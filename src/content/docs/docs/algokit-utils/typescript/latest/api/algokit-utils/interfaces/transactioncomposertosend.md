@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "TransactionComposerToSend"
+title: 'TransactionComposerToSend'
 ---
 
 Defined in: [src/transaction/types.ts:142](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/transaction/types.ts#L142)
@@ -27,7 +27,7 @@ Whether to use simulate to automatically calculate required app call inner trans
 
 [`SendParams`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/sendparams/).[`coverAppCallInnerTransactionFees`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/sendparams/#coverappcallinnertransactionfees)
 
-***
+---
 
 ### maxRoundsToWaitForConfirmation?
 
@@ -41,7 +41,7 @@ The number of rounds to wait for confirmation. By default until the latest lastV
 
 [`SendParams`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/sendparams/).[`maxRoundsToWaitForConfirmation`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/sendparams/#maxroundstowaitforconfirmation)
 
-***
+---
 
 ### populateAppCallResources?
 
@@ -55,7 +55,7 @@ Whether to use simulate to automatically populate app call resources in the txn 
 
 [`SendParams`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/sendparams/).[`populateAppCallResources`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/sendparams/#populateappcallresources)
 
-***
+---
 
 ### suppressLog?
 
@@ -69,7 +69,7 @@ Whether to suppress log messages from transaction send, default: do not suppress
 
 [`SendParams`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/sendparams/).[`suppressLog`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/sendparams/#suppresslog)
 
-***
+---
 
 ### transactionComposer
 

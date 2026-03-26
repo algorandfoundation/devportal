@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "replace"
+title: 'replace'
 ---
 
 > **replace**(`a`, `b`, `c`): [`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)

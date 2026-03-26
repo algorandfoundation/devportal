@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "PaymentComposeFields"
+title: 'PaymentComposeFields'
 ---
 
 Defined in: [itxn-compose.ts:7](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/itxn-compose.ts#L7)
@@ -25,7 +25,7 @@ microalgos
 
 [`PaymentFields`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/paymentfields/).[`amount`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/paymentfields/#amount)
 
-***
+---
 
 ### closeRemainderTo?
 
@@ -39,7 +39,7 @@ Defined in: [itxn.ts:625](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 [`PaymentFields`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/paymentfields/).[`closeRemainderTo`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/paymentfields/#closeremainderto)
 
-***
+---
 
 ### fee?
 
@@ -53,7 +53,7 @@ microalgos
 
 [`PaymentFields`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/paymentfields/).[`fee`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/paymentfields/#fee)
 
-***
+---
 
 ### firstValid?
 
@@ -67,7 +67,7 @@ round number
 
 [`PaymentFields`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/paymentfields/).[`firstValid`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/paymentfields/#firstvalid)
 
-***
+---
 
 ### firstValidTime?
 
@@ -81,7 +81,7 @@ UNIX timestamp of block before txn.FirstValid. Fails if negative
 
 [`PaymentFields`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/paymentfields/).[`firstValidTime`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/paymentfields/#firstvalidtime)
 
-***
+---
 
 ### lastValid?
 
@@ -95,7 +95,7 @@ round number
 
 [`PaymentFields`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/paymentfields/).[`lastValid`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/paymentfields/#lastvalid)
 
-***
+---
 
 ### lease?
 
@@ -109,7 +109,7 @@ Defined in: [itxn.ts:609](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 [`PaymentFields`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/paymentfields/).[`lease`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/paymentfields/#lease)
 
-***
+---
 
 ### note?
 
@@ -123,7 +123,7 @@ Any data up to 1024 bytes
 
 [`PaymentFields`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/paymentfields/).[`note`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/paymentfields/#note)
 
-***
+---
 
 ### receiver?
 
@@ -137,7 +137,7 @@ Defined in: [itxn.ts:617](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 [`PaymentFields`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/paymentfields/).[`receiver`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/paymentfields/#receiver)
 
-***
+---
 
 ### rekeyTo?
 
@@ -151,7 +151,7 @@ Defined in: [itxn.ts:613](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 [`PaymentFields`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/paymentfields/).[`rekeyTo`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/paymentfields/#rekeyto)
 
-***
+---
 
 ### sender?
 
@@ -165,7 +165,7 @@ Defined in: [itxn.ts:585](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 [`PaymentFields`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/paymentfields/).[`sender`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/paymentfields/#sender)
 
-***
+---
 
 ### type
 

@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "Contract"
+title: 'Contract'
 ---
 
 Defined in: [arc4/index.ts:14](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/arc4/index.ts#L14)
@@ -46,7 +46,7 @@ args and on completion actions
 
 [`BaseContract`](/algorand-typescript/api/index/classes/basecontract/).[`approvalProgram`](/algorand-typescript/api/index/classes/basecontract/#approvalprogram)
 
-***
+---
 
 ### clearStateProgram()
 

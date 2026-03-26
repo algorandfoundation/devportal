@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "OnCompleteActionStr"
+title: 'OnCompleteActionStr'
 ---
 
 > **OnCompleteActionStr** = `"NoOp"` \| `"OptIn"` \| `"ClearState"` \| `"CloseOut"` \| `"UpdateApplication"` \| `"DeleteApplication"`

@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "HeartbeatTransactionFields"
+title: 'HeartbeatTransactionFields'
 ---
 
 > **HeartbeatTransactionFields** = `object`
@@ -21,7 +21,7 @@ Defined in: [packages/transact/src/transactions/heartbeat.ts:8](https://github.c
 
 Heartbeat address
 
-***
+---
 
 ### keyDilution
 
@@ -31,7 +31,7 @@ Defined in: [packages/transact/src/transactions/heartbeat.ts:20](https://github.
 
 Heartbeat key dilution
 
-***
+---
 
 ### proof
 
@@ -41,7 +41,7 @@ Defined in: [packages/transact/src/transactions/heartbeat.ts:11](https://github.
 
 Heartbeat proof
 
-***
+---
 
 ### seed
 
@@ -51,7 +51,7 @@ Defined in: [packages/transact/src/transactions/heartbeat.ts:14](https://github.
 
 Heartbeat seed
 
-***
+---
 
 ### voteId
 

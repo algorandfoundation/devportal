@@ -1,6 +1,6 @@
 ---
-title: "Application Boxes Lookup"
-description: "This example demonstrates how to query application boxes using the IndexerClient searchForApplicationBoxes() and lookupApplicationBoxByIdAndName() methods."
+title: 'Application Boxes Lookup'
+description: 'This example demonstrates how to query application boxes using the IndexerClient searchForApplicationBoxes() and lookupApplicationBoxByIdAndName() methods.'
 sidebar:
   order: 13
 ---
@@ -39,7 +39,7 @@ npm run example indexer_client/13-application-boxes.ts
  * - LocalNet running (via `algokit localnet start`)
  */
 
-import { algo, getApplicationAddress } from '@algorandfoundation/algokit-utils'
+import { algo, getApplicationAddress } from '@algorandfoundation/algokit-utils';
 import {
   createAlgodClient,
   createAlgorandClient,
@@ -51,7 +51,7 @@ import {
   printStep,
   printSuccess,
   shortenAddress,
-} from '../shared/utils.js'
+} from '../shared/utils.js';
 
 /**
  * Decode box name bytes to a displayable string
@@ -59,19 +59,19 @@ import {
  */
 function decodeBoxName(nameBytes: Uint8Array): string {
   try {
-    const decoded = new TextDecoder().decode(nameBytes)
+    const decoded = new TextDecoder().decode(nameBytes);
     // Check if it's printable ASCII/UTF-8
     if (/^[\x20-\x7E\s]+$/.test(decoded)) {
-      return `"${decoded}"`
+      return `"${decoded}"`;
     }
   } catch {
     // Fall through to hex display
   }
   // Display as hex for binary data
   const hex = Array.from(nameBytes)
-    .map((b) => b.toString(16).padStart(2, '0'))
-    .join('')
-  return `0x${hex} (${nameBytes.length} bytes)`
+    .map(b => b.toString(16).padStart(2, '0'))
+    .join('');
+  return `0x${hex} (${nameBytes.length} bytes)`;
 }
 
 /**
@@ -80,81 +80,83 @@ function decodeBoxName(nameBytes: Uint8Array): string {
  */
 function decodeBoxValue(valueBytes: Uint8Array): string {
   try {
-    const decoded = new TextDecoder().decode(valueBytes)
+    const decoded = new TextDecoder().decode(valueBytes);
     // Check if it's printable ASCII/UTF-8
     if (/^[\x20-\x7E\s]+$/.test(decoded)) {
-      return `"${decoded}"`
+      return `"${decoded}"`;
     }
   } catch {
     // Fall through to hex display
   }
   // Display as hex for binary data
   const hex = Array.from(valueBytes)
-    .map((b) => b.toString(16).padStart(2, '0'))
-    .join('')
-  return `0x${hex} (${valueBytes.length} bytes)`
+    .map(b => b.toString(16).padStart(2, '0'))
+    .join('');
+  return `0x${hex} (${valueBytes.length} bytes)`;
 }
 
 async function main() {
-  printHeader('Application Boxes Lookup Example')
+  printHeader('Application Boxes Lookup Example');
 
   // Create clients
-  const indexer = createIndexerClient()
-  const algorand = createAlgorandClient()
-  const algod = createAlgodClient()
+  const indexer = createIndexerClient();
+  const algorand = createAlgorandClient();
+  const algod = createAlgodClient();
 
   // =========================================================================
   // Step 1: Get a funded account from LocalNet
   // =========================================================================
-  printStep(1, 'Getting a funded account from LocalNet')
+  printStep(1, 'Getting a funded account from LocalNet');
 
-  let creatorAddress: string
-  let creatorAccount: Awaited<ReturnType<typeof algorand.account.kmd.getLocalNetDispenserAccount>>
+  let creatorAddress: string;
+  let creatorAccount: Awaited<ReturnType<typeof algorand.account.kmd.getLocalNetDispenserAccount>>;
 
   try {
-    creatorAccount = await algorand.account.kmd.getLocalNetDispenserAccount()
-    algorand.setSignerFromAccount(creatorAccount)
-    creatorAddress = creatorAccount.addr.toString()
-    printSuccess(`Using dispenser account: ${shortenAddress(creatorAddress)}`)
+    creatorAccount = await algorand.account.kmd.getLocalNetDispenserAccount();
+    algorand.setSignerFromAccount(creatorAccount);
+    creatorAddress = creatorAccount.addr.toString();
+    printSuccess(`Using dispenser account: ${shortenAddress(creatorAddress)}`);
   } catch (error) {
-    printError(`Failed to get dispenser account: ${error instanceof Error ? error.message : String(error)}`)
-    printInfo('')
-    printInfo('Make sure LocalNet is running: algokit localnet start')
-    printInfo('If issues persist, try: algokit localnet reset')
-    return
+    printError(
+      `Failed to get dispenser account: ${error instanceof Error ? error.message : String(error)}`,
+    );
+    printInfo('');
+    printInfo('Make sure LocalNet is running: algokit localnet start');
+    printInfo('If issues persist, try: algokit localnet reset');
+    return;
   }
 
   // =========================================================================
   // Step 2: Deploy an application that uses box storage
   // =========================================================================
-  printStep(2, 'Deploying an application that uses box storage')
+  printStep(2, 'Deploying an application that uses box storage');
 
-  let appId: bigint
+  let appId: bigint;
 
   try {
     // Load approval program from shared artifacts that supports box operations:
     // - On create: does nothing (just succeeds)
     // - On call with arg "create_box": creates a box with name from arg[1] and value from arg[2]
     // - On call with arg "delete_box": deletes a box with name from arg[1]
-    const approvalSource = loadTealSource('approval-box-ops.teal')
+    const approvalSource = loadTealSource('approval-box-ops.teal');
 
     // Load clear state program from shared artifacts
-    const clearSource = loadTealSource('clear-state-approve.teal')
+    const clearSource = loadTealSource('clear-state-approve.teal');
 
     // Compile TEAL programs
-    printInfo('Compiling TEAL programs...')
-    const approvalResult = await algod.tealCompile(approvalSource)
-    const approvalProgram = new Uint8Array(Buffer.from(approvalResult.result, 'base64'))
+    printInfo('Compiling TEAL programs...');
+    const approvalResult = await algod.tealCompile(approvalSource);
+    const approvalProgram = new Uint8Array(Buffer.from(approvalResult.result, 'base64'));
 
-    const clearResult = await algod.tealCompile(clearSource)
-    const clearStateProgram = new Uint8Array(Buffer.from(clearResult.result, 'base64'))
+    const clearResult = await algod.tealCompile(clearSource);
+    const clearStateProgram = new Uint8Array(Buffer.from(clearResult.result, 'base64'));
 
-    printInfo(`Approval program: ${approvalProgram.length} bytes`)
-    printInfo(`Clear state program: ${clearStateProgram.length} bytes`)
-    printInfo('')
+    printInfo(`Approval program: ${approvalProgram.length} bytes`);
+    printInfo(`Clear state program: ${clearStateProgram.length} bytes`);
+    printInfo('');
 
     // Create application using AlgorandClient's high-level API
-    printInfo('Creating application...')
+    printInfo('Creating application...');
     const result = await algorand.send.appCreate({
       sender: creatorAccount.addr,
       approvalProgram,
@@ -165,52 +167,56 @@ async function main() {
         localInts: 0,
         localByteSlices: 0,
       },
-    })
+    });
 
-    appId = result.appId
-    printSuccess(`Created application with ID: ${appId}`)
+    appId = result.appId;
+    printSuccess(`Created application with ID: ${appId}`);
 
     // Fund the application account for box storage MBR
-    const appAddress = getApplicationAddress(appId)
-    printInfo(`Funding application account: ${shortenAddress(appAddress.toString())}`)
+    const appAddress = getApplicationAddress(appId);
+    printInfo(`Funding application account: ${shortenAddress(appAddress.toString())}`);
     await algorand.send.payment({
       sender: creatorAccount.addr,
       receiver: appAddress.toString(),
       amount: algo(1), // 1 ALGO for box storage
-    })
-    printSuccess('Funded application account with 1 ALGO for box storage')
-    printInfo('')
+    });
+    printSuccess('Funded application account with 1 ALGO for box storage');
+    printInfo('');
   } catch (error) {
-    printError(`Failed to create application: ${error instanceof Error ? error.message : String(error)}`)
-    printInfo('')
-    printInfo('If LocalNet errors occur, try: algokit localnet reset')
-    return
+    printError(
+      `Failed to create application: ${error instanceof Error ? error.message : String(error)}`,
+    );
+    printInfo('');
+    printInfo('If LocalNet errors occur, try: algokit localnet reset');
+    return;
   }
 
   // =========================================================================
   // Step 3: Handle case where application has no boxes
   // =========================================================================
-  printStep(3, 'Handling case where application has no boxes')
+  printStep(3, 'Handling case where application has no boxes');
 
   try {
     // searchForApplicationBoxes() returns an empty array when no boxes exist
-    const emptyResult = await indexer.searchForApplicationBoxes(appId)
+    const emptyResult = await indexer.searchForApplicationBoxes(appId);
 
-    printInfo(`Application ID: ${emptyResult.applicationId}`)
-    printInfo(`Number of boxes: ${emptyResult.boxes.length}`)
+    printInfo(`Application ID: ${emptyResult.applicationId}`);
+    printInfo(`Number of boxes: ${emptyResult.boxes.length}`);
 
     if (emptyResult.boxes.length === 0) {
-      printSuccess('Correctly returned empty boxes array for new application')
-      printInfo('Applications start with no boxes - boxes are created via app calls')
+      printSuccess('Correctly returned empty boxes array for new application');
+      printInfo('Applications start with no boxes - boxes are created via app calls');
     }
   } catch (error) {
-    printError(`searchForApplicationBoxes failed: ${error instanceof Error ? error.message : String(error)}`)
+    printError(
+      `searchForApplicationBoxes failed: ${error instanceof Error ? error.message : String(error)}`,
+    );
   }
 
   // =========================================================================
   // Step 4: Create several boxes with different names and values
   // =========================================================================
-  printStep(4, 'Creating several boxes with different names and values')
+  printStep(4, 'Creating several boxes with different names and values');
 
   // Box data to create
   const boxData = [
@@ -220,273 +226,278 @@ async function main() {
     { name: 'box_alpha', value: 'First box in alphabetical order' },
     { name: 'box_beta', value: 'Second box in alphabetical order' },
     { name: 'box_gamma', value: 'Third box in alphabetical order' },
-  ]
+  ];
 
   try {
     for (const box of boxData) {
-      const boxNameBytes = new TextEncoder().encode(box.name)
-      const boxValueBytes = new TextEncoder().encode(box.value)
+      const boxNameBytes = new TextEncoder().encode(box.name);
+      const boxValueBytes = new TextEncoder().encode(box.value);
 
       await algorand.send.appCall({
         sender: creatorAccount.addr,
         appId: appId,
         args: [new TextEncoder().encode('create_box'), boxNameBytes, boxValueBytes],
         boxReferences: [{ appId: appId, name: boxNameBytes }],
-      })
+      });
 
-      printInfo(`Created box "${box.name}" with value: "${box.value}"`)
+      printInfo(`Created box "${box.name}" with value: "${box.value}"`);
     }
-    printSuccess(`Created ${boxData.length} boxes for demonstration`)
-    printInfo('')
+    printSuccess(`Created ${boxData.length} boxes for demonstration`);
+    printInfo('');
   } catch (error) {
-    printError(`Failed to create boxes: ${error instanceof Error ? error.message : String(error)}`)
-    return
+    printError(`Failed to create boxes: ${error instanceof Error ? error.message : String(error)}`);
+    return;
   }
 
   // =========================================================================
   // Step 5: Search for application boxes with searchForApplicationBoxes()
   // =========================================================================
-  printStep(5, 'Searching for application boxes with searchForApplicationBoxes()')
+  printStep(5, 'Searching for application boxes with searchForApplicationBoxes()');
 
   // Wait for the indexer to catch up with the algod transactions
-  printInfo('Waiting for indexer to sync...')
-  await new Promise((resolve) => setTimeout(resolve, 3000))
+  printInfo('Waiting for indexer to sync...');
+  await new Promise(resolve => setTimeout(resolve, 3000));
 
   try {
     // searchForApplicationBoxes() returns all box names for an application
-    const boxesResult = await indexer.searchForApplicationBoxes(appId)
+    const boxesResult = await indexer.searchForApplicationBoxes(appId);
 
-    printSuccess(`Retrieved boxes for application ${boxesResult.applicationId}`)
-    printInfo(`Total boxes found: ${boxesResult.boxes.length}`)
-    printInfo('')
+    printSuccess(`Retrieved boxes for application ${boxesResult.applicationId}`);
+    printInfo(`Total boxes found: ${boxesResult.boxes.length}`);
+    printInfo('');
 
     if (boxesResult.boxes.length > 0) {
-      printInfo('Box names (sorted lexicographically):')
+      printInfo('Box names (sorted lexicographically):');
       for (let i = 0; i < boxesResult.boxes.length; i++) {
-        const boxDescriptor = boxesResult.boxes[i]
-        const nameDisplay = decodeBoxName(boxDescriptor.name)
-        printInfo(`  [${i}] ${nameDisplay}`)
+        const boxDescriptor = boxesResult.boxes[i];
+        const nameDisplay = decodeBoxName(boxDescriptor.name);
+        printInfo(`  [${i}] ${nameDisplay}`);
       }
-      printInfo('')
-      printInfo('Note: searchForApplicationBoxes returns only box names (BoxDescriptor[]),')
-      printInfo('not the values. Use lookupApplicationBoxByIdAndName to get values.')
+      printInfo('');
+      printInfo('Note: searchForApplicationBoxes returns only box names (BoxDescriptor[]),');
+      printInfo('not the values. Use lookupApplicationBoxByIdAndName to get values.');
     }
 
     if (boxesResult.nextToken) {
-      printInfo(`More results available (nextToken: ${boxesResult.nextToken.substring(0, 20)}...)`)
+      printInfo(`More results available (nextToken: ${boxesResult.nextToken.substring(0, 20)}...)`);
     }
   } catch (error) {
-    printError(`searchForApplicationBoxes failed: ${error instanceof Error ? error.message : String(error)}`)
+    printError(
+      `searchForApplicationBoxes failed: ${error instanceof Error ? error.message : String(error)}`,
+    );
   }
 
   // =========================================================================
   // Step 6: Lookup specific box by name with lookupApplicationBoxByIdAndName()
   // =========================================================================
-  printStep(6, 'Looking up specific box values with lookupApplicationBoxByIdAndName()')
+  printStep(6, 'Looking up specific box values with lookupApplicationBoxByIdAndName()');
 
   try {
     // lookupApplicationBoxByIdAndName() requires the box name as Uint8Array
-    const boxName = new TextEncoder().encode('settings')
+    const boxName = new TextEncoder().encode('settings');
 
-    printInfo('Looking up box with name "settings"...')
-    printInfo(`Box name as Uint8Array: [${Array.from(boxName).join(', ')}]`)
-    printInfo('')
+    printInfo('Looking up box with name "settings"...');
+    printInfo(`Box name as Uint8Array: [${Array.from(boxName).join(', ')}]`);
+    printInfo('');
 
-    const boxResult = await indexer.lookupApplicationBoxByIdAndName(appId, boxName)
+    const boxResult = await indexer.lookupApplicationBoxByIdAndName(appId, boxName);
 
-    printSuccess('Retrieved box details:')
-    printInfo(`  Round: ${boxResult.round}`)
-    printInfo(`  Name:  ${decodeBoxName(boxResult.name)}`)
-    printInfo(`  Value: ${decodeBoxValue(boxResult.value)}`)
-    printInfo(`  Value size: ${boxResult.value.length} bytes`)
-    printInfo('')
+    printSuccess('Retrieved box details:');
+    printInfo(`  Round: ${boxResult.round}`);
+    printInfo(`  Name:  ${decodeBoxName(boxResult.name)}`);
+    printInfo(`  Value: ${decodeBoxValue(boxResult.value)}`);
+    printInfo(`  Value size: ${boxResult.value.length} bytes`);
+    printInfo('');
 
     // Try parsing as JSON since we know this box contains JSON
-    const valueStr = new TextDecoder().decode(boxResult.value)
+    const valueStr = new TextDecoder().decode(boxResult.value);
     if (valueStr.startsWith('{')) {
       try {
-        const parsed = JSON.parse(valueStr)
-        printInfo('Parsed as JSON:')
+        const parsed = JSON.parse(valueStr);
+        printInfo('Parsed as JSON:');
         for (const [key, val] of Object.entries(parsed)) {
-          printInfo(`  ${key}: ${JSON.stringify(val)}`)
+          printInfo(`  ${key}: ${JSON.stringify(val)}`);
         }
       } catch {
         // Not valid JSON
       }
     }
   } catch (error) {
-    printError(`lookupApplicationBoxByIdAndName failed: ${error instanceof Error ? error.message : String(error)}`)
+    printError(
+      `lookupApplicationBoxByIdAndName failed: ${error instanceof Error ? error.message : String(error)}`,
+    );
   }
 
   // =========================================================================
   // Step 7: Show how to properly encode box names using Uint8Array
   // =========================================================================
-  printStep(7, 'Demonstrating box name encoding with Uint8Array')
+  printStep(7, 'Demonstrating box name encoding with Uint8Array');
 
   try {
-    printInfo('Box names are Uint8Array (raw bytes). Common encoding methods:')
-    printInfo('')
+    printInfo('Box names are Uint8Array (raw bytes). Common encoding methods:');
+    printInfo('');
 
     // Example 1: String to Uint8Array using TextEncoder
-    const stringName = 'user_count'
-    const stringNameBytes = new TextEncoder().encode(stringName)
-    printInfo(`1. String "${stringName}" to Uint8Array:`)
-    printInfo(`   new TextEncoder().encode("${stringName}")`)
-    printInfo(`   Result: [${Array.from(stringNameBytes).join(', ')}]`)
-    printInfo('')
+    const stringName = 'user_count';
+    const stringNameBytes = new TextEncoder().encode(stringName);
+    printInfo(`1. String "${stringName}" to Uint8Array:`);
+    printInfo(`   new TextEncoder().encode("${stringName}")`);
+    printInfo(`   Result: [${Array.from(stringNameBytes).join(', ')}]`);
+    printInfo('');
 
     // Lookup this box
-    const box1 = await indexer.lookupApplicationBoxByIdAndName(appId, stringNameBytes)
-    printInfo(`   Box value: ${decodeBoxValue(box1.value)}`)
-    printInfo('')
+    const box1 = await indexer.lookupApplicationBoxByIdAndName(appId, stringNameBytes);
+    printInfo(`   Box value: ${decodeBoxValue(box1.value)}`);
+    printInfo('');
 
     // Example 2: Direct byte array
-    printInfo('2. Direct Uint8Array from known bytes:')
-    const directBytes = new Uint8Array([109, 101, 116, 97, 100, 97, 116, 97]) // "metadata"
-    printInfo(`   new Uint8Array([${Array.from(directBytes).join(', ')}])`)
-    printInfo(`   Decodes to: "${new TextDecoder().decode(directBytes)}"`)
+    printInfo('2. Direct Uint8Array from known bytes:');
+    const directBytes = new Uint8Array([109, 101, 116, 97, 100, 97, 116, 97]); // "metadata"
+    printInfo(`   new Uint8Array([${Array.from(directBytes).join(', ')}])`);
+    printInfo(`   Decodes to: "${new TextDecoder().decode(directBytes)}"`);
 
-    const box2 = await indexer.lookupApplicationBoxByIdAndName(appId, directBytes)
-    printInfo(`   Box value: ${decodeBoxValue(box2.value)}`)
-    printInfo('')
+    const box2 = await indexer.lookupApplicationBoxByIdAndName(appId, directBytes);
+    printInfo(`   Box value: ${decodeBoxValue(box2.value)}`);
+    printInfo('');
 
     // Example 3: Hexadecimal string to Uint8Array
-    printInfo('3. Hex string to Uint8Array (for binary box names):')
-    const hexStr = '73657474696e6773' // "settings" in hex
-    const hexBytes = new Uint8Array(hexStr.match(/.{1,2}/g)!.map((byte) => parseInt(byte, 16)))
-    printInfo(`   Hex "${hexStr}" to bytes`)
-    printInfo(`   Decodes to: "${new TextDecoder().decode(hexBytes)}"`)
+    printInfo('3. Hex string to Uint8Array (for binary box names):');
+    const hexStr = '73657474696e6773'; // "settings" in hex
+    const hexBytes = new Uint8Array(hexStr.match(/.{1,2}/g)!.map(byte => parseInt(byte, 16)));
+    printInfo(`   Hex "${hexStr}" to bytes`);
+    printInfo(`   Decodes to: "${new TextDecoder().decode(hexBytes)}"`);
 
-    const box3 = await indexer.lookupApplicationBoxByIdAndName(appId, hexBytes)
-    printInfo(`   Box value: ${decodeBoxValue(box3.value)}`)
+    const box3 = await indexer.lookupApplicationBoxByIdAndName(appId, hexBytes);
+    printInfo(`   Box value: ${decodeBoxValue(box3.value)}`);
   } catch (error) {
-    printError(`Box name encoding demo failed: ${error instanceof Error ? error.message : String(error)}`)
+    printError(
+      `Box name encoding demo failed: ${error instanceof Error ? error.message : String(error)}`,
+    );
   }
 
   // =========================================================================
   // Step 8: Handle case where box is not found
   // =========================================================================
-  printStep(8, 'Handling case where box is not found')
+  printStep(8, 'Handling case where box is not found');
 
   try {
-    const nonExistentBoxName = new TextEncoder().encode('does_not_exist')
-    printInfo('Attempting to lookup non-existent box "does_not_exist"...')
+    const nonExistentBoxName = new TextEncoder().encode('does_not_exist');
+    printInfo('Attempting to lookup non-existent box "does_not_exist"...');
 
-    await indexer.lookupApplicationBoxByIdAndName(appId, nonExistentBoxName)
+    await indexer.lookupApplicationBoxByIdAndName(appId, nonExistentBoxName);
 
     // If we get here, the box was found (unexpected)
-    printInfo('Box was found (unexpected)')
+    printInfo('Box was found (unexpected)');
   } catch (error) {
-    printSuccess('Correctly caught error for non-existent box')
+    printSuccess('Correctly caught error for non-existent box');
     if (error instanceof Error) {
-      printInfo(`Error message: ${error.message}`)
+      printInfo(`Error message: ${error.message}`);
     }
-    printInfo('')
-    printInfo('Always handle the case where a box may not exist.')
-    printInfo('The indexer throws an error when the box is not found.')
+    printInfo('');
+    printInfo('Always handle the case where a box may not exist.');
+    printInfo('The indexer throws an error when the box is not found.');
   }
 
   // =========================================================================
   // Step 9: Demonstrate pagination for applications with many boxes
   // =========================================================================
-  printStep(9, 'Demonstrating pagination with limit and next parameters')
+  printStep(9, 'Demonstrating pagination with limit and next parameters');
 
   try {
     // First page with limit of 2
-    printInfo('Fetching first page of boxes (limit: 2)...')
-    const page1 = await indexer.searchForApplicationBoxes(appId, { limit: 2 })
+    printInfo('Fetching first page of boxes (limit: 2)...');
+    const page1 = await indexer.searchForApplicationBoxes(appId, { limit: 2 });
 
-    printInfo(`Page 1: Retrieved ${page1.boxes.length} box(es)`)
+    printInfo(`Page 1: Retrieved ${page1.boxes.length} box(es)`);
     for (const box of page1.boxes) {
-      printInfo(`  - ${decodeBoxName(box.name)}`)
+      printInfo(`  - ${decodeBoxName(box.name)}`);
     }
 
     // Check if there are more results
     if (page1.nextToken) {
-      printInfo(`Next token available: ${page1.nextToken.substring(0, 20)}...`)
-      printInfo('')
+      printInfo(`Next token available: ${page1.nextToken.substring(0, 20)}...`);
+      printInfo('');
 
       // Fetch second page using next token
-      printInfo('Fetching second page using next token...')
+      printInfo('Fetching second page using next token...');
       const page2 = await indexer.searchForApplicationBoxes(appId, {
         limit: 2,
         next: page1.nextToken,
-      })
+      });
 
-      printInfo(`Page 2: Retrieved ${page2.boxes.length} box(es)`)
+      printInfo(`Page 2: Retrieved ${page2.boxes.length} box(es)`);
       for (const box of page2.boxes) {
-        printInfo(`  - ${decodeBoxName(box.name)}`)
+        printInfo(`  - ${decodeBoxName(box.name)}`);
       }
 
       if (page2.nextToken) {
-        printInfo(`More results available (nextToken present)`)
-        printInfo('')
+        printInfo(`More results available (nextToken present)`);
+        printInfo('');
 
         // Fetch remaining boxes
-        printInfo('Fetching remaining boxes...')
+        printInfo('Fetching remaining boxes...');
         const page3 = await indexer.searchForApplicationBoxes(appId, {
           limit: 10,
           next: page2.nextToken,
-        })
+        });
 
-        printInfo(`Page 3: Retrieved ${page3.boxes.length} box(es)`)
+        printInfo(`Page 3: Retrieved ${page3.boxes.length} box(es)`);
         for (const box of page3.boxes) {
-          printInfo(`  - ${decodeBoxName(box.name)}`)
+          printInfo(`  - ${decodeBoxName(box.name)}`);
         }
 
         if (!page3.nextToken) {
-          printInfo('No more results (no nextToken)')
+          printInfo('No more results (no nextToken)');
         }
       } else {
-        printInfo('No more results (no nextToken)')
+        printInfo('No more results (no nextToken)');
       }
     } else {
-      printInfo('No pagination needed (all results fit in one page)')
+      printInfo('No pagination needed (all results fit in one page)');
     }
   } catch (error) {
-    printError(`Pagination demo failed: ${error instanceof Error ? error.message : String(error)}`)
+    printError(`Pagination demo failed: ${error instanceof Error ? error.message : String(error)}`);
   }
 
   // =========================================================================
   // Summary
   // =========================================================================
-  printHeader('Summary')
-  printInfo('This example demonstrated:')
-  printInfo('  1. Deploying an application that uses box storage')
-  printInfo('  2. Creating several boxes via app calls')
-  printInfo('  3. Handling the case where application has no boxes')
-  printInfo('  4. searchForApplicationBoxes(appId) - List all box names')
-  printInfo('  5. lookupApplicationBoxByIdAndName(appId, boxName) - Get specific box value')
-  printInfo('  6. Properly encoding box names using Uint8Array')
-  printInfo('  7. Displaying box values after decoding from Uint8Array')
-  printInfo('  8. Handling the case where box is not found')
-  printInfo('  9. Pagination with limit and next parameters')
-  printInfo('')
-  printInfo('Key searchForApplicationBoxes response fields (BoxesResponse):')
-  printInfo('  - applicationId: The application identifier (bigint)')
-  printInfo('  - boxes: Array of BoxDescriptor objects (just names, not values)')
-  printInfo('  - nextToken: Pagination token for next page (optional)')
-  printInfo('')
-  printInfo('Key BoxDescriptor fields:')
-  printInfo('  - name: Box name as Uint8Array (raw bytes)')
-  printInfo('')
-  printInfo('Key lookupApplicationBoxByIdAndName response fields (Box):')
-  printInfo('  - round: Round at which box was retrieved (bigint)')
-  printInfo('  - name: Box name as Uint8Array')
-  printInfo('  - value: Box value as Uint8Array')
-  printInfo('')
-  printInfo('searchForApplicationBoxes() filter parameters:')
-  printInfo('  - limit: Maximum results per page')
-  printInfo('  - next: Pagination token from previous response')
-  printInfo('')
-  printInfo('Note: Box names are returned sorted lexicographically by the indexer.')
+  printHeader('Summary');
+  printInfo('This example demonstrated:');
+  printInfo('  1. Deploying an application that uses box storage');
+  printInfo('  2. Creating several boxes via app calls');
+  printInfo('  3. Handling the case where application has no boxes');
+  printInfo('  4. searchForApplicationBoxes(appId) - List all box names');
+  printInfo('  5. lookupApplicationBoxByIdAndName(appId, boxName) - Get specific box value');
+  printInfo('  6. Properly encoding box names using Uint8Array');
+  printInfo('  7. Displaying box values after decoding from Uint8Array');
+  printInfo('  8. Handling the case where box is not found');
+  printInfo('  9. Pagination with limit and next parameters');
+  printInfo('');
+  printInfo('Key searchForApplicationBoxes response fields (BoxesResponse):');
+  printInfo('  - applicationId: The application identifier (bigint)');
+  printInfo('  - boxes: Array of BoxDescriptor objects (just names, not values)');
+  printInfo('  - nextToken: Pagination token for next page (optional)');
+  printInfo('');
+  printInfo('Key BoxDescriptor fields:');
+  printInfo('  - name: Box name as Uint8Array (raw bytes)');
+  printInfo('');
+  printInfo('Key lookupApplicationBoxByIdAndName response fields (Box):');
+  printInfo('  - round: Round at which box was retrieved (bigint)');
+  printInfo('  - name: Box name as Uint8Array');
+  printInfo('  - value: Box value as Uint8Array');
+  printInfo('');
+  printInfo('searchForApplicationBoxes() filter parameters:');
+  printInfo('  - limit: Maximum results per page');
+  printInfo('  - next: Pagination token from previous response');
+  printInfo('');
+  printInfo('Note: Box names are returned sorted lexicographically by the indexer.');
 }
 
-main().catch((error) => {
-  console.error('Fatal error:', error)
-  process.exit(1)
-})
-
+main().catch(error => {
+  console.error('Fatal error:', error);
+  process.exit(1);
+});
 ```
 
 ---

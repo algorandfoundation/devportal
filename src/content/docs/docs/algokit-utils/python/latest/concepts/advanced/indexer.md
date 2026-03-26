@@ -1,6 +1,6 @@
 ---
-title: "Indexer lookups / searching"
-description: "Indexer lookups / searching is a higher-order use case capability provided by AlgoKit Utils that builds on top of the core capabilities. It provides type-safe indexer API wrappers (no more dict[str, Any] pain), with typed dataclass response models and built-in retry logic."
+title: 'Indexer lookups / searching'
+description: 'Indexer lookups / searching is a higher-order use case capability provided by AlgoKit Utils that builds on top of the core capabilities. It provides type-safe indexer API wrappers (no more dict[str, Any] pain), with typed dataclass response models and built-in retry logic.'
 ---
 
 Indexer lookups / searching is a higher-order use case capability provided by AlgoKit Utils that builds on top of the core capabilities. It provides type-safe indexer API wrappers (no more `dict[str, Any]` pain), with typed dataclass response models and built-in retry logic.

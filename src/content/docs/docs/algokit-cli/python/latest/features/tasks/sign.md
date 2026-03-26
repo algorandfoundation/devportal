@@ -1,5 +1,5 @@
 ---
-title: "AlgoKit Task Sign"
+title: 'AlgoKit Task Sign'
 ---
 
 The AlgoKit Sign feature allows you to sign Algorand transaction(s) using the AlgoKit CLI. This feature supports signing single or multiple transactions, either provided directly as a base64 encoded string or from a binary file.
@@ -86,9 +86,7 @@ algosdk.transaction.write_to_file([{YOUR_TXN_OBJECT}], "some_file.txn") # Result
 Encoding simple txn object in javascript:
 
 ```ts
-Buffer.from(algosdk.encodeObj({ txn: txn.get_obj_for_encoding() })).toString(
-  "base64",
-); // Resulting string can be passed directly to algokit task sign with --transaction flag
+Buffer.from(algosdk.encodeObj({ txn: txn.get_obj_for_encoding() })).toString('base64'); // Resulting string can be passed directly to algokit task sign with --transaction flag
 ```
 
 ## Further Reading

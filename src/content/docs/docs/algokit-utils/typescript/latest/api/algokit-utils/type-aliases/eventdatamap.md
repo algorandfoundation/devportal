@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "EventDataMap"
+title: 'EventDataMap'
 ---
 
 > **EventDataMap** = `object`
@@ -17,7 +17,7 @@ Defined in: [src/lifecycle-events.ts:8](https://github.com/algorandfoundation/al
 
 Defined in: [src/lifecycle-events.ts:10](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/lifecycle-events.ts#L10)
 
-***
+---
 
 ### TxnGroupSimulated
 

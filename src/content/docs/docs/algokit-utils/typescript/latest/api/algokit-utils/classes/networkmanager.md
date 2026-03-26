@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "NetworkManager"
+title: 'NetworkManager'
 ---
 
 Defined in: [src/network-manager.ts:101](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/network-manager.ts#L101)
@@ -56,10 +56,10 @@ an error if called on other networks.
 
 ```typescript
 // Block warp on LocalNet
-await algorand.network.localNet.blockWarp(100n)
+await algorand.network.localNet.blockWarp(100n);
 
 // Time warp on LocalNet
-await algorand.network.localNet.timeWarp(BigInt(Date.now() / 1000) + 3600n)
+await algorand.network.localNet.timeWarp(BigInt(Date.now() / 1000) + 3600n);
 ```
 
 ##### Returns
@@ -87,11 +87,11 @@ The last round number
 #### Example
 
 ```typescript
-const lastRound = await algorand.network.getLastRound()
-console.log(`Current round: ${lastRound}`)
+const lastRound = await algorand.network.getLastRound();
+console.log(`Current round: ${lastRound}`);
 ```
 
-***
+---
 
 ### getLatestTimestamp()
 
@@ -114,11 +114,11 @@ The UNIX timestamp of the last round
 #### Example
 
 ```typescript
-const timestamp = await algorand.network.getLatestTimestamp()
-console.log(`Latest block time: ${new Date(Number(timestamp) * 1000)}`)
+const timestamp = await algorand.network.getLatestTimestamp();
+console.log(`Latest block time: ${new Date(Number(timestamp) * 1000)}`);
 ```
 
-***
+---
 
 ### waitUntilRound()
 
@@ -148,13 +148,13 @@ Error if timeout is reached before the target round
 
 ```typescript
 // Wait for round 1000
-await algorand.network.waitUntilRound(1000n)
+await algorand.network.waitUntilRound(1000n);
 
 // Wait with a 30 second timeout
-await algorand.network.waitUntilRound(1000n, 30000)
+await algorand.network.waitUntilRound(1000n, 30000);
 ```
 
-***
+---
 
 ### waitUntilTimestamp()
 
@@ -186,9 +186,12 @@ Optional parameters for waiting
 
 ```typescript
 // Wait until a specific time
-const futureTime = BigInt(Math.floor(Date.now() / 1000)) + 60n // 1 minute from now
-await algorand.network.waitUntilTimestamp(futureTime)
+const futureTime = BigInt(Math.floor(Date.now() / 1000)) + 60n; // 1 minute from now
+await algorand.network.waitUntilTimestamp(futureTime);
 
 // Wait with custom timing parameters
-await algorand.network.waitUntilTimestamp(futureTime, { blockTimeSeconds: 3.0, pollingIntervalMs: 500 })
+await algorand.network.waitUntilTimestamp(futureTime, {
+  blockTimeSeconds: 3.0,
+  pollingIntervalMs: 500,
+});
 ```

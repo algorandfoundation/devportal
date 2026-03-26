@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "GlobalState"
+title: 'GlobalState'
 ---
 
 > **GlobalState**\<`ValueType`\>(`options?`): [`GlobalState`](/algorand-typescript/api/index/type-aliases/globalstate/)\<`ValueType`\>

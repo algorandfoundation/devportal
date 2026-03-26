@@ -1,5 +1,5 @@
 ---
-title: "Advanced `algokit generate` command"
+title: 'Advanced `algokit generate` command'
 ---
 
 - **Status**: Approved

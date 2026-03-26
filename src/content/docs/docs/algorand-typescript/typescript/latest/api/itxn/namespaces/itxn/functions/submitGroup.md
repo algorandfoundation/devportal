@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "submitGroup"
+title: 'submitGroup'
 ---
 
 > **submitGroup**\<`TFields`\>(...`transactionFields`): [`TxnFor`](/algorand-typescript/api/itxn/namespaces/itxn/type-aliases/txnfor/)\<`TFields`\>
@@ -15,7 +15,7 @@ Submit a group of ItxnParams objects and return the InnerTransaction results
 
 ### TFields
 
-`TFields` *extends* [`ItxnParams`](/algorand-typescript/api/itxn/namespaces/itxn/type-aliases/itxnparams/)[]
+`TFields` _extends_ [`ItxnParams`](/algorand-typescript/api/itxn/namespaces/itxn/type-aliases/itxnparams/)[]
 
 ## Parameters
 

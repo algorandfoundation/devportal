@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "compileArc4"
+title: 'compileArc4'
 ---
 
 > **compileArc4**\<`TContract`\>(`contract`, `options?`): [`ContractProxy`](/algorand-typescript/api/arc4/type-aliases/contractproxy/)\<`TContract`\>
@@ -15,7 +15,7 @@ Pre compile the target ARC4 contract and return a proxy object for constructing 
 
 ### TContract
 
-`TContract` *extends* [`Contract`](/algorand-typescript/api/arc4/classes/contract/)
+`TContract` _extends_ [`Contract`](/algorand-typescript/api/arc4/classes/contract/)
 
 ## Parameters
 

@@ -1,6 +1,6 @@
 ---
-title: "Application Logs Lookup"
-description: "This example demonstrates how to lookup application logs using the IndexerClient lookupApplicationLogsById() method."
+title: 'Application Logs Lookup'
+description: 'This example demonstrates how to lookup application logs using the IndexerClient lookupApplicationLogsById() method.'
 sidebar:
   order: 12
 ---
@@ -39,14 +39,14 @@ npm run example indexer_client/12-application-logs.ts
  * - LocalNet running (via `algokit localnet start`)
  */
 
-import { algo } from '@algorandfoundation/algokit-utils'
+import { algo } from '@algorandfoundation/algokit-utils';
 import {
   assignFee,
   OnApplicationComplete,
   Transaction,
   TransactionType,
   type AppCallTransactionFields,
-} from '@algorandfoundation/algokit-utils/transact'
+} from '@algorandfoundation/algokit-utils/transact';
 import {
   createAlgodClient,
   createAlgorandClient,
@@ -58,7 +58,7 @@ import {
   printStep,
   printSuccess,
   shortenAddress,
-} from '../shared/utils.js'
+} from '../shared/utils.js';
 
 /**
  * Wait for a transaction to be confirmed
@@ -68,18 +68,18 @@ async function waitForConfirmation(
   txId: string,
   maxRounds = 10,
 ): Promise<Record<string, unknown>> {
-  let lastRound = (await algod.status()).lastRound
-  const startRound = lastRound
+  let lastRound = (await algod.status()).lastRound;
+  const startRound = lastRound;
 
   while (lastRound < startRound + BigInt(maxRounds)) {
-    const pendingInfo = await algod.pendingTransactionInformation(txId)
+    const pendingInfo = await algod.pendingTransactionInformation(txId);
     if (pendingInfo.confirmedRound && pendingInfo.confirmedRound > 0n) {
-      return pendingInfo as Record<string, unknown>
+      return pendingInfo as Record<string, unknown>;
     }
-    lastRound = (await algod.statusAfterBlock(lastRound)).lastRound
+    lastRound = (await algod.statusAfterBlock(lastRound)).lastRound;
   }
 
-  throw new Error(`Transaction ${txId} not confirmed after ${maxRounds} rounds`)
+  throw new Error(`Transaction ${txId} not confirmed after ${maxRounds} rounds`);
 }
 
 /**
@@ -88,10 +88,10 @@ async function waitForConfirmation(
 function decodeLogEntry(logBytes: Uint8Array): string {
   try {
     // Try to decode as UTF-8 string
-    const decoded = new TextDecoder().decode(logBytes)
+    const decoded = new TextDecoder().decode(logBytes);
     // Check if it's printable ASCII/UTF-8
     if (/^[\x20-\x7E\s]+$/.test(decoded)) {
-      return `"${decoded}"`
+      return `"${decoded}"`;
     }
   } catch {
     // Fall through to hex display
@@ -99,85 +99,85 @@ function decodeLogEntry(logBytes: Uint8Array): string {
 
   // Display as hex for binary data
   const hex = Array.from(logBytes)
-    .map((b) => b.toString(16).padStart(2, '0'))
-    .join('')
-  return `0x${hex} (${logBytes.length} bytes)`
+    .map(b => b.toString(16).padStart(2, '0'))
+    .join('');
+  return `0x${hex} (${logBytes.length} bytes)`;
 }
 
 async function main() {
-  printHeader('Application Logs Lookup Example')
+  printHeader('Application Logs Lookup Example');
 
   // Create clients
-  const indexer = createIndexerClient()
-  const algorand = createAlgorandClient()
-  const algod = createAlgodClient()
+  const indexer = createIndexerClient();
+  const algorand = createAlgorandClient();
+  const algod = createAlgodClient();
 
   // =========================================================================
   // Step 1: Get funded accounts from LocalNet
   // =========================================================================
-  printStep(1, 'Getting funded accounts from LocalNet')
+  printStep(1, 'Getting funded accounts from LocalNet');
 
-  let creatorAddress: string
-  let creatorAccount: Awaited<ReturnType<typeof algorand.account.kmd.getLocalNetDispenserAccount>>
-  let callerAccount: Awaited<ReturnType<typeof algorand.account.kmd.getOrCreateWalletAccount>>
+  let creatorAddress: string;
+  let creatorAccount: Awaited<ReturnType<typeof algorand.account.kmd.getLocalNetDispenserAccount>>;
+  let callerAccount: Awaited<ReturnType<typeof algorand.account.kmd.getOrCreateWalletAccount>>;
 
   try {
-    creatorAccount = await algorand.account.kmd.getLocalNetDispenserAccount()
-    algorand.setSignerFromAccount(creatorAccount)
-    creatorAddress = creatorAccount.addr.toString()
-    printSuccess(`Using dispenser account as creator: ${shortenAddress(creatorAddress)}`)
+    creatorAccount = await algorand.account.kmd.getLocalNetDispenserAccount();
+    algorand.setSignerFromAccount(creatorAccount);
+    creatorAddress = creatorAccount.addr.toString();
+    printSuccess(`Using dispenser account as creator: ${shortenAddress(creatorAddress)}`);
 
     // Create a separate caller account for sender filtering demo
-    callerAccount = await algorand.account.kmd.getOrCreateWalletAccount('caller-account')
-    algorand.setSignerFromAccount(callerAccount)
-    const callerAddress = callerAccount.addr.toString()
-    printSuccess(`Using caller account: ${shortenAddress(callerAddress)}`)
+    callerAccount = await algorand.account.kmd.getOrCreateWalletAccount('caller-account');
+    algorand.setSignerFromAccount(callerAccount);
+    const callerAddress = callerAccount.addr.toString();
+    printSuccess(`Using caller account: ${shortenAddress(callerAddress)}`);
 
     // Fund the caller account
     await algorand.send.payment({
       sender: creatorAccount.addr,
       receiver: callerAccount.addr,
       amount: algo(1),
-    })
-    printInfo('Funded caller account with 1 ALGO')
+    });
+    printInfo('Funded caller account with 1 ALGO');
   } catch (error) {
-    printError(`Failed to get accounts: ${error instanceof Error ? error.message : String(error)}`)
-    printInfo('')
-    printInfo('Make sure LocalNet is running: algokit localnet start')
-    printInfo('If issues persist, try: algokit localnet reset')
-    return
+    printError(`Failed to get accounts: ${error instanceof Error ? error.message : String(error)}`);
+    printInfo('');
+    printInfo('Make sure LocalNet is running: algokit localnet start');
+    printInfo('If issues persist, try: algokit localnet reset');
+    return;
   }
 
   // =========================================================================
   // Step 2: Deploy an application that emits logs
   // =========================================================================
-  printStep(2, 'Deploying an application that emits logs')
+  printStep(2, 'Deploying an application that emits logs');
 
-  let appId: bigint
+  let appId: bigint;
 
   try {
     // Load TEAL programs from shared artifacts
     // The approval program emits logs on each call using the `log` opcode
-    const approvalSource = loadTealSource('approval-logging.teal')
+    const approvalSource = loadTealSource('approval-logging.teal');
 
     // Load clear state program that logs when called
-    const clearSource = loadTealSource('clear-state-logging.teal')
+    const clearSource = loadTealSource('clear-state-logging.teal');
 
     // Compile TEAL programs
-    printInfo('Compiling TEAL programs...')
-    const approvalResult = await algod.tealCompile(approvalSource)
-    const approvalProgram = new Uint8Array(Buffer.from(approvalResult.result, 'base64'))
+    printInfo('Compiling TEAL programs...');
+    const approvalResult = await algod.tealCompile(approvalSource);
+    const approvalProgram = new Uint8Array(Buffer.from(approvalResult.result, 'base64'));
 
-    const clearResult = await algod.tealCompile(clearSource)
-    const clearStateProgram = new Uint8Array(Buffer.from(clearResult.result, 'base64'))
+    const clearResult = await algod.tealCompile(clearSource);
+    const clearStateProgram = new Uint8Array(Buffer.from(clearResult.result, 'base64'));
 
-    printInfo(`Approval program: ${approvalProgram.length} bytes`)
-    printInfo(`Clear state program: ${clearStateProgram.length} bytes`)
-    printInfo('')
+    printInfo(`Approval program: ${approvalProgram.length} bytes`);
+    printInfo(`Clear state program: ${clearStateProgram.length} bytes`);
+    printInfo('');
 
     // Create application
-    printInfo('Creating application...')
-    const suggestedParams = await algod.suggestedParams()
+    printInfo('Creating application...');
+    const suggestedParams = await algod.suggestedParams();
 
     const appCallFields: AppCallTransactionFields = {
       appId: 0n,
@@ -186,7 +186,7 @@ async function main() {
       clearStateProgram,
       globalStateSchema: { numUints: 0, numByteSlices: 0 },
       localStateSchema: { numUints: 0, numByteSlices: 0 },
-    }
+    };
 
     const createAppTx = new Transaction({
       type: TransactionType.AppCall,
@@ -196,46 +196,48 @@ async function main() {
       genesisHash: suggestedParams.genesisHash,
       genesisId: suggestedParams.genesisId,
       appCall: appCallFields,
-    })
+    });
 
     const createAppTxWithFee = assignFee(createAppTx, {
       feePerByte: suggestedParams.fee,
       minFee: suggestedParams.minFee,
-    })
+    });
 
-    const signedCreateTx = await creatorAccount.signer([createAppTxWithFee], [0])
-    await algod.sendRawTransaction(signedCreateTx)
-    const createPendingInfo = await waitForConfirmation(algod, createAppTxWithFee.txId())
-    appId = createPendingInfo.appId as bigint
-    const createTxId = createAppTxWithFee.txId()
-    printSuccess(`Created application with ID: ${appId}`)
-    printInfo(`Creation transaction ID: ${createTxId}`)
-    printInfo('')
+    const signedCreateTx = await creatorAccount.signer([createAppTxWithFee], [0]);
+    await algod.sendRawTransaction(signedCreateTx);
+    const createPendingInfo = await waitForConfirmation(algod, createAppTxWithFee.txId());
+    appId = createPendingInfo.appId as bigint;
+    const createTxId = createAppTxWithFee.txId();
+    printSuccess(`Created application with ID: ${appId}`);
+    printInfo(`Creation transaction ID: ${createTxId}`);
+    printInfo('');
   } catch (error) {
-    printError(`Failed to create application: ${error instanceof Error ? error.message : String(error)}`)
-    printInfo('')
-    printInfo('If LocalNet errors occur, try: algokit localnet reset')
-    return
+    printError(
+      `Failed to create application: ${error instanceof Error ? error.message : String(error)}`,
+    );
+    printInfo('');
+    printInfo('If LocalNet errors occur, try: algokit localnet reset');
+    return;
   }
 
   // =========================================================================
   // Step 3: Call the application multiple times to generate logs
   // =========================================================================
-  printStep(3, 'Calling the application multiple times to generate logs')
+  printStep(3, 'Calling the application multiple times to generate logs');
 
-  const callTxIds: string[] = []
-  let firstCallRound: bigint = 0n
-  let lastCallRound: bigint = 0n
+  const callTxIds: string[] = [];
+  let firstCallRound: bigint = 0n;
+  let lastCallRound: bigint = 0n;
 
   try {
     // Make several calls from the creator account
     for (let i = 0; i < 3; i++) {
-      const callParams = await algod.suggestedParams()
+      const callParams = await algod.suggestedParams();
 
       const callFields: AppCallTransactionFields = {
         appId,
         onComplete: OnApplicationComplete.NoOp,
-      }
+      };
 
       const callTx = new Transaction({
         type: TransactionType.AppCall,
@@ -245,34 +247,36 @@ async function main() {
         genesisHash: callParams.genesisHash,
         genesisId: callParams.genesisId,
         appCall: callFields,
-      })
+      });
 
       const callTxWithFee = assignFee(callTx, {
         feePerByte: callParams.fee,
         minFee: callParams.minFee,
-      })
+      });
 
-      const signedCallTx = await creatorAccount.signer([callTxWithFee], [0])
-      await algod.sendRawTransaction(signedCallTx)
-      const callPendingInfo = await waitForConfirmation(algod, callTxWithFee.txId())
-      callTxIds.push(callTxWithFee.txId())
+      const signedCallTx = await creatorAccount.signer([callTxWithFee], [0]);
+      await algod.sendRawTransaction(signedCallTx);
+      const callPendingInfo = await waitForConfirmation(algod, callTxWithFee.txId());
+      callTxIds.push(callTxWithFee.txId());
 
-      const confirmedRound = callPendingInfo.confirmedRound as bigint
+      const confirmedRound = callPendingInfo.confirmedRound as bigint;
       if (firstCallRound === 0n) {
-        firstCallRound = confirmedRound
+        firstCallRound = confirmedRound;
       }
-      lastCallRound = confirmedRound
+      lastCallRound = confirmedRound;
 
-      printInfo(`Call ${i + 1}: txId=${callTxWithFee.txId().substring(0, 12)}..., round=${confirmedRound}`)
+      printInfo(
+        `Call ${i + 1}: txId=${callTxWithFee.txId().substring(0, 12)}..., round=${confirmedRound}`,
+      );
     }
 
     // Make a call from the caller account (different sender)
-    const callerCallParams = await algod.suggestedParams()
+    const callerCallParams = await algod.suggestedParams();
 
     const callerCallFields: AppCallTransactionFields = {
       appId,
       onComplete: OnApplicationComplete.NoOp,
-    }
+    };
 
     const callerCallTx = new Transaction({
       type: TransactionType.AppCall,
@@ -282,271 +286,278 @@ async function main() {
       genesisHash: callerCallParams.genesisHash,
       genesisId: callerCallParams.genesisId,
       appCall: callerCallFields,
-    })
+    });
 
     const callerCallTxWithFee = assignFee(callerCallTx, {
       feePerByte: callerCallParams.fee,
       minFee: callerCallParams.minFee,
-    })
+    });
 
-    const signedCallerCallTx = await callerAccount.signer([callerCallTxWithFee], [0])
-    await algod.sendRawTransaction(signedCallerCallTx)
-    const callerCallPendingInfo = await waitForConfirmation(algod, callerCallTxWithFee.txId())
-    callTxIds.push(callerCallTxWithFee.txId())
-    lastCallRound = callerCallPendingInfo.confirmedRound as bigint
+    const signedCallerCallTx = await callerAccount.signer([callerCallTxWithFee], [0]);
+    await algod.sendRawTransaction(signedCallerCallTx);
+    const callerCallPendingInfo = await waitForConfirmation(algod, callerCallTxWithFee.txId());
+    callTxIds.push(callerCallTxWithFee.txId());
+    lastCallRound = callerCallPendingInfo.confirmedRound as bigint;
 
     printInfo(
       `Call 4 (from caller): txId=${callerCallTxWithFee.txId().substring(0, 12)}..., round=${lastCallRound}`,
-    )
-    printSuccess('Made 4 application calls (3 from creator, 1 from caller)')
-    printInfo('')
+    );
+    printSuccess('Made 4 application calls (3 from creator, 1 from caller)');
+    printInfo('');
   } catch (error) {
-    printError(`Failed to call application: ${error instanceof Error ? error.message : String(error)}`)
-    return
+    printError(
+      `Failed to call application: ${error instanceof Error ? error.message : String(error)}`,
+    );
+    return;
   }
 
   // =========================================================================
   // Step 4: Lookup application logs with lookupApplicationLogsById()
   // =========================================================================
-  printStep(4, 'Looking up application logs with lookupApplicationLogsById()')
+  printStep(4, 'Looking up application logs with lookupApplicationLogsById()');
 
   // Wait for indexer to catch up with algod
-  printInfo('Waiting for indexer to sync...')
-  await new Promise((resolve) => setTimeout(resolve, 3000))
+  printInfo('Waiting for indexer to sync...');
+  await new Promise(resolve => setTimeout(resolve, 3000));
 
   try {
     // lookupApplicationLogsById() returns all logs for an application
-    const logsResult = await indexer.lookupApplicationLogsById(appId)
+    const logsResult = await indexer.lookupApplicationLogsById(appId);
 
-    printSuccess(`Retrieved logs for application ${logsResult.applicationId}`)
-    printInfo(`Query performed at round: ${logsResult.currentRound}`)
-    printInfo('')
+    printSuccess(`Retrieved logs for application ${logsResult.applicationId}`);
+    printInfo(`Query performed at round: ${logsResult.currentRound}`);
+    printInfo('');
 
     if (logsResult.logData && logsResult.logData.length > 0) {
-      printInfo(`Found ${logsResult.logData.length} transaction(s) with logs:`)
-      printInfo('')
+      printInfo(`Found ${logsResult.logData.length} transaction(s) with logs:`);
+      printInfo('');
 
       for (const logEntry of logsResult.logData) {
-        printInfo(`Transaction: ${logEntry.txId}`)
-        printInfo(`  Logs (${logEntry.logs.length} entries):`)
+        printInfo(`Transaction: ${logEntry.txId}`);
+        printInfo(`  Logs (${logEntry.logs.length} entries):`);
         for (let i = 0; i < logEntry.logs.length; i++) {
-          const decoded = decodeLogEntry(logEntry.logs[i])
-          printInfo(`    [${i}] ${decoded}`)
+          const decoded = decodeLogEntry(logEntry.logs[i]);
+          printInfo(`    [${i}] ${decoded}`);
         }
-        printInfo('')
+        printInfo('');
       }
     } else {
-      printInfo('No logs found for this application')
+      printInfo('No logs found for this application');
     }
 
     if (logsResult.nextToken) {
-      printInfo(`More results available (nextToken: ${logsResult.nextToken.substring(0, 20)}...)`)
+      printInfo(`More results available (nextToken: ${logsResult.nextToken.substring(0, 20)}...)`);
     }
   } catch (error) {
-    printError(`lookupApplicationLogsById failed: ${error instanceof Error ? error.message : String(error)}`)
+    printError(
+      `lookupApplicationLogsById failed: ${error instanceof Error ? error.message : String(error)}`,
+    );
   }
 
   // =========================================================================
   // Step 5: Filter logs by txId to get logs from a specific transaction
   // =========================================================================
-  printStep(5, 'Filtering logs by txId')
+  printStep(5, 'Filtering logs by txId');
 
   try {
-    const specificTxId = callTxIds[0]
-    printInfo(`Filtering logs for specific transaction: ${specificTxId.substring(0, 20)}...`)
+    const specificTxId = callTxIds[0];
+    printInfo(`Filtering logs for specific transaction: ${specificTxId.substring(0, 20)}...`);
 
     const filteredResult = await indexer.lookupApplicationLogsById(appId, {
       txId: specificTxId,
-    })
+    });
 
     if (filteredResult.logData && filteredResult.logData.length > 0) {
-      printSuccess(`Found ${filteredResult.logData.length} log entry for transaction`)
+      printSuccess(`Found ${filteredResult.logData.length} log entry for transaction`);
       for (const logEntry of filteredResult.logData) {
-        printInfo(`Transaction: ${logEntry.txId}`)
-        printInfo(`  Logs (${logEntry.logs.length} entries):`)
+        printInfo(`Transaction: ${logEntry.txId}`);
+        printInfo(`  Logs (${logEntry.logs.length} entries):`);
         for (let i = 0; i < logEntry.logs.length; i++) {
-          const decoded = decodeLogEntry(logEntry.logs[i])
-          printInfo(`    [${i}] ${decoded}`)
+          const decoded = decodeLogEntry(logEntry.logs[i]);
+          printInfo(`    [${i}] ${decoded}`);
         }
       }
     } else {
-      printInfo('No logs found for this transaction')
+      printInfo('No logs found for this transaction');
     }
   } catch (error) {
-    printError(`txId filtering failed: ${error instanceof Error ? error.message : String(error)}`)
+    printError(`txId filtering failed: ${error instanceof Error ? error.message : String(error)}`);
   }
 
   // =========================================================================
   // Step 6: Filter logs by minRound and maxRound
   // =========================================================================
-  printStep(6, 'Filtering logs by minRound and maxRound')
+  printStep(6, 'Filtering logs by minRound and maxRound');
 
   try {
-    printInfo(`Filtering logs between rounds ${firstCallRound} and ${lastCallRound}`)
+    printInfo(`Filtering logs between rounds ${firstCallRound} and ${lastCallRound}`);
 
     // Filter by minRound
-    printInfo('')
-    printInfo(`Logs with minRound=${firstCallRound}:`)
+    printInfo('');
+    printInfo(`Logs with minRound=${firstCallRound}:`);
     const minRoundResult = await indexer.lookupApplicationLogsById(appId, {
       minRound: firstCallRound,
-    })
+    });
     if (minRoundResult.logData) {
-      printInfo(`  Found ${minRoundResult.logData.length} transaction(s) with logs`)
+      printInfo(`  Found ${minRoundResult.logData.length} transaction(s) with logs`);
     }
 
     // Filter by maxRound
-    printInfo('')
-    printInfo(`Logs with maxRound=${firstCallRound}:`)
+    printInfo('');
+    printInfo(`Logs with maxRound=${firstCallRound}:`);
     const maxRoundResult = await indexer.lookupApplicationLogsById(appId, {
       maxRound: firstCallRound,
-    })
+    });
     if (maxRoundResult.logData) {
-      printInfo(`  Found ${maxRoundResult.logData.length} transaction(s) with logs`)
+      printInfo(`  Found ${maxRoundResult.logData.length} transaction(s) with logs`);
     }
 
     // Filter by range (minRound and maxRound combined)
-    printInfo('')
-    printInfo(`Logs with minRound=${firstCallRound} and maxRound=${lastCallRound}:`)
+    printInfo('');
+    printInfo(`Logs with minRound=${firstCallRound} and maxRound=${lastCallRound}:`);
     const rangeResult = await indexer.lookupApplicationLogsById(appId, {
       minRound: firstCallRound,
       maxRound: lastCallRound,
-    })
+    });
     if (rangeResult.logData) {
-      printInfo(`  Found ${rangeResult.logData.length} transaction(s) with logs`)
+      printInfo(`  Found ${rangeResult.logData.length} transaction(s) with logs`);
       for (const logEntry of rangeResult.logData) {
-        printInfo(`    - ${logEntry.txId.substring(0, 20)}... (${logEntry.logs.length} log entries)`)
+        printInfo(
+          `    - ${logEntry.txId.substring(0, 20)}... (${logEntry.logs.length} log entries)`,
+        );
       }
     }
   } catch (error) {
-    printError(`Round filtering failed: ${error instanceof Error ? error.message : String(error)}`)
+    printError(`Round filtering failed: ${error instanceof Error ? error.message : String(error)}`);
   }
 
   // =========================================================================
   // Step 7: Filter logs by senderAddress
   // =========================================================================
-  printStep(7, 'Filtering logs by senderAddress')
+  printStep(7, 'Filtering logs by senderAddress');
 
   try {
-    const callerAddress = callerAccount.addr.toString()
+    const callerAddress = callerAccount.addr.toString();
 
     // Filter logs by creator address
-    printInfo(`Filtering logs by sender: ${shortenAddress(creatorAddress)}`)
+    printInfo(`Filtering logs by sender: ${shortenAddress(creatorAddress)}`);
     const creatorLogsResult = await indexer.lookupApplicationLogsById(appId, {
       senderAddress: creatorAddress,
-    })
+    });
     if (creatorLogsResult.logData) {
-      printSuccess(`Found ${creatorLogsResult.logData.length} transaction(s) from creator`)
+      printSuccess(`Found ${creatorLogsResult.logData.length} transaction(s) from creator`);
     }
 
     // Filter logs by caller address
-    printInfo('')
-    printInfo(`Filtering logs by sender: ${shortenAddress(callerAddress)}`)
+    printInfo('');
+    printInfo(`Filtering logs by sender: ${shortenAddress(callerAddress)}`);
     const callerLogsResult = await indexer.lookupApplicationLogsById(appId, {
       senderAddress: callerAddress,
-    })
+    });
     if (callerLogsResult.logData) {
-      printSuccess(`Found ${callerLogsResult.logData.length} transaction(s) from caller`)
+      printSuccess(`Found ${callerLogsResult.logData.length} transaction(s) from caller`);
       for (const logEntry of callerLogsResult.logData) {
-        printInfo(`  Transaction: ${logEntry.txId.substring(0, 20)}...`)
+        printInfo(`  Transaction: ${logEntry.txId.substring(0, 20)}...`);
         for (let i = 0; i < logEntry.logs.length; i++) {
-          const decoded = decodeLogEntry(logEntry.logs[i])
-          printInfo(`    [${i}] ${decoded}`)
+          const decoded = decodeLogEntry(logEntry.logs[i]);
+          printInfo(`    [${i}] ${decoded}`);
         }
       }
     }
   } catch (error) {
-    printError(`senderAddress filtering failed: ${error instanceof Error ? error.message : String(error)}`)
+    printError(
+      `senderAddress filtering failed: ${error instanceof Error ? error.message : String(error)}`,
+    );
   }
 
   // =========================================================================
   // Step 8: Demonstrate pagination for applications with many log entries
   // =========================================================================
-  printStep(8, 'Demonstrating pagination with limit and next parameters')
+  printStep(8, 'Demonstrating pagination with limit and next parameters');
 
   try {
     // First page with limit of 2
-    printInfo('Fetching first page of logs (limit: 2)...')
-    const page1 = await indexer.lookupApplicationLogsById(appId, { limit: 2 })
+    printInfo('Fetching first page of logs (limit: 2)...');
+    const page1 = await indexer.lookupApplicationLogsById(appId, { limit: 2 });
 
     if (page1.logData) {
-      printInfo(`Page 1: Retrieved ${page1.logData.length} transaction(s) with logs`)
+      printInfo(`Page 1: Retrieved ${page1.logData.length} transaction(s) with logs`);
       for (const logEntry of page1.logData) {
-        printInfo(`  - ${logEntry.txId.substring(0, 20)}...`)
+        printInfo(`  - ${logEntry.txId.substring(0, 20)}...`);
       }
     }
 
     // Check if there are more results
     if (page1.nextToken) {
-      printInfo(`  Next token available: ${page1.nextToken.substring(0, 20)}...`)
-      printInfo('')
+      printInfo(`  Next token available: ${page1.nextToken.substring(0, 20)}...`);
+      printInfo('');
 
       // Fetch second page using next token
-      printInfo('Fetching second page using next token...')
+      printInfo('Fetching second page using next token...');
       const page2 = await indexer.lookupApplicationLogsById(appId, {
         limit: 2,
         next: page1.nextToken,
-      })
+      });
 
       if (page2.logData) {
-        printInfo(`Page 2: Retrieved ${page2.logData.length} transaction(s) with logs`)
+        printInfo(`Page 2: Retrieved ${page2.logData.length} transaction(s) with logs`);
         for (const logEntry of page2.logData) {
-          printInfo(`  - ${logEntry.txId.substring(0, 20)}...`)
+          printInfo(`  - ${logEntry.txId.substring(0, 20)}...`);
         }
       }
 
       if (page2.nextToken) {
-        printInfo(`  More results available (nextToken present)`)
+        printInfo(`  More results available (nextToken present)`);
       } else {
-        printInfo(`  No more results (no nextToken)`)
+        printInfo(`  No more results (no nextToken)`);
       }
     } else {
-      printInfo('  No pagination needed (all results fit in one page)')
+      printInfo('  No pagination needed (all results fit in one page)');
     }
   } catch (error) {
-    printError(`Pagination demo failed: ${error instanceof Error ? error.message : String(error)}`)
+    printError(`Pagination demo failed: ${error instanceof Error ? error.message : String(error)}`);
   }
 
   // =========================================================================
   // Summary
   // =========================================================================
-  printHeader('Summary')
-  printInfo('This example demonstrated:')
-  printInfo('  1. Deploying an application that emits logs using the `log` opcode')
-  printInfo('  2. Calling the application to generate log entries')
-  printInfo('  3. lookupApplicationLogsById(appId) - Get all logs for an application')
-  printInfo('  4. Displaying log entry fields: txId and logs (decoded from Uint8Array)')
-  printInfo('  5. Filtering by txId to get logs from a specific transaction')
-  printInfo('  6. Filtering by minRound and maxRound for round range queries')
-  printInfo('  7. Filtering by senderAddress to get logs from a specific caller')
-  printInfo('  8. Pagination with limit and next parameters')
-  printInfo('')
-  printInfo('Key lookupApplicationLogsById response fields:')
-  printInfo('  - applicationId: The application identifier (bigint)')
-  printInfo('  - currentRound: Round at which results were computed (bigint)')
-  printInfo('  - logData: Array of ApplicationLogData objects')
-  printInfo('  - nextToken: Pagination token for next page (optional)')
-  printInfo('')
-  printInfo('Key ApplicationLogData fields:')
-  printInfo('  - txId: Transaction ID that generated the logs')
-  printInfo('  - logs: Array of Uint8Array, each containing a log entry')
-  printInfo('')
-  printInfo('Filter parameters:')
-  printInfo('  - txId: Filter by specific transaction ID')
-  printInfo('  - minRound: Only include logs from this round onwards')
-  printInfo('  - maxRound: Only include logs up to this round')
-  printInfo('  - senderAddress: Filter by the address that called the application')
-  printInfo('  - limit: Maximum results per page')
-  printInfo('  - next: Pagination token from previous response')
-  printInfo('')
-  printInfo('Note: The `log` opcode in TEAL emits log entries that are stored')
-  printInfo('in the transaction result and indexed by the indexer.')
+  printHeader('Summary');
+  printInfo('This example demonstrated:');
+  printInfo('  1. Deploying an application that emits logs using the `log` opcode');
+  printInfo('  2. Calling the application to generate log entries');
+  printInfo('  3. lookupApplicationLogsById(appId) - Get all logs for an application');
+  printInfo('  4. Displaying log entry fields: txId and logs (decoded from Uint8Array)');
+  printInfo('  5. Filtering by txId to get logs from a specific transaction');
+  printInfo('  6. Filtering by minRound and maxRound for round range queries');
+  printInfo('  7. Filtering by senderAddress to get logs from a specific caller');
+  printInfo('  8. Pagination with limit and next parameters');
+  printInfo('');
+  printInfo('Key lookupApplicationLogsById response fields:');
+  printInfo('  - applicationId: The application identifier (bigint)');
+  printInfo('  - currentRound: Round at which results were computed (bigint)');
+  printInfo('  - logData: Array of ApplicationLogData objects');
+  printInfo('  - nextToken: Pagination token for next page (optional)');
+  printInfo('');
+  printInfo('Key ApplicationLogData fields:');
+  printInfo('  - txId: Transaction ID that generated the logs');
+  printInfo('  - logs: Array of Uint8Array, each containing a log entry');
+  printInfo('');
+  printInfo('Filter parameters:');
+  printInfo('  - txId: Filter by specific transaction ID');
+  printInfo('  - minRound: Only include logs from this round onwards');
+  printInfo('  - maxRound: Only include logs up to this round');
+  printInfo('  - senderAddress: Filter by the address that called the application');
+  printInfo('  - limit: Maximum results per page');
+  printInfo('  - next: Pagination token from previous response');
+  printInfo('');
+  printInfo('Note: The `log` opcode in TEAL emits log entries that are stored');
+  printInfo('in the transaction result and indexed by the indexer.');
 }
 
-main().catch((error) => {
-  console.error('Fatal error:', error)
-  process.exit(1)
-})
-
+main().catch(error => {
+  console.error('Fatal error:', error);
+  process.exit(1);
+});
 ```
 
 ---

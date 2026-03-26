@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "BeforePollMetadata"
+title: 'BeforePollMetadata'
 ---
 
 Defined in: [src/types/subscription.ts:209](https://github.com/algorandfoundation/algokit-subscriber-ts/blob/main/src/types/subscription.ts#L209)
@@ -19,7 +19,7 @@ Defined in: [src/types/subscription.ts:213](https://github.com/algorandfoundatio
 
 The current round of algod
 
-***
+---
 
 ### watermark
 

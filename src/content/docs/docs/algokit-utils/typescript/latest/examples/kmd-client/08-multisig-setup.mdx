@@ -1,6 +1,6 @@
 ---
-title: "Multisig Account Setup"
-description: "This example demonstrates how to create multisig accounts using the KMD `importMultisig()` method."
+title: 'Multisig Account Setup'
+description: 'This example demonstrates how to create multisig accounts using the KMD `importMultisig()` method.'
 sidebar:
   order: 8
 ---
@@ -10,13 +10,14 @@ sidebar:
 ## Description
 
 This example demonstrates how to create multisig accounts using the KMD `importMultisig()` method.
- Key concepts:
+Key concepts:
+
 - A multisig account requires M-of-N signatures to authorize transactions
 - The threshold (M) is the minimum number of signatures required
 - The public keys (N) are the participants who can sign
 - The multisig version parameter (currently always 1) defines the format
 - The resulting multisig address is deterministically derived from the
-public keys, threshold, and version
+  public keys, threshold, and version
 
 ## Prerequisites
 
@@ -61,7 +62,7 @@ npm run example kmd_client/08-multisig-setup.ts
  * - importMultisig() - Create a multisig account from public keys
  */
 
-import { decodeAddress } from '@algorandfoundation/algokit-utils'
+import { decodeAddress } from '@algorandfoundation/algokit-utils';
 import {
   cleanupTestWallet,
   createKmdClient,
@@ -71,265 +72,268 @@ import {
   printInfo,
   printStep,
   printSuccess,
-} from '../shared/utils.js'
+} from '../shared/utils.js';
 
 /**
  * Format a byte array for display, showing first and last few bytes
  */
 function formatBytesForDisplay(bytes: Uint8Array, showFirst = 4, showLast = 4): string {
-  const hex = Buffer.from(bytes).toString('hex')
+  const hex = Buffer.from(bytes).toString('hex');
   if (bytes.length <= showFirst + showLast) {
-    return hex
+    return hex;
   }
-  const firstBytes = hex.slice(0, showFirst * 2)
-  const lastBytes = hex.slice(-(showLast * 2))
-  return `${firstBytes}...${lastBytes}`
+  const firstBytes = hex.slice(0, showFirst * 2);
+  const lastBytes = hex.slice(-(showLast * 2));
+  return `${firstBytes}...${lastBytes}`;
 }
 
 async function main() {
-  printHeader('KMD Multisig Account Setup Example')
+  printHeader('KMD Multisig Account Setup Example');
 
-  const kmd = createKmdClient()
-  let walletHandleToken = ''
-  const walletPassword = 'test-password'
+  const kmd = createKmdClient();
+  let walletHandleToken = '';
+  const walletPassword = 'test-password';
 
   try {
     // =========================================================================
     // Step 1: Create a Test Wallet
     // =========================================================================
-    printStep(1, 'Creating a test wallet')
+    printStep(1, 'Creating a test wallet');
 
-    const testWallet = await createTestWallet(kmd, walletPassword)
-    walletHandleToken = testWallet.walletHandleToken
+    const testWallet = await createTestWallet(kmd, walletPassword);
+    walletHandleToken = testWallet.walletHandleToken;
 
-    printSuccess(`Test wallet created: ${testWallet.walletName}`)
-    printInfo(`Wallet ID: ${testWallet.walletId}`)
+    printSuccess(`Test wallet created: ${testWallet.walletName}`);
+    printInfo(`Wallet ID: ${testWallet.walletId}`);
 
     // =========================================================================
     // Step 2: Generate 3 Keys for Multisig Participants
     // =========================================================================
-    printStep(2, 'Generating 3 keys to use as multisig participants')
+    printStep(2, 'Generating 3 keys to use as multisig participants');
 
-    const participantAddresses: string[] = []
-    const numParticipants = 3
+    const participantAddresses: string[] = [];
+    const numParticipants = 3;
 
     for (let i = 1; i <= numParticipants; i++) {
-      const result = await kmd.generateKey({ walletHandleToken })
-      participantAddresses.push(result.address.toString())
-      printInfo(`Participant ${i}: ${result.address}`)
+      const result = await kmd.generateKey({ walletHandleToken });
+      participantAddresses.push(result.address.toString());
+      printInfo(`Participant ${i}: ${result.address}`);
     }
 
-    printSuccess(`Generated ${numParticipants} participant keys`)
-    printInfo('')
-    printInfo('These addresses will be used to create a 2-of-3 multisig account.')
+    printSuccess(`Generated ${numParticipants} participant keys`);
+    printInfo('');
+    printInfo('These addresses will be used to create a 2-of-3 multisig account.');
 
     // =========================================================================
     // Step 3: Convert Addresses to Public Keys
     // =========================================================================
-    printStep(3, 'Converting addresses to public keys')
+    printStep(3, 'Converting addresses to public keys');
 
-    const publicKeys: Uint8Array[] = participantAddresses.map((addr) => {
-      const decoded = decodeAddress(addr)
-      return decoded.publicKey
-    })
+    const publicKeys: Uint8Array[] = participantAddresses.map(addr => {
+      const decoded = decodeAddress(addr);
+      return decoded.publicKey;
+    });
 
-    printInfo('Public keys extracted from addresses:')
+    printInfo('Public keys extracted from addresses:');
     publicKeys.forEach((pk, i) => {
-      printInfo(`  Participant ${i + 1}: ${formatBytesForDisplay(pk)} (${pk.length} bytes)`)
-    })
+      printInfo(`  Participant ${i + 1}: ${formatBytesForDisplay(pk)} (${pk.length} bytes)`);
+    });
 
-    printInfo('')
-    printInfo('Note: Each Algorand address encodes a 32-byte public key.')
-    printInfo('The address also includes a 4-byte checksum for error detection.')
+    printInfo('');
+    printInfo('Note: Each Algorand address encodes a 32-byte public key.');
+    printInfo('The address also includes a 4-byte checksum for error detection.');
 
     // =========================================================================
     // Step 4: Create the Multisig Account with importMultisig()
     // =========================================================================
-    printStep(4, 'Creating a 2-of-3 multisig account with importMultisig()')
+    printStep(4, 'Creating a 2-of-3 multisig account with importMultisig()');
 
-    const threshold = 2 // Minimum signatures required
-    const multisigVersion = 1 // Multisig format version
+    const threshold = 2; // Minimum signatures required
+    const multisigVersion = 1; // Multisig format version
 
     const multisigResult = await kmd.importMultisig({
       walletHandleToken,
       publicKeys,
       threshold,
       multisigVersion,
-    })
+    });
 
-    const multisigAddress = multisigResult.address.toString()
+    const multisigAddress = multisigResult.address.toString();
 
-    printSuccess('Multisig account created successfully!')
-    printInfo('')
-    printInfo('ImportMultisigResponse fields:')
-    printInfo(`  address: ${multisigAddress}`)
-    printInfo('')
-    printInfo('Parameters used:')
-    printInfo(`  publicKeys:       ${numParticipants} participant keys`)
-    printInfo(`  threshold:        ${threshold} (minimum signatures required)`)
-    printInfo(`  multisigVersion:  ${multisigVersion}`)
+    printSuccess('Multisig account created successfully!');
+    printInfo('');
+    printInfo('ImportMultisigResponse fields:');
+    printInfo(`  address: ${multisigAddress}`);
+    printInfo('');
+    printInfo('Parameters used:');
+    printInfo(`  publicKeys:       ${numParticipants} participant keys`);
+    printInfo(`  threshold:        ${threshold} (minimum signatures required)`);
+    printInfo(`  multisigVersion:  ${multisigVersion}`);
 
     // =========================================================================
     // Step 5: Explain the Threshold Parameter
     // =========================================================================
-    printStep(5, 'Understanding the threshold parameter')
+    printStep(5, 'Understanding the threshold parameter');
 
-    printInfo('')
-    printInfo('What is the threshold?')
-    printInfo('-'.repeat(40))
-    printInfo('')
-    printInfo(`The threshold (${threshold}) is the minimum number of signatures required`)
-    printInfo('to authorize any transaction from this multisig account.')
-    printInfo('')
-    printInfo(`With a ${threshold}-of-${numParticipants} configuration:`)
-    printInfo(`  - ${numParticipants} participants can potentially sign`)
-    printInfo(`  - At least ${threshold} signatures are required`)
-    printInfo(`  - Any ${threshold} of the ${numParticipants} participants can authorize a transaction`)
-    printInfo('')
-    printInfo('Common use cases:')
-    printInfo('  - 2-of-3: Standard security (recover if one key is lost)')
-    printInfo('  - 2-of-2: Joint control (both parties must agree)')
-    printInfo('  - 3-of-5: Committee/board decisions')
-    printInfo('  - 1-of-N: Any participant can act alone (hot wallet backup)')
+    printInfo('');
+    printInfo('What is the threshold?');
+    printInfo('-'.repeat(40));
+    printInfo('');
+    printInfo(`The threshold (${threshold}) is the minimum number of signatures required`);
+    printInfo('to authorize any transaction from this multisig account.');
+    printInfo('');
+    printInfo(`With a ${threshold}-of-${numParticipants} configuration:`);
+    printInfo(`  - ${numParticipants} participants can potentially sign`);
+    printInfo(`  - At least ${threshold} signatures are required`);
+    printInfo(
+      `  - Any ${threshold} of the ${numParticipants} participants can authorize a transaction`,
+    );
+    printInfo('');
+    printInfo('Common use cases:');
+    printInfo('  - 2-of-3: Standard security (recover if one key is lost)');
+    printInfo('  - 2-of-2: Joint control (both parties must agree)');
+    printInfo('  - 3-of-5: Committee/board decisions');
+    printInfo('  - 1-of-N: Any participant can act alone (hot wallet backup)');
 
     // =========================================================================
     // Step 6: Explain the Multisig Version Parameter
     // =========================================================================
-    printStep(6, 'Understanding the multisig version parameter')
+    printStep(6, 'Understanding the multisig version parameter');
 
-    printInfo('')
-    printInfo('What is the multisig version?')
-    printInfo('-'.repeat(40))
-    printInfo('')
-    printInfo(`The multisig version (${multisigVersion}) specifies the format of the multisig account.`)
-    printInfo('')
-    printInfo('Currently, version 1 is the only supported version on Algorand.')
-    printInfo('This parameter exists for future compatibility if the multisig')
-    printInfo('format is ever updated.')
-    printInfo('')
-    printInfo('Always use version 1 unless Algorand documentation specifies otherwise.')
+    printInfo('');
+    printInfo('What is the multisig version?');
+    printInfo('-'.repeat(40));
+    printInfo('');
+    printInfo(
+      `The multisig version (${multisigVersion}) specifies the format of the multisig account.`,
+    );
+    printInfo('');
+    printInfo('Currently, version 1 is the only supported version on Algorand.');
+    printInfo('This parameter exists for future compatibility if the multisig');
+    printInfo('format is ever updated.');
+    printInfo('');
+    printInfo('Always use version 1 unless Algorand documentation specifies otherwise.');
 
     // =========================================================================
     // Step 7: Show Relationship Between Keys and Address
     // =========================================================================
-    printStep(7, 'Relationship between public keys and multisig address')
+    printStep(7, 'Relationship between public keys and multisig address');
 
-    printInfo('')
-    printInfo('How is the multisig address derived?')
-    printInfo('-'.repeat(40))
-    printInfo('')
-    printInfo('The multisig address is deterministically computed from:')
-    printInfo('  1. The multisig version')
-    printInfo('  2. The threshold value')
-    printInfo('  3. The ordered list of public keys')
-    printInfo('')
-    printInfo('Important properties:')
-    printInfo('  - Same inputs always produce the same multisig address')
-    printInfo('  - Changing the order of public keys changes the address')
-    printInfo('  - Changing the threshold changes the address')
-    printInfo('  - The address encodes the complete multisig configuration')
-    printInfo('')
-    printInfo('Multisig address structure:')
-    printInfo(`  ${multisigAddress}`)
-    printInfo('')
-    printInfo('Participant addresses (order matters!):')
+    printInfo('');
+    printInfo('How is the multisig address derived?');
+    printInfo('-'.repeat(40));
+    printInfo('');
+    printInfo('The multisig address is deterministically computed from:');
+    printInfo('  1. The multisig version');
+    printInfo('  2. The threshold value');
+    printInfo('  3. The ordered list of public keys');
+    printInfo('');
+    printInfo('Important properties:');
+    printInfo('  - Same inputs always produce the same multisig address');
+    printInfo('  - Changing the order of public keys changes the address');
+    printInfo('  - Changing the threshold changes the address');
+    printInfo('  - The address encodes the complete multisig configuration');
+    printInfo('');
+    printInfo('Multisig address structure:');
+    printInfo(`  ${multisigAddress}`);
+    printInfo('');
+    printInfo('Participant addresses (order matters!):');
     participantAddresses.forEach((addr, i) => {
-      printInfo(`  ${i + 1}. ${addr}`)
-    })
+      printInfo(`  ${i + 1}. ${addr}`);
+    });
 
     // =========================================================================
     // Step 8: Verify Multisig is Listed
     // =========================================================================
-    printStep(8, 'Verifying the multisig account is in the wallet')
+    printStep(8, 'Verifying the multisig account is in the wallet');
 
-    const listResult = await kmd.listMultisig({ walletHandleToken })
+    const listResult = await kmd.listMultisig({ walletHandleToken });
 
-    printSuccess(`Wallet contains ${listResult.addresses.length} multisig address(es)`)
-    printInfo('')
-    printInfo('Multisig addresses in wallet:')
+    printSuccess(`Wallet contains ${listResult.addresses.length} multisig address(es)`);
+    printInfo('');
+    printInfo('Multisig addresses in wallet:');
     listResult.addresses.forEach((addr, i) => {
-      const marker = addr.toString() === multisigAddress ? ' (our new multisig)' : ''
-      printInfo(`  ${i + 1}. ${addr}${marker}`)
-    })
+      const marker = addr.toString() === multisigAddress ? ' (our new multisig)' : '';
+      printInfo(`  ${i + 1}. ${addr}${marker}`);
+    });
 
     // =========================================================================
     // Step 9: Summary of Multisig Operations
     // =========================================================================
-    printStep(9, 'What you can do with the multisig account')
+    printStep(9, 'What you can do with the multisig account');
 
-    printInfo('')
-    printInfo('Now that the multisig is imported, you can:')
-    printInfo('')
-    printInfo('  1. RECEIVE FUNDS: Send Algo or ASAs to the multisig address')
-    printInfo(`     Address: ${multisigAddress}`)
-    printInfo('')
-    printInfo('  2. SIGN TRANSACTIONS: Use signMultisigTransaction() to add')
-    printInfo('     signatures from participants whose keys are in this wallet')
-    printInfo('')
-    printInfo('  3. EXPORT CONFIGURATION: Use exportMultisig() to get the')
-    printInfo('     full multisig parameters (keys, threshold, version)')
-    printInfo('')
-    printInfo('  4. DELETE: Use deleteMultisig() to remove from the wallet')
-    printInfo('     (does not affect the blockchain account or funds)')
-    printInfo('')
-    printInfo('Note: To fully authorize a transaction, collect signatures from')
-    printInfo(`at least ${threshold} participants, then combine and submit.`)
+    printInfo('');
+    printInfo('Now that the multisig is imported, you can:');
+    printInfo('');
+    printInfo('  1. RECEIVE FUNDS: Send Algo or ASAs to the multisig address');
+    printInfo(`     Address: ${multisigAddress}`);
+    printInfo('');
+    printInfo('  2. SIGN TRANSACTIONS: Use signMultisigTransaction() to add');
+    printInfo('     signatures from participants whose keys are in this wallet');
+    printInfo('');
+    printInfo('  3. EXPORT CONFIGURATION: Use exportMultisig() to get the');
+    printInfo('     full multisig parameters (keys, threshold, version)');
+    printInfo('');
+    printInfo('  4. DELETE: Use deleteMultisig() to remove from the wallet');
+    printInfo('     (does not affect the blockchain account or funds)');
+    printInfo('');
+    printInfo('Note: To fully authorize a transaction, collect signatures from');
+    printInfo(`at least ${threshold} participants, then combine and submit.`);
 
     // =========================================================================
     // Cleanup
     // =========================================================================
-    printStep(10, 'Cleaning up test wallet')
+    printStep(10, 'Cleaning up test wallet');
 
-    await cleanupTestWallet(kmd, walletHandleToken)
-    walletHandleToken = '' // Mark as cleaned up
+    await cleanupTestWallet(kmd, walletHandleToken);
+    walletHandleToken = ''; // Mark as cleaned up
 
-    printSuccess('Test wallet handle released')
+    printSuccess('Test wallet handle released');
 
     // =========================================================================
     // Summary
     // =========================================================================
-    printHeader('Summary')
-    printInfo('This example demonstrated multisig account setup in KMD:')
-    printInfo('')
-    printInfo('  importMultisig()')
-    printInfo('    Parameters:')
-    printInfo('      - walletHandleToken: Session token for the wallet')
-    printInfo('      - publicKeys:        Array of Uint8Array participant keys')
-    printInfo('      - threshold:         Minimum signatures required (M in M-of-N)')
-    printInfo('      - multisigVersion:   Format version (always 1)')
-    printInfo('    Returns:')
-    printInfo('      - address:           The generated multisig Address')
-    printInfo('')
-    printInfo('Key takeaways:')
-    printInfo('  - Multisig requires M-of-N signatures to authorize transactions')
-    printInfo('  - The address is derived from version + threshold + ordered keys')
-    printInfo('  - Same configuration always produces the same address')
-    printInfo('  - Public keys are extracted from addresses using decodeAddress()')
-    printInfo('  - multisigVersion should always be 1 (current Algorand standard)')
-    printInfo('')
-    printInfo('Note: The test wallet remains in KMD (wallets cannot be deleted via API).')
+    printHeader('Summary');
+    printInfo('This example demonstrated multisig account setup in KMD:');
+    printInfo('');
+    printInfo('  importMultisig()');
+    printInfo('    Parameters:');
+    printInfo('      - walletHandleToken: Session token for the wallet');
+    printInfo('      - publicKeys:        Array of Uint8Array participant keys');
+    printInfo('      - threshold:         Minimum signatures required (M in M-of-N)');
+    printInfo('      - multisigVersion:   Format version (always 1)');
+    printInfo('    Returns:');
+    printInfo('      - address:           The generated multisig Address');
+    printInfo('');
+    printInfo('Key takeaways:');
+    printInfo('  - Multisig requires M-of-N signatures to authorize transactions');
+    printInfo('  - The address is derived from version + threshold + ordered keys');
+    printInfo('  - Same configuration always produces the same address');
+    printInfo('  - Public keys are extracted from addresses using decodeAddress()');
+    printInfo('  - multisigVersion should always be 1 (current Algorand standard)');
+    printInfo('');
+    printInfo('Note: The test wallet remains in KMD (wallets cannot be deleted via API).');
   } catch (error) {
-    printError(`Error: ${error instanceof Error ? error.message : String(error)}`)
-    printInfo('')
-    printInfo('Troubleshooting:')
-    printInfo('  - Ensure LocalNet is running: algokit localnet start')
-    printInfo('  - If LocalNet issues occur: algokit localnet reset')
-    printInfo('  - Check that KMD is accessible on port 4002')
+    printError(`Error: ${error instanceof Error ? error.message : String(error)}`);
+    printInfo('');
+    printInfo('Troubleshooting:');
+    printInfo('  - Ensure LocalNet is running: algokit localnet start');
+    printInfo('  - If LocalNet issues occur: algokit localnet reset');
+    printInfo('  - Check that KMD is accessible on port 4002');
 
     // Cleanup on error
     if (walletHandleToken) {
-      await cleanupTestWallet(kmd, walletHandleToken)
+      await cleanupTestWallet(kmd, walletHandleToken);
     }
 
-    process.exit(1)
+    process.exit(1);
   }
 }
 
-main().catch((error) => {
-  console.error('Fatal error:', error)
-  process.exit(1)
-})
-
+main().catch(error => {
+  console.error('Fatal error:', error);
+  process.exit(1);
+});
 ```
 
 ---

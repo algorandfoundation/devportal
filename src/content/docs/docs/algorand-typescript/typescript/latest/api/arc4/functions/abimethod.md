@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "abimethod"
+title: 'abimethod'
 ---
 
 > **abimethod**\<`TContract`\>(`config?`): \<`TArgs`, `TReturn`\>(`target`, `ctx`) => (`this`, ...`args`) => `TReturn`
@@ -15,7 +15,7 @@ Declares the decorated method as an abimethod that is called when the first tran
 
 ### TContract
 
-`TContract` *extends* [`Contract`](/algorand-typescript/api/arc4/classes/contract/)
+`TContract` _extends_ [`Contract`](/algorand-typescript/api/arc4/classes/contract/)
 
 the type of the contract this method is a part of
 
@@ -35,7 +35,7 @@ The config for this abi method
 
 #### TArgs
 
-`TArgs` *extends* `any`[]
+`TArgs` _extends_ `any`[]
 
 #### TReturn
 

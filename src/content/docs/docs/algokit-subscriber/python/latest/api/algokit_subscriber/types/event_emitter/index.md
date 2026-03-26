@@ -1,5 +1,5 @@
 ---
-title: "algokit_subscriber.types.event_emitter"
+title: 'algokit_subscriber.types.event_emitter'
 ---
 
 <div class="api-ref">
@@ -7,13 +7,13 @@ title: "algokit_subscriber.types.event_emitter"
 ## Attributes
 
 | [`TEventType`](#teventtype)       |                                                |
-|--------------------------------------------------------------------------|------------------------------------------------|
+| --------------------------------- | ---------------------------------------------- |
 | [`EventListener`](#eventlistener) | A function that takes an event and event name. |
 
 ## Classes
 
-| [`EventEmitter`](#class-eventemitter)   | A simple event emitter that allows for the registration of event listeners and the   |
-|--------------------------------------------------------------------------|--------------------------------------------------------------------------------------|
+| [`EventEmitter`](#class-eventemitter) | A simple event emitter that allows for the registration of event listeners and the |
+| ------------------------------------- | ---------------------------------------------------------------------------------- |
 
 ## Module Contents
 
@@ -23,7 +23,7 @@ title: "algokit_subscriber.types.event_emitter"
 
 A function that takes an event and event name.
 
-### *class* EventEmitter
+### _class_ EventEmitter
 
 A simple event emitter that allows for the registration of event listeners and the
 emission of events to those listeners.
@@ -45,6 +45,5 @@ Registers a listener for the given event name that will only be called once.
 Removes a listener for the given event name.
 
 #### off
-
 
 </div>

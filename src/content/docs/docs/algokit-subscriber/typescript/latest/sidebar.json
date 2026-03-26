@@ -6,10 +6,7 @@
   },
   {
     "label": "Guides",
-    "items": [
-      { "slug": "guide/subscriber" },
-      { "slug": "guide/subscriptions" }
-    ]
+    "items": [{ "slug": "guide/subscriber" }, { "slug": "guide/subscriptions" }]
   },
   {
     "label": "Concepts",

@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "AssetTransferComposeFields"
+title: 'AssetTransferComposeFields'
 ---
 
 Defined in: [itxn-compose.ts:16](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/itxn-compose.ts#L16)
@@ -25,7 +25,7 @@ value in Asset's units
 
 [`AssetTransferFields`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/assettransferfields/).[`assetAmount`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/assettransferfields/#assetamount)
 
-***
+---
 
 ### assetCloseTo?
 
@@ -39,7 +39,7 @@ Defined in: [itxn.ts:823](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 [`AssetTransferFields`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/assettransferfields/).[`assetCloseTo`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/assettransferfields/#assetcloseto)
 
-***
+---
 
 ### assetReceiver?
 
@@ -53,7 +53,7 @@ Defined in: [itxn.ts:819](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 [`AssetTransferFields`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/assettransferfields/).[`assetReceiver`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/assettransferfields/#assetreceiver)
 
-***
+---
 
 ### assetSender?
 
@@ -67,7 +67,7 @@ Defined in: [itxn.ts:815](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 [`AssetTransferFields`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/assettransferfields/).[`assetSender`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/assettransferfields/#assetsender)
 
-***
+---
 
 ### fee?
 
@@ -81,7 +81,7 @@ microalgos
 
 [`AssetTransferFields`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/assettransferfields/).[`fee`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/assettransferfields/#fee)
 
-***
+---
 
 ### firstValid?
 
@@ -95,7 +95,7 @@ round number
 
 [`AssetTransferFields`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/assettransferfields/).[`firstValid`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/assettransferfields/#firstvalid)
 
-***
+---
 
 ### firstValidTime?
 
@@ -109,7 +109,7 @@ UNIX timestamp of block before txn.FirstValid. Fails if negative
 
 [`AssetTransferFields`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/assettransferfields/).[`firstValidTime`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/assettransferfields/#firstvalidtime)
 
-***
+---
 
 ### lastValid?
 
@@ -123,7 +123,7 @@ round number
 
 [`AssetTransferFields`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/assettransferfields/).[`lastValid`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/assettransferfields/#lastvalid)
 
-***
+---
 
 ### lease?
 
@@ -137,7 +137,7 @@ Defined in: [itxn.ts:799](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 [`AssetTransferFields`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/assettransferfields/).[`lease`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/assettransferfields/#lease)
 
-***
+---
 
 ### note?
 
@@ -151,7 +151,7 @@ Any data up to 1024 bytes
 
 [`AssetTransferFields`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/assettransferfields/).[`note`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/assettransferfields/#note)
 
-***
+---
 
 ### rekeyTo?
 
@@ -165,7 +165,7 @@ Defined in: [itxn.ts:803](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 [`AssetTransferFields`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/assettransferfields/).[`rekeyTo`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/assettransferfields/#rekeyto)
 
-***
+---
 
 ### sender?
 
@@ -179,7 +179,7 @@ Defined in: [itxn.ts:775](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 [`AssetTransferFields`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/assettransferfields/).[`sender`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/assettransferfields/#sender)
 
-***
+---
 
 ### type
 
@@ -187,7 +187,7 @@ Defined in: [itxn.ts:775](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 Defined in: [itxn-compose.ts:17](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/itxn-compose.ts#L17)
 
-***
+---
 
 ### xferAsset?
 

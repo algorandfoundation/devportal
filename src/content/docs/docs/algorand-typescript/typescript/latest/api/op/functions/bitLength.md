@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "bitLength"
+title: 'bitLength'
 ---
 
 > **bitLength**(`a`): [`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)

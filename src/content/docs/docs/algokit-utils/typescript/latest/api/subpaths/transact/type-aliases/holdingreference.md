@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "HoldingReference"
+title: 'HoldingReference'
 ---
 
 > **HoldingReference** = `object`
@@ -21,7 +21,7 @@ Defined in: [packages/transact/src/transactions/app-call.ts:225](https://github.
 
 The address of the account holding the asset
 
-***
+---
 
 ### assetId
 

@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "ResolveAppClientByCreatorAndName"
+title: 'ResolveAppClientByCreatorAndName'
 ---
 
 > **ResolveAppClientByCreatorAndName** = `Expand`\<`Omit`\<[`AppClientParams`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/appclientparams/), `"appId"`\> & `object`\>

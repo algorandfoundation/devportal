@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "AccountInformation"
+title: 'AccountInformation'
 ---
 
 > **AccountInformation** = `object`
@@ -21,7 +21,7 @@ Defined in: [src/account.ts:26](https://github.com/algorandfoundation/algokit-ut
 
 The account public key
 
-***
+---
 
 ### amountWithoutPendingRewards
 
@@ -31,7 +31,7 @@ Defined in: [src/account.ts:34](https://github.com/algorandfoundation/algokit-ut
 
 The amount of Algo in the account, without the pending rewards.
 
-***
+---
 
 ### appsLocalState?
 
@@ -41,7 +41,7 @@ Defined in: [src/account.ts:91](https://github.com/algorandfoundation/algokit-ut
 
 Applications local data stored in this account.
 
-***
+---
 
 ### appsTotalExtraPages?
 
@@ -51,7 +51,7 @@ Defined in: [src/account.ts:96](https://github.com/algorandfoundation/algokit-ut
 
 The sum of all extra application program pages for this account.
 
-***
+---
 
 ### appsTotalSchema?
 
@@ -63,7 +63,7 @@ Defined in: [src/account.ts:102](https://github.com/algorandfoundation/algokit-u
 account.
 Note: the raw account uses `StateSchema` for this type.
 
-***
+---
 
 ### assets?
 
@@ -73,7 +73,7 @@ Defined in: [src/account.ts:107](https://github.com/algorandfoundation/algokit-u
 
 Assets held by this account.
 
-***
+---
 
 ### authAddr?
 
@@ -85,7 +85,7 @@ The address against which signing should be checked. If empty, the
 address of the current account is used. This field can be updated in any
 transaction by setting the `RekeyTo` field.
 
-***
+---
 
 ### balance
 
@@ -95,7 +95,7 @@ Defined in: [src/account.ts:29](https://github.com/algorandfoundation/algokit-ut
 
 The balance of Algo currently held by the account.
 
-***
+---
 
 ### createdApps?
 
@@ -105,7 +105,7 @@ Defined in: [src/account.ts:119](https://github.com/algorandfoundation/algokit-u
 
 Parameters of applications created by this account including app global data.
 
-***
+---
 
 ### createdAssets?
 
@@ -116,7 +116,7 @@ Defined in: [src/account.ts:125](https://github.com/algorandfoundation/algokit-u
 (apar) parameters of assets created by this account.
 Note: the raw account uses `map[int] -> Asset` for this type.
 
-***
+---
 
 ### lastHeartbeatRound?
 
@@ -127,7 +127,7 @@ Defined in: [src/account.ts:162](https://github.com/algorandfoundation/algokit-u
 The round in which this account last went online, or explicitly renewed their
 online status.
 
-***
+---
 
 ### lastProposedRound?
 
@@ -137,7 +137,7 @@ Defined in: [src/account.ts:167](https://github.com/algorandfoundation/algokit-u
 
 The round in which this account last proposed the block.
 
-***
+---
 
 ### minBalance
 
@@ -149,7 +149,7 @@ Algo balance required to be held by the account.
 
 The requirement grows based on asset and application usage.
 
-***
+---
 
 ### participation?
 
@@ -160,7 +160,7 @@ Defined in: [src/account.ts:131](https://github.com/algorandfoundation/algokit-u
 AccountParticipation describes the parameters used by this account in consensus
 protocol.
 
-***
+---
 
 ### pendingRewards
 
@@ -170,7 +170,7 @@ Defined in: [src/account.ts:45](https://github.com/algorandfoundation/algokit-ut
 
 Amount of Algo of pending rewards in this account.
 
-***
+---
 
 ### rewardBase?
 
@@ -181,7 +181,7 @@ Defined in: [src/account.ts:137](https://github.com/algorandfoundation/algokit-u
 Used as part of the rewards computation. Only applicable to accounts
 which are participating.
 
-***
+---
 
 ### rewards
 
@@ -192,7 +192,7 @@ Defined in: [src/account.ts:51](https://github.com/algorandfoundation/algokit-ut
 Total rewards of Algo the account has received, including pending
 rewards.
 
-***
+---
 
 ### sigType?
 
@@ -201,11 +201,12 @@ rewards.
 Defined in: [src/account.ts:145](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/account.ts#L145)
 
 Indicates what type of signature is used by this account, must be one of:
-* sig
-* msig
-* lsig
 
-***
+- sig
+- msig
+- lsig
+
+---
 
 ### status
 
@@ -214,11 +215,12 @@ Indicates what type of signature is used by this account, must be one of:
 Defined in: [src/account.ts:64](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/account.ts#L64)
 
 Delegation status of the account's Algo:
-* Offline - indicates that the associated account is delegated.
-* Online - indicates that the associated account used as part of the delegation pool.
-* NotParticipating - indicates that the associated account is neither a delegator nor a delegate.
 
-***
+- Offline - indicates that the associated account is delegated.
+- Online - indicates that the associated account used as part of the delegation pool.
+- NotParticipating - indicates that the associated account is neither a delegator nor a delegate.
+
+---
 
 ### totalAppsOptedIn
 
@@ -229,7 +231,7 @@ Defined in: [src/account.ts:70](https://github.com/algorandfoundation/algokit-ut
 The count of all applications that have been opted in, equivalent to the count
 of application local data (AppLocalState objects) stored in this account.
 
-***
+---
 
 ### totalAssetsOptedIn
 
@@ -240,7 +242,7 @@ Defined in: [src/account.ts:76](https://github.com/algorandfoundation/algokit-ut
 The count of all assets that have been opted in, equivalent to the count of
 AssetHolding objects held by this account.
 
-***
+---
 
 ### totalBoxBytes?
 
@@ -251,7 +253,7 @@ Defined in: [src/account.ts:151](https://github.com/algorandfoundation/algokit-u
 The total number of bytes used by this account's app's box keys and
 values.
 
-***
+---
 
 ### totalBoxes?
 
@@ -261,7 +263,7 @@ Defined in: [src/account.ts:156](https://github.com/algorandfoundation/algokit-u
 
 The number of existing boxes created by this account's app.
 
-***
+---
 
 ### totalCreatedApps
 
@@ -271,7 +273,7 @@ Defined in: [src/account.ts:81](https://github.com/algorandfoundation/algokit-ut
 
 The count of all apps (AppParams objects) created by this account.
 
-***
+---
 
 ### totalCreatedAssets
 
@@ -281,7 +283,7 @@ Defined in: [src/account.ts:86](https://github.com/algorandfoundation/algokit-ut
 
 The count of all assets (AssetParams objects) created by this account.
 
-***
+---
 
 ### validAsOfRound
 

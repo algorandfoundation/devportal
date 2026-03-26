@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "AppUpdateParams"
+title: 'AppUpdateParams'
 ---
 
 > **AppUpdateParams** = `Expand`\<`CommonAppCallParams` & `object`\>

@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "AssetFreezeTxn"
+title: 'AssetFreezeTxn'
 ---
 
 Defined in: [gtxn.ts:629](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/gtxn.ts#L629)
@@ -19,7 +19,7 @@ Defined in: [gtxn.ts:359](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 microalgos
 
-***
+---
 
 ### firstValid
 
@@ -29,7 +29,7 @@ Defined in: [gtxn.ts:363](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 round number
 
-***
+---
 
 ### firstValidTime
 
@@ -39,7 +39,7 @@ Defined in: [gtxn.ts:367](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 UNIX timestamp of block before txn.FirstValid. Fails if negative
 
-***
+---
 
 ### freezeAccount
 
@@ -49,7 +49,7 @@ Defined in: [gtxn.ts:408](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 32 byte address of the account whose asset slot is being frozen or un-frozen
 
-***
+---
 
 ### freezeAsset
 
@@ -59,7 +59,7 @@ Defined in: [gtxn.ts:404](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 Asset ID being frozen or un-frozen
 
-***
+---
 
 ### frozen
 
@@ -69,7 +69,7 @@ Defined in: [gtxn.ts:412](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 The new frozen value
 
-***
+---
 
 ### groupIndex
 
@@ -80,7 +80,7 @@ Defined in: [gtxn.ts:392](https://github.com/algorandfoundation/puya-ts/blob/mai
 Position of this transaction within an atomic group
 A stand-alone transaction is implicitly element 0 in a group of 1
 
-***
+---
 
 ### lastValid
 
@@ -90,7 +90,7 @@ Defined in: [gtxn.ts:371](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 round number
 
-***
+---
 
 ### lease
 
@@ -100,7 +100,7 @@ Defined in: [gtxn.ts:379](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 32 byte lease value
 
-***
+---
 
 ### note
 
@@ -110,7 +110,7 @@ Defined in: [gtxn.ts:375](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 Any data up to 1024 bytes
 
-***
+---
 
 ### rekeyTo
 
@@ -120,7 +120,7 @@ Defined in: [gtxn.ts:400](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 32 byte Sender's new AuthAddr
 
-***
+---
 
 ### sender
 
@@ -130,7 +130,7 @@ Defined in: [gtxn.ts:355](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 32 byte address
 
-***
+---
 
 ### txnId
 
@@ -140,7 +140,7 @@ Defined in: [gtxn.ts:396](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 The computed ID for this transaction. 32 bytes.
 
-***
+---
 
 ### type
 
@@ -150,7 +150,7 @@ Defined in: [gtxn.ts:387](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 Transaction type
 
-***
+---
 
 ### typeBytes
 

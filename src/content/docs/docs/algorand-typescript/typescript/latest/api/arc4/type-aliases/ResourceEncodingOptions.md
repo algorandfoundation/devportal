@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "ResourceEncodingOptions"
+title: 'ResourceEncodingOptions'
 ---
 
 > **ResourceEncodingOptions** = `"index"` \| `"value"`

@@ -1,5 +1,5 @@
 ---
-title: "AlgoKit Task Vanity Address"
+title: 'AlgoKit Task Vanity Address'
 ---
 
 The AlgoKit Vanity Address feature allows you to generate a vanity Algorand address. A vanity address is an address that contains a specific keyword in it. The keyword can only include uppercase letters A-Z and numbers 2-7. The longer the keyword, the longer it may take to generate a matching address.

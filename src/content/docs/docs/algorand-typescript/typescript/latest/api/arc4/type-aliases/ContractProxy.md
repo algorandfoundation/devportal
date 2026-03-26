@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "ContractProxy"
+title: 'ContractProxy'
 ---
 
 > **ContractProxy**\<`TContract`\> = [`CompiledContract`](/algorand-typescript/api/index/type-aliases/compiledcontract/) & `object`
@@ -42,4 +42,4 @@ Specify values for transaction fields which should override the default values.
 
 ### TContract
 
-`TContract` *extends* [`Contract`](/algorand-typescript/api/arc4/classes/contract/)
+`TContract` _extends_ [`Contract`](/algorand-typescript/api/arc4/classes/contract/)

@@ -1,6 +1,6 @@
 ---
-title: "Transaction Proof"
-description: "This example demonstrates how to get transaction proofs using:"
+title: 'Transaction Proof'
+description: 'This example demonstrates how to get transaction proofs using:'
 sidebar:
   order: 15
 ---
@@ -10,9 +10,10 @@ sidebar:
 ## Description
 
 This example demonstrates how to get transaction proofs using:
+
 - transactionProof(round, txId) - Get the Merkle proof for a transaction
- Transaction proofs are cryptographic proofs that a transaction is included in a specific block. They are used for light client verification, allowing clients to verify transaction inclusion without downloading the entire blockchain.
- The proof uses a Merkle tree structure where:
+  Transaction proofs are cryptographic proofs that a transaction is included in a specific block. They are used for light client verification, allowing clients to verify transaction inclusion without downloading the entire blockchain.
+  The proof uses a Merkle tree structure where:
 - Each transaction in a block is a leaf in the tree
 - The root of the tree is committed in the block header
 - The proof provides the sibling hashes needed to reconstruct the root
@@ -54,8 +55,8 @@ npm run example algod_client/15-transaction-proof.ts
  * - LocalNet running (via `algokit localnet start`)
  */
 
-import { algo } from '@algorandfoundation/algokit-utils'
-import type { TransactionProof } from '@algorandfoundation/algokit-utils/algod-client'
+import { algo } from '@algorandfoundation/algokit-utils';
+import type { TransactionProof } from '@algorandfoundation/algokit-utils/algod-client';
 import {
   createAlgodClient,
   createAlgorandClient,
@@ -65,293 +66,296 @@ import {
   printStep,
   printSuccess,
   shortenAddress,
-} from '../shared/utils.js'
+} from '../shared/utils.js';
 
 async function main() {
-  printHeader('Transaction Proof Example')
+  printHeader('Transaction Proof Example');
 
   // Create clients
-  const algod = createAlgodClient()
-  const algorand = createAlgorandClient()
+  const algod = createAlgodClient();
+  const algorand = createAlgorandClient();
 
   // =========================================================================
   // Step 1: Submit a transaction and wait for confirmation
   // =========================================================================
-  printStep(1, 'Submitting a transaction and waiting for confirmation')
+  printStep(1, 'Submitting a transaction and waiting for confirmation');
 
   // Get a funded account from LocalNet (the dispenser)
-  const sender = await algorand.account.dispenserFromEnvironment()
-  printInfo(`Sender address: ${shortenAddress(sender.addr.toString())}`)
+  const sender = await algorand.account.dispenserFromEnvironment();
+  printInfo(`Sender address: ${shortenAddress(sender.addr.toString())}`);
 
   // Create a new random account as receiver
-  const receiver = algorand.account.random()
-  printInfo(`Receiver address: ${shortenAddress(receiver.addr.toString())}`)
+  const receiver = algorand.account.random();
+  printInfo(`Receiver address: ${shortenAddress(receiver.addr.toString())}`);
 
   // Submit a payment transaction
-  const paymentAmount = algo(1)
-  printInfo(`Sending ${paymentAmount.algo} ALGO to receiver...`)
+  const paymentAmount = algo(1);
+  printInfo(`Sending ${paymentAmount.algo} ALGO to receiver...`);
 
   const result = await algorand.send.payment({
     sender: sender.addr,
     receiver: receiver.addr,
     amount: paymentAmount,
-  })
+  });
 
-  const txId = result.txIds[0]
-  const confirmedRound = result.confirmation.confirmedRound!
+  const txId = result.txIds[0];
+  const confirmedRound = result.confirmation.confirmedRound!;
 
-  printSuccess(`Transaction confirmed!`)
-  printInfo(`Transaction ID: ${txId}`)
-  printInfo(`Confirmed in round: ${confirmedRound.toLocaleString('en-US')}`)
-  printInfo('')
+  printSuccess(`Transaction confirmed!`);
+  printInfo(`Transaction ID: ${txId}`);
+  printInfo(`Confirmed in round: ${confirmedRound.toLocaleString('en-US')}`);
+  printInfo('');
 
   // =========================================================================
   // Step 2: Get transaction proof using transactionProof(round, txId)
   // =========================================================================
-  printStep(2, 'Getting transaction proof using transactionProof(round, txId)')
+  printStep(2, 'Getting transaction proof using transactionProof(round, txId)');
 
-  printInfo('transactionProof(round, txId) returns a Merkle proof that the transaction')
-  printInfo('is included in the specified block. This is used for light client verification.')
-  printInfo('')
+  printInfo('transactionProof(round, txId) returns a Merkle proof that the transaction');
+  printInfo('is included in the specified block. This is used for light client verification.');
+  printInfo('');
 
   try {
-    const proof = await algod.transactionProof(confirmedRound, txId)
-    printSuccess('Successfully retrieved transaction proof!')
-    printInfo('')
+    const proof = await algod.transactionProof(confirmedRound, txId);
+    printSuccess('Successfully retrieved transaction proof!');
+    printInfo('');
 
-    displayTransactionProof(proof)
+    displayTransactionProof(proof);
   } catch (error) {
-    const errorMessage = error instanceof Error ? error.message : String(error)
-    printError(`Error getting transaction proof: ${errorMessage}`)
-    printInfo('')
+    const errorMessage = error instanceof Error ? error.message : String(error);
+    printError(`Error getting transaction proof: ${errorMessage}`);
+    printInfo('');
   }
 
   // =========================================================================
   // Step 3: Demonstrate proof with different hash type (sha256)
   // =========================================================================
-  printStep(3, 'Getting transaction proof with SHA-256 hash type')
+  printStep(3, 'Getting transaction proof with SHA-256 hash type');
 
-  printInfo('The hashtype parameter specifies the hash function used to create the proof.')
-  printInfo('Supported values: "sha512_256" (default) and "sha256"')
-  printInfo('')
+  printInfo('The hashtype parameter specifies the hash function used to create the proof.');
+  printInfo('Supported values: "sha512_256" (default) and "sha256"');
+  printInfo('');
 
   try {
-    const proofSha256 = await algod.transactionProof(confirmedRound, txId, { hashtype: 'sha256' })
-    printSuccess('Successfully retrieved transaction proof with SHA-256!')
-    printInfo('')
+    const proofSha256 = await algod.transactionProof(confirmedRound, txId, { hashtype: 'sha256' });
+    printSuccess('Successfully retrieved transaction proof with SHA-256!');
+    printInfo('');
 
-    displayTransactionProof(proofSha256)
+    displayTransactionProof(proofSha256);
   } catch (error) {
-    const errorMessage = error instanceof Error ? error.message : String(error)
+    const errorMessage = error instanceof Error ? error.message : String(error);
     if (errorMessage.includes('not supported') || errorMessage.includes('400')) {
-      printError('SHA-256 hash type may not be supported on this node configuration.')
-      printInfo('The default SHA-512/256 is the native Algorand hash function.')
+      printError('SHA-256 hash type may not be supported on this node configuration.');
+      printInfo('The default SHA-512/256 is the native Algorand hash function.');
     } else {
-      printError(`Error getting transaction proof with SHA-256: ${errorMessage}`)
+      printError(`Error getting transaction proof with SHA-256: ${errorMessage}`);
     }
-    printInfo('')
+    printInfo('');
   }
 
   // =========================================================================
   // Step 4: Demonstrate structure of Merkle proof data
   // =========================================================================
-  printStep(4, 'Understanding the Merkle proof structure')
+  printStep(4, 'Understanding the Merkle proof structure');
 
-  printInfo('The transaction proof contains data needed to verify transaction inclusion:')
-  printInfo('')
+  printInfo('The transaction proof contains data needed to verify transaction inclusion:');
+  printInfo('');
 
   try {
-    const proof = await algod.transactionProof(confirmedRound, txId)
+    const proof = await algod.transactionProof(confirmedRound, txId);
 
-    printInfo('  Merkle Proof Structure:')
-    printInfo('')
-    printInfo('  1. idx (index): Position of the transaction in the block\'s payset')
-    printInfo(`     Value: ${proof.idx}`)
-    printInfo('     This tells you which leaf in the Merkle tree corresponds to this transaction.')
-    printInfo('')
+    printInfo('  Merkle Proof Structure:');
+    printInfo('');
+    printInfo("  1. idx (index): Position of the transaction in the block's payset");
+    printInfo(`     Value: ${proof.idx}`);
+    printInfo('     This tells you which leaf in the Merkle tree corresponds to this transaction.');
+    printInfo('');
 
-    printInfo('  2. treedepth: Number of levels in the Merkle tree')
-    printInfo(`     Value: ${proof.treedepth}`)
-    printInfo(`     A tree with depth ${proof.treedepth} can hold up to ${Math.pow(2, proof.treedepth)} transactions.`)
-    printInfo('')
+    printInfo('  2. treedepth: Number of levels in the Merkle tree');
+    printInfo(`     Value: ${proof.treedepth}`);
+    printInfo(
+      `     A tree with depth ${proof.treedepth} can hold up to ${Math.pow(2, proof.treedepth)} transactions.`,
+    );
+    printInfo('');
 
-    printInfo('  3. proof: Sibling hashes needed to reconstruct the Merkle root')
-    printInfo(`     Length: ${proof.proof.length} bytes`)
+    printInfo('  3. proof: Sibling hashes needed to reconstruct the Merkle root');
+    printInfo(`     Length: ${proof.proof.length} bytes`);
     if (proof.treedepth > 0) {
-      printInfo(`     Number of hashes: ${proof.treedepth} (one for each level)`)
-      printInfo(`     Hash size: ${proof.proof.length / proof.treedepth} bytes per hash`)
+      printInfo(`     Number of hashes: ${proof.treedepth} (one for each level)`);
+      printInfo(`     Hash size: ${proof.proof.length / proof.treedepth} bytes per hash`);
     } else {
-      printInfo('     (Empty - single transaction in block, stibhash IS the Merkle root)')
+      printInfo('     (Empty - single transaction in block, stibhash IS the Merkle root)');
     }
-    printInfo('')
+    printInfo('');
 
-    printInfo('  4. stibhash: Hash of SignedTxnInBlock')
-    printInfo(`     Length: ${proof.stibhash.length} bytes`)
-    printInfo('     This is the leaf value - the hash of the transaction as stored in the block.')
-    printInfo('')
+    printInfo('  4. stibhash: Hash of SignedTxnInBlock');
+    printInfo(`     Length: ${proof.stibhash.length} bytes`);
+    printInfo('     This is the leaf value - the hash of the transaction as stored in the block.');
+    printInfo('');
 
-    printInfo('  5. hashtype: Hash function used')
-    printInfo(`     Value: "${proof.hashtype}"`)
-    printInfo('     SHA-512/256 is Algorand\'s native hash function (first 256 bits of SHA-512).')
-    printInfo('')
+    printInfo('  5. hashtype: Hash function used');
+    printInfo(`     Value: "${proof.hashtype}"`);
+    printInfo("     SHA-512/256 is Algorand's native hash function (first 256 bits of SHA-512).");
+    printInfo('');
   } catch (error) {
-    const errorMessage = error instanceof Error ? error.message : String(error)
-    printError(`Error demonstrating proof structure: ${errorMessage}`)
-    printInfo('')
+    const errorMessage = error instanceof Error ? error.message : String(error);
+    printError(`Error demonstrating proof structure: ${errorMessage}`);
+    printInfo('');
   }
 
   // =========================================================================
   // Step 5: Handle errors - invalid round or transaction ID
   // =========================================================================
-  printStep(5, 'Handling errors when proof is not available')
+  printStep(5, 'Handling errors when proof is not available');
 
-  printInfo('Transaction proofs may not be available if:')
-  printInfo('  - The round number is invalid or not yet committed')
-  printInfo('  - The transaction ID does not exist in the specified round')
-  printInfo('  - The node does not have the block data')
-  printInfo('')
+  printInfo('Transaction proofs may not be available if:');
+  printInfo('  - The round number is invalid or not yet committed');
+  printInfo('  - The transaction ID does not exist in the specified round');
+  printInfo('  - The node does not have the block data');
+  printInfo('');
 
   // Try getting proof for a non-existent transaction ID
-  const fakeTxId = 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'
+  const fakeTxId = 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA';
   try {
-    await algod.transactionProof(confirmedRound, fakeTxId)
-    printInfo('Unexpectedly succeeded with fake transaction ID')
+    await algod.transactionProof(confirmedRound, fakeTxId);
+    printInfo('Unexpectedly succeeded with fake transaction ID');
   } catch (error) {
-    const errorMessage = error instanceof Error ? error.message : String(error)
-    printSuccess(`Correctly rejected invalid transaction ID`)
-    printInfo(`Error: ${errorMessage.substring(0, 100)}...`)
+    const errorMessage = error instanceof Error ? error.message : String(error);
+    printSuccess(`Correctly rejected invalid transaction ID`);
+    printInfo(`Error: ${errorMessage.substring(0, 100)}...`);
   }
-  printInfo('')
+  printInfo('');
 
   // Try getting proof for a future round
-  const status = await algod.status()
-  const futureRound = status.lastRound + 1000n
+  const status = await algod.status();
+  const futureRound = status.lastRound + 1000n;
   try {
-    await algod.transactionProof(futureRound, txId)
-    printInfo('Unexpectedly succeeded with future round')
+    await algod.transactionProof(futureRound, txId);
+    printInfo('Unexpectedly succeeded with future round');
   } catch (error) {
-    const errorMessage = error instanceof Error ? error.message : String(error)
-    printSuccess(`Correctly rejected future round`)
-    printInfo(`Error: ${errorMessage.substring(0, 100)}...`)
+    const errorMessage = error instanceof Error ? error.message : String(error);
+    printSuccess(`Correctly rejected future round`);
+    printInfo(`Error: ${errorMessage.substring(0, 100)}...`);
   }
-  printInfo('')
+  printInfo('');
 
   // =========================================================================
   // Step 6: Submit multiple transactions and compare proofs
   // =========================================================================
-  printStep(6, 'Comparing proofs for multiple transactions in the same block')
+  printStep(6, 'Comparing proofs for multiple transactions in the same block');
 
-  printInfo('Each transaction in a block has a unique position (idx) in the Merkle tree.')
-  printInfo('Submitting multiple transactions to observe different proof indices...')
-  printInfo('')
+  printInfo('Each transaction in a block has a unique position (idx) in the Merkle tree.');
+  printInfo('Submitting multiple transactions to observe different proof indices...');
+  printInfo('');
 
   // Submit multiple transactions in sequence (they may end up in different blocks on LocalNet dev mode)
-  const txIds: string[] = []
-  const confirmedRounds: bigint[] = []
+  const txIds: string[] = [];
+  const confirmedRounds: bigint[] = [];
 
   for (let i = 0; i < 3; i++) {
-    const newReceiver = algorand.account.random()
+    const newReceiver = algorand.account.random();
     const txResult = await algorand.send.payment({
       sender: sender.addr,
       receiver: newReceiver.addr,
       amount: algo(0.1),
-    })
-    txIds.push(txResult.txIds[0])
-    confirmedRounds.push(txResult.confirmation.confirmedRound!)
+    });
+    txIds.push(txResult.txIds[0]);
+    confirmedRounds.push(txResult.confirmation.confirmedRound!);
   }
 
-  printInfo(`Submitted ${txIds.length} transactions`)
-  printInfo('')
+  printInfo(`Submitted ${txIds.length} transactions`);
+  printInfo('');
 
   // Get proofs for each transaction
   for (let i = 0; i < txIds.length; i++) {
     try {
-      const proof = await algod.transactionProof(confirmedRounds[i], txIds[i])
-      printInfo(`  Transaction ${i + 1}:`)
-      printInfo(`    Round: ${confirmedRounds[i].toLocaleString('en-US')}`)
-      printInfo(`    TX ID: ${txIds[i].substring(0, 20)}...`)
-      printInfo(`    Index in block (idx): ${proof.idx}`)
-      printInfo(`    Tree depth: ${proof.treedepth}`)
-      printInfo('')
+      const proof = await algod.transactionProof(confirmedRounds[i], txIds[i]);
+      printInfo(`  Transaction ${i + 1}:`);
+      printInfo(`    Round: ${confirmedRounds[i].toLocaleString('en-US')}`);
+      printInfo(`    TX ID: ${txIds[i].substring(0, 20)}...`);
+      printInfo(`    Index in block (idx): ${proof.idx}`);
+      printInfo(`    Tree depth: ${proof.treedepth}`);
+      printInfo('');
     } catch (error) {
-      const errorMessage = error instanceof Error ? error.message : String(error)
-      printError(`Error getting proof for transaction ${i + 1}: ${errorMessage}`)
+      const errorMessage = error instanceof Error ? error.message : String(error);
+      printError(`Error getting proof for transaction ${i + 1}: ${errorMessage}`);
     }
   }
 
   // =========================================================================
   // Summary
   // =========================================================================
-  printHeader('Summary')
+  printHeader('Summary');
 
-  printInfo('Transaction Proof Use Cases:')
-  printInfo('')
-  printInfo('1. Light Client Verification:')
-  printInfo('   - Verify a transaction is included in the blockchain without downloading all blocks')
-  printInfo('   - Only need the block header (with Merkle root) and the proof')
-  printInfo('   - Reduces bandwidth and storage requirements significantly')
-  printInfo('')
-  printInfo('2. Cross-Chain Bridges:')
-  printInfo('   - Prove to another blockchain that a transaction occurred on Algorand')
-  printInfo('   - The proof can be verified by a smart contract on the target chain')
-  printInfo('')
-  printInfo('3. Auditing and Compliance:')
-  printInfo('   - Provide cryptographic proof of transaction inclusion')
-  printInfo('   - Third parties can verify without trusting the provider')
-  printInfo('')
-  printInfo('TransactionProof Type Structure:')
-  printInfo('  proof: Uint8Array      - Merkle proof (sibling hashes concatenated)')
-  printInfo('  stibhash: Uint8Array   - Hash of SignedTxnInBlock (leaf value)')
-  printInfo('  treedepth: number      - Depth of the Merkle tree')
-  printInfo('  idx: number            - Transaction index in the block\'s payset')
-  printInfo('  hashtype: string       - Hash function used ("sha512_256" or "sha256")')
-  printInfo('')
-  printInfo('API Method:')
-  printInfo('  transactionProof(round, txId, params?)')
-  printInfo('    round: number | bigint - The round (block) containing the transaction')
-  printInfo('    txId: string           - The transaction ID')
-  printInfo('    params?: { hashtype?: "sha512_256" | "sha256" }')
-  printInfo('')
-  printInfo('Verification Process:')
-  printInfo('  1. Get the stibhash (leaf value) from the proof')
-  printInfo('  2. Use idx to determine if leaf is left or right child at each level')
-  printInfo('  3. Combine with sibling hashes from proof, hashing up the tree')
-  printInfo('  4. Compare computed root with the txnCommitments in the block header')
-  printInfo('  5. If they match, the transaction is verified as included in the block')
+  printInfo('Transaction Proof Use Cases:');
+  printInfo('');
+  printInfo('1. Light Client Verification:');
+  printInfo(
+    '   - Verify a transaction is included in the blockchain without downloading all blocks',
+  );
+  printInfo('   - Only need the block header (with Merkle root) and the proof');
+  printInfo('   - Reduces bandwidth and storage requirements significantly');
+  printInfo('');
+  printInfo('2. Cross-Chain Bridges:');
+  printInfo('   - Prove to another blockchain that a transaction occurred on Algorand');
+  printInfo('   - The proof can be verified by a smart contract on the target chain');
+  printInfo('');
+  printInfo('3. Auditing and Compliance:');
+  printInfo('   - Provide cryptographic proof of transaction inclusion');
+  printInfo('   - Third parties can verify without trusting the provider');
+  printInfo('');
+  printInfo('TransactionProof Type Structure:');
+  printInfo('  proof: Uint8Array      - Merkle proof (sibling hashes concatenated)');
+  printInfo('  stibhash: Uint8Array   - Hash of SignedTxnInBlock (leaf value)');
+  printInfo('  treedepth: number      - Depth of the Merkle tree');
+  printInfo("  idx: number            - Transaction index in the block's payset");
+  printInfo('  hashtype: string       - Hash function used ("sha512_256" or "sha256")');
+  printInfo('');
+  printInfo('API Method:');
+  printInfo('  transactionProof(round, txId, params?)');
+  printInfo('    round: number | bigint - The round (block) containing the transaction');
+  printInfo('    txId: string           - The transaction ID');
+  printInfo('    params?: { hashtype?: "sha512_256" | "sha256" }');
+  printInfo('');
+  printInfo('Verification Process:');
+  printInfo('  1. Get the stibhash (leaf value) from the proof');
+  printInfo('  2. Use idx to determine if leaf is left or right child at each level');
+  printInfo('  3. Combine with sibling hashes from proof, hashing up the tree');
+  printInfo('  4. Compare computed root with the txnCommitments in the block header');
+  printInfo('  5. If they match, the transaction is verified as included in the block');
 }
 
 /**
  * Display details from a TransactionProof
  */
 function displayTransactionProof(proof: TransactionProof): void {
-  printInfo('  TransactionProof fields:')
-  printInfo(`    idx: ${proof.idx}`)
-  printInfo(`         Index of the transaction in the block's payset`)
-  printInfo('')
+  printInfo('  TransactionProof fields:');
+  printInfo(`    idx: ${proof.idx}`);
+  printInfo(`         Index of the transaction in the block's payset`);
+  printInfo('');
   if (proof.proof.length > 0) {
-    printInfo(`    proof: ${Buffer.from(proof.proof).toString('hex').substring(0, 64)}...`)
-    printInfo(`           (${proof.proof.length} bytes total - Merkle proof data)`)
+    printInfo(`    proof: ${Buffer.from(proof.proof).toString('hex').substring(0, 64)}...`);
+    printInfo(`           (${proof.proof.length} bytes total - Merkle proof data)`);
   } else {
-    printInfo('    proof: (empty - single transaction in block)')
-    printInfo('           When treedepth=0, stibhash IS the Merkle root')
+    printInfo('    proof: (empty - single transaction in block)');
+    printInfo('           When treedepth=0, stibhash IS the Merkle root');
   }
-  printInfo('')
-  printInfo(`    stibhash: ${Buffer.from(proof.stibhash).toString('hex')}`)
-  printInfo(`              (${proof.stibhash.length} bytes - Hash of SignedTxnInBlock)`)
-  printInfo('')
-  printInfo(`    treedepth: ${proof.treedepth}`)
-  printInfo(`               Number of edges from leaf to root in the Merkle tree`)
-  printInfo('')
-  printInfo(`    hashtype: "${proof.hashtype}"`)
-  printInfo(`              Hash function used to create the proof`)
-  printInfo('')
+  printInfo('');
+  printInfo(`    stibhash: ${Buffer.from(proof.stibhash).toString('hex')}`);
+  printInfo(`              (${proof.stibhash.length} bytes - Hash of SignedTxnInBlock)`);
+  printInfo('');
+  printInfo(`    treedepth: ${proof.treedepth}`);
+  printInfo(`               Number of edges from leaf to root in the Merkle tree`);
+  printInfo('');
+  printInfo(`    hashtype: "${proof.hashtype}"`);
+  printInfo(`              Hash function used to create the proof`);
+  printInfo('');
 }
 
-main().catch((error) => {
-  console.error('Fatal error:', error)
-  process.exit(1)
-})
-
+main().catch(error => {
+  console.error('Fatal error:', error);
+  process.exit(1);
+});
 ```
 
 ---

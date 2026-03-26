@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "readonly"
+title: 'readonly'
 ---
 
 > **readonly**\<`TContract`, `TArgs`, `TReturn`\>(`target`, `ctx`): (`this`, ...`args`) => `TReturn`
@@ -17,13 +17,13 @@ Shorthand for `@abimethod({readonly: true})`
 
 ### TContract
 
-`TContract` *extends* [`Contract`](/algorand-typescript/api/arc4/classes/contract/)
+`TContract` _extends_ [`Contract`](/algorand-typescript/api/arc4/classes/contract/)
 
 the type of the contract this method is a part of
 
 ### TArgs
 
-`TArgs` *extends* `any`[]
+`TArgs` _extends_ `any`[]
 
 ### TReturn
 

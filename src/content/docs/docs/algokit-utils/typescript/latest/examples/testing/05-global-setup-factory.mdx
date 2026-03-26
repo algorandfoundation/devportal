@@ -1,6 +1,6 @@
 ---
-title: "Vitest Global Setup Factory"
-description: "This example demonstrates how to use createGlobalSetup() to create custom Vitest global setup functions for mock server lifecycle management. It shows:"
+title: 'Vitest Global Setup Factory'
+description: 'This example demonstrates how to use createGlobalSetup() to create custom Vitest global setup functions for mock server lifecycle management. It shows:'
 sidebar:
   order: 5
 ---
@@ -10,12 +10,13 @@ sidebar:
 ## Description
 
 This example demonstrates how to use createGlobalSetup() to create custom Vitest global setup functions for mock server lifecycle management. It shows:
+
 - The function signature: createGlobalSetup(clientType: ClientType)
 - Creating custom global setups for algod, indexer, and kmd
 - The returned async setup function and its teardown mechanism
 - Example vitest.config.ts usage with the globalSetup option
 - Environment variables for configuration and debugging
- NOTE: This example documents the factory pattern without invoking the setup (no running server needed). The setup functions are designed for use in vitest.config.ts, not direct invocation.
+  NOTE: This example documents the factory pattern without invoking the setup (no running server needed). The setup functions are designed for use in vitest.config.ts, not direct invocation.
 
 ## Prerequisites
 
@@ -59,155 +60,156 @@ import {
   createGlobalSetup,
   indexerGlobalSetup,
   kmdGlobalSetup,
-} from '@algorandfoundation/algokit-utils/testing'
-import { printHeader, printInfo, printStep, printSuccess } from '../shared/utils.js'
+} from '@algorandfoundation/algokit-utils/testing';
+import { printHeader, printInfo, printStep, printSuccess } from '../shared/utils.js';
 
 function main() {
-  printHeader('Vitest Global Setup Factory Example')
+  printHeader('Vitest Global Setup Factory Example');
 
   // Step 1: Document the function signature
-  printStep(1, 'Function Signature')
-  printInfo('createGlobalSetup(clientType: ClientType) returns an async setup function')
-  printInfo('')
-  printInfo('Type signature:')
-  printInfo('  function createGlobalSetup(clientType: ClientType): () => Promise<() => Promise<void>>')
-  printInfo('')
-  printInfo('Where ClientType is:')
-  printInfo("  type ClientType = 'algod' | 'indexer' | 'kmd'")
-  printInfo('')
-  printInfo('The returned function:')
-  printInfo('  1. Is async - returns Promise<() => Promise<void>>')
-  printInfo('  2. Connects to the mock server when called')
-  printInfo('  3. Returns a teardown function for cleanup')
+  printStep(1, 'Function Signature');
+  printInfo('createGlobalSetup(clientType: ClientType) returns an async setup function');
+  printInfo('');
+  printInfo('Type signature:');
+  printInfo(
+    '  function createGlobalSetup(clientType: ClientType): () => Promise<() => Promise<void>>',
+  );
+  printInfo('');
+  printInfo('Where ClientType is:');
+  printInfo("  type ClientType = 'algod' | 'indexer' | 'kmd'");
+  printInfo('');
+  printInfo('The returned function:');
+  printInfo('  1. Is async - returns Promise<() => Promise<void>>');
+  printInfo('  2. Connects to the mock server when called');
+  printInfo('  3. Returns a teardown function for cleanup');
 
   // Step 2: Demonstrate creating custom global setups
-  printStep(2, 'Creating Custom Global Setups')
-  printInfo('You can create custom global setups for each client type:')
-  printInfo('')
-  printInfo("  // For algod mock server")
-  printInfo("  const algodSetup = createGlobalSetup('algod')")
-  printInfo('')
-  printInfo("  // For indexer mock server")
-  printInfo("  const indexerSetup = createGlobalSetup('indexer')")
-  printInfo('')
-  printInfo("  // For kmd mock server")
-  printInfo("  const kmdSetup = createGlobalSetup('kmd')")
-  printInfo('')
-  printInfo('Verifying factory creates functions:')
-  printInfo(`  createGlobalSetup('algod'):   ${typeof createGlobalSetup('algod')}`)
-  printInfo(`  createGlobalSetup('indexer'): ${typeof createGlobalSetup('indexer')}`)
-  printInfo(`  createGlobalSetup('kmd'):     ${typeof createGlobalSetup('kmd')}`)
+  printStep(2, 'Creating Custom Global Setups');
+  printInfo('You can create custom global setups for each client type:');
+  printInfo('');
+  printInfo('  // For algod mock server');
+  printInfo("  const algodSetup = createGlobalSetup('algod')");
+  printInfo('');
+  printInfo('  // For indexer mock server');
+  printInfo("  const indexerSetup = createGlobalSetup('indexer')");
+  printInfo('');
+  printInfo('  // For kmd mock server');
+  printInfo("  const kmdSetup = createGlobalSetup('kmd')");
+  printInfo('');
+  printInfo('Verifying factory creates functions:');
+  printInfo(`  createGlobalSetup('algod'):   ${typeof createGlobalSetup('algod')}`);
+  printInfo(`  createGlobalSetup('indexer'): ${typeof createGlobalSetup('indexer')}`);
+  printInfo(`  createGlobalSetup('kmd'):     ${typeof createGlobalSetup('kmd')}`);
 
   // Step 3: Show pre-built global setup exports
-  printStep(3, 'Pre-built Global Setup Exports')
-  printInfo('The testing package exports pre-built setup functions:')
-  printInfo('')
-  printInfo('  import {')
-  printInfo('    algodGlobalSetup,    // createGlobalSetup("algod")')
-  printInfo('    indexerGlobalSetup,  // createGlobalSetup("indexer")')
-  printInfo('    kmdGlobalSetup,      // createGlobalSetup("kmd")')
-  printInfo('  } from "@algorandfoundation/algokit-utils/testing"')
-  printInfo('')
-  printInfo('Verifying pre-built exports are functions:')
-  printInfo(`  algodGlobalSetup:   ${typeof algodGlobalSetup}`)
-  printInfo(`  indexerGlobalSetup: ${typeof indexerGlobalSetup}`)
-  printInfo(`  kmdGlobalSetup:     ${typeof kmdGlobalSetup}`)
+  printStep(3, 'Pre-built Global Setup Exports');
+  printInfo('The testing package exports pre-built setup functions:');
+  printInfo('');
+  printInfo('  import {');
+  printInfo('    algodGlobalSetup,    // createGlobalSetup("algod")');
+  printInfo('    indexerGlobalSetup,  // createGlobalSetup("indexer")');
+  printInfo('    kmdGlobalSetup,      // createGlobalSetup("kmd")');
+  printInfo('  } from "@algorandfoundation/algokit-utils/testing"');
+  printInfo('');
+  printInfo('Verifying pre-built exports are functions:');
+  printInfo(`  algodGlobalSetup:   ${typeof algodGlobalSetup}`);
+  printInfo(`  indexerGlobalSetup: ${typeof indexerGlobalSetup}`);
+  printInfo(`  kmdGlobalSetup:     ${typeof kmdGlobalSetup}`);
 
   // Step 4: Show vitest.config.ts usage
-  printStep(4, 'Vitest Configuration Example')
-  printInfo('Use the globalSetup option in vitest.config.ts:')
-  printInfo('')
-  printInfo('  // vitest.config.ts')
-  printInfo('  import { defineConfig } from "vitest/config"')
-  printInfo('')
-  printInfo('  export default defineConfig({')
-  printInfo('    test: {')
-  printInfo('      // Use a single setup file that exports the setup function')
-  printInfo('      globalSetup: "./tests/globalSetup.ts",')
-  printInfo('    },')
-  printInfo('  })')
-  printInfo('')
-  printInfo('  // tests/globalSetup.ts')
-  printInfo('  import { algodGlobalSetup } from "@algorandfoundation/algokit-utils/testing"')
-  printInfo('  export default algodGlobalSetup')
-  printInfo('')
-  printInfo('Or create a custom setup file for multiple servers:')
-  printInfo('')
-  printInfo('  // tests/globalSetup.ts')
-  printInfo('  import { createGlobalSetup } from "@algorandfoundation/algokit-utils/testing"')
-  printInfo('')
-  printInfo('  const algodSetup = createGlobalSetup("algod")')
-  printInfo('  const indexerSetup = createGlobalSetup("indexer")')
-  printInfo('')
-  printInfo('  export default async function setup() {')
-  printInfo('    const teardownAlgod = await algodSetup()')
-  printInfo('    const teardownIndexer = await indexerSetup()')
-  printInfo('    return async () => {')
-  printInfo('      await teardownAlgod()')
-  printInfo('      await teardownIndexer()')
-  printInfo('    }')
-  printInfo('  }')
+  printStep(4, 'Vitest Configuration Example');
+  printInfo('Use the globalSetup option in vitest.config.ts:');
+  printInfo('');
+  printInfo('  // vitest.config.ts');
+  printInfo('  import { defineConfig } from "vitest/config"');
+  printInfo('');
+  printInfo('  export default defineConfig({');
+  printInfo('    test: {');
+  printInfo('      // Use a single setup file that exports the setup function');
+  printInfo('      globalSetup: "./tests/globalSetup.ts",');
+  printInfo('    },');
+  printInfo('  })');
+  printInfo('');
+  printInfo('  // tests/globalSetup.ts');
+  printInfo('  import { algodGlobalSetup } from "@algorandfoundation/algokit-utils/testing"');
+  printInfo('  export default algodGlobalSetup');
+  printInfo('');
+  printInfo('Or create a custom setup file for multiple servers:');
+  printInfo('');
+  printInfo('  // tests/globalSetup.ts');
+  printInfo('  import { createGlobalSetup } from "@algorandfoundation/algokit-utils/testing"');
+  printInfo('');
+  printInfo('  const algodSetup = createGlobalSetup("algod")');
+  printInfo('  const indexerSetup = createGlobalSetup("indexer")');
+  printInfo('');
+  printInfo('  export default async function setup() {');
+  printInfo('    const teardownAlgod = await algodSetup()');
+  printInfo('    const teardownIndexer = await indexerSetup()');
+  printInfo('    return async () => {');
+  printInfo('      await teardownAlgod()');
+  printInfo('      await teardownIndexer()');
+  printInfo('    }');
+  printInfo('  }');
 
   // Step 5: Explain environment variables
-  printStep(5, 'Environment Variables')
-  printInfo('The global setup reads configuration from environment variables:')
-  printInfo('')
-  printInfo('DEBUG_MOCK_SERVER=true')
-  printInfo('  - Enables verbose logging for setup/teardown lifecycle')
-  printInfo('  - Shows connection and disconnection messages')
-  printInfo('  - Useful for debugging server connection issues')
-  printInfo('')
-  printInfo(`Current DEBUG_MOCK_SERVER value: ${  process.env.DEBUG_MOCK_SERVER || '(not set)'}`)
+  printStep(5, 'Environment Variables');
+  printInfo('The global setup reads configuration from environment variables:');
+  printInfo('');
+  printInfo('DEBUG_MOCK_SERVER=true');
+  printInfo('  - Enables verbose logging for setup/teardown lifecycle');
+  printInfo('  - Shows connection and disconnection messages');
+  printInfo('  - Useful for debugging server connection issues');
+  printInfo('');
+  printInfo(`Current DEBUG_MOCK_SERVER value: ${process.env.DEBUG_MOCK_SERVER || '(not set)'}`);
 
   // Step 6: Explain .env file configuration
-  printStep(6, '.env File Configuration')
-  printInfo('The setup automatically reads .env from the project root:')
-  printInfo('')
-  printInfo('  # .env file in project root')
-  printInfo('  MOCK_ALGOD_URL=http://localhost:8000')
-  printInfo('  MOCK_INDEXER_URL=http://localhost:8002')
-  printInfo('  MOCK_KMD_URL=http://localhost:8001')
-  printInfo('  DEBUG_MOCK_SERVER=true')
-  printInfo('')
-  printInfo('The .env file is loaded using dotenv before connecting to servers.')
-  printInfo('This allows project-wide configuration for all test files.')
+  printStep(6, '.env File Configuration');
+  printInfo('The setup automatically reads .env from the project root:');
+  printInfo('');
+  printInfo('  # .env file in project root');
+  printInfo('  MOCK_ALGOD_URL=http://localhost:8000');
+  printInfo('  MOCK_INDEXER_URL=http://localhost:8002');
+  printInfo('  MOCK_KMD_URL=http://localhost:8001');
+  printInfo('  DEBUG_MOCK_SERVER=true');
+  printInfo('');
+  printInfo('The .env file is loaded using dotenv before connecting to servers.');
+  printInfo('This allows project-wide configuration for all test files.');
 
   // Step 7: Lifecycle explanation
-  printStep(7, 'Setup and Teardown Lifecycle')
-  printInfo('When Vitest runs with globalSetup configured:')
-  printInfo('')
-  printInfo('  1. SETUP PHASE (before all tests):')
-  printInfo('     - Vitest calls the exported setup function')
-  printInfo('     - The setup connects to the mock server')
-  printInfo('     - If DEBUG_MOCK_SERVER=true, logs: "[MockServer] Connecting to algod..."')
-  printInfo('     - On success, logs: "[MockServer] algod server ready at http://..."')
-  printInfo('     - Returns a teardown function')
-  printInfo('')
-  printInfo('  2. TEST EXECUTION:')
-  printInfo('     - All test files run with the mock server available')
-  printInfo('     - Tests can use the server via environment variables')
-  printInfo('')
-  printInfo('  3. TEARDOWN PHASE (after all tests):')
-  printInfo('     - Vitest calls the returned teardown function')
-  printInfo('     - If DEBUG_MOCK_SERVER=true, logs: "[MockServer] Disconnecting..."')
-  printInfo('     - Cleanup completes')
+  printStep(7, 'Setup and Teardown Lifecycle');
+  printInfo('When Vitest runs with globalSetup configured:');
+  printInfo('');
+  printInfo('  1. SETUP PHASE (before all tests):');
+  printInfo('     - Vitest calls the exported setup function');
+  printInfo('     - The setup connects to the mock server');
+  printInfo('     - If DEBUG_MOCK_SERVER=true, logs: "[MockServer] Connecting to algod..."');
+  printInfo('     - On success, logs: "[MockServer] algod server ready at http://..."');
+  printInfo('     - Returns a teardown function');
+  printInfo('');
+  printInfo('  2. TEST EXECUTION:');
+  printInfo('     - All test files run with the mock server available');
+  printInfo('     - Tests can use the server via environment variables');
+  printInfo('');
+  printInfo('  3. TEARDOWN PHASE (after all tests):');
+  printInfo('     - Vitest calls the returned teardown function');
+  printInfo('     - If DEBUG_MOCK_SERVER=true, logs: "[MockServer] Disconnecting..."');
+  printInfo('     - Cleanup completes');
 
   // Summary
-  printStep(8, 'Summary')
-  printInfo('Key takeaways for using createGlobalSetup():')
-  printInfo('  1. Use createGlobalSetup(clientType) to create custom setup functions')
-  printInfo("  2. ClientType can be 'algod', 'indexer', or 'kmd'")
-  printInfo('  3. The returned function is async and returns a teardown function')
-  printInfo('  4. Use pre-built exports (algodGlobalSetup, etc.) for convenience')
-  printInfo('  5. Configure via environment variables or .env file')
-  printInfo('  6. Set DEBUG_MOCK_SERVER=true for verbose lifecycle logging')
-  printInfo('  7. Export the setup function as default in your globalSetup file')
+  printStep(8, 'Summary');
+  printInfo('Key takeaways for using createGlobalSetup():');
+  printInfo('  1. Use createGlobalSetup(clientType) to create custom setup functions');
+  printInfo("  2. ClientType can be 'algod', 'indexer', or 'kmd'");
+  printInfo('  3. The returned function is async and returns a teardown function');
+  printInfo('  4. Use pre-built exports (algodGlobalSetup, etc.) for convenience');
+  printInfo('  5. Configure via environment variables or .env file');
+  printInfo('  6. Set DEBUG_MOCK_SERVER=true for verbose lifecycle logging');
+  printInfo('  7. Export the setup function as default in your globalSetup file');
 
-  printSuccess('Vitest global setup factory example completed!')
+  printSuccess('Vitest global setup factory example completed!');
 }
 
-main()
-
+main();
 ```
 
 ---

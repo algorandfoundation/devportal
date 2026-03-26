@@ -1,6 +1,6 @@
 ---
-title: "Program Signing (Delegated Logic Signatures) with KMD"
-description: "This example demonstrates how to sign programs/contracts using the KMD sign_program() method. It shows:"
+title: 'Program Signing (Delegated Logic Signatures) with KMD'
+description: 'This example demonstrates how to sign programs/contracts using the KMD sign_program() method. It shows:'
 sidebar:
   order: 12
 ---
@@ -10,19 +10,20 @@ sidebar:
 ## Description
 
 This example demonstrates how to sign programs/contracts using the KMD sign_program() method. It shows:
+
 - Creating a simple TEAL program (logic signature)
 - Compiling the TEAL program using algod's teal_compile
 - Signing the compiled program bytes with sign_program()
 - Understanding the resulting signature for delegated logic signatures
 - How to use the signature with a LogicSigAccount
- What is Program Signing? Program signing creates a "delegated logic signature" (delegated lsig). This allows an account holder to authorize a smart contract (TEAL program) to sign transactions on their behalf. When you sign a program: 1. You're attesting that you authorize this program to act for your account 2. Transactions signed by this delegated lsig will be authorized by your account 3. The program logic determines which transactions are approved
- Use cases for delegated logic signatures:
+  What is Program Signing? Program signing creates a "delegated logic signature" (delegated lsig). This allows an account holder to authorize a smart contract (TEAL program) to sign transactions on their behalf. When you sign a program: 1. You're attesting that you authorize this program to act for your account 2. Transactions signed by this delegated lsig will be authorized by your account 3. The program logic determines which transactions are approved
+  Use cases for delegated logic signatures:
 - Recurring payments (program checks amount and frequency)
 - Subscription services (program validates payment recipients)
 - Limited spending authorizations (program enforces constraints)
 - Conditional transfers (program checks external conditions)
- Prerequisites:
- Covered operations:
+  Prerequisites:
+  Covered operations:
 - sign_program() - Sign a compiled TEAL program with a wallet key
 
 ## Prerequisites

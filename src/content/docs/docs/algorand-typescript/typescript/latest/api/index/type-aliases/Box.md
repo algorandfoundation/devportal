@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "Box"
+title: 'Box'
 ---
 
 > **Box**\<`TValue`\> = `object`
@@ -29,7 +29,7 @@ Defined in: [box.ts:33](https://github.com/algorandfoundation/puya-ts/blob/main/
 
 Get a boolean indicating if the box exists or not
 
-***
+---
 
 ### key
 
@@ -39,7 +39,7 @@ Defined in: [box.ts:23](https://github.com/algorandfoundation/puya-ts/blob/main/
 
 Get the key used by this box proxy
 
-***
+---
 
 ### length
 
@@ -49,7 +49,7 @@ Defined in: [box.ts:55](https://github.com/algorandfoundation/puya-ts/blob/main/
 
 Returns the length of the box, or error if the box does not exist
 
-***
+---
 
 ### value
 
@@ -70,8 +70,9 @@ Get will error if the box does not exist
 Defined in: [box.ts:19](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/box.ts#L19)
 
 Create the box for this proxy with a bzero value.
- - If options.size is specified, the box will be created with that length
- - Otherwise the box will be created with storage size of TValue. Errors if the size of TValue is not fixed
+
+- If options.size is specified, the box will be created with that length
+- Otherwise the box will be created with storage size of TValue. Errors if the size of TValue is not fixed
 
 No op if the box already exists with the same size
 Errors if the box already exists with a different size.
@@ -91,7 +92,7 @@ Errors if the specified size is greater than the max box size (32,768)
 
 True if the box was created, false if it already existed
 
-***
+---
 
 ### delete()
 
@@ -107,7 +108,7 @@ Delete the box associated with this proxy if it exists.
 
 True if the box existed and was deleted, else false
 
-***
+---
 
 ### extract()
 
@@ -140,7 +141,7 @@ The number of bytes to extract
 
 The extracted bytes
 
-***
+---
 
 ### get()
 
@@ -166,7 +167,7 @@ Options to specify a default value to be returned if no other value exists
 
 The value if the box exists, else the default value
 
-***
+---
 
 ### maybe()
 
@@ -184,7 +185,7 @@ readonly \[`TValue`, `boolean`\]
 
 A tuple with the first item being the box value, and the second item being a boolean indicating if the box exists.
 
-***
+---
 
 ### replace()
 
@@ -215,7 +216,7 @@ The value to be written
 
 `void`
 
-***
+---
 
 ### resize()
 
@@ -241,7 +242,7 @@ The new size for the box
 
 `void`
 
-***
+---
 
 ### splice()
 

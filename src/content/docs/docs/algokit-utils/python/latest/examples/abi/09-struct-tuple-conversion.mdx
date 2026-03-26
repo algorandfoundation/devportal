@@ -1,6 +1,6 @@
 ---
-title: "ABI Struct and Tuple Conversion"
-description: "This example demonstrates how to convert between struct values (named) and tuple values (positional):"
+title: 'ABI Struct and Tuple Conversion'
+description: 'This example demonstrates how to convert between struct values (named) and tuple values (positional):'
 sidebar:
   order: 9
 ---
@@ -10,12 +10,13 @@ sidebar:
 ## Description
 
 This example demonstrates how to convert between struct values (named) and tuple values (positional):
+
 - get_tuple_from_struct(): Convert struct dict to tuple
 - get_struct_from_tuple(): Convert tuple back to struct dict
 - Simple struct &#123; name: 'Alice', age: 30n &#125; &lt;-&gt; tuple ('Alice', 30)
 - Nested structs with complex types
 - Verify that struct and tuple encodings produce identical bytes
- Key concept: Structs and tuples have identical binary encoding in ARC-4. The conversion functions allow you to work with the same data in either format:
+  Key concept: Structs and tuples have identical binary encoding in ARC-4. The conversion functions allow you to work with the same data in either format:
 - Struct format: dict with named properties (more readable)
 - Tuple format: tuple with positional elements (matches ABI encoding)
 

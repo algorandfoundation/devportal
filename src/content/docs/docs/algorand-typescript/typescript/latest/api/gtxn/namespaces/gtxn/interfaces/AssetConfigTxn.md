@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "AssetConfigTxn"
+title: 'AssetConfigTxn'
 ---
 
 Defined in: [gtxn.ts:613](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/gtxn.ts#L613)
@@ -19,7 +19,7 @@ Defined in: [gtxn.ts:244](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 The asset name
 
-***
+---
 
 ### clawback
 
@@ -29,7 +29,7 @@ Defined in: [gtxn.ts:268](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 32 byte address
 
-***
+---
 
 ### configAsset
 
@@ -39,7 +39,7 @@ Defined in: [gtxn.ts:220](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 Asset ID in asset config transaction
 
-***
+---
 
 ### createdAsset
 
@@ -49,7 +49,7 @@ Defined in: [gtxn.ts:224](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 The asset created by this transaction
 
-***
+---
 
 ### decimals
 
@@ -59,7 +59,7 @@ Defined in: [gtxn.ts:232](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 Number of digits to display after the decimal place when displaying the asset
 
-***
+---
 
 ### defaultFrozen
 
@@ -69,7 +69,7 @@ Defined in: [gtxn.ts:236](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 Whether the asset's slots are frozen by default or not, 0 or 1
 
-***
+---
 
 ### fee
 
@@ -79,7 +79,7 @@ Defined in: [gtxn.ts:175](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 microalgos
 
-***
+---
 
 ### firstValid
 
@@ -89,7 +89,7 @@ Defined in: [gtxn.ts:179](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 round number
 
-***
+---
 
 ### firstValidTime
 
@@ -99,7 +99,7 @@ Defined in: [gtxn.ts:183](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 UNIX timestamp of block before txn.FirstValid. Fails if negative
 
-***
+---
 
 ### freeze
 
@@ -109,7 +109,7 @@ Defined in: [gtxn.ts:264](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 32 byte address
 
-***
+---
 
 ### groupIndex
 
@@ -120,7 +120,7 @@ Defined in: [gtxn.ts:208](https://github.com/algorandfoundation/puya-ts/blob/mai
 Position of this transaction within an atomic group
 A stand-alone transaction is implicitly element 0 in a group of 1
 
-***
+---
 
 ### lastValid
 
@@ -130,7 +130,7 @@ Defined in: [gtxn.ts:187](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 round number
 
-***
+---
 
 ### lease
 
@@ -140,7 +140,7 @@ Defined in: [gtxn.ts:195](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 32 byte lease value
 
-***
+---
 
 ### manager
 
@@ -150,7 +150,7 @@ Defined in: [gtxn.ts:256](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 32 byte address
 
-***
+---
 
 ### metadataHash
 
@@ -160,7 +160,7 @@ Defined in: [gtxn.ts:252](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 32 byte commitment to unspecified asset metadata
 
-***
+---
 
 ### note
 
@@ -170,7 +170,7 @@ Defined in: [gtxn.ts:191](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 Any data up to 1024 bytes
 
-***
+---
 
 ### rekeyTo
 
@@ -180,7 +180,7 @@ Defined in: [gtxn.ts:216](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 32 byte Sender's new AuthAddr
 
-***
+---
 
 ### reserve
 
@@ -190,7 +190,7 @@ Defined in: [gtxn.ts:260](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 32 byte address
 
-***
+---
 
 ### sender
 
@@ -200,7 +200,7 @@ Defined in: [gtxn.ts:171](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 32 byte address
 
-***
+---
 
 ### total
 
@@ -210,7 +210,7 @@ Defined in: [gtxn.ts:228](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 Total number of units of this asset created
 
-***
+---
 
 ### txnId
 
@@ -220,7 +220,7 @@ Defined in: [gtxn.ts:212](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 The computed ID for this transaction. 32 bytes.
 
-***
+---
 
 ### type
 
@@ -230,7 +230,7 @@ Defined in: [gtxn.ts:203](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 Transaction type
 
-***
+---
 
 ### typeBytes
 
@@ -240,7 +240,7 @@ Defined in: [gtxn.ts:199](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 Transaction type as bytes
 
-***
+---
 
 ### unitName
 
@@ -250,7 +250,7 @@ Defined in: [gtxn.ts:240](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 Unit name of the asset
 
-***
+---
 
 ### url
 

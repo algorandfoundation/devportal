@@ -1,5 +1,5 @@
 ---
-title: "Beaker testing strategy"
+title: 'Beaker testing strategy'
 ---
 
 - **Status**: Draft

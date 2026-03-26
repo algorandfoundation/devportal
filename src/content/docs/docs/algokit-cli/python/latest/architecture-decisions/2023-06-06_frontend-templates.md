@@ -1,5 +1,5 @@
 ---
-title: "Frontend Templates"
+title: 'Frontend Templates'
 ---
 
 - **Status**: Approved

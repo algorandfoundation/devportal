@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "minBalance"
+title: 'minBalance'
 ---
 
 > **minBalance**(`a`): [`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)

@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "ApplicationCallFields"
+title: 'ApplicationCallFields'
 ---
 
 Defined in: [itxn.ts:871](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/itxn.ts#L871)
@@ -26,7 +26,7 @@ Accounts listed in the ApplicationCall transaction
 
 Index of the account to get
 
-***
+---
 
 ### appArgs?
 
@@ -40,7 +40,7 @@ Arguments passed to the application in the ApplicationCall transaction
 
 Index of the arg to get
 
-***
+---
 
 ### appId?
 
@@ -50,7 +50,7 @@ Defined in: [itxn.ts:907](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 ApplicationID from ApplicationCall transaction
 
-***
+---
 
 ### approvalProgram?
 
@@ -64,7 +64,7 @@ All approval program pages
 
 Index of the page to get
 
-***
+---
 
 ### apps?
 
@@ -78,7 +78,7 @@ Foreign Apps listed in the ApplicationCall transaction
 
 Index of the application to get
 
-***
+---
 
 ### assets?
 
@@ -92,7 +92,7 @@ Foreign Assets listed in the ApplicationCall transaction
 
 Index of the asset to get
 
-***
+---
 
 ### clearStateProgram?
 
@@ -106,7 +106,7 @@ All clear state program pages
 
 Index of the page to get
 
-***
+---
 
 ### extraProgramPages?
 
@@ -116,7 +116,7 @@ Defined in: [itxn.ts:931](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 Number of additional pages for each of the application's approval and clear state program
 
-***
+---
 
 ### fee?
 
@@ -126,7 +126,7 @@ Defined in: [itxn.ts:879](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 microalgos
 
-***
+---
 
 ### firstValid?
 
@@ -136,7 +136,7 @@ Defined in: [itxn.ts:883](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 round number
 
-***
+---
 
 ### firstValidTime?
 
@@ -146,7 +146,7 @@ Defined in: [itxn.ts:887](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 UNIX timestamp of block before txn.FirstValid. Fails if negative
 
-***
+---
 
 ### globalNumBytes?
 
@@ -156,7 +156,7 @@ Defined in: [itxn.ts:919](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 Number of global state byteslices this application makes use of.
 
-***
+---
 
 ### globalNumUint?
 
@@ -166,7 +166,7 @@ Defined in: [itxn.ts:915](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 Number of global state integers this application makes use of.
 
-***
+---
 
 ### lastValid?
 
@@ -176,7 +176,7 @@ Defined in: [itxn.ts:891](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 round number
 
-***
+---
 
 ### lease?
 
@@ -186,7 +186,7 @@ Defined in: [itxn.ts:899](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 32 byte lease value
 
-***
+---
 
 ### localNumBytes?
 
@@ -196,7 +196,7 @@ Defined in: [itxn.ts:927](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 Number of local state byteslices this application makes use of.
 
-***
+---
 
 ### localNumUint?
 
@@ -206,7 +206,7 @@ Defined in: [itxn.ts:923](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 Number of local state integers this application makes use of.
 
-***
+---
 
 ### note?
 
@@ -216,7 +216,7 @@ Defined in: [itxn.ts:895](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 Any data up to 1024 bytes
 
-***
+---
 
 ### onCompletion?
 
@@ -226,7 +226,7 @@ Defined in: [itxn.ts:911](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 ApplicationCall transaction on completion action
 
-***
+---
 
 ### rejectVersion?
 
@@ -236,7 +236,7 @@ Defined in: [itxn.ts:965](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 Application version for which the txn must reject
 
-***
+---
 
 ### rekeyTo?
 
@@ -246,7 +246,7 @@ Defined in: [itxn.ts:903](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 32 byte Sender's new AuthAddr
 
-***
+---
 
 ### sender?
 

@@ -1,5 +1,5 @@
 ---
-title: "algokit_utils.models.account"
+title: 'algokit_utils.models.account'
 ---
 
 <div class="api-ref">
@@ -8,12 +8,11 @@ title: "algokit_utils.models.account"
 
 ## Attributes
 
-| [`DISPENSER_ACCOUNT_NAME`](#algokit_utils.models.account.DISPENSER_ACCOUNT_NAME)   |    |
-|------------------------------------------------------------------------------------|----|
+| [`DISPENSER_ACCOUNT_NAME`](#algokit_utils.models.account.DISPENSER_ACCOUNT_NAME) |     |
+| -------------------------------------------------------------------------------- | --- |
 
 ## Module Contents
 
-### DISPENSER_ACCOUNT_NAME *= 'DISPENSER'*
-
+### DISPENSER*ACCOUNT_NAME *= 'DISPENSER'\_
 
 </div>

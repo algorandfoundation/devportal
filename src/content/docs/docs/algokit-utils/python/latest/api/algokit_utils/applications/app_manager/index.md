@@ -1,5 +1,5 @@
 ---
-title: "algokit_utils.applications.app_manager"
+title: 'algokit_utils.applications.app_manager'
 ---
 
 <div class="api-ref">
@@ -8,35 +8,35 @@ title: "algokit_utils.applications.app_manager"
 
 ## Attributes
 
-| [`UPDATABLE_TEMPLATE_NAME`](#algokit_utils.applications.app_manager.UPDATABLE_TEMPLATE_NAME)   | The name of the TEAL template variable for deploy-time immutability control.   |
-|------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------|
-| [`DELETABLE_TEMPLATE_NAME`](#algokit_utils.applications.app_manager.DELETABLE_TEMPLATE_NAME)   | The name of the TEAL template variable for deploy-time permanence control.     |
+| [`UPDATABLE_TEMPLATE_NAME`](#algokit_utils.applications.app_manager.UPDATABLE_TEMPLATE_NAME) | The name of the TEAL template variable for deploy-time immutability control. |
+| -------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------- |
+| [`DELETABLE_TEMPLATE_NAME`](#algokit_utils.applications.app_manager.DELETABLE_TEMPLATE_NAME) | The name of the TEAL template variable for deploy-time permanence control.   |
 
 ## Classes
 
-| [`AppManager`](#algokit_utils.applications.app_manager.AppManager)   | A manager class for interacting with Algorand applications.   |
-|----------------------------------------------------------------------|---------------------------------------------------------------|
+| [`AppManager`](#algokit_utils.applications.app_manager.AppManager) | A manager class for interacting with Algorand applications. |
+| ------------------------------------------------------------------ | ----------------------------------------------------------- |
 
 ## Module Contents
 
-### UPDATABLE_TEMPLATE_NAME *= 'TMPL_UPDATABLE'*
+### UPDATABLE*TEMPLATE_NAME *= 'TMPL*UPDATABLE'*
 
 The name of the TEAL template variable for deploy-time immutability control.
 
-### DELETABLE_TEMPLATE_NAME *= 'TMPL_DELETABLE'*
+### DELETABLE*TEMPLATE_NAME *= 'TMPL*DELETABLE'*
 
 The name of the TEAL template variable for deploy-time permanence control.
 
-### *class* AppManager(algod_client: AlgodClient)
+### _class_ AppManager(algod_client: AlgodClient)
 
 A manager class for interacting with Algorand applications.
 
 Provides functionality for compiling TEAL code, managing application state,
 and interacting with application boxes.
 
-* **Parameters:**
+- **Parameters:**
   **algod_client** – The Algorand client instance to use for interacting with the network
-* **Example:**
+- **Example:**
   ```python
   app_manager = AppManager(algod_client)
   ```
@@ -45,22 +45,23 @@ and interacting with application boxes.
 
 Compile TEAL source code.
 
-* **Parameters:**
+- **Parameters:**
   **teal_code** – The TEAL source code to compile
-* **Returns:**
+- **Returns:**
   The compiled TEAL code and associated metadata
 
 #### compile_teal_template(teal_template_code: str, template_params: TealTemplateParams | None = None, deployment_metadata: Mapping[str, bool | None] | None = None) → [CompiledTeal](/docs/algokit-utils/python/latest/api/algokit_utils/models/application/#algokit_utils.models.application.CompiledTeal)
 
 Compile a TEAL template with parameters.
 
-* **Parameters:**
-  * **teal_template_code** – The TEAL template code to compile
-  * **template_params** – Parameters to substitute in the template
-  * **deployment_metadata** – Deployment control parameters
-* **Returns:**
+- **Parameters:**
+  - **teal_template_code** – The TEAL template code to compile
+  - **template_params** – Parameters to substitute in the template
+  - **deployment_metadata** – Deployment control parameters
+- **Returns:**
   The compiled TEAL code and associated metadata
-* **Example:**
+- **Example:**
+
   ```python
   app_manager = AppManager(algod_client)
   teal_template_code =
@@ -74,11 +75,11 @@ Compile a TEAL template with parameters.
 
 Get cached compilation result for TEAL code if available.
 
-* **Parameters:**
+- **Parameters:**
   **teal_code** – The TEAL source code
-* **Returns:**
+- **Returns:**
   The cached compilation result if available, None otherwise
-* **Example:**
+- **Example:**
   ```python
   app_manager = AppManager(algod_client)
   teal_code = "RETURN 1"
@@ -90,11 +91,11 @@ Get cached compilation result for TEAL code if available.
 
 Get information about an application by ID.
 
-* **Parameters:**
+- **Parameters:**
   **app_id** – The application ID
-* **Returns:**
+- **Returns:**
   Information about the application
-* **Example:**
+- **Example:**
   ```python
   app_manager = AppManager(algod_client)
   app_id = 1234567890
@@ -105,11 +106,11 @@ Get information about an application by ID.
 
 Get the global state of an application.
 
-* **Parameters:**
+- **Parameters:**
   **app_id** – The application ID
-* **Returns:**
+- **Returns:**
   The application’s global state
-* **Example:**
+- **Example:**
   ```python
   app_manager = AppManager(algod_client)
   app_id = 123
@@ -120,14 +121,14 @@ Get the global state of an application.
 
 Get the local state for an account in an application.
 
-* **Parameters:**
-  * **app_id** – The application ID
-  * **address** – The account address
-* **Returns:**
+- **Parameters:**
+  - **app_id** – The application ID
+  - **address** – The account address
+- **Returns:**
   The account’s local state for the application
-* **Raises:**
+- **Raises:**
   **ValueError** – If local state is not found
-* **Example:**
+- **Example:**
   ```python
   app_manager = AppManager(algod_client)
   app_id = 123
@@ -141,11 +142,11 @@ Get names of all boxes for an application.
 
 If the box name can’t be decoded from UTF-8, the string representation of the bytes is returned.
 
-* **Parameters:**
+- **Parameters:**
   **app_id** – The application ID
-* **Returns:**
+- **Returns:**
   List of box names
-* **Example:**
+- **Example:**
   ```python
   app_manager = AppManager(algod_client)
   app_id = 123
@@ -156,12 +157,12 @@ If the box name can’t be decoded from UTF-8, the string representation of the 
 
 Get the value stored in a box.
 
-* **Parameters:**
-  * **app_id** – The application ID
-  * **box_name** – The box identifier
-* **Returns:**
+- **Parameters:**
+  - **app_id** – The application ID
+  - **box_name** – The box identifier
+- **Returns:**
   The box value as bytes
-* **Example:**
+- **Example:**
   ```python
   app_manager = AppManager(algod_client)
   app_id = 123
@@ -173,12 +174,12 @@ Get the value stored in a box.
 
 Get values for multiple boxes.
 
-* **Parameters:**
-  * **app_id** – The application ID
-  * **box_names** – List of box identifiers
-* **Returns:**
+- **Parameters:**
+  - **app_id** – The application ID
+  - **box_names** – List of box identifiers
+- **Returns:**
   List of box values as bytes
-* **Example:**
+- **Example:**
   ```python
   app_manager = AppManager(algod_client)
   app_id = 123
@@ -190,15 +191,15 @@ Get values for multiple boxes.
 
 Get and decode a box value using an ABI type.
 
-* **Parameters:**
-  * **app_id** – The application ID
-  * **box_name** – The box identifier
-  * **abi_type** – The ABI type to decode with
-* **Returns:**
+- **Parameters:**
+  - **app_id** – The application ID
+  - **box_name** – The box identifier
+  - **abi_type** – The ABI type to decode with
+- **Returns:**
   The decoded box value
-* **Raises:**
+- **Raises:**
   **ValueError** – If decoding fails
-* **Example:**
+- **Example:**
   ```python
   app_manager = AppManager(algod_client)
   app_id = 123
@@ -211,13 +212,13 @@ Get and decode a box value using an ABI type.
 
 Get and decode multiple box values using an ABI type.
 
-* **Parameters:**
-  * **app_id** – The application ID
-  * **box_names** – List of box identifiers
-  * **abi_type** – The ABI type to decode with
-* **Returns:**
+- **Parameters:**
+  - **app_id** – The application ID
+  - **box_names** – List of box identifiers
+  - **abi_type** – The ABI type to decode with
+- **Returns:**
   List of decoded box values
-* **Example:**
+- **Example:**
   ```python
   app_manager = AppManager(algod_client)
   app_id = 123
@@ -226,17 +227,17 @@ Get and decode multiple box values using an ABI type.
   box_values = app_manager.get_box_values_from_abi_type(app_id, box_names, abi_type)
   ```
 
-#### *static* get_box_reference(box_id: BoxIdentifier | BoxReference) → tuple[int, bytes]
+#### _static_ get_box_reference(box_id: BoxIdentifier | BoxReference) → tuple[int, bytes]
 
 Get standardized box reference from various identifier types.
 
-* **Parameters:**
+- **Parameters:**
   **box_id** – The box identifier
-* **Returns:**
+- **Returns:**
   Tuple of (app_id, box_name_bytes)
-* **Raises:**
+- **Raises:**
   **ValueError** – If box identifier type is invalid
-* **Example:**
+- **Example:**
   ```python
   app_manager = AppManager(algod_client)
   app_id = 123
@@ -244,16 +245,16 @@ Get standardized box reference from various identifier types.
   box_reference = app_manager.get_box_reference(box_name)
   ```
 
-#### *static* get_abi_return(confirmation: PendingTransactionResponse, method: Method | None = None) → [ABIReturn](/docs/algokit-utils/python/latest/api/algokit_utils/applications/abi/#algokit_utils.applications.abi.ABIReturn) | None
+#### _static_ get_abi_return(confirmation: PendingTransactionResponse, method: Method | None = None) → [ABIReturn](/docs/algokit-utils/python/latest/api/algokit_utils/applications/abi/#algokit_utils.applications.abi.ABIReturn) | None
 
 Get the ABI return value from a transaction confirmation.
 
-* **Parameters:**
-  * **confirmation** – The transaction confirmation
-  * **method** – The ABI method
-* **Returns:**
+- **Parameters:**
+  - **confirmation** – The transaction confirmation
+  - **method** – The ABI method
+- **Returns:**
   The parsed ABI return value, or None if not available
-* **Example:**
+- **Example:**
   ```python
   app_manager = AppManager(algod_client)
   app_id = 123
@@ -262,17 +263,17 @@ Get the ABI return value from a transaction confirmation.
   abi_return = app_manager.get_abi_return(confirmation, method)
   ```
 
-#### *static* decode_app_state(state: Sequence[TealKeyValue] | None) → dict[str, [AppState](/docs/algokit-utils/python/latest/api/algokit_utils/models/application/#algokit_utils.models.application.AppState)]
+#### _static_ decode_app_state(state: Sequence[TealKeyValue] | None) → dict[str, [AppState](/docs/algokit-utils/python/latest/api/algokit_utils/models/application/#algokit_utils.models.application.AppState)]
 
 Decode application state from raw format.
 
-* **Parameters:**
+- **Parameters:**
   **state** – The raw application state
-* **Returns:**
+- **Returns:**
   Decoded application state
-* **Raises:**
+- **Raises:**
   **ValueError** – If unknown state data type is encountered
-* **Example:**
+- **Example:**
   ```python
   app_manager = AppManager(algod_client)
   app_id = 123
@@ -280,18 +281,18 @@ Decode application state from raw format.
   decoded_state = app_manager.decode_app_state(state)
   ```
 
-#### *static* replace_template_variables(program: str, template_values: TealTemplateParams) → str
+#### _static_ replace_template_variables(program: str, template_values: TealTemplateParams) → str
 
 Replace template variables in TEAL code.
 
-* **Parameters:**
-  * **program** – The TEAL program code
-  * **template_values** – Template variable values to substitute
-* **Returns:**
+- **Parameters:**
+  - **program** – The TEAL program code
+  - **template_values** – Template variable values to substitute
+- **Returns:**
   TEAL code with substituted values
-* **Raises:**
+- **Raises:**
   **ValueError** – If template value type is unexpected
-* **Example:**
+- **Example:**
   ```python
   app_manager = AppManager(algod_client)
   app_id = 123
@@ -300,18 +301,18 @@ Replace template variables in TEAL code.
   updated_program = app_manager.replace_template_variables(program, template_values)
   ```
 
-#### *static* replace_teal_template_deploy_time_control_params(teal_template_code: str, params: Mapping[str, bool | None]) → str
+#### _static_ replace_teal_template_deploy_time_control_params(teal_template_code: str, params: Mapping[str, bool | None]) → str
 
 Replace deploy-time control parameters in TEAL template.
 
-* **Parameters:**
-  * **teal_template_code** – The TEAL template code
-  * **params** – The deploy-time control parameters
-* **Returns:**
+- **Parameters:**
+  - **teal_template_code** – The TEAL template code
+  - **params** – The deploy-time control parameters
+- **Returns:**
   TEAL code with substituted control parameters
-* **Raises:**
+- **Raises:**
   **ValueError** – If template variables not found in code
-* **Example:**
+- **Example:**
   ```python
   app_manager = AppManager(algod_client)
   app_id = 123
@@ -322,20 +323,19 @@ Replace deploy-time control parameters in TEAL template.
   )
   ```
 
-#### *static* strip_teal_comments(teal_code: str) → str
+#### _static_ strip_teal_comments(teal_code: str) → str
 
 Strip comments from TEAL code.
 
-* **Parameters:**
+- **Parameters:**
   **teal_code** – The TEAL code to strip comments from
-* **Returns:**
+- **Returns:**
   The TEAL code with comments stripped
-* **Example:**
+- **Example:**
   ```python
   app_manager = AppManager(algod_client)
   teal_code = "RETURN 1"
   stripped_teal_code = app_manager.strip_teal_comments(teal_code)
   ```
-
 
 </div>

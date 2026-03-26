@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "match"
+title: 'match'
 ---
 
 > **match**\<`T`\>(`subject`, `test`): `boolean`

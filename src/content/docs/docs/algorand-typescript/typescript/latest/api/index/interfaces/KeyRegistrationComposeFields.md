@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "KeyRegistrationComposeFields"
+title: 'KeyRegistrationComposeFields'
 ---
 
 Defined in: [itxn-compose.ts:10](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/itxn-compose.ts#L10)
@@ -25,7 +25,7 @@ microalgos
 
 [`KeyRegistrationFields`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/keyregistrationfields/).[`fee`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/keyregistrationfields/#fee)
 
-***
+---
 
 ### firstValid?
 
@@ -39,7 +39,7 @@ round number
 
 [`KeyRegistrationFields`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/keyregistrationfields/).[`firstValid`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/keyregistrationfields/#firstvalid)
 
-***
+---
 
 ### firstValidTime?
 
@@ -53,7 +53,7 @@ UNIX timestamp of block before txn.FirstValid. Fails if negative
 
 [`KeyRegistrationFields`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/keyregistrationfields/).[`firstValidTime`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/keyregistrationfields/#firstvalidtime)
 
-***
+---
 
 ### lastValid?
 
@@ -67,7 +67,7 @@ round number
 
 [`KeyRegistrationFields`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/keyregistrationfields/).[`lastValid`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/keyregistrationfields/#lastvalid)
 
-***
+---
 
 ### lease?
 
@@ -81,7 +81,7 @@ Defined in: [itxn.ts:655](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 [`KeyRegistrationFields`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/keyregistrationfields/).[`lease`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/keyregistrationfields/#lease)
 
-***
+---
 
 ### nonparticipation?
 
@@ -95,7 +95,7 @@ Marks an account nonparticipating for rewards
 
 [`KeyRegistrationFields`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/keyregistrationfields/).[`nonparticipation`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/keyregistrationfields/#nonparticipation)
 
-***
+---
 
 ### note?
 
@@ -109,7 +109,7 @@ Any data up to 1024 bytes
 
 [`KeyRegistrationFields`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/keyregistrationfields/).[`note`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/keyregistrationfields/#note)
 
-***
+---
 
 ### rekeyTo?
 
@@ -123,7 +123,7 @@ Defined in: [itxn.ts:659](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 [`KeyRegistrationFields`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/keyregistrationfields/).[`rekeyTo`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/keyregistrationfields/#rekeyto)
 
-***
+---
 
 ### selectionKey?
 
@@ -137,7 +137,7 @@ Defined in: [itxn.ts:667](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 [`KeyRegistrationFields`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/keyregistrationfields/).[`selectionKey`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/keyregistrationfields/#selectionkey)
 
-***
+---
 
 ### sender?
 
@@ -151,7 +151,7 @@ Defined in: [itxn.ts:631](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 [`KeyRegistrationFields`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/keyregistrationfields/).[`sender`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/keyregistrationfields/#sender)
 
-***
+---
 
 ### stateProofKey?
 
@@ -165,7 +165,7 @@ Defined in: [itxn.ts:687](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 [`KeyRegistrationFields`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/keyregistrationfields/).[`stateProofKey`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/keyregistrationfields/#stateproofkey)
 
-***
+---
 
 ### type
 
@@ -173,7 +173,7 @@ Defined in: [itxn.ts:687](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 Defined in: [itxn-compose.ts:11](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/itxn-compose.ts#L11)
 
-***
+---
 
 ### voteFirst?
 
@@ -187,7 +187,7 @@ The first round that the participation key is valid.
 
 [`KeyRegistrationFields`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/keyregistrationfields/).[`voteFirst`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/keyregistrationfields/#votefirst)
 
-***
+---
 
 ### voteKey?
 
@@ -201,7 +201,7 @@ Defined in: [itxn.ts:663](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 [`KeyRegistrationFields`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/keyregistrationfields/).[`voteKey`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/keyregistrationfields/#votekey)
 
-***
+---
 
 ### voteKeyDilution?
 
@@ -215,7 +215,7 @@ Dilution for the 2-level participation key
 
 [`KeyRegistrationFields`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/keyregistrationfields/).[`voteKeyDilution`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/keyregistrationfields/#votekeydilution)
 
-***
+---
 
 ### voteLast?
 

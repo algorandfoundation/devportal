@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "itxnCompose"
+title: 'itxnCompose'
 ---
 
 > `const` **itxnCompose**: [`ItxnCompose`](/algorand-typescript/api/index/type-aliases/itxncompose/)

@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "err"
+title: 'err'
 ---
 
 > **err**(`message?`): `never`

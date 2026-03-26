@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "LocalState"
+title: 'LocalState'
 ---
 
 > **LocalState**\<`ValueType`\>(`options?`): [`LocalState`](/algorand-typescript/api/index/type-aliases/localstate/)\<`ValueType`\>

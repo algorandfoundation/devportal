@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "TransactionSubscriptionParams"
+title: 'TransactionSubscriptionParams'
 ---
 
 Defined in: [src/types/subscription.ts:347](https://github.com/algorandfoundation/algokit-subscriber-ts/blob/main/src/types/subscription.ts#L347)
@@ -27,7 +27,7 @@ Any ARC-28 event definitions to process from app call logs
 
 [`CoreTransactionSubscriptionParams`](/docs/algokit-subscriber/typescript/latest/api/types/interfaces/coretransactionsubscriptionparams/).[`arc28Events`](/docs/algokit-subscriber/typescript/latest/api/types/interfaces/coretransactionsubscriptionparams/#arc28events)
 
-***
+---
 
 ### currentRound?
 
@@ -38,7 +38,7 @@ Defined in: [src/types/subscription.ts:363](https://github.com/algorandfoundatio
 The current tip of the configured Algorand blockchain.
 If not provided, it will be resolved on demand.
 
-***
+---
 
 ### filters
 
@@ -52,26 +52,29 @@ A list of filters with corresponding names.
 #### Example
 
 ```typescript
- filter: [{
-  name: 'asset-transfers',
-  filter: {
-    type: TransactionType.axfer,
-    //...
-  }
- }, {
-  name: 'payments',
-  filter: {
-    type: TransactionType.pay,
-    //...
-  }
- }]
+filter: [
+  {
+    name: 'asset-transfers',
+    filter: {
+      type: TransactionType.axfer,
+      //...
+    },
+  },
+  {
+    name: 'payments',
+    filter: {
+      type: TransactionType.pay,
+      //...
+    },
+  },
+];
 ```
 
 #### Inherited from
 
 [`CoreTransactionSubscriptionParams`](/docs/algokit-subscriber/typescript/latest/api/types/interfaces/coretransactionsubscriptionparams/).[`filters`](/docs/algokit-subscriber/typescript/latest/api/types/interfaces/coretransactionsubscriptionparams/#filters)
 
-***
+---
 
 ### maxIndexerRoundsToSync?
 
@@ -92,7 +95,7 @@ boundary based on the number of rounds specified here.
 
 [`CoreTransactionSubscriptionParams`](/docs/algokit-subscriber/typescript/latest/api/types/interfaces/coretransactionsubscriptionparams/).[`maxIndexerRoundsToSync`](/docs/algokit-subscriber/typescript/latest/api/types/interfaces/coretransactionsubscriptionparams/#maxindexerroundstosync)
 
-***
+---
 
 ### maxRoundsToSync?
 
@@ -112,7 +115,7 @@ your catchup speed when using `sync-oldest`.
 
 [`CoreTransactionSubscriptionParams`](/docs/algokit-subscriber/typescript/latest/api/types/interfaces/coretransactionsubscriptionparams/).[`maxRoundsToSync`](/docs/algokit-subscriber/typescript/latest/api/types/interfaces/coretransactionsubscriptionparams/#maxroundstosync)
 
-***
+---
 
 ### syncBehaviour
 
@@ -122,26 +125,27 @@ Defined in: [src/types/subscription.ts:279](https://github.com/algorandfoundatio
 
 If the current tip of the configured Algorand blockchain is more than `maxRoundsToSync`
 past `watermark` then how should that be handled:
- * `skip-sync-newest`: Discard old blocks/transactions and sync the newest; useful
-   for real-time notification scenarios where you don't care about history and
-   are happy to lose old transactions.
- * `sync-oldest`: Sync from the oldest rounds forward `maxRoundsToSync` rounds
-   using algod; note: this will be slow if you are starting from 0 and requires
-   an archival node.
- * `sync-oldest-start-now`: Same as `sync-oldest`, but if the `watermark` is `0`
-   then start at the current round i.e. don't sync historical records, but once
-   subscribing starts sync everything; note: if it falls behind it requires an
-   archival node.
- * `catchup-with-indexer`: Sync to round `currentRound - maxRoundsToSync + 1`
-   using indexer (much faster than using algod for long time periods) and then
-   use algod from there.
- * `fail`: Throw an error.
+
+- `skip-sync-newest`: Discard old blocks/transactions and sync the newest; useful
+  for real-time notification scenarios where you don't care about history and
+  are happy to lose old transactions.
+- `sync-oldest`: Sync from the oldest rounds forward `maxRoundsToSync` rounds
+  using algod; note: this will be slow if you are starting from 0 and requires
+  an archival node.
+- `sync-oldest-start-now`: Same as `sync-oldest`, but if the `watermark` is `0`
+  then start at the current round i.e. don't sync historical records, but once
+  subscribing starts sync everything; note: if it falls behind it requires an
+  archival node.
+- `catchup-with-indexer`: Sync to round `currentRound - maxRoundsToSync + 1`
+  using indexer (much faster than using algod for long time periods) and then
+  use algod from there.
+- `fail`: Throw an error.
 
 #### Inherited from
 
 [`CoreTransactionSubscriptionParams`](/docs/algokit-subscriber/typescript/latest/api/types/interfaces/coretransactionsubscriptionparams/).[`syncBehaviour`](/docs/algokit-subscriber/typescript/latest/api/types/interfaces/coretransactionsubscriptionparams/#syncbehaviour)
 
-***
+---
 
 ### watermark
 

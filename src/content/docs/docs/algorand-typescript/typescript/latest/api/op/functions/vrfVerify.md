@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "vrfVerify"
+title: 'vrfVerify'
 ---
 
 > **vrfVerify**(`s`, `a`, `b`, `c`): readonly \[[`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)\<`64`\>, `boolean`\]

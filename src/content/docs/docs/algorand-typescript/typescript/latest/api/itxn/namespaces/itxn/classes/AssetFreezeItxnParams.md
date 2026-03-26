@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "AssetFreezeItxnParams"
+title: 'AssetFreezeItxnParams'
 ---
 
 Defined in: [itxn.ts:1111](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/itxn.ts#L1111)
@@ -33,7 +33,7 @@ Return a copy of this AssetFreezeItxnParams object
 
 `AssetFreezeItxnParams`
 
-***
+---
 
 ### set()
 
@@ -53,7 +53,7 @@ Update one or more fields in this AssetFreezeItxnParams object
 
 `void`
 
-***
+---
 
 ### submit()
 

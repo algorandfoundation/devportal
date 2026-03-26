@@ -2,10 +2,10 @@
 editUrl: false
 next: false
 prev: false
-title: "TypedApplicationCallResponse"
+title: 'TypedApplicationCallResponse'
 ---
 
-> **TypedApplicationCallResponse**\<`TReturn`\> = `TReturn` *extends* `void` ? `object` : `object`
+> **TypedApplicationCallResponse**\<`TReturn`\> = `TReturn` _extends_ `void` ? `object` : `object`
 
 Defined in: [arc4/c2c.ts:64](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/arc4/c2c.ts#L64)
 

@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "getLocalABIStorageKey"
+title: 'getLocalABIStorageKey'
 ---
 
 > **getLocalABIStorageKey**(`contract`, `keyName`): [`ABIStorageKey`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/type-aliases/abistoragekey/)

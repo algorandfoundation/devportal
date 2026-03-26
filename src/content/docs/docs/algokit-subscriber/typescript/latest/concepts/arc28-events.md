@@ -38,15 +38,15 @@ The `Arc28EventGroup` type has the following definition:
 /** Specifies a group of ARC-28 event definitions along with instructions for when to attempt to process the events. */
 export interface Arc28EventGroup {
   /** The name to designate for this group of events. */
-  groupName: string
+  groupName: string;
   /** Optional list of app IDs that this event should apply to */
-  processForAppIds?: bigint[]
+  processForAppIds?: bigint[];
   /** Optional predicate to indicate if these ARC-28 events should be processed for the given transaction */
-  processTransaction?: (transaction: SubscribedTransaction) => boolean
+  processTransaction?: (transaction: SubscribedTransaction) => boolean;
   /** Whether or not to silently (with warning log) continue if an error is encountered processing the ARC-28 event data; default = false */
-  continueOnError?: boolean
+  continueOnError?: boolean;
   /** The list of ARC-28 event definitions */
-  events: Arc28Event[]
+  events: Arc28Event[];
 }
 
 /**
@@ -54,18 +54,18 @@ export interface Arc28EventGroup {
  */
 export interface Arc28Event {
   /** The name of the event */
-  name: string
+  name: string;
   /** Optional, user-friendly description for the event */
-  desc?: string
+  desc?: string;
   /** The arguments of the event, in order */
   args: Array<{
     /** The type of the argument */
-    type: string
+    type: string;
     /** Optional, user-friendly name for the argument */
-    name?: string
+    name?: string;
     /** Optional, user-friendly description for the argument */
-    desc?: string
-  }>
+    desc?: string;
+  }>;
 }
 ```
 

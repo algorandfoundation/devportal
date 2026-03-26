@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "SendParams"
+title: 'SendParams'
 ---
 
 Defined in: [src/transaction/types.ts:124](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/transaction/types.ts#L124)
@@ -23,7 +23,7 @@ Defined in: [src/transaction/types.ts:132](https://github.com/algorandfoundation
 
 Whether to use simulate to automatically calculate required app call inner transaction fees and cover them in the parent app call transaction fee
 
-***
+---
 
 ### maxRoundsToWaitForConfirmation?
 
@@ -33,7 +33,7 @@ Defined in: [src/transaction/types.ts:126](https://github.com/algorandfoundation
 
 The number of rounds to wait for confirmation. By default until the latest lastValid has past.
 
-***
+---
 
 ### populateAppCallResources?
 
@@ -43,7 +43,7 @@ Defined in: [src/transaction/types.ts:130](https://github.com/algorandfoundation
 
 Whether to use simulate to automatically populate app call resources in the txn objects. Defaults to `Config.populateAppCallResources`.
 
-***
+---
 
 ### suppressLog?
 

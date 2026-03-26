@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "getEncodedTransactionType"
+title: 'getEncodedTransactionType'
 ---
 
 > **getEncodedTransactionType**(`encoded_transaction`): [`TransactionType`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/enumerations/transactiontype/)
@@ -14,7 +14,7 @@ This is particularly useful when decoding a transaction that has an unknown type
 
 ## Parameters
 
-### encoded\_transaction
+### encoded_transaction
 
 `Uint8Array`
 

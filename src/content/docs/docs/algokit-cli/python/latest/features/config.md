@@ -1,5 +1,5 @@
 ---
-title: "AlgoKit Config"
+title: 'AlgoKit Config'
 ---
 
 The `algokit config` command allows you to manage various global settings used by AlgoKit CLI. This feature is essential for customizing your AlgoKit environment to suit your needs.

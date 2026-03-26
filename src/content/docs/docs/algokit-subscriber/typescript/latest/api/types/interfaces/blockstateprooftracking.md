@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "BlockStateProofTracking"
+title: 'BlockStateProofTracking'
 ---
 
 Defined in: [src/types/subscription.ts:101](https://github.com/algorandfoundation/algokit-subscriber-ts/blob/main/src/types/subscription.ts#L101)
@@ -17,7 +17,7 @@ Defined in: [src/types/subscription.ts:105](https://github.com/algorandfoundatio
 
 (n) Next round for which we will accept a state proof transaction.
 
-***
+---
 
 ### onlineTotalWeight?
 
@@ -28,7 +28,7 @@ Defined in: [src/types/subscription.ts:111](https://github.com/algorandfoundatio
 (t) The total number of microalgos held by the online accounts during the
 StateProof round.
 
-***
+---
 
 ### type?
 
@@ -38,7 +38,7 @@ Defined in: [src/types/subscription.ts:116](https://github.com/algorandfoundatio
 
 State Proof Type. Note the raw object uses map with this as key.
 
-***
+---
 
 ### votersCommitment?
 

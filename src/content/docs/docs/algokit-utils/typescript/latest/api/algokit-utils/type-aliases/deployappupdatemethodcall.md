@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "DeployAppUpdateMethodCall"
+title: 'DeployAppUpdateMethodCall'
 ---
 
 > **DeployAppUpdateMethodCall** = `Expand`\<`Omit`\<[`AppUpdateMethodCall`](/docs/algokit-utils/typescript/latest/api/algokit-utils/type-aliases/appupdatemethodcall/), `"appId"` \| `"approvalProgram"` \| `"clearStateProgram"`\>\>

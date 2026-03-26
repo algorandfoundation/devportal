@@ -1,6 +1,6 @@
 ---
-title: "Pending Transactions"
-description: "This example demonstrates how to query pending transactions in the transaction pool using pendingTransactions() and pendingTransactionsByAddress(). Pending transactions are those that have been submitted but not yet confirmed in a block."
+title: 'Pending Transactions'
+description: 'This example demonstrates how to query pending transactions in the transaction pool using pendingTransactions() and pendingTransactionsByAddress(). Pending transactions are those that have been submitted but not yet confirmed in a block.'
 sidebar:
   order: 7
 ---
@@ -40,8 +40,8 @@ npm run example algod_client/07-pending-transactions.ts
  * - LocalNet running (via `algokit localnet start`)
  */
 
-import { algo } from '@algorandfoundation/algokit-utils'
-import type { PendingTransactionsResponse } from '@algorandfoundation/algokit-utils/algod-client'
+import { algo } from '@algorandfoundation/algokit-utils';
+import type { PendingTransactionsResponse } from '@algorandfoundation/algokit-utils/algod-client';
 import {
   createAlgodClient,
   createAlgorandClient,
@@ -52,258 +52,262 @@ import {
   printStep,
   printSuccess,
   shortenAddress,
-} from '../shared/utils.js'
+} from '../shared/utils.js';
 
 /** Display details of a signed transaction from the pending pool */
-function displayPendingTransaction(txn: PendingTransactionsResponse['topTransactions'][number], index: number): void {
-  printInfo(`  Transaction ${index + 1}:`)
+function displayPendingTransaction(
+  txn: PendingTransactionsResponse['topTransactions'][number],
+  index: number,
+): void {
+  printInfo(`  Transaction ${index + 1}:`);
   if (txn.txn) {
-    const inner = txn.txn
-    printInfo(`    Type: ${inner.type}`)
-    printInfo(`    Sender: ${shortenAddress(inner.sender.toString())}`)
+    const inner = txn.txn;
+    printInfo(`    Type: ${inner.type}`);
+    printInfo(`    Sender: ${shortenAddress(inner.sender.toString())}`);
     if (inner.fee) {
-      printInfo(`    Fee: ${formatMicroAlgo(inner.fee)}`)
+      printInfo(`    Fee: ${formatMicroAlgo(inner.fee)}`);
     }
-    printInfo(`    First Valid: ${inner.firstValid.toLocaleString('en-US')}`)
-    printInfo(`    Last Valid: ${inner.lastValid.toLocaleString('en-US')}`)
+    printInfo(`    First Valid: ${inner.firstValid.toLocaleString('en-US')}`);
+    printInfo(`    Last Valid: ${inner.lastValid.toLocaleString('en-US')}`);
 
     // Payment-specific fields
     if (inner.payment) {
-      printInfo(`    Receiver: ${shortenAddress(inner.payment.receiver.toString())}`)
-      printInfo(`    Amount: ${formatMicroAlgo(inner.payment.amount)}`)
+      printInfo(`    Receiver: ${shortenAddress(inner.payment.receiver.toString())}`);
+      printInfo(`    Amount: ${formatMicroAlgo(inner.payment.amount)}`);
     }
   }
-  printInfo('')
+  printInfo('');
 }
 
 async function main() {
-  printHeader('Pending Transactions Example')
+  printHeader('Pending Transactions Example');
 
   // Create clients
-  const algod = createAlgodClient()
-  const algorand = createAlgorandClient()
+  const algod = createAlgodClient();
+  const algorand = createAlgorandClient();
 
   // =========================================================================
   // Step 1: Query all pending transactions in the pool
   // =========================================================================
-  printStep(1, 'Querying all pending transactions with pendingTransactions()')
+  printStep(1, 'Querying all pending transactions with pendingTransactions()');
 
-  printInfo('pendingTransactions() returns all transactions in the pending pool')
-  printInfo('sorted by priority (fee per byte) in decreasing order.')
-  printInfo('')
+  printInfo('pendingTransactions() returns all transactions in the pending pool');
+  printInfo('sorted by priority (fee per byte) in decreasing order.');
+  printInfo('');
 
-  const allPending = await algod.pendingTransactions()
+  const allPending = await algod.pendingTransactions();
 
-  printInfo('PendingTransactionsResponse structure:')
-  printInfo(`  totalTransactions: ${allPending.totalTransactions} (total txns in pool)`)
-  printInfo(`  topTransactions: SignedTransaction[] (array of pending txns)`)
-  printInfo(`  topTransactions.length: ${allPending.topTransactions.length}`)
-  printInfo('')
+  printInfo('PendingTransactionsResponse structure:');
+  printInfo(`  totalTransactions: ${allPending.totalTransactions} (total txns in pool)`);
+  printInfo(`  topTransactions: SignedTransaction[] (array of pending txns)`);
+  printInfo(`  topTransactions.length: ${allPending.topTransactions.length}`);
+  printInfo('');
 
   if (allPending.totalTransactions === 0) {
-    printInfo('No pending transactions in the pool (normal for LocalNet in dev mode)')
-    printInfo('On LocalNet dev mode, transactions are confirmed immediately when submitted.')
+    printInfo('No pending transactions in the pool (normal for LocalNet in dev mode)');
+    printInfo('On LocalNet dev mode, transactions are confirmed immediately when submitted.');
   } else {
-    printInfo(`Found ${allPending.totalTransactions} pending transaction(s)`)
+    printInfo(`Found ${allPending.totalTransactions} pending transaction(s)`);
     for (let i = 0; i < allPending.topTransactions.length; i++) {
-      displayPendingTransaction(allPending.topTransactions[i], i)
+      displayPendingTransaction(allPending.topTransactions[i], i);
     }
   }
-  printInfo('')
+  printInfo('');
 
   // =========================================================================
   // Step 2: Query pending transactions for a specific address
   // =========================================================================
-  printStep(2, 'Querying pending transactions by address with pendingTransactionsByAddress()')
+  printStep(2, 'Querying pending transactions by address with pendingTransactionsByAddress()');
 
   // Get the dispenser account address for testing
-  const dispenser = await algorand.account.dispenserFromEnvironment()
-  const dispenserAddress = dispenser.addr.toString()
+  const dispenser = await algorand.account.dispenserFromEnvironment();
+  const dispenserAddress = dispenser.addr.toString();
 
-  printInfo(`Checking pending transactions for: ${shortenAddress(dispenserAddress)}`)
-  printInfo('')
+  printInfo(`Checking pending transactions for: ${shortenAddress(dispenserAddress)}`);
+  printInfo('');
 
-  const addressPending = await algod.pendingTransactionsByAddress(dispenserAddress)
+  const addressPending = await algod.pendingTransactionsByAddress(dispenserAddress);
 
-  printInfo('PendingTransactionsResponse for address:')
-  printInfo(`  totalTransactions: ${addressPending.totalTransactions}`)
-  printInfo(`  topTransactions.length: ${addressPending.topTransactions.length}`)
-  printInfo('')
+  printInfo('PendingTransactionsResponse for address:');
+  printInfo(`  totalTransactions: ${addressPending.totalTransactions}`);
+  printInfo(`  topTransactions.length: ${addressPending.topTransactions.length}`);
+  printInfo('');
 
   if (addressPending.totalTransactions === 0) {
-    printInfo('No pending transactions for this address')
+    printInfo('No pending transactions for this address');
   } else {
-    printInfo(`Found ${addressPending.totalTransactions} pending transaction(s) for this address`)
+    printInfo(`Found ${addressPending.totalTransactions} pending transaction(s) for this address`);
     for (let i = 0; i < addressPending.topTransactions.length; i++) {
-      displayPendingTransaction(addressPending.topTransactions[i], i)
+      displayPendingTransaction(addressPending.topTransactions[i], i);
     }
   }
-  printInfo('')
+  printInfo('');
 
   // =========================================================================
   // Step 3: Using the max parameter to limit results
   // =========================================================================
-  printStep(3, 'Using the max parameter to limit results')
+  printStep(3, 'Using the max parameter to limit results');
 
-  printInfo('Both methods accept an optional { max: number } parameter')
-  printInfo('When max = 0 (or undefined), all pending transactions are returned')
-  printInfo('When max > 0, results are truncated to that many transactions')
-  printInfo('')
+  printInfo('Both methods accept an optional { max: number } parameter');
+  printInfo('When max = 0 (or undefined), all pending transactions are returned');
+  printInfo('When max > 0, results are truncated to that many transactions');
+  printInfo('');
 
   // Query with max = 5
-  const limitedPending = await algod.pendingTransactions({ max: 5 })
-  printInfo(`pendingTransactions({ max: 5 }):`)
-  printInfo(`  totalTransactions: ${limitedPending.totalTransactions} (total in pool)`)
-  printInfo(`  topTransactions.length: ${limitedPending.topTransactions.length} (returned, max 5)`)
-  printInfo('')
+  const limitedPending = await algod.pendingTransactions({ max: 5 });
+  printInfo(`pendingTransactions({ max: 5 }):`);
+  printInfo(`  totalTransactions: ${limitedPending.totalTransactions} (total in pool)`);
+  printInfo(`  topTransactions.length: ${limitedPending.topTransactions.length} (returned, max 5)`);
+  printInfo('');
 
   // Query by address with max = 3
-  const limitedByAddress = await algod.pendingTransactionsByAddress(dispenserAddress, { max: 3 })
-  printInfo(`pendingTransactionsByAddress(address, { max: 3 }):`)
-  printInfo(`  totalTransactions: ${limitedByAddress.totalTransactions}`)
-  printInfo(`  topTransactions.length: ${limitedByAddress.topTransactions.length}`)
-  printInfo('')
+  const limitedByAddress = await algod.pendingTransactionsByAddress(dispenserAddress, { max: 3 });
+  printInfo(`pendingTransactionsByAddress(address, { max: 3 }):`);
+  printInfo(`  totalTransactions: ${limitedByAddress.totalTransactions}`);
+  printInfo(`  topTransactions.length: ${limitedByAddress.topTransactions.length}`);
+  printInfo('');
 
   // =========================================================================
   // Step 4: Submit a transaction and immediately query the pending pool
   // =========================================================================
-  printStep(4, 'Submitting a transaction and immediately querying pending pool')
+  printStep(4, 'Submitting a transaction and immediately querying pending pool');
 
-  printInfo('On LocalNet in dev mode, transactions are confirmed immediately,')
-  printInfo('so they may not appear in the pending pool. On MainNet/TestNet,')
-  printInfo('there is a window where the transaction is pending before confirmation.')
-  printInfo('')
+  printInfo('On LocalNet in dev mode, transactions are confirmed immediately,');
+  printInfo('so they may not appear in the pending pool. On MainNet/TestNet,');
+  printInfo('there is a window where the transaction is pending before confirmation.');
+  printInfo('');
 
   // Create a receiver account
-  const receiver = algorand.account.random()
-  printInfo(`Sender: ${shortenAddress(dispenser.addr.toString())}`)
-  printInfo(`Receiver: ${shortenAddress(receiver.addr.toString())}`)
-  printInfo('')
+  const receiver = algorand.account.random();
+  printInfo(`Sender: ${shortenAddress(dispenser.addr.toString())}`);
+  printInfo(`Receiver: ${shortenAddress(receiver.addr.toString())}`);
+  printInfo('');
 
   // Create and sign a payment transaction
-  const paymentAmount = algo(0.1)
+  const paymentAmount = algo(0.1);
   const paymentTxn = await algorand.createTransaction.payment({
     sender: dispenser.addr,
     receiver: receiver.addr,
     amount: paymentAmount,
-  })
+  });
 
-  const txId = paymentTxn.txId()
-  printInfo(`Transaction ID: ${txId}`)
+  const txId = paymentTxn.txId();
+  printInfo(`Transaction ID: ${txId}`);
 
   // Sign the transaction
-  const signedTxn = await dispenser.signer([paymentTxn], [0])
+  const signedTxn = await dispenser.signer([paymentTxn], [0]);
 
   // Submit the transaction
-  printInfo('Submitting transaction...')
-  await algod.sendRawTransaction(signedTxn)
-  printSuccess('Transaction submitted!')
-  printInfo('')
+  printInfo('Submitting transaction...');
+  await algod.sendRawTransaction(signedTxn);
+  printSuccess('Transaction submitted!');
+  printInfo('');
 
   // Immediately query pending transactions
   // Note: On LocalNet dev mode, this will likely show the transaction as already confirmed
-  const pendingAfterSubmit = await algod.pendingTransactions()
-  printInfo('Pending pool immediately after submission:')
-  printInfo(`  totalTransactions: ${pendingAfterSubmit.totalTransactions}`)
+  const pendingAfterSubmit = await algod.pendingTransactions();
+  printInfo('Pending pool immediately after submission:');
+  printInfo(`  totalTransactions: ${pendingAfterSubmit.totalTransactions}`);
 
   if (pendingAfterSubmit.totalTransactions === 0) {
-    printInfo('Transaction already confirmed (LocalNet dev mode behavior)')
+    printInfo('Transaction already confirmed (LocalNet dev mode behavior)');
   } else {
-    printInfo('Transaction found in pending pool:')
+    printInfo('Transaction found in pending pool:');
     for (const pendingTxn of pendingAfterSubmit.topTransactions) {
       if (pendingTxn.txn) {
-        displayPendingTransaction(pendingTxn, 0)
+        displayPendingTransaction(pendingTxn, 0);
       }
     }
   }
-  printInfo('')
+  printInfo('');
 
   // Also check by sender address
-  const senderPending = await algod.pendingTransactionsByAddress(dispenser.addr.toString())
-  printInfo(`Pending for sender address: ${senderPending.totalTransactions} transaction(s)`)
-  printInfo('')
+  const senderPending = await algod.pendingTransactionsByAddress(dispenser.addr.toString());
+  printInfo(`Pending for sender address: ${senderPending.totalTransactions} transaction(s)`);
+  printInfo('');
 
   // Verify the transaction was confirmed
-  const pendingInfo = await algod.pendingTransactionInformation(txId)
+  const pendingInfo = await algod.pendingTransactionInformation(txId);
   if (pendingInfo.confirmedRound && pendingInfo.confirmedRound > 0n) {
-    printSuccess(`Transaction confirmed in round ${pendingInfo.confirmedRound.toLocaleString('en-US')}`)
+    printSuccess(
+      `Transaction confirmed in round ${pendingInfo.confirmedRound.toLocaleString('en-US')}`,
+    );
   } else if (pendingInfo.poolError) {
-    printError(`Transaction rejected: ${pendingInfo.poolError}`)
+    printError(`Transaction rejected: ${pendingInfo.poolError}`);
   } else {
-    printInfo('Transaction is still pending...')
+    printInfo('Transaction is still pending...');
   }
-  printInfo('')
+  printInfo('');
 
   // =========================================================================
   // Step 5: Understanding the SignedTransaction structure
   // =========================================================================
-  printStep(5, 'Understanding the SignedTransaction structure in pending pool')
+  printStep(5, 'Understanding the SignedTransaction structure in pending pool');
 
-  printInfo('Each transaction in topTransactions is a SignedTransaction with:')
-  printInfo('  txn: Transaction      - The unsigned transaction details')
-  printInfo('  sig?: Uint8Array      - Signature bytes (for single-sig)')
-  printInfo('  msig?: Multisig       - Multisig details (if multisig)')
-  printInfo('  lsig?: LogicSig       - Logic signature (if using smart sig)')
-  printInfo('  sgnr?: Address        - The actual signer (if rekeyed)')
-  printInfo('')
+  printInfo('Each transaction in topTransactions is a SignedTransaction with:');
+  printInfo('  txn: Transaction      - The unsigned transaction details');
+  printInfo('  sig?: Uint8Array      - Signature bytes (for single-sig)');
+  printInfo('  msig?: Multisig       - Multisig details (if multisig)');
+  printInfo('  lsig?: LogicSig       - Logic signature (if using smart sig)');
+  printInfo('  sgnr?: Address        - The actual signer (if rekeyed)');
+  printInfo('');
 
-  printInfo('The Transaction (txn) object contains:')
-  printInfo('  type: string          - Transaction type (pay, axfer, appl, etc.)')
-  printInfo('  sender: Address       - The sender address')
-  printInfo('  fee?: bigint          - Transaction fee in microAlgos')
-  printInfo('  firstValid: bigint    - First valid round')
-  printInfo('  lastValid: bigint     - Last valid round')
-  printInfo('  genesisId?: string    - Genesis ID (network identifier)')
-  printInfo('  genesisHash?: Uint8Array - Genesis hash')
-  printInfo('  note?: Uint8Array     - Transaction note')
-  printInfo('  lease?: Uint8Array    - Transaction lease')
-  printInfo('  rekeyTo?: Address     - Rekey-to address')
-  printInfo('  group?: Uint8Array    - Group ID (if in atomic group)')
-  printInfo('')
+  printInfo('The Transaction (txn) object contains:');
+  printInfo('  type: string          - Transaction type (pay, axfer, appl, etc.)');
+  printInfo('  sender: Address       - The sender address');
+  printInfo('  fee?: bigint          - Transaction fee in microAlgos');
+  printInfo('  firstValid: bigint    - First valid round');
+  printInfo('  lastValid: bigint     - Last valid round');
+  printInfo('  genesisId?: string    - Genesis ID (network identifier)');
+  printInfo('  genesisHash?: Uint8Array - Genesis hash');
+  printInfo('  note?: Uint8Array     - Transaction note');
+  printInfo('  lease?: Uint8Array    - Transaction lease');
+  printInfo('  rekeyTo?: Address     - Rekey-to address');
+  printInfo('  group?: Uint8Array    - Group ID (if in atomic group)');
+  printInfo('');
 
-  printInfo('Type-specific fields (on the Transaction object):')
-  printInfo('  payment?: { receiver, amount, closeRemainderTo }')
-  printInfo('  assetTransfer?: { assetId, receiver, amount, sender, closeRemainderTo }')
-  printInfo('  applicationCall?: { appId, onComplete, accounts, args, ... }')
-  printInfo('  assetConfig?: { assetId, params }')
-  printInfo('  assetFreeze?: { assetId, freezeAccount, frozen }')
-  printInfo('  keyRegistration?: { ... }')
-  printInfo('  stateProofTransaction?: { ... }')
-  printInfo('')
+  printInfo('Type-specific fields (on the Transaction object):');
+  printInfo('  payment?: { receiver, amount, closeRemainderTo }');
+  printInfo('  assetTransfer?: { assetId, receiver, amount, sender, closeRemainderTo }');
+  printInfo('  applicationCall?: { appId, onComplete, accounts, args, ... }');
+  printInfo('  assetConfig?: { assetId, params }');
+  printInfo('  assetFreeze?: { assetId, freezeAccount, frozen }');
+  printInfo('  keyRegistration?: { ... }');
+  printInfo('  stateProofTransaction?: { ... }');
+  printInfo('');
 
   // =========================================================================
   // Summary
   // =========================================================================
-  printHeader('Summary')
-  printInfo('This example demonstrated:')
-  printInfo('  1. pendingTransactions() - Get all pending transactions in the pool')
-  printInfo('  2. pendingTransactionsByAddress(address) - Get pending txns for an address')
-  printInfo('  3. Using { max: N } parameter to limit results')
-  printInfo('  4. Submitting and immediately querying for pending transactions')
-  printInfo('  5. Understanding the SignedTransaction and Transaction structure')
-  printInfo('')
-  printInfo('Key PendingTransactionsResponse fields:')
-  printInfo('  - totalTransactions: Total number of transactions in the pool')
-  printInfo('  - topTransactions: Array of SignedTransaction objects')
-  printInfo('')
-  printInfo('Use cases for pending transactions:')
-  printInfo('  - Monitor your own pending transactions')
-  printInfo('  - Check transaction pool congestion')
-  printInfo('  - Verify a transaction was submitted before confirmation')
-  printInfo('  - Build fee estimation based on current pool')
-  printInfo('')
-  printInfo('Notes:')
-  printInfo('  - On LocalNet dev mode, transactions confirm immediately')
-  printInfo('  - On MainNet/TestNet, pending pool shows unconfirmed transactions')
-  printInfo('  - Transactions are sorted by priority (fee per byte)')
-  printInfo('  - Use max parameter to avoid fetching large numbers of transactions')
+  printHeader('Summary');
+  printInfo('This example demonstrated:');
+  printInfo('  1. pendingTransactions() - Get all pending transactions in the pool');
+  printInfo('  2. pendingTransactionsByAddress(address) - Get pending txns for an address');
+  printInfo('  3. Using { max: N } parameter to limit results');
+  printInfo('  4. Submitting and immediately querying for pending transactions');
+  printInfo('  5. Understanding the SignedTransaction and Transaction structure');
+  printInfo('');
+  printInfo('Key PendingTransactionsResponse fields:');
+  printInfo('  - totalTransactions: Total number of transactions in the pool');
+  printInfo('  - topTransactions: Array of SignedTransaction objects');
+  printInfo('');
+  printInfo('Use cases for pending transactions:');
+  printInfo('  - Monitor your own pending transactions');
+  printInfo('  - Check transaction pool congestion');
+  printInfo('  - Verify a transaction was submitted before confirmation');
+  printInfo('  - Build fee estimation based on current pool');
+  printInfo('');
+  printInfo('Notes:');
+  printInfo('  - On LocalNet dev mode, transactions confirm immediately');
+  printInfo('  - On MainNet/TestNet, pending pool shows unconfirmed transactions');
+  printInfo('  - Transactions are sorted by priority (fee per byte)');
+  printInfo('  - Use max parameter to avoid fetching large numbers of transactions');
 }
 
-main().catch((error) => {
-  console.error('Fatal error:', error)
-  process.exit(1)
-})
-
+main().catch(error => {
+  console.error('Fatal error:', error);
+  process.exit(1);
+});
 ```
 
 ---

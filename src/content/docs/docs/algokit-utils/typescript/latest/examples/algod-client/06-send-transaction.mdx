@@ -1,6 +1,6 @@
 ---
-title: "Send and Confirm Transaction"
-description: "This example demonstrates how to send transactions and wait for confirmation using sendRawTransaction() and pendingTransactionInformation(). It shows the complete lifecycle of submitting a transaction to the Algorand network."
+title: 'Send and Confirm Transaction'
+description: 'This example demonstrates how to send transactions and wait for confirmation using sendRawTransaction() and pendingTransactionInformation(). It shows the complete lifecycle of submitting a transaction to the Algorand network.'
 sidebar:
   order: 6
 ---
@@ -28,7 +28,7 @@ npm run example algod_client/06-send-transaction.ts
 
 [View source on GitHub](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/examples/algod_client/06-send-transaction.ts)
 
-```typescript title="06-send-transaction.ts"
+````typescript title="06-send-transaction.ts"
 /**
  * Example: Send and Confirm Transaction
  *
@@ -40,8 +40,8 @@ npm run example algod_client/06-send-transaction.ts
  * - LocalNet running (via `algokit localnet start`)
  */
 
-import { algo } from '@algorandfoundation/algokit-utils'
-import type { PendingTransactionResponse } from '@algorandfoundation/algokit-utils/algod-client'
+import { algo } from '@algorandfoundation/algokit-utils';
+import type { PendingTransactionResponse } from '@algorandfoundation/algokit-utils/algod-client';
 import {
   createAlgodClient,
   createAlgorandClient,
@@ -52,14 +52,14 @@ import {
   printStep,
   printSuccess,
   shortenAddress,
-} from '../shared/utils.js'
+} from '../shared/utils.js';
 
 /**
  * Format a bigint as microAlgos and Algos
  */
 function formatFee(microAlgos: bigint): string {
-  const algoValue = Number(microAlgos) / 1_000_000
-  return `${microAlgos.toLocaleString('en-US')} µALGO (${algoValue.toFixed(6)} ALGO)`
+  const algoValue = Number(microAlgos) / 1_000_000;
+  return `${microAlgos.toLocaleString('en-US')} µALGO (${algoValue.toFixed(6)} ALGO)`;
 }
 
 /**
@@ -74,91 +74,95 @@ function formatFee(microAlgos: bigint): string {
 async function waitForConfirmation(
   algod: ReturnType<typeof createAlgodClient>,
   txId: string,
-  maxRounds: number = 10
+  maxRounds: number = 10,
 ): Promise<PendingTransactionResponse> {
   // Get the current status to know what round we're on
-  const status = await algod.status()
-  let currentRound = status.lastRound
-  const endRound = currentRound + BigInt(maxRounds)
+  const status = await algod.status();
+  let currentRound = status.lastRound;
+  const endRound = currentRound + BigInt(maxRounds);
 
-  printInfo(`  Starting at round: ${currentRound.toLocaleString('en-US')}`)
-  printInfo(`  Will wait until round: ${endRound.toLocaleString('en-US')}`)
-  printInfo('')
+  printInfo(`  Starting at round: ${currentRound.toLocaleString('en-US')}`);
+  printInfo(`  Will wait until round: ${endRound.toLocaleString('en-US')}`);
+  printInfo('');
 
   while (currentRound < endRound) {
     // Check the transaction status
-    const pendingInfo = await algod.pendingTransactionInformation(txId)
+    const pendingInfo = await algod.pendingTransactionInformation(txId);
 
     // Case 1: Transaction is confirmed (confirmedRound > 0)
     if (pendingInfo.confirmedRound && pendingInfo.confirmedRound > 0n) {
-      printInfo(`  Transaction confirmed in round ${pendingInfo.confirmedRound.toLocaleString('en-US')}`)
-      return pendingInfo
+      printInfo(
+        `  Transaction confirmed in round ${pendingInfo.confirmedRound.toLocaleString('en-US')}`,
+      );
+      return pendingInfo;
     }
 
     // Case 2: Transaction was rejected (poolError is not empty)
     if (pendingInfo.poolError && pendingInfo.poolError.length > 0) {
-      throw new Error(`Transaction rejected: ${pendingInfo.poolError}`)
+      throw new Error(`Transaction rejected: ${pendingInfo.poolError}`);
     }
 
     // Case 3: Transaction is still pending (confirmedRound = 0, poolError = "")
-    printInfo(`  Round ${currentRound.toLocaleString('en-US')}: Transaction still pending...`)
+    printInfo(`  Round ${currentRound.toLocaleString('en-US')}: Transaction still pending...`);
 
     // Wait for the next block
-    await algod.statusAfterBlock(currentRound)
-    currentRound++
+    await algod.statusAfterBlock(currentRound);
+    currentRound++;
   }
 
-  throw new Error(`Transaction ${txId} not confirmed after ${maxRounds} rounds`)
+  throw new Error(`Transaction ${txId} not confirmed after ${maxRounds} rounds`);
 }
 
 async function main() {
-  printHeader('Send and Confirm Transaction Example')
+  printHeader('Send and Confirm Transaction Example');
 
   // Create clients
-  const algod = createAlgodClient()
-  const algorand = createAlgorandClient()
+  const algod = createAlgodClient();
+  const algorand = createAlgorandClient();
 
   // =========================================================================
   // Step 1: Get a funded account and create a receiver
   // =========================================================================
-  printStep(1, 'Setting up sender and receiver accounts')
+  printStep(1, 'Setting up sender and receiver accounts');
 
   // Get a funded account from LocalNet (the dispenser)
-  const sender = await algorand.account.dispenserFromEnvironment()
-  printInfo(`Sender address: ${shortenAddress(sender.addr.toString())}`)
+  const sender = await algorand.account.dispenserFromEnvironment();
+  printInfo(`Sender address: ${shortenAddress(sender.addr.toString())}`);
 
   // Get sender balance
-  const senderInfo = await algod.accountInformation(sender.addr.toString())
-  printInfo(`Sender balance: ${formatMicroAlgo(senderInfo.amount)}`)
+  const senderInfo = await algod.accountInformation(sender.addr.toString());
+  printInfo(`Sender balance: ${formatMicroAlgo(senderInfo.amount)}`);
 
   // Create a new random account as receiver
-  const receiver = algorand.account.random()
-  printInfo(`Receiver address: ${shortenAddress(receiver.addr.toString())}`)
-  printInfo('Receiver is a new unfunded account')
-  printInfo('')
+  const receiver = algorand.account.random();
+  printInfo(`Receiver address: ${shortenAddress(receiver.addr.toString())}`);
+  printInfo('Receiver is a new unfunded account');
+  printInfo('');
 
   // =========================================================================
   // Step 2: Get suggested transaction parameters
   // =========================================================================
-  printStep(2, 'Getting suggested transaction parameters')
+  printStep(2, 'Getting suggested transaction parameters');
 
-  const suggestedParams = await algod.suggestedParams()
-  printInfo(`First valid round: ${suggestedParams.firstValid.toLocaleString('en-US')}`)
-  printInfo(`Last valid round: ${suggestedParams.lastValid.toLocaleString('en-US')}`)
-  printInfo(`Min fee: ${formatFee(suggestedParams.minFee)}`)
-  printInfo(`Genesis ID: ${suggestedParams.genesisId}`)
-  printInfo('')
+  const suggestedParams = await algod.suggestedParams();
+  printInfo(`First valid round: ${suggestedParams.firstValid.toLocaleString('en-US')}`);
+  printInfo(`Last valid round: ${suggestedParams.lastValid.toLocaleString('en-US')}`);
+  printInfo(`Min fee: ${formatFee(suggestedParams.minFee)}`);
+  printInfo(`Genesis ID: ${suggestedParams.genesisId}`);
+  printInfo('');
 
   // =========================================================================
   // Step 3: Create a payment transaction using algosdk/algokit
   // =========================================================================
-  printStep(3, 'Creating a payment transaction')
+  printStep(3, 'Creating a payment transaction');
 
-  const paymentAmount = algo(1) // 1 ALGO
-  printInfo(`Payment amount: ${paymentAmount.algo} ALGO (${paymentAmount.microAlgo.toLocaleString('en-US')} µALGO)`)
-  printInfo(`Sender: ${shortenAddress(sender.addr.toString())}`)
-  printInfo(`Receiver: ${shortenAddress(receiver.addr.toString())}`)
-  printInfo('')
+  const paymentAmount = algo(1); // 1 ALGO
+  printInfo(
+    `Payment amount: ${paymentAmount.algo} ALGO (${paymentAmount.microAlgo.toLocaleString('en-US')} µALGO)`,
+  );
+  printInfo(`Sender: ${shortenAddress(sender.addr.toString())}`);
+  printInfo(`Receiver: ${shortenAddress(receiver.addr.toString())}`);
+  printInfo('');
 
   // Build the transaction using AlgorandClient.createTransaction
   // This creates an unsigned Transaction object
@@ -166,214 +170,216 @@ async function main() {
     sender: sender.addr,
     receiver: receiver.addr,
     amount: paymentAmount,
-  })
+  });
 
   // Get the transaction ID before sending
-  const txId = paymentTxn.txId()
-  printInfo(`Transaction ID: ${txId}`)
+  const txId = paymentTxn.txId();
+  printInfo(`Transaction ID: ${txId}`);
 
   // Sign the transaction using the sender's signer
-  const signedTxn = await sender.signer([paymentTxn], [0])
-  printSuccess('Transaction signed successfully!')
-  printInfo('')
+  const signedTxn = await sender.signer([paymentTxn], [0]);
+  printSuccess('Transaction signed successfully!');
+  printInfo('');
 
   // =========================================================================
   // Step 4: Submit the transaction using sendRawTransaction()
   // =========================================================================
-  printStep(4, 'Submitting transaction with sendRawTransaction()')
+  printStep(4, 'Submitting transaction with sendRawTransaction()');
 
   try {
-    const submitResponse = await algod.sendRawTransaction(signedTxn)
-    printSuccess(`Transaction submitted successfully!`)
-    printInfo(`Transaction ID from response: ${submitResponse.txId}`)
-    printInfo('')
+    const submitResponse = await algod.sendRawTransaction(signedTxn);
+    printSuccess(`Transaction submitted successfully!`);
+    printInfo(`Transaction ID from response: ${submitResponse.txId}`);
+    printInfo('');
 
-    printInfo('sendRawTransaction() accepts:')
-    printInfo('  - A single signed transaction (Uint8Array)')
-    printInfo('  - An array of signed transactions (Uint8Array[])')
-    printInfo('Returns PostTransactionsResponse with txid field')
-    printInfo('')
-
+    printInfo('sendRawTransaction() accepts:');
+    printInfo('  - A single signed transaction (Uint8Array)');
+    printInfo('  - An array of signed transactions (Uint8Array[])');
+    printInfo('Returns PostTransactionsResponse with txid field');
+    printInfo('');
   } catch (error) {
-    printError(`Failed to submit transaction: ${error instanceof Error ? error.message : String(error)}`)
-    printInfo('Common errors:')
-    printInfo('  - "txn dead" - Transaction validity window has passed')
-    printInfo('  - "overspend" - Sender has insufficient funds')
-    printInfo('  - "fee too small" - Transaction fee is below minimum')
-    throw error
+    printError(
+      `Failed to submit transaction: ${error instanceof Error ? error.message : String(error)}`,
+    );
+    printInfo('Common errors:');
+    printInfo('  - "txn dead" - Transaction validity window has passed');
+    printInfo('  - "overspend" - Sender has insufficient funds');
+    printInfo('  - "fee too small" - Transaction fee is below minimum');
+    throw error;
   }
 
   // =========================================================================
   // Step 5: Check transaction status with pendingTransactionInformation()
   // =========================================================================
-  printStep(5, 'Checking transaction status with pendingTransactionInformation()')
+  printStep(5, 'Checking transaction status with pendingTransactionInformation()');
 
   // First, let's check the initial status (may already be confirmed on LocalNet)
-  const initialStatus = await algod.pendingTransactionInformation(txId)
-  printInfo('Initial transaction status:')
-  printInfo(`  confirmedRound: ${initialStatus.confirmedRound ?? 'undefined (not yet confirmed)'}`)
-  printInfo(`  poolError: "${initialStatus.poolError}" ${initialStatus.poolError ? '(ERROR!)' : '(empty = no error)'}`)
-  printInfo('')
+  const initialStatus = await algod.pendingTransactionInformation(txId);
+  printInfo('Initial transaction status:');
+  printInfo(`  confirmedRound: ${initialStatus.confirmedRound ?? 'undefined (not yet confirmed)'}`);
+  printInfo(
+    `  poolError: "${initialStatus.poolError}" ${initialStatus.poolError ? '(ERROR!)' : '(empty = no error)'}`,
+  );
+  printInfo('');
 
-  printInfo('pendingTransactionInformation() returns PendingTransactionResponse with:')
-  printInfo('  - confirmedRound: The round the txn was confirmed (0 or undefined if pending)')
-  printInfo('  - poolError: Error message if txn was rejected (empty if OK)')
-  printInfo('  - txn: The signed transaction object')
-  printInfo('  - And other fields like rewards, inner transactions, etc.')
-  printInfo('')
+  printInfo('pendingTransactionInformation() returns PendingTransactionResponse with:');
+  printInfo('  - confirmedRound: The round the txn was confirmed (0 or undefined if pending)');
+  printInfo('  - poolError: Error message if txn was rejected (empty if OK)');
+  printInfo('  - txn: The signed transaction object');
+  printInfo('  - And other fields like rewards, inner transactions, etc.');
+  printInfo('');
 
   // =========================================================================
   // Step 6: Wait for confirmation using a polling loop
   // =========================================================================
-  printStep(6, 'Implementing waitForConfirmation loop')
+  printStep(6, 'Implementing waitForConfirmation loop');
 
-  printInfo('The waitForConfirmation pattern:')
-  printInfo('  1. Call pendingTransactionInformation(txId)')
-  printInfo('  2. If confirmedRound > 0: Transaction confirmed!')
-  printInfo('  3. If poolError is not empty: Transaction rejected!')
-  printInfo('  4. Otherwise: Wait for next block with statusAfterBlock(round)')
-  printInfo('  5. Repeat until confirmed, rejected, or timeout')
-  printInfo('')
+  printInfo('The waitForConfirmation pattern:');
+  printInfo('  1. Call pendingTransactionInformation(txId)');
+  printInfo('  2. If confirmedRound > 0: Transaction confirmed!');
+  printInfo('  3. If poolError is not empty: Transaction rejected!');
+  printInfo('  4. Otherwise: Wait for next block with statusAfterBlock(round)');
+  printInfo('  5. Repeat until confirmed, rejected, or timeout');
+  printInfo('');
 
-  let confirmedInfo: PendingTransactionResponse
+  let confirmedInfo: PendingTransactionResponse;
 
   // On LocalNet in dev mode, the transaction may already be confirmed
   if (initialStatus.confirmedRound && initialStatus.confirmedRound > 0n) {
-    printInfo('Transaction was already confirmed (LocalNet dev mode)')
-    confirmedInfo = initialStatus
+    printInfo('Transaction was already confirmed (LocalNet dev mode)');
+    confirmedInfo = initialStatus;
   } else {
-    printInfo('Waiting for confirmation...')
-    printInfo('')
-    confirmedInfo = await waitForConfirmation(algod, txId, 10)
+    printInfo('Waiting for confirmation...');
+    printInfo('');
+    confirmedInfo = await waitForConfirmation(algod, txId, 10);
   }
 
-  printSuccess('Transaction confirmed!')
-  printInfo('')
+  printSuccess('Transaction confirmed!');
+  printInfo('');
 
   // =========================================================================
   // Step 7: Display confirmed transaction details
   // =========================================================================
-  printStep(7, 'Displaying confirmed transaction details')
+  printStep(7, 'Displaying confirmed transaction details');
 
-  printInfo('Confirmed Transaction Details:')
-  printInfo(`  confirmedRound: ${confirmedInfo.confirmedRound?.toLocaleString('en-US')}`)
-  printInfo('')
+  printInfo('Confirmed Transaction Details:');
+  printInfo(`  confirmedRound: ${confirmedInfo.confirmedRound?.toLocaleString('en-US')}`);
+  printInfo('');
 
   // Display the transaction object details
-  printInfo('Transaction Object (txn):')
-  const txn = confirmedInfo.txn.txn
-  printInfo(`  type: ${txn.type}`)
-  printInfo(`  sender: ${shortenAddress(txn.sender.toString())}`)
-  printInfo(`  fee: ${formatFee(txn.fee ?? 0n)}`)
-  printInfo(`  firstValid: ${txn.firstValid.toLocaleString('en-US')}`)
-  printInfo(`  lastValid: ${txn.lastValid.toLocaleString('en-US')}`)
-  printInfo(`  genesisId: ${txn.genesisId}`)
+  printInfo('Transaction Object (txn):');
+  const txn = confirmedInfo.txn.txn;
+  printInfo(`  type: ${txn.type}`);
+  printInfo(`  sender: ${shortenAddress(txn.sender.toString())}`);
+  printInfo(`  fee: ${formatFee(txn.fee ?? 0n)}`);
+  printInfo(`  firstValid: ${txn.firstValid.toLocaleString('en-US')}`);
+  printInfo(`  lastValid: ${txn.lastValid.toLocaleString('en-US')}`);
+  printInfo(`  genesisId: ${txn.genesisId}`);
 
   // Payment-specific fields
   if (txn.payment) {
-    printInfo('')
-    printInfo('Payment Fields:')
-    printInfo(`  receiver: ${shortenAddress(txn.payment.receiver.toString())}`)
-    printInfo(`  amount: ${formatMicroAlgo(txn.payment.amount)}`)
+    printInfo('');
+    printInfo('Payment Fields:');
+    printInfo(`  receiver: ${shortenAddress(txn.payment.receiver.toString())}`);
+    printInfo(`  amount: ${formatMicroAlgo(txn.payment.amount)}`);
   }
-  printInfo('')
+  printInfo('');
 
   // Display rewards (if any)
   if (confirmedInfo.senderRewards !== undefined) {
-    printInfo('Rewards:')
-    printInfo(`  senderRewards: ${formatMicroAlgo(confirmedInfo.senderRewards)}`)
+    printInfo('Rewards:');
+    printInfo(`  senderRewards: ${formatMicroAlgo(confirmedInfo.senderRewards)}`);
     if (confirmedInfo.receiverRewards !== undefined) {
-      printInfo(`  receiverRewards: ${formatMicroAlgo(confirmedInfo.receiverRewards)}`)
+      printInfo(`  receiverRewards: ${formatMicroAlgo(confirmedInfo.receiverRewards)}`);
     }
-    printInfo('')
+    printInfo('');
   }
 
   // =========================================================================
   // Step 8: Handle and display transaction errors
   // =========================================================================
-  printStep(8, 'Demonstrating error handling (poolError)')
+  printStep(8, 'Demonstrating error handling (poolError)');
 
-  printInfo('The poolError field in PendingTransactionResponse indicates why a')
-  printInfo('transaction was rejected from the transaction pool.')
-  printInfo('')
+  printInfo('The poolError field in PendingTransactionResponse indicates why a');
+  printInfo('transaction was rejected from the transaction pool.');
+  printInfo('');
 
-  printInfo('Common poolError values:')
-  printInfo('  "" (empty string) - Transaction is valid and in pool/confirmed')
-  printInfo('  "transaction already in ledger" - Duplicate transaction')
-  printInfo('  "txn dead" - Transaction validity window expired')
-  printInfo('  "overspend" - Sender has insufficient funds')
-  printInfo('  "fee too small" - Fee is below network minimum')
-  printInfo('  "asset frozen" - Asset is frozen for the account')
-  printInfo('  "logic eval error" - Smart contract evaluation failed')
-  printInfo('')
+  printInfo('Common poolError values:');
+  printInfo('  "" (empty string) - Transaction is valid and in pool/confirmed');
+  printInfo('  "transaction already in ledger" - Duplicate transaction');
+  printInfo('  "txn dead" - Transaction validity window expired');
+  printInfo('  "overspend" - Sender has insufficient funds');
+  printInfo('  "fee too small" - Fee is below network minimum');
+  printInfo('  "asset frozen" - Asset is frozen for the account');
+  printInfo('  "logic eval error" - Smart contract evaluation failed');
+  printInfo('');
 
-  printInfo('Best practice: Always check poolError before assuming success')
-  printInfo('')
+  printInfo('Best practice: Always check poolError before assuming success');
+  printInfo('');
 
   // Example of checking poolError
-  printInfo('Example error handling pattern:')
-  printInfo('```')
-  printInfo('const pendingInfo = await algod.pendingTransactionInformation(txId)')
-  printInfo('if (pendingInfo.poolError && pendingInfo.poolError.length > 0) {')
-  printInfo('  throw new Error(`Transaction rejected: ${pendingInfo.poolError}`)')
-  printInfo('}')
-  printInfo('if (pendingInfo.confirmedRound && pendingInfo.confirmedRound > 0) {')
-  printInfo('  console.log("Transaction confirmed!")')
-  printInfo('}')
-  printInfo('```')
-  printInfo('')
+  printInfo('Example error handling pattern:');
+  printInfo('```');
+  printInfo('const pendingInfo = await algod.pendingTransactionInformation(txId)');
+  printInfo('if (pendingInfo.poolError && pendingInfo.poolError.length > 0) {');
+  printInfo('  throw new Error(`Transaction rejected: ${pendingInfo.poolError}`)');
+  printInfo('}');
+  printInfo('if (pendingInfo.confirmedRound && pendingInfo.confirmedRound > 0) {');
+  printInfo('  console.log("Transaction confirmed!")');
+  printInfo('}');
+  printInfo('```');
+  printInfo('');
 
   // =========================================================================
   // Step 9: Verify the payment was received
   // =========================================================================
-  printStep(9, 'Verifying the receiver got the funds')
+  printStep(9, 'Verifying the receiver got the funds');
 
-  const receiverInfo = await algod.accountInformation(receiver.addr.toString())
-  printInfo(`Receiver balance: ${formatMicroAlgo(receiverInfo.amount)}`)
+  const receiverInfo = await algod.accountInformation(receiver.addr.toString());
+  printInfo(`Receiver balance: ${formatMicroAlgo(receiverInfo.amount)}`);
 
   if (receiverInfo.amount === paymentAmount.microAlgo) {
-    printSuccess(`Payment of ${paymentAmount.algo} ALGO received successfully!`)
+    printSuccess(`Payment of ${paymentAmount.algo} ALGO received successfully!`);
   } else {
-    printError(`Expected ${paymentAmount.microAlgo} µALGO but got ${receiverInfo.amount} µALGO`)
+    printError(`Expected ${paymentAmount.microAlgo} µALGO but got ${receiverInfo.amount} µALGO`);
   }
 
   // =========================================================================
   // Summary
   // =========================================================================
-  printHeader('Summary')
-  printInfo('This example demonstrated:')
-  printInfo('  1. sendRawTransaction(signedTxn) - Submit a signed transaction')
-  printInfo('  2. pendingTransactionInformation(txId) - Check transaction status')
-  printInfo('  3. waitForConfirmation loop - Poll until confirmed or rejected')
-  printInfo('  4. Confirmed transaction details: confirmedRound, txn, fee')
-  printInfo('  5. Error handling with poolError field')
-  printInfo('')
-  printInfo('Key PendingTransactionResponse fields:')
-  printInfo('  - confirmedRound: Round when confirmed (bigint, undefined if pending)')
-  printInfo('  - poolError: Error message if rejected (string, empty if OK)')
-  printInfo('  - txn: The SignedTransaction object')
-  printInfo('  - senderRewards: Rewards applied to sender (bigint)')
-  printInfo('  - receiverRewards: Rewards applied to receiver (bigint)')
-  printInfo('  - closingAmount: Amount sent to close-to address (bigint)')
-  printInfo('')
-  printInfo('Transaction Status Cases:')
-  printInfo('  - confirmedRound > 0: Transaction committed to ledger')
-  printInfo('  - confirmedRound = 0, poolError = "": Still pending in pool')
-  printInfo('  - confirmedRound = 0, poolError != "": Rejected from pool')
-  printInfo('')
-  printInfo('Best practices:')
-  printInfo('  - Always wait for confirmation before considering a transaction final')
-  printInfo('  - Check poolError for rejection reasons')
-  printInfo('  - Use appropriate timeout (validity window is typically 1000 rounds)')
-  printInfo('  - On LocalNet dev mode, transactions confirm immediately')
+  printHeader('Summary');
+  printInfo('This example demonstrated:');
+  printInfo('  1. sendRawTransaction(signedTxn) - Submit a signed transaction');
+  printInfo('  2. pendingTransactionInformation(txId) - Check transaction status');
+  printInfo('  3. waitForConfirmation loop - Poll until confirmed or rejected');
+  printInfo('  4. Confirmed transaction details: confirmedRound, txn, fee');
+  printInfo('  5. Error handling with poolError field');
+  printInfo('');
+  printInfo('Key PendingTransactionResponse fields:');
+  printInfo('  - confirmedRound: Round when confirmed (bigint, undefined if pending)');
+  printInfo('  - poolError: Error message if rejected (string, empty if OK)');
+  printInfo('  - txn: The SignedTransaction object');
+  printInfo('  - senderRewards: Rewards applied to sender (bigint)');
+  printInfo('  - receiverRewards: Rewards applied to receiver (bigint)');
+  printInfo('  - closingAmount: Amount sent to close-to address (bigint)');
+  printInfo('');
+  printInfo('Transaction Status Cases:');
+  printInfo('  - confirmedRound > 0: Transaction committed to ledger');
+  printInfo('  - confirmedRound = 0, poolError = "": Still pending in pool');
+  printInfo('  - confirmedRound = 0, poolError != "": Rejected from pool');
+  printInfo('');
+  printInfo('Best practices:');
+  printInfo('  - Always wait for confirmation before considering a transaction final');
+  printInfo('  - Check poolError for rejection reasons');
+  printInfo('  - Use appropriate timeout (validity window is typically 1000 rounds)');
+  printInfo('  - On LocalNet dev mode, transactions confirm immediately');
 }
 
-main().catch((error) => {
-  console.error('Fatal error:', error)
-  process.exit(1)
-})
-
-```
+main().catch(error => {
+  console.error('Fatal error:', error);
+  process.exit(1);
+});
+````
 
 ---
 

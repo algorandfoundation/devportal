@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "AlgorandSubscriber"
+title: 'AlgorandSubscriber'
 ---
 
 Defined in: [src/subscriber.ts:19](https://github.com/algorandfoundation/algokit-subscriber-ts/blob/main/src/subscriber.ts#L19)
@@ -84,7 +84,9 @@ The subscriber so `on*` calls can be chained
 #### Examples
 
 ```typescript
-subscriber.on('my-filter', async (transaction) => { console.log(transaction.id) })
+subscriber.on('my-filter', async transaction => {
+  console.log(transaction.id);
+});
 ```
 
 ```typescript
@@ -92,7 +94,7 @@ new AlgorandSubscriber({filters: [{name: 'my-filter', filter: {...}, mapper: (t)
  .on<string>('my-filter', async (transactionId) => { console.log(transactionId) })
 ```
 
-***
+---
 
 ### onBatch()
 
@@ -137,7 +139,9 @@ The subscriber so `on*` calls can be chained
 #### Examples
 
 ```typescript
-subscriber.onBatch('my-filter', async (transactions) => { console.log(transactions.length) })
+subscriber.onBatch('my-filter', async transactions => {
+  console.log(transactions.length);
+});
 ```
 
 ```typescript
@@ -145,7 +149,7 @@ new AlgorandSubscriber({filters: [{name: 'my-filter', filter: {...}, mapper: (t)
  .onBatch<string>('my-filter', async (transactionIds) => { console.log(transactionIds) })
 ```
 
-***
+---
 
 ### onBeforePoll()
 
@@ -176,10 +180,12 @@ The subscriber so `on*` calls can be chained
 #### Example
 
 ```typescript
-subscriber.onBeforePoll(async (metadata) => { console.log(metadata.watermark) })
+subscriber.onBeforePoll(async metadata => {
+  console.log(metadata.watermark);
+});
 ```
 
-***
+---
 
 ### onError()
 
@@ -210,25 +216,27 @@ The subscriber so `on*` calls can be chained
 #### Examples
 
 ```typescript
-subscriber.onError((error) => { console.error(error) })
+subscriber.onError(error => {
+  console.error(error);
+});
 ```
 
 ```typescript
-const maxRetries = 3
-let retryCount = 0
-subscriber.onError(async (error) => {
-  retryCount++
+const maxRetries = 3;
+let retryCount = 0;
+subscriber.onError(async error => {
+  retryCount++;
   if (retryCount > maxRetries) {
-    console.error(error)
-    return
+    console.error(error);
+    return;
   }
-  console.log(`Error occurred, retrying in 2 seconds (${retryCount}/${maxRetries})`)
-  await new Promise((r) => setTimeout(r, 2_000))
-  subscriber.start()
-})
+  console.log(`Error occurred, retrying in 2 seconds (${retryCount}/${maxRetries})`);
+  await new Promise(r => setTimeout(r, 2_000));
+  subscriber.start();
+});
 ```
 
-***
+---
 
 ### onPoll()
 
@@ -262,10 +270,12 @@ The subscriber so `on*` calls can be chained
 #### Example
 
 ```typescript
-subscriber.onPoll(async (pollResult) => { console.log(pollResult.subscribedTransactions.length, pollResult.syncedRoundRange) })
+subscriber.onPoll(async pollResult => {
+  console.log(pollResult.subscribedTransactions.length, pollResult.syncedRoundRange);
+});
 ```
 
-***
+---
 
 ### pollOnce()
 
@@ -284,7 +294,7 @@ triggered by a recurring schedule / cron.
 
 The poll result
 
-***
+---
 
 ### start()
 
@@ -314,7 +324,7 @@ A function that is called for each poll so the inner workings can be inspected /
 
 An object that contains a promise you can wait for after calling stop
 
-***
+---
 
 ### stop()
 

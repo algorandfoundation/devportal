@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "CompiledContract"
+title: 'CompiledContract'
 ---
 
 > **CompiledContract** = `object`
@@ -21,7 +21,7 @@ Defined in: [compiled.ts:15](https://github.com/algorandfoundation/puya-ts/blob/
 
 Approval program pages for a contract, after template variables have been replaced and compiled to AVM bytecode
 
-***
+---
 
 ### clearStateProgram
 
@@ -31,7 +31,7 @@ Defined in: [compiled.ts:19](https://github.com/algorandfoundation/puya-ts/blob/
 
 Clear state program pages for a contract, after template variables have been replaced and compiled to AVM bytecode
 
-***
+---
 
 ### extraProgramPages
 
@@ -41,7 +41,7 @@ Defined in: [compiled.ts:23](https://github.com/algorandfoundation/puya-ts/blob/
 
 By default, provides extra program pages required based on approval and clear state program size, can be overridden when calling `compile(ExampleContractType, { extraProgramPages: ... })`
 
-***
+---
 
 ### globalBytes
 
@@ -51,7 +51,7 @@ Defined in: [compiled.ts:31](https://github.com/algorandfoundation/puya-ts/blob/
 
 By default, provides global num bytes based on contract state totals, can be overridden when calling `compile(ExampleContractType, { globalBytes: ... })`
 
-***
+---
 
 ### globalUints
 
@@ -61,7 +61,7 @@ Defined in: [compiled.ts:27](https://github.com/algorandfoundation/puya-ts/blob/
 
 By default, provides global num uints based on contract state totals, can be overridden when calling `compile(ExampleContractType, { globalUints: ... })`
 
-***
+---
 
 ### localBytes
 
@@ -69,9 +69,9 @@ By default, provides global num uints based on contract state totals, can be ove
 
 Defined in: [compiled.ts:39](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/compiled.ts#L39)
 
-By default, provides local num bytes based on contract state totals, can be overridden  when calling `compile(ExampleContractType, { localBytes: ... })`
+By default, provides local num bytes based on contract state totals, can be overridden when calling `compile(ExampleContractType, { localBytes: ... })`
 
-***
+---
 
 ### localUints
 

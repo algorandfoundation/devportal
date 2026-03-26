@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "Box"
+title: 'Box'
 ---
 
 > **Box**\<`TValue`\>(`options`): [`Box`](/algorand-typescript/api/index/type-aliases/box/)\<`TValue`\>

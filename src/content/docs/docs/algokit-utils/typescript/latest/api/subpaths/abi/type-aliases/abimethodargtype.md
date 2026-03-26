@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "ABIMethodArgType"
+title: 'ABIMethodArgType'
 ---
 
 > **ABIMethodArgType** = [`ABIType`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/classes/abitype/) \| [`ABITransactionType`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/enumerations/abitransactiontype/) \| [`ABIReferenceType`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/enumerations/abireferencetype/)

@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "Base64"
+title: 'Base64'
 ---
 
 Defined in: [op.ts:7](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/op.ts#L7)
@@ -15,7 +15,7 @@ Defined in: [op.ts:7](https://github.com/algorandfoundation/puya-ts/blob/main/pa
 
 Defined in: [op.ts:9](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/op.ts#L9)
 
-***
+---
 
 ### URLEncoding
 

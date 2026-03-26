@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "shr"
+title: 'shr'
 ---
 
 > **shr**(`a`, `b`): [`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)

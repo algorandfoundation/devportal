@@ -1,5 +1,5 @@
 ---
-title: "Key Generation"
+title: 'Key Generation'
 description: "This example demonstrates how to generate new keys in a wallet using the KMD `generateKey()` method. Keys are generated deterministically from the wallet's master derivation key, which means they can be recovered if you have the wallet's mnemonic or master derivation key."
 sidebar:
   order: 4
@@ -57,155 +57,154 @@ import {
   printInfo,
   printStep,
   printSuccess,
-} from '../shared/utils.js'
+} from '../shared/utils.js';
 
 async function main() {
-  printHeader('KMD Key Generation Example')
+  printHeader('KMD Key Generation Example');
 
-  const kmd = createKmdClient()
-  let walletHandleToken = ''
+  const kmd = createKmdClient();
+  let walletHandleToken = '';
 
   try {
     // =========================================================================
     // Step 1: Create a Test Wallet
     // =========================================================================
-    printStep(1, 'Creating a test wallet for key generation')
+    printStep(1, 'Creating a test wallet for key generation');
 
-    const testWallet = await createTestWallet(kmd, 'test-password')
-    walletHandleToken = testWallet.walletHandleToken
+    const testWallet = await createTestWallet(kmd, 'test-password');
+    walletHandleToken = testWallet.walletHandleToken;
 
-    printSuccess(`Test wallet created: ${testWallet.walletName}`)
-    printInfo(`Wallet ID: ${testWallet.walletId}`)
+    printSuccess(`Test wallet created: ${testWallet.walletName}`);
+    printInfo(`Wallet ID: ${testWallet.walletId}`);
 
     // =========================================================================
     // Step 2: Generate a Single Key
     // =========================================================================
-    printStep(2, 'Generating a new key with generateKey()')
+    printStep(2, 'Generating a new key with generateKey()');
 
     const keyResult = await kmd.generateKey({
       walletHandleToken,
-    })
+    });
 
-    printSuccess('Key generated successfully!')
-    printInfo('')
-    printInfo('GenerateKeyResponse fields:')
-    printInfo(`  address: ${keyResult.address}`)
-    printInfo('')
-    printInfo('The address is the public key (account address) for the generated key.')
-    printInfo('The corresponding private key is stored securely in the wallet.')
+    printSuccess('Key generated successfully!');
+    printInfo('');
+    printInfo('GenerateKeyResponse fields:');
+    printInfo(`  address: ${keyResult.address}`);
+    printInfo('');
+    printInfo('The address is the public key (account address) for the generated key.');
+    printInfo('The corresponding private key is stored securely in the wallet.');
 
     // =========================================================================
     // Step 3: Generate Multiple Keys (Deterministic Derivation)
     // =========================================================================
-    printStep(3, 'Generating multiple keys to demonstrate deterministic derivation')
+    printStep(3, 'Generating multiple keys to demonstrate deterministic derivation');
 
-    const generatedAddresses: string[] = [keyResult.address.toString()]
+    const generatedAddresses: string[] = [keyResult.address.toString()];
 
-    printInfo('Generating 4 more keys...')
-    printInfo('')
+    printInfo('Generating 4 more keys...');
+    printInfo('');
 
     for (let i = 0; i < 4; i++) {
       const result = await kmd.generateKey({
         walletHandleToken,
-      })
-      generatedAddresses.push(result.address.toString())
-      printInfo(`  Key ${i + 2}: ${result.address}`)
+      });
+      generatedAddresses.push(result.address.toString());
+      printInfo(`  Key ${i + 2}: ${result.address}`);
     }
 
-    printSuccess(`Generated ${generatedAddresses.length} keys total`)
-    printInfo('')
-    printInfo('Each key is derived from the master derivation key (MDK) using a')
-    printInfo('deterministic sequence. This means if you create a new wallet with')
-    printInfo('the same MDK (or mnemonic), you can regenerate these same keys')
-    printInfo('in the same order.')
+    printSuccess(`Generated ${generatedAddresses.length} keys total`);
+    printInfo('');
+    printInfo('Each key is derived from the master derivation key (MDK) using a');
+    printInfo('deterministic sequence. This means if you create a new wallet with');
+    printInfo('the same MDK (or mnemonic), you can regenerate these same keys');
+    printInfo('in the same order.');
 
     // =========================================================================
     // Step 4: List All Keys in the Wallet
     // =========================================================================
-    printStep(4, 'Listing all keys in the wallet with listKeysInWallet()')
+    printStep(4, 'Listing all keys in the wallet with listKeysInWallet()');
 
     const listResult = await kmd.listKeysInWallet({
       walletHandleToken,
-    })
+    });
 
-    printSuccess(`Found ${listResult.addresses.length} keys in wallet`)
-    printInfo('')
-    printInfo('All keys in the wallet:')
+    printSuccess(`Found ${listResult.addresses.length} keys in wallet`);
+    printInfo('');
+    printInfo('All keys in the wallet:');
 
     listResult.addresses.forEach((address, index) => {
-      printInfo(`  ${index + 1}. ${address}`)
-    })
+      printInfo(`  ${index + 1}. ${address}`);
+    });
 
     // =========================================================================
     // Step 5: Verify Generated Keys Match Listed Keys
     // =========================================================================
-    printStep(5, 'Verifying generated keys match listed keys')
+    printStep(5, 'Verifying generated keys match listed keys');
 
-    const listedAddresses = listResult.addresses.map((addr) => addr.toString())
-    const allFound = generatedAddresses.every((addr) => listedAddresses.includes(addr))
+    const listedAddresses = listResult.addresses.map(addr => addr.toString());
+    const allFound = generatedAddresses.every(addr => listedAddresses.includes(addr));
 
     if (allFound) {
-      printSuccess('All generated keys are present in the wallet!')
+      printSuccess('All generated keys are present in the wallet!');
     } else {
-      printError('Some generated keys are missing from the wallet list')
+      printError('Some generated keys are missing from the wallet list');
     }
 
     // =========================================================================
     // Cleanup
     // =========================================================================
-    printStep(6, 'Cleaning up test wallet')
+    printStep(6, 'Cleaning up test wallet');
 
-    await cleanupTestWallet(kmd, walletHandleToken)
-    walletHandleToken = '' // Mark as cleaned up
+    await cleanupTestWallet(kmd, walletHandleToken);
+    walletHandleToken = ''; // Mark as cleaned up
 
-    printSuccess('Test wallet handle released')
+    printSuccess('Test wallet handle released');
 
     // =========================================================================
     // Summary
     // =========================================================================
-    printHeader('Summary')
-    printInfo('This example demonstrated key generation in KMD:')
-    printInfo('')
-    printInfo('  1. generateKey()      - Generate a new key, returns the public address')
-    printInfo('  2. listKeysInWallet() - List all keys (addresses) in the wallet')
-    printInfo('')
-    printInfo('Key concepts:')
-    printInfo('  - Keys are generated deterministically from the master derivation key')
-    printInfo('  - Each generateKey() call creates the next key in the sequence')
-    printInfo('  - Generated keys can be recovered by restoring the wallet from its')
-    printInfo('    mnemonic or master derivation key')
-    printInfo('  - The private keys are stored securely in the wallet, only public')
-    printInfo('    addresses are returned')
-    printInfo('')
-    printInfo('Recovery note:')
-    printInfo('  If you need to recover generated keys, you can:')
-    printInfo('  1. Create a new wallet with the same master derivation key')
-    printInfo('  2. Call generateKey() the same number of times')
-    printInfo('  3. The same addresses will be generated in the same order')
-    printInfo('')
-    printInfo('Note: The test wallet remains in KMD (wallets cannot be deleted via API).')
+    printHeader('Summary');
+    printInfo('This example demonstrated key generation in KMD:');
+    printInfo('');
+    printInfo('  1. generateKey()      - Generate a new key, returns the public address');
+    printInfo('  2. listKeysInWallet() - List all keys (addresses) in the wallet');
+    printInfo('');
+    printInfo('Key concepts:');
+    printInfo('  - Keys are generated deterministically from the master derivation key');
+    printInfo('  - Each generateKey() call creates the next key in the sequence');
+    printInfo('  - Generated keys can be recovered by restoring the wallet from its');
+    printInfo('    mnemonic or master derivation key');
+    printInfo('  - The private keys are stored securely in the wallet, only public');
+    printInfo('    addresses are returned');
+    printInfo('');
+    printInfo('Recovery note:');
+    printInfo('  If you need to recover generated keys, you can:');
+    printInfo('  1. Create a new wallet with the same master derivation key');
+    printInfo('  2. Call generateKey() the same number of times');
+    printInfo('  3. The same addresses will be generated in the same order');
+    printInfo('');
+    printInfo('Note: The test wallet remains in KMD (wallets cannot be deleted via API).');
   } catch (error) {
-    printError(`Error: ${error instanceof Error ? error.message : String(error)}`)
-    printInfo('')
-    printInfo('Troubleshooting:')
-    printInfo('  - Ensure LocalNet is running: algokit localnet start')
-    printInfo('  - If LocalNet issues occur: algokit localnet reset')
-    printInfo('  - Check that KMD is accessible on port 4002')
+    printError(`Error: ${error instanceof Error ? error.message : String(error)}`);
+    printInfo('');
+    printInfo('Troubleshooting:');
+    printInfo('  - Ensure LocalNet is running: algokit localnet start');
+    printInfo('  - If LocalNet issues occur: algokit localnet reset');
+    printInfo('  - Check that KMD is accessible on port 4002');
 
     // Cleanup on error
     if (walletHandleToken) {
-      await cleanupTestWallet(kmd, walletHandleToken)
+      await cleanupTestWallet(kmd, walletHandleToken);
     }
 
-    process.exit(1)
+    process.exit(1);
   }
 }
 
-main().catch((error) => {
-  console.error('Fatal error:', error)
-  process.exit(1)
-})
-
+main().catch(error => {
+  console.error('Fatal error:', error);
+  process.exit(1);
+});
 ```
 
 ---

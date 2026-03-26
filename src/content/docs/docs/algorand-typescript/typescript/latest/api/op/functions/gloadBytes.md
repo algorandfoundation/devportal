@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "gloadBytes"
+title: 'gloadBytes'
 ---
 
 > **gloadBytes**(`a`, `b`): [`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)

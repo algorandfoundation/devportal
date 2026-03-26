@@ -1,6 +1,6 @@
 ---
-title: "Asset Create"
-description: "This example demonstrates how to create a new Algorand Standard Asset (ASA) using the transact package. It shows the low-level transaction construction pattern with:"
+title: 'Asset Create'
+description: 'This example demonstrates how to create a new Algorand Standard Asset (ASA) using the transact package. It shows the low-level transaction construction pattern with:'
 sidebar:
   order: 3
 ---
@@ -10,6 +10,7 @@ sidebar:
 ## Description
 
 This example demonstrates how to create a new Algorand Standard Asset (ASA) using the transact package. It shows the low-level transaction construction pattern with:
+
 - Transaction class with TransactionType.AssetConfig
 - AssetConfigTransactionFields with all configuration options
 - Retrieving created asset ID from pending transaction info
@@ -47,14 +48,14 @@ npm run example transact/03-asset-create.ts
  * - LocalNet running (via `algokit localnet start`)
  */
 
-import { AlgorandClient } from '@algorandfoundation/algokit-utils'
-import type { PendingTransactionResponse } from '@algorandfoundation/algokit-utils/algod-client'
+import { AlgorandClient } from '@algorandfoundation/algokit-utils';
+import type { PendingTransactionResponse } from '@algorandfoundation/algokit-utils/algod-client';
 import {
   Transaction,
   TransactionType,
   assignFee,
   type AssetConfigTransactionFields,
-} from '@algorandfoundation/algokit-utils/transact'
+} from '@algorandfoundation/algokit-utils/transact';
 import {
   createAlgodClient,
   printHeader,
@@ -63,46 +64,46 @@ import {
   printSuccess,
   shortenAddress,
   waitForConfirmation,
-} from '../shared/utils.js'
+} from '../shared/utils.js';
 
 /**
  * Gets a funded account from LocalNet's KMD wallet
  */
 async function getLocalNetFundedAccount(algorand: AlgorandClient) {
-  return await algorand.account.kmd.getLocalNetDispenserAccount()
+  return await algorand.account.kmd.getLocalNetDispenserAccount();
 }
 
 async function main() {
-  printHeader('Asset Create Example')
+  printHeader('Asset Create Example');
 
   // Step 1: Initialize clients
-  printStep(1, 'Initialize Algod Client')
-  const algod = createAlgodClient()
-  const algorand = AlgorandClient.defaultLocalNet()
-  printInfo('Connected to LocalNet Algod')
+  printStep(1, 'Initialize Algod Client');
+  const algod = createAlgodClient();
+  const algorand = AlgorandClient.defaultLocalNet();
+  printInfo('Connected to LocalNet Algod');
 
   // Step 2: Get a funded account from KMD (creator)
-  printStep(2, 'Get Funded Account from KMD (Asset Creator)')
-  const creator = await getLocalNetFundedAccount(algorand)
-  printInfo(`Creator address: ${shortenAddress(creator.addr.toString())}`)
+  printStep(2, 'Get Funded Account from KMD (Asset Creator)');
+  const creator = await getLocalNetFundedAccount(algorand);
+  printInfo(`Creator address: ${shortenAddress(creator.addr.toString())}`);
 
   // Step 3: Get suggested transaction parameters
-  printStep(3, 'Get Suggested Transaction Parameters')
-  const suggestedParams = await algod.suggestedParams()
-  printInfo(`First valid round: ${suggestedParams.firstValid}`)
-  printInfo(`Last valid round: ${suggestedParams.lastValid}`)
-  printInfo(`Min fee: ${suggestedParams.minFee} microALGO`)
+  printStep(3, 'Get Suggested Transaction Parameters');
+  const suggestedParams = await algod.suggestedParams();
+  printInfo(`First valid round: ${suggestedParams.firstValid}`);
+  printInfo(`Last valid round: ${suggestedParams.lastValid}`);
+  printInfo(`Min fee: ${suggestedParams.minFee} microALGO`);
 
   // Step 4: Define asset configuration with all fields
-  printStep(4, 'Define Asset Configuration')
+  printStep(4, 'Define Asset Configuration');
 
   // Asset parameters
-  const assetTotal = 1_000_000_000_000n // 1 million units with 6 decimals
-  const assetDecimals = 6
-  const assetName = 'Example Token'
-  const assetUnitName = 'EXMPL'
-  const assetUrl = 'https://example.com/asset'
-  const defaultFrozen = false
+  const assetTotal = 1_000_000_000_000n; // 1 million units with 6 decimals
+  const assetDecimals = 6;
+  const assetName = 'Example Token';
+  const assetUnitName = 'EXMPL';
+  const assetUrl = 'https://example.com/asset';
+  const defaultFrozen = false;
 
   // Asset configuration fields - all addresses set to creator for this example
   const assetConfigFields: AssetConfigTransactionFields = {
@@ -118,21 +119,23 @@ async function main() {
     reserve: creator.addr, // Holds non-minted units
     freeze: creator.addr, // Can freeze/unfreeze accounts
     clawback: creator.addr, // Can clawback assets
-  }
+  };
 
-  printInfo(`Asset name: ${assetName}`)
-  printInfo(`Unit name: ${assetUnitName}`)
-  printInfo(`Total supply: ${assetTotal} (${Number(assetTotal) / Math.pow(10, assetDecimals)} ${assetUnitName})`)
-  printInfo(`Decimals: ${assetDecimals}`)
-  printInfo(`Default frozen: ${defaultFrozen}`)
-  printInfo(`URL: ${assetUrl}`)
-  printInfo(`Manager: ${shortenAddress(creator.addr.toString())}`)
-  printInfo(`Reserve: ${shortenAddress(creator.addr.toString())}`)
-  printInfo(`Freeze: ${shortenAddress(creator.addr.toString())}`)
-  printInfo(`Clawback: ${shortenAddress(creator.addr.toString())}`)
+  printInfo(`Asset name: ${assetName}`);
+  printInfo(`Unit name: ${assetUnitName}`);
+  printInfo(
+    `Total supply: ${assetTotal} (${Number(assetTotal) / Math.pow(10, assetDecimals)} ${assetUnitName})`,
+  );
+  printInfo(`Decimals: ${assetDecimals}`);
+  printInfo(`Default frozen: ${defaultFrozen}`);
+  printInfo(`URL: ${assetUrl}`);
+  printInfo(`Manager: ${shortenAddress(creator.addr.toString())}`);
+  printInfo(`Reserve: ${shortenAddress(creator.addr.toString())}`);
+  printInfo(`Freeze: ${shortenAddress(creator.addr.toString())}`);
+  printInfo(`Clawback: ${shortenAddress(creator.addr.toString())}`);
 
   // Step 5: Create asset config transaction
-  printStep(5, 'Create Asset Config Transaction')
+  printStep(5, 'Create Asset Config Transaction');
   const transaction = new Transaction({
     type: TransactionType.AssetConfig,
     sender: creator.addr,
@@ -141,119 +144,120 @@ async function main() {
     genesisHash: suggestedParams.genesisHash,
     genesisId: suggestedParams.genesisId,
     assetConfig: assetConfigFields,
-  })
+  });
 
-  printInfo(`Transaction type: ${transaction.type}`)
+  printInfo(`Transaction type: ${transaction.type}`);
 
   // Step 6: Assign fee using suggested params
-  printStep(6, 'Assign Transaction Fee')
+  printStep(6, 'Assign Transaction Fee');
   const transactionWithFee = assignFee(transaction, {
     feePerByte: suggestedParams.fee,
     minFee: suggestedParams.minFee,
-  })
-  printInfo(`Assigned fee: ${transactionWithFee.fee} microALGO`)
+  });
+  printInfo(`Assigned fee: ${transactionWithFee.fee} microALGO`);
 
   // Step 7: Sign the transaction
-  printStep(7, 'Sign Transaction')
-  const signedTxns = await creator.signer([transactionWithFee], [0])
-  const txId = transactionWithFee.txId()
-  printInfo(`Transaction ID: ${txId}`)
-  printInfo('Transaction signed successfully')
+  printStep(7, 'Sign Transaction');
+  const signedTxns = await creator.signer([transactionWithFee], [0]);
+  const txId = transactionWithFee.txId();
+  printInfo(`Transaction ID: ${txId}`);
+  printInfo('Transaction signed successfully');
 
   // Step 8: Submit transaction and wait for confirmation
-  printStep(8, 'Submit Transaction and Wait for Confirmation')
-  await algod.sendRawTransaction(signedTxns)
-  printInfo('Transaction submitted to network')
+  printStep(8, 'Submit Transaction and Wait for Confirmation');
+  await algod.sendRawTransaction(signedTxns);
+  printInfo('Transaction submitted to network');
 
   // Wait for confirmation using the utility function
-  const pendingInfo = (await waitForConfirmation(algod, txId)) as PendingTransactionResponse
-  printInfo(`Transaction confirmed in round: ${pendingInfo.confirmedRound}`)
+  const pendingInfo = (await waitForConfirmation(algod, txId)) as PendingTransactionResponse;
+  printInfo(`Transaction confirmed in round: ${pendingInfo.confirmedRound}`);
 
   // Step 9: Retrieve created asset ID from pending transaction info
-  printStep(9, 'Retrieve Created Asset ID')
-  const assetId = pendingInfo.assetId
+  printStep(9, 'Retrieve Created Asset ID');
+  const assetId = pendingInfo.assetId;
   if (!assetId) {
-    throw new Error('Asset ID not found in pending transaction response')
+    throw new Error('Asset ID not found in pending transaction response');
   }
-  printInfo(`Created asset ID: ${assetId}`)
-  printSuccess(`Asset created with ID: ${assetId}`)
+  printInfo(`Created asset ID: ${assetId}`);
+  printSuccess(`Asset created with ID: ${assetId}`);
 
   // Step 10: Verify asset exists with correct parameters using algod.assetById()
-  printStep(10, 'Verify Asset Parameters')
-  const asset = await algod.assetById(assetId)
-  printInfo(`Asset ID from API: ${asset.id}`)
-  printInfo(`Creator: ${asset.params.creator}`)
-  printInfo(`Total: ${asset.params.total}`)
-  printInfo(`Decimals: ${asset.params.decimals}`)
-  printInfo(`Name: ${asset.params.name}`)
-  printInfo(`Unit Name: ${asset.params.unitName}`)
-  printInfo(`URL: ${asset.params.url}`)
-  printInfo(`Default Frozen: ${asset.params.defaultFrozen ?? false}`)
-  printInfo(`Manager: ${asset.params.manager}`)
-  printInfo(`Reserve: ${asset.params.reserve}`)
-  printInfo(`Freeze: ${asset.params.freeze}`)
-  printInfo(`Clawback: ${asset.params.clawback}`)
+  printStep(10, 'Verify Asset Parameters');
+  const asset = await algod.assetById(assetId);
+  printInfo(`Asset ID from API: ${asset.id}`);
+  printInfo(`Creator: ${asset.params.creator}`);
+  printInfo(`Total: ${asset.params.total}`);
+  printInfo(`Decimals: ${asset.params.decimals}`);
+  printInfo(`Name: ${asset.params.name}`);
+  printInfo(`Unit Name: ${asset.params.unitName}`);
+  printInfo(`URL: ${asset.params.url}`);
+  printInfo(`Default Frozen: ${asset.params.defaultFrozen ?? false}`);
+  printInfo(`Manager: ${asset.params.manager}`);
+  printInfo(`Reserve: ${asset.params.reserve}`);
+  printInfo(`Freeze: ${asset.params.freeze}`);
+  printInfo(`Clawback: ${asset.params.clawback}`);
 
   // Verify all parameters match
-  const creatorAddress = creator.addr.toString()
+  const creatorAddress = creator.addr.toString();
   if (asset.params.total !== assetTotal) {
-    throw new Error(`Total mismatch: expected ${assetTotal}, got ${asset.params.total}`)
+    throw new Error(`Total mismatch: expected ${assetTotal}, got ${asset.params.total}`);
   }
   if (asset.params.decimals !== assetDecimals) {
-    throw new Error(`Decimals mismatch: expected ${assetDecimals}, got ${asset.params.decimals}`)
+    throw new Error(`Decimals mismatch: expected ${assetDecimals}, got ${asset.params.decimals}`);
   }
   if (asset.params.name !== assetName) {
-    throw new Error(`Name mismatch: expected ${assetName}, got ${asset.params.name}`)
+    throw new Error(`Name mismatch: expected ${assetName}, got ${asset.params.name}`);
   }
   if (asset.params.unitName !== assetUnitName) {
-    throw new Error(`Unit name mismatch: expected ${assetUnitName}, got ${asset.params.unitName}`)
+    throw new Error(`Unit name mismatch: expected ${assetUnitName}, got ${asset.params.unitName}`);
   }
   if (asset.params.url !== assetUrl) {
-    throw new Error(`URL mismatch: expected ${assetUrl}, got ${asset.params.url}`)
+    throw new Error(`URL mismatch: expected ${assetUrl}, got ${asset.params.url}`);
   }
   if (asset.params.creator !== creatorAddress) {
-    throw new Error(`Creator mismatch: expected ${creatorAddress}, got ${asset.params.creator}`)
+    throw new Error(`Creator mismatch: expected ${creatorAddress}, got ${asset.params.creator}`);
   }
   if (asset.params.manager !== creatorAddress) {
-    throw new Error(`Manager mismatch: expected ${creatorAddress}, got ${asset.params.manager}`)
+    throw new Error(`Manager mismatch: expected ${creatorAddress}, got ${asset.params.manager}`);
   }
   if (asset.params.reserve !== creatorAddress) {
-    throw new Error(`Reserve mismatch: expected ${creatorAddress}, got ${asset.params.reserve}`)
+    throw new Error(`Reserve mismatch: expected ${creatorAddress}, got ${asset.params.reserve}`);
   }
   if (asset.params.freeze !== creatorAddress) {
-    throw new Error(`Freeze mismatch: expected ${creatorAddress}, got ${asset.params.freeze}`)
+    throw new Error(`Freeze mismatch: expected ${creatorAddress}, got ${asset.params.freeze}`);
   }
   if (asset.params.clawback !== creatorAddress) {
-    throw new Error(`Clawback mismatch: expected ${creatorAddress}, got ${asset.params.clawback}`)
+    throw new Error(`Clawback mismatch: expected ${creatorAddress}, got ${asset.params.clawback}`);
   }
 
-  printSuccess('All asset parameters verified correctly!')
+  printSuccess('All asset parameters verified correctly!');
 
   // Step 11: Verify creator holds total supply
-  printStep(11, 'Verify Creator Holds Total Supply')
-  const accountAssetInfo = await algod.accountAssetInformation(creatorAddress, assetId)
+  printStep(11, 'Verify Creator Holds Total Supply');
+  const accountAssetInfo = await algod.accountAssetInformation(creatorAddress, assetId);
 
   if (!accountAssetInfo.assetHolding) {
-    throw new Error('Creator does not have asset holding')
+    throw new Error('Creator does not have asset holding');
   }
 
-  const creatorBalance = accountAssetInfo.assetHolding.amount
-  printInfo(`Creator balance: ${creatorBalance} (${Number(creatorBalance) / Math.pow(10, assetDecimals)} ${assetUnitName})`)
-  printInfo(`Total supply: ${assetTotal}`)
+  const creatorBalance = accountAssetInfo.assetHolding.amount;
+  printInfo(
+    `Creator balance: ${creatorBalance} (${Number(creatorBalance) / Math.pow(10, assetDecimals)} ${assetUnitName})`,
+  );
+  printInfo(`Total supply: ${assetTotal}`);
 
   if (creatorBalance !== assetTotal) {
-    throw new Error(`Creator balance ${creatorBalance} does not match total supply ${assetTotal}`)
+    throw new Error(`Creator balance ${creatorBalance} does not match total supply ${assetTotal}`);
   }
 
-  printSuccess(`Creator holds entire supply: ${creatorBalance} units`)
-  printSuccess('Asset create example completed successfully!')
+  printSuccess(`Creator holds entire supply: ${creatorBalance} units`);
+  printSuccess('Asset create example completed successfully!');
 }
 
-main().catch((error) => {
-  console.error('Error:', error)
-  process.exit(1)
-})
-
+main().catch(error => {
+  console.error('Error:', error);
+  process.exit(1);
+});
 ```
 
 ---

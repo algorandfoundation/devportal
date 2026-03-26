@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "keccak256"
+title: 'keccak256'
 ---
 
 > **keccak256**(`a`): [`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)\<`32`\>

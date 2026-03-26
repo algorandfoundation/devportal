@@ -1,5 +1,5 @@
 ---
-title: "AlgoKit Init Wizard Version 2 and Template Enhancements"
+title: 'AlgoKit Init Wizard Version 2 and Template Enhancements'
 ---
 
 - **Status:** Proposed (Revision 2)
@@ -21,18 +21,15 @@ This ADR emerges from various discussions aimed at enhancing the `init` wizard v
 ### Main Areas for Improvement
 
 1. **Enhancements to the `Init` Wizard:**
-
    - Improve user experience by making the wizard more intuitive and less reliant on Algorand-specific jargon.
    - Streamline the `presets` concept to minimize user inputs and simplify the process.
 
 2. **Template Refinements:**
-
    - Address potential complexities in maintaining the `fullstack` template with new `smart-contract` template combinations, including future `.NET` integration alongside `puya` compiler-compatible stacks.
    - Implement `codespaces` configurations for simplified project setup in GitHub Codespaces.
    - Consider unifying `add smart contract` generators in the `puya` and `beaker` templates into a single, generic generator managed by the CLI itself (suggestion added as part of revision 2 based on DevRel feedback). This helps solving the problem of simplifying template building experience (removing duplication of generators that are essentially generic) while still giving an option for template builders to have custom generators within templates.
 
 3. **CLI Enhancements:**
-
    - Enhance user experience by standardizing the use of `bootstrap`, `algokit.toml`, `.algokit` folder, and `.env` conventions, presenting a unified and intuitive CLI interface.
 
 ## Detailed Proposals

@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "TransactionSubscriptionResult"
+title: 'TransactionSubscriptionResult'
 ---
 
 Defined in: [src/types/subscription.ts:7](https://github.com/algorandfoundation/algokit-subscriber-ts/blob/main/src/types/subscription.ts#L7)
@@ -20,7 +20,7 @@ Defined in: [src/types/subscription.ts:29](https://github.com/algorandfoundation
 The metadata about any blocks that were retrieved from algod as part
 of the subscription poll.
 
-***
+---
 
 ### currentRound
 
@@ -30,7 +30,7 @@ Defined in: [src/types/subscription.ts:11](https://github.com/algorandfoundation
 
 The current detected tip of the configured Algorand blockchain.
 
-***
+---
 
 ### newWatermark
 
@@ -44,7 +44,7 @@ Will be equal to `syncedRoundRange[1]`. Only persist this
 after processing (or in the same atomic transaction as)
 subscribed transactions to keep it reliable.
 
-***
+---
 
 ### startingWatermark
 
@@ -54,7 +54,7 @@ Defined in: [src/types/subscription.ts:13](https://github.com/algorandfoundation
 
 The watermark value that was retrieved at the start of the subscription poll.
 
-***
+---
 
 ### subscribedTransactions
 
@@ -67,7 +67,7 @@ the synced round range. This substantively uses the [indexer transaction
 format](https://dev.algorand.co/reference/rest-apis/indexer#transaction)
 to represent the data with some additional fields.
 
-***
+---
 
 ### syncedRoundRange
 

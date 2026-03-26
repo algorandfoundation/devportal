@@ -1,5 +1,5 @@
 ---
-title: "Beaker productionisation review"
+title: 'Beaker productionisation review'
 ---
 
 - **Status**: Approved

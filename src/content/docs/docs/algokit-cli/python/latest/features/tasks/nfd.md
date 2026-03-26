@@ -1,5 +1,5 @@
 ---
-title: "AlgoKit Task NFD Lookup"
+title: 'AlgoKit Task NFD Lookup'
 ---
 
 The AlgoKit NFD Lookup feature allows you to perform a lookup via NFD domain or address, returning the associated address or domain respectively using the AlgoKit CLI. The feature is powered by [NFDomains MainNet API](https://api-docs.nf.domains/).

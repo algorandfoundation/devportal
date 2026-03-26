@@ -1,5 +1,5 @@
 ---
-title: "AlgoKit Project Deploy"
+title: 'AlgoKit Project Deploy'
 ---
 
 Deploy your smart contracts effortlessly to various networks with the algokit project deploy feature. This feature is essential for automation in CI/CD pipelines and for seamless deployment to various Algorand network environments.
@@ -56,7 +56,6 @@ The logic for loading environment variables is as follows:
 The `deploy` command assumes default configurations for `mainnet`, `localnet`, and `testnet` environments. If you're deploying to one of these networks and haven't provided specific environment variables, AlgoKit will use these default values:
 
 - **Localnet**:
-
   - `ALGOD_TOKEN`: "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
   - `ALGOD_SERVER`: "http://localhost"
   - `ALGOD_PORT`: "4001"
@@ -65,7 +64,6 @@ The `deploy` command assumes default configurations for `mainnet`, `localnet`, a
   - `INDEXER_PORT`: "8980"
 
 - **Mainnet**:
-
   - `ALGOD_SERVER`: "https://mainnet-api.algonode.cloud"
   - `INDEXER_SERVER`: "https://mainnet-idx.algonode.cloud"
 
@@ -172,7 +170,7 @@ Example:
 algokit project deploy testnet --custom-deploy-command="your-custom-command"
 ```
 
->⚠️ Please note, chaining multiple commands with `&&` is **not** currently supported. If you need to run multiple commands, you can defer to a custom script. Refer to [run](/docs/algokit-cli/python/latest/features/project/run/#custom-command-injection) for scenarios where multiple sub-command invocations are required.
+> ⚠️ Please note, chaining multiple commands with `&&` is **not** currently supported. If you need to run multiple commands, you can defer to a custom script. Refer to [run](/docs/algokit-cli/python/latest/features/project/run/#custom-command-injection) for scenarios where multiple sub-command invocations are required.
 
 ## CI Mode
 

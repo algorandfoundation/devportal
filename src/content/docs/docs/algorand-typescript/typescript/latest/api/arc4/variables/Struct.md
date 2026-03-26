@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "Struct"
+title: 'Struct'
 ---
 
 > `const` **Struct**: `StructConstructor`
@@ -12,6 +12,7 @@ Defined in: [arc4/encoded-types.ts:499](https://github.com/algorandfoundation/pu
 The base type of arc4 structs
 
 Usage:
+
 ```
 class MyStruct extends Struct<{ x: Uint8, y: Str, z: DynamicBytes }> { }
 ```

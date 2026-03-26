@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "getABIMethod"
+title: 'getABIMethod'
 ---
 
 > **getABIMethod**(`methodNameOrSignature`, `appSpec`): [`ABIMethod`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/classes/abimethod/)

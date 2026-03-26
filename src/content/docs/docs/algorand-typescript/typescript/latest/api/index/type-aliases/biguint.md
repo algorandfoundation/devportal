@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "biguint"
+title: 'biguint'
 ---
 
 > **biguint** = `object` & `bigint`

@@ -2,14 +2,14 @@
 editUrl: false
 next: false
 prev: false
-title: "getBit"
+title: 'getBit'
 ---
 
 > **getBit**(`a`, `b`): `boolean`
 
 Defined in: [op.ts:964](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/op.ts#L964)
 
-Bth bit of (byte-array or integer) A. If B is greater than or equal to the bit length of the value (8*byte length), the program fails
+Bth bit of (byte-array or integer) A. If B is greater than or equal to the bit length of the value (8\*byte length), the program fails
 see explanation of bit ordering in setbit
 
 ## Parameters

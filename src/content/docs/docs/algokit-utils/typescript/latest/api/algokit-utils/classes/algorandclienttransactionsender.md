@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "AlgorandClientTransactionSender"
+title: 'AlgorandClientTransactionSender'
 ---
 
 Defined in: [src/algorand-client-transaction-sender.ts:38](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/algorand-client-transaction-sender.ts#L38)
@@ -46,7 +46,11 @@ An `AppManager` instance
 #### Example
 
 ```typescript
-const transactionSender = new AlgorandClientTransactionSender(() => new TransactionComposer(), assetManager, appManager)
+const transactionSender = new AlgorandClientTransactionSender(
+  () => new TransactionComposer(),
+  assetManager,
+  appManager,
+);
 ```
 
 ## Properties
@@ -78,7 +82,7 @@ The result of the app call transaction and the transaction that was sent
 #### Examples
 
 ```typescript
-await algorand.send.appCall({ sender: 'CREATORADDRESS' })
+await algorand.send.appCall({ sender: 'CREATORADDRESS' });
 ```
 
 ```typescript
@@ -111,7 +115,7 @@ await algorand.send.appCall({
 })
 ```
 
-***
+---
 
 ### appCallMethodCall()
 
@@ -144,8 +148,12 @@ const method = new ABIMethod({
   name: 'method',
   args: [{ name: 'arg1', type: 'string' }],
   returns: { type: 'string' },
-})
-await algorand.send.appCallMethodCall({ sender: 'CREATORADDRESS', method: method, args: ["arg1_value"] })
+});
+await algorand.send.appCallMethodCall({
+  sender: 'CREATORADDRESS',
+  method: method,
+  args: ['arg1_value'],
+});
 ```
 
 ```typescript
@@ -185,7 +193,7 @@ await algorand.send.appCallMethodCall({
 })
 ```
 
-***
+---
 
 ### appCreate()
 
@@ -214,8 +222,12 @@ The result of the app create transaction and the transaction that was sent
 #### Examples
 
 ```typescript
-const result = await algorand.send.appCreate({ sender: 'CREATORADDRESS', approvalProgram: 'TEALCODE', clearStateProgram: 'TEALCODE' })
-const createdAppId = result.appId
+const result = await algorand.send.appCreate({
+  sender: 'CREATORADDRESS',
+  approvalProgram: 'TEALCODE',
+  clearStateProgram: 'TEALCODE',
+});
+const createdAppId = result.appId;
 ```
 
 ```typescript
@@ -257,7 +269,7 @@ await algorand.send.appCreate({
 })
 ```
 
-***
+---
 
 ### appCreateMethodCall()
 
@@ -290,9 +302,15 @@ const method = new ABIMethod({
   name: 'method',
   args: [{ name: 'arg1', type: 'string' }],
   returns: { type: 'string' },
-})
-const result = await algorand.send.appCreateMethodCall({ sender: 'CREATORADDRESS', approvalProgram: 'TEALCODE', clearStateProgram: 'TEALCODE', method: method, args: ["arg1_value"] })
-const createdAppId = result.appId
+});
+const result = await algorand.send.appCreateMethodCall({
+  sender: 'CREATORADDRESS',
+  approvalProgram: 'TEALCODE',
+  clearStateProgram: 'TEALCODE',
+  method: method,
+  args: ['arg1_value'],
+});
+const createdAppId = result.appId;
 ```
 
 ```typescript
@@ -341,7 +359,7 @@ await algorand.send.appCreateMethodCall({
 })
 ```
 
-***
+---
 
 ### appDelete()
 
@@ -370,7 +388,7 @@ The result of the app delete transaction and the transaction that was sent
 #### Examples
 
 ```typescript
-await algorand.send.appDelete({ sender: 'CREATORADDRESS' })
+await algorand.send.appDelete({ sender: 'CREATORADDRESS' });
 ```
 
 ```typescript
@@ -403,7 +421,7 @@ await algorand.send.appDelete({
 })
 ```
 
-***
+---
 
 ### appDeleteMethodCall()
 
@@ -436,8 +454,12 @@ const method = new ABIMethod({
   name: 'method',
   args: [{ name: 'arg1', type: 'string' }],
   returns: { type: 'string' },
-})
-await algorand.send.appDeleteMethodCall({ sender: 'CREATORADDRESS', method: method, args: ["arg1_value"] })
+});
+await algorand.send.appDeleteMethodCall({
+  sender: 'CREATORADDRESS',
+  method: method,
+  args: ['arg1_value'],
+});
 ```
 
 ```typescript
@@ -477,7 +499,7 @@ await algorand.send.appDeleteMethodCall({
 })
 ```
 
-***
+---
 
 ### appUpdate()
 
@@ -506,7 +528,11 @@ The result of the app update transaction and the transaction that was sent
 #### Examples
 
 ```typescript
-await algorand.send.appUpdate({ sender: 'CREATORADDRESS', approvalProgram: 'TEALCODE', clearStateProgram: 'TEALCODE' })
+await algorand.send.appUpdate({
+  sender: 'CREATORADDRESS',
+  approvalProgram: 'TEALCODE',
+  clearStateProgram: 'TEALCODE',
+});
 ```
 
 ```typescript
@@ -541,7 +567,7 @@ await algorand.send.appUpdate({
 })
 ```
 
-***
+---
 
 ### appUpdateMethodCall()
 
@@ -574,8 +600,14 @@ const method = new ABIMethod({
   name: 'method',
   args: [{ name: 'arg1', type: 'string' }],
   returns: { type: 'string' },
-})
-await algorand.send.appUpdateMethodCall({ sender: 'CREATORADDRESS', approvalProgram: 'TEALCODE', clearStateProgram: 'TEALCODE', method: method, args: ["arg1_value"] })
+});
+await algorand.send.appUpdateMethodCall({
+  sender: 'CREATORADDRESS',
+  approvalProgram: 'TEALCODE',
+  clearStateProgram: 'TEALCODE',
+  method: method,
+  args: ['arg1_value'],
+});
 ```
 
 ```typescript
@@ -617,7 +649,7 @@ await algorand.send.appUpdateMethodCall({
 })
 ```
 
-***
+---
 
 ### assetConfig()
 
@@ -648,7 +680,11 @@ The result of the asset config transaction and the transaction that was sent
 #### Examples
 
 ```typescript
-await algorand.send.assetConfig({ sender: "MANAGERADDRESS", assetId: 123456n, manager: "MANAGERADDRESS" })
+await algorand.send.assetConfig({
+  sender: 'MANAGERADDRESS',
+  assetId: 123456n,
+  manager: 'MANAGERADDRESS',
+});
 ```
 
 ```typescript
@@ -675,10 +711,10 @@ await algorand.send.assetConfig({
   signer: transactionSigner,
   maxRoundsToWaitForConfirmation: 5,
   suppressLog: true,
-})
+});
 ```
 
-***
+---
 
 ### assetDestroy()
 
@@ -709,7 +745,7 @@ The result of the asset destroy transaction and the transaction that was sent
 #### Examples
 
 ```typescript
-await algorand.send.assetDestroy({ sender: "MANAGERADDRESS", assetId: 123456n })
+await algorand.send.assetDestroy({ sender: 'MANAGERADDRESS', assetId: 123456n });
 ```
 
 ```typescript
@@ -732,10 +768,10 @@ await algorand.send.assetDestroy({
   signer: transactionSigner,
   maxRoundsToWaitForConfirmation: 5,
   suppressLog: true,
-})
+});
 ```
 
-***
+---
 
 ### assetFreeze()
 
@@ -762,7 +798,12 @@ The result of the asset freeze transaction and the transaction that was sent
 #### Examples
 
 ```typescript
-await algorand.send.assetFreeze({ sender: "MANAGERADDRESS", assetId: 123456n, account: "ACCOUNTADDRESS", frozen: true })
+await algorand.send.assetFreeze({
+  sender: 'MANAGERADDRESS',
+  assetId: 123456n,
+  account: 'ACCOUNTADDRESS',
+  frozen: true,
+});
 ```
 
 ```typescript
@@ -787,10 +828,10 @@ await algorand.send.assetFreeze({
   signer: transactionSigner,
   maxRoundsToWaitForConfirmation: 5,
   suppressLog: true,
-})
+});
 ```
 
-***
+---
 
 ### assetOptIn()
 
@@ -817,7 +858,7 @@ The result of the asset opt-in transaction and the transaction that was sent
 #### Examples
 
 ```typescript
-await algorand.send.assetOptIn({ sender: "SENDERADDRESS", assetId: 123456n })
+await algorand.send.assetOptIn({ sender: 'SENDERADDRESS', assetId: 123456n });
 ```
 
 ```typescript
@@ -840,10 +881,10 @@ await algorand.send.assetOptIn({
   signer: transactionSigner,
   maxRoundsToWaitForConfirmation: 5,
   suppressLog: true,
-})
+});
 ```
 
-***
+---
 
 ### assetTransfer()
 
@@ -870,7 +911,12 @@ The result of the asset transfer transaction and the transaction that was sent
 #### Examples
 
 ```typescript
-await algorand.send.assetTransfer({ sender: "HOLDERADDRESS", assetId: 123456n, amount: 1n, receiver: "RECEIVERADDRESS" })
+await algorand.send.assetTransfer({
+  sender: 'HOLDERADDRESS',
+  assetId: 123456n,
+  amount: 1n,
+  receiver: 'RECEIVERADDRESS',
+});
 ```
 
 ```typescript
@@ -901,7 +947,7 @@ await algorand.send.assetTransfer({
 })
 ```
 
-***
+---
 
 ### offlineKeyRegistration()
 
@@ -930,7 +976,7 @@ The result of the offline key registration transaction and the transaction that 
 ```typescript
 const result = await algorand.send.offlineKeyRegistration({
   sender: 'SENDERADDRESS',
-})
+});
 ```
 
 ```typescript
@@ -948,10 +994,10 @@ const result = await algorand.send.offlineKeyRegistration({
   // Max fee doesn't make sense with extraFee AND staticFee
   //  already specified, but here for completeness
   maxFee: (3000).microAlgo(),
-})
+});
 ```
 
-***
+---
 
 ### onlineKeyRegistration()
 
@@ -980,21 +1026,21 @@ The result of the online key registration transaction and the transaction that w
 ```typescript
 const result = await algorand.send.onlineKeyRegistration({
   sender: 'SENDERADDRESS',
-  voteKey: Uint8Array.from(Buffer.from("voteKeyBase64", 'base64')),
-  selectionKey: Uint8Array.from(Buffer.from("selectionKeyBase64", 'base64')),
-  stateProofKey: Uint8Array.from(Buffer.from("stateProofKeyBase64", 'base64')),
+  voteKey: Uint8Array.from(Buffer.from('voteKeyBase64', 'base64')),
+  selectionKey: Uint8Array.from(Buffer.from('selectionKeyBase64', 'base64')),
+  stateProofKey: Uint8Array.from(Buffer.from('stateProofKeyBase64', 'base64')),
   voteFirst: 1n,
   voteLast: 1000n,
   voteKeyDilution: 1n,
-})
+});
 ```
 
 ```typescript
 const result = await algorand.send.onlineKeyRegistration({
   sender: 'SENDERADDRESS',
-  voteKey: Uint8Array.from(Buffer.from("voteKeyBase64", 'base64')),
-  selectionKey: Uint8Array.from(Buffer.from("selectionKeyBase64", 'base64')),
-  stateProofKey: Uint8Array.from(Buffer.from("stateProofKeyBase64", 'base64')),
+  voteKey: Uint8Array.from(Buffer.from('voteKeyBase64', 'base64')),
+  selectionKey: Uint8Array.from(Buffer.from('selectionKeyBase64', 'base64')),
+  stateProofKey: Uint8Array.from(Buffer.from('stateProofKeyBase64', 'base64')),
   voteFirst: 1n,
   voteLast: 1000n,
   voteKeyDilution: 1n,
@@ -1010,10 +1056,10 @@ const result = await algorand.send.onlineKeyRegistration({
   // Max fee doesn't make sense with extraFee AND staticFee
   //  already specified, but here for completeness
   maxFee: (3000).microAlgo(),
-})
+});
 ```
 
-***
+---
 
 ### payment()
 
@@ -1068,7 +1114,7 @@ const result = await algorand.send.payment({
   signer: transactionSigner,
   maxRoundsToWaitForConfirmation: 5,
   suppressLog: true,
-})
+});
 ```
 
 #### See
@@ -1139,14 +1185,14 @@ await algorand.send.assetCreate({
   signer: transactionSigner,
   maxRoundsToWaitForConfirmation: 5,
   suppressLog: true,
-})
+});
 ```
 
 #### See
 
 [Full working example](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/algorand-client.spec.ts)
 
-***
+---
 
 ### assetOptOut()
 
@@ -1156,7 +1202,7 @@ Defined in: [src/algorand-client-transaction-sender.ts:507](https://github.com/a
 
 Opt an account out of an Algorand Standard Asset.
 
-*Note:* If the account has a balance of the asset,
+_Note:_ If the account has a balance of the asset,
 it will not be able to opt-out unless `ensureZeroBalance`
 is set to `false` (but then the account will lose the assets).
 
@@ -1177,11 +1223,20 @@ The result of the asset opt-out transaction and the transaction that was sent
 #### Examples
 
 ```typescript
-await algorand.send.assetOptOut({ sender: "SENDERADDRESS", assetId: 123456n, ensureZeroBalance: true })
+await algorand.send.assetOptOut({
+  sender: 'SENDERADDRESS',
+  assetId: 123456n,
+  ensureZeroBalance: true,
+});
 ```
 
 ```typescript
-await algorand.send.assetOptOut({ sender: "SENDERADDRESS", creator: "CREATORADDRESS", assetId: 123456n, ensureZeroBalance: true })
+await algorand.send.assetOptOut({
+  sender: 'SENDERADDRESS',
+  creator: 'CREATORADDRESS',
+  assetId: 123456n,
+  ensureZeroBalance: true,
+});
 ```
 
 ```typescript
@@ -1206,10 +1261,10 @@ await algorand.send.assetOptOut({
   signer: transactionSigner,
   maxRoundsToWaitForConfirmation: 5,
   suppressLog: true,
-})
+});
 ```
 
-***
+---
 
 ### newGroup()
 
@@ -1229,5 +1284,5 @@ A new instance of `TransactionComposer`.
 
 ```ts
 const composer = AlgorandClient.mainNet().send.newGroup();
-const result = await composer.addTransaction(payment).send()
+const result = await composer.addTransaction(payment).send();
 ```

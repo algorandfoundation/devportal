@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "applicationCall"
+title: 'applicationCall'
 ---
 
 > **applicationCall**(`fields`): [`ApplicationCallItxnParams`](/algorand-typescript/api/itxn/namespaces/itxn/classes/applicationcallitxnparams/)

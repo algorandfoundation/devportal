@@ -1,6 +1,6 @@
 ---
-title: "ABI Address Type"
-description: "This example demonstrates how to encode and decode Algorand addresses using AddressType:"
+title: 'ABI Address Type'
+description: 'This example demonstrates how to encode and decode Algorand addresses using AddressType:'
 sidebar:
   order: 3
 ---
@@ -10,15 +10,16 @@ sidebar:
 ## Description
 
 This example demonstrates how to encode and decode Algorand addresses using AddressType:
+
 - Encoding address strings (base32 format) to 32 bytes
 - Encoding raw 32-byte public key (bytes)
 - Decoding bytes back to address string
 - Verifying address encoding is exactly 32 bytes (no length prefix)
 - Understanding relationship between Algorand address and public key bytes
- Algorand addresses are 58 characters in base32 encoding, which includes:
+  Algorand addresses are 58 characters in base32 encoding, which includes:
 - 32 bytes of public key
 - 4 bytes of checksum (computed from public key)
- The ABI encoding is just the raw 32-byte public key without checksum.
+  The ABI encoding is just the raw 32-byte public key without checksum.
 
 ## Prerequisites
 

@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "ParticipationUpdates"
+title: 'ParticipationUpdates'
 ---
 
 Defined in: [src/types/subscription.ts:142](https://github.com/algorandfoundation/algokit-subscriber-ts/blob/main/src/types/subscription.ts#L142)
@@ -17,7 +17,7 @@ Defined in: [src/types/subscription.ts:146](https://github.com/algorandfoundatio
 
 (partupabs) a list of online accounts that need to be suspended.
 
-***
+---
 
 ### expiredParticipationAccounts?
 

@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "makeEmptyTransactionSigner"
+title: 'makeEmptyTransactionSigner'
 ---
 
 > **makeEmptyTransactionSigner**(): [`TransactionSigner`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/type-aliases/transactionsigner/)

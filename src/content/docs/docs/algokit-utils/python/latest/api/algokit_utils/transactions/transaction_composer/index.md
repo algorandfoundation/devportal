@@ -1,5 +1,5 @@
 ---
-title: "algokit_utils.transactions.transaction_composer"
+title: 'algokit_utils.transactions.transaction_composer'
 ---
 
 <div class="api-ref">
@@ -8,21 +8,21 @@ title: "algokit_utils.transactions.transaction_composer"
 
 ## Attributes
 
-| [`AppMethodCallTransactionArgument`](#algokit_utils.transactions.transaction_composer.AppMethodCallTransactionArgument)   |    |
-|---------------------------------------------------------------------------------------------------------------------------|----|
-| [`ErrorTransformer`](#algokit_utils.transactions.transaction_composer.ErrorTransformer)                                   |    |
+| [`AppMethodCallTransactionArgument`](#algokit_utils.transactions.transaction_composer.AppMethodCallTransactionArgument) |     |
+| ----------------------------------------------------------------------------------------------------------------------- | --- |
+| [`ErrorTransformer`](#algokit_utils.transactions.transaction_composer.ErrorTransformer)                                 |     |
 
 ## Exceptions
 
 | [`ErrorTransformerError`](#algokit_utils.transactions.transaction_composer.ErrorTransformerError)                         | Raised when an error transformer throws.                           |
-|---------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------|
+| ------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------ |
 | [`InvalidErrorTransformerValueError`](#algokit_utils.transactions.transaction_composer.InvalidErrorTransformerValueError) | Raised when an error transformer returns a non-error value.        |
 | [`TransactionComposerError`](#algokit_utils.transactions.transaction_composer.TransactionComposerError)                   | Error raised when transaction composer fails to send transactions. |
 
 ## Classes
 
 | [`TransactionComposerConfig`](#algokit_utils.transactions.transaction_composer.TransactionComposerConfig)           |                                                                     |
-|---------------------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------|
+| ------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------- |
 | [`TransactionComposerParams`](#algokit_utils.transactions.transaction_composer.TransactionComposerParams)           |                                                                     |
 | [`TransactionWithSigner`](#algokit_utils.transactions.transaction_composer.TransactionWithSigner)                   |                                                                     |
 | [`BuiltTransactions`](#algokit_utils.transactions.transaction_composer.BuiltTransactions)                           |                                                                     |
@@ -33,7 +33,7 @@ title: "algokit_utils.transactions.transaction_composer"
 
 ### AppMethodCallTransactionArgument
 
-### *exception* ErrorTransformerError
+### _exception_ ErrorTransformerError
 
 Bases: `RuntimeError`
 
@@ -41,13 +41,13 @@ Raised when an error transformer throws.
 
 ### ErrorTransformer
 
-### *exception* InvalidErrorTransformerValueError(original_error: Exception, value: object)
+### _exception_ InvalidErrorTransformerValueError(original_error: Exception, value: object)
 
 Bases: `RuntimeError`
 
 Raised when an error transformer returns a non-error value.
 
-### *exception* TransactionComposerError(message: str, \*, cause: Exception | None = None, traces: list[SimulateTransactionResult] | None = None, sent_transactions: list[Transaction] | None = None, simulate_response: SimulateResponse | None = None)
+### _exception_ TransactionComposerError(message: str, \*, cause: Exception | None = None, traces: list[SimulateTransactionResult] | None = None, sent_transactions: list[Transaction] | None = None, simulate_response: SimulateResponse | None = None)
 
 Bases: `RuntimeError`
 
@@ -55,65 +55,65 @@ Error raised when transaction composer fails to send transactions.
 
 Contains detailed debugging information including simulation traces and sent transactions.
 
-#### traces *= None*
+#### traces _= None_
 
-#### sent_transactions *= None*
+#### sent*transactions *= None\_
 
-#### simulate_response *= None*
+#### simulate*response *= None\_
 
-### *class* TransactionComposerConfig
+### _class_ TransactionComposerConfig
 
-#### cover_app_call_inner_transaction_fees *: bool* *= False*
+#### cover*app_call_inner_transaction_fees *: bool\_ _= False_
 
-#### populate_app_call_resources *: bool* *= True*
+#### populate*app_call_resources *: bool\_ _= True_
 
-### *class* TransactionComposerParams
+### _class_ TransactionComposerParams
 
-#### algod *: AlgodClient*
+#### algod _: AlgodClient_
 
-#### get_signer *: Callable[[str], TransactionSigner]*
+#### get*signer *: Callable[[str], TransactionSigner]\_
 
-#### get_suggested_params *: Callable[[], SuggestedParams] | None* *= None*
+#### get*suggested_params *: Callable[[], SuggestedParams] | None\_ _= None_
 
-#### default_validity_window *: int | None* *= None*
+#### default*validity_window *: int | None\_ _= None_
 
-#### app_manager *: [AppManager](/docs/algokit-utils/python/latest/api/algokit_utils/applications/app_manager/#algokit_utils.applications.app_manager.AppManager) | None* *= None*
+#### app*manager *: [AppManager](/docs/algokit-utils/python/latest/api/algokit_utils/applications/app_manager/#algokit_utils.applications.app_manager.AppManager) | None\_ _= None_
 
-#### error_transformers *: list[ErrorTransformer] | None* *= None*
+#### error*transformers *: list[ErrorTransformer] | None\_ _= None_
 
-#### composer_config *: [TransactionComposerConfig](#algokit_utils.transactions.transaction_composer.TransactionComposerConfig) | None* *= None*
+#### composer*config *: [TransactionComposerConfig](#algokit_utils.transactions.transaction_composer.TransactionComposerConfig) | None\_ _= None_
 
-### *class* TransactionWithSigner
+### _class_ TransactionWithSigner
 
-#### txn *: Transaction*
+#### txn _: Transaction_
 
-#### signer *: TransactionSigner*
+#### signer _: TransactionSigner_
 
-#### method *: ABIMethod | None* *= None*
+#### method _: ABIMethod | None_ _= None_
 
-### *class* BuiltTransactions
+### _class_ BuiltTransactions
 
-#### transactions *: list[Transaction]*
+#### transactions _: list[Transaction]_
 
-#### method_calls *: dict[int, ABIMethod]*
+#### method*calls *: dict[int, ABIMethod]\_
 
-#### signers *: dict[int, TransactionSigner]*
+#### signers _: dict[int, TransactionSigner]_
 
-### *class* SendTransactionComposerResults
+### _class_ SendTransactionComposerResults
 
-#### tx_ids *: list[str]*
+#### tx*ids *: list[str]\_
 
-#### transactions *: list[Transaction]*
+#### transactions _: list[Transaction]_
 
-#### confirmations *: list[PendingTransactionResponse]*
+#### confirmations _: list[PendingTransactionResponse]_
 
-#### returns *: list[[ABIReturn](/docs/algokit-utils/python/latest/api/algokit_utils/applications/abi/#algokit_utils.applications.abi.ABIReturn)]*
+#### returns _: list[[ABIReturn](/docs/algokit-utils/python/latest/api/algokit_utils/applications/abi/#algokit_utils.applications.abi.ABIReturn)]_
 
-#### group_id *: str | None* *= None*
+#### group*id *: str | None\_ _= None_
 
-#### simulate_response *: SimulateResponse | None* *= None*
+#### simulate*response *: SimulateResponse | None\_ _= None_
 
-### *class* TransactionComposer(params: [TransactionComposerParams](#algokit_utils.transactions.transaction_composer.TransactionComposerParams))
+### _class_ TransactionComposer(params: [TransactionComposerParams](#algokit_utils.transactions.transaction_composer.TransactionComposerParams))
 
 Light-weight transaction composer built on top of algokit_transact.
 
@@ -165,7 +165,7 @@ Create a shallow copy of this composer, optionally overriding config flags.
 
 #### rebuild() → [BuiltTransactions](#algokit_utils.transactions.transaction_composer.BuiltTransactions)
 
-#### *static* arc2_note(note: Arc2TransactionNote) → bytes
+#### _static_ arc2_note(note: Arc2TransactionNote) → bytes
 
 #### add_transaction_composer(composer: [TransactionComposer](#algokit_utils.transactions.transaction_composer.TransactionComposer)) → [TransactionComposer](#algokit_utils.transactions.transaction_composer.TransactionComposer)
 
@@ -192,16 +192,15 @@ Compose the transaction group and simulate execution without submitting to the n
 
 Args:
 : skip_signatures: Whether to skip signatures for all built transactions and use an empty signer instead.
-  : This will set allow_empty_signatures and fix_signers when sending the request to algod.
-  <br/>
-  result_on_failure: Whether to return the result on simulation failure instead of throwing an error.
-  : Defaults to False (throws on failure).
-  <br/>
-  ```
-  **
-  ```
-  <br/>
-  raw_options: Additional options to pass to the simulate request.
+: This will set allow_empty_signatures and fix_signers when sending the request to algod.
+
+<br />
+result_on_failure: Whether to return the result on simulation failure instead of throwing an error.
+: Defaults to False (throws on failure).
+<br />
+``` ** ```
+<br />
+raw_options: Additional options to pass to the simulate request.
 
 Returns:
 : SendTransactionComposerResults containing simulation results.
@@ -209,6 +208,5 @@ Returns:
 #### set_max_fees(max_fees: dict[int, [AlgoAmount](/docs/algokit-utils/python/latest/api/algokit_utils/models/amount/#algokit_utils.models.amount.AlgoAmount)]) → [TransactionComposer](#algokit_utils.transactions.transaction_composer.TransactionComposer)
 
 Override max_fee for queued transactions by index before building.
-
 
 </div>

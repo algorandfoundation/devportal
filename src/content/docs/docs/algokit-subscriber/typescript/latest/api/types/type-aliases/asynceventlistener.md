@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "AsyncEventListener"
+title: 'AsyncEventListener'
 ---
 
 > **AsyncEventListener** = (`event`, `eventName`) => `Promise`\<`void`\> \| `void`

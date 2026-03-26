@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "BuiltTransactions"
+title: 'BuiltTransactions'
 ---
 
 Defined in: [src/composer.ts:214](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/composer.ts#L214)
@@ -19,7 +19,7 @@ Defined in: [src/composer.ts:218](https://github.com/algorandfoundation/algokit-
 
 Any `ABIMethod` objects associated with any of the transactions in a map keyed by transaction index.
 
-***
+---
 
 ### signers
 
@@ -29,7 +29,7 @@ Defined in: [src/composer.ts:220](https://github.com/algorandfoundation/algokit-
 
 Any `TransactionSigner` objects associated with any of the transactions in a map keyed by transaction index.
 
-***
+---
 
 ### transactions
 

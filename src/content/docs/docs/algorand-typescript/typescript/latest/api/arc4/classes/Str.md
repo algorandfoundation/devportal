@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "Str"
+title: 'Str'
 ---
 
 Defined in: [arc4/encoded-types.ts:110](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/arc4/encoded-types.ts#L110)
@@ -59,7 +59,7 @@ Retrieve the encoded bytes for this type
 
 [`ARC4Encoded`](/algorand-typescript/api/arc4/classes/arc4encoded/).[`bytes`](/algorand-typescript/api/arc4/classes/arc4encoded/#bytes)
 
-***
+---
 
 ### native
 

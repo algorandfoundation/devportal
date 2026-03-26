@@ -1,6 +1,6 @@
 ---
-title: "Program Signing (Delegated Logic Signatures) with KMD"
-description: "This example demonstrates how to sign programs/contracts using the KMD `signProgram()` method. It shows:"
+title: 'Program Signing (Delegated Logic Signatures) with KMD'
+description: 'This example demonstrates how to sign programs/contracts using the KMD `signProgram()` method. It shows:'
 sidebar:
   order: 12
 ---
@@ -10,13 +10,14 @@ sidebar:
 ## Description
 
 This example demonstrates how to sign programs/contracts using the KMD `signProgram()` method. It shows:
+
 - Creating a simple TEAL program (logic signature)
 - Compiling the TEAL program using algod's tealCompile
 - Signing the compiled program bytes with signProgram()
 - Understanding the resulting signature for delegated logic signatures
 - How to use the signature with a LogicSigAccount
- What is Program Signing? Program signing creates a "delegated logic signature" (delegated lsig). This allows an account holder to authorize a smart contract (TEAL program) to sign transactions on their behalf. When you sign a program: 1. You're attesting that you authorize this program to act for your account 2. Transactions signed by this delegated lsig will be authorized by your account 3. The program logic determines which transactions are approved
- Use cases for delegated logic signatures:
+  What is Program Signing? Program signing creates a "delegated logic signature" (delegated lsig). This allows an account holder to authorize a smart contract (TEAL program) to sign transactions on their behalf. When you sign a program: 1. You're attesting that you authorize this program to act for your account 2. Transactions signed by this delegated lsig will be authorized by your account 3. The program logic determines which transactions are approved
+  Use cases for delegated logic signatures:
 - Recurring payments (program checks amount and frequency)
 - Subscription services (program validates payment recipients)
 - Limited spending authorizations (program enforces constraints)
@@ -74,7 +75,7 @@ npm run example kmd_client/12-program-signing.ts
  * - signProgram() - Sign a compiled TEAL program with a wallet key
  */
 
-import { LogicSig, LogicSigAccount } from '@algorandfoundation/algokit-utils/transact'
+import { LogicSig, LogicSigAccount } from '@algorandfoundation/algokit-utils/transact';
 import {
   cleanupTestWallet,
   createAlgodClient,
@@ -87,255 +88,254 @@ import {
   printStep,
   printSuccess,
   shortenAddress,
-} from '../shared/utils.js'
+} from '../shared/utils.js';
 
 /**
  * Format a byte array for display, showing first and last few bytes
  */
 function formatBytesForDisplay(bytes: Uint8Array, showFirst = 8, showLast = 8): string {
-  const hex = Buffer.from(bytes).toString('hex')
+  const hex = Buffer.from(bytes).toString('hex');
   if (bytes.length <= showFirst + showLast) {
-    return hex
+    return hex;
   }
-  const firstBytes = hex.slice(0, showFirst * 2)
-  const lastBytes = hex.slice(-(showLast * 2))
-  return `${firstBytes}...${lastBytes}`
+  const firstBytes = hex.slice(0, showFirst * 2);
+  const lastBytes = hex.slice(-(showLast * 2));
+  return `${firstBytes}...${lastBytes}`;
 }
 
 async function main() {
-  printHeader('KMD Program Signing Example')
+  printHeader('KMD Program Signing Example');
 
-  const kmd = createKmdClient()
-  const algod = createAlgodClient()
-  let walletHandleToken = ''
-  const walletPassword = 'test-password'
+  const kmd = createKmdClient();
+  const algod = createAlgodClient();
+  let walletHandleToken = '';
+  const walletPassword = 'test-password';
 
   try {
     // =========================================================================
     // Step 1: Create a Test Wallet
     // =========================================================================
-    printStep(1, 'Creating a test wallet for program signing')
+    printStep(1, 'Creating a test wallet for program signing');
 
-    const testWallet = await createTestWallet(kmd, walletPassword)
-    walletHandleToken = testWallet.walletHandleToken
+    const testWallet = await createTestWallet(kmd, walletPassword);
+    walletHandleToken = testWallet.walletHandleToken;
 
-    printSuccess(`Test wallet created: ${testWallet.walletName}`)
-    printInfo(`Wallet ID: ${testWallet.walletId}`)
+    printSuccess(`Test wallet created: ${testWallet.walletName}`);
+    printInfo(`Wallet ID: ${testWallet.walletId}`);
 
     // =========================================================================
     // Step 2: Generate a Key in the Wallet
     // =========================================================================
-    printStep(2, 'Generating a key in the wallet')
+    printStep(2, 'Generating a key in the wallet');
 
-    const generateResult = await kmd.generateKey({ walletHandleToken })
-    const signerAddress = generateResult.address
+    const generateResult = await kmd.generateKey({ walletHandleToken });
+    const signerAddress = generateResult.address;
 
-    printSuccess(`Key generated!`)
-    printInfo(`Address: ${signerAddress.toString()}`)
-    printInfo(`Shortened: ${shortenAddress(signerAddress.toString())}`)
+    printSuccess(`Key generated!`);
+    printInfo(`Address: ${signerAddress.toString()}`);
+    printInfo(`Shortened: ${shortenAddress(signerAddress.toString())}`);
 
     // =========================================================================
     // Step 3: Create a Simple TEAL Program
     // =========================================================================
-    printStep(3, 'Creating a simple TEAL program')
+    printStep(3, 'Creating a simple TEAL program');
 
     // Load the delegated payment limit TEAL program from shared artifacts
     // This program approves payment transactions up to 1 ALGO
-    const tealSource = loadTealSource('delegated-payment-limit.teal')
+    const tealSource = loadTealSource('delegated-payment-limit.teal');
 
-    printInfo('TEAL Program Source:')
-    printInfo('')
-    tealSource.split('\n').forEach((line) => {
-      printInfo(`    ${line}`)
-    })
-    printInfo('')
-    printInfo('This program approves payment transactions up to 1 ALGO.')
-    printInfo("When signed by an account, it creates a 'delegated logic signature'")
-    printInfo('that can authorize small payments on behalf of that account.')
+    printInfo('TEAL Program Source:');
+    printInfo('');
+    tealSource.split('\n').forEach(line => {
+      printInfo(`    ${line}`);
+    });
+    printInfo('');
+    printInfo('This program approves payment transactions up to 1 ALGO.');
+    printInfo("When signed by an account, it creates a 'delegated logic signature'");
+    printInfo('that can authorize small payments on behalf of that account.');
 
     // =========================================================================
     // Step 4: Compile the TEAL Program
     // =========================================================================
-    printStep(4, 'Compiling the TEAL program using algod tealCompile')
+    printStep(4, 'Compiling the TEAL program using algod tealCompile');
 
-    const compileResult = await algod.tealCompile(tealSource)
+    const compileResult = await algod.tealCompile(tealSource);
 
     // Decode base64 result to Uint8Array
-    const programBytes = new Uint8Array(Buffer.from(compileResult.result, 'base64'))
+    const programBytes = new Uint8Array(Buffer.from(compileResult.result, 'base64'));
 
-    printSuccess('TEAL program compiled successfully!')
-    printInfo('')
-    printInfo('Compilation Result:')
-    printInfo(`  Hash (address):    ${compileResult.hash}`)
-    printInfo(`  Compiled size:     ${programBytes.length} bytes`)
-    printInfo(`  Compiled bytes:    ${formatBytesForDisplay(programBytes)}`)
-    printInfo('')
-    printInfo('The hash is the "contract address" - the address of the logic signature')
-    printInfo('when used in non-delegated mode (without a signature).')
+    printSuccess('TEAL program compiled successfully!');
+    printInfo('');
+    printInfo('Compilation Result:');
+    printInfo(`  Hash (address):    ${compileResult.hash}`);
+    printInfo(`  Compiled size:     ${programBytes.length} bytes`);
+    printInfo(`  Compiled bytes:    ${formatBytesForDisplay(programBytes)}`);
+    printInfo('');
+    printInfo('The hash is the "contract address" - the address of the logic signature');
+    printInfo('when used in non-delegated mode (without a signature).');
 
     // =========================================================================
     // Step 5: Sign the Program with signProgram()
     // =========================================================================
-    printStep(5, 'Signing the program with signProgram()')
+    printStep(5, 'Signing the program with signProgram()');
 
-    printInfo(`Signer: ${shortenAddress(signerAddress.toString())}`)
-    printInfo('')
+    printInfo(`Signer: ${shortenAddress(signerAddress.toString())}`);
+    printInfo('');
 
     const signResult = await kmd.signProgram({
       walletHandleToken,
       address: signerAddress,
       program: programBytes,
       walletPassword,
-    })
+    });
 
-    printSuccess('Program signed successfully!')
-    printInfo('')
-    printInfo('SignProgramResponse fields:')
-    printInfo(`  sig: Uint8Array (${signResult.sig.length} bytes)`)
-    printInfo('')
-    printInfo('Signature Details:')
-    printInfo(`  Signature:         ${formatBytesForDisplay(signResult.sig)}`)
-    printInfo(`  Signature length:  ${signResult.sig.length} bytes (ed25519 signature)`)
-    printInfo('')
-    printInfo('This signature attests that the signer authorizes this program')
-    printInfo('to sign transactions on their behalf.')
+    printSuccess('Program signed successfully!');
+    printInfo('');
+    printInfo('SignProgramResponse fields:');
+    printInfo(`  sig: Uint8Array (${signResult.sig.length} bytes)`);
+    printInfo('');
+    printInfo('Signature Details:');
+    printInfo(`  Signature:         ${formatBytesForDisplay(signResult.sig)}`);
+    printInfo(`  Signature length:  ${signResult.sig.length} bytes (ed25519 signature)`);
+    printInfo('');
+    printInfo('This signature attests that the signer authorizes this program');
+    printInfo('to sign transactions on their behalf.');
 
     // =========================================================================
     // Step 6: Create a LogicSigAccount with the Signature
     // =========================================================================
-    printStep(6, 'Creating a LogicSigAccount with the signature')
+    printStep(6, 'Creating a LogicSigAccount with the signature');
 
-    printInfo('A LogicSigAccount combines:')
-    printInfo('  1. The compiled program (logic)')
-    printInfo('  2. The signature (delegation proof)')
-    printInfo('  3. The delegator address (who authorized it)')
-    printInfo('')
+    printInfo('A LogicSigAccount combines:');
+    printInfo('  1. The compiled program (logic)');
+    printInfo('  2. The signature (delegation proof)');
+    printInfo('  3. The delegator address (who authorized it)');
+    printInfo('');
 
     // First, get the program address (hash of "Program" + logic)
     // This is what the address would be in non-delegated mode
-    const nonDelegatedLsig = new LogicSig(programBytes)
-    const programAddress = nonDelegatedLsig.address()
+    const nonDelegatedLsig = new LogicSig(programBytes);
+    const programAddress = nonDelegatedLsig.address();
 
     // Create a LogicSigAccount for delegation
-    const lsigAccount = new LogicSigAccount(programBytes, [], signerAddress)
-    lsigAccount.sig = signResult.sig
+    const lsigAccount = new LogicSigAccount(programBytes, [], signerAddress);
+    lsigAccount.sig = signResult.sig;
 
-    printSuccess('LogicSigAccount created!')
-    printInfo('')
-    printInfo('LogicSigAccount properties:')
-    printInfo(`  Program address:   ${shortenAddress(programAddress.toString())}`)
-    printInfo(`  Delegator address: ${shortenAddress(signerAddress.toString())}`)
-    printInfo(`  Has signature:     ${lsigAccount.sig !== undefined}`)
-    printInfo(`  Logic size:        ${lsigAccount.logic.length} bytes`)
-    printInfo('')
+    printSuccess('LogicSigAccount created!');
+    printInfo('');
+    printInfo('LogicSigAccount properties:');
+    printInfo(`  Program address:   ${shortenAddress(programAddress.toString())}`);
+    printInfo(`  Delegator address: ${shortenAddress(signerAddress.toString())}`);
+    printInfo(`  Has signature:     ${lsigAccount.sig !== undefined}`);
+    printInfo(`  Logic size:        ${lsigAccount.logic.length} bytes`);
+    printInfo('');
 
     // Show that the lsigAccount's addr is the delegator, not the program
-    printInfo('Important distinction:')
-    printInfo(`  - Program address: ${shortenAddress(programAddress.toString())}`)
-    printInfo('    Hash of the logic - this is the "contract account" in non-delegated mode')
-    printInfo('')
-    printInfo(`  - lsigAccount.addr: ${shortenAddress(lsigAccount.addr.toString())}`)
-    printInfo('    This is the DELEGATOR - the account authorizing the program')
-    printInfo('')
-    printInfo('When using this delegated lsig, transactions will be authorized')
-    printInfo(`as if signed by ${shortenAddress(signerAddress.toString())} (the delegator).`)
+    printInfo('Important distinction:');
+    printInfo(`  - Program address: ${shortenAddress(programAddress.toString())}`);
+    printInfo('    Hash of the logic - this is the "contract account" in non-delegated mode');
+    printInfo('');
+    printInfo(`  - lsigAccount.addr: ${shortenAddress(lsigAccount.addr.toString())}`);
+    printInfo('    This is the DELEGATOR - the account authorizing the program');
+    printInfo('');
+    printInfo('When using this delegated lsig, transactions will be authorized');
+    printInfo(`as if signed by ${shortenAddress(signerAddress.toString())} (the delegator).`);
 
     // =========================================================================
     // Step 7: Demonstrate How to Use the LogicSigAccount
     // =========================================================================
-    printStep(7, 'Understanding how to use the delegated LogicSigAccount')
+    printStep(7, 'Understanding how to use the delegated LogicSigAccount');
 
-    printInfo('To use this delegated logic signature in a transaction:')
-    printInfo('')
-    printInfo('  1. Create a Transaction with sender = delegator address')
-    printInfo('')
-    printInfo('  2. Use the LogicSigAccount.signer to sign the transaction:')
-    printInfo('')
-    printInfo('     const signedTxns = await lsigAccount.signer([txn], [0])')
-    printInfo('')
-    printInfo('  3. The signed transaction will include:')
-    printInfo('     - lsig.logic:  The compiled TEAL program')
-    printInfo('     - lsig.sig:    The delegation signature from signProgram()')
-    printInfo('')
-    printInfo('  4. When submitted, the network validates:')
-    printInfo('     - The signature is valid for the program + delegator')
-    printInfo('     - The program logic approves the transaction')
-    printInfo('')
-    printInfo('Example use case - a subscription payment service:')
-    printInfo('  - User signs a program allowing monthly $10 payments to service')
-    printInfo('  - Service can execute payments without additional user approval')
-    printInfo('  - Program logic ensures payments stay within authorized limits')
+    printInfo('To use this delegated logic signature in a transaction:');
+    printInfo('');
+    printInfo('  1. Create a Transaction with sender = delegator address');
+    printInfo('');
+    printInfo('  2. Use the LogicSigAccount.signer to sign the transaction:');
+    printInfo('');
+    printInfo('     const signedTxns = await lsigAccount.signer([txn], [0])');
+    printInfo('');
+    printInfo('  3. The signed transaction will include:');
+    printInfo('     - lsig.logic:  The compiled TEAL program');
+    printInfo('     - lsig.sig:    The delegation signature from signProgram()');
+    printInfo('');
+    printInfo('  4. When submitted, the network validates:');
+    printInfo('     - The signature is valid for the program + delegator');
+    printInfo('     - The program logic approves the transaction');
+    printInfo('');
+    printInfo('Example use case - a subscription payment service:');
+    printInfo('  - User signs a program allowing monthly $10 payments to service');
+    printInfo('  - Service can execute payments without additional user approval');
+    printInfo('  - Program logic ensures payments stay within authorized limits');
 
     // =========================================================================
     // Cleanup
     // =========================================================================
-    printStep(8, 'Cleaning up test wallet')
+    printStep(8, 'Cleaning up test wallet');
 
-    await cleanupTestWallet(kmd, walletHandleToken)
-    walletHandleToken = '' // Mark as cleaned up
+    await cleanupTestWallet(kmd, walletHandleToken);
+    walletHandleToken = ''; // Mark as cleaned up
 
-    printSuccess('Test wallet handle released')
+    printSuccess('Test wallet handle released');
 
     // =========================================================================
     // Summary
     // =========================================================================
-    printHeader('Summary')
-    printInfo('This example demonstrated program signing with KMD:')
-    printInfo('')
-    printInfo('  signProgram() - Sign a TEAL program for delegation')
-    printInfo('     Parameters:')
-    printInfo('       - walletHandleToken: The wallet session token')
-    printInfo('       - address: The account that will delegate authority')
-    printInfo('       - program: The compiled TEAL program bytes')
-    printInfo('       - walletPassword: The wallet password')
-    printInfo('     Returns:')
-    printInfo('       - sig: Uint8Array (64-byte ed25519 signature)')
-    printInfo('')
-    printInfo('Program signing workflow:')
-    printInfo('  1. Write a TEAL program with the desired authorization logic')
-    printInfo('  2. Compile the program using algod.tealCompile()')
-    printInfo('  3. Sign the program bytes using kmd.signProgram()')
-    printInfo('  4. Create a LogicSigAccount with the program, signature, and delegator')
-    printInfo('  5. Use the LogicSigAccount.signer to sign authorized transactions')
-    printInfo('')
-    printInfo('Key concepts:')
-    printInfo('  - Delegated vs Non-delegated Logic Signatures:')
-    printInfo('    - Non-delegated: Program itself is the "account", no signature needed')
-    printInfo('    - Delegated: Program acts on behalf of a real account (requires signature)')
-    printInfo('')
-    printInfo('  - The signature proves the delegator authorized the program')
-    printInfo('  - The program logic controls which transactions are approved')
-    printInfo('  - Anyone with the lsig can submit transactions (if program approves)')
-    printInfo('')
-    printInfo('Security considerations:')
-    printInfo('  - Write program logic carefully - it controls your account!')
-    printInfo('  - Always limit amounts, recipients, or other transaction fields')
-    printInfo('  - Consider adding time bounds or counters for recurring payments')
-    printInfo('')
-    printInfo('Note: The test wallet remains in KMD (wallets cannot be deleted via API).')
+    printHeader('Summary');
+    printInfo('This example demonstrated program signing with KMD:');
+    printInfo('');
+    printInfo('  signProgram() - Sign a TEAL program for delegation');
+    printInfo('     Parameters:');
+    printInfo('       - walletHandleToken: The wallet session token');
+    printInfo('       - address: The account that will delegate authority');
+    printInfo('       - program: The compiled TEAL program bytes');
+    printInfo('       - walletPassword: The wallet password');
+    printInfo('     Returns:');
+    printInfo('       - sig: Uint8Array (64-byte ed25519 signature)');
+    printInfo('');
+    printInfo('Program signing workflow:');
+    printInfo('  1. Write a TEAL program with the desired authorization logic');
+    printInfo('  2. Compile the program using algod.tealCompile()');
+    printInfo('  3. Sign the program bytes using kmd.signProgram()');
+    printInfo('  4. Create a LogicSigAccount with the program, signature, and delegator');
+    printInfo('  5. Use the LogicSigAccount.signer to sign authorized transactions');
+    printInfo('');
+    printInfo('Key concepts:');
+    printInfo('  - Delegated vs Non-delegated Logic Signatures:');
+    printInfo('    - Non-delegated: Program itself is the "account", no signature needed');
+    printInfo('    - Delegated: Program acts on behalf of a real account (requires signature)');
+    printInfo('');
+    printInfo('  - The signature proves the delegator authorized the program');
+    printInfo('  - The program logic controls which transactions are approved');
+    printInfo('  - Anyone with the lsig can submit transactions (if program approves)');
+    printInfo('');
+    printInfo('Security considerations:');
+    printInfo('  - Write program logic carefully - it controls your account!');
+    printInfo('  - Always limit amounts, recipients, or other transaction fields');
+    printInfo('  - Consider adding time bounds or counters for recurring payments');
+    printInfo('');
+    printInfo('Note: The test wallet remains in KMD (wallets cannot be deleted via API).');
   } catch (error) {
-    printError(`Error: ${error instanceof Error ? error.message : String(error)}`)
-    printInfo('')
-    printInfo('Troubleshooting:')
-    printInfo('  - Ensure LocalNet is running: algokit localnet start')
-    printInfo('  - If LocalNet issues occur: algokit localnet reset')
-    printInfo('  - Check that KMD is accessible on port 4002')
-    printInfo('  - Check that Algod is accessible on port 4001')
+    printError(`Error: ${error instanceof Error ? error.message : String(error)}`);
+    printInfo('');
+    printInfo('Troubleshooting:');
+    printInfo('  - Ensure LocalNet is running: algokit localnet start');
+    printInfo('  - If LocalNet issues occur: algokit localnet reset');
+    printInfo('  - Check that KMD is accessible on port 4002');
+    printInfo('  - Check that Algod is accessible on port 4001');
 
     // Cleanup on error
     if (walletHandleToken) {
-      await cleanupTestWallet(kmd, walletHandleToken)
+      await cleanupTestWallet(kmd, walletHandleToken);
     }
 
-    process.exit(1)
+    process.exit(1);
   }
 }
 
-main().catch((error) => {
-  console.error('Fatal error:', error)
-  process.exit(1)
-})
-
+main().catch(error => {
+  console.error('Fatal error:', error);
+  process.exit(1);
+});
 ```
 
 ---

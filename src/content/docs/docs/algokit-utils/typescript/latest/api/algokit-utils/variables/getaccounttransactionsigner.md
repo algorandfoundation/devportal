@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "getAccountTransactionSigner"
+title: 'getAccountTransactionSigner'
 ---
 
 > `const` **getAccountTransactionSigner**: (`val`) => [`TransactionSigner`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/type-aliases/transactionsigner/)

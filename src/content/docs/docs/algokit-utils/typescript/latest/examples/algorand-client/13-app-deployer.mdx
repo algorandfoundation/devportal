@@ -1,6 +1,6 @@
 ---
-title: "App Deployer"
-description: "This example demonstrates the AppDeployer functionality for idempotent application deployment with create, update, and replace strategies:"
+title: 'App Deployer'
+description: 'This example demonstrates the AppDeployer functionality for idempotent application deployment with create, update, and replace strategies:'
 sidebar:
   order: 13
 ---
@@ -10,6 +10,7 @@ sidebar:
 ## Description
 
 This example demonstrates the AppDeployer functionality for idempotent application deployment with create, update, and replace strategies:
+
 - algorand.appDeployer.deploy() for initial deployment
 - Deploy parameters: name, version, approvalProgram, clearProgram, schema, onUpdate, onSchemaBreak
 - Idempotency: calling deploy() again with same version does nothing
@@ -57,8 +58,16 @@ npm run example algorand_client/13-app-deployer.ts
  * - LocalNet running (via `algokit localnet start`)
  */
 
-import { AlgorandClient, algo } from '@algorandfoundation/algokit-utils'
-import { loadTealSource, printError, printHeader, printInfo, printStep, printSuccess, shortenAddress } from '../shared/utils.js'
+import { AlgorandClient, algo } from '@algorandfoundation/algokit-utils';
+import {
+  loadTealSource,
+  printError,
+  printHeader,
+  printInfo,
+  printStep,
+  printSuccess,
+  shortenAddress,
+} from '../shared/utils.js';
 
 // ============================================================================
 // TEAL Programs - Versioned Application (loaded from shared artifacts)
@@ -70,46 +79,48 @@ import { loadTealSource, printError, printHeader, printInfo, printStep, printSuc
  * The version parameter changes the bytecode to simulate code updates.
  */
 function getVersionedApprovalProgram(version: number): string {
-  return loadTealSource('teal-template-versioned.teal').replace(/TMPL_VERSION/g, String(version))
+  return loadTealSource('teal-template-versioned.teal').replace(/TMPL_VERSION/g, String(version));
 }
 
 // Clear state program (always approves)
-const CLEAR_STATE_PROGRAM = loadTealSource('clear-state-approve.teal')
+const CLEAR_STATE_PROGRAM = loadTealSource('clear-state-approve.teal');
 
 async function main() {
-  printHeader('App Deployer Example')
+  printHeader('App Deployer Example');
 
   // Initialize client and verify LocalNet is running
-  const algorand = AlgorandClient.defaultLocalNet()
+  const algorand = AlgorandClient.defaultLocalNet();
 
   try {
-    await algorand.client.algod.status()
-    printSuccess('Connected to LocalNet')
+    await algorand.client.algod.status();
+    printSuccess('Connected to LocalNet');
   } catch (error) {
-    printError(`Failed to connect to LocalNet: ${error instanceof Error ? error.message : String(error)}`)
-    printInfo('Make sure LocalNet is running (e.g., algokit localnet start)')
-    return
+    printError(
+      `Failed to connect to LocalNet: ${error instanceof Error ? error.message : String(error)}`,
+    );
+    printInfo('Make sure LocalNet is running (e.g., algokit localnet start)');
+    return;
   }
 
   // Step 1: Create and fund test accounts
-  printStep(1, 'Create and fund test accounts')
-  printInfo('Creating account for app deployment demonstrations')
+  printStep(1, 'Create and fund test accounts');
+  printInfo('Creating account for app deployment demonstrations');
 
-  const deployer = algorand.account.random()
+  const deployer = algorand.account.random();
 
-  printInfo(`\nCreated account:`)
-  printInfo(`  Deployer: ${shortenAddress(deployer.addr.toString())}`)
+  printInfo(`\nCreated account:`);
+  printInfo(`  Deployer: ${shortenAddress(deployer.addr.toString())}`);
 
   // Fund account generously for multiple deployments
-  await algorand.account.ensureFundedFromEnvironment(deployer.addr, algo(50))
+  await algorand.account.ensureFundedFromEnvironment(deployer.addr, algo(50));
 
-  printSuccess('Created and funded test account')
+  printSuccess('Created and funded test account');
 
   // Step 2: Initial deployment with appDeployer.deploy()
-  printStep(2, 'Initial deployment with algorand.appDeployer.deploy()')
-  printInfo('Deploying a versioned application for the first time')
+  printStep(2, 'Initial deployment with algorand.appDeployer.deploy()');
+  printInfo('Deploying a versioned application for the first time');
 
-  const appName = 'MyVersionedApp'
+  const appName = 'MyVersionedApp';
 
   const result1 = await algorand.appDeployer.deploy({
     metadata: {
@@ -135,25 +146,25 @@ async function main() {
     deleteParams: {
       sender: deployer.addr,
     },
-  })
+  });
 
-  printInfo(`\nDeployment result:`)
-  printInfo(`  Operation performed: ${result1.operationPerformed}`)
-  printInfo(`  App ID: ${result1.appId}`)
-  printInfo(`  App Address: ${shortenAddress(result1.appAddress.toString())}`)
-  printInfo(`  App Name: ${result1.name}`)
-  printInfo(`  Version: ${result1.version}`)
-  printInfo(`  Updatable: ${result1.updatable}`)
-  printInfo(`  Deletable: ${result1.deletable}`)
+  printInfo(`\nDeployment result:`);
+  printInfo(`  Operation performed: ${result1.operationPerformed}`);
+  printInfo(`  App ID: ${result1.appId}`);
+  printInfo(`  App Address: ${shortenAddress(result1.appAddress.toString())}`);
+  printInfo(`  App Name: ${result1.name}`);
+  printInfo(`  Version: ${result1.version}`);
+  printInfo(`  Updatable: ${result1.updatable}`);
+  printInfo(`  Deletable: ${result1.deletable}`);
   if ('transaction' in result1) {
-    printInfo(`  Transaction ID: ${result1.txIds[0]}`)
+    printInfo(`  Transaction ID: ${result1.txIds[0]}`);
   }
 
-  printSuccess('Initial deployment completed (operation: create)')
+  printSuccess('Initial deployment completed (operation: create)');
 
   // Step 3: Demonstrate idempotency - same version does nothing
-  printStep(3, 'Demonstrate idempotency - deploy same version again')
-  printInfo('Calling deploy() again with the same version should do nothing')
+  printStep(3, 'Demonstrate idempotency - deploy same version again');
+  printInfo('Calling deploy() again with the same version should do nothing');
 
   const result2 = await algorand.appDeployer.deploy({
     metadata: {
@@ -179,21 +190,21 @@ async function main() {
     deleteParams: {
       sender: deployer.addr,
     },
-  })
+  });
 
-  printInfo(`\nIdempotent deployment result:`)
-  printInfo(`  Operation performed: ${result2.operationPerformed}`)
-  printInfo(`  App ID: ${result2.appId} (same as before)`)
-  printInfo(`  Version: ${result2.version}`)
+  printInfo(`\nIdempotent deployment result:`);
+  printInfo(`  Operation performed: ${result2.operationPerformed}`);
+  printInfo(`  App ID: ${result2.appId} (same as before)`);
+  printInfo(`  Version: ${result2.version}`);
   if (result2.operationPerformed === 'nothing') {
-    printInfo(`  Note: No transaction was sent - app is unchanged`)
+    printInfo(`  Note: No transaction was sent - app is unchanged`);
   }
 
-  printSuccess('Idempotency verified - no action taken for same version')
+  printSuccess('Idempotency verified - no action taken for same version');
 
   // Step 4: Demonstrate onUpdate: 'update'
-  printStep(4, "Demonstrate onUpdate: 'update' - update existing app")
-  printInfo('Deploying version 2.0.0 with onUpdate: "update" to update the existing app')
+  printStep(4, "Demonstrate onUpdate: 'update' - update existing app");
+  printInfo('Deploying version 2.0.0 with onUpdate: "update" to update the existing app');
 
   const result3 = await algorand.appDeployer.deploy({
     metadata: {
@@ -220,29 +231,29 @@ async function main() {
       sender: deployer.addr,
     },
     onUpdate: 'update', // Update the existing app
-  })
+  });
 
-  printInfo(`\nUpdate deployment result:`)
-  printInfo(`  Operation performed: ${result3.operationPerformed}`)
-  printInfo(`  App ID: ${result3.appId} (same app, updated in place)`)
-  printInfo(`  Version: ${result3.version}`)
-  printInfo(`  Created round: ${result3.createdRound}`)
-  printInfo(`  Updated round: ${result3.updatedRound}`)
+  printInfo(`\nUpdate deployment result:`);
+  printInfo(`  Operation performed: ${result3.operationPerformed}`);
+  printInfo(`  App ID: ${result3.appId} (same app, updated in place)`);
+  printInfo(`  Version: ${result3.version}`);
+  printInfo(`  Created round: ${result3.createdRound}`);
+  printInfo(`  Updated round: ${result3.updatedRound}`);
   if ('transaction' in result3) {
-    printInfo(`  Transaction ID: ${result3.txIds[0]}`)
+    printInfo(`  Transaction ID: ${result3.txIds[0]}`);
   }
 
   // Verify the global state was preserved but version updated
-  const globalState = await algorand.app.getGlobalState(result3.appId)
-  printInfo(`\nGlobal state after update:`)
-  printInfo(`  version: ${globalState['version']?.value ?? 'N/A'} (from TEAL)`)
-  printInfo(`  counter: ${globalState['counter']?.value ?? 'N/A'} (preserved)`)
+  const globalState = await algorand.app.getGlobalState(result3.appId);
+  printInfo(`\nGlobal state after update:`);
+  printInfo(`  version: ${globalState['version']?.value ?? 'N/A'} (from TEAL)`);
+  printInfo(`  counter: ${globalState['counter']?.value ?? 'N/A'} (preserved)`);
 
-  printSuccess('App updated in place with new code')
+  printSuccess('App updated in place with new code');
 
   // Step 5: Demonstrate onUpdate: 'fail'
-  printStep(5, "Demonstrate onUpdate: 'fail' - fails if update detected")
-  printInfo('Trying to deploy version 3.0.0 with onUpdate: "fail" should throw an error')
+  printStep(5, "Demonstrate onUpdate: 'fail' - fails if update detected");
+  printInfo('Trying to deploy version 3.0.0 with onUpdate: "fail" should throw an error');
 
   try {
     await algorand.appDeployer.deploy({
@@ -270,19 +281,19 @@ async function main() {
         sender: deployer.addr,
       },
       onUpdate: 'fail', // Fail if update detected
-    })
-    printError('Expected an error but deployment succeeded')
+    });
+    printError('Expected an error but deployment succeeded');
   } catch (error) {
-    printInfo(`\nExpected error caught:`)
-    printInfo(`  ${error instanceof Error ? error.message : String(error)}`)
-    printSuccess('onUpdate: "fail" correctly prevents updates')
+    printInfo(`\nExpected error caught:`);
+    printInfo(`  ${error instanceof Error ? error.message : String(error)}`);
+    printSuccess('onUpdate: "fail" correctly prevents updates');
   }
 
   // Step 6: Demonstrate onUpdate: 'replace'
-  printStep(6, "Demonstrate onUpdate: 'replace' - delete and recreate app")
-  printInfo('Deploying version 3.0.0 with onUpdate: "replace" deletes old app and creates new one')
+  printStep(6, "Demonstrate onUpdate: 'replace' - delete and recreate app");
+  printInfo('Deploying version 3.0.0 with onUpdate: "replace" deletes old app and creates new one');
 
-  const oldAppId = result3.appId
+  const oldAppId = result3.appId;
 
   const result4 = await algorand.appDeployer.deploy({
     metadata: {
@@ -309,24 +320,26 @@ async function main() {
       sender: deployer.addr,
     },
     onUpdate: 'replace', // Delete old and create new
-  })
+  });
 
-  printInfo(`\nReplace deployment result:`)
-  printInfo(`  Operation performed: ${result4.operationPerformed}`)
-  printInfo(`  Old App ID: ${oldAppId} (deleted)`)
-  printInfo(`  New App ID: ${result4.appId}`)
-  printInfo(`  App Address: ${shortenAddress(result4.appAddress.toString())}`)
-  printInfo(`  Version: ${result4.version}`)
+  printInfo(`\nReplace deployment result:`);
+  printInfo(`  Operation performed: ${result4.operationPerformed}`);
+  printInfo(`  Old App ID: ${oldAppId} (deleted)`);
+  printInfo(`  New App ID: ${result4.appId}`);
+  printInfo(`  App Address: ${shortenAddress(result4.appAddress.toString())}`);
+  printInfo(`  Version: ${result4.version}`);
   if (result4.operationPerformed === 'replace' && 'deleteResult' in result4) {
-    printInfo(`  Delete transaction confirmed: round ${result4.deleteResult.confirmation.confirmedRound}`)
+    printInfo(
+      `  Delete transaction confirmed: round ${result4.deleteResult.confirmation.confirmedRound}`,
+    );
   }
 
-  printSuccess('Old app deleted and new app created')
+  printSuccess('Old app deleted and new app created');
 
   // Step 7: Demonstrate onSchemaBreak: 'replace'
-  printStep(7, "Demonstrate onSchemaBreak: 'replace' - handle schema changes")
-  printInfo('Deploying version 4.0.0 with increased schema (more global ints)')
-  printInfo('Schema changes cannot be done via update, so replace is required')
+  printStep(7, "Demonstrate onSchemaBreak: 'replace' - handle schema changes");
+  printInfo('Deploying version 4.0.0 with increased schema (more global ints)');
+  printInfo('Schema changes cannot be done via update, so replace is required');
 
   const result5 = await algorand.appDeployer.deploy({
     metadata: {
@@ -354,49 +367,49 @@ async function main() {
     },
     onUpdate: 'update', // Would normally try to update
     onSchemaBreak: 'replace', // But schema change forces replace
-  })
+  });
 
-  printInfo(`\nSchema break deployment result:`)
-  printInfo(`  Operation performed: ${result5.operationPerformed}`)
-  printInfo(`  Previous App ID: ${result4.appId}`)
-  printInfo(`  New App ID: ${result5.appId}`)
-  printInfo(`  Version: ${result5.version}`)
+  printInfo(`\nSchema break deployment result:`);
+  printInfo(`  Operation performed: ${result5.operationPerformed}`);
+  printInfo(`  Previous App ID: ${result4.appId}`);
+  printInfo(`  New App ID: ${result5.appId}`);
+  printInfo(`  Version: ${result5.version}`);
 
   // Verify new schema
-  const appInfo = await algorand.app.getById(result5.appId)
-  printInfo(`\nNew app schema:`)
-  printInfo(`  globalInts: ${appInfo.globalInts}`)
-  printInfo(`  globalByteSlices: ${appInfo.globalByteSlices}`)
+  const appInfo = await algorand.app.getById(result5.appId);
+  printInfo(`\nNew app schema:`);
+  printInfo(`  globalInts: ${appInfo.globalInts}`);
+  printInfo(`  globalByteSlices: ${appInfo.globalByteSlices}`);
 
-  printSuccess('Schema break handled with replace strategy')
+  printSuccess('Schema break handled with replace strategy');
 
   // Step 8: Show deployment metadata in global state
-  printStep(8, 'Show deployment metadata lookup by name')
-  printInfo('The appDeployer uses app name for idempotent lookups across deployments')
+  printStep(8, 'Show deployment metadata lookup by name');
+  printInfo('The appDeployer uses app name for idempotent lookups across deployments');
 
   // Look up the app by creator
-  const creatorApps = await algorand.appDeployer.getCreatorAppsByName(deployer.addr)
+  const creatorApps = await algorand.appDeployer.getCreatorAppsByName(deployer.addr);
 
-  printInfo(`\nApps deployed by ${shortenAddress(deployer.addr.toString())}:`)
+  printInfo(`\nApps deployed by ${shortenAddress(deployer.addr.toString())}:`);
   for (const [name, appMeta] of Object.entries(creatorApps.apps)) {
-    printInfo(`\n  App Name: "${name}"`)
-    printInfo(`    App ID: ${appMeta.appId}`)
-    printInfo(`    Version: ${appMeta.version}`)
-    printInfo(`    Updatable: ${appMeta.updatable}`)
-    printInfo(`    Deletable: ${appMeta.deletable}`)
-    printInfo(`    Created Round: ${appMeta.createdRound}`)
-    printInfo(`    Updated Round: ${appMeta.updatedRound}`)
-    printInfo(`    Deleted: ${appMeta.deleted}`)
-    printInfo(`    Created Metadata:`)
-    printInfo(`      Name: ${appMeta.createdMetadata.name}`)
-    printInfo(`      Version: ${appMeta.createdMetadata.version}`)
+    printInfo(`\n  App Name: "${name}"`);
+    printInfo(`    App ID: ${appMeta.appId}`);
+    printInfo(`    Version: ${appMeta.version}`);
+    printInfo(`    Updatable: ${appMeta.updatable}`);
+    printInfo(`    Deletable: ${appMeta.deletable}`);
+    printInfo(`    Created Round: ${appMeta.createdRound}`);
+    printInfo(`    Updated Round: ${appMeta.updatedRound}`);
+    printInfo(`    Deleted: ${appMeta.deleted}`);
+    printInfo(`    Created Metadata:`);
+    printInfo(`      Name: ${appMeta.createdMetadata.name}`);
+    printInfo(`      Version: ${appMeta.createdMetadata.version}`);
   }
 
-  printSuccess('Deployment metadata retrieved')
+  printSuccess('Deployment metadata retrieved');
 
   // Step 9: Demonstrate how name enables idempotency
-  printStep(9, 'Demonstrate how app name enables idempotent deployments')
-  printInfo('Deploy a second app with a different name to show name-based lookup')
+  printStep(9, 'Demonstrate how app name enables idempotent deployments');
+  printInfo('Deploy a second app with a different name to show name-based lookup');
 
   const result6 = await algorand.appDeployer.deploy({
     metadata: {
@@ -422,69 +435,68 @@ async function main() {
     deleteParams: {
       sender: deployer.addr,
     },
-  })
+  });
 
-  printInfo(`\nSecond app deployment:`)
-  printInfo(`  Name: AnotherApp`)
-  printInfo(`  App ID: ${result6.appId}`)
-  printInfo(`  Operation: ${result6.operationPerformed}`)
+  printInfo(`\nSecond app deployment:`);
+  printInfo(`  Name: AnotherApp`);
+  printInfo(`  App ID: ${result6.appId}`);
+  printInfo(`  Operation: ${result6.operationPerformed}`);
 
   // Now list all apps again
-  const allApps = await algorand.appDeployer.getCreatorAppsByName(deployer.addr)
-  printInfo(`\nAll apps by creator (${Object.keys(allApps.apps).length} apps):`)
+  const allApps = await algorand.appDeployer.getCreatorAppsByName(deployer.addr);
+  printInfo(`\nAll apps by creator (${Object.keys(allApps.apps).length} apps):`);
   for (const name of Object.keys(allApps.apps)) {
-    printInfo(`  - "${name}" (App ID: ${allApps.apps[name].appId})`)
+    printInfo(`  - "${name}" (App ID: ${allApps.apps[name].appId})`);
   }
 
-  printSuccess('Multiple apps tracked by name')
+  printSuccess('Multiple apps tracked by name');
 
   // Step 10: Summary
-  printStep(10, 'Summary - App Deployer API')
-  printInfo('The AppDeployer provides idempotent application deployment:')
-  printInfo('')
-  printInfo('algorand.appDeployer.deploy(params):')
-  printInfo('  - Deploys applications with idempotent behavior based on app name')
-  printInfo('  - Returns: AppDeployResult with operationPerformed discriminator')
-  printInfo('')
-  printInfo('Key parameters:')
-  printInfo('  metadata: { name, version, updatable, deletable }')
-  printInfo('    - name: Unique identifier for idempotent lookups')
-  printInfo('    - version: Semantic version string')
-  printInfo('    - updatable/deletable: Deploy-time controls (TMPL_UPDATABLE/TMPL_DELETABLE)')
-  printInfo('')
-  printInfo('  createParams: { sender, approvalProgram, clearStateProgram, schema }')
-  printInfo('  updateParams: { sender } - Used for update operations')
-  printInfo('  deleteParams: { sender } - Used for replace operations')
-  printInfo('')
-  printInfo('  onUpdate: Controls behavior when code changes:')
-  printInfo("    'fail' - Throw error (default)")
-  printInfo("    'update' - Update app in place (preserves app ID)")
-  printInfo("    'replace' - Delete old app, create new one")
-  printInfo("    'append' - Create new app, leave old one")
-  printInfo('')
-  printInfo('  onSchemaBreak: Controls behavior when schema changes:')
-  printInfo("    'fail' - Throw error (default)")
-  printInfo("    'replace' - Delete old app, create new one")
-  printInfo("    'append' - Create new app, leave old one")
-  printInfo('')
-  printInfo('operationPerformed values:')
-  printInfo("  'create' - New app was created")
-  printInfo("  'update' - Existing app was updated in place")
-  printInfo("  'replace' - Old app deleted, new app created")
-  printInfo("  'nothing' - No changes (idempotent)")
-  printInfo('')
-  printInfo('algorand.appDeployer.getCreatorAppsByName(creator):')
-  printInfo('  - Lists all apps deployed by a creator with their metadata')
-  printInfo('  - Used internally for idempotent lookup by name')
+  printStep(10, 'Summary - App Deployer API');
+  printInfo('The AppDeployer provides idempotent application deployment:');
+  printInfo('');
+  printInfo('algorand.appDeployer.deploy(params):');
+  printInfo('  - Deploys applications with idempotent behavior based on app name');
+  printInfo('  - Returns: AppDeployResult with operationPerformed discriminator');
+  printInfo('');
+  printInfo('Key parameters:');
+  printInfo('  metadata: { name, version, updatable, deletable }');
+  printInfo('    - name: Unique identifier for idempotent lookups');
+  printInfo('    - version: Semantic version string');
+  printInfo('    - updatable/deletable: Deploy-time controls (TMPL_UPDATABLE/TMPL_DELETABLE)');
+  printInfo('');
+  printInfo('  createParams: { sender, approvalProgram, clearStateProgram, schema }');
+  printInfo('  updateParams: { sender } - Used for update operations');
+  printInfo('  deleteParams: { sender } - Used for replace operations');
+  printInfo('');
+  printInfo('  onUpdate: Controls behavior when code changes:');
+  printInfo("    'fail' - Throw error (default)");
+  printInfo("    'update' - Update app in place (preserves app ID)");
+  printInfo("    'replace' - Delete old app, create new one");
+  printInfo("    'append' - Create new app, leave old one");
+  printInfo('');
+  printInfo('  onSchemaBreak: Controls behavior when schema changes:');
+  printInfo("    'fail' - Throw error (default)");
+  printInfo("    'replace' - Delete old app, create new one");
+  printInfo("    'append' - Create new app, leave old one");
+  printInfo('');
+  printInfo('operationPerformed values:');
+  printInfo("  'create' - New app was created");
+  printInfo("  'update' - Existing app was updated in place");
+  printInfo("  'replace' - Old app deleted, new app created");
+  printInfo("  'nothing' - No changes (idempotent)");
+  printInfo('');
+  printInfo('algorand.appDeployer.getCreatorAppsByName(creator):');
+  printInfo('  - Lists all apps deployed by a creator with their metadata');
+  printInfo('  - Used internally for idempotent lookup by name');
 
-  printSuccess('App Deployer example completed!')
+  printSuccess('App Deployer example completed!');
 }
 
-main().catch((error) => {
-  printError(`Unhandled error: ${error instanceof Error ? error.message : String(error)}`)
-  process.exit(1)
-})
-
+main().catch(error => {
+  printError(`Unhandled error: ${error instanceof Error ? error.message : String(error)}`);
+  process.exit(1);
+});
 ```
 
 ---

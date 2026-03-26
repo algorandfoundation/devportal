@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "BareMethodConfig"
+title: 'BareMethodConfig'
 ---
 
 > **BareMethodConfig** = `object`
@@ -24,10 +24,10 @@ Which on complete action(s) are allowed when invoking this method.
 #### Default
 
 ```ts
-'NoOp'
+'NoOp';
 ```
 
-***
+---
 
 ### onCreate?
 
@@ -40,5 +40,5 @@ Whether this method should be callable when creating the application.
 #### Default
 
 ```ts
-'disallow'
+'disallow';
 ```

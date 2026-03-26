@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "bzero"
+title: 'bzero'
 ---
 
 > **bzero**\<`TLength`\>(`a`): [`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)\<`TLength`\>
@@ -15,7 +15,7 @@ zero filled byte-array of length A
 
 ### TLength
 
-`TLength` *extends* [`uint64`](/algorand-typescript/api/index/type-aliases/uint64/) = [`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
+`TLength` _extends_ [`uint64`](/algorand-typescript/api/index/type-aliases/uint64/) = [`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
 
 ## Parameters
 

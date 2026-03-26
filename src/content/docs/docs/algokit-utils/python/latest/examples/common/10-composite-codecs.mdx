@@ -1,6 +1,6 @@
 ---
-title: "Composite Serde (Serialization/Deserialization)"
-description: "This example demonstrates how to serialize/deserialize composite data structures like arrays, maps, and records in Python using the serde utilities."
+title: 'Composite Serde (Serialization/Deserialization)'
+description: 'This example demonstrates how to serialize/deserialize composite data structures like arrays, maps, and records in Python using the serde utilities.'
 sidebar:
   order: 10
 ---
@@ -10,11 +10,12 @@ sidebar:
 ## Description
 
 This example demonstrates how to serialize/deserialize composite data structures like arrays, maps, and records in Python using the serde utilities.
- Note: Unlike the TypeScript SDK which uses explicit ArrayCodec, MapCodec, and RecordCodec classes, the Python SDK handles these natively through:
+Note: Unlike the TypeScript SDK which uses explicit ArrayCodec, MapCodec, and RecordCodec classes, the Python SDK handles these natively through:
+
 - Native Python lists for arrays
 - Native Python dicts for records/maps
 - Dataclass fields with serde helpers for structured data
- Topics covered:
+  Topics covered:
 - Encoding/decoding typed arrays (lists)
 - Encoding/decoding maps (dictionaries)
 - Using bytes_seq(), int_seq(), addr_seq() helpers

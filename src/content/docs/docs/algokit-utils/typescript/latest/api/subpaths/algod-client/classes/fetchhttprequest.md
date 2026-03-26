@@ -2,10 +2,10 @@
 editUrl: false
 next: false
 prev: false
-title: "FetchHttpRequest"
+title: 'FetchHttpRequest'
 ---
 
-Defined in: [packages/algod\_client/src/core/fetch-http-request.ts:61](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/algod_client/src/core/fetch-http-request.ts#L61)
+Defined in: [packages/algod_client/src/core/fetch-http-request.ts:61](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/algod_client/src/core/fetch-http-request.ts#L61)
 
 ## Extends
 
@@ -17,7 +17,7 @@ Defined in: [packages/algod\_client/src/core/fetch-http-request.ts:61](https://g
 
 > **new FetchHttpRequest**(`config`): `FetchHttpRequest`
 
-Defined in: [packages/algod\_client/src/core/base-http-request.ts:20](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/algod_client/src/core/base-http-request.ts#L20)
+Defined in: [packages/algod_client/src/core/base-http-request.ts:20](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/algod_client/src/core/base-http-request.ts#L20)
 
 #### Parameters
 
@@ -39,7 +39,7 @@ Defined in: [packages/algod\_client/src/core/base-http-request.ts:20](https://gi
 
 > `readonly` **config**: [`ClientConfig`](/docs/algokit-utils/typescript/latest/api/subpaths/algod-client/interfaces/clientconfig/)
 
-Defined in: [packages/algod\_client/src/core/base-http-request.ts:20](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/algod_client/src/core/base-http-request.ts#L20)
+Defined in: [packages/algod_client/src/core/base-http-request.ts:20](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/algod_client/src/core/base-http-request.ts#L20)
 
 #### Inherited from
 
@@ -51,7 +51,7 @@ Defined in: [packages/algod\_client/src/core/base-http-request.ts:20](https://gi
 
 > **request**\<`T`\>(`options`): `Promise`\<`T`\>
 
-Defined in: [packages/algod\_client/src/core/fetch-http-request.ts:62](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/algod_client/src/core/fetch-http-request.ts#L62)
+Defined in: [packages/algod_client/src/core/fetch-http-request.ts:62](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/algod_client/src/core/fetch-http-request.ts#L62)
 
 #### Type Parameters
 

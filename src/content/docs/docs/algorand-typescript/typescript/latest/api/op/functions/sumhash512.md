@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "sumhash512"
+title: 'sumhash512'
 ---
 
 > **sumhash512**(`a`): [`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)\<`64`\>

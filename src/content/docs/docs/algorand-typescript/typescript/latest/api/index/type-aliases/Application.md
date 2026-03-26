@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "Application"
+title: 'Application'
 ---
 
 > **Application** = `object`
@@ -21,7 +21,7 @@ Defined in: [reference.ts:288](https://github.com/algorandfoundation/puya-ts/blo
 
 Address for which this application has authority
 
-***
+---
 
 ### approvalProgram
 
@@ -31,7 +31,7 @@ Defined in: [reference.ts:248](https://github.com/algorandfoundation/puya-ts/blo
 
 Bytecode of Approval Program
 
-***
+---
 
 ### clearStateProgram
 
@@ -41,7 +41,7 @@ Defined in: [reference.ts:253](https://github.com/algorandfoundation/puya-ts/blo
 
 Bytecode of Clear State Program
 
-***
+---
 
 ### creator
 
@@ -51,7 +51,7 @@ Defined in: [reference.ts:283](https://github.com/algorandfoundation/puya-ts/blo
 
 Creator address
 
-***
+---
 
 ### extraProgramPages
 
@@ -61,7 +61,7 @@ Defined in: [reference.ts:278](https://github.com/algorandfoundation/puya-ts/blo
 
 Number of Extra Program Pages of code space
 
-***
+---
 
 ### globalNumBytes
 
@@ -71,7 +71,7 @@ Defined in: [reference.ts:263](https://github.com/algorandfoundation/puya-ts/blo
 
 Number of byte array values allowed in Global State
 
-***
+---
 
 ### globalNumUint
 
@@ -81,7 +81,7 @@ Defined in: [reference.ts:258](https://github.com/algorandfoundation/puya-ts/blo
 
 Number of uint64 values allowed in Global State
 
-***
+---
 
 ### id
 
@@ -91,7 +91,7 @@ Defined in: [reference.ts:244](https://github.com/algorandfoundation/puya-ts/blo
 
 The id of this application on the current network
 
-***
+---
 
 ### localNumBytes
 
@@ -101,7 +101,7 @@ Defined in: [reference.ts:273](https://github.com/algorandfoundation/puya-ts/blo
 
 Number of byte array values allowed in Local State
 
-***
+---
 
 ### localNumUint
 
@@ -111,7 +111,7 @@ Defined in: [reference.ts:268](https://github.com/algorandfoundation/puya-ts/blo
 
 Number of uint64 values allowed in Local State
 
-***
+---
 
 ### version
 

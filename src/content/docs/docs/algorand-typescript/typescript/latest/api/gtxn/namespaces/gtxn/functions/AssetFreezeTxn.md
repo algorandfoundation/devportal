@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "AssetFreezeTxn"
+title: 'AssetFreezeTxn'
 ---
 
 > **AssetFreezeTxn**(`n`): [`AssetFreezeTxn`](/algorand-typescript/api/gtxn/namespaces/gtxn/interfaces/assetfreezetxn/)

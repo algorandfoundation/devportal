@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "AlgoKitConfig"
+title: 'AlgoKitConfig'
 ---
 
 Defined in: [src/updatable-config.ts:5](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/updatable-config.ts#L5)
@@ -19,7 +19,7 @@ Defined in: [src/updatable-config.ts:9](https://github.com/algorandfoundation/al
 
 Whether or not debug mode is enabled
 
-***
+---
 
 ### events
 
@@ -27,7 +27,7 @@ Whether or not debug mode is enabled
 
 Defined in: [src/updatable-config.ts:24](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/updatable-config.ts#L24)
 
-***
+---
 
 ### logger
 
@@ -37,7 +37,7 @@ Defined in: [src/updatable-config.ts:7](https://github.com/algorandfoundation/al
 
 Logger
 
-***
+---
 
 ### maxSearchDepth
 
@@ -47,7 +47,7 @@ Defined in: [src/updatable-config.ts:17](https://github.com/algorandfoundation/a
 
 The maximum depth to search for a specific file
 
-***
+---
 
 ### populateAppCallResources
 
@@ -58,7 +58,7 @@ Defined in: [src/updatable-config.ts:22](https://github.com/algorandfoundation/a
 Whether to enable populateAppCallResources in sendParams by default.
 Default value is false.
 
-***
+---
 
 ### projectRoot
 
@@ -68,7 +68,7 @@ Defined in: [src/updatable-config.ts:11](https://github.com/algorandfoundation/a
 
 The path to the project root directory
 
-***
+---
 
 ### traceAll
 
@@ -78,7 +78,7 @@ Defined in: [src/updatable-config.ts:13](https://github.com/algorandfoundation/a
 
 Indicates whether to trace all operations
 
-***
+---
 
 ### traceBufferSizeMb
 

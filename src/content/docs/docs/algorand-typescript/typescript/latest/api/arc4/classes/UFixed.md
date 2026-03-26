@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "UFixed"
+title: 'UFixed'
 ---
 
 Defined in: [arc4/encoded-types.ts:198](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/arc4/encoded-types.ts#L198)
@@ -17,11 +17,11 @@ A fixed bit size, fixed decimal unsigned value
 
 ### N
 
-`N` *extends* [`BitSize`](/algorand-typescript/api/arc4/type-aliases/bitsize/)
+`N` _extends_ [`BitSize`](/algorand-typescript/api/arc4/type-aliases/bitsize/)
 
 ### M
 
-`M` *extends* `number`
+`M` _extends_ `number`
 
 ## Constructors
 

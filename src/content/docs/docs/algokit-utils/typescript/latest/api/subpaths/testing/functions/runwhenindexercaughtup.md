@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "runWhenIndexerCaughtUp"
+title: 'runWhenIndexerCaughtUp'
 ---
 
 > **runWhenIndexerCaughtUp**\<`T`\>(`run`): `Promise`\<`T`\>
@@ -36,5 +36,5 @@ The result (as a promise), or throws if the indexer didn't catch up in time
 ## Example
 
 ```typescript
-const transaction = await runWhenIndexerCaughtUp(() => indexer.lookupTransactionByID(txnId).do())
+const transaction = await runWhenIndexerCaughtUp(() => indexer.lookupTransactionByID(txnId).do());
 ```

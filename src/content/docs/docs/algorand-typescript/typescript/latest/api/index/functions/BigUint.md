@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "BigUint"
+title: 'BigUint'
 ---
 
 ## Call Signature

@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "ConfirmedTransactionResults"
+title: 'ConfirmedTransactionResults'
 ---
 
 Defined in: [src/transaction/types.ts:87](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/transaction/types.ts#L87)
@@ -27,7 +27,7 @@ The response from sending and waiting for the primary transaction
 
 [`SendTransactionResult`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/sendtransactionresult/).[`confirmation`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/sendtransactionresult/#confirmation)
 
-***
+---
 
 ### confirmations
 
@@ -41,7 +41,7 @@ The response from sending and waiting for the transactions
 
 [`SendTransactionResults`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/sendtransactionresults/).[`confirmations`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/sendtransactionresults/#confirmations)
 
-***
+---
 
 ### transaction
 
@@ -55,7 +55,7 @@ The transaction
 
 [`SendTransactionResult`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/sendtransactionresult/).[`transaction`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/sendtransactionresult/#transaction)
 
-***
+---
 
 ### transactions
 

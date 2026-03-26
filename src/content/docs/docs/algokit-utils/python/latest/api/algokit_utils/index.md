@@ -1,5 +1,5 @@
 ---
-title: "algokit_utils"
+title: 'algokit_utils'
 ---
 
 <div class="api-ref">
@@ -19,18 +19,17 @@ For more specific functionality, import directly from the relevant submodules:
 
 ## Submodules
 
-* [algokit_utils.accounts](/docs/algokit-utils/python/latest/api/algokit_utils/accounts/)
-* [algokit_utils.algo25](/docs/algokit-utils/python/latest/api/algokit_utils/algo25/)
-* [algokit_utils.algorand](/docs/algokit-utils/python/latest/api/algokit_utils/algorand/)
-* [algokit_utils.applications](/docs/algokit-utils/python/latest/api/algokit_utils/applications/)
-* [algokit_utils.assets](/docs/algokit-utils/python/latest/api/algokit_utils/assets/)
-* [algokit_utils.clients](/docs/algokit-utils/python/latest/api/algokit_utils/clients/)
-* [algokit_utils.config](/docs/algokit-utils/python/latest/api/algokit_utils/config/)
-* [algokit_utils.errors](/docs/algokit-utils/python/latest/api/algokit_utils/errors/)
-* [algokit_utils.models](/docs/algokit-utils/python/latest/api/algokit_utils/models/)
-* [algokit_utils.protocols](/docs/algokit-utils/python/latest/api/algokit_utils/protocols/)
-* [algokit_utils.transact](/docs/algokit-utils/python/latest/api/algokit_utils/transact/)
-* [algokit_utils.transactions](/docs/algokit-utils/python/latest/api/algokit_utils/transactions/)
-
+- [algokit_utils.accounts](/docs/algokit-utils/python/latest/api/algokit_utils/accounts/)
+- [algokit_utils.algo25](/docs/algokit-utils/python/latest/api/algokit_utils/algo25/)
+- [algokit_utils.algorand](/docs/algokit-utils/python/latest/api/algokit_utils/algorand/)
+- [algokit_utils.applications](/docs/algokit-utils/python/latest/api/algokit_utils/applications/)
+- [algokit_utils.assets](/docs/algokit-utils/python/latest/api/algokit_utils/assets/)
+- [algokit_utils.clients](/docs/algokit-utils/python/latest/api/algokit_utils/clients/)
+- [algokit_utils.config](/docs/algokit-utils/python/latest/api/algokit_utils/config/)
+- [algokit_utils.errors](/docs/algokit-utils/python/latest/api/algokit_utils/errors/)
+- [algokit_utils.models](/docs/algokit-utils/python/latest/api/algokit_utils/models/)
+- [algokit_utils.protocols](/docs/algokit-utils/python/latest/api/algokit_utils/protocols/)
+- [algokit_utils.transact](/docs/algokit-utils/python/latest/api/algokit_utils/transact/)
+- [algokit_utils.transactions](/docs/algokit-utils/python/latest/api/algokit_utils/transactions/)
 
 </div>

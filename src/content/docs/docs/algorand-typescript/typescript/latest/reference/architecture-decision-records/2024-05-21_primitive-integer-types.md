@@ -1,5 +1,5 @@
 ---
-title: "Primitive integer types"
+title: 'Primitive integer types'
 ---
 
 # Architecture Decision Record - Primitive integer types
@@ -57,14 +57,14 @@ A `UInt64` and `BigUint` class could be defined which make use of `bigint` inter
 
 ```ts
 class UInt64 {
-  private value: bigint
+  private value: bigint;
 
   constructor(value: bigint | number) {
-    this.value = this.checkBounds(value)
+    this.value = this.checkBounds(value);
   }
 
   add(other: UInt64): UInt64 {
-    return new UInt64(this.value + other.value)
+    return new UInt64(this.value + other.value);
   }
 
   /* etc */
@@ -74,13 +74,13 @@ class UInt64 {
 This solution provides the ultimate in type safety and semantic/syntactic compatibility, and requires no custom TypeScript transformer to run _correctly_ on Node.js. The semantics should be obvious to anyone familiar with Object Oriented Programming. The downside is that neither EcmaScript nor TypeScript support operator overloading which results in more verbose and unwieldy math expressions. The lack of idiomatic TypeScript mathematical operators is a deal breaker that rules this option out.
 
 ```ts
-const a = UInt64(500n)
-const b = Uint64(256)
+const a = UInt64(500n);
+const b = Uint64(256);
 
 // Not supported (a compile error in TS)
-const c1 = a + b
+const c1 = a + b;
 // Works, but is verbose and unwieldy for more complicated expressions and isn't idiomatic TypeScript
-const c2 = a.add(b)
+const c2 = a.add(b);
 ```
 
 ### Option 3 - Branded `bigint`
@@ -89,27 +89,27 @@ TypeScript allows you to intersect primitive types with a simple interface to br
 
 ```ts
 // Constructors
-declare function UInt64(v): uint64
-declare function BigUint(v): uint64
+declare function UInt64(v): uint64;
+declare function BigUint(v): uint64;
 
 // Branded types
-type uint64 = bigint & { __type?: 'uint64' }
-type biguint = bigint & { __type?: 'biguint' }
+type uint64 = bigint & { __type?: 'uint64' };
+type biguint = bigint & { __type?: 'biguint' };
 
-const a: uint64 = 323n // Declare with type annotation and raw `bigint` literal
-const b = UInt64(12n) // Declare with factory
-const b2 = UInt64(12) // Factory could also take `number` literals (compiler could check they aren't negative and are integers)
+const a: uint64 = 323n; // Declare with type annotation and raw `bigint` literal
+const b = UInt64(12n); // Declare with factory
+const b2 = UInt64(12); // Factory could also take `number` literals (compiler could check they aren't negative and are integers)
 
 // c1 type is `bigint`, but we can mandate a type hint with the compiler (c2)
-const c1 = a + b
-const c2: uint64 = a + b
+const c1 = a + b;
+const c2: uint64 = a + b;
 
 // No TypeScript type error, but semantically ambiguous - is a+b performed as a biguint op or a uint64 one and then converted?
 // (We could detect this as a compiler error though)
-const c3: biguint = a + b
+const c3: biguint = a + b;
 
 // Type error on b: Argument of type 'uint64' is not assignable to parameter of type 'biguint'. Nice!
-test(a, b)
+test(a, b);
 function test(x: uint64, y: biguint) {
   // ...
 }
@@ -130,22 +130,22 @@ The drawbacks of this solution are:
 A variation of option 3 with non-optional `__type` tags would prevent accidental implicit assignment errors when assigning between (say) `uint64` and `biguint`, but require explicit casting on all ops and any methods that return the base type.
 
 ```ts
-declare function Uint64(v): uint64
-declare function BigUint(v): uint64
+declare function Uint64(v): uint64;
+declare function BigUint(v): uint64;
 
-type uint64 = bigint & { __type: 'uint64' }
-type biguint = bigint & { __type: 'biguint' }
+type uint64 = bigint & { __type: 'uint64' };
+type biguint = bigint & { __type: 'biguint' };
 
 // Require factory or cast on declaration
-const a: uint64 = 323n as uint64
-const b = Uint64(12n)
+const a: uint64 = 323n as uint64;
+const b = Uint64(12n);
 
 // Also require factory or cast on math
-let c2: uint64
+let c2: uint64;
 
-c2 = a + b // error
-c2 = Uint64(a + b) // ok
-c2 = (a + b) as uint64 // ok
+c2 = a + b; // error
+c2 = Uint64(a + b); // ok
+c2 = (a + b) as uint64; // ok
 ```
 
 This introduces a degree of type safety with the in-built TypeScript type system at the significant expense of legibility and writability.

@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "LookupAssetHoldingsOptions"
+title: 'LookupAssetHoldingsOptions'
 ---
 
 Defined in: [src/indexer.ts:2](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/indexer.ts#L2)
@@ -19,7 +19,7 @@ Defined in: [src/indexer.ts:6](https://github.com/algorandfoundation/algokit-uti
 
 Results should have a decimal units amount greater than this value.
 
-***
+---
 
 ### currencyLessThan?
 
@@ -29,7 +29,7 @@ Defined in: [src/indexer.ts:4](https://github.com/algorandfoundation/algokit-uti
 
 Results should have a decimal units amount less than this value.
 
-***
+---
 
 ### includeAll?
 

@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "SigslotCommit"
+title: 'SigslotCommit'
 ---
 
 > **SigslotCommit** = `object`
@@ -17,7 +17,7 @@ Defined in: [packages/transact/src/transactions/state-proof.ts:56](https://githu
 
 Defined in: [packages/transact/src/transactions/state-proof.ts:58](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/transact/src/transactions/state-proof.ts#L58)
 
-***
+---
 
 ### sig
 

@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "Address"
+title: 'Address'
 ---
 
 Defined in: [packages/common/src/address.ts:42](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/common/src/address.ts#L42)
@@ -55,7 +55,7 @@ Compute the 4 byte checksum of the address.
 
 `Uint8Array`
 
-***
+---
 
 ### equals()
 
@@ -75,7 +75,7 @@ Check if the address is equal to another address.
 
 `boolean`
 
-***
+---
 
 ### toString()
 
@@ -89,7 +89,7 @@ Encode the address into a string form.
 
 `string`
 
-***
+---
 
 ### fromString()
 
@@ -113,7 +113,7 @@ The address to decode. Must be 58 characters long.
 
 An Address object corresponding to the input string.
 
-***
+---
 
 ### zeroAddress()
 

@@ -1,6 +1,6 @@
 ---
-title: "Pagination"
-description: "This example demonstrates how to properly handle pagination across multiple indexer endpoints using limit and next parameters. It includes a generic pagination helper function and shows iteration through all pages of results."
+title: 'Pagination'
+description: 'This example demonstrates how to properly handle pagination across multiple indexer endpoints using limit and next parameters. It includes a generic pagination helper function and shows iteration through all pages of results.'
 sidebar:
   order: 16
 ---
@@ -40,7 +40,7 @@ npm run example indexer_client/16-pagination.ts
  * - LocalNet running (via `algokit localnet start`)
  */
 
-import { algo } from '@algorandfoundation/algokit-utils'
+import { algo } from '@algorandfoundation/algokit-utils';
 import {
   createAlgorandClient,
   createIndexerClient,
@@ -51,7 +51,7 @@ import {
   printStep,
   printSuccess,
   shortenAddress,
-} from '../shared/utils.js'
+} from '../shared/utils.js';
 
 // ============================================================================
 // Generic Pagination Helper Function
@@ -62,9 +62,9 @@ import {
  */
 interface PaginationOptions {
   /** Maximum items per page */
-  limit?: number
+  limit?: number;
   /** Token for next page */
-  next?: string
+  next?: string;
 }
 
 /**
@@ -72,11 +72,11 @@ interface PaginationOptions {
  */
 interface PaginatedResponse<T> {
   /** The items returned in this page */
-  items: T[]
+  items: T[];
   /** Token for fetching the next page (undefined if no more pages) */
-  nextToken?: string
+  nextToken?: string;
   /** Current round when query was performed */
-  currentRound: bigint
+  currentRound: bigint;
 }
 
 /**
@@ -84,13 +84,13 @@ interface PaginatedResponse<T> {
  */
 interface PaginateAllOptions<T> {
   /** Page size (default: 100) */
-  pageSize?: number
+  pageSize?: number;
   /** Maximum total items to fetch (default: unlimited) */
-  maxItems?: number
+  maxItems?: number;
   /** Callback called for each page, return false to stop pagination */
-  onPage?: (items: T[], pageNumber: number) => boolean | void
+  onPage?: (items: T[], pageNumber: number) => boolean | void;
   /** Condition to stop early - return true to stop */
-  stopWhen?: (item: T, index: number) => boolean
+  stopWhen?: (item: T, index: number) => boolean;
 }
 
 /**
@@ -121,558 +121,578 @@ async function paginateAll<T>(
   fetchPage: (options: PaginationOptions) => Promise<PaginatedResponse<T>>,
   options: PaginateAllOptions<T> = {},
 ): Promise<{ items: T[]; totalPages: number; stoppedEarly: boolean }> {
-  const { pageSize = 100, maxItems, onPage, stopWhen } = options
+  const { pageSize = 100, maxItems, onPage, stopWhen } = options;
 
-  const allItems: T[] = []
-  let nextToken: string | undefined
-  let pageNumber = 0
-  let stoppedEarly = false
+  const allItems: T[] = [];
+  let nextToken: string | undefined;
+  let pageNumber = 0;
+  let stoppedEarly = false;
 
   do {
-    pageNumber++
+    pageNumber++;
 
     // Fetch the next page
     const response = await fetchPage({
       limit: pageSize,
       next: nextToken,
-    })
+    });
 
     // Process items and check for early termination
     for (const item of response.items) {
       // Check stop condition
       if (stopWhen && stopWhen(item, allItems.length)) {
-        stoppedEarly = true
-        break
+        stoppedEarly = true;
+        break;
       }
 
-      allItems.push(item)
+      allItems.push(item);
 
       // Check max items limit
       if (maxItems && allItems.length >= maxItems) {
-        stoppedEarly = true
-        break
+        stoppedEarly = true;
+        break;
       }
     }
 
     // Call page callback if provided
     if (onPage) {
-      const continueIteration = onPage(response.items, pageNumber)
+      const continueIteration = onPage(response.items, pageNumber);
       if (continueIteration === false) {
-        stoppedEarly = true
-        break
+        stoppedEarly = true;
+        break;
       }
     }
 
     // Check if we should stop
     if (stoppedEarly) {
-      break
+      break;
     }
 
-    nextToken = response.nextToken
-  } while (nextToken)
+    nextToken = response.nextToken;
+  } while (nextToken);
 
-  return { items: allItems, totalPages: pageNumber, stoppedEarly }
+  return { items: allItems, totalPages: pageNumber, stoppedEarly };
 }
 
 async function main() {
-  printHeader('Pagination Example')
+  printHeader('Pagination Example');
 
   // Create clients
-  const indexer = createIndexerClient()
-  const algorand = createAlgorandClient()
+  const indexer = createIndexerClient();
+  const algorand = createAlgorandClient();
 
   // =========================================================================
   // Step 1: Get a funded account and create some test data
   // =========================================================================
-  printStep(1, 'Setting up test data for pagination')
+  printStep(1, 'Setting up test data for pagination');
 
-  let senderAddress: string
-  let senderAccount: Awaited<ReturnType<typeof algorand.account.kmd.getLocalNetDispenserAccount>>
+  let senderAddress: string;
+  let senderAccount: Awaited<ReturnType<typeof algorand.account.kmd.getLocalNetDispenserAccount>>;
 
   try {
-    senderAccount = await algorand.account.kmd.getLocalNetDispenserAccount()
-    algorand.setSignerFromAccount(senderAccount)
-    senderAddress = senderAccount.addr.toString()
-    printSuccess(`Using dispenser account: ${shortenAddress(senderAddress)}`)
+    senderAccount = await algorand.account.kmd.getLocalNetDispenserAccount();
+    algorand.setSignerFromAccount(senderAccount);
+    senderAddress = senderAccount.addr.toString();
+    printSuccess(`Using dispenser account: ${shortenAddress(senderAddress)}`);
 
     // Create several random accounts and send them funds to generate transactions
-    printInfo('Creating test transactions for pagination demo...')
-    const receiverAccounts: string[] = []
+    printInfo('Creating test transactions for pagination demo...');
+    const receiverAccounts: string[] = [];
 
     for (let i = 0; i < 5; i++) {
-      const receiver = algorand.account.random()
-      receiverAccounts.push(receiver.addr.toString())
+      const receiver = algorand.account.random();
+      receiverAccounts.push(receiver.addr.toString());
 
       await algorand.send.payment({
         sender: senderAccount.addr,
         receiver: receiver.addr,
         amount: algo(1),
-      })
+      });
     }
 
-    printSuccess(`Created ${receiverAccounts.length} payment transactions`)
+    printSuccess(`Created ${receiverAccounts.length} payment transactions`);
 
     // Create a test asset
-    printInfo('Creating test asset...')
+    printInfo('Creating test asset...');
     const assetResult = await algorand.send.assetCreate({
       sender: senderAccount.addr,
       total: 1_000_000n,
       decimals: 0,
       assetName: 'PaginationTestToken',
       unitName: 'PAGE',
-    })
-    printSuccess(`Created asset: PaginationTestToken (ID: ${assetResult.assetId})`)
+    });
+    printSuccess(`Created asset: PaginationTestToken (ID: ${assetResult.assetId})`);
 
     // Wait for indexer to catch up
-    printInfo('Waiting for indexer to index transactions...')
-    await new Promise((resolve) => setTimeout(resolve, 3000))
-    printInfo('')
+    printInfo('Waiting for indexer to index transactions...');
+    await new Promise(resolve => setTimeout(resolve, 3000));
+    printInfo('');
   } catch (error) {
-    printError(`Failed to set up test data: ${error instanceof Error ? error.message : String(error)}`)
-    printInfo('')
-    printInfo('Make sure LocalNet is running: algokit localnet start')
-    printInfo('If issues persist, try: algokit localnet reset')
-    return
+    printError(
+      `Failed to set up test data: ${error instanceof Error ? error.message : String(error)}`,
+    );
+    printInfo('');
+    printInfo('Make sure LocalNet is running: algokit localnet start');
+    printInfo('If issues persist, try: algokit localnet reset');
+    return;
   }
 
   // =========================================================================
   // Step 2: Demonstrate pagination with searchForTransactions()
   // =========================================================================
-  printStep(2, 'Paginating through searchForTransactions()')
+  printStep(2, 'Paginating through searchForTransactions()');
 
   try {
-    printInfo('Using the generic paginateAll helper to iterate through all transactions...')
-    printInfo('Settings: pageSize=2 (small for demo purposes)')
-    printInfo('')
+    printInfo('Using the generic paginateAll helper to iterate through all transactions...');
+    printInfo('Settings: pageSize=2 (small for demo purposes)');
+    printInfo('');
 
     const transactionResult = await paginateAll(
-      async (opts) => {
+      async opts => {
         const result = await indexer.searchForTransactions({
           limit: opts.limit,
           next: opts.next,
-        })
+        });
         return {
           items: result.transactions,
           nextToken: result.nextToken,
           currentRound: result.currentRound,
-        }
+        };
       },
       {
         pageSize: 2, // Small page size to demonstrate pagination
         maxItems: 10, // Limit to 10 for demo
         onPage: (items, pageNumber) => {
-          printInfo(`  Page ${pageNumber}: Retrieved ${items.length} transaction(s)`)
+          printInfo(`  Page ${pageNumber}: Retrieved ${items.length} transaction(s)`);
         },
       },
-    )
+    );
 
-    printSuccess(`Total transactions fetched: ${transactionResult.items.length}`)
-    printInfo(`Total pages fetched: ${transactionResult.totalPages}`)
-    printInfo(`Stopped early (hit maxItems): ${transactionResult.stoppedEarly}`)
-    printInfo('')
+    printSuccess(`Total transactions fetched: ${transactionResult.items.length}`);
+    printInfo(`Total pages fetched: ${transactionResult.totalPages}`);
+    printInfo(`Stopped early (hit maxItems): ${transactionResult.stoppedEarly}`);
+    printInfo('');
 
     // Display first few transactions
     if (transactionResult.items.length > 0) {
-      printInfo('First 3 transactions:')
+      printInfo('First 3 transactions:');
       for (const tx of transactionResult.items.slice(0, 3)) {
-        printInfo(`  - ${tx.id ? shortenAddress(tx.id, 8, 6) : 'N/A'}: ${tx.txType}`)
+        printInfo(`  - ${tx.id ? shortenAddress(tx.id, 8, 6) : 'N/A'}: ${tx.txType}`);
       }
     }
   } catch (error) {
-    printError(`searchForTransactions pagination failed: ${error instanceof Error ? error.message : String(error)}`)
+    printError(
+      `searchForTransactions pagination failed: ${error instanceof Error ? error.message : String(error)}`,
+    );
   }
 
   // =========================================================================
   // Step 3: Demonstrate pagination with searchForAccounts()
   // =========================================================================
-  printStep(3, 'Paginating through searchForAccounts()')
+  printStep(3, 'Paginating through searchForAccounts()');
 
   try {
-    printInfo('Fetching all accounts with balance > 0 using pagination...')
-    printInfo('Settings: pageSize=3')
-    printInfo('')
+    printInfo('Fetching all accounts with balance > 0 using pagination...');
+    printInfo('Settings: pageSize=3');
+    printInfo('');
 
     const accountResult = await paginateAll(
-      async (opts) => {
+      async opts => {
         const result = await indexer.searchForAccounts({
           currencyGreaterThan: 0n,
           limit: opts.limit,
           next: opts.next,
-        })
+        });
         return {
           items: result.accounts,
           nextToken: result.nextToken,
           currentRound: result.currentRound,
-        }
+        };
       },
       {
         pageSize: 3,
         maxItems: 15,
         onPage: (items, pageNumber) => {
-          printInfo(`  Page ${pageNumber}: Retrieved ${items.length} account(s)`)
+          printInfo(`  Page ${pageNumber}: Retrieved ${items.length} account(s)`);
         },
       },
-    )
+    );
 
-    printSuccess(`Total accounts fetched: ${accountResult.items.length}`)
-    printInfo(`Total pages fetched: ${accountResult.totalPages}`)
-    printInfo('')
+    printSuccess(`Total accounts fetched: ${accountResult.items.length}`);
+    printInfo(`Total pages fetched: ${accountResult.totalPages}`);
+    printInfo('');
 
     // Display accounts with their balances
     if (accountResult.items.length > 0) {
-      printInfo('Accounts found:')
+      printInfo('Accounts found:');
       for (const account of accountResult.items.slice(0, 5)) {
-        printInfo(`  - ${shortenAddress(account.address)}: ${formatMicroAlgo(account.amount)}`)
+        printInfo(`  - ${shortenAddress(account.address)}: ${formatMicroAlgo(account.amount)}`);
       }
       if (accountResult.items.length > 5) {
-        printInfo(`  ... and ${accountResult.items.length - 5} more`)
+        printInfo(`  ... and ${accountResult.items.length - 5} more`);
       }
     }
   } catch (error) {
-    printError(`searchForAccounts pagination failed: ${error instanceof Error ? error.message : String(error)}`)
+    printError(
+      `searchForAccounts pagination failed: ${error instanceof Error ? error.message : String(error)}`,
+    );
   }
 
   // =========================================================================
   // Step 4: Demonstrate pagination with searchForAssets()
   // =========================================================================
-  printStep(4, 'Paginating through searchForAssets()')
+  printStep(4, 'Paginating through searchForAssets()');
 
   try {
-    printInfo('Fetching all assets using pagination...')
-    printInfo('Settings: pageSize=2')
-    printInfo('')
+    printInfo('Fetching all assets using pagination...');
+    printInfo('Settings: pageSize=2');
+    printInfo('');
 
     const assetResult = await paginateAll(
-      async (opts) => {
+      async opts => {
         const result = await indexer.searchForAssets({
           limit: opts.limit,
           next: opts.next,
-        })
+        });
         return {
           items: result.assets,
           nextToken: result.nextToken,
           currentRound: result.currentRound,
-        }
+        };
       },
       {
         pageSize: 2,
         maxItems: 10,
         onPage: (items, pageNumber) => {
-          printInfo(`  Page ${pageNumber}: Retrieved ${items.length} asset(s)`)
+          printInfo(`  Page ${pageNumber}: Retrieved ${items.length} asset(s)`);
         },
       },
-    )
+    );
 
-    printSuccess(`Total assets fetched: ${assetResult.items.length}`)
-    printInfo(`Total pages fetched: ${assetResult.totalPages}`)
-    printInfo('')
+    printSuccess(`Total assets fetched: ${assetResult.items.length}`);
+    printInfo(`Total pages fetched: ${assetResult.totalPages}`);
+    printInfo('');
 
     // Display assets
     if (assetResult.items.length > 0) {
-      printInfo('Assets found:')
+      printInfo('Assets found:');
       for (const asset of assetResult.items.slice(0, 5)) {
-        const name = asset.params.name ?? 'Unnamed'
-        const unitName = asset.params.unitName ?? 'N/A'
-        printInfo(`  - ID ${asset.id}: ${name} (${unitName})`)
+        const name = asset.params.name ?? 'Unnamed';
+        const unitName = asset.params.unitName ?? 'N/A';
+        printInfo(`  - ID ${asset.id}: ${name} (${unitName})`);
       }
       if (assetResult.items.length > 5) {
-        printInfo(`  ... and ${assetResult.items.length - 5} more`)
+        printInfo(`  ... and ${assetResult.items.length - 5} more`);
       }
     } else {
-      printInfo('No assets found on LocalNet')
+      printInfo('No assets found on LocalNet');
     }
   } catch (error) {
-    printError(`searchForAssets pagination failed: ${error instanceof Error ? error.message : String(error)}`)
+    printError(
+      `searchForAssets pagination failed: ${error instanceof Error ? error.message : String(error)}`,
+    );
   }
 
   // =========================================================================
   // Step 5: Display total count of items across all pages
   // =========================================================================
-  printStep(5, 'Counting total items across all pages')
+  printStep(5, 'Counting total items across all pages');
 
   try {
-    printInfo('Counting all transactions without fetching full data...')
-    printInfo('')
+    printInfo('Counting all transactions without fetching full data...');
+    printInfo('');
 
-    let totalTransactions = 0
-    let pageCount = 0
-    let nextToken: string | undefined
+    let totalTransactions = 0;
+    let pageCount = 0;
+    let nextToken: string | undefined;
 
     // Simple counting loop using limit and next
     do {
-      pageCount++
+      pageCount++;
       const result = await indexer.searchForTransactions({
         limit: 100, // Use larger page size for counting
         next: nextToken,
-      })
+      });
 
-      totalTransactions += result.transactions.length
-      nextToken = result.nextToken
+      totalTransactions += result.transactions.length;
+      nextToken = result.nextToken;
 
       // Safety limit for demo
       if (pageCount >= 10) {
-        printInfo('  (stopping after 10 pages for demo purposes)')
-        break
+        printInfo('  (stopping after 10 pages for demo purposes)');
+        break;
       }
-    } while (nextToken)
+    } while (nextToken);
 
-    printSuccess(`Total transactions counted: ${totalTransactions}`)
-    printInfo(`Pages scanned: ${pageCount}`)
-    printInfo('')
+    printSuccess(`Total transactions counted: ${totalTransactions}`);
+    printInfo(`Pages scanned: ${pageCount}`);
+    printInfo('');
 
     // Also count accounts
-    printInfo('Counting all accounts...')
-    let totalAccounts = 0
-    pageCount = 0
-    nextToken = undefined
+    printInfo('Counting all accounts...');
+    let totalAccounts = 0;
+    pageCount = 0;
+    nextToken = undefined;
 
     do {
-      pageCount++
+      pageCount++;
       const result = await indexer.searchForAccounts({
         currencyGreaterThan: 0n,
         limit: 100,
         next: nextToken,
-      })
+      });
 
-      totalAccounts += result.accounts.length
-      nextToken = result.nextToken
+      totalAccounts += result.accounts.length;
+      nextToken = result.nextToken;
 
-      if (pageCount >= 10) break
-    } while (nextToken)
+      if (pageCount >= 10) break;
+    } while (nextToken);
 
-    printSuccess(`Total accounts with balance > 0: ${totalAccounts}`)
-    printInfo(`Pages scanned: ${pageCount}`)
+    printSuccess(`Total accounts with balance > 0: ${totalAccounts}`);
+    printInfo(`Pages scanned: ${pageCount}`);
   } catch (error) {
-    printError(`Counting failed: ${error instanceof Error ? error.message : String(error)}`)
+    printError(`Counting failed: ${error instanceof Error ? error.message : String(error)}`);
   }
 
   // =========================================================================
   // Step 6: Demonstrate early termination when a condition is met
   // =========================================================================
-  printStep(6, 'Demonstrating early termination')
+  printStep(6, 'Demonstrating early termination');
 
   try {
-    printInfo('Searching for transactions until we find a payment transaction...')
-    printInfo('')
+    printInfo('Searching for transactions until we find a payment transaction...');
+    printInfo('');
 
     const earlyTermResult = await paginateAll(
-      async (opts) => {
+      async opts => {
         const result = await indexer.searchForTransactions({
           limit: opts.limit,
           next: opts.next,
-        })
+        });
         return {
           items: result.transactions,
           nextToken: result.nextToken,
           currentRound: result.currentRound,
-        }
+        };
       },
       {
         pageSize: 5,
         stopWhen: (tx, index) => {
           // Stop when we find a payment transaction
           if (tx.txType === 'pay') {
-            printInfo(`  Found payment transaction at index ${index}: ${tx.id ? shortenAddress(tx.id, 8, 6) : 'N/A'}`)
-            return true
+            printInfo(
+              `  Found payment transaction at index ${index}: ${tx.id ? shortenAddress(tx.id, 8, 6) : 'N/A'}`,
+            );
+            return true;
           }
-          return false
+          return false;
         },
         onPage: (items, pageNumber) => {
-          printInfo(`  Page ${pageNumber}: Checking ${items.length} transaction(s)...`)
+          printInfo(`  Page ${pageNumber}: Checking ${items.length} transaction(s)...`);
         },
       },
-    )
+    );
 
-    printSuccess(`Stopped early: ${earlyTermResult.stoppedEarly}`)
-    printInfo(`Total transactions before stopping: ${earlyTermResult.items.length}`)
-    printInfo(`Pages checked: ${earlyTermResult.totalPages}`)
-    printInfo('')
+    printSuccess(`Stopped early: ${earlyTermResult.stoppedEarly}`);
+    printInfo(`Total transactions before stopping: ${earlyTermResult.items.length}`);
+    printInfo(`Pages checked: ${earlyTermResult.totalPages}`);
+    printInfo('');
 
     // Another example: stop after finding an account with specific balance
-    printInfo('Searching for an account with balance > 1000 ALGO...')
+    printInfo('Searching for an account with balance > 1000 ALGO...');
 
     const accountSearchResult = await paginateAll(
-      async (opts) => {
+      async opts => {
         const result = await indexer.searchForAccounts({
           currencyGreaterThan: 0n,
           limit: opts.limit,
           next: opts.next,
-        })
+        });
         return {
           items: result.accounts,
           nextToken: result.nextToken,
           currentRound: result.currentRound,
-        }
+        };
       },
       {
         pageSize: 5,
-        stopWhen: (account) => {
+        stopWhen: account => {
           // Stop when we find an account with > 1000 ALGO (1,000,000,000 microAlgos)
           if (account.amount > 1_000_000_000_000n) {
             printInfo(
               `  Found whale account: ${shortenAddress(account.address)} with ${formatMicroAlgo(account.amount)}`,
-            )
-            return true
+            );
+            return true;
           }
-          return false
+          return false;
         },
       },
-    )
+    );
 
     if (accountSearchResult.stoppedEarly) {
-      printSuccess('Found an account with > 1000 ALGO!')
+      printSuccess('Found an account with > 1000 ALGO!');
     } else {
-      printInfo('No account found with > 1000 ALGO (searched all accounts)')
+      printInfo('No account found with > 1000 ALGO (searched all accounts)');
     }
   } catch (error) {
-    printError(`Early termination demo failed: ${error instanceof Error ? error.message : String(error)}`)
+    printError(
+      `Early termination demo failed: ${error instanceof Error ? error.message : String(error)}`,
+    );
   }
 
   // =========================================================================
   // Step 7: Handle the case where there are no results
   // =========================================================================
-  printStep(7, 'Handling empty results')
+  printStep(7, 'Handling empty results');
 
   try {
-    printInfo('Searching for assets with a name that does not exist...')
-    printInfo('')
+    printInfo('Searching for assets with a name that does not exist...');
+    printInfo('');
 
     const emptyResult = await paginateAll(
-      async (opts) => {
+      async opts => {
         const result = await indexer.searchForAssets({
           name: 'ThisAssetNameShouldNotExist12345',
           limit: opts.limit,
           next: opts.next,
-        })
+        });
         return {
           items: result.assets,
           nextToken: result.nextToken,
           currentRound: result.currentRound,
-        }
+        };
       },
       {
         pageSize: 10,
         onPage: (items, pageNumber) => {
-          printInfo(`  Page ${pageNumber}: Retrieved ${items.length} item(s)`)
+          printInfo(`  Page ${pageNumber}: Retrieved ${items.length} item(s)`);
         },
       },
-    )
+    );
 
     if (emptyResult.items.length === 0) {
-      printSuccess('Correctly handled empty results (no assets found)')
-      printInfo(`Total pages: ${emptyResult.totalPages}`)
-      printInfo('Note: Empty results return an empty array, not an error')
+      printSuccess('Correctly handled empty results (no assets found)');
+      printInfo(`Total pages: ${emptyResult.totalPages}`);
+      printInfo('Note: Empty results return an empty array, not an error');
     } else {
-      printInfo(`Unexpectedly found ${emptyResult.items.length} asset(s)`)
+      printInfo(`Unexpectedly found ${emptyResult.items.length} asset(s)`);
     }
-    printInfo('')
+    printInfo('');
 
     // Also demonstrate with accounts
-    printInfo('Searching for accounts with impossibly high balance...')
+    printInfo('Searching for accounts with impossibly high balance...');
     const emptyAccountResult = await paginateAll(
-      async (opts) => {
+      async opts => {
         // Search for accounts with balance > max supply (would never exist)
         const result = await indexer.searchForAccounts({
           currencyGreaterThan: 10_000_000_000_000_000n, // > 10 billion ALGO
           limit: opts.limit,
           next: opts.next,
-        })
+        });
         return {
           items: result.accounts,
           nextToken: result.nextToken,
           currentRound: result.currentRound,
-        }
+        };
       },
       { pageSize: 10 },
-    )
+    );
 
     if (emptyAccountResult.items.length === 0) {
-      printSuccess('Correctly handled empty results (no accounts with such high balance)')
+      printSuccess('Correctly handled empty results (no accounts with such high balance)');
     } else {
-      printInfo(`Found ${emptyAccountResult.items.length} account(s)`)
+      printInfo(`Found ${emptyAccountResult.items.length} account(s)`);
     }
   } catch (error) {
-    printError(`Empty results handling failed: ${error instanceof Error ? error.message : String(error)}`)
+    printError(
+      `Empty results handling failed: ${error instanceof Error ? error.message : String(error)}`,
+    );
   }
 
   // =========================================================================
   // Step 8: Manual pagination without helper
   // =========================================================================
-  printStep(8, 'Manual pagination pattern (without helper)')
+  printStep(8, 'Manual pagination pattern (without helper)');
 
   try {
-    printInfo('Sometimes you may want to control pagination manually...')
-    printInfo('')
+    printInfo('Sometimes you may want to control pagination manually...');
+    printInfo('');
 
     // Manual pagination loop
-    let allTransactions: Awaited<ReturnType<typeof indexer.searchForTransactions>>['transactions'] = []
-    let nextToken: string | undefined
-    let pageNum = 0
+    let allTransactions: Awaited<ReturnType<typeof indexer.searchForTransactions>>['transactions'] =
+      [];
+    let nextToken: string | undefined;
+    let pageNum = 0;
 
     do {
-      pageNum++
+      pageNum++;
       const page = await indexer.searchForTransactions({
         limit: 3,
         next: nextToken,
-      })
+      });
 
-      allTransactions = allTransactions.concat(page.transactions)
-      nextToken = page.nextToken
+      allTransactions = allTransactions.concat(page.transactions);
+      nextToken = page.nextToken;
 
-      printInfo(`  Page ${pageNum}: ${page.transactions.length} transactions (total: ${allTransactions.length})`)
+      printInfo(
+        `  Page ${pageNum}: ${page.transactions.length} transactions (total: ${allTransactions.length})`,
+      );
 
       // Limit for demo
       if (pageNum >= 3) {
-        printInfo('  (stopping after 3 pages for demo)')
-        break
+        printInfo('  (stopping after 3 pages for demo)');
+        break;
       }
-    } while (nextToken)
+    } while (nextToken);
 
-    printSuccess(`Manual pagination complete: ${allTransactions.length} transactions in ${pageNum} pages`)
-    printInfo('')
+    printSuccess(
+      `Manual pagination complete: ${allTransactions.length} transactions in ${pageNum} pages`,
+    );
+    printInfo('');
 
-    printInfo('Key pagination fields:')
-    printInfo('  - limit: Maximum items per page (request parameter)')
-    printInfo('  - nextToken: Token from response to fetch next page')
-    printInfo('  - When nextToken is undefined/missing, no more pages exist')
+    printInfo('Key pagination fields:');
+    printInfo('  - limit: Maximum items per page (request parameter)');
+    printInfo('  - nextToken: Token from response to fetch next page');
+    printInfo('  - When nextToken is undefined/missing, no more pages exist');
   } catch (error) {
-    printError(`Manual pagination failed: ${error instanceof Error ? error.message : String(error)}`)
+    printError(
+      `Manual pagination failed: ${error instanceof Error ? error.message : String(error)}`,
+    );
   }
 
   // =========================================================================
   // Summary
   // =========================================================================
-  printHeader('Summary')
-  printInfo('This example demonstrated pagination patterns for indexer endpoints:')
-  printInfo('')
-  printInfo('Pagination basics:')
-  printInfo('  - Use `limit` parameter to control page size')
-  printInfo('  - Use `next` parameter with `nextToken` from response to get next page')
-  printInfo('  - When `nextToken` is undefined, there are no more pages')
-  printInfo('')
-  printInfo('Generic pagination helper (paginateAll):')
-  printInfo('  - Reusable across all paginated endpoints')
-  printInfo('  - Supports pageSize, maxItems limits')
-  printInfo('  - Supports onPage callback for progress tracking')
-  printInfo('  - Supports stopWhen condition for early termination')
-  printInfo('')
-  printInfo('Endpoints demonstrated:')
-  printInfo('  - searchForTransactions() - paginate through transactions')
-  printInfo('  - searchForAccounts() - paginate through accounts')
-  printInfo('  - searchForAssets() - paginate through assets')
-  printInfo('')
-  printInfo('Best practices:')
-  printInfo('  - Use larger page sizes (50-100) for production to reduce API calls')
-  printInfo('  - Implement maxItems limit to prevent unbounded queries')
-  printInfo('  - Use early termination when searching for specific items')
-  printInfo('  - Handle empty results gracefully (empty array, not error)')
+  printHeader('Summary');
+  printInfo('This example demonstrated pagination patterns for indexer endpoints:');
+  printInfo('');
+  printInfo('Pagination basics:');
+  printInfo('  - Use `limit` parameter to control page size');
+  printInfo('  - Use `next` parameter with `nextToken` from response to get next page');
+  printInfo('  - When `nextToken` is undefined, there are no more pages');
+  printInfo('');
+  printInfo('Generic pagination helper (paginateAll):');
+  printInfo('  - Reusable across all paginated endpoints');
+  printInfo('  - Supports pageSize, maxItems limits');
+  printInfo('  - Supports onPage callback for progress tracking');
+  printInfo('  - Supports stopWhen condition for early termination');
+  printInfo('');
+  printInfo('Endpoints demonstrated:');
+  printInfo('  - searchForTransactions() - paginate through transactions');
+  printInfo('  - searchForAccounts() - paginate through accounts');
+  printInfo('  - searchForAssets() - paginate through assets');
+  printInfo('');
+  printInfo('Best practices:');
+  printInfo('  - Use larger page sizes (50-100) for production to reduce API calls');
+  printInfo('  - Implement maxItems limit to prevent unbounded queries');
+  printInfo('  - Use early termination when searching for specific items');
+  printInfo('  - Handle empty results gracefully (empty array, not error)');
 }
 
-main().catch((error) => {
-  console.error('Fatal error:', error)
-  process.exit(1)
-})
-
+main().catch(error => {
+  console.error('Fatal error:', error);
+  process.exit(1);
+});
 ```
 
 ---

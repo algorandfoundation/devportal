@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "bytes"
+title: 'bytes'
 ---
 
 > **bytes**\<`TLength`\> = `object`
@@ -15,7 +15,7 @@ A sequence of zero or more bytes (ie. byte[])
 
 ### TLength
 
-`TLength` *extends* [`uint64`](/algorand-typescript/api/index/type-aliases/uint64/) = [`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
+`TLength` _extends_ [`uint64`](/algorand-typescript/api/index/type-aliases/uint64/) = [`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
 
 The static length of this byte array
 
@@ -53,7 +53,7 @@ The index to read. Can be negative to read from the end
 
 The byte found at the index, or an empty bytes value
 
-***
+---
 
 ### bitwiseAnd()
 
@@ -104,7 +104,7 @@ The other bytes value
 
 The bitwise operation result
 
-***
+---
 
 ### bitwiseInvert()
 
@@ -120,7 +120,7 @@ Perform a bitwise INVERT operation with this bytes value
 
 The bitwise operation result
 
-***
+---
 
 ### bitwiseOr()
 
@@ -171,7 +171,7 @@ The other bytes value
 
 The bitwise operation result
 
-***
+---
 
 ### bitwiseXor()
 
@@ -222,7 +222,7 @@ The other bytes value
 
 The bitwise operation result
 
-***
+---
 
 ### concat()
 
@@ -246,7 +246,7 @@ The other bytes value
 
 The concatenation result
 
-***
+---
 
 ### equals()
 
@@ -270,7 +270,7 @@ The other bytes value
 
 True if both values represent the same byte sequence
 
-***
+---
 
 ### slice()
 
@@ -332,7 +332,7 @@ The index to end the slice. Can be negative to count from the end.
 
 `bytes`
 
-***
+---
 
 ### toFixed()
 
@@ -346,7 +346,7 @@ Change this unbounded bytes instance into a bounded one
 
 ##### TNewLength
 
-`TNewLength` *extends* [`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
+`TNewLength` _extends_ [`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
 
 #### Parameters
 
@@ -360,7 +360,7 @@ Options for the conversion
 
 `bytes`\<`TNewLength`\>
 
-***
+---
 
 ### toString()
 

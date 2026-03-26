@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "KeyRegistrationTxn"
+title: 'KeyRegistrationTxn'
 ---
 
 > **KeyRegistrationTxn**(`n`): [`KeyRegistrationTxn`](/algorand-typescript/api/gtxn/namespaces/gtxn/interfaces/keyregistrationtxn/)

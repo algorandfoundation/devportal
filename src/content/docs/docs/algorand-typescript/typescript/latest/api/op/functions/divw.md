@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "divw"
+title: 'divw'
 ---
 
 > **divw**(`a`, `b`, `c`): [`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)

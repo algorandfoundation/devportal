@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "@algorandfoundation/algorand-typescript"
+title: '@algorandfoundation/algorand-typescript'
 ---
 
 ## Modules

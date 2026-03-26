@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "setByte"
+title: 'setByte'
 ---
 
 > **setByte**(`a`, `b`, `c`): [`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)

@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "TransactionType"
+title: 'TransactionType'
 ---
 
 Defined in: [transactions.ts:4](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/transactions.ts#L4)
@@ -19,7 +19,7 @@ Defined in: [transactions.ts:28](https://github.com/algorandfoundation/puya-ts/b
 
 An Application Call transaction
 
-***
+---
 
 ### AssetConfig
 
@@ -29,7 +29,7 @@ Defined in: [transactions.ts:16](https://github.com/algorandfoundation/puya-ts/b
 
 An Asset Config transaction
 
-***
+---
 
 ### AssetFreeze
 
@@ -39,7 +39,7 @@ Defined in: [transactions.ts:24](https://github.com/algorandfoundation/puya-ts/b
 
 An Asset Freeze transaction
 
-***
+---
 
 ### AssetTransfer
 
@@ -49,7 +49,7 @@ Defined in: [transactions.ts:20](https://github.com/algorandfoundation/puya-ts/b
 
 An Asset Transfer transaction
 
-***
+---
 
 ### KeyRegistration
 
@@ -59,7 +59,7 @@ Defined in: [transactions.ts:12](https://github.com/algorandfoundation/puya-ts/b
 
 A Key Registration transaction
 
-***
+---
 
 ### Payment
 

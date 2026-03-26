@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "LogicSigSignature"
+title: 'LogicSigSignature'
 ---
 
 > **LogicSigSignature** = `object`
@@ -21,7 +21,7 @@ Defined in: [packages/transact/src/transactions/signed-transaction.ts:89](https:
 
 Logic signature arguments
 
-***
+---
 
 ### lmsig?
 
@@ -31,7 +31,7 @@ Defined in: [packages/transact/src/transactions/signed-transaction.ts:104](https
 
 Multisig for delegated logic sig
 
-***
+---
 
 ### logic
 
@@ -41,7 +41,7 @@ Defined in: [packages/transact/src/transactions/signed-transaction.ts:84](https:
 
 Logic signature program
 
-***
+---
 
 ### msig?
 
@@ -51,7 +51,7 @@ Defined in: [packages/transact/src/transactions/signed-transaction.ts:99](https:
 
 Legacy multisig for delegated logic sig
 
-***
+---
 
 ### sig?
 

@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "AlgorandFixtureConfig"
+title: 'AlgorandFixtureConfig'
 ---
 
 Defined in: [src/testing/types.ts:55](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/testing/types.ts#L55)
@@ -33,7 +33,7 @@ Optional override for how to get an account; this allows you to retrieve account
 
 `Promise`\<[`Address`](/docs/algokit-utils/typescript/latest/api/algokit-utils/classes/address/) & `object`\>
 
-***
+---
 
 ### algod?
 
@@ -43,7 +43,7 @@ Defined in: [src/testing/types.ts:57](https://github.com/algorandfoundation/algo
 
 An optional algod client, if not specified then it will create one against `algodConfig` (if present) then environment variables defined network (if present) or default LocalNet.
 
-***
+---
 
 ### algodConfig?
 
@@ -57,7 +57,7 @@ Algod client configuration
 
 [`AlgoConfig`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/algoconfig/).[`algodConfig`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/algoconfig/#algodconfig)
 
-***
+---
 
 ### indexer?
 
@@ -67,7 +67,7 @@ Defined in: [src/testing/types.ts:59](https://github.com/algorandfoundation/algo
 
 An optional indexer client, if not specified then it will create one against `indexerConfig` (if present) then environment variables defined network (if present) or default LocalNet.
 
-***
+---
 
 ### indexerConfig?
 
@@ -81,7 +81,7 @@ Indexer client configuration
 
 [`AlgoConfig`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/algoconfig/).[`indexerConfig`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/algoconfig/#indexerconfig)
 
-***
+---
 
 ### kmd?
 
@@ -91,7 +91,7 @@ Defined in: [src/testing/types.ts:61](https://github.com/algorandfoundation/algo
 
 An optional kmd client, if not specified then it will create one against `kmdConfig` (if present) then environment variables defined network (if present) or default LocalNet.
 
-***
+---
 
 ### kmdConfig?
 
@@ -105,7 +105,7 @@ Kmd configuration
 
 [`AlgoConfig`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/algoconfig/).[`kmdConfig`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/algoconfig/#kmdconfig)
 
-***
+---
 
 ### testAccountFunding?
 

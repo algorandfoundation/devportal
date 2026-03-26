@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "ABIDefaultValue"
+title: 'ABIDefaultValue'
 ---
 
 > **ABIDefaultValue** = `object`
@@ -19,7 +19,7 @@ Defined in: [packages/abi/src/abi-method.ts:38](https://github.com/algorandfound
 
 Base64 encoded bytes, base64 ARC4 encoded uint64, or UTF-8 method selector
 
-***
+---
 
 ### source
 
@@ -29,7 +29,7 @@ Defined in: [packages/abi/src/abi-method.ts:40](https://github.com/algorandfound
 
 Where the default value is coming from
 
-***
+---
 
 ### type?
 

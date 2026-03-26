@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "Tuple"
+title: 'Tuple'
 ---
 
 Defined in: [arc4/encoded-types.ts:408](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/arc4/encoded-types.ts#L408)
@@ -17,7 +17,7 @@ An arc4 encoded tuple of values
 
 ### TTuple
 
-`TTuple` *extends* readonly \[[`ARC4Encoded`](/algorand-typescript/api/arc4/classes/arc4encoded/), `...ARC4Encoded[]`\]
+`TTuple` _extends_ readonly \[[`ARC4Encoded`](/algorand-typescript/api/arc4/classes/arc4encoded/), `...ARC4Encoded[]`\]
 
 A type representing the native tuple of item types
 
@@ -83,7 +83,7 @@ Retrieve the encoded bytes for this type
 
 [`ARC4Encoded`](/algorand-typescript/api/arc4/classes/arc4encoded/).[`bytes`](/algorand-typescript/api/arc4/classes/arc4encoded/#bytes)
 
-***
+---
 
 ### length
 
@@ -99,7 +99,7 @@ Returns the length of this tuple
 
 `TTuple`\[`"length"`\] & `object` & `number`
 
-***
+---
 
 ### native
 
@@ -129,7 +129,7 @@ Returns the item at the specified index
 
 ##### TIndex
 
-`TIndex` *extends* `string` \| `number` \| `symbol`
+`TIndex` _extends_ `string` \| `number` \| `symbol`
 
 #### Parameters
 

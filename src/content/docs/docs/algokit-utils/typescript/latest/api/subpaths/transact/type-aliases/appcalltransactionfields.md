@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "AppCallTransactionFields"
+title: 'AppCallTransactionFields'
 ---
 
 > **AppCallTransactionFields** = `object`
@@ -24,7 +24,7 @@ Defined in: [packages/transact/src/transactions/app-call.ts:114](https://github.
 
 Resources accessed by the application
 
-***
+---
 
 ### accountReferences?
 
@@ -35,7 +35,7 @@ Defined in: [packages/transact/src/transactions/app-call.ts:90](https://github.c
 List of accounts in addition to the sender that may be accessed
 from the app's approval program and clear state program.
 
-***
+---
 
 ### appId
 
@@ -47,7 +47,7 @@ ID of the app being called.
 
 Set this to 0 to indicate an app creation call.
 
-***
+---
 
 ### appReferences?
 
@@ -58,7 +58,7 @@ Defined in: [packages/transact/src/transactions/app-call.ts:96](https://github.c
 List of apps in addition to the current app that may be called
 from the app's approval program and clear state program.
 
-***
+---
 
 ### approvalProgram?
 
@@ -72,7 +72,7 @@ on-completion is set to "clear".
 Approval programs may reject the transaction.
 Only required for app creation and update transactions.
 
-***
+---
 
 ### args?
 
@@ -83,7 +83,7 @@ Defined in: [packages/transact/src/transactions/app-call.ts:84](https://github.c
 Transaction specific arguments available in the app's
 approval program and clear state program.
 
-***
+---
 
 ### assetReferences?
 
@@ -96,7 +96,7 @@ approval program and clear state program.
 
 The access is read-only.
 
-***
+---
 
 ### boxReferences?
 
@@ -106,7 +106,7 @@ Defined in: [packages/transact/src/transactions/app-call.ts:109](https://github.
 
 The boxes that should be made available for the runtime of the program.
 
-***
+---
 
 ### clearStateProgram?
 
@@ -119,7 +119,7 @@ Logic executed for app call transactions with on-completion set to "clear".
 Clear state programs cannot reject the transaction.
 Only required for app creation and update transactions.
 
-***
+---
 
 ### extraProgramPages?
 
@@ -131,11 +131,11 @@ Number of additional pages allocated to the app's approval
 and clear state programs.
 
 Each extra program page is 2048 bytes. The sum of approval program
-and clear state program may not exceed 2048*(1+extra_program_pages) bytes.
+and clear state program may not exceed 2048\*(1+extra_program_pages) bytes.
 Currently, the maximum value is 3.
 This cannot be changed after creation.
 
-***
+---
 
 ### globalStateSchema?
 
@@ -148,7 +148,7 @@ Holds the maximum number of global state values.
 Only required for app creation transactions.
 This cannot be changed after creation.
 
-***
+---
 
 ### localStateSchema?
 
@@ -161,7 +161,7 @@ Holds the maximum number of local state values.
 Only required for app creation transactions.
 This cannot be changed after creation.
 
-***
+---
 
 ### onComplete
 
@@ -171,7 +171,7 @@ Defined in: [packages/transact/src/transactions/app-call.ts:34](https://github.c
 
 Defines what additional actions occur with the transaction.
 
-***
+---
 
 ### rejectVersion?
 

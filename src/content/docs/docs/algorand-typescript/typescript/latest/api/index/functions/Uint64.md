@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "Uint64"
+title: 'Uint64'
 ---
 
 ## Call Signature

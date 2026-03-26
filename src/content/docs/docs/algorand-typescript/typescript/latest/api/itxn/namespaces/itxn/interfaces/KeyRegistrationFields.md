@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "KeyRegistrationFields"
+title: 'KeyRegistrationFields'
 ---
 
 Defined in: [itxn.ts:627](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/itxn.ts#L627)
@@ -22,7 +22,7 @@ Defined in: [itxn.ts:635](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 microalgos
 
-***
+---
 
 ### firstValid?
 
@@ -32,7 +32,7 @@ Defined in: [itxn.ts:639](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 round number
 
-***
+---
 
 ### firstValidTime?
 
@@ -42,7 +42,7 @@ Defined in: [itxn.ts:643](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 UNIX timestamp of block before txn.FirstValid. Fails if negative
 
-***
+---
 
 ### lastValid?
 
@@ -52,7 +52,7 @@ Defined in: [itxn.ts:647](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 round number
 
-***
+---
 
 ### lease?
 
@@ -62,7 +62,7 @@ Defined in: [itxn.ts:655](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 32 byte lease value
 
-***
+---
 
 ### nonparticipation?
 
@@ -72,7 +72,7 @@ Defined in: [itxn.ts:683](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 Marks an account nonparticipating for rewards
 
-***
+---
 
 ### note?
 
@@ -82,7 +82,7 @@ Defined in: [itxn.ts:651](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 Any data up to 1024 bytes
 
-***
+---
 
 ### rekeyTo?
 
@@ -92,7 +92,7 @@ Defined in: [itxn.ts:659](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 32 byte Sender's new AuthAddr
 
-***
+---
 
 ### selectionKey?
 
@@ -102,7 +102,7 @@ Defined in: [itxn.ts:667](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 32 byte address
 
-***
+---
 
 ### sender?
 
@@ -112,7 +112,7 @@ Defined in: [itxn.ts:631](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 32 byte address
 
-***
+---
 
 ### stateProofKey?
 
@@ -122,7 +122,7 @@ Defined in: [itxn.ts:687](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 64 byte state proof public key
 
-***
+---
 
 ### voteFirst?
 
@@ -132,7 +132,7 @@ Defined in: [itxn.ts:671](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 The first round that the participation key is valid.
 
-***
+---
 
 ### voteKey?
 
@@ -142,7 +142,7 @@ Defined in: [itxn.ts:663](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 32 byte address
 
-***
+---
 
 ### voteKeyDilution?
 
@@ -152,7 +152,7 @@ Defined in: [itxn.ts:679](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 Dilution for the 2-level participation key
 
-***
+---
 
 ### voteLast?
 

@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "StructField"
+title: 'StructField'
 ---
 
 > **StructField** = `object`
@@ -21,7 +21,7 @@ Defined in: [packages/abi/src/arc56-contract.ts:257](https://github.com/algorand
 
 The name of the struct field
 
-***
+---
 
 ### type
 

@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "ABIReferenceType"
+title: 'ABIReferenceType'
 ---
 
 Defined in: [packages/abi/src/abi-method.ts:16](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/abi/src/abi-method.ts#L16)
@@ -15,7 +15,7 @@ Defined in: [packages/abi/src/abi-method.ts:16](https://github.com/algorandfound
 
 Defined in: [packages/abi/src/abi-method.ts:17](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/abi/src/abi-method.ts#L17)
 
-***
+---
 
 ### Application
 
@@ -23,7 +23,7 @@ Defined in: [packages/abi/src/abi-method.ts:17](https://github.com/algorandfound
 
 Defined in: [packages/abi/src/abi-method.ts:18](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/abi/src/abi-method.ts#L18)
 
-***
+---
 
 ### Asset
 

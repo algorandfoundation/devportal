@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "EmittedArc28Event"
+title: 'EmittedArc28Event'
 ---
 
 Defined in: [src/types/arc-28.ts:38](https://github.com/algorandfoundation/algokit-subscriber-ts/blob/main/src/types/arc-28.ts#L38)
@@ -23,7 +23,7 @@ Defined in: [src/types/arc-28.ts:40](https://github.com/algorandfoundation/algok
 
 The ordered arguments extracted from the event that was emitted
 
-***
+---
 
 ### argsByName
 
@@ -33,7 +33,7 @@ Defined in: [src/types/arc-28.ts:42](https://github.com/algorandfoundation/algok
 
 The named arguments extracted from the event that was emitted (where the arguments had a name defined)
 
-***
+---
 
 ### eventDefinition
 
@@ -47,7 +47,7 @@ The ARC-28 definition of the event
 
 [`Arc28EventToProcess`](/docs/algokit-subscriber/typescript/latest/api/types/interfaces/arc28eventtoprocess/).[`eventDefinition`](/docs/algokit-subscriber/typescript/latest/api/types/interfaces/arc28eventtoprocess/#eventdefinition)
 
-***
+---
 
 ### eventName
 
@@ -61,7 +61,7 @@ The name of the ARC-28 event that was triggered
 
 [`Arc28EventToProcess`](/docs/algokit-subscriber/typescript/latest/api/types/interfaces/arc28eventtoprocess/).[`eventName`](/docs/algokit-subscriber/typescript/latest/api/types/interfaces/arc28eventtoprocess/#eventname)
 
-***
+---
 
 ### eventPrefix
 
@@ -75,7 +75,7 @@ The 4-byte hex prefix for the event
 
 [`Arc28EventToProcess`](/docs/algokit-subscriber/typescript/latest/api/types/interfaces/arc28eventtoprocess/).[`eventPrefix`](/docs/algokit-subscriber/typescript/latest/api/types/interfaces/arc28eventtoprocess/#eventprefix)
 
-***
+---
 
 ### eventSignature
 
@@ -89,7 +89,7 @@ The signature of the event e.g. `EventName(type1,type2)`
 
 [`Arc28EventToProcess`](/docs/algokit-subscriber/typescript/latest/api/types/interfaces/arc28eventtoprocess/).[`eventSignature`](/docs/algokit-subscriber/typescript/latest/api/types/interfaces/arc28eventtoprocess/#eventsignature)
 
-***
+---
 
 ### groupName
 

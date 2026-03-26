@@ -1,6 +1,6 @@
 ---
-title: "Asset Clawback"
-description: "This example demonstrates how to clawback assets from an account using the clawback address and the transact package: 1. Create an asset with clawback address set 2. Transfer assets to a target account 3. Clawback assets from target account using assetSender field 4. Verify target account balance decreased 5. Verify clawback receiver received the assets"
+title: 'Asset Clawback'
+description: 'This example demonstrates how to clawback assets from an account using the clawback address and the transact package: 1. Create an asset with clawback address set 2. Transfer assets to a target account 3. Clawback assets from target account using assetSender field 4. Verify target account balance decreased 5. Verify clawback receiver received the assets'
 sidebar:
   order: 6
 ---
@@ -10,7 +10,7 @@ sidebar:
 ## Description
 
 This example demonstrates how to clawback assets from an account using the clawback address and the transact package: 1. Create an asset with clawback address set 2. Transfer assets to a target account 3. Clawback assets from target account using assetSender field 4. Verify target account balance decreased 5. Verify clawback receiver received the assets
- Uses Transaction class with TransactionType.AssetTransfer and the assetSender field in AssetTransferTransactionFields for clawback operations.
+Uses Transaction class with TransactionType.AssetTransfer and the assetSender field in AssetTransferTransactionFields for clawback operations.
 
 ## Prerequisites
 
@@ -48,8 +48,8 @@ npm run example transact/06-asset-clawback.ts
  * - LocalNet running (via `algokit localnet start`)
  */
 
-import { AlgorandClient } from '@algorandfoundation/algokit-utils'
-import type { PendingTransactionResponse } from '@algorandfoundation/algokit-utils/algod-client'
+import { AlgorandClient } from '@algorandfoundation/algokit-utils';
+import type { PendingTransactionResponse } from '@algorandfoundation/algokit-utils/algod-client';
 import {
   Transaction,
   TransactionType,
@@ -57,7 +57,7 @@ import {
   type AssetConfigTransactionFields,
   type AssetTransferTransactionFields,
   type PaymentTransactionFields,
-} from '@algorandfoundation/algokit-utils/transact'
+} from '@algorandfoundation/algokit-utils/transact';
 import {
   createAlgodClient,
   printHeader,
@@ -66,48 +66,48 @@ import {
   printSuccess,
   shortenAddress,
   waitForConfirmation,
-} from '../shared/utils.js'
+} from '../shared/utils.js';
 
 /**
  * Gets a funded account from LocalNet's KMD wallet
  */
 async function getLocalNetFundedAccount(algorand: AlgorandClient) {
-  return await algorand.account.kmd.getLocalNetDispenserAccount()
+  return await algorand.account.kmd.getLocalNetDispenserAccount();
 }
 
 async function main() {
-  printHeader('Asset Clawback Example')
+  printHeader('Asset Clawback Example');
 
   // Step 1: Initialize clients
-  printStep(1, 'Initialize Algod Client')
-  const algod = createAlgodClient()
-  const algorand = AlgorandClient.defaultLocalNet()
-  printInfo('Connected to LocalNet Algod')
+  printStep(1, 'Initialize Algod Client');
+  const algod = createAlgodClient();
+  const algorand = AlgorandClient.defaultLocalNet();
+  printInfo('Connected to LocalNet Algod');
 
   // Step 2: Get clawback manager account from KMD
-  printStep(2, 'Get Clawback Manager Account from KMD')
-  const clawbackManager = await getLocalNetFundedAccount(algorand)
-  printInfo(`Clawback manager address: ${shortenAddress(clawbackManager.addr.toString())}`)
+  printStep(2, 'Get Clawback Manager Account from KMD');
+  const clawbackManager = await getLocalNetFundedAccount(algorand);
+  printInfo(`Clawback manager address: ${shortenAddress(clawbackManager.addr.toString())}`);
 
   // Step 3: Get suggested transaction parameters
-  printStep(3, 'Get Suggested Transaction Parameters')
-  const suggestedParams = await algod.suggestedParams()
-  printInfo(`First valid round: ${suggestedParams.firstValid}`)
-  printInfo(`Last valid round: ${suggestedParams.lastValid}`)
-  printInfo(`Min fee: ${suggestedParams.minFee} microALGO`)
+  printStep(3, 'Get Suggested Transaction Parameters');
+  const suggestedParams = await algod.suggestedParams();
+  printInfo(`First valid round: ${suggestedParams.firstValid}`);
+  printInfo(`Last valid round: ${suggestedParams.lastValid}`);
+  printInfo(`Min fee: ${suggestedParams.minFee} microALGO`);
 
   // Step 4: Generate and fund target account using AlgorandClient helper (will have assets clawed back)
-  printStep(4, 'Generate and Fund Target Account')
-  const target = algorand.account.random()
-  printInfo(`Target address: ${shortenAddress(target.addr.toString())}`)
+  printStep(4, 'Generate and Fund Target Account');
+  const target = algorand.account.random();
+  printInfo(`Target address: ${shortenAddress(target.addr.toString())}`);
 
   // Fund the target with enough ALGO to cover opt-in transaction fee
-  const fundingAmount = 1_000_000n // 1 ALGO in microALGO
+  const fundingAmount = 1_000_000n; // 1 ALGO in microALGO
 
   const fundTargetFields: PaymentTransactionFields = {
     receiver: target.addr,
     amount: fundingAmount,
-  }
+  };
 
   const fundTargetTx = new Transaction({
     type: TransactionType.Payment,
@@ -117,29 +117,29 @@ async function main() {
     genesisHash: suggestedParams.genesisHash,
     genesisId: suggestedParams.genesisId,
     payment: fundTargetFields,
-  })
+  });
 
   const fundTargetTxWithFee = assignFee(fundTargetTx, {
     feePerByte: suggestedParams.fee,
     minFee: suggestedParams.minFee,
-  })
+  });
 
-  const signedFundTargetTx = await clawbackManager.signer([fundTargetTxWithFee], [0])
-  await algod.sendRawTransaction(signedFundTargetTx)
-  await waitForConfirmation(algod, fundTargetTxWithFee.txId())
-  printInfo('Funded target with 1 ALGO for transaction fees')
+  const signedFundTargetTx = await clawbackManager.signer([fundTargetTxWithFee], [0]);
+  await algod.sendRawTransaction(signedFundTargetTx);
+  await waitForConfirmation(algod, fundTargetTxWithFee.txId());
+  printInfo('Funded target with 1 ALGO for transaction fees');
 
   // Step 5: Generate and fund clawback receiver account using AlgorandClient helper (will receive clawed back assets)
-  printStep(5, 'Generate and Fund Clawback Receiver Account')
-  const clawbackReceiver = algorand.account.random()
-  printInfo(`Clawback receiver address: ${shortenAddress(clawbackReceiver.addr.toString())}`)
+  printStep(5, 'Generate and Fund Clawback Receiver Account');
+  const clawbackReceiver = algorand.account.random();
+  printInfo(`Clawback receiver address: ${shortenAddress(clawbackReceiver.addr.toString())}`);
 
-  const fundReceiverSuggestedParams = await algod.suggestedParams()
+  const fundReceiverSuggestedParams = await algod.suggestedParams();
 
   const fundReceiverFields: PaymentTransactionFields = {
     receiver: clawbackReceiver.addr,
     amount: fundingAmount,
-  }
+  };
 
   const fundReceiverTx = new Transaction({
     type: TransactionType.Payment,
@@ -149,27 +149,27 @@ async function main() {
     genesisHash: fundReceiverSuggestedParams.genesisHash,
     genesisId: fundReceiverSuggestedParams.genesisId,
     payment: fundReceiverFields,
-  })
+  });
 
   const fundReceiverTxWithFee = assignFee(fundReceiverTx, {
     feePerByte: fundReceiverSuggestedParams.fee,
     minFee: fundReceiverSuggestedParams.minFee,
-  })
+  });
 
-  const signedFundReceiverTx = await clawbackManager.signer([fundReceiverTxWithFee], [0])
-  await algod.sendRawTransaction(signedFundReceiverTx)
-  await waitForConfirmation(algod, fundReceiverTxWithFee.txId())
-  printInfo('Funded clawback receiver with 1 ALGO for transaction fees')
+  const signedFundReceiverTx = await clawbackManager.signer([fundReceiverTxWithFee], [0]);
+  await algod.sendRawTransaction(signedFundReceiverTx);
+  await waitForConfirmation(algod, fundReceiverTxWithFee.txId());
+  printInfo('Funded clawback receiver with 1 ALGO for transaction fees');
 
   // Step 6: Create an asset with clawback address set
-  printStep(6, 'Create Asset with Clawback Address Set')
+  printStep(6, 'Create Asset with Clawback Address Set');
 
-  const assetTotal = 10_000_000_000n // 10,000 units with 6 decimals
-  const assetDecimals = 6
-  const assetName = 'Clawbackable Token'
-  const assetUnitName = 'CLW'
+  const assetTotal = 10_000_000_000n; // 10,000 units with 6 decimals
+  const assetDecimals = 6;
+  const assetName = 'Clawbackable Token';
+  const assetUnitName = 'CLW';
 
-  const createSuggestedParams = await algod.suggestedParams()
+  const createSuggestedParams = await algod.suggestedParams();
 
   const assetConfigFields: AssetConfigTransactionFields = {
     assetId: 0n, // 0 indicates asset creation
@@ -183,10 +183,10 @@ async function main() {
     reserve: clawbackManager.addr,
     freeze: clawbackManager.addr,
     clawback: clawbackManager.addr, // IMPORTANT: Set clawback address to enable clawback
-  }
+  };
 
-  printInfo(`Creating asset: ${assetName} (${assetUnitName})`)
-  printInfo(`Clawback address set to: ${shortenAddress(clawbackManager.addr.toString())}`)
+  printInfo(`Creating asset: ${assetName} (${assetUnitName})`);
+  printInfo(`Clawback address set to: ${shortenAddress(clawbackManager.addr.toString())}`);
 
   const createAssetTx = new Transaction({
     type: TransactionType.AssetConfig,
@@ -196,34 +196,37 @@ async function main() {
     genesisHash: createSuggestedParams.genesisHash,
     genesisId: createSuggestedParams.genesisId,
     assetConfig: assetConfigFields,
-  })
+  });
 
   const createAssetTxWithFee = assignFee(createAssetTx, {
     feePerByte: createSuggestedParams.fee,
     minFee: createSuggestedParams.minFee,
-  })
+  });
 
-  const signedCreateTx = await clawbackManager.signer([createAssetTxWithFee], [0])
-  await algod.sendRawTransaction(signedCreateTx)
+  const signedCreateTx = await clawbackManager.signer([createAssetTxWithFee], [0]);
+  await algod.sendRawTransaction(signedCreateTx);
 
-  const createPendingInfo = (await waitForConfirmation(algod, createAssetTxWithFee.txId())) as PendingTransactionResponse
-  const assetId = createPendingInfo.assetId
+  const createPendingInfo = (await waitForConfirmation(
+    algod,
+    createAssetTxWithFee.txId(),
+  )) as PendingTransactionResponse;
+  const assetId = createPendingInfo.assetId;
   if (!assetId) {
-    throw new Error('Asset ID not found in pending transaction response')
+    throw new Error('Asset ID not found in pending transaction response');
   }
-  printInfo(`Asset created with ID: ${assetId}`)
-  printSuccess(`Asset ${assetName} (ID: ${assetId}) created with clawback capability!`)
+  printInfo(`Asset created with ID: ${assetId}`);
+  printSuccess(`Asset ${assetName} (ID: ${assetId}) created with clawback capability!`);
 
   // Step 7: Target opts into the asset
-  printStep(7, 'Target Opts Into the Asset')
+  printStep(7, 'Target Opts Into the Asset');
 
-  const optInTargetSuggestedParams = await algod.suggestedParams()
+  const optInTargetSuggestedParams = await algod.suggestedParams();
 
   const optInTargetFields: AssetTransferTransactionFields = {
     assetId: assetId,
     receiver: target.addr,
     amount: 0n, // 0 amount for opt-in
-  }
+  };
 
   const optInTargetTx = new Transaction({
     type: TransactionType.AssetTransfer,
@@ -233,29 +236,29 @@ async function main() {
     genesisHash: optInTargetSuggestedParams.genesisHash,
     genesisId: optInTargetSuggestedParams.genesisId,
     assetTransfer: optInTargetFields,
-  })
+  });
 
   const optInTargetTxWithFee = assignFee(optInTargetTx, {
     feePerByte: optInTargetSuggestedParams.fee,
     minFee: optInTargetSuggestedParams.minFee,
-  })
+  });
 
-  const signedOptInTargetTx = await target.signer([optInTargetTxWithFee], [0])
-  await algod.sendRawTransaction(signedOptInTargetTx)
-  await waitForConfirmation(algod, optInTargetTxWithFee.txId())
-  printInfo('Target opted into the asset')
-  printSuccess('Target successfully opted into the asset!')
+  const signedOptInTargetTx = await target.signer([optInTargetTxWithFee], [0]);
+  await algod.sendRawTransaction(signedOptInTargetTx);
+  await waitForConfirmation(algod, optInTargetTxWithFee.txId());
+  printInfo('Target opted into the asset');
+  printSuccess('Target successfully opted into the asset!');
 
   // Step 8: Clawback receiver opts into the asset
-  printStep(8, 'Clawback Receiver Opts Into the Asset')
+  printStep(8, 'Clawback Receiver Opts Into the Asset');
 
-  const optInReceiverSuggestedParams = await algod.suggestedParams()
+  const optInReceiverSuggestedParams = await algod.suggestedParams();
 
   const optInReceiverFields: AssetTransferTransactionFields = {
     assetId: assetId,
     receiver: clawbackReceiver.addr,
     amount: 0n, // 0 amount for opt-in
-  }
+  };
 
   const optInReceiverTx = new Transaction({
     type: TransactionType.AssetTransfer,
@@ -265,32 +268,34 @@ async function main() {
     genesisHash: optInReceiverSuggestedParams.genesisHash,
     genesisId: optInReceiverSuggestedParams.genesisId,
     assetTransfer: optInReceiverFields,
-  })
+  });
 
   const optInReceiverTxWithFee = assignFee(optInReceiverTx, {
     feePerByte: optInReceiverSuggestedParams.fee,
     minFee: optInReceiverSuggestedParams.minFee,
-  })
+  });
 
-  const signedOptInReceiverTx = await clawbackReceiver.signer([optInReceiverTxWithFee], [0])
-  await algod.sendRawTransaction(signedOptInReceiverTx)
-  await waitForConfirmation(algod, optInReceiverTxWithFee.txId())
-  printInfo('Clawback receiver opted into the asset')
-  printSuccess('Clawback receiver successfully opted into the asset!')
+  const signedOptInReceiverTx = await clawbackReceiver.signer([optInReceiverTxWithFee], [0]);
+  await algod.sendRawTransaction(signedOptInReceiverTx);
+  await waitForConfirmation(algod, optInReceiverTxWithFee.txId());
+  printInfo('Clawback receiver opted into the asset');
+  printSuccess('Clawback receiver successfully opted into the asset!');
 
   // Step 9: Transfer assets from creator to target
-  printStep(9, 'Transfer Assets to Target')
+  printStep(9, 'Transfer Assets to Target');
 
-  const transferAmount = 1_000_000_000n // 1,000 units
-  printInfo(`Transferring ${Number(transferAmount) / Math.pow(10, assetDecimals)} ${assetUnitName} to target`)
+  const transferAmount = 1_000_000_000n; // 1,000 units
+  printInfo(
+    `Transferring ${Number(transferAmount) / Math.pow(10, assetDecimals)} ${assetUnitName} to target`,
+  );
 
-  const transferSuggestedParams = await algod.suggestedParams()
+  const transferSuggestedParams = await algod.suggestedParams();
 
   const transferFields: AssetTransferTransactionFields = {
     assetId: assetId,
     receiver: target.addr,
     amount: transferAmount,
-  }
+  };
 
   const transferTx = new Transaction({
     type: TransactionType.AssetTransfer,
@@ -300,32 +305,43 @@ async function main() {
     genesisHash: transferSuggestedParams.genesisHash,
     genesisId: transferSuggestedParams.genesisId,
     assetTransfer: transferFields,
-  })
+  });
 
   const transferTxWithFee = assignFee(transferTx, {
     feePerByte: transferSuggestedParams.fee,
     minFee: transferSuggestedParams.minFee,
-  })
+  });
 
-  const signedTransferTx = await clawbackManager.signer([transferTxWithFee], [0])
-  await algod.sendRawTransaction(signedTransferTx)
-  await waitForConfirmation(algod, transferTxWithFee.txId())
+  const signedTransferTx = await clawbackManager.signer([transferTxWithFee], [0]);
+  await algod.sendRawTransaction(signedTransferTx);
+  await waitForConfirmation(algod, transferTxWithFee.txId());
 
   // Verify target's balance before clawback
-  const targetAssetInfoBefore = await algod.accountAssetInformation(target.addr.toString(), assetId)
-  const targetBalanceBefore = targetAssetInfoBefore.assetHolding?.amount ?? 0n
-  printInfo(`Target balance before clawback: ${targetBalanceBefore} (${Number(targetBalanceBefore) / Math.pow(10, assetDecimals)} ${assetUnitName})`)
-  printSuccess(`Transferred ${Number(transferAmount) / Math.pow(10, assetDecimals)} ${assetUnitName} to target!`)
+  const targetAssetInfoBefore = await algod.accountAssetInformation(
+    target.addr.toString(),
+    assetId,
+  );
+  const targetBalanceBefore = targetAssetInfoBefore.assetHolding?.amount ?? 0n;
+  printInfo(
+    `Target balance before clawback: ${targetBalanceBefore} (${Number(targetBalanceBefore) / Math.pow(10, assetDecimals)} ${assetUnitName})`,
+  );
+  printSuccess(
+    `Transferred ${Number(transferAmount) / Math.pow(10, assetDecimals)} ${assetUnitName} to target!`,
+  );
 
   // Step 10: Clawback assets from target to clawback receiver
-  printStep(10, 'Clawback Assets Using assetSender Field')
-  printInfo('Demonstrating clawback: clawback address takes assets from target and sends to receiver')
-  printInfo('Key: Use assetSender field to specify the account to clawback FROM')
+  printStep(10, 'Clawback Assets Using assetSender Field');
+  printInfo(
+    'Demonstrating clawback: clawback address takes assets from target and sends to receiver',
+  );
+  printInfo('Key: Use assetSender field to specify the account to clawback FROM');
 
-  const clawbackAmount = 500_000_000n // 500 units (half of what target holds)
-  printInfo(`Clawback amount: ${Number(clawbackAmount) / Math.pow(10, assetDecimals)} ${assetUnitName}`)
+  const clawbackAmount = 500_000_000n; // 500 units (half of what target holds)
+  printInfo(
+    `Clawback amount: ${Number(clawbackAmount) / Math.pow(10, assetDecimals)} ${assetUnitName}`,
+  );
 
-  const clawbackSuggestedParams = await algod.suggestedParams()
+  const clawbackSuggestedParams = await algod.suggestedParams();
 
   // IMPORTANT: For clawback, use assetSender to specify WHO we're taking assets FROM
   const clawbackFields: AssetTransferTransactionFields = {
@@ -333,7 +349,7 @@ async function main() {
     receiver: clawbackReceiver.addr, // Assets go TO clawback receiver
     amount: clawbackAmount,
     assetSender: target.addr, // CLAWBACK: Taking assets FROM target account
-  }
+  };
 
   const clawbackTx = new Transaction({
     type: TransactionType.AssetTransfer,
@@ -343,64 +359,90 @@ async function main() {
     genesisHash: clawbackSuggestedParams.genesisHash,
     genesisId: clawbackSuggestedParams.genesisId,
     assetTransfer: clawbackFields,
-  })
+  });
 
   const clawbackTxWithFee = assignFee(clawbackTx, {
     feePerByte: clawbackSuggestedParams.fee,
     minFee: clawbackSuggestedParams.minFee,
-  })
+  });
 
   // Only the clawback address needs to sign (not the target)
-  const signedClawbackTx = await clawbackManager.signer([clawbackTxWithFee], [0])
-  await algod.sendRawTransaction(signedClawbackTx)
-  await waitForConfirmation(algod, clawbackTxWithFee.txId())
+  const signedClawbackTx = await clawbackManager.signer([clawbackTxWithFee], [0]);
+  await algod.sendRawTransaction(signedClawbackTx);
+  await waitForConfirmation(algod, clawbackTxWithFee.txId());
 
-  printSuccess('Clawback transaction confirmed!')
+  printSuccess('Clawback transaction confirmed!');
 
   // Step 11: Verify target account balance decreased
-  printStep(11, 'Verify Target Account Balance Decreased')
+  printStep(11, 'Verify Target Account Balance Decreased');
 
-  const targetAssetInfoAfter = await algod.accountAssetInformation(target.addr.toString(), assetId)
-  const targetBalanceAfter = targetAssetInfoAfter.assetHolding?.amount ?? 0n
-  const expectedTargetBalance = targetBalanceBefore - clawbackAmount
+  const targetAssetInfoAfter = await algod.accountAssetInformation(target.addr.toString(), assetId);
+  const targetBalanceAfter = targetAssetInfoAfter.assetHolding?.amount ?? 0n;
+  const expectedTargetBalance = targetBalanceBefore - clawbackAmount;
 
-  printInfo(`Target balance before: ${Number(targetBalanceBefore) / Math.pow(10, assetDecimals)} ${assetUnitName}`)
-  printInfo(`Target balance after: ${Number(targetBalanceAfter) / Math.pow(10, assetDecimals)} ${assetUnitName}`)
-  printInfo(`Expected balance: ${Number(expectedTargetBalance) / Math.pow(10, assetDecimals)} ${assetUnitName}`)
+  printInfo(
+    `Target balance before: ${Number(targetBalanceBefore) / Math.pow(10, assetDecimals)} ${assetUnitName}`,
+  );
+  printInfo(
+    `Target balance after: ${Number(targetBalanceAfter) / Math.pow(10, assetDecimals)} ${assetUnitName}`,
+  );
+  printInfo(
+    `Expected balance: ${Number(expectedTargetBalance) / Math.pow(10, assetDecimals)} ${assetUnitName}`,
+  );
 
   if (targetBalanceAfter !== expectedTargetBalance) {
-    throw new Error(`Target balance mismatch: expected ${expectedTargetBalance}, got ${targetBalanceAfter}`)
+    throw new Error(
+      `Target balance mismatch: expected ${expectedTargetBalance}, got ${targetBalanceAfter}`,
+    );
   }
-  printSuccess(`Target balance correctly decreased by ${Number(clawbackAmount) / Math.pow(10, assetDecimals)} ${assetUnitName}!`)
+  printSuccess(
+    `Target balance correctly decreased by ${Number(clawbackAmount) / Math.pow(10, assetDecimals)} ${assetUnitName}!`,
+  );
 
   // Step 12: Verify clawback receiver received the assets
-  printStep(12, 'Verify Clawback Receiver Received the Assets')
+  printStep(12, 'Verify Clawback Receiver Received the Assets');
 
-  const receiverAssetInfo = await algod.accountAssetInformation(clawbackReceiver.addr.toString(), assetId)
-  const receiverBalance = receiverAssetInfo.assetHolding?.amount ?? 0n
+  const receiverAssetInfo = await algod.accountAssetInformation(
+    clawbackReceiver.addr.toString(),
+    assetId,
+  );
+  const receiverBalance = receiverAssetInfo.assetHolding?.amount ?? 0n;
 
-  printInfo(`Clawback receiver balance: ${Number(receiverBalance) / Math.pow(10, assetDecimals)} ${assetUnitName}`)
+  printInfo(
+    `Clawback receiver balance: ${Number(receiverBalance) / Math.pow(10, assetDecimals)} ${assetUnitName}`,
+  );
 
   if (receiverBalance !== clawbackAmount) {
-    throw new Error(`Receiver balance mismatch: expected ${clawbackAmount}, got ${receiverBalance}`)
+    throw new Error(
+      `Receiver balance mismatch: expected ${clawbackAmount}, got ${receiverBalance}`,
+    );
   }
-  printSuccess(`Clawback receiver correctly received ${Number(clawbackAmount) / Math.pow(10, assetDecimals)} ${assetUnitName}!`)
+  printSuccess(
+    `Clawback receiver correctly received ${Number(clawbackAmount) / Math.pow(10, assetDecimals)} ${assetUnitName}!`,
+  );
 
   // Summary
-  printSuccess('Asset clawback example completed successfully!')
-  printInfo('Summary:')
-  printInfo(`  - Created asset ${assetName} (ID: ${assetId}) with clawback address`)
-  printInfo(`  - Transferred ${Number(transferAmount) / Math.pow(10, assetDecimals)} ${assetUnitName} to target`)
-  printInfo(`  - Clawed back ${Number(clawbackAmount) / Math.pow(10, assetDecimals)} ${assetUnitName} from target to receiver`)
-  printInfo(`  - Target final balance: ${Number(targetBalanceAfter) / Math.pow(10, assetDecimals)} ${assetUnitName}`)
-  printInfo(`  - Receiver final balance: ${Number(receiverBalance) / Math.pow(10, assetDecimals)} ${assetUnitName}`)
+  printSuccess('Asset clawback example completed successfully!');
+  printInfo('Summary:');
+  printInfo(`  - Created asset ${assetName} (ID: ${assetId}) with clawback address`);
+  printInfo(
+    `  - Transferred ${Number(transferAmount) / Math.pow(10, assetDecimals)} ${assetUnitName} to target`,
+  );
+  printInfo(
+    `  - Clawed back ${Number(clawbackAmount) / Math.pow(10, assetDecimals)} ${assetUnitName} from target to receiver`,
+  );
+  printInfo(
+    `  - Target final balance: ${Number(targetBalanceAfter) / Math.pow(10, assetDecimals)} ${assetUnitName}`,
+  );
+  printInfo(
+    `  - Receiver final balance: ${Number(receiverBalance) / Math.pow(10, assetDecimals)} ${assetUnitName}`,
+  );
 }
 
-main().catch((error) => {
-  console.error('Error:', error)
-  process.exit(1)
-})
-
+main().catch(error => {
+  console.error('Error:', error);
+  process.exit(1);
+});
 ```
 
 ---

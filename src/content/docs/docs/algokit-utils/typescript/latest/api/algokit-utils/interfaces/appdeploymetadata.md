@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "AppDeployMetadata"
+title: 'AppDeployMetadata'
 ---
 
 Defined in: [src/app.ts:151](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/app.ts#L151)
@@ -23,7 +23,7 @@ Defined in: [src/app.ts:157](https://github.com/algorandfoundation/algokit-utils
 
 Whether or not the app is deletable / permanent / unspecified
 
-***
+---
 
 ### name
 
@@ -33,7 +33,7 @@ Defined in: [src/app.ts:153](https://github.com/algorandfoundation/algokit-utils
 
 The unique name identifier of the app within the creator account
 
-***
+---
 
 ### updatable?
 
@@ -43,7 +43,7 @@ Defined in: [src/app.ts:159](https://github.com/algorandfoundation/algokit-utils
 
 Whether or not the app is updatable / immutable / unspecified
 
-***
+---
 
 ### version
 

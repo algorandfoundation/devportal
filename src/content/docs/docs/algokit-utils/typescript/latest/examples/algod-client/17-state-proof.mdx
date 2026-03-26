@@ -1,6 +1,6 @@
 ---
-title: "State Proof"
-description: "This example demonstrates how to get state proofs using:"
+title: 'State Proof'
+description: 'This example demonstrates how to get state proofs using:'
 sidebar:
   order: 17
 ---
@@ -10,9 +10,10 @@ sidebar:
 ## Description
 
 This example demonstrates how to get state proofs using:
+
 - stateProof(round) - Get the state proof for a specific round
- State proofs are cryptographic proofs that attest to the state of the Algorand blockchain. They allow external systems (like bridges, light clients, and other blockchains) to verify Algorand's blockchain state without trusting any intermediary.
- Key concepts:
+  State proofs are cryptographic proofs that attest to the state of the Algorand blockchain. They allow external systems (like bridges, light clients, and other blockchains) to verify Algorand's blockchain state without trusting any intermediary.
+  Key concepts:
 - State proofs are generated at regular intervals (every 256 rounds on MainNet)
 - Each state proof covers a range of block headers (the interval)
 - State proofs are signed by a supermajority of online stake
@@ -62,7 +63,7 @@ npm run example algod_client/17-state-proof.ts
  * This example demonstrates the API call and handles the expected errors gracefully.
  */
 
-import type { StateProof } from '@algorandfoundation/algokit-utils/algod-client'
+import type { StateProof } from '@algorandfoundation/algokit-utils/algod-client';
 import {
   createAlgodClient,
   printError,
@@ -70,312 +71,335 @@ import {
   printInfo,
   printStep,
   printSuccess,
-} from '../shared/utils.js'
+} from '../shared/utils.js';
 
 async function main() {
-  printHeader('State Proof Example')
+  printHeader('State Proof Example');
 
   // Create clients
-  const algod = createAlgodClient()
+  const algod = createAlgodClient();
 
   // =========================================================================
   // Step 1: Understand State Proofs
   // =========================================================================
-  printStep(1, 'Understanding state proofs')
+  printStep(1, 'Understanding state proofs');
 
-  printInfo('What are State Proofs?')
-  printInfo('  - Cryptographic proofs that attest to the state of the Algorand blockchain')
-  printInfo('  - Allow external systems to verify Algorand state without trusting intermediaries')
-  printInfo('  - Signed by a supermajority of online stake (using Falcon signatures)')
-  printInfo('  - Use post-quantum secure cryptographic techniques')
-  printInfo('')
-  printInfo('How State Proofs Work:')
-  printInfo('  1. State proofs are generated at regular intervals (StateProofInterval)')
-  printInfo('  2. Each proof attests to a range of block headers')
-  printInfo('  3. The proof includes a vector commitment to all block headers in the interval')
-  printInfo('  4. A supermajority of stake signs the commitment')
-  printInfo('  5. The resulting proof can be verified without syncing the full blockchain')
-  printInfo('')
+  printInfo('What are State Proofs?');
+  printInfo('  - Cryptographic proofs that attest to the state of the Algorand blockchain');
+  printInfo('  - Allow external systems to verify Algorand state without trusting intermediaries');
+  printInfo('  - Signed by a supermajority of online stake (using Falcon signatures)');
+  printInfo('  - Use post-quantum secure cryptographic techniques');
+  printInfo('');
+  printInfo('How State Proofs Work:');
+  printInfo('  1. State proofs are generated at regular intervals (StateProofInterval)');
+  printInfo('  2. Each proof attests to a range of block headers');
+  printInfo('  3. The proof includes a vector commitment to all block headers in the interval');
+  printInfo('  4. A supermajority of stake signs the commitment');
+  printInfo('  5. The resulting proof can be verified without syncing the full blockchain');
+  printInfo('');
 
   // =========================================================================
   // Step 2: Get current round and understand intervals
   // =========================================================================
-  printStep(2, 'Getting current round and understanding state proof intervals')
+  printStep(2, 'Getting current round and understanding state proof intervals');
 
-  const status = await algod.status()
-  printInfo(`Current round: ${status.lastRound.toLocaleString('en-US')}`)
-  printInfo('')
+  const status = await algod.status();
+  printInfo(`Current round: ${status.lastRound.toLocaleString('en-US')}`);
+  printInfo('');
 
   // State proof interval (256 rounds on MainNet)
-  const stateProofInterval = 256n
-  printInfo(`State Proof Interval: ${stateProofInterval.toLocaleString('en-US')} rounds`)
-  printInfo('')
+  const stateProofInterval = 256n;
+  printInfo(`State Proof Interval: ${stateProofInterval.toLocaleString('en-US')} rounds`);
+  printInfo('');
 
-  printInfo('State Proof Interval Boundaries:')
-  printInfo('  - State proofs are NOT generated for every round')
-  printInfo('  - Only rounds that are multiples of the StateProofInterval have proofs')
-  printInfo('  - The proof at round N attests to rounds [(N-1)*interval + 1, N*interval]')
-  printInfo('')
+  printInfo('State Proof Interval Boundaries:');
+  printInfo('  - State proofs are NOT generated for every round');
+  printInfo('  - Only rounds that are multiples of the StateProofInterval have proofs');
+  printInfo('  - The proof at round N attests to rounds [(N-1)*interval + 1, N*interval]');
+  printInfo('');
 
   // Calculate which intervals we might find state proofs for
-  const currentInterval = status.lastRound / stateProofInterval
-  printInfo(`Current interval number: ~${currentInterval.toLocaleString('en-US')}`)
-  printInfo('')
+  const currentInterval = status.lastRound / stateProofInterval;
+  printInfo(`Current interval number: ~${currentInterval.toLocaleString('en-US')}`);
+  printInfo('');
 
   // Show example interval boundaries
-  const exampleProofRound = currentInterval * stateProofInterval
-  const intervalStart = (currentInterval - 1n) * stateProofInterval + 1n
-  const intervalEnd = currentInterval * stateProofInterval
-  printInfo(`Example: If state proof exists for round ${  exampleProofRound.toLocaleString('en-US')  }:`)
-  printInfo(`  It would attest to rounds ${intervalStart.toLocaleString('en-US')} to ${intervalEnd.toLocaleString('en-US')}`)
-  printInfo('')
+  const exampleProofRound = currentInterval * stateProofInterval;
+  const intervalStart = (currentInterval - 1n) * stateProofInterval + 1n;
+  const intervalEnd = currentInterval * stateProofInterval;
+  printInfo(
+    `Example: If state proof exists for round ${exampleProofRound.toLocaleString('en-US')}:`,
+  );
+  printInfo(
+    `  It would attest to rounds ${intervalStart.toLocaleString('en-US')} to ${intervalEnd.toLocaleString('en-US')}`,
+  );
+  printInfo('');
 
   // =========================================================================
   // Step 3: Try to get state proof for current interval
   // =========================================================================
-  printStep(3, 'Attempting to get state proof')
+  printStep(3, 'Attempting to get state proof');
 
   // State proofs are available at interval boundaries
   // Try the most recent complete interval
-  const proofRound = currentInterval * stateProofInterval
+  const proofRound = currentInterval * stateProofInterval;
 
-  printInfo(`Trying stateProof(${proofRound.toLocaleString('en-US')})...`)
-  printInfo('')
+  printInfo(`Trying stateProof(${proofRound.toLocaleString('en-US')})...`);
+  printInfo('');
 
   try {
-    const proof = await algod.stateProof(proofRound)
-    printSuccess('Successfully retrieved state proof!')
-    printInfo('')
-    displayStateProof(proof)
+    const proof = await algod.stateProof(proofRound);
+    printSuccess('Successfully retrieved state proof!');
+    printInfo('');
+    displayStateProof(proof);
   } catch (error) {
-    const errorMessage = error instanceof Error ? error.message : String(error)
+    const errorMessage = error instanceof Error ? error.message : String(error);
 
     // Handle expected cases where state proof is not available
-    if (errorMessage.includes('state proof') || errorMessage.includes('not found') || errorMessage.includes('404')) {
-      printInfo('State proof is not available for this round.')
-      printInfo('This is expected behavior on LocalNet dev mode.')
-      printInfo('')
-      printInfo('Possible reasons:')
-      printInfo('  1. State proofs are not enabled on this network (LocalNet dev mode)')
-      printInfo('  2. The requested round is not a state proof interval boundary')
-      printInfo('  3. The state proof for this interval has not been generated yet')
-      printInfo('  4. The state proof has been pruned (old data)')
-    } else if (errorMessage.includes('501') || errorMessage.includes('not supported') || errorMessage.includes('Not Implemented')) {
-      printInfo('State proofs are not supported on this node.')
-      printInfo('This feature requires a node with state proof support enabled.')
+    if (
+      errorMessage.includes('state proof') ||
+      errorMessage.includes('not found') ||
+      errorMessage.includes('404')
+    ) {
+      printInfo('State proof is not available for this round.');
+      printInfo('This is expected behavior on LocalNet dev mode.');
+      printInfo('');
+      printInfo('Possible reasons:');
+      printInfo('  1. State proofs are not enabled on this network (LocalNet dev mode)');
+      printInfo('  2. The requested round is not a state proof interval boundary');
+      printInfo('  3. The state proof for this interval has not been generated yet');
+      printInfo('  4. The state proof has been pruned (old data)');
+    } else if (
+      errorMessage.includes('501') ||
+      errorMessage.includes('not supported') ||
+      errorMessage.includes('Not Implemented')
+    ) {
+      printInfo('State proofs are not supported on this node.');
+      printInfo('This feature requires a node with state proof support enabled.');
     } else {
-      printError(`Error: ${errorMessage}`)
+      printError(`Error: ${errorMessage}`);
     }
-    printInfo('')
+    printInfo('');
   }
 
   // =========================================================================
   // Step 4: Try multiple interval rounds to find available proofs
   // =========================================================================
-  printStep(4, 'Scanning interval boundaries for available state proofs')
+  printStep(4, 'Scanning interval boundaries for available state proofs');
 
-  printInfo('Checking several interval boundaries to find available proofs...')
-  printInfo('')
+  printInfo('Checking several interval boundaries to find available proofs...');
+  printInfo('');
 
   // Try a range of interval boundaries
   const intervalsToTry = [
-    stateProofInterval,           // First possible interval (round 256)
-    stateProofInterval * 2n,      // Second interval (round 512)
-    stateProofInterval * 4n,      // Fourth interval (round 1024)
-    (currentInterval - 2n) * stateProofInterval,  // 2 intervals ago
-    (currentInterval - 1n) * stateProofInterval,  // 1 interval ago
-    currentInterval * stateProofInterval,          // Current interval
-  ].filter(r => r > 0n && r <= status.lastRound)
+    stateProofInterval, // First possible interval (round 256)
+    stateProofInterval * 2n, // Second interval (round 512)
+    stateProofInterval * 4n, // Fourth interval (round 1024)
+    (currentInterval - 2n) * stateProofInterval, // 2 intervals ago
+    (currentInterval - 1n) * stateProofInterval, // 1 interval ago
+    currentInterval * stateProofInterval, // Current interval
+  ].filter(r => r > 0n && r <= status.lastRound);
 
-  let foundProof = false
+  let foundProof = false;
   for (const round of intervalsToTry) {
     try {
-      const proof = await algod.stateProof(round)
-      printSuccess(`Found state proof for round ${round.toLocaleString('en-US')}!`)
-      displayStateProof(proof)
-      foundProof = true
-      break
+      const proof = await algod.stateProof(round);
+      printSuccess(`Found state proof for round ${round.toLocaleString('en-US')}!`);
+      displayStateProof(proof);
+      foundProof = true;
+      break;
     } catch {
-      printInfo(`Round ${round.toLocaleString('en-US')}: No state proof available`)
+      printInfo(`Round ${round.toLocaleString('en-US')}: No state proof available`);
     }
   }
 
   if (!foundProof) {
-    printInfo('')
-    printInfo('No state proofs found for any tested round.')
-    printInfo('This is expected on LocalNet in dev mode where state proofs are not generated.')
+    printInfo('');
+    printInfo('No state proofs found for any tested round.');
+    printInfo('This is expected on LocalNet in dev mode where state proofs are not generated.');
   }
-  printInfo('')
+  printInfo('');
 
   // =========================================================================
   // Step 5: Demonstrate which rounds have state proofs
   // =========================================================================
-  printStep(5, 'Understanding which rounds have state proofs')
+  printStep(5, 'Understanding which rounds have state proofs');
 
-  printInfo('State proofs are only generated at specific rounds:')
-  printInfo('')
-  printInfo('  Round 256    -> First state proof (attests to rounds 1-256)')
-  printInfo('  Round 512    -> Second state proof (attests to rounds 257-512)')
-  printInfo('  Round 768    -> Third state proof (attests to rounds 513-768)')
-  printInfo('  ...')
-  printInfo('  Round N*256  -> Attests to rounds [(N-1)*256 + 1, N*256]')
-  printInfo('')
+  printInfo('State proofs are only generated at specific rounds:');
+  printInfo('');
+  printInfo('  Round 256    -> First state proof (attests to rounds 1-256)');
+  printInfo('  Round 512    -> Second state proof (attests to rounds 257-512)');
+  printInfo('  Round 768    -> Third state proof (attests to rounds 513-768)');
+  printInfo('  ...');
+  printInfo('  Round N*256  -> Attests to rounds [(N-1)*256 + 1, N*256]');
+  printInfo('');
 
-  printInfo('Rounds that do NOT have state proofs (examples):')
-  printInfo('  Round 1, 2, 3, ... 255  -> Part of first interval, no individual proofs')
-  printInfo('  Round 257, 300, 400     -> Part of second interval, no individual proofs')
-  printInfo('  Round 100, 500, 1000    -> Not interval boundaries')
-  printInfo('')
+  printInfo('Rounds that do NOT have state proofs (examples):');
+  printInfo('  Round 1, 2, 3, ... 255  -> Part of first interval, no individual proofs');
+  printInfo('  Round 257, 300, 400     -> Part of second interval, no individual proofs');
+  printInfo('  Round 100, 500, 1000    -> Not interval boundaries');
+  printInfo('');
 
   // =========================================================================
   // Step 6: Error handling for invalid rounds
   // =========================================================================
-  printStep(6, 'Demonstrating error handling for invalid rounds')
+  printStep(6, 'Demonstrating error handling for invalid rounds');
 
-  printInfo('Testing error handling for various round scenarios:')
-  printInfo('')
+  printInfo('Testing error handling for various round scenarios:');
+  printInfo('');
 
   // Try a non-interval round (should fail)
-  const nonIntervalRound = stateProofInterval + 1n
-  printInfo(`  Non-interval round (${nonIntervalRound.toLocaleString('en-US')}):`)
+  const nonIntervalRound = stateProofInterval + 1n;
+  printInfo(`  Non-interval round (${nonIntervalRound.toLocaleString('en-US')}):`);
   try {
-    await algod.stateProof(nonIntervalRound)
-    printInfo('    Unexpectedly succeeded')
+    await algod.stateProof(nonIntervalRound);
+    printInfo('    Unexpectedly succeeded');
   } catch (error) {
-    const errorMessage = error instanceof Error ? error.message : String(error)
-    printInfo(`    Error (expected): ${errorMessage.substring(0, 80)}${errorMessage.length > 80 ? '...' : ''}`)
+    const errorMessage = error instanceof Error ? error.message : String(error);
+    printInfo(
+      `    Error (expected): ${errorMessage.substring(0, 80)}${errorMessage.length > 80 ? '...' : ''}`,
+    );
   }
-  printInfo('')
+  printInfo('');
 
   // Try a future round
-  const futureRound = (status.lastRound / stateProofInterval + 10n) * stateProofInterval
-  printInfo(`  Future round (${futureRound.toLocaleString('en-US')}):`)
+  const futureRound = (status.lastRound / stateProofInterval + 10n) * stateProofInterval;
+  printInfo(`  Future round (${futureRound.toLocaleString('en-US')}):`);
   try {
-    await algod.stateProof(futureRound)
-    printInfo('    Unexpectedly succeeded')
+    await algod.stateProof(futureRound);
+    printInfo('    Unexpectedly succeeded');
   } catch (error) {
-    const errorMessage = error instanceof Error ? error.message : String(error)
-    printInfo(`    Error (expected): ${errorMessage.substring(0, 80)}${errorMessage.length > 80 ? '...' : ''}`)
+    const errorMessage = error instanceof Error ? error.message : String(error);
+    printInfo(
+      `    Error (expected): ${errorMessage.substring(0, 80)}${errorMessage.length > 80 ? '...' : ''}`,
+    );
   }
-  printInfo('')
+  printInfo('');
 
   // Try round 0 (invalid - no state proof for genesis)
-  printInfo('  Round 0 (invalid):')
+  printInfo('  Round 0 (invalid):');
   try {
-    await algod.stateProof(0)
-    printInfo('    Unexpectedly succeeded')
+    await algod.stateProof(0);
+    printInfo('    Unexpectedly succeeded');
   } catch (error) {
-    const errorMessage = error instanceof Error ? error.message : String(error)
-    printInfo(`    Error (expected): ${errorMessage.substring(0, 80)}${errorMessage.length > 80 ? '...' : ''}`)
+    const errorMessage = error instanceof Error ? error.message : String(error);
+    printInfo(
+      `    Error (expected): ${errorMessage.substring(0, 80)}${errorMessage.length > 80 ? '...' : ''}`,
+    );
   }
-  printInfo('')
+  printInfo('');
 
   // =========================================================================
   // Summary
   // =========================================================================
-  printHeader('Summary')
+  printHeader('Summary');
 
-  printInfo('State Proofs - Key Points:')
-  printInfo('')
-  printInfo('1. What They Are:')
-  printInfo('   - Cryptographic proofs of Algorand blockchain state')
-  printInfo('   - Allow trustless verification by external systems')
-  printInfo('   - Signed by supermajority of online stake (~3+ billion ALGO)')
-  printInfo('   - Use post-quantum secure Falcon signatures')
-  printInfo('')
-  printInfo('2. When They\'re Generated:')
-  printInfo('   - Every StateProofInterval rounds (256 on MainNet)')
-  printInfo('   - NOT generated for every round')
-  printInfo('   - Only at interval boundary rounds (256, 512, 768, ...)')
-  printInfo('')
-  printInfo('3. StateProof Type Structure:')
-  printInfo('   message: StateProofMessage')
-  printInfo('     - blockHeadersCommitment: Uint8Array  - Vector commitment to block headers')
-  printInfo('     - votersCommitment: Uint8Array        - Commitment to voters for next proof')
-  printInfo('     - lnProvenWeight: bigint              - Log of proven weight (16-bit precision)')
-  printInfo('     - firstAttestedRound: bigint          - First round in the interval')
-  printInfo('     - lastAttestedRound: bigint           - Last round in the interval')
-  printInfo('   stateProof: Uint8Array                  - The encoded cryptographic proof')
-  printInfo('')
-  printInfo('4. API Method:')
-  printInfo('   stateProof(round: number | bigint): Promise<StateProof>')
-  printInfo('   - round must be a state proof interval boundary')
-  printInfo('')
-  printInfo('5. Use Cases:')
-  printInfo('   - Cross-chain bridges: Verify Algorand state on other chains')
-  printInfo('   - Light clients: Verify state without full node sync')
-  printInfo('   - Trustless verification: No intermediary needed')
-  printInfo('   - Interoperability: Connect Algorand to other ecosystems')
-  printInfo('')
-  printInfo('6. Availability:')
-  printInfo('   - MainNet/TestNet: Available at interval boundaries')
-  printInfo('   - LocalNet dev mode: NOT available (no real consensus)')
-  printInfo('   - Archive nodes: Historical state proofs may be available')
-  printInfo('')
-  printInfo('7. Verification Process:')
-  printInfo('   1. Get the state proof for an interval boundary')
-  printInfo('   2. Verify the Falcon signatures against known voters')
-  printInfo('   3. Check that proven weight represents supermajority')
-  printInfo('   4. Use blockHeadersCommitment to verify individual block headers')
-  printInfo('   5. Chain state proofs together for long-range verification')
+  printInfo('State Proofs - Key Points:');
+  printInfo('');
+  printInfo('1. What They Are:');
+  printInfo('   - Cryptographic proofs of Algorand blockchain state');
+  printInfo('   - Allow trustless verification by external systems');
+  printInfo('   - Signed by supermajority of online stake (~3+ billion ALGO)');
+  printInfo('   - Use post-quantum secure Falcon signatures');
+  printInfo('');
+  printInfo("2. When They're Generated:");
+  printInfo('   - Every StateProofInterval rounds (256 on MainNet)');
+  printInfo('   - NOT generated for every round');
+  printInfo('   - Only at interval boundary rounds (256, 512, 768, ...)');
+  printInfo('');
+  printInfo('3. StateProof Type Structure:');
+  printInfo('   message: StateProofMessage');
+  printInfo('     - blockHeadersCommitment: Uint8Array  - Vector commitment to block headers');
+  printInfo('     - votersCommitment: Uint8Array        - Commitment to voters for next proof');
+  printInfo('     - lnProvenWeight: bigint              - Log of proven weight (16-bit precision)');
+  printInfo('     - firstAttestedRound: bigint          - First round in the interval');
+  printInfo('     - lastAttestedRound: bigint           - Last round in the interval');
+  printInfo('   stateProof: Uint8Array                  - The encoded cryptographic proof');
+  printInfo('');
+  printInfo('4. API Method:');
+  printInfo('   stateProof(round: number | bigint): Promise<StateProof>');
+  printInfo('   - round must be a state proof interval boundary');
+  printInfo('');
+  printInfo('5. Use Cases:');
+  printInfo('   - Cross-chain bridges: Verify Algorand state on other chains');
+  printInfo('   - Light clients: Verify state without full node sync');
+  printInfo('   - Trustless verification: No intermediary needed');
+  printInfo('   - Interoperability: Connect Algorand to other ecosystems');
+  printInfo('');
+  printInfo('6. Availability:');
+  printInfo('   - MainNet/TestNet: Available at interval boundaries');
+  printInfo('   - LocalNet dev mode: NOT available (no real consensus)');
+  printInfo('   - Archive nodes: Historical state proofs may be available');
+  printInfo('');
+  printInfo('7. Verification Process:');
+  printInfo('   1. Get the state proof for an interval boundary');
+  printInfo('   2. Verify the Falcon signatures against known voters');
+  printInfo('   3. Check that proven weight represents supermajority');
+  printInfo('   4. Use blockHeadersCommitment to verify individual block headers');
+  printInfo('   5. Chain state proofs together for long-range verification');
 }
 
 /**
  * Display details from a StateProof
  */
 function displayStateProof(proof: StateProof): void {
-  printInfo('  StateProof fields:')
-  printInfo('')
-  printInfo('  message (StateProofMessage):')
-  printInfo(`    firstAttestedRound: ${proof.message.firstAttestedRound.toLocaleString('en-US')}`)
-  printInfo('                        First round covered by this state proof')
-  printInfo('')
-  printInfo(`    lastAttestedRound: ${proof.message.lastAttestedRound.toLocaleString('en-US')}`)
-  printInfo('                       Last round covered by this state proof')
-  printInfo('')
+  printInfo('  StateProof fields:');
+  printInfo('');
+  printInfo('  message (StateProofMessage):');
+  printInfo(`    firstAttestedRound: ${proof.message.firstAttestedRound.toLocaleString('en-US')}`);
+  printInfo('                        First round covered by this state proof');
+  printInfo('');
+  printInfo(`    lastAttestedRound: ${proof.message.lastAttestedRound.toLocaleString('en-US')}`);
+  printInfo('                       Last round covered by this state proof');
+  printInfo('');
 
   // Calculate interval size
-  const intervalSize = proof.message.lastAttestedRound - proof.message.firstAttestedRound + 1n
-  printInfo(`    Interval size: ${intervalSize.toLocaleString('en-US')} rounds`)
-  printInfo('')
+  const intervalSize = proof.message.lastAttestedRound - proof.message.firstAttestedRound + 1n;
+  printInfo(`    Interval size: ${intervalSize.toLocaleString('en-US')} rounds`);
+  printInfo('');
 
-  printInfo(`    blockHeadersCommitment: ${Buffer.from(proof.message.blockHeadersCommitment).toString('hex').substring(0, 64)}...`)
-  printInfo(`                            (${proof.message.blockHeadersCommitment.length} bytes)`)
-  printInfo('                            Vector commitment root for all block headers in interval')
-  printInfo('')
+  printInfo(
+    `    blockHeadersCommitment: ${Buffer.from(proof.message.blockHeadersCommitment).toString('hex').substring(0, 64)}...`,
+  );
+  printInfo(`                            (${proof.message.blockHeadersCommitment.length} bytes)`);
+  printInfo('                            Vector commitment root for all block headers in interval');
+  printInfo('');
 
-  printInfo(`    votersCommitment: ${Buffer.from(proof.message.votersCommitment).toString('hex').substring(0, 64)}...`)
-  printInfo(`                      (${proof.message.votersCommitment.length} bytes)`)
-  printInfo('                      Commitment to voters for the next state proof interval')
-  printInfo('')
+  printInfo(
+    `    votersCommitment: ${Buffer.from(proof.message.votersCommitment).toString('hex').substring(0, 64)}...`,
+  );
+  printInfo(`                      (${proof.message.votersCommitment.length} bytes)`);
+  printInfo('                      Commitment to voters for the next state proof interval');
+  printInfo('');
 
-  printInfo(`    lnProvenWeight: ${proof.message.lnProvenWeight.toLocaleString('en-US')}`)
-  printInfo('                    Natural log of proven weight with 16-bit precision')
-  printInfo('                    Used to verify that supermajority of stake signed')
-  printInfo('')
+  printInfo(`    lnProvenWeight: ${proof.message.lnProvenWeight.toLocaleString('en-US')}`);
+  printInfo('                    Natural log of proven weight with 16-bit precision');
+  printInfo('                    Used to verify that supermajority of stake signed');
+  printInfo('');
 
-  printInfo('  stateProof (encoded proof):')
+  printInfo('  stateProof (encoded proof):');
   if (proof.stateProof.length > 0) {
-    printInfo(`    ${Buffer.from(proof.stateProof).toString('hex').substring(0, 64)}...`)
-    printInfo(`    (${proof.stateProof.length.toLocaleString('en-US')} bytes total)`)
-    printInfo('    Contains Falcon signatures and Merkle proofs')
+    printInfo(`    ${Buffer.from(proof.stateProof).toString('hex').substring(0, 64)}...`);
+    printInfo(`    (${proof.stateProof.length.toLocaleString('en-US')} bytes total)`);
+    printInfo('    Contains Falcon signatures and Merkle proofs');
   } else {
-    printInfo('    (empty)')
+    printInfo('    (empty)');
   }
-  printInfo('')
+  printInfo('');
 
   // Show which rounds this proof covers
-  printInfo('  Coverage:')
-  printInfo(`    This state proof attests to rounds ${proof.message.firstAttestedRound.toLocaleString('en-US')} to ${proof.message.lastAttestedRound.toLocaleString('en-US')}`)
-  printInfo('    Any block header in this range can be verified against blockHeadersCommitment')
-  printInfo('')
+  printInfo('  Coverage:');
+  printInfo(
+    `    This state proof attests to rounds ${proof.message.firstAttestedRound.toLocaleString('en-US')} to ${proof.message.lastAttestedRound.toLocaleString('en-US')}`,
+  );
+  printInfo('    Any block header in this range can be verified against blockHeadersCommitment');
+  printInfo('');
 }
 
-main().catch((error) => {
-  console.error('Fatal error:', error)
-  process.exit(1)
-})
-
+main().catch(error => {
+  console.error('Fatal error:', error);
+  process.exit(1);
+});
 ```
 
 ---

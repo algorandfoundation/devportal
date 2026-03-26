@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "TransactionSigner"
+title: 'TransactionSigner'
 ---
 
 > **TransactionSigner** = (`txnGroup`, `indexesToSign`) => `Promise`\<`Uint8Array`[]\>

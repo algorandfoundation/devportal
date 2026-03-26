@@ -1,6 +1,6 @@
 ---
-title: "Account Applications"
-description: "This example demonstrates how to query account application relationships using the IndexerClient lookupAccountCreatedApplications() and lookupAccountAppLocalStates() methods."
+title: 'Account Applications'
+description: 'This example demonstrates how to query account application relationships using the IndexerClient lookupAccountCreatedApplications() and lookupAccountAppLocalStates() methods.'
 sidebar:
   order: 4
 ---
@@ -45,7 +45,7 @@ import {
   Transaction,
   TransactionType,
   type AppCallTransactionFields,
-} from '@algorandfoundation/algokit-utils/transact'
+} from '@algorandfoundation/algokit-utils/transact';
 import {
   createAlgodClient,
   createAlgorandClient,
@@ -57,7 +57,7 @@ import {
   printStep,
   printSuccess,
   shortenAddress,
-} from '../shared/utils.js'
+} from '../shared/utils.js';
 
 /**
  * Wait for a transaction to be confirmed
@@ -67,78 +67,80 @@ async function waitForConfirmation(
   txId: string,
   maxRounds = 10,
 ): Promise<Record<string, unknown>> {
-  let lastRound = (await algod.status()).lastRound
-  const startRound = lastRound
+  let lastRound = (await algod.status()).lastRound;
+  const startRound = lastRound;
 
   while (lastRound < startRound + BigInt(maxRounds)) {
-    const pendingInfo = await algod.pendingTransactionInformation(txId)
+    const pendingInfo = await algod.pendingTransactionInformation(txId);
     if (pendingInfo.confirmedRound && pendingInfo.confirmedRound > 0n) {
-      return pendingInfo as Record<string, unknown>
+      return pendingInfo as Record<string, unknown>;
     }
-    lastRound = (await algod.statusAfterBlock(lastRound)).lastRound
+    lastRound = (await algod.statusAfterBlock(lastRound)).lastRound;
   }
 
-  throw new Error(`Transaction ${txId} not confirmed after ${maxRounds} rounds`)
+  throw new Error(`Transaction ${txId} not confirmed after ${maxRounds} rounds`);
 }
 
 async function main() {
-  printHeader('Account Applications Example')
+  printHeader('Account Applications Example');
 
   // Create clients
-  const indexer = createIndexerClient()
-  const algorand = createAlgorandClient()
-  const algod = createAlgodClient()
+  const indexer = createIndexerClient();
+  const algorand = createAlgorandClient();
+  const algod = createAlgodClient();
 
   // =========================================================================
   // Step 1: Get a funded account from LocalNet
   // =========================================================================
-  printStep(1, 'Getting a funded account from LocalNet')
+  printStep(1, 'Getting a funded account from LocalNet');
 
-  let creatorAddress: string
-  let creatorAccount: Awaited<ReturnType<typeof algorand.account.kmd.getLocalNetDispenserAccount>>
+  let creatorAddress: string;
+  let creatorAccount: Awaited<ReturnType<typeof algorand.account.kmd.getLocalNetDispenserAccount>>;
 
   try {
-    creatorAccount = await algorand.account.kmd.getLocalNetDispenserAccount()
-    creatorAddress = creatorAccount.addr.toString()
-    printSuccess(`Using dispenser account: ${shortenAddress(creatorAddress)}`)
+    creatorAccount = await algorand.account.kmd.getLocalNetDispenserAccount();
+    creatorAddress = creatorAccount.addr.toString();
+    printSuccess(`Using dispenser account: ${shortenAddress(creatorAddress)}`);
   } catch (error) {
-    printError(`Failed to get dispenser account: ${error instanceof Error ? error.message : String(error)}`)
-    printInfo('')
-    printInfo('Make sure LocalNet is running: algokit localnet start')
-    printInfo('If issues persist, try: algokit localnet reset')
-    return
+    printError(
+      `Failed to get dispenser account: ${error instanceof Error ? error.message : String(error)}`,
+    );
+    printInfo('');
+    printInfo('Make sure LocalNet is running: algokit localnet start');
+    printInfo('If issues persist, try: algokit localnet reset');
+    return;
   }
 
   // =========================================================================
   // Step 2: Deploy test applications using AlgorandClient
   // =========================================================================
-  printStep(2, 'Deploying test applications for demonstration')
+  printStep(2, 'Deploying test applications for demonstration');
 
-  let appId1: bigint
-  let appId2: bigint
+  let appId1: bigint;
+  let appId2: bigint;
 
   try {
     // Load approval program from shared artifacts that stores a counter in global state and supports local state
-    const approvalSource = loadTealSource('approval-lifecycle-counter.teal')
+    const approvalSource = loadTealSource('approval-lifecycle-counter.teal');
 
     // Load clear state program from shared artifacts
-    const clearSource = loadTealSource('clear-state-approve.teal')
+    const clearSource = loadTealSource('clear-state-approve.teal');
 
     // Compile TEAL programs
-    printInfo('Compiling TEAL programs...')
-    const approvalResult = await algod.tealCompile(approvalSource)
-    const approvalProgram = new Uint8Array(Buffer.from(approvalResult.result, 'base64'))
+    printInfo('Compiling TEAL programs...');
+    const approvalResult = await algod.tealCompile(approvalSource);
+    const approvalProgram = new Uint8Array(Buffer.from(approvalResult.result, 'base64'));
 
-    const clearResult = await algod.tealCompile(clearSource)
-    const clearStateProgram = new Uint8Array(Buffer.from(clearResult.result, 'base64'))
+    const clearResult = await algod.tealCompile(clearSource);
+    const clearStateProgram = new Uint8Array(Buffer.from(clearResult.result, 'base64'));
 
-    printInfo(`Approval program: ${approvalProgram.length} bytes`)
-    printInfo(`Clear state program: ${clearStateProgram.length} bytes`)
-    printInfo('')
+    printInfo(`Approval program: ${approvalProgram.length} bytes`);
+    printInfo(`Clear state program: ${clearStateProgram.length} bytes`);
+    printInfo('');
 
     // Create first application
-    printInfo('Creating first test application: DemoApp1...')
-    const suggestedParams = await algod.suggestedParams()
+    printInfo('Creating first test application: DemoApp1...');
+    const suggestedParams = await algod.suggestedParams();
 
     const appCallFields1: AppCallTransactionFields = {
       appId: 0n,
@@ -147,7 +149,7 @@ async function main() {
       clearStateProgram,
       globalStateSchema: { numUints: 1, numByteSlices: 0 },
       localStateSchema: { numUints: 1, numByteSlices: 0 },
-    }
+    };
 
     const createAppTx1 = new Transaction({
       type: TransactionType.AppCall,
@@ -157,22 +159,22 @@ async function main() {
       genesisHash: suggestedParams.genesisHash,
       genesisId: suggestedParams.genesisId,
       appCall: appCallFields1,
-    })
+    });
 
     const createAppTxWithFee1 = assignFee(createAppTx1, {
       feePerByte: suggestedParams.fee,
       minFee: suggestedParams.minFee,
-    })
+    });
 
-    const signedCreateTx1 = await creatorAccount.signer([createAppTxWithFee1], [0])
-    await algod.sendRawTransaction(signedCreateTx1)
-    const createPendingInfo1 = await waitForConfirmation(algod, createAppTxWithFee1.txId())
-    appId1 = createPendingInfo1.appId as bigint
-    printSuccess(`Created DemoApp1 with Application ID: ${appId1}`)
+    const signedCreateTx1 = await creatorAccount.signer([createAppTxWithFee1], [0]);
+    await algod.sendRawTransaction(signedCreateTx1);
+    const createPendingInfo1 = await waitForConfirmation(algod, createAppTxWithFee1.txId());
+    appId1 = createPendingInfo1.appId as bigint;
+    printSuccess(`Created DemoApp1 with Application ID: ${appId1}`);
 
     // Create second application
-    printInfo('Creating second test application: DemoApp2...')
-    const suggestedParams2 = await algod.suggestedParams()
+    printInfo('Creating second test application: DemoApp2...');
+    const suggestedParams2 = await algod.suggestedParams();
 
     const appCallFields2: AppCallTransactionFields = {
       appId: 0n,
@@ -181,7 +183,7 @@ async function main() {
       clearStateProgram,
       globalStateSchema: { numUints: 2, numByteSlices: 1 },
       localStateSchema: { numUints: 2, numByteSlices: 1 },
-    }
+    };
 
     const createAppTx2 = new Transaction({
       type: TransactionType.AppCall,
@@ -191,38 +193,40 @@ async function main() {
       genesisHash: suggestedParams2.genesisHash,
       genesisId: suggestedParams2.genesisId,
       appCall: appCallFields2,
-    })
+    });
 
     const createAppTxWithFee2 = assignFee(createAppTx2, {
       feePerByte: suggestedParams2.fee,
       minFee: suggestedParams2.minFee,
-    })
+    });
 
-    const signedCreateTx2 = await creatorAccount.signer([createAppTxWithFee2], [0])
-    await algod.sendRawTransaction(signedCreateTx2)
-    const createPendingInfo2 = await waitForConfirmation(algod, createAppTxWithFee2.txId())
-    appId2 = createPendingInfo2.appId as bigint
-    printSuccess(`Created DemoApp2 with Application ID: ${appId2}`)
-    printInfo('')
+    const signedCreateTx2 = await creatorAccount.signer([createAppTxWithFee2], [0]);
+    await algod.sendRawTransaction(signedCreateTx2);
+    const createPendingInfo2 = await waitForConfirmation(algod, createAppTxWithFee2.txId());
+    appId2 = createPendingInfo2.appId as bigint;
+    printSuccess(`Created DemoApp2 with Application ID: ${appId2}`);
+    printInfo('');
   } catch (error) {
-    printError(`Failed to create test applications: ${error instanceof Error ? error.message : String(error)}`)
-    printInfo('')
-    printInfo('If LocalNet errors occur, try: algokit localnet reset')
-    return
+    printError(
+      `Failed to create test applications: ${error instanceof Error ? error.message : String(error)}`,
+    );
+    printInfo('');
+    printInfo('If LocalNet errors occur, try: algokit localnet reset');
+    return;
   }
 
   // =========================================================================
   // Step 3: Opt into an application to create local state
   // =========================================================================
-  printStep(3, 'Opting into an application to create local state')
+  printStep(3, 'Opting into an application to create local state');
 
   try {
-    const optInParams = await algod.suggestedParams()
+    const optInParams = await algod.suggestedParams();
 
     const optInFields: AppCallTransactionFields = {
       appId: appId1,
       onComplete: OnApplicationComplete.OptIn,
-    }
+    };
 
     const optInTx = new Transaction({
       type: TransactionType.AppCall,
@@ -232,257 +236,286 @@ async function main() {
       genesisHash: optInParams.genesisHash,
       genesisId: optInParams.genesisId,
       appCall: optInFields,
-    })
+    });
 
     const optInTxWithFee = assignFee(optInTx, {
       feePerByte: optInParams.fee,
       minFee: optInParams.minFee,
-    })
+    });
 
-    printInfo(`Opting into app ${appId1}...`)
-    const signedOptInTx = await creatorAccount.signer([optInTxWithFee], [0])
-    await algod.sendRawTransaction(signedOptInTx)
-    await waitForConfirmation(algod, optInTxWithFee.txId())
-    printSuccess(`Successfully opted into app ${appId1}`)
-    printInfo('')
+    printInfo(`Opting into app ${appId1}...`);
+    const signedOptInTx = await creatorAccount.signer([optInTxWithFee], [0]);
+    await algod.sendRawTransaction(signedOptInTx);
+    await waitForConfirmation(algod, optInTxWithFee.txId());
+    printSuccess(`Successfully opted into app ${appId1}`);
+    printInfo('');
   } catch (error) {
-    printError(`Failed to opt into application: ${error instanceof Error ? error.message : String(error)}`)
+    printError(
+      `Failed to opt into application: ${error instanceof Error ? error.message : String(error)}`,
+    );
     // Continue anyway to demonstrate lookups
   }
 
   // =========================================================================
   // Step 4: Lookup created applications with lookupAccountCreatedApplications()
   // =========================================================================
-  printStep(4, 'Looking up created applications with lookupAccountCreatedApplications()')
+  printStep(4, 'Looking up created applications with lookupAccountCreatedApplications()');
 
   try {
     // lookupAccountCreatedApplications() returns applications created by an account
-    const createdAppsResult = await indexer.lookupAccountCreatedApplications(creatorAddress)
+    const createdAppsResult = await indexer.lookupAccountCreatedApplications(creatorAddress);
 
-    printSuccess(`Found ${createdAppsResult.applications.length} application(s) created by account`)
-    printInfo('')
+    printSuccess(
+      `Found ${createdAppsResult.applications.length} application(s) created by account`,
+    );
+    printInfo('');
 
     if (createdAppsResult.applications.length > 0) {
-      printInfo('Created applications:')
+      printInfo('Created applications:');
       for (const app of createdAppsResult.applications) {
-        printInfo(`  Application ID: ${app.id}`)
+        printInfo(`  Application ID: ${app.id}`);
         if (app.params.creator) {
-          printInfo(`    - creator: ${shortenAddress(app.params.creator.toString())}`)
+          printInfo(`    - creator: ${shortenAddress(app.params.creator.toString())}`);
         }
         if (app.params.approvalProgram) {
-          printInfo(`    - approvalProgram: ${app.params.approvalProgram.length} bytes`)
+          printInfo(`    - approvalProgram: ${app.params.approvalProgram.length} bytes`);
         }
         if (app.params.clearStateProgram) {
-          printInfo(`    - clearStateProgram: ${app.params.clearStateProgram.length} bytes`)
+          printInfo(`    - clearStateProgram: ${app.params.clearStateProgram.length} bytes`);
         }
         if (app.params.globalStateSchema) {
-          printInfo(`    - globalStateSchema: ${app.params.globalStateSchema.numUints} uints, ${app.params.globalStateSchema.numByteSlices} byte slices`)
+          printInfo(
+            `    - globalStateSchema: ${app.params.globalStateSchema.numUints} uints, ${app.params.globalStateSchema.numByteSlices} byte slices`,
+          );
         }
         if (app.params.localStateSchema) {
-          printInfo(`    - localStateSchema: ${app.params.localStateSchema.numUints} uints, ${app.params.localStateSchema.numByteSlices} byte slices`)
+          printInfo(
+            `    - localStateSchema: ${app.params.localStateSchema.numUints} uints, ${app.params.localStateSchema.numByteSlices} byte slices`,
+          );
         }
         if (app.createdAtRound !== undefined) {
-          printInfo(`    - createdAtRound: ${app.createdAtRound}`)
+          printInfo(`    - createdAtRound: ${app.createdAtRound}`);
         }
         if (app.params.globalState && app.params.globalState.length > 0) {
-          printInfo(`    - globalState: ${app.params.globalState.length} key-value pair(s)`)
+          printInfo(`    - globalState: ${app.params.globalState.length} key-value pair(s)`);
         }
-        printInfo('')
+        printInfo('');
       }
     }
 
-    printInfo(`Query performed at round: ${createdAppsResult.currentRound}`)
+    printInfo(`Query performed at round: ${createdAppsResult.currentRound}`);
   } catch (error) {
-    printError(`lookupAccountCreatedApplications failed: ${error instanceof Error ? error.message : String(error)}`)
+    printError(
+      `lookupAccountCreatedApplications failed: ${error instanceof Error ? error.message : String(error)}`,
+    );
   }
 
   // =========================================================================
   // Step 5: Lookup account app local states with lookupAccountAppLocalStates()
   // =========================================================================
-  printStep(5, 'Looking up app local states with lookupAccountAppLocalStates()')
+  printStep(5, 'Looking up app local states with lookupAccountAppLocalStates()');
 
   try {
     // lookupAccountAppLocalStates() returns local state for applications the account has opted into
-    const localStatesResult = await indexer.lookupAccountAppLocalStates(creatorAddress)
+    const localStatesResult = await indexer.lookupAccountAppLocalStates(creatorAddress);
 
-    printSuccess(`Found ${localStatesResult.appsLocalStates.length} app local state(s) for account`)
-    printInfo('')
+    printSuccess(
+      `Found ${localStatesResult.appsLocalStates.length} app local state(s) for account`,
+    );
+    printInfo('');
 
     if (localStatesResult.appsLocalStates.length > 0) {
-      printInfo('App local states:')
+      printInfo('App local states:');
       for (const localState of localStatesResult.appsLocalStates) {
-        printInfo(`  Application ID: ${localState.id}`)
-        printInfo(`    - schema: ${localState.schema.numUints} uints, ${localState.schema.numByteSlices} byte slices`)
+        printInfo(`  Application ID: ${localState.id}`);
+        printInfo(
+          `    - schema: ${localState.schema.numUints} uints, ${localState.schema.numByteSlices} byte slices`,
+        );
         if (localState.optedInAtRound !== undefined) {
-          printInfo(`    - optedInAtRound: ${localState.optedInAtRound}`)
+          printInfo(`    - optedInAtRound: ${localState.optedInAtRound}`);
         }
         if (localState.keyValue && localState.keyValue.length > 0) {
-          printInfo(`    - keyValue pairs: ${localState.keyValue.length}`)
+          printInfo(`    - keyValue pairs: ${localState.keyValue.length}`);
           for (const kv of localState.keyValue) {
             // Decode the key from bytes to string
-            const keyStr = new TextDecoder().decode(kv.key)
+            const keyStr = new TextDecoder().decode(kv.key);
             // Value type: 1 = bytes, 2 = uint
             if (kv.value.type === 2) {
-              printInfo(`      - "${keyStr}": ${kv.value.uint} (uint)`)
+              printInfo(`      - "${keyStr}": ${kv.value.uint} (uint)`);
             } else {
-              const valueStr = new TextDecoder().decode(kv.value.bytes)
-              printInfo(`      - "${keyStr}": "${valueStr}" (bytes)`)
+              const valueStr = new TextDecoder().decode(kv.value.bytes);
+              printInfo(`      - "${keyStr}": "${valueStr}" (bytes)`);
             }
           }
         } else {
-          printInfo(`    - keyValue: (empty)`)
+          printInfo(`    - keyValue: (empty)`);
         }
-        printInfo('')
+        printInfo('');
       }
     }
 
-    printInfo(`Query performed at round: ${localStatesResult.currentRound}`)
+    printInfo(`Query performed at round: ${localStatesResult.currentRound}`);
   } catch (error) {
-    printError(`lookupAccountAppLocalStates failed: ${error instanceof Error ? error.message : String(error)}`)
+    printError(
+      `lookupAccountAppLocalStates failed: ${error instanceof Error ? error.message : String(error)}`,
+    );
   }
 
   // =========================================================================
   // Step 6: Demonstrate pagination with limit parameter
   // =========================================================================
-  printStep(6, 'Demonstrating pagination with limit parameter')
+  printStep(6, 'Demonstrating pagination with limit parameter');
 
   try {
     // First query: get only 1 created application
-    printInfo('Querying created applications with limit=1...')
-    const page1 = await indexer.lookupAccountCreatedApplications(creatorAddress, { limit: 1 })
+    printInfo('Querying created applications with limit=1...');
+    const page1 = await indexer.lookupAccountCreatedApplications(creatorAddress, { limit: 1 });
 
-    printInfo(`Page 1: Retrieved ${page1.applications.length} application(s)`)
+    printInfo(`Page 1: Retrieved ${page1.applications.length} application(s)`);
     if (page1.applications.length > 0) {
-      printInfo(`  - Application ID: ${page1.applications[0].id}`)
+      printInfo(`  - Application ID: ${page1.applications[0].id}`);
     }
 
     // Check if there are more results
     if (page1.nextToken) {
-      printInfo(`  - Next token available: ${page1.nextToken.substring(0, 20)}...`)
-      printInfo('')
+      printInfo(`  - Next token available: ${page1.nextToken.substring(0, 20)}...`);
+      printInfo('');
 
       // Second query: use the next token to get more results
-      printInfo('Querying next page with next parameter...')
+      printInfo('Querying next page with next parameter...');
       const page2 = await indexer.lookupAccountCreatedApplications(creatorAddress, {
         limit: 1,
         next: page1.nextToken,
-      })
+      });
 
-      printInfo(`Page 2: Retrieved ${page2.applications.length} application(s)`)
+      printInfo(`Page 2: Retrieved ${page2.applications.length} application(s)`);
       if (page2.applications.length > 0) {
-        printInfo(`  - Application ID: ${page2.applications[0].id}`)
+        printInfo(`  - Application ID: ${page2.applications[0].id}`);
       }
 
       if (page2.nextToken) {
-        printInfo(`  - More results available (nextToken present)`)
+        printInfo(`  - More results available (nextToken present)`);
       } else {
-        printInfo(`  - No more results (no nextToken)`)
+        printInfo(`  - No more results (no nextToken)`);
       }
     } else {
-      printInfo('  - No pagination needed (all results fit in one page)')
+      printInfo('  - No pagination needed (all results fit in one page)');
     }
   } catch (error) {
-    printError(`Pagination demo failed: ${error instanceof Error ? error.message : String(error)}`)
+    printError(`Pagination demo failed: ${error instanceof Error ? error.message : String(error)}`);
   }
 
   // =========================================================================
   // Step 7: Query specific application with applicationId filter
   // =========================================================================
-  printStep(7, 'Querying specific application with applicationId filter')
+  printStep(7, 'Querying specific application with applicationId filter');
 
   try {
     // You can filter lookupAccountCreatedApplications by a specific applicationId
-    printInfo(`Querying created application with ID ${appId1} only...`)
+    printInfo(`Querying created application with ID ${appId1} only...`);
     const specificResult = await indexer.lookupAccountCreatedApplications(creatorAddress, {
       applicationId: appId1,
-    })
+    });
 
     if (specificResult.applications.length > 0) {
-      const app = specificResult.applications[0]
-      printSuccess(`Found created application with ID ${appId1}`)
+      const app = specificResult.applications[0];
+      printSuccess(`Found created application with ID ${appId1}`);
       if (app.params.globalStateSchema) {
-        printInfo(`  - globalStateSchema: ${app.params.globalStateSchema.numUints} uints, ${app.params.globalStateSchema.numByteSlices} byte slices`)
+        printInfo(
+          `  - globalStateSchema: ${app.params.globalStateSchema.numUints} uints, ${app.params.globalStateSchema.numByteSlices} byte slices`,
+        );
       }
       if (app.params.localStateSchema) {
-        printInfo(`  - localStateSchema: ${app.params.localStateSchema.numUints} uints, ${app.params.localStateSchema.numByteSlices} byte slices`)
+        printInfo(
+          `  - localStateSchema: ${app.params.localStateSchema.numUints} uints, ${app.params.localStateSchema.numByteSlices} byte slices`,
+        );
       }
     } else {
-      printInfo(`No created application found with ID ${appId1}`)
+      printInfo(`No created application found with ID ${appId1}`);
     }
   } catch (error) {
-    printError(`Specific application query failed: ${error instanceof Error ? error.message : String(error)}`)
+    printError(
+      `Specific application query failed: ${error instanceof Error ? error.message : String(error)}`,
+    );
   }
 
   // =========================================================================
   // Step 8: Query specific local state with applicationId filter
   // =========================================================================
-  printStep(8, 'Querying specific local state with applicationId filter')
+  printStep(8, 'Querying specific local state with applicationId filter');
 
   try {
     // You can also filter lookupAccountAppLocalStates by a specific applicationId
-    printInfo(`Querying local state for application ID ${appId1} only...`)
+    printInfo(`Querying local state for application ID ${appId1} only...`);
     const specificLocalState = await indexer.lookupAccountAppLocalStates(creatorAddress, {
       applicationId: appId1,
-    })
+    });
 
     if (specificLocalState.appsLocalStates.length > 0) {
-      const localState = specificLocalState.appsLocalStates[0]
-      printSuccess(`Found local state for application ID ${appId1}`)
-      printInfo(`  - schema: ${localState.schema.numUints} uints, ${localState.schema.numByteSlices} byte slices`)
+      const localState = specificLocalState.appsLocalStates[0];
+      printSuccess(`Found local state for application ID ${appId1}`);
+      printInfo(
+        `  - schema: ${localState.schema.numUints} uints, ${localState.schema.numByteSlices} byte slices`,
+      );
       if (localState.keyValue && localState.keyValue.length > 0) {
-        printInfo(`  - keyValue pairs: ${localState.keyValue.length}`)
+        printInfo(`  - keyValue pairs: ${localState.keyValue.length}`);
       }
     } else {
-      printInfo(`No local state found for application ID ${appId1}`)
+      printInfo(`No local state found for application ID ${appId1}`);
     }
   } catch (error) {
-    printError(`Specific local state query failed: ${error instanceof Error ? error.message : String(error)}`)
+    printError(
+      `Specific local state query failed: ${error instanceof Error ? error.message : String(error)}`,
+    );
   }
 
   // =========================================================================
   // Summary
   // =========================================================================
-  printHeader('Summary')
-  printInfo('This example demonstrated:')
-  printInfo('  1. Deploying test applications using TEAL compilation and TransactionType.AppCall')
-  printInfo('  2. Opting into an application to create local state')
-  printInfo('  3. lookupAccountCreatedApplications(address) - Get applications created by an account')
-  printInfo('  4. lookupAccountAppLocalStates(address) - Get application local states for an account')
-  printInfo('  5. Pagination using limit and next parameters')
-  printInfo('  6. Filtering by specific applicationId')
-  printInfo('')
-  printInfo('Key Application fields (from lookupAccountCreatedApplications):')
-  printInfo('  - id: The application identifier (bigint)')
-  printInfo('  - params.creator: Address that created the application')
-  printInfo('  - params.approvalProgram: TEAL bytecode for approval logic (Uint8Array)')
-  printInfo('  - params.clearStateProgram: TEAL bytecode for clear state logic (Uint8Array)')
-  printInfo('  - params.globalStateSchema: {numUints, numByteSlices} for global storage')
-  printInfo('  - params.localStateSchema: {numUints, numByteSlices} for per-user storage')
-  printInfo('  - params.globalState: Array of TealKeyValue for current global state')
-  printInfo('  - createdAtRound: Round when application was created (optional bigint)')
-  printInfo('')
-  printInfo('Key ApplicationLocalState fields (from lookupAccountAppLocalStates):')
-  printInfo('  - id: The application identifier (bigint)')
-  printInfo('  - schema: {numUints, numByteSlices} for allocated local storage')
-  printInfo('  - optedInAtRound: Round when account opted in (optional bigint)')
-  printInfo('  - keyValue: Array of TealKeyValue for current local state')
-  printInfo('')
-  printInfo('TealKeyValue structure:')
-  printInfo('  - key: The key as Uint8Array (decode with TextDecoder)')
-  printInfo('  - value.type: 1 for bytes, 2 for uint')
-  printInfo('  - value.bytes: Byte value as Uint8Array')
-  printInfo('  - value.uint: Integer value as bigint')
-  printInfo('')
-  printInfo('Pagination parameters:')
-  printInfo('  - limit: Maximum number of results per page')
-  printInfo('  - next: Token from previous response to get next page')
+  printHeader('Summary');
+  printInfo('This example demonstrated:');
+  printInfo('  1. Deploying test applications using TEAL compilation and TransactionType.AppCall');
+  printInfo('  2. Opting into an application to create local state');
+  printInfo(
+    '  3. lookupAccountCreatedApplications(address) - Get applications created by an account',
+  );
+  printInfo(
+    '  4. lookupAccountAppLocalStates(address) - Get application local states for an account',
+  );
+  printInfo('  5. Pagination using limit and next parameters');
+  printInfo('  6. Filtering by specific applicationId');
+  printInfo('');
+  printInfo('Key Application fields (from lookupAccountCreatedApplications):');
+  printInfo('  - id: The application identifier (bigint)');
+  printInfo('  - params.creator: Address that created the application');
+  printInfo('  - params.approvalProgram: TEAL bytecode for approval logic (Uint8Array)');
+  printInfo('  - params.clearStateProgram: TEAL bytecode for clear state logic (Uint8Array)');
+  printInfo('  - params.globalStateSchema: {numUints, numByteSlices} for global storage');
+  printInfo('  - params.localStateSchema: {numUints, numByteSlices} for per-user storage');
+  printInfo('  - params.globalState: Array of TealKeyValue for current global state');
+  printInfo('  - createdAtRound: Round when application was created (optional bigint)');
+  printInfo('');
+  printInfo('Key ApplicationLocalState fields (from lookupAccountAppLocalStates):');
+  printInfo('  - id: The application identifier (bigint)');
+  printInfo('  - schema: {numUints, numByteSlices} for allocated local storage');
+  printInfo('  - optedInAtRound: Round when account opted in (optional bigint)');
+  printInfo('  - keyValue: Array of TealKeyValue for current local state');
+  printInfo('');
+  printInfo('TealKeyValue structure:');
+  printInfo('  - key: The key as Uint8Array (decode with TextDecoder)');
+  printInfo('  - value.type: 1 for bytes, 2 for uint');
+  printInfo('  - value.bytes: Byte value as Uint8Array');
+  printInfo('  - value.uint: Integer value as bigint');
+  printInfo('');
+  printInfo('Pagination parameters:');
+  printInfo('  - limit: Maximum number of results per page');
+  printInfo('  - next: Token from previous response to get next page');
 }
 
-main().catch((error) => {
-  console.error('Fatal error:', error)
-  process.exit(1)
-})
-
+main().catch(error => {
+  console.error('Fatal error:', error);
+  process.exit(1);
+});
 ```
 
 ---

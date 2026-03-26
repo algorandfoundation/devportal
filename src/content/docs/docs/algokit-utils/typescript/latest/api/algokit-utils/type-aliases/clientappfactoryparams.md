@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "ClientAppFactoryParams"
+title: 'ClientAppFactoryParams'
 ---
 
 > **ClientAppFactoryParams** = `Expand`\<`Omit`\<[`AppFactoryParams`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/appfactoryparams/), `"algorand"`\>\>

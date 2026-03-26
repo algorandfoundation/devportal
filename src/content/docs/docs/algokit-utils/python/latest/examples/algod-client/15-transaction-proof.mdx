@@ -1,6 +1,6 @@
 ---
-title: "Transaction Proof"
-description: "This example demonstrates how to get transaction proofs using:"
+title: 'Transaction Proof'
+description: 'This example demonstrates how to get transaction proofs using:'
 sidebar:
   order: 15
 ---
@@ -10,13 +10,14 @@ sidebar:
 ## Description
 
 This example demonstrates how to get transaction proofs using:
+
 - transaction_proof(round, tx_id) - Get the Merkle proof for a transaction
- Transaction proofs are cryptographic proofs that a transaction is included in a specific block. They are used for light client verification, allowing clients to verify transaction inclusion without downloading the entire blockchain.
- The proof uses a Merkle tree structure where:
+  Transaction proofs are cryptographic proofs that a transaction is included in a specific block. They are used for light client verification, allowing clients to verify transaction inclusion without downloading the entire blockchain.
+  The proof uses a Merkle tree structure where:
 - Each transaction in a block is a leaf in the tree
 - The root of the tree is committed in the block header
 - The proof provides the sibling hashes needed to reconstruct the root
- Prerequisites:
+  Prerequisites:
 
 ## Prerequisites
 

@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "AssetFreezeFields"
+title: 'AssetFreezeFields'
 ---
 
 Defined in: [itxn.ts:825](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/itxn.ts#L825)
@@ -22,7 +22,7 @@ Defined in: [itxn.ts:833](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 microalgos
 
-***
+---
 
 ### firstValid?
 
@@ -32,7 +32,7 @@ Defined in: [itxn.ts:837](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 round number
 
-***
+---
 
 ### firstValidTime?
 
@@ -42,7 +42,7 @@ Defined in: [itxn.ts:841](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 UNIX timestamp of block before txn.FirstValid. Fails if negative
 
-***
+---
 
 ### freezeAccount?
 
@@ -52,7 +52,7 @@ Defined in: [itxn.ts:865](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 32 byte address of the account whose asset slot is being frozen or un-frozen
 
-***
+---
 
 ### freezeAsset?
 
@@ -62,7 +62,7 @@ Defined in: [itxn.ts:861](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 Asset ID being frozen or un-frozen
 
-***
+---
 
 ### frozen?
 
@@ -72,7 +72,7 @@ Defined in: [itxn.ts:869](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 The new frozen value
 
-***
+---
 
 ### lastValid?
 
@@ -82,7 +82,7 @@ Defined in: [itxn.ts:845](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 round number
 
-***
+---
 
 ### lease?
 
@@ -92,7 +92,7 @@ Defined in: [itxn.ts:853](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 32 byte lease value
 
-***
+---
 
 ### note?
 
@@ -102,7 +102,7 @@ Defined in: [itxn.ts:849](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 Any data up to 1024 bytes
 
-***
+---
 
 ### rekeyTo?
 
@@ -112,7 +112,7 @@ Defined in: [itxn.ts:857](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 32 byte Sender's new AuthAddr
 
-***
+---
 
 ### sender?
 

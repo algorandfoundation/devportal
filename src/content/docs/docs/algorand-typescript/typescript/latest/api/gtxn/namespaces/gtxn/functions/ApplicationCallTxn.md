@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "ApplicationCallTxn"
+title: 'ApplicationCallTxn'
 ---
 
 > **ApplicationCallTxn**(`n`): [`ApplicationCallTxn`](/algorand-typescript/api/gtxn/namespaces/gtxn/interfaces/applicationcalltxn/)

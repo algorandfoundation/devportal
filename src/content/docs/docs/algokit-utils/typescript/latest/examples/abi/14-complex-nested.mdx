@@ -1,6 +1,6 @@
 ---
-title: "ABI Complex Nested Types"
-description: "This example demonstrates how to work with deeply nested ABI types combining arrays, tuples, and structs:"
+title: 'ABI Complex Nested Types'
+description: 'This example demonstrates how to work with deeply nested ABI types combining arrays, tuples, and structs:'
 sidebar:
   order: 14
 ---
@@ -10,11 +10,12 @@ sidebar:
 ## Description
 
 This example demonstrates how to work with deeply nested ABI types combining arrays, tuples, and structs:
+
 - Array of tuples: (uint64,string)[]
 - Tuple containing arrays: (uint64[],string[])
 - Nested structs with arrays
 - Deeply nested type: ((uint64,bool)[],string,(address,uint256))[]
- Key concepts:
+  Key concepts:
 - Dynamic types (strings, dynamic arrays) always use head/tail encoding
 - Offsets in head section point to data positions in tail section
 - Nesting depth affects encoding complexity but follows consistent rules
@@ -58,123 +59,143 @@ npm run example abi/14-complex-nested.ts
  * - No LocalNet required
  */
 
-import { Address } from '@algorandfoundation/algokit-utils'
+import { Address } from '@algorandfoundation/algokit-utils';
 import {
   ABIArrayDynamicType,
   ABIStructType,
   ABITupleType,
   ABIType,
-} from '@algorandfoundation/algokit-utils/abi'
-import { formatBytes, formatHex, printHeader, printInfo, printStep, printSuccess } from '../shared/utils.js'
+} from '@algorandfoundation/algokit-utils/abi';
+import {
+  formatBytes,
+  formatHex,
+  printHeader,
+  printInfo,
+  printStep,
+  printSuccess,
+} from '../shared/utils.js';
 
 function main() {
-  printHeader('ABI Complex Nested Types Example')
+  printHeader('ABI Complex Nested Types Example');
 
   // Step 1: Array of tuples - (uint64,string)[]
-  printStep(1, 'Array of Tuples - (uint64,string)[]')
+  printStep(1, 'Array of Tuples - (uint64,string)[]');
 
-  const arrayOfTuplesType = ABIType.from('(uint64,string)[]') as ABIArrayDynamicType
+  const arrayOfTuplesType = ABIType.from('(uint64,string)[]') as ABIArrayDynamicType;
 
-  printInfo('Type: (uint64,string)[]')
-  printInfo(`  toString(): ${arrayOfTuplesType.toString()}`)
-  printInfo(`  isDynamic(): ${arrayOfTuplesType.isDynamic()}`)
-  printInfo(`  childType: ${arrayOfTuplesType.childType.toString()}`)
-  printInfo(`  childType.isDynamic(): ${arrayOfTuplesType.childType.isDynamic()} (because string is dynamic)`)
+  printInfo('Type: (uint64,string)[]');
+  printInfo(`  toString(): ${arrayOfTuplesType.toString()}`);
+  printInfo(`  isDynamic(): ${arrayOfTuplesType.isDynamic()}`);
+  printInfo(`  childType: ${arrayOfTuplesType.childType.toString()}`);
+  printInfo(
+    `  childType.isDynamic(): ${arrayOfTuplesType.childType.isDynamic()} (because string is dynamic)`,
+  );
 
   const tupleArrayValue: [bigint, string][] = [
     [100n, 'First'],
     [200n, 'Second'],
     [300n, 'Third'],
-  ]
+  ];
 
-  const tupleArrayEncoded = arrayOfTuplesType.encode(tupleArrayValue)
+  const tupleArrayEncoded = arrayOfTuplesType.encode(tupleArrayValue);
 
-  printInfo(`\nInput: [[100n, "First"], [200n, "Second"], [300n, "Third"]]`)
-  printInfo(`Encoded: ${formatHex(tupleArrayEncoded)}`)
-  printInfo(`Total bytes: ${tupleArrayEncoded.length}`)
+  printInfo(`\nInput: [[100n, "First"], [200n, "Second"], [300n, "Third"]]`);
+  printInfo(`Encoded: ${formatHex(tupleArrayEncoded)}`);
+  printInfo(`Total bytes: ${tupleArrayEncoded.length}`);
 
-  printInfo('\nByte layout (dynamic array of dynamic tuples):')
-  printInfo('  [0-1] Array length prefix')
+  printInfo('\nByte layout (dynamic array of dynamic tuples):');
+  printInfo('  [0-1] Array length prefix');
 
-  const numTuples = (tupleArrayEncoded[0] << 8) | tupleArrayEncoded[1]
-  printInfo(`         ${formatHex(tupleArrayEncoded.slice(0, 2))} = ${numTuples} elements`)
+  const numTuples = (tupleArrayEncoded[0] << 8) | tupleArrayEncoded[1];
+  printInfo(`         ${formatHex(tupleArrayEncoded.slice(0, 2))} = ${numTuples} elements`);
 
-  printInfo('\n  HEAD SECTION (offsets to each tuple):')
+  printInfo('\n  HEAD SECTION (offsets to each tuple):');
   for (let i = 0; i < numTuples; i++) {
-    const offsetPos = 2 + i * 2
-    const offset = (tupleArrayEncoded[offsetPos] << 8) | tupleArrayEncoded[offsetPos + 1]
-    printInfo(`    [${offsetPos}-${offsetPos + 1}] Tuple ${i} offset: ${formatHex(tupleArrayEncoded.slice(offsetPos, offsetPos + 2))} = ${offset}`)
+    const offsetPos = 2 + i * 2;
+    const offset = (tupleArrayEncoded[offsetPos] << 8) | tupleArrayEncoded[offsetPos + 1];
+    printInfo(
+      `    [${offsetPos}-${offsetPos + 1}] Tuple ${i} offset: ${formatHex(tupleArrayEncoded.slice(offsetPos, offsetPos + 2))} = ${offset}`,
+    );
   }
 
-  printInfo('\n  TAIL SECTION (tuple data):')
-  const headEnd = 2 + numTuples * 2
-  printInfo(`    Starts at byte ${headEnd}`)
-  printInfo(`    Each tuple has: [uint64:8 bytes][string_offset:2 bytes][string_len:2][string_data:N]`)
+  printInfo('\n  TAIL SECTION (tuple data):');
+  const headEnd = 2 + numTuples * 2;
+  printInfo(`    Starts at byte ${headEnd}`);
+  printInfo(
+    `    Each tuple has: [uint64:8 bytes][string_offset:2 bytes][string_len:2][string_data:N]`,
+  );
 
   // Decode and verify
-  const tupleArrayDecoded = arrayOfTuplesType.decode(tupleArrayEncoded) as [bigint, string][]
+  const tupleArrayDecoded = arrayOfTuplesType.decode(tupleArrayEncoded) as [bigint, string][];
 
-  printInfo('\nDecoded:')
+  printInfo('\nDecoded:');
   tupleArrayDecoded.forEach((tuple, i) => {
-    printInfo(`  [${i}]: [${tuple[0]}, "${tuple[1]}"]`)
-  })
+    printInfo(`  [${i}]: [${tuple[0]}, "${tuple[1]}"]`);
+  });
 
   const tupleArrayMatch = tupleArrayDecoded.every(
-    (tuple, i) => tuple[0] === tupleArrayValue[i][0] && tuple[1] === tupleArrayValue[i][1]
-  )
-  printInfo(`Round-trip verified: ${tupleArrayMatch}`)
+    (tuple, i) => tuple[0] === tupleArrayValue[i][0] && tuple[1] === tupleArrayValue[i][1],
+  );
+  printInfo(`Round-trip verified: ${tupleArrayMatch}`);
 
   // Step 2: Tuple containing arrays - (uint64[],string[])
-  printStep(2, 'Tuple Containing Arrays - (uint64[],string[])')
+  printStep(2, 'Tuple Containing Arrays - (uint64[],string[])');
 
-  const tupleWithArraysType = ABIType.from('(uint64[],string[])') as ABITupleType
+  const tupleWithArraysType = ABIType.from('(uint64[],string[])') as ABITupleType;
 
-  printInfo('Type: (uint64[],string[])')
-  printInfo(`  toString(): ${tupleWithArraysType.toString()}`)
-  printInfo(`  isDynamic(): ${tupleWithArraysType.isDynamic()}`)
-  printInfo(`  childTypes: ${tupleWithArraysType.childTypes.length} elements`)
+  printInfo('Type: (uint64[],string[])');
+  printInfo(`  toString(): ${tupleWithArraysType.toString()}`);
+  printInfo(`  isDynamic(): ${tupleWithArraysType.isDynamic()}`);
+  printInfo(`  childTypes: ${tupleWithArraysType.childTypes.length} elements`);
   tupleWithArraysType.childTypes.forEach((child, i) => {
-    printInfo(`    [${i}]: ${child.toString()} (isDynamic: ${child.isDynamic()})`)
-  })
+    printInfo(`    [${i}]: ${child.toString()} (isDynamic: ${child.isDynamic()})`);
+  });
 
   const tupleWithArraysValue: [bigint[], string[]] = [
     [10n, 20n, 30n],
     ['Apple', 'Banana', 'Cherry'],
-  ]
+  ];
 
-  const tupleWithArraysEncoded = tupleWithArraysType.encode(tupleWithArraysValue)
+  const tupleWithArraysEncoded = tupleWithArraysType.encode(tupleWithArraysValue);
 
-  printInfo(`\nInput: [[10n, 20n, 30n], ["Apple", "Banana", "Cherry"]]`)
-  printInfo(`Encoded: ${formatBytes(tupleWithArraysEncoded, 16)}`)
-  printInfo(`Total bytes: ${tupleWithArraysEncoded.length}`)
+  printInfo(`\nInput: [[10n, 20n, 30n], ["Apple", "Banana", "Cherry"]]`);
+  printInfo(`Encoded: ${formatBytes(tupleWithArraysEncoded, 16)}`);
+  printInfo(`Total bytes: ${tupleWithArraysEncoded.length}`);
 
-  printInfo('\nByte layout (tuple with 2 dynamic children):')
-  printInfo('  HEAD SECTION (2 offsets):')
+  printInfo('\nByte layout (tuple with 2 dynamic children):');
+  printInfo('  HEAD SECTION (2 offsets):');
 
-  const arr1Offset = (tupleWithArraysEncoded[0] << 8) | tupleWithArraysEncoded[1]
-  const arr2Offset = (tupleWithArraysEncoded[2] << 8) | tupleWithArraysEncoded[3]
+  const arr1Offset = (tupleWithArraysEncoded[0] << 8) | tupleWithArraysEncoded[1];
+  const arr2Offset = (tupleWithArraysEncoded[2] << 8) | tupleWithArraysEncoded[3];
 
-  printInfo(`    [0-1] uint64[] offset: ${formatHex(tupleWithArraysEncoded.slice(0, 2))} = ${arr1Offset}`)
-  printInfo(`    [2-3] string[] offset: ${formatHex(tupleWithArraysEncoded.slice(2, 4))} = ${arr2Offset}`)
+  printInfo(
+    `    [0-1] uint64[] offset: ${formatHex(tupleWithArraysEncoded.slice(0, 2))} = ${arr1Offset}`,
+  );
+  printInfo(
+    `    [2-3] string[] offset: ${formatHex(tupleWithArraysEncoded.slice(2, 4))} = ${arr2Offset}`,
+  );
 
-  printInfo('\n  TAIL SECTION:')
-  printInfo(`    uint64[] at offset ${arr1Offset}: [len:2][elem1:8][elem2:8][elem3:8]`)
-  printInfo(`    string[] at offset ${arr2Offset}: [len:2][offsets...][string data...]`)
+  printInfo('\n  TAIL SECTION:');
+  printInfo(`    uint64[] at offset ${arr1Offset}: [len:2][elem1:8][elem2:8][elem3:8]`);
+  printInfo(`    string[] at offset ${arr2Offset}: [len:2][offsets...][string data...]`);
 
   // Decode and verify
-  const tupleWithArraysDecoded = tupleWithArraysType.decode(tupleWithArraysEncoded) as [bigint[], string[]]
+  const tupleWithArraysDecoded = tupleWithArraysType.decode(tupleWithArraysEncoded) as [
+    bigint[],
+    string[],
+  ];
 
-  printInfo('\nDecoded:')
-  printInfo(`  uint64[]: [${tupleWithArraysDecoded[0].join(', ')}]`)
-  printInfo(`  string[]: [${tupleWithArraysDecoded[1].map((s) => `"${s}"`).join(', ')}]`)
+  printInfo('\nDecoded:');
+  printInfo(`  uint64[]: [${tupleWithArraysDecoded[0].join(', ')}]`);
+  printInfo(`  string[]: [${tupleWithArraysDecoded[1].map(s => `"${s}"`).join(', ')}]`);
 
   const tupleWithArraysMatch =
     tupleWithArraysDecoded[0].every((v, i) => v === tupleWithArraysValue[0][i]) &&
-    tupleWithArraysDecoded[1].every((v, i) => v === tupleWithArraysValue[1][i])
-  printInfo(`Round-trip verified: ${tupleWithArraysMatch}`)
+    tupleWithArraysDecoded[1].every((v, i) => v === tupleWithArraysValue[1][i]);
+  printInfo(`Round-trip verified: ${tupleWithArraysMatch}`);
 
   // Step 3: Nested structs with arrays
-  printStep(3, 'Nested Structs with Arrays')
+  printStep(3, 'Nested Structs with Arrays');
 
   // Create struct definitions
   const orderStruct = ABIStructType.fromStruct('Order', {
@@ -183,321 +204,371 @@ function main() {
       { name: 'items', type: 'string[]' },
       { name: 'quantities', type: 'uint32[]' },
     ],
-  })
+  });
 
-  printInfo('Order struct: { orderId: uint64, items: string[], quantities: uint32[] }')
-  printInfo(`  ABI type: ${orderStruct.name}`)
-  printInfo(`  isDynamic(): ${orderStruct.isDynamic()}`)
+  printInfo('Order struct: { orderId: uint64, items: string[], quantities: uint32[] }');
+  printInfo(`  ABI type: ${orderStruct.name}`);
+  printInfo(`  isDynamic(): ${orderStruct.isDynamic()}`);
 
   const orderValue = {
     orderId: 12345n,
     items: ['Widget', 'Gadget', 'Gizmo'],
     quantities: [2, 5, 1],
-  }
+  };
 
-  const orderEncoded = orderStruct.encode(orderValue)
+  const orderEncoded = orderStruct.encode(orderValue);
 
-  printInfo(`\nInput: { orderId: 12345, items: ["Widget", "Gadget", "Gizmo"], quantities: [2, 5, 1] }`)
-  printInfo(`Encoded: ${formatBytes(orderEncoded, 20)}`)
-  printInfo(`Total bytes: ${orderEncoded.length}`)
+  printInfo(
+    `\nInput: { orderId: 12345, items: ["Widget", "Gadget", "Gizmo"], quantities: [2, 5, 1] }`,
+  );
+  printInfo(`Encoded: ${formatBytes(orderEncoded, 20)}`);
+  printInfo(`Total bytes: ${orderEncoded.length}`);
 
-  printInfo('\nByte layout (struct with static + dynamic fields):')
-  printInfo('  HEAD SECTION:')
-  printInfo(`    [0-7]   orderId (uint64): ${formatHex(orderEncoded.slice(0, 8))} = ${orderValue.orderId}`)
+  printInfo('\nByte layout (struct with static + dynamic fields):');
+  printInfo('  HEAD SECTION:');
+  printInfo(
+    `    [0-7]   orderId (uint64): ${formatHex(orderEncoded.slice(0, 8))} = ${orderValue.orderId}`,
+  );
 
-  const itemsOffset = (orderEncoded[8] << 8) | orderEncoded[9]
-  const quantitiesOffset = (orderEncoded[10] << 8) | orderEncoded[11]
+  const itemsOffset = (orderEncoded[8] << 8) | orderEncoded[9];
+  const quantitiesOffset = (orderEncoded[10] << 8) | orderEncoded[11];
 
-  printInfo(`    [8-9]   items offset:     ${formatHex(orderEncoded.slice(8, 10))} = ${itemsOffset}`)
-  printInfo(`    [10-11] quantities offset: ${formatHex(orderEncoded.slice(10, 12))} = ${quantitiesOffset}`)
+  printInfo(
+    `    [8-9]   items offset:     ${formatHex(orderEncoded.slice(8, 10))} = ${itemsOffset}`,
+  );
+  printInfo(
+    `    [10-11] quantities offset: ${formatHex(orderEncoded.slice(10, 12))} = ${quantitiesOffset}`,
+  );
 
-  printInfo('\n  TAIL SECTION:')
-  printInfo(`    items (string[]) at offset ${itemsOffset}`)
-  printInfo(`    quantities (uint32[]) at offset ${quantitiesOffset}`)
+  printInfo('\n  TAIL SECTION:');
+  printInfo(`    items (string[]) at offset ${itemsOffset}`);
+  printInfo(`    quantities (uint32[]) at offset ${quantitiesOffset}`);
 
   // Decode and verify
   const orderDecoded = orderStruct.decode(orderEncoded) as {
-    orderId: bigint
-    items: string[]
-    quantities: number[]
-  }
+    orderId: bigint;
+    items: string[];
+    quantities: number[];
+  };
 
-  printInfo('\nDecoded:')
-  printInfo(`  orderId: ${orderDecoded.orderId}`)
-  printInfo(`  items: [${orderDecoded.items.map((s) => `"${s}"`).join(', ')}]`)
-  printInfo(`  quantities: [${orderDecoded.quantities.join(', ')}]`)
+  printInfo('\nDecoded:');
+  printInfo(`  orderId: ${orderDecoded.orderId}`);
+  printInfo(`  items: [${orderDecoded.items.map(s => `"${s}"`).join(', ')}]`);
+  printInfo(`  quantities: [${orderDecoded.quantities.join(', ')}]`);
 
   const orderMatch =
     orderDecoded.orderId === orderValue.orderId &&
     orderDecoded.items.every((v, i) => v === orderValue.items[i]) &&
-    orderDecoded.quantities.every((v, i) => Number(v) === orderValue.quantities[i])
-  printInfo(`Round-trip verified: ${orderMatch}`)
+    orderDecoded.quantities.every((v, i) => Number(v) === orderValue.quantities[i]);
+  printInfo(`Round-trip verified: ${orderMatch}`);
 
   // Step 4: Deeply nested type - ((uint64,bool)[],string,(address,uint256))[]
-  printStep(4, 'Deeply Nested Type - ((uint64,bool)[],string,(address,uint256))[]')
+  printStep(4, 'Deeply Nested Type - ((uint64,bool)[],string,(address,uint256))[]');
 
-  const deeplyNestedType = ABIType.from('((uint64,bool)[],string,(address,uint256))[]') as ABIArrayDynamicType
+  const deeplyNestedType = ABIType.from(
+    '((uint64,bool)[],string,(address,uint256))[]',
+  ) as ABIArrayDynamicType;
 
-  printInfo('Type: ((uint64,bool)[],string,(address,uint256))[]')
-  printInfo(`  toString(): ${deeplyNestedType.toString()}`)
-  printInfo(`  isDynamic(): ${deeplyNestedType.isDynamic()}`)
+  printInfo('Type: ((uint64,bool)[],string,(address,uint256))[]');
+  printInfo(`  toString(): ${deeplyNestedType.toString()}`);
+  printInfo(`  isDynamic(): ${deeplyNestedType.isDynamic()}`);
 
-  const innerTupleType = deeplyNestedType.childType as ABITupleType
-  printInfo(`\n  Child tuple type: ${innerTupleType.toString()}`)
-  printInfo(`  Child tuple elements:`)
+  const innerTupleType = deeplyNestedType.childType as ABITupleType;
+  printInfo(`\n  Child tuple type: ${innerTupleType.toString()}`);
+  printInfo(`  Child tuple elements:`);
   innerTupleType.childTypes.forEach((child, i) => {
-    printInfo(`    [${i}]: ${child.toString()} (isDynamic: ${child.isDynamic()})`)
-  })
+    printInfo(`    [${i}]: ${child.toString()} (isDynamic: ${child.isDynamic()})`);
+  });
 
   // Create sample addresses
-  const pubKey1 = new Uint8Array(32).fill(0xaa)
-  const pubKey2 = new Uint8Array(32).fill(0xbb)
-  const addr1 = new Address(pubKey1).toString()
-  const addr2 = new Address(pubKey2).toString()
+  const pubKey1 = new Uint8Array(32).fill(0xaa);
+  const pubKey2 = new Uint8Array(32).fill(0xbb);
+  const addr1 = new Address(pubKey1).toString();
+  const addr2 = new Address(pubKey2).toString();
 
   // Create deeply nested value
-  type DeepNestedTuple = [[bigint, boolean][], string, [string, bigint]]
+  type DeepNestedTuple = [[bigint, boolean][], string, [string, bigint]];
   const deeplyNestedValue: DeepNestedTuple[] = [
     [
-      [[1n, true], [2n, false]],           // (uint64,bool)[]
-      'First Entry',                        // string
-      [addr1, 1000000000000000000n],        // (address,uint256)
+      [
+        [1n, true],
+        [2n, false],
+      ], // (uint64,bool)[]
+      'First Entry', // string
+      [addr1, 1000000000000000000n], // (address,uint256)
     ],
     [
-      [[10n, false], [20n, true], [30n, true]],  // (uint64,bool)[]
-      'Second Entry',                             // string
-      [addr2, 2000000000000000000n],              // (address,uint256)
+      [
+        [10n, false],
+        [20n, true],
+        [30n, true],
+      ], // (uint64,bool)[]
+      'Second Entry', // string
+      [addr2, 2000000000000000000n], // (address,uint256)
     ],
-  ]
+  ];
 
-  const deeplyNestedEncoded = deeplyNestedType.encode(deeplyNestedValue)
+  const deeplyNestedEncoded = deeplyNestedType.encode(deeplyNestedValue);
 
-  printInfo('\nInput:')
-  printInfo('  [')
-  printInfo('    [[[1n, true], [2n, false]], "First Entry", [addr1, 1e18n]],')
-  printInfo('    [[[10n, false], [20n, true], [30n, true]], "Second Entry", [addr2, 2e18n]]')
-  printInfo('  ]')
-  printInfo(`\nEncoded: ${formatBytes(deeplyNestedEncoded, 24)}`)
-  printInfo(`Total bytes: ${deeplyNestedEncoded.length}`)
+  printInfo('\nInput:');
+  printInfo('  [');
+  printInfo('    [[[1n, true], [2n, false]], "First Entry", [addr1, 1e18n]],');
+  printInfo('    [[[10n, false], [20n, true], [30n, true]], "Second Entry", [addr2, 2e18n]]');
+  printInfo('  ]');
+  printInfo(`\nEncoded: ${formatBytes(deeplyNestedEncoded, 24)}`);
+  printInfo(`Total bytes: ${deeplyNestedEncoded.length}`);
 
-  printInfo('\nEncoding structure (simplified):')
-  printInfo('  OUTER ARRAY:')
-  printInfo('    [0-1] Array length prefix (2 elements)')
-  printInfo('    [2-3] Offset to element 0')
-  printInfo('    [4-5] Offset to element 1')
-  printInfo('    [6+]  Element data (each element is a complex tuple)')
+  printInfo('\nEncoding structure (simplified):');
+  printInfo('  OUTER ARRAY:');
+  printInfo('    [0-1] Array length prefix (2 elements)');
+  printInfo('    [2-3] Offset to element 0');
+  printInfo('    [4-5] Offset to element 1');
+  printInfo('    [6+]  Element data (each element is a complex tuple)');
 
-  printInfo('\n  EACH INNER TUPLE ((uint64,bool)[],string,(address,uint256)):')
-  printInfo('    HEAD: [arr_offset:2][string_offset:2][addr:32][uint256:32]')
-  printInfo('    TAIL: [(uint64,bool)[] data][string data]')
+  printInfo('\n  EACH INNER TUPLE ((uint64,bool)[],string,(address,uint256)):');
+  printInfo('    HEAD: [arr_offset:2][string_offset:2][addr:32][uint256:32]');
+  printInfo('    TAIL: [(uint64,bool)[] data][string data]');
 
-  printInfo('\n  INNERMOST (uint64,bool)[]:')
-  printInfo('    [len:2][elem0:9][elem1:9]... (each tuple is 8+1=9 bytes)')
+  printInfo('\n  INNERMOST (uint64,bool)[]:');
+  printInfo('    [len:2][elem0:9][elem1:9]... (each tuple is 8+1=9 bytes)');
 
   // Decode and verify
-  const deeplyNestedDecoded = deeplyNestedType.decode(deeplyNestedEncoded) as DeepNestedTuple[]
+  const deeplyNestedDecoded = deeplyNestedType.decode(deeplyNestedEncoded) as DeepNestedTuple[];
 
-  printInfo('\nDecoded:')
+  printInfo('\nDecoded:');
   deeplyNestedDecoded.forEach((entry, i) => {
-    printInfo(`  Entry ${i}:`)
-    printInfo(`    (uint64,bool)[]: [${entry[0].map((t) => `[${t[0]}, ${t[1]}]`).join(', ')}]`)
-    printInfo(`    string: "${entry[1]}"`)
-    printInfo(`    (address,uint256): [${entry[2][0].substring(0, 10)}..., ${entry[2][1]}]`)
-  })
+    printInfo(`  Entry ${i}:`);
+    printInfo(`    (uint64,bool)[]: [${entry[0].map(t => `[${t[0]}, ${t[1]}]`).join(', ')}]`);
+    printInfo(`    string: "${entry[1]}"`);
+    printInfo(`    (address,uint256): [${entry[2][0].substring(0, 10)}..., ${entry[2][1]}]`);
+  });
 
   // Verify round-trip
-  let deepMatch = deeplyNestedDecoded.length === deeplyNestedValue.length
+  let deepMatch = deeplyNestedDecoded.length === deeplyNestedValue.length;
   for (let i = 0; i < deeplyNestedValue.length && deepMatch; i++) {
-    const orig = deeplyNestedValue[i]
-    const dec = deeplyNestedDecoded[i]
+    const orig = deeplyNestedValue[i];
+    const dec = deeplyNestedDecoded[i];
     // Check (uint64,bool)[]
-    deepMatch = deepMatch && orig[0].length === dec[0].length
+    deepMatch = deepMatch && orig[0].length === dec[0].length;
     for (let j = 0; j < orig[0].length && deepMatch; j++) {
-      deepMatch = deepMatch && orig[0][j][0] === dec[0][j][0] && orig[0][j][1] === dec[0][j][1]
+      deepMatch = deepMatch && orig[0][j][0] === dec[0][j][0] && orig[0][j][1] === dec[0][j][1];
     }
     // Check string
-    deepMatch = deepMatch && orig[1] === dec[1]
+    deepMatch = deepMatch && orig[1] === dec[1];
     // Check (address,uint256)
-    deepMatch = deepMatch && orig[2][0] === dec[2][0] && orig[2][1] === dec[2][1]
+    deepMatch = deepMatch && orig[2][0] === dec[2][0] && orig[2][1] === dec[2][1];
   }
-  printInfo(`Round-trip verified: ${deepMatch}`)
+  printInfo(`Round-trip verified: ${deepMatch}`);
 
   // Step 5: Encoding size analysis
-  printStep(5, 'Encoding Size Analysis')
+  printStep(5, 'Encoding Size Analysis');
 
-  printInfo('Comparing encoding sizes for different nesting levels:')
+  printInfo('Comparing encoding sizes for different nesting levels:');
 
   // Simple static tuple
-  const simpleType = ABIType.from('(uint64,bool)')
-  const simpleEncoded = simpleType.encode([1n, true])
-  printInfo(`\n  (uint64,bool) = [1n, true]:`)
-  printInfo(`    Size: ${simpleEncoded.length} bytes (8 + 1 = 9, all static)`)
+  const simpleType = ABIType.from('(uint64,bool)');
+  const simpleEncoded = simpleType.encode([1n, true]);
+  printInfo(`\n  (uint64,bool) = [1n, true]:`);
+  printInfo(`    Size: ${simpleEncoded.length} bytes (8 + 1 = 9, all static)`);
 
   // Array of static tuples
-  const staticArrayType = ABIType.from('(uint64,bool)[]')
-  const staticArrayEncoded = staticArrayType.encode([[1n, true], [2n, false]])
-  printInfo(`\n  (uint64,bool)[] = [[1n, true], [2n, false]]:`)
-  printInfo(`    Size: ${staticArrayEncoded.length} bytes (2 length + 2*9 elements = 20)`)
+  const staticArrayType = ABIType.from('(uint64,bool)[]');
+  const staticArrayEncoded = staticArrayType.encode([
+    [1n, true],
+    [2n, false],
+  ]);
+  printInfo(`\n  (uint64,bool)[] = [[1n, true], [2n, false]]:`);
+  printInfo(`    Size: ${staticArrayEncoded.length} bytes (2 length + 2*9 elements = 20)`);
 
   // Tuple with dynamic element
-  const dynamicTupleType = ABIType.from('(uint64,string)')
-  const dynamicTupleEncoded = dynamicTupleType.encode([1n, 'Hello'])
-  printInfo(`\n  (uint64,string) = [1n, "Hello"]:`)
-  printInfo(`    Size: ${dynamicTupleEncoded.length} bytes (8 + 2 offset + 2 len + 5 content = 17)`)
+  const dynamicTupleType = ABIType.from('(uint64,string)');
+  const dynamicTupleEncoded = dynamicTupleType.encode([1n, 'Hello']);
+  printInfo(`\n  (uint64,string) = [1n, "Hello"]:`);
+  printInfo(
+    `    Size: ${dynamicTupleEncoded.length} bytes (8 + 2 offset + 2 len + 5 content = 17)`,
+  );
 
   // Array of tuples with dynamic element
-  const dynamicArrayType = ABIType.from('(uint64,string)[]')
-  const dynamicArrayEncoded = dynamicArrayType.encode([[1n, 'Hi'], [2n, 'Bye']])
-  printInfo(`\n  (uint64,string)[] = [[1n, "Hi"], [2n, "Bye"]]:`)
-  printInfo(`    Size: ${dynamicArrayEncoded.length} bytes`)
-  printInfo(`    Breakdown: 2 array_len + 2*2 offsets + 2*(8+2+2+N) per tuple`)
+  const dynamicArrayType = ABIType.from('(uint64,string)[]');
+  const dynamicArrayEncoded = dynamicArrayType.encode([
+    [1n, 'Hi'],
+    [2n, 'Bye'],
+  ]);
+  printInfo(`\n  (uint64,string)[] = [[1n, "Hi"], [2n, "Bye"]]:`);
+  printInfo(`    Size: ${dynamicArrayEncoded.length} bytes`);
+  printInfo(`    Breakdown: 2 array_len + 2*2 offsets + 2*(8+2+2+N) per tuple`);
 
   // Deep nesting size
-  printInfo(`\n  ((uint64,bool)[],string,(address,uint256))[] with 2 complex elements:`)
-  printInfo(`    Size: ${deeplyNestedEncoded.length} bytes`)
-  printInfo(`    Each element has: array of tuples + string + (address,uint256) tuple`)
+  printInfo(`\n  ((uint64,bool)[],string,(address,uint256))[] with 2 complex elements:`);
+  printInfo(`    Size: ${deeplyNestedEncoded.length} bytes`);
+  printInfo(`    Each element has: array of tuples + string + (address,uint256) tuple`);
 
   // Step 6: Static vs dynamic arrays inside tuples
-  printStep(6, 'Static vs Dynamic Arrays Inside Tuples')
+  printStep(6, 'Static vs Dynamic Arrays Inside Tuples');
 
   // Tuple with static array
-  const tupleWithStaticArrayType = ABIType.from('(uint64[3],bool)')
-  const tupleWithStaticArrayValue: [bigint[], boolean] = [[1n, 2n, 3n], true]
-  const tupleWithStaticArrayEncoded = tupleWithStaticArrayType.encode(tupleWithStaticArrayValue)
+  const tupleWithStaticArrayType = ABIType.from('(uint64[3],bool)');
+  const tupleWithStaticArrayValue: [bigint[], boolean] = [[1n, 2n, 3n], true];
+  const tupleWithStaticArrayEncoded = tupleWithStaticArrayType.encode(tupleWithStaticArrayValue);
 
-  printInfo('Tuple with static array: (uint64[3],bool)')
-  printInfo(`  Input: [[1n, 2n, 3n], true]`)
-  printInfo(`  Encoded: ${formatHex(tupleWithStaticArrayEncoded)}`)
-  printInfo(`  Size: ${tupleWithStaticArrayEncoded.length} bytes (24 + 1 = 25, no offsets needed)`)
-  printInfo(`  isDynamic(): ${tupleWithStaticArrayType.isDynamic()} (static array doesnt make tuple dynamic)`)
+  printInfo('Tuple with static array: (uint64[3],bool)');
+  printInfo(`  Input: [[1n, 2n, 3n], true]`);
+  printInfo(`  Encoded: ${formatHex(tupleWithStaticArrayEncoded)}`);
+  printInfo(`  Size: ${tupleWithStaticArrayEncoded.length} bytes (24 + 1 = 25, no offsets needed)`);
+  printInfo(
+    `  isDynamic(): ${tupleWithStaticArrayType.isDynamic()} (static array doesnt make tuple dynamic)`,
+  );
 
   // Tuple with dynamic array
-  const tupleWithDynamicArrayType = ABIType.from('(uint64[],bool)')
-  const tupleWithDynamicArrayValue: [bigint[], boolean] = [[1n, 2n, 3n], true]
-  const tupleWithDynamicArrayEncoded = tupleWithDynamicArrayType.encode(tupleWithDynamicArrayValue)
+  const tupleWithDynamicArrayType = ABIType.from('(uint64[],bool)');
+  const tupleWithDynamicArrayValue: [bigint[], boolean] = [[1n, 2n, 3n], true];
+  const tupleWithDynamicArrayEncoded = tupleWithDynamicArrayType.encode(tupleWithDynamicArrayValue);
 
-  printInfo('\nTuple with dynamic array: (uint64[],bool)')
-  printInfo(`  Input: [[1n, 2n, 3n], true]`)
-  printInfo(`  Encoded: ${formatHex(tupleWithDynamicArrayEncoded)}`)
-  printInfo(`  Size: ${tupleWithDynamicArrayEncoded.length} bytes (2 offset + 1 bool + 2 len + 24 data = 29)`)
-  printInfo(`  isDynamic(): ${tupleWithDynamicArrayType.isDynamic()}`)
+  printInfo('\nTuple with dynamic array: (uint64[],bool)');
+  printInfo(`  Input: [[1n, 2n, 3n], true]`);
+  printInfo(`  Encoded: ${formatHex(tupleWithDynamicArrayEncoded)}`);
+  printInfo(
+    `  Size: ${tupleWithDynamicArrayEncoded.length} bytes (2 offset + 1 bool + 2 len + 24 data = 29)`,
+  );
+  printInfo(`  isDynamic(): ${tupleWithDynamicArrayType.isDynamic()}`);
 
-  printInfo('\nByte layout comparison:')
-  printInfo('  Static (uint64[3],bool):')
-  printInfo(`    [0-7]   uint64[0]: ${formatHex(tupleWithStaticArrayEncoded.slice(0, 8))}`)
-  printInfo(`    [8-15]  uint64[1]: ${formatHex(tupleWithStaticArrayEncoded.slice(8, 16))}`)
-  printInfo(`    [16-23] uint64[2]: ${formatHex(tupleWithStaticArrayEncoded.slice(16, 24))}`)
-  printInfo(`    [24]    bool:      ${formatHex(tupleWithStaticArrayEncoded.slice(24, 25))}`)
+  printInfo('\nByte layout comparison:');
+  printInfo('  Static (uint64[3],bool):');
+  printInfo(`    [0-7]   uint64[0]: ${formatHex(tupleWithStaticArrayEncoded.slice(0, 8))}`);
+  printInfo(`    [8-15]  uint64[1]: ${formatHex(tupleWithStaticArrayEncoded.slice(8, 16))}`);
+  printInfo(`    [16-23] uint64[2]: ${formatHex(tupleWithStaticArrayEncoded.slice(16, 24))}`);
+  printInfo(`    [24]    bool:      ${formatHex(tupleWithStaticArrayEncoded.slice(24, 25))}`);
 
-  printInfo('\n  Dynamic (uint64[],bool):')
-  const dynArrayOffset = (tupleWithDynamicArrayEncoded[0] << 8) | tupleWithDynamicArrayEncoded[1]
-  printInfo(`    [0-1]   array offset: ${formatHex(tupleWithDynamicArrayEncoded.slice(0, 2))} = ${dynArrayOffset}`)
-  printInfo(`    [2]     bool:         ${formatHex(tupleWithDynamicArrayEncoded.slice(2, 3))}`)
-  printInfo(`    [3-4]   array length: ${formatHex(tupleWithDynamicArrayEncoded.slice(3, 5))}`)
-  printInfo(`    [5-28]  array data:   ${formatHex(tupleWithDynamicArrayEncoded.slice(5))}`)
+  printInfo('\n  Dynamic (uint64[],bool):');
+  const dynArrayOffset = (tupleWithDynamicArrayEncoded[0] << 8) | tupleWithDynamicArrayEncoded[1];
+  printInfo(
+    `    [0-1]   array offset: ${formatHex(tupleWithDynamicArrayEncoded.slice(0, 2))} = ${dynArrayOffset}`,
+  );
+  printInfo(`    [2]     bool:         ${formatHex(tupleWithDynamicArrayEncoded.slice(2, 3))}`);
+  printInfo(`    [3-4]   array length: ${formatHex(tupleWithDynamicArrayEncoded.slice(3, 5))}`);
+  printInfo(`    [5-28]  array data:   ${formatHex(tupleWithDynamicArrayEncoded.slice(5))}`);
 
   // Decode and verify both
-  const staticArrayDecoded = tupleWithStaticArrayType.decode(tupleWithStaticArrayEncoded) as [bigint[], boolean]
-  const dynamicArrayDecoded = tupleWithDynamicArrayType.decode(tupleWithDynamicArrayEncoded) as [bigint[], boolean]
+  const staticArrayDecoded = tupleWithStaticArrayType.decode(tupleWithStaticArrayEncoded) as [
+    bigint[],
+    boolean,
+  ];
+  const dynamicArrayDecoded = tupleWithDynamicArrayType.decode(tupleWithDynamicArrayEncoded) as [
+    bigint[],
+    boolean,
+  ];
 
-  printInfo('\nRound-trip verification:')
-  printInfo(`  Static array tuple: ${staticArrayDecoded[0].every((v, i) => v === tupleWithStaticArrayValue[0][i]) && staticArrayDecoded[1] === tupleWithStaticArrayValue[1]}`)
-  printInfo(`  Dynamic array tuple: ${dynamicArrayDecoded[0].every((v, i) => v === tupleWithDynamicArrayValue[0][i]) && dynamicArrayDecoded[1] === tupleWithDynamicArrayValue[1]}`)
+  printInfo('\nRound-trip verification:');
+  printInfo(
+    `  Static array tuple: ${staticArrayDecoded[0].every((v, i) => v === tupleWithStaticArrayValue[0][i]) && staticArrayDecoded[1] === tupleWithStaticArrayValue[1]}`,
+  );
+  printInfo(
+    `  Dynamic array tuple: ${dynamicArrayDecoded[0].every((v, i) => v === tupleWithDynamicArrayValue[0][i]) && dynamicArrayDecoded[1] === tupleWithDynamicArrayValue[1]}`,
+  );
 
   // Step 7: Triple nesting verification
-  printStep(7, 'Triple Nesting Verification')
+  printStep(7, 'Triple Nesting Verification');
 
   // Type: ((uint64,bool)[])[] is an array of single-element tuples where each tuple contains (uint64,bool)[]
   // This means: outer array -> 1-element tuple -> dynamic array of (uint64,bool) tuples
-  const tripleNestedType = ABIType.from('((uint64,bool)[])[]') as ABIArrayDynamicType
+  const tripleNestedType = ABIType.from('((uint64,bool)[])[]') as ABIArrayDynamicType;
 
-  printInfo('Type: ((uint64,bool)[])[]')
-  printInfo('  This is: array of 1-element tuples, where each tuple contains (uint64,bool)[]')
-  printInfo(`  toString(): ${tripleNestedType.toString()}`)
-  printInfo(`  isDynamic(): ${tripleNestedType.isDynamic()}`)
+  printInfo('Type: ((uint64,bool)[])[]');
+  printInfo('  This is: array of 1-element tuples, where each tuple contains (uint64,bool)[]');
+  printInfo(`  toString(): ${tripleNestedType.toString()}`);
+  printInfo(`  isDynamic(): ${tripleNestedType.isDynamic()}`);
 
-  const tripleInnerTupleType = tripleNestedType.childType as ABITupleType
-  printInfo(`\n  childType: ${tripleInnerTupleType.toString()} (a 1-element tuple)`)
-  printInfo(`    childTypes[0]: ${tripleInnerTupleType.childTypes[0].toString()}`)
+  const tripleInnerTupleType = tripleNestedType.childType as ABITupleType;
+  printInfo(`\n  childType: ${tripleInnerTupleType.toString()} (a 1-element tuple)`);
+  printInfo(`    childTypes[0]: ${tripleInnerTupleType.childTypes[0].toString()}`);
 
   // Each element is a 1-element tuple containing an array of (uint64,bool) tuples
-  type TripleNestedElement = [[bigint, boolean][]]
+  type TripleNestedElement = [[bigint, boolean][]];
   const tripleNestedValue: TripleNestedElement[] = [
-    [[[1n, true], [2n, false]]],           // 1-element tuple containing [(1,true), (2,false)]
-    [[[10n, false]]],                       // 1-element tuple containing [(10,false)]
-    [[[100n, true], [200n, true], [300n, false]]],  // 1-element tuple containing 3 tuples
-  ]
+    [
+      [
+        [1n, true],
+        [2n, false],
+      ],
+    ], // 1-element tuple containing [(1,true), (2,false)]
+    [[[10n, false]]], // 1-element tuple containing [(10,false)]
+    [
+      [
+        [100n, true],
+        [200n, true],
+        [300n, false],
+      ],
+    ], // 1-element tuple containing 3 tuples
+  ];
 
-  const tripleNestedEncoded = tripleNestedType.encode(tripleNestedValue)
+  const tripleNestedEncoded = tripleNestedType.encode(tripleNestedValue);
 
-  printInfo('\nInput (each element is a tuple containing an array):')
-  printInfo('  [')
-  printInfo('    [[ [1n, true], [2n, false] ]],       // tuple wrapping array of 2 tuples')
-  printInfo('    [[ [10n, false] ]],                  // tuple wrapping array of 1 tuple')
-  printInfo('    [[ [100n, true], [200n, true], [300n, false] ]]  // tuple wrapping array of 3')
-  printInfo('  ]')
-  printInfo(`\nEncoded: ${formatBytes(tripleNestedEncoded, 20)}`)
-  printInfo(`Total bytes: ${tripleNestedEncoded.length}`)
+  printInfo('\nInput (each element is a tuple containing an array):');
+  printInfo('  [');
+  printInfo('    [[ [1n, true], [2n, false] ]],       // tuple wrapping array of 2 tuples');
+  printInfo('    [[ [10n, false] ]],                  // tuple wrapping array of 1 tuple');
+  printInfo('    [[ [100n, true], [200n, true], [300n, false] ]]  // tuple wrapping array of 3');
+  printInfo('  ]');
+  printInfo(`\nEncoded: ${formatBytes(tripleNestedEncoded, 20)}`);
+  printInfo(`Total bytes: ${tripleNestedEncoded.length}`);
 
   // Decode and verify
-  const tripleNestedDecoded = tripleNestedType.decode(tripleNestedEncoded) as TripleNestedElement[]
+  const tripleNestedDecoded = tripleNestedType.decode(tripleNestedEncoded) as TripleNestedElement[];
 
-  printInfo('\nDecoded:')
+  printInfo('\nDecoded:');
   tripleNestedDecoded.forEach((outer, i) => {
-    const innerArray = outer[0] // First (only) element of the tuple
-    printInfo(`  [${i}]: [[ ${innerArray.map((t) => `[${t[0]}, ${t[1]}]`).join(', ')} ]]`)
-  })
+    const innerArray = outer[0]; // First (only) element of the tuple
+    printInfo(`  [${i}]: [[ ${innerArray.map(t => `[${t[0]}, ${t[1]}]`).join(', ')} ]]`);
+  });
 
-  let tripleMatch = tripleNestedDecoded.length === tripleNestedValue.length
+  let tripleMatch = tripleNestedDecoded.length === tripleNestedValue.length;
   for (let i = 0; i < tripleNestedValue.length && tripleMatch; i++) {
-    const origInner = tripleNestedValue[i][0]
-    const decInner = tripleNestedDecoded[i][0]
-    tripleMatch = tripleMatch && origInner.length === decInner.length
+    const origInner = tripleNestedValue[i][0];
+    const decInner = tripleNestedDecoded[i][0];
+    tripleMatch = tripleMatch && origInner.length === decInner.length;
     for (let j = 0; j < origInner.length && tripleMatch; j++) {
-      tripleMatch = tripleMatch &&
-        origInner[j][0] === decInner[j][0] &&
-        origInner[j][1] === decInner[j][1]
+      tripleMatch =
+        tripleMatch && origInner[j][0] === decInner[j][0] && origInner[j][1] === decInner[j][1];
     }
   }
-  printInfo(`Round-trip verified: ${tripleMatch}`)
+  printInfo(`Round-trip verified: ${tripleMatch}`);
 
   // Step 8: Summary
-  printStep(8, 'Summary')
+  printStep(8, 'Summary');
 
-  printInfo('Complex nested types follow consistent encoding rules:')
+  printInfo('Complex nested types follow consistent encoding rules:');
 
-  printInfo('\nArray of tuples (T)[]:')
-  printInfo('  - 2-byte length prefix (element count)')
-  printInfo('  - If T is dynamic: head section with offsets, tail section with data')
-  printInfo('  - If T is static: elements encoded consecutively after length')
+  printInfo('\nArray of tuples (T)[]:');
+  printInfo('  - 2-byte length prefix (element count)');
+  printInfo('  - If T is dynamic: head section with offsets, tail section with data');
+  printInfo('  - If T is static: elements encoded consecutively after length');
 
-  printInfo('\nTuple containing arrays (T1[],T2[]):')
-  printInfo('  - Head section: offsets for each dynamic child')
-  printInfo('  - Tail section: array data in order')
-  printInfo('  - Static arrays (T[N]) encode inline, dynamic arrays (T[]) use offsets')
+  printInfo('\nTuple containing arrays (T1[],T2[]):');
+  printInfo('  - Head section: offsets for each dynamic child');
+  printInfo('  - Tail section: array data in order');
+  printInfo('  - Static arrays (T[N]) encode inline, dynamic arrays (T[]) use offsets');
 
-  printInfo('\nNested structs with arrays:')
-  printInfo('  - Struct encoding identical to equivalent tuple')
-  printInfo('  - Static fields inline, dynamic fields via offsets')
-  printInfo('  - Nested arrays and strings all end up in tail section')
+  printInfo('\nNested structs with arrays:');
+  printInfo('  - Struct encoding identical to equivalent tuple');
+  printInfo('  - Static fields inline, dynamic fields via offsets');
+  printInfo('  - Nested arrays and strings all end up in tail section');
 
-  printInfo('\nDeeply nested types like ((uint64,bool)[],string,(address,uint256))[]:')
-  printInfo('  - Outer array: 2-byte count + offsets to each inner tuple')
-  printInfo('  - Each inner tuple: offsets for dynamic parts, inline for static')
-  printInfo('  - Innermost arrays: 2-byte count + element data')
-  printInfo('  - Round-trip encoding/decoding preserves all values at every nesting level')
+  printInfo('\nDeeply nested types like ((uint64,bool)[],string,(address,uint256))[]:');
+  printInfo('  - Outer array: 2-byte count + offsets to each inner tuple');
+  printInfo('  - Each inner tuple: offsets for dynamic parts, inline for static');
+  printInfo('  - Innermost arrays: 2-byte count + element data');
+  printInfo('  - Round-trip encoding/decoding preserves all values at every nesting level');
 
-  printInfo('\nKey observations:')
-  printInfo('  - Static types never need offsets (fixed position)')
-  printInfo('  - Dynamic types always use 2-byte offsets relative to container start')
-  printInfo('  - Nesting depth doesnt change rules, just adds layers')
-  printInfo('  - All encoded bytes are deterministic for same input values')
+  printInfo('\nKey observations:');
+  printInfo('  - Static types never need offsets (fixed position)');
+  printInfo('  - Dynamic types always use 2-byte offsets relative to container start');
+  printInfo('  - Nesting depth doesnt change rules, just adds layers');
+  printInfo('  - All encoded bytes are deterministic for same input values');
 
-  printSuccess('ABI Complex Nested Types example completed successfully!')
+  printSuccess('ABI Complex Nested Types example completed successfully!');
 }
 
-main()
-
+main();
 ```
 
 ---

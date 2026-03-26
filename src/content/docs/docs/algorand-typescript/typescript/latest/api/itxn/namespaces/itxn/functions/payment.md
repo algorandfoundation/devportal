@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "payment"
+title: 'payment'
 ---
 
 > **payment**(`fields`): [`PaymentItxnParams`](/algorand-typescript/api/itxn/namespaces/itxn/classes/paymentitxnparams/)

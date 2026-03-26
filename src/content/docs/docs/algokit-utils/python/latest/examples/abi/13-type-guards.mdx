@@ -1,6 +1,6 @@
 ---
-title: "Type Guards"
-description: "This example demonstrates how to check argument and type categories in the ABI system:"
+title: 'Type Guards'
+description: 'This example demonstrates how to check argument and type categories in the ABI system:'
 sidebar:
   order: 13
 ---
@@ -15,8 +15,8 @@ This example demonstrates how to check argument and type categories in the ABI s
 - ReferenceType: Check if type is a reference type (account, asset, application)
 - ABIType: Standard ABI types (not transaction or reference)
 - AVMType: AVM-specific types (AVMBytes, AVMString, AVMUint64)
- In Python, use isinstance() checks with TransactionType and ReferenceType enums, and the abi.ABIType base class to determine type categories.
- These checks are essential for:
+  In Python, use isinstance() checks with TransactionType and ReferenceType enums, and the abi.ABIType base class to determine type categories.
+  These checks are essential for:
 - Method argument handling and routing
 - Type narrowing for safer code
 - Determining how to encode/decode values based on type category

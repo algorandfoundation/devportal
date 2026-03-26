@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "ABIReferenceValue"
+title: 'ABIReferenceValue'
 ---
 
 > **ABIReferenceValue** = `string` \| `bigint`

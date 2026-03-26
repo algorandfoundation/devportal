@@ -1,5 +1,5 @@
 ---
-title: "AlgoKit CLI binary distribution"
+title: 'AlgoKit CLI binary distribution'
 ---
 
 - **Status**: Approved

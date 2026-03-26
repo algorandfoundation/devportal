@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "BalanceChangeRole"
+title: 'BalanceChangeRole'
 ---
 
 Defined in: [src/types/subscription.ts:193](https://github.com/algorandfoundation/algokit-subscriber-ts/blob/main/src/types/subscription.ts#L193)
@@ -19,7 +19,7 @@ Defined in: [src/types/subscription.ts:201](https://github.com/algorandfoundatio
 
 Account was creating an asset and holds the full asset supply
 
-***
+---
 
 ### AssetDestroyer
 
@@ -30,7 +30,7 @@ Defined in: [src/types/subscription.ts:205](https://github.com/algorandfoundatio
 Account was destroying an asset and has removed the full asset supply from circulation.
 A balance change with this role will always have a 0 amount and use the asset manager address.
 
-***
+---
 
 ### CloseTo
 
@@ -40,7 +40,7 @@ Defined in: [src/types/subscription.ts:199](https://github.com/algorandfoundatio
 
 Account was having an asset amount closed to it
 
-***
+---
 
 ### Receiver
 
@@ -50,7 +50,7 @@ Defined in: [src/types/subscription.ts:197](https://github.com/algorandfoundatio
 
 Account was receiving a transaction
 
-***
+---
 
 ### Sender
 

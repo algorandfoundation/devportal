@@ -1,5 +1,5 @@
 ---
-title: "AlgoKit CLI native binaries"
+title: 'AlgoKit CLI native binaries'
 ---
 
 - **Status**: Approved

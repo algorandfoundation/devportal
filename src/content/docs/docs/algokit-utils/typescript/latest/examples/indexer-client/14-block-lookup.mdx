@@ -1,6 +1,6 @@
 ---
-title: "Block Lookup"
-description: "This example demonstrates how to lookup block information using the IndexerClient lookupBlock() method."
+title: 'Block Lookup'
+description: 'This example demonstrates how to lookup block information using the IndexerClient lookupBlock() method.'
 sidebar:
   order: 14
 ---
@@ -39,7 +39,7 @@ npm run example indexer_client/14-block-lookup.ts
  * - LocalNet running (via `algokit localnet start`)
  */
 
-import { algo } from '@algorandfoundation/algokit-utils'
+import { algo } from '@algorandfoundation/algokit-utils';
 import {
   createAlgorandClient,
   createIndexerClient,
@@ -49,271 +49,285 @@ import {
   printStep,
   printSuccess,
   shortenAddress,
-} from '../shared/utils.js'
+} from '../shared/utils.js';
 
 /**
  * Format a Uint8Array as a hex string
  */
 function formatBytes(bytes: Uint8Array): string {
   return Array.from(bytes)
-    .map((b) => b.toString(16).padStart(2, '0'))
-    .join('')
+    .map(b => b.toString(16).padStart(2, '0'))
+    .join('');
 }
 
 /**
  * Format a Unix timestamp to a human-readable date
  */
 function formatTimestamp(timestamp: number): string {
-  return new Date(timestamp * 1000).toISOString()
+  return new Date(timestamp * 1000).toISOString();
 }
 
 async function main() {
-  printHeader('Block Lookup Example')
+  printHeader('Block Lookup Example');
 
   // Create clients
-  const indexer = createIndexerClient()
-  const algorand = createAlgorandClient()
+  const indexer = createIndexerClient();
+  const algorand = createAlgorandClient();
 
   // =========================================================================
   // Step 1: Get the current round from the indexer to find a recent block
   // =========================================================================
-  printStep(1, 'Getting a recent block round from the indexer')
+  printStep(1, 'Getting a recent block round from the indexer');
 
-  let recentRound: bigint
+  let recentRound: bigint;
 
   try {
     // Use health check to get the current round
-    const health = await indexer.healthCheck()
-    recentRound = BigInt(health.round)
-    printSuccess(`Current indexer round: ${recentRound}`)
-    printInfo('')
+    const health = await indexer.healthCheck();
+    recentRound = BigInt(health.round);
+    printSuccess(`Current indexer round: ${recentRound}`);
+    printInfo('');
 
     // Use a block that's a few rounds back to ensure it's fully indexed
     if (recentRound > 5n) {
-      recentRound = recentRound - 3n
-      printInfo(`Using block ${recentRound} (a few rounds back for stability)`)
+      recentRound = recentRound - 3n;
+      printInfo(`Using block ${recentRound} (a few rounds back for stability)`);
     }
   } catch (error) {
-    printError(`Failed to get current round: ${error instanceof Error ? error.message : String(error)}`)
-    printInfo('')
-    printInfo('Make sure LocalNet is running: algokit localnet start')
-    printInfo('If issues persist, try: algokit localnet reset')
-    return
+    printError(
+      `Failed to get current round: ${error instanceof Error ? error.message : String(error)}`,
+    );
+    printInfo('');
+    printInfo('Make sure LocalNet is running: algokit localnet start');
+    printInfo('If issues persist, try: algokit localnet reset');
+    return;
   }
 
   // =========================================================================
   // Step 2: Lookup block with lookupBlock() to get full block details
   // =========================================================================
-  printStep(2, 'Looking up block with lookupBlock(roundNumber)')
+  printStep(2, 'Looking up block with lookupBlock(roundNumber)');
 
   try {
-    const block = await indexer.lookupBlock(recentRound)
+    const block = await indexer.lookupBlock(recentRound);
 
-    printSuccess(`Retrieved block ${block.round}`)
-    printInfo('')
+    printSuccess(`Retrieved block ${block.round}`);
+    printInfo('');
 
     // Display basic block fields
-    printInfo('Basic Block Fields:')
-    printInfo(`  Round:              ${block.round}`)
-    printInfo(`  Timestamp:          ${block.timestamp} (${formatTimestamp(block.timestamp)})`)
-    printInfo(`  Genesis ID:         ${block.genesisId}`)
-    printInfo(`  Genesis Hash:       ${formatBytes(block.genesisHash)}`)
-    printInfo(`  Previous Block Hash: ${formatBytes(block.previousBlockHash)}`)
-    printInfo('')
+    printInfo('Basic Block Fields:');
+    printInfo(`  Round:              ${block.round}`);
+    printInfo(`  Timestamp:          ${block.timestamp} (${formatTimestamp(block.timestamp)})`);
+    printInfo(`  Genesis ID:         ${block.genesisId}`);
+    printInfo(`  Genesis Hash:       ${formatBytes(block.genesisHash)}`);
+    printInfo(`  Previous Block Hash: ${formatBytes(block.previousBlockHash)}`);
+    printInfo('');
 
     // Display optional proposer info (may not be present on all networks)
     if (block.proposer) {
-      printInfo('Proposer Information:')
-      printInfo(`  Proposer:           ${shortenAddress(block.proposer.toString())}`)
+      printInfo('Proposer Information:');
+      printInfo(`  Proposer:           ${shortenAddress(block.proposer.toString())}`);
       if (block.feesCollected !== undefined) {
-        printInfo(`  Fees Collected:     ${block.feesCollected} µALGO`)
+        printInfo(`  Fees Collected:     ${block.feesCollected} µALGO`);
       }
       if (block.bonus !== undefined) {
-        printInfo(`  Bonus:              ${block.bonus} µALGO`)
+        printInfo(`  Bonus:              ${block.bonus} µALGO`);
       }
       if (block.proposerPayout !== undefined) {
-        printInfo(`  Proposer Payout:    ${block.proposerPayout} µALGO`)
+        printInfo(`  Proposer Payout:    ${block.proposerPayout} µALGO`);
       }
-      printInfo('')
+      printInfo('');
     }
 
     // Display transaction counter
     if (block.txnCounter !== undefined) {
-      printInfo(`Transaction Counter: ${block.txnCounter} (total txns committed in ledger up to this block)`)
-      printInfo('')
+      printInfo(
+        `Transaction Counter: ${block.txnCounter} (total txns committed in ledger up to this block)`,
+      );
+      printInfo('');
     }
   } catch (error) {
-    printError(`lookupBlock failed: ${error instanceof Error ? error.message : String(error)}`)
+    printError(`lookupBlock failed: ${error instanceof Error ? error.message : String(error)}`);
   }
 
   // =========================================================================
   // Step 3: Display block header info - seed, txnCommitments, participationUpdates
   // =========================================================================
-  printStep(3, 'Displaying block header information')
+  printStep(3, 'Displaying block header information');
 
   try {
-    const block = await indexer.lookupBlock(recentRound)
+    const block = await indexer.lookupBlock(recentRound);
 
-    printInfo('Seed and Transaction Commitments:')
-    printInfo(`  Seed (Sortition):     ${formatBytes(block.seed)}`)
-    printInfo(`  Transactions Root:    ${formatBytes(block.transactionsRoot)}`)
+    printInfo('Seed and Transaction Commitments:');
+    printInfo(`  Seed (Sortition):     ${formatBytes(block.seed)}`);
+    printInfo(`  Transactions Root:    ${formatBytes(block.transactionsRoot)}`);
     if (block.transactionsRootSha256) {
-      printInfo(`  Txn Root SHA256:      ${formatBytes(block.transactionsRootSha256)}`)
+      printInfo(`  Txn Root SHA256:      ${formatBytes(block.transactionsRootSha256)}`);
     }
     if (block.transactionsRootSha512) {
-      printInfo(`  Txn Root SHA512:      ${formatBytes(block.transactionsRootSha512)}`)
+      printInfo(`  Txn Root SHA512:      ${formatBytes(block.transactionsRootSha512)}`);
     }
     if (block.previousBlockHash512) {
-      printInfo(`  Prev Block Hash 512:  ${formatBytes(block.previousBlockHash512)}`)
+      printInfo(`  Prev Block Hash 512:  ${formatBytes(block.previousBlockHash512)}`);
     }
-    printInfo('')
+    printInfo('');
 
     // Display participation updates
-    printInfo('Participation Updates:')
-    const updates = block.participationUpdates
+    printInfo('Participation Updates:');
+    const updates = block.participationUpdates;
     if (updates.absentParticipationAccounts && updates.absentParticipationAccounts.length > 0) {
-      printInfo(`  Absent Accounts:      ${updates.absentParticipationAccounts.length} account(s)`)
+      printInfo(`  Absent Accounts:      ${updates.absentParticipationAccounts.length} account(s)`);
       for (const account of updates.absentParticipationAccounts.slice(0, 3)) {
-        printInfo(`    - ${shortenAddress(account.toString())}`)
+        printInfo(`    - ${shortenAddress(account.toString())}`);
       }
       if (updates.absentParticipationAccounts.length > 3) {
-        printInfo(`    ... and ${updates.absentParticipationAccounts.length - 3} more`)
+        printInfo(`    ... and ${updates.absentParticipationAccounts.length - 3} more`);
       }
     } else {
-      printInfo('  Absent Accounts:      None')
+      printInfo('  Absent Accounts:      None');
     }
     if (updates.expiredParticipationAccounts && updates.expiredParticipationAccounts.length > 0) {
-      printInfo(`  Expired Accounts:     ${updates.expiredParticipationAccounts.length} account(s)`)
+      printInfo(
+        `  Expired Accounts:     ${updates.expiredParticipationAccounts.length} account(s)`,
+      );
       for (const account of updates.expiredParticipationAccounts.slice(0, 3)) {
-        printInfo(`    - ${shortenAddress(account.toString())}`)
+        printInfo(`    - ${shortenAddress(account.toString())}`);
       }
       if (updates.expiredParticipationAccounts.length > 3) {
-        printInfo(`    ... and ${updates.expiredParticipationAccounts.length - 3} more`)
+        printInfo(`    ... and ${updates.expiredParticipationAccounts.length - 3} more`);
       }
     } else {
-      printInfo('  Expired Accounts:     None')
+      printInfo('  Expired Accounts:     None');
     }
-    printInfo('')
+    printInfo('');
 
     // Display rewards info
-    printInfo('Block Rewards:')
-    printInfo(`  Fee Sink:             ${shortenAddress(block.rewards.feeSink.toString())}`)
-    printInfo(`  Rewards Pool:         ${shortenAddress(block.rewards.rewardsPool.toString())}`)
-    printInfo(`  Rewards Level:        ${block.rewards.rewardsLevel}`)
-    printInfo(`  Rewards Rate:         ${block.rewards.rewardsRate}`)
-    printInfo(`  Rewards Residue:      ${block.rewards.rewardsResidue}`)
-    printInfo(`  Rewards Calc Round:   ${block.rewards.rewardsCalculationRound}`)
-    printInfo('')
+    printInfo('Block Rewards:');
+    printInfo(`  Fee Sink:             ${shortenAddress(block.rewards.feeSink.toString())}`);
+    printInfo(`  Rewards Pool:         ${shortenAddress(block.rewards.rewardsPool.toString())}`);
+    printInfo(`  Rewards Level:        ${block.rewards.rewardsLevel}`);
+    printInfo(`  Rewards Rate:         ${block.rewards.rewardsRate}`);
+    printInfo(`  Rewards Residue:      ${block.rewards.rewardsResidue}`);
+    printInfo(`  Rewards Calc Round:   ${block.rewards.rewardsCalculationRound}`);
+    printInfo('');
 
     // Display upgrade state
-    printInfo('Upgrade State:')
-    printInfo(`  Current Protocol:     ${block.upgradeState.currentProtocol}`)
+    printInfo('Upgrade State:');
+    printInfo(`  Current Protocol:     ${block.upgradeState.currentProtocol}`);
     if (block.upgradeState.nextProtocol) {
-      printInfo(`  Next Protocol:        ${block.upgradeState.nextProtocol}`)
-      printInfo(`  Next Protocol Vote:   ${block.upgradeState.nextProtocolVoteBefore}`)
-      printInfo(`  Next Protocol Switch: ${block.upgradeState.nextProtocolSwitchOn}`)
-      printInfo(`  Next Protocol Approvals: ${block.upgradeState.nextProtocolApprovals}`)
+      printInfo(`  Next Protocol:        ${block.upgradeState.nextProtocol}`);
+      printInfo(`  Next Protocol Vote:   ${block.upgradeState.nextProtocolVoteBefore}`);
+      printInfo(`  Next Protocol Switch: ${block.upgradeState.nextProtocolSwitchOn}`);
+      printInfo(`  Next Protocol Approvals: ${block.upgradeState.nextProtocolApprovals}`);
     } else {
-      printInfo('  Next Protocol:        None (no upgrade pending)')
+      printInfo('  Next Protocol:        None (no upgrade pending)');
     }
 
     // Display upgrade vote if present
     if (block.upgradeVote) {
-      printInfo('')
-      printInfo('Upgrade Vote:')
+      printInfo('');
+      printInfo('Upgrade Vote:');
       if (block.upgradeVote.upgradePropose) {
-        printInfo(`  Proposed Protocol:    ${block.upgradeVote.upgradePropose}`)
+        printInfo(`  Proposed Protocol:    ${block.upgradeVote.upgradePropose}`);
       }
       if (block.upgradeVote.upgradeDelay !== undefined) {
-        printInfo(`  Upgrade Delay:        ${block.upgradeVote.upgradeDelay}`)
+        printInfo(`  Upgrade Delay:        ${block.upgradeVote.upgradeDelay}`);
       }
-      printInfo(`  Upgrade Approve:      ${block.upgradeVote.upgradeApprove ?? false}`)
+      printInfo(`  Upgrade Approve:      ${block.upgradeVote.upgradeApprove ?? false}`);
     }
-    printInfo('')
+    printInfo('');
 
     // Display state proof tracking if present
     if (block.stateProofTracking && block.stateProofTracking.length > 0) {
-      printInfo('State Proof Tracking:')
+      printInfo('State Proof Tracking:');
       for (const tracking of block.stateProofTracking) {
-        printInfo(`  Type: ${tracking.type}`)
+        printInfo(`  Type: ${tracking.type}`);
         if (tracking.nextRound !== undefined) {
-          printInfo(`    Next Round:       ${tracking.nextRound}`)
+          printInfo(`    Next Round:       ${tracking.nextRound}`);
         }
         if (tracking.onlineTotalWeight !== undefined) {
-          printInfo(`    Online Weight:    ${tracking.onlineTotalWeight}`)
+          printInfo(`    Online Weight:    ${tracking.onlineTotalWeight}`);
         }
         if (tracking.votersCommitment) {
-          printInfo(`    Voters Commitment: ${formatBytes(tracking.votersCommitment)}`)
+          printInfo(`    Voters Commitment: ${formatBytes(tracking.votersCommitment)}`);
         }
       }
-      printInfo('')
+      printInfo('');
     }
   } catch (error) {
-    printError(`Failed to display block header: ${error instanceof Error ? error.message : String(error)}`)
+    printError(
+      `Failed to display block header: ${error instanceof Error ? error.message : String(error)}`,
+    );
   }
 
   // =========================================================================
   // Step 4: Show transactions included in the block if any
   // =========================================================================
-  printStep(4, 'Showing transactions included in the block')
+  printStep(4, 'Showing transactions included in the block');
 
   try {
-    const block = await indexer.lookupBlock(recentRound)
+    const block = await indexer.lookupBlock(recentRound);
 
-    printInfo(`Block ${block.round} contains ${block.transactions.length} transaction(s)`)
-    printInfo('')
+    printInfo(`Block ${block.round} contains ${block.transactions.length} transaction(s)`);
+    printInfo('');
 
     if (block.transactions.length > 0) {
-      printInfo('Transactions in this block:')
+      printInfo('Transactions in this block:');
       // Show up to 5 transactions for brevity
-      const txnsToShow = block.transactions.slice(0, 5)
+      const txnsToShow = block.transactions.slice(0, 5);
       for (let i = 0; i < txnsToShow.length; i++) {
-        const txn = txnsToShow[i]
-        printInfo(`  [${i}] ID: ${txn.id}`)
-        printInfo(`      Type: ${txn.txType}`)
-        printInfo(`      Sender: ${shortenAddress(txn.sender.toString())}`)
-        printInfo(`      Fee: ${txn.fee} µALGO`)
+        const txn = txnsToShow[i];
+        printInfo(`  [${i}] ID: ${txn.id}`);
+        printInfo(`      Type: ${txn.txType}`);
+        printInfo(`      Sender: ${shortenAddress(txn.sender.toString())}`);
+        printInfo(`      Fee: ${txn.fee} µALGO`);
         if (txn.paymentTransaction) {
-          printInfo(`      Receiver: ${shortenAddress(txn.paymentTransaction.receiver.toString())}`)
-          printInfo(`      Amount: ${txn.paymentTransaction.amount} µALGO`)
+          printInfo(
+            `      Receiver: ${shortenAddress(txn.paymentTransaction.receiver.toString())}`,
+          );
+          printInfo(`      Amount: ${txn.paymentTransaction.amount} µALGO`);
         }
         if (txn.assetTransferTransaction) {
-          printInfo(`      Asset ID: ${txn.assetTransferTransaction.assetId}`)
-          printInfo(`      Receiver: ${shortenAddress(txn.assetTransferTransaction.receiver.toString())}`)
-          printInfo(`      Amount: ${txn.assetTransferTransaction.amount}`)
+          printInfo(`      Asset ID: ${txn.assetTransferTransaction.assetId}`);
+          printInfo(
+            `      Receiver: ${shortenAddress(txn.assetTransferTransaction.receiver.toString())}`,
+          );
+          printInfo(`      Amount: ${txn.assetTransferTransaction.amount}`);
         }
-        printInfo('')
+        printInfo('');
       }
       if (block.transactions.length > 5) {
-        printInfo(`  ... and ${block.transactions.length - 5} more transaction(s)`)
-        printInfo('')
+        printInfo(`  ... and ${block.transactions.length - 5} more transaction(s)`);
+        printInfo('');
       }
     } else {
-      printInfo('This block has no transactions (empty block).')
-      printInfo('Empty blocks are common on LocalNet when there is no activity.')
-      printInfo('')
+      printInfo('This block has no transactions (empty block).');
+      printInfo('Empty blocks are common on LocalNet when there is no activity.');
+      printInfo('');
     }
   } catch (error) {
-    printError(`Failed to show transactions: ${error instanceof Error ? error.message : String(error)}`)
+    printError(
+      `Failed to show transactions: ${error instanceof Error ? error.message : String(error)}`,
+    );
   }
 
   // =========================================================================
   // Step 5: Create some transactions to have blocks with transactions
   // =========================================================================
-  printStep(5, 'Creating transactions to demonstrate blocks with transactions')
+  printStep(5, 'Creating transactions to demonstrate blocks with transactions');
 
-  let blockWithTxns: bigint | undefined
+  let blockWithTxns: bigint | undefined;
 
   try {
     // Get a funded account
-    const dispenser = await algorand.account.kmd.getLocalNetDispenserAccount()
-    algorand.setSignerFromAccount(dispenser)
-    const dispenserAddress = dispenser.addr.toString()
-    printInfo(`Using dispenser: ${shortenAddress(dispenserAddress)}`)
+    const dispenser = await algorand.account.kmd.getLocalNetDispenserAccount();
+    algorand.setSignerFromAccount(dispenser);
+    const dispenserAddress = dispenser.addr.toString();
+    printInfo(`Using dispenser: ${shortenAddress(dispenserAddress)}`);
 
     // Create a few transactions
-    printInfo('Creating 3 payment transactions...')
-    const receiver = algorand.account.random()
+    printInfo('Creating 3 payment transactions...');
+    const receiver = algorand.account.random();
 
     for (let i = 0; i < 3; i++) {
       await algorand.send.payment({
@@ -321,152 +335,155 @@ async function main() {
         receiver: receiver.addr,
         amount: algo(0.1),
         note: `Block lookup example payment ${i + 1}`,
-      })
+      });
     }
 
-    printSuccess('Created 3 transactions')
+    printSuccess('Created 3 transactions');
 
     // Wait a moment for indexer to catch up
-    printInfo('Waiting for indexer to index the transactions...')
-    await new Promise((resolve) => setTimeout(resolve, 2000))
+    printInfo('Waiting for indexer to index the transactions...');
+    await new Promise(resolve => setTimeout(resolve, 2000));
 
     // Get the current round which should contain our transactions
-    const health = await indexer.healthCheck()
-    blockWithTxns = BigInt(health.round)
-    printInfo(`Current round after transactions: ${blockWithTxns}`)
-    printInfo('')
+    const health = await indexer.healthCheck();
+    blockWithTxns = BigInt(health.round);
+    printInfo(`Current round after transactions: ${blockWithTxns}`);
+    printInfo('');
 
     // Look up a recent block that might contain our transactions
     // Check a few recent blocks to find one with transactions
     for (let r = blockWithTxns; r > blockWithTxns - 5n && r > 0n; r--) {
-      const block = await indexer.lookupBlock(r)
+      const block = await indexer.lookupBlock(r);
       if (block.transactions.length > 0) {
-        blockWithTxns = r
-        printSuccess(`Found block ${r} with ${block.transactions.length} transaction(s)`)
-        printInfo('')
+        blockWithTxns = r;
+        printSuccess(`Found block ${r} with ${block.transactions.length} transaction(s)`);
+        printInfo('');
 
         // Show the transactions
-        printInfo('Transactions in this block:')
+        printInfo('Transactions in this block:');
         for (let i = 0; i < Math.min(block.transactions.length, 3); i++) {
-          const txn = block.transactions[i]
-          const txnId = txn.id ?? 'unknown'
-          printInfo(`  [${i}] ${txnId.substring(0, 20)}... (${txn.txType})`)
+          const txn = block.transactions[i];
+          const txnId = txn.id ?? 'unknown';
+          printInfo(`  [${i}] ${txnId.substring(0, 20)}... (${txn.txType})`);
         }
         if (block.transactions.length > 3) {
-          printInfo(`  ... and ${block.transactions.length - 3} more`)
+          printInfo(`  ... and ${block.transactions.length - 3} more`);
         }
-        break
+        break;
       }
     }
   } catch (error) {
-    printError(`Failed to create transactions: ${error instanceof Error ? error.message : String(error)}`)
-    printInfo('This step requires LocalNet - continuing with other demonstrations...')
-    printInfo('')
+    printError(
+      `Failed to create transactions: ${error instanceof Error ? error.message : String(error)}`,
+    );
+    printInfo('This step requires LocalNet - continuing with other demonstrations...');
+    printInfo('');
   }
 
   // =========================================================================
   // Step 6: Demonstrate headerOnly parameter to get only block header
   // =========================================================================
-  printStep(6, 'Demonstrating headerOnly parameter')
+  printStep(6, 'Demonstrating headerOnly parameter');
 
   try {
-    const roundToLookup = blockWithTxns ?? recentRound
+    const roundToLookup = blockWithTxns ?? recentRound;
 
-    printInfo(`Looking up block ${roundToLookup} with headerOnly=false (default):`)
-    const fullBlock = await indexer.lookupBlock(roundToLookup)
-    printInfo(`  Transactions included: ${fullBlock.transactions.length}`)
-    printInfo('')
+    printInfo(`Looking up block ${roundToLookup} with headerOnly=false (default):`);
+    const fullBlock = await indexer.lookupBlock(roundToLookup);
+    printInfo(`  Transactions included: ${fullBlock.transactions.length}`);
+    printInfo('');
 
-    printInfo(`Looking up block ${roundToLookup} with headerOnly=true:`)
-    const headerOnly = await indexer.lookupBlock(roundToLookup, { headerOnly: true })
-    printInfo(`  Transactions included: ${headerOnly.transactions.length}`)
-    printInfo('')
+    printInfo(`Looking up block ${roundToLookup} with headerOnly=true:`);
+    const headerOnly = await indexer.lookupBlock(roundToLookup, { headerOnly: true });
+    printInfo(`  Transactions included: ${headerOnly.transactions.length}`);
+    printInfo('');
 
     if (fullBlock.transactions.length > 0 && headerOnly.transactions.length === 0) {
-      printSuccess('headerOnly=true correctly excludes transactions from the response')
+      printSuccess('headerOnly=true correctly excludes transactions from the response');
     } else if (fullBlock.transactions.length === 0) {
-      printInfo('This block has no transactions, so headerOnly has no visible effect')
-      printInfo('headerOnly=true is useful to reduce response size for blocks with many transactions')
+      printInfo('This block has no transactions, so headerOnly has no visible effect');
+      printInfo(
+        'headerOnly=true is useful to reduce response size for blocks with many transactions',
+      );
     }
 
-    printInfo('')
-    printInfo('headerOnly parameter:')
-    printInfo('  - false (default): Returns full block including all transactions')
-    printInfo('  - true: Returns only block header without transactions array')
-    printInfo('  - Use headerOnly=true when you only need block metadata for better performance')
+    printInfo('');
+    printInfo('headerOnly parameter:');
+    printInfo('  - false (default): Returns full block including all transactions');
+    printInfo('  - true: Returns only block header without transactions array');
+    printInfo('  - Use headerOnly=true when you only need block metadata for better performance');
   } catch (error) {
-    printError(`headerOnly demo failed: ${error instanceof Error ? error.message : String(error)}`)
+    printError(`headerOnly demo failed: ${error instanceof Error ? error.message : String(error)}`);
   }
 
   // =========================================================================
   // Step 7: Handle the case where block is not found
   // =========================================================================
-  printStep(7, 'Handling the case where block is not found')
+  printStep(7, 'Handling the case where block is not found');
 
   try {
     // Try to look up a block from the far future
-    const futureRound = 999999999999n
-    printInfo(`Attempting to lookup block ${futureRound} (far future)...`)
+    const futureRound = 999999999999n;
+    printInfo(`Attempting to lookup block ${futureRound} (far future)...`);
 
-    await indexer.lookupBlock(futureRound)
+    await indexer.lookupBlock(futureRound);
 
     // If we get here, the block was found (unexpected)
-    printInfo('Block was found (unexpected)')
+    printInfo('Block was found (unexpected)');
   } catch (error) {
-    printSuccess('Correctly caught error for non-existent block')
+    printSuccess('Correctly caught error for non-existent block');
     if (error instanceof Error) {
-      printInfo(`Error message: ${error.message}`)
+      printInfo(`Error message: ${error.message}`);
     }
-    printInfo('')
-    printInfo('Always handle the case where a block may not exist yet.')
-    printInfo('The indexer throws an error when the block round has not been reached.')
+    printInfo('');
+    printInfo('Always handle the case where a block may not exist yet.');
+    printInfo('The indexer throws an error when the block round has not been reached.');
   }
 
   // =========================================================================
   // Summary
   // =========================================================================
-  printHeader('Summary')
-  printInfo('This example demonstrated:')
-  printInfo('  1. Getting a recent block round from the indexer health check')
-  printInfo('  2. lookupBlock(roundNumber) - Get full block details')
-  printInfo('  3. Block header info: seed, transaction commitments, participation updates')
-  printInfo('  4. Displaying transactions included in a block')
-  printInfo('  5. Creating transactions to populate blocks')
-  printInfo('  6. headerOnly parameter - Get block header without transactions')
-  printInfo('  7. Handling the case where block is not found')
-  printInfo('')
-  printInfo('Key Block fields:')
-  printInfo('  - round: Block round number (bigint)')
-  printInfo('  - timestamp: Unix timestamp in seconds')
-  printInfo('  - genesisId: Genesis block identifier string')
-  printInfo('  - genesisHash: 32-byte hash of genesis block (Uint8Array)')
-  printInfo('  - previousBlockHash: 32-byte hash of previous block (Uint8Array)')
-  printInfo('  - seed: 32-byte sortition seed (Uint8Array)')
-  printInfo('  - transactionsRoot: Merkle root of transactions (Uint8Array)')
-  printInfo('  - transactions: Array of Transaction objects')
-  printInfo('  - participationUpdates: Participation account updates')
-  printInfo('  - rewards: Block rewards info (feeSink, rewardsPool, etc.)')
-  printInfo('  - upgradeState: Protocol upgrade state')
-  printInfo('')
-  printInfo('Optional Block fields:')
-  printInfo('  - proposer: Block proposer address (newer blocks)')
-  printInfo('  - feesCollected: Total fees collected in block')
-  printInfo('  - bonus: Bonus payout for block')
-  printInfo('  - proposerPayout: Amount paid to proposer')
-  printInfo('  - txnCounter: Cumulative transaction count')
-  printInfo('  - stateProofTracking: State proof tracking info')
-  printInfo('  - upgradeVote: Protocol upgrade vote')
-  printInfo('')
-  printInfo('lookupBlock() parameters:')
-  printInfo('  - roundNumber: Block round to lookup (required)')
-  printInfo('  - headerOnly: If true, exclude transactions from response (optional)')
+  printHeader('Summary');
+  printInfo('This example demonstrated:');
+  printInfo('  1. Getting a recent block round from the indexer health check');
+  printInfo('  2. lookupBlock(roundNumber) - Get full block details');
+  printInfo('  3. Block header info: seed, transaction commitments, participation updates');
+  printInfo('  4. Displaying transactions included in a block');
+  printInfo('  5. Creating transactions to populate blocks');
+  printInfo('  6. headerOnly parameter - Get block header without transactions');
+  printInfo('  7. Handling the case where block is not found');
+  printInfo('');
+  printInfo('Key Block fields:');
+  printInfo('  - round: Block round number (bigint)');
+  printInfo('  - timestamp: Unix timestamp in seconds');
+  printInfo('  - genesisId: Genesis block identifier string');
+  printInfo('  - genesisHash: 32-byte hash of genesis block (Uint8Array)');
+  printInfo('  - previousBlockHash: 32-byte hash of previous block (Uint8Array)');
+  printInfo('  - seed: 32-byte sortition seed (Uint8Array)');
+  printInfo('  - transactionsRoot: Merkle root of transactions (Uint8Array)');
+  printInfo('  - transactions: Array of Transaction objects');
+  printInfo('  - participationUpdates: Participation account updates');
+  printInfo('  - rewards: Block rewards info (feeSink, rewardsPool, etc.)');
+  printInfo('  - upgradeState: Protocol upgrade state');
+  printInfo('');
+  printInfo('Optional Block fields:');
+  printInfo('  - proposer: Block proposer address (newer blocks)');
+  printInfo('  - feesCollected: Total fees collected in block');
+  printInfo('  - bonus: Bonus payout for block');
+  printInfo('  - proposerPayout: Amount paid to proposer');
+  printInfo('  - txnCounter: Cumulative transaction count');
+  printInfo('  - stateProofTracking: State proof tracking info');
+  printInfo('  - upgradeVote: Protocol upgrade vote');
+  printInfo('');
+  printInfo('lookupBlock() parameters:');
+  printInfo('  - roundNumber: Block round to lookup (required)');
+  printInfo('  - headerOnly: If true, exclude transactions from response (optional)');
 }
 
-main().catch((error) => {
-  console.error('Fatal error:', error)
-  process.exit(1)
-})
-
+main().catch(error => {
+  console.error('Fatal error:', error);
+  process.exit(1);
+});
 ```
 
 ---

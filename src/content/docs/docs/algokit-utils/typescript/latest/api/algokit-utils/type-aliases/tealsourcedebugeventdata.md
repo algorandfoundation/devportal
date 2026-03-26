@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "TealSourceDebugEventData"
+title: 'TealSourceDebugEventData'
 ---
 
 > **TealSourceDebugEventData** = `object`
@@ -21,7 +21,7 @@ Defined in: [src/debugging.ts:29](https://github.com/algorandfoundation/algokit-
 
 The name of the application
 
-***
+---
 
 ### compiledTeal
 
@@ -31,7 +31,7 @@ Defined in: [src/debugging.ts:33](https://github.com/algorandfoundation/algokit-
 
 The compiled TEAL code
 
-***
+---
 
 ### fileName
 

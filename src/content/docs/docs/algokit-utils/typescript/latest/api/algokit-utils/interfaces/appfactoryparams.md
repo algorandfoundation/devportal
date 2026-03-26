@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "AppFactoryParams"
+title: 'AppFactoryParams'
 ---
 
 Defined in: [src/app-factory.ts:27](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/app-factory.ts#L27)
@@ -19,7 +19,7 @@ Defined in: [src/app-factory.ts:36](https://github.com/algorandfoundation/algoki
 
 `AlgorandClient` instance
 
-***
+---
 
 ### appName?
 
@@ -30,7 +30,7 @@ Defined in: [src/app-factory.ts:42](https://github.com/algorandfoundation/algoki
 Optional override for the app name; used for on-chain metadata and lookups.
 Defaults to the ARC-32/ARC-56 app spec name.
 
-***
+---
 
 ### appSpec
 
@@ -39,11 +39,12 @@ Defaults to the ARC-32/ARC-56 app spec name.
 Defined in: [src/app-factory.ts:33](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/app-factory.ts#L33)
 
 The ARC-56 or ARC-32 application spec as either:
- * Parsed JSON ARC-56 `Contract`
- * Parsed JSON ARC-32 `AppSpec`
- * Raw JSON string (in either ARC-56 or ARC-32 format)
 
-***
+- Parsed JSON ARC-56 `Contract`
+- Parsed JSON ARC-32 `AppSpec`
+- Raw JSON string (in either ARC-56 or ARC-32 format)
+
+---
 
 ### defaultSender?
 
@@ -53,7 +54,7 @@ Defined in: [src/app-factory.ts:45](https://github.com/algorandfoundation/algoki
 
 Optional address to use for the account to use as the default sender for calls.
 
-***
+---
 
 ### defaultSigner?
 
@@ -63,7 +64,7 @@ Defined in: [src/app-factory.ts:48](https://github.com/algorandfoundation/algoki
 
 Optional signer to use as the default signer for default sender calls (if not specified then the signer will be resolved from `AlgorandClient`).
 
-***
+---
 
 ### deletable?
 
@@ -77,7 +78,7 @@ If specified here will get used in calls to `deploy` and `create` calls unless o
 Useful if you want to vend multiple contracts from the same factory without specifying this value
 for each call.
 
-***
+---
 
 ### deployTimeParams?
 
@@ -91,7 +92,7 @@ If specified here will get used in calls to `deploy` and `create` calls unless o
 Useful if you want to vend multiple contracts from the same factory without specifying this value
 for each call.
 
-***
+---
 
 ### updatable?
 
@@ -105,7 +106,7 @@ If specified here will get used in calls to `deploy` and `create` calls unless o
 Useful if you want to vend multiple contracts from the same factory without specifying this value
 for each call.
 
-***
+---
 
 ### version?
 

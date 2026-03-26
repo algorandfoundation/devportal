@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "AbiCallOptions"
+title: 'AbiCallOptions'
 ---
 
 Defined in: [arc4/c2c.ts:112](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/arc4/c2c.ts#L112)
@@ -35,7 +35,7 @@ Index of the account to get
 
 [`ApplicationCallFields`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/applicationcallfields/).[`accounts`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/applicationcallfields/#accounts)
 
-***
+---
 
 ### appId?
 
@@ -49,7 +49,7 @@ ApplicationID from ApplicationCall transaction
 
 [`ApplicationCallFields`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/applicationcallfields/).[`appId`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/applicationcallfields/#appid)
 
-***
+---
 
 ### approvalProgram?
 
@@ -67,7 +67,7 @@ Index of the page to get
 
 [`ApplicationCallFields`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/applicationcallfields/).[`approvalProgram`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/applicationcallfields/#approvalprogram)
 
-***
+---
 
 ### apps?
 
@@ -85,15 +85,15 @@ Index of the application to get
 
 [`ApplicationCallFields`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/applicationcallfields/).[`apps`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/applicationcallfields/#apps)
 
-***
+---
 
 ### args?
 
-> `readonly` `optional` **args**: `TMethod` *extends* `InstanceMethod`\<[`Contract`](/algorand-typescript/api/arc4/classes/contract/), `TParams`\> ? [`TypedApplicationArgs`](/algorand-typescript/api/arc4/type-aliases/typedapplicationargs/)\<`TParams`\> : `unknown`[]
+> `readonly` `optional` **args**: `TMethod` _extends_ `InstanceMethod`\<[`Contract`](/algorand-typescript/api/arc4/classes/contract/), `TParams`\> ? [`TypedApplicationArgs`](/algorand-typescript/api/arc4/type-aliases/typedapplicationargs/)\<`TParams`\> : `unknown`[]
 
 Defined in: [arc4/c2c.ts:114](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/arc4/c2c.ts#L114)
 
-***
+---
 
 ### assets?
 
@@ -111,7 +111,7 @@ Index of the asset to get
 
 [`ApplicationCallFields`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/applicationcallfields/).[`assets`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/applicationcallfields/#assets)
 
-***
+---
 
 ### clearStateProgram?
 
@@ -129,7 +129,7 @@ Index of the page to get
 
 [`ApplicationCallFields`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/applicationcallfields/).[`clearStateProgram`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/applicationcallfields/#clearstateprogram)
 
-***
+---
 
 ### extraProgramPages?
 
@@ -143,7 +143,7 @@ Number of additional pages for each of the application's approval and clear stat
 
 [`ApplicationCallFields`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/applicationcallfields/).[`extraProgramPages`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/applicationcallfields/#extraprogrampages)
 
-***
+---
 
 ### fee?
 
@@ -157,7 +157,7 @@ microalgos
 
 [`ApplicationCallFields`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/applicationcallfields/).[`fee`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/applicationcallfields/#fee)
 
-***
+---
 
 ### firstValid?
 
@@ -171,7 +171,7 @@ round number
 
 [`ApplicationCallFields`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/applicationcallfields/).[`firstValid`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/applicationcallfields/#firstvalid)
 
-***
+---
 
 ### firstValidTime?
 
@@ -185,7 +185,7 @@ UNIX timestamp of block before txn.FirstValid. Fails if negative
 
 [`ApplicationCallFields`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/applicationcallfields/).[`firstValidTime`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/applicationcallfields/#firstvalidtime)
 
-***
+---
 
 ### globalNumBytes?
 
@@ -199,7 +199,7 @@ Number of global state byteslices this application makes use of.
 
 [`ApplicationCallFields`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/applicationcallfields/).[`globalNumBytes`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/applicationcallfields/#globalnumbytes)
 
-***
+---
 
 ### globalNumUint?
 
@@ -213,7 +213,7 @@ Number of global state integers this application makes use of.
 
 [`ApplicationCallFields`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/applicationcallfields/).[`globalNumUint`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/applicationcallfields/#globalnumuint)
 
-***
+---
 
 ### lastValid?
 
@@ -227,7 +227,7 @@ round number
 
 [`ApplicationCallFields`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/applicationcallfields/).[`lastValid`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/applicationcallfields/#lastvalid)
 
-***
+---
 
 ### lease?
 
@@ -241,7 +241,7 @@ Defined in: [itxn.ts:899](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 [`ApplicationCallFields`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/applicationcallfields/).[`lease`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/applicationcallfields/#lease)
 
-***
+---
 
 ### localNumBytes?
 
@@ -255,7 +255,7 @@ Number of local state byteslices this application makes use of.
 
 [`ApplicationCallFields`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/applicationcallfields/).[`localNumBytes`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/applicationcallfields/#localnumbytes)
 
-***
+---
 
 ### localNumUint?
 
@@ -269,7 +269,7 @@ Number of local state integers this application makes use of.
 
 [`ApplicationCallFields`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/applicationcallfields/).[`localNumUint`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/applicationcallfields/#localnumuint)
 
-***
+---
 
 ### method?
 
@@ -277,7 +277,7 @@ Number of local state integers this application makes use of.
 
 Defined in: [arc4/c2c.ts:113](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/arc4/c2c.ts#L113)
 
-***
+---
 
 ### note?
 
@@ -291,7 +291,7 @@ Any data up to 1024 bytes
 
 [`ApplicationCallFields`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/applicationcallfields/).[`note`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/applicationcallfields/#note)
 
-***
+---
 
 ### onCompletion?
 
@@ -305,7 +305,7 @@ ApplicationCall transaction on completion action
 
 [`ApplicationCallFields`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/applicationcallfields/).[`onCompletion`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/applicationcallfields/#oncompletion)
 
-***
+---
 
 ### rejectVersion?
 
@@ -319,7 +319,7 @@ Application version for which the txn must reject
 
 [`ApplicationCallFields`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/applicationcallfields/).[`rejectVersion`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/applicationcallfields/#rejectversion)
 
-***
+---
 
 ### rekeyTo?
 
@@ -333,7 +333,7 @@ Defined in: [itxn.ts:903](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 [`ApplicationCallFields`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/applicationcallfields/).[`rekeyTo`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/applicationcallfields/#rekeyto)
 
-***
+---
 
 ### sender?
 

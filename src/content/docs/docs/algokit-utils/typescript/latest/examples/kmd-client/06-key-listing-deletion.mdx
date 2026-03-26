@@ -1,6 +1,6 @@
 ---
-title: "Key Listing and Deletion"
-description: "This example demonstrates how to list all keys in a wallet and delete specific keys using the KMD `listKeysInWallet()` and `deleteKey()` methods."
+title: 'Key Listing and Deletion'
+description: 'This example demonstrates how to list all keys in a wallet and delete specific keys using the KMD `listKeysInWallet()` and `deleteKey()` methods.'
 sidebar:
   order: 6
 ---
@@ -16,7 +16,7 @@ This example demonstrates how to list all keys in a wallet and delete specific k
 - LocalNet running (via `algokit localnet start`)
 - Covered operations:
 - listKeysInWallet() - List all keys (addresses) in a wallet
-- deleteKey()        - Delete a specific key from the wallet
+- deleteKey() - Delete a specific key from the wallet
 
 ## Run This Example
 
@@ -46,7 +46,7 @@ npm run example kmd_client/06-key-listing-deletion.ts
  * - deleteKey()        - Delete a specific key from the wallet
  */
 
-import type { Address } from '@algorandfoundation/algokit-utils'
+import type { Address } from '@algorandfoundation/algokit-utils';
 import {
   cleanupTestWallet,
   createKmdClient,
@@ -56,126 +56,128 @@ import {
   printInfo,
   printStep,
   printSuccess,
-} from '../shared/utils.js'
+} from '../shared/utils.js';
 
 async function main() {
-  printHeader('KMD Key Listing and Deletion Example')
+  printHeader('KMD Key Listing and Deletion Example');
 
-  const kmd = createKmdClient()
-  const walletPassword = 'test-password'
-  let walletHandleToken = ''
+  const kmd = createKmdClient();
+  const walletPassword = 'test-password';
+  let walletHandleToken = '';
 
   try {
     // =========================================================================
     // Step 1: Create a Test Wallet
     // =========================================================================
-    printStep(1, 'Creating a test wallet')
+    printStep(1, 'Creating a test wallet');
 
-    const testWallet = await createTestWallet(kmd, walletPassword)
-    walletHandleToken = testWallet.walletHandleToken
+    const testWallet = await createTestWallet(kmd, walletPassword);
+    walletHandleToken = testWallet.walletHandleToken;
 
-    printSuccess(`Test wallet created: ${testWallet.walletName}`)
-    printInfo(`Wallet ID: ${testWallet.walletId}`)
+    printSuccess(`Test wallet created: ${testWallet.walletName}`);
+    printInfo(`Wallet ID: ${testWallet.walletId}`);
 
     // =========================================================================
     // Step 2: Generate Several Keys
     // =========================================================================
-    printStep(2, 'Generating several keys in the wallet')
+    printStep(2, 'Generating several keys in the wallet');
 
-    const generatedAddresses: Address[] = []
+    const generatedAddresses: Address[] = [];
 
-    printInfo('Generating 5 keys...')
-    printInfo('')
+    printInfo('Generating 5 keys...');
+    printInfo('');
 
     for (let i = 0; i < 5; i++) {
       const result = await kmd.generateKey({
         walletHandleToken,
-      })
-      generatedAddresses.push(result.address)
-      printInfo(`  Key ${i + 1}: ${result.address}`)
+      });
+      generatedAddresses.push(result.address);
+      printInfo(`  Key ${i + 1}: ${result.address}`);
     }
 
-    printSuccess(`Generated ${generatedAddresses.length} keys`)
+    printSuccess(`Generated ${generatedAddresses.length} keys`);
 
     // =========================================================================
     // Step 3: List All Keys with listKeysInWallet()
     // =========================================================================
-    printStep(3, 'Listing all keys with listKeysInWallet()')
+    printStep(3, 'Listing all keys with listKeysInWallet()');
 
     const listResult = await kmd.listKeysInWallet({
       walletHandleToken,
-    })
+    });
 
-    printSuccess(`Found ${listResult.addresses.length} keys in wallet`)
-    printInfo('')
-    printInfo('ListKeysResponse fields:')
-    printInfo('  addresses: Array of Address objects')
-    printInfo('')
-    printInfo('All keys in the wallet:')
+    printSuccess(`Found ${listResult.addresses.length} keys in wallet`);
+    printInfo('');
+    printInfo('ListKeysResponse fields:');
+    printInfo('  addresses: Array of Address objects');
+    printInfo('');
+    printInfo('All keys in the wallet:');
 
     listResult.addresses.forEach((address, index) => {
-      printInfo(`  ${index + 1}. ${address}`)
-    })
+      printInfo(`  ${index + 1}. ${address}`);
+    });
 
     // =========================================================================
     // Step 4: Delete One Key with deleteKey()
     // =========================================================================
-    printStep(4, 'Deleting the first key with deleteKey()')
+    printStep(4, 'Deleting the first key with deleteKey()');
 
-    const keyToDelete = generatedAddresses[0]
-    const keyToDeleteStr = keyToDelete.toString()
-    printInfo(`Key to delete: ${keyToDeleteStr}`)
-    printInfo('')
+    const keyToDelete = generatedAddresses[0];
+    const keyToDeleteStr = keyToDelete.toString();
+    printInfo(`Key to delete: ${keyToDeleteStr}`);
+    printInfo('');
 
     await kmd.deleteKey({
       walletHandleToken,
       address: keyToDelete,
       walletPassword,
-    })
+    });
 
-    printSuccess('Key deleted successfully!')
-    printInfo('')
-    printInfo('deleteKey() parameters:')
-    printInfo('  walletHandleToken: The handle token from initWalletHandle()')
-    printInfo('  address:           The public address of the key to delete')
-    printInfo('  walletPassword:    The wallet password (required for security)')
-    printInfo('')
-    printInfo('Note: deleteKey() returns void on success (no response body).')
+    printSuccess('Key deleted successfully!');
+    printInfo('');
+    printInfo('deleteKey() parameters:');
+    printInfo('  walletHandleToken: The handle token from initWalletHandle()');
+    printInfo('  address:           The public address of the key to delete');
+    printInfo('  walletPassword:    The wallet password (required for security)');
+    printInfo('');
+    printInfo('Note: deleteKey() returns void on success (no response body).');
 
     // =========================================================================
     // Step 5: Verify Deletion by Listing Keys Again
     // =========================================================================
-    printStep(5, 'Verifying deletion by listing keys again')
+    printStep(5, 'Verifying deletion by listing keys again');
 
     const listAfterDelete = await kmd.listKeysInWallet({
       walletHandleToken,
-    })
+    });
 
-    printInfo(`Keys before deletion: ${listResult.addresses.length}`)
-    printInfo(`Keys after deletion:  ${listAfterDelete.addresses.length}`)
-    printInfo('')
+    printInfo(`Keys before deletion: ${listResult.addresses.length}`);
+    printInfo(`Keys after deletion:  ${listAfterDelete.addresses.length}`);
+    printInfo('');
 
-    const deletedKeyPresent = listAfterDelete.addresses.some((addr) => addr.toString() === keyToDeleteStr)
+    const deletedKeyPresent = listAfterDelete.addresses.some(
+      addr => addr.toString() === keyToDeleteStr,
+    );
 
     if (!deletedKeyPresent) {
-      printSuccess(`Confirmed: Key ${keyToDeleteStr.slice(0, 8)}... is no longer in the wallet`)
+      printSuccess(`Confirmed: Key ${keyToDeleteStr.slice(0, 8)}... is no longer in the wallet`);
     } else {
-      printError('Key still present in wallet after deletion!')
+      printError('Key still present in wallet after deletion!');
     }
 
-    printInfo('')
-    printInfo('Remaining keys:')
+    printInfo('');
+    printInfo('Remaining keys:');
     listAfterDelete.addresses.forEach((address, index) => {
-      printInfo(`  ${index + 1}. ${address}`)
-    })
+      printInfo(`  ${index + 1}. ${address}`);
+    });
 
     // =========================================================================
     // Step 6: Handle Deleting a Non-Existent Key
     // =========================================================================
-    printStep(6, 'Handling deletion of a non-existent key')
+    printStep(6, 'Handling deletion of a non-existent key');
 
-    printInfo('Attempting to delete the already-deleted key again...')
-    printInfo('')
+    printInfo('Attempting to delete the already-deleted key again...');
+    printInfo('');
 
     // Note: KMD does NOT throw an error when deleting a non-existent key.
     // The operation silently succeeds even if the key doesn't exist.
@@ -183,73 +185,72 @@ async function main() {
       walletHandleToken,
       address: keyToDelete,
       walletPassword,
-    })
+    });
 
-    printSuccess('deleteKey() completed (no error thrown)')
-    printInfo('')
-    printInfo('Important: KMD does NOT throw an error when deleting a non-existent key!')
-    printInfo('The operation silently succeeds even if:')
-    printInfo('  - The key does not exist in the wallet')
-    printInfo('  - The address was never part of this wallet')
-    printInfo('  - The key was already deleted')
-    printInfo('')
-    printInfo('This means you should always verify key existence before deletion')
-    printInfo('if you need to confirm the key was actually removed.')
+    printSuccess('deleteKey() completed (no error thrown)');
+    printInfo('');
+    printInfo('Important: KMD does NOT throw an error when deleting a non-existent key!');
+    printInfo('The operation silently succeeds even if:');
+    printInfo('  - The key does not exist in the wallet');
+    printInfo('  - The address was never part of this wallet');
+    printInfo('  - The key was already deleted');
+    printInfo('');
+    printInfo('This means you should always verify key existence before deletion');
+    printInfo('if you need to confirm the key was actually removed.');
 
     // =========================================================================
     // Cleanup
     // =========================================================================
-    printStep(7, 'Cleaning up test wallet')
+    printStep(7, 'Cleaning up test wallet');
 
-    await cleanupTestWallet(kmd, walletHandleToken)
-    walletHandleToken = '' // Mark as cleaned up
+    await cleanupTestWallet(kmd, walletHandleToken);
+    walletHandleToken = ''; // Mark as cleaned up
 
-    printSuccess('Test wallet handle released')
+    printSuccess('Test wallet handle released');
 
     // =========================================================================
     // Summary
     // =========================================================================
-    printHeader('Summary')
-    printInfo('This example demonstrated key listing and deletion in KMD:')
-    printInfo('')
-    printInfo('  1. listKeysInWallet() - List all keys (addresses) in a wallet')
-    printInfo('     - Takes: walletHandleToken')
-    printInfo('     - Returns: { addresses: Address[] }')
-    printInfo('')
-    printInfo('  2. deleteKey() - Delete a specific key from the wallet')
-    printInfo('     - Takes: walletHandleToken, address, walletPassword')
-    printInfo('     - Returns: void (no response body)')
-    printInfo('     - Requires wallet password for security')
-    printInfo('')
-    printInfo('Important notes:')
-    printInfo('  - Deleted keys cannot be recovered unless you have a backup')
-    printInfo('  - Generated keys can be re-derived from the master derivation key')
-    printInfo('  - Imported keys are permanently lost if deleted without backup')
-    printInfo('  - Deleting a non-existent key does NOT throw an error (silent success)')
-    printInfo('')
-    printInfo('Note: The test wallet remains in KMD (wallets cannot be deleted via API).')
+    printHeader('Summary');
+    printInfo('This example demonstrated key listing and deletion in KMD:');
+    printInfo('');
+    printInfo('  1. listKeysInWallet() - List all keys (addresses) in a wallet');
+    printInfo('     - Takes: walletHandleToken');
+    printInfo('     - Returns: { addresses: Address[] }');
+    printInfo('');
+    printInfo('  2. deleteKey() - Delete a specific key from the wallet');
+    printInfo('     - Takes: walletHandleToken, address, walletPassword');
+    printInfo('     - Returns: void (no response body)');
+    printInfo('     - Requires wallet password for security');
+    printInfo('');
+    printInfo('Important notes:');
+    printInfo('  - Deleted keys cannot be recovered unless you have a backup');
+    printInfo('  - Generated keys can be re-derived from the master derivation key');
+    printInfo('  - Imported keys are permanently lost if deleted without backup');
+    printInfo('  - Deleting a non-existent key does NOT throw an error (silent success)');
+    printInfo('');
+    printInfo('Note: The test wallet remains in KMD (wallets cannot be deleted via API).');
   } catch (error) {
-    printError(`Error: ${error instanceof Error ? error.message : String(error)}`)
-    printInfo('')
-    printInfo('Troubleshooting:')
-    printInfo('  - Ensure LocalNet is running: algokit localnet start')
-    printInfo('  - If LocalNet issues occur: algokit localnet reset')
-    printInfo('  - Check that KMD is accessible on port 4002')
+    printError(`Error: ${error instanceof Error ? error.message : String(error)}`);
+    printInfo('');
+    printInfo('Troubleshooting:');
+    printInfo('  - Ensure LocalNet is running: algokit localnet start');
+    printInfo('  - If LocalNet issues occur: algokit localnet reset');
+    printInfo('  - Check that KMD is accessible on port 4002');
 
     // Cleanup on error
     if (walletHandleToken) {
-      await cleanupTestWallet(kmd, walletHandleToken)
+      await cleanupTestWallet(kmd, walletHandleToken);
     }
 
-    process.exit(1)
+    process.exit(1);
   }
 }
 
-main().catch((error) => {
-  console.error('Fatal error:', error)
-  process.exit(1)
-})
-
+main().catch(error => {
+  console.error('Fatal error:', error);
+  process.exit(1);
+});
 ```
 
 ---

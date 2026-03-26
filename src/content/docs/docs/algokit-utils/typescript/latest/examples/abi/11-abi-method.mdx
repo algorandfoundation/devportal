@@ -1,6 +1,6 @@
 ---
-title: "ABI Method"
-description: "This example demonstrates how to work with ABI methods:"
+title: 'ABI Method'
+description: 'This example demonstrates how to work with ABI methods:'
 sidebar:
   order: 11
 ---
@@ -10,11 +10,12 @@ sidebar:
 ## Description
 
 This example demonstrates how to work with ABI methods:
+
 - Parsing method signatures with ABIMethod.fromSignature()
 - Accessing method name, args, and return type
 - Generating 4-byte method selectors with getSelector()
 - Understanding the relationship: selector = first 4 bytes of SHA-512/256(signature)
- ABI method signatures follow the pattern: name(arg1Type,arg2Type,...)returnType Examples: 'transfer(address,uint64)uint64', 'hello(string)string'
+  ABI method signatures follow the pattern: name(arg1Type,arg2Type,...)returnType Examples: 'transfer(address,uint64)uint64', 'hello(string)string'
 
 ## Prerequisites
 
@@ -50,274 +51,277 @@ npm run example abi/11-abi-method.ts
  * - No LocalNet required
  */
 
-import { ABIMethod } from '@algorandfoundation/algokit-utils/abi'
-import crypto from 'crypto'
-import { formatHex, printHeader, printInfo, printStep, printSuccess } from '../shared/utils.js'
+import { ABIMethod } from '@algorandfoundation/algokit-utils/abi';
+import crypto from 'crypto';
+import { formatHex, printHeader, printInfo, printStep, printSuccess } from '../shared/utils.js';
 
 function main() {
-  printHeader('ABI Method Example')
+  printHeader('ABI Method Example');
 
   // Step 1: Introduction to ABI Methods
-  printStep(1, 'Introduction to ABI Methods')
+  printStep(1, 'Introduction to ABI Methods');
 
-  printInfo('ABI methods define the interface for smart contract functions.')
-  printInfo('Method signatures follow the pattern: name(argTypes...)returnType')
-  printInfo('')
-  printInfo('Key components:')
-  printInfo('  - name: The method name (e.g., "transfer")')
-  printInfo('  - args: Array of argument types (e.g., [address, uint64])')
-  printInfo('  - returns: The return type (e.g., uint64)')
-  printInfo('  - selector: 4-byte identifier = SHA-512/256(signature)[0:4]')
+  printInfo('ABI methods define the interface for smart contract functions.');
+  printInfo('Method signatures follow the pattern: name(argTypes...)returnType');
+  printInfo('');
+  printInfo('Key components:');
+  printInfo('  - name: The method name (e.g., "transfer")');
+  printInfo('  - args: Array of argument types (e.g., [address, uint64])');
+  printInfo('  - returns: The return type (e.g., uint64)');
+  printInfo('  - selector: 4-byte identifier = SHA-512/256(signature)[0:4]');
 
   // Step 2: Parse a basic method signature
-  printStep(2, 'Parsing Method Signatures')
+  printStep(2, 'Parsing Method Signatures');
 
-  const transferMethod = ABIMethod.fromSignature('transfer(address,uint64)uint64')
+  const transferMethod = ABIMethod.fromSignature('transfer(address,uint64)uint64');
 
-  printInfo(`Signature: transfer(address,uint64)uint64`)
-  printInfo(`  name: ${transferMethod.name}`)
-  printInfo(`  args count: ${transferMethod.args.length}`)
+  printInfo(`Signature: transfer(address,uint64)uint64`);
+  printInfo(`  name: ${transferMethod.name}`);
+  printInfo(`  args count: ${transferMethod.args.length}`);
 
   for (let i = 0; i < transferMethod.args.length; i++) {
-    const arg = transferMethod.args[i]
-    printInfo(`  args[${i}].type: ${arg.type.toString()}`)
+    const arg = transferMethod.args[i];
+    printInfo(`  args[${i}].type: ${arg.type.toString()}`);
   }
 
-  printInfo(`  returns.type: ${transferMethod.returns.type.toString()}`)
+  printInfo(`  returns.type: ${transferMethod.returns.type.toString()}`);
 
   // Step 3: Parse various method signatures
-  printStep(3, 'Various Method Signatures')
+  printStep(3, 'Various Method Signatures');
 
-  const helloMethod = ABIMethod.fromSignature('hello(string)string')
-  printInfo(`hello(string)string:`)
-  printInfo(`  name: ${helloMethod.name}`)
-  printInfo(`  args: [${helloMethod.args.map((a) => a.type.toString()).join(', ')}]`)
-  printInfo(`  returns: ${helloMethod.returns.type.toString()}`)
+  const helloMethod = ABIMethod.fromSignature('hello(string)string');
+  printInfo(`hello(string)string:`);
+  printInfo(`  name: ${helloMethod.name}`);
+  printInfo(`  args: [${helloMethod.args.map(a => a.type.toString()).join(', ')}]`);
+  printInfo(`  returns: ${helloMethod.returns.type.toString()}`);
 
-  const addMethod = ABIMethod.fromSignature('add(uint64,uint64)uint64')
-  printInfo(`\nadd(uint64,uint64)uint64:`)
-  printInfo(`  name: ${addMethod.name}`)
-  printInfo(`  args: [${addMethod.args.map((a) => a.type.toString()).join(', ')}]`)
-  printInfo(`  returns: ${addMethod.returns.type.toString()}`)
+  const addMethod = ABIMethod.fromSignature('add(uint64,uint64)uint64');
+  printInfo(`\nadd(uint64,uint64)uint64:`);
+  printInfo(`  name: ${addMethod.name}`);
+  printInfo(`  args: [${addMethod.args.map(a => a.type.toString()).join(', ')}]`);
+  printInfo(`  returns: ${addMethod.returns.type.toString()}`);
 
-  const swapMethod = ABIMethod.fromSignature('swap(address,address,uint64,uint64)bool')
-  printInfo(`\nswap(address,address,uint64,uint64)bool:`)
-  printInfo(`  name: ${swapMethod.name}`)
-  printInfo(`  args: [${swapMethod.args.map((a) => a.type.toString()).join(', ')}]`)
-  printInfo(`  returns: ${swapMethod.returns.type.toString()}`)
+  const swapMethod = ABIMethod.fromSignature('swap(address,address,uint64,uint64)bool');
+  printInfo(`\nswap(address,address,uint64,uint64)bool:`);
+  printInfo(`  name: ${swapMethod.name}`);
+  printInfo(`  args: [${swapMethod.args.map(a => a.type.toString()).join(', ')}]`);
+  printInfo(`  returns: ${swapMethod.returns.type.toString()}`);
 
   // Step 4: Method with no args
-  printStep(4, 'Method with No Arguments')
+  printStep(4, 'Method with No Arguments');
 
-  const getMethod = ABIMethod.fromSignature('get()uint64')
+  const getMethod = ABIMethod.fromSignature('get()uint64');
 
-  printInfo(`Signature: get()uint64`)
-  printInfo(`  name: ${getMethod.name}`)
-  printInfo(`  args count: ${getMethod.args.length}`)
-  printInfo(`  args: []`)
-  printInfo(`  returns.type: ${getMethod.returns.type.toString()}`)
+  printInfo(`Signature: get()uint64`);
+  printInfo(`  name: ${getMethod.name}`);
+  printInfo(`  args count: ${getMethod.args.length}`);
+  printInfo(`  args: []`);
+  printInfo(`  returns.type: ${getMethod.returns.type.toString()}`);
 
-  const getCounterMethod = ABIMethod.fromSignature('getCounter()uint256')
+  const getCounterMethod = ABIMethod.fromSignature('getCounter()uint256');
 
-  printInfo(`\nSignature: getCounter()uint256`)
-  printInfo(`  name: ${getCounterMethod.name}`)
-  printInfo(`  args: []`)
-  printInfo(`  returns: ${getCounterMethod.returns.type.toString()}`)
+  printInfo(`\nSignature: getCounter()uint256`);
+  printInfo(`  name: ${getCounterMethod.name}`);
+  printInfo(`  args: []`);
+  printInfo(`  returns: ${getCounterMethod.returns.type.toString()}`);
 
   // Step 5: Method with void return
-  printStep(5, 'Method with Void Return')
+  printStep(5, 'Method with Void Return');
 
-  const setMethod = ABIMethod.fromSignature('set(uint64)void')
+  const setMethod = ABIMethod.fromSignature('set(uint64)void');
 
-  printInfo(`Signature: set(uint64)void`)
-  printInfo(`  name: ${setMethod.name}`)
-  printInfo(`  args: [${setMethod.args.map((a) => a.type.toString()).join(', ')}]`)
-  printInfo(`  returns.type: ${setMethod.returns.type.toString()}`)
+  printInfo(`Signature: set(uint64)void`);
+  printInfo(`  name: ${setMethod.name}`);
+  printInfo(`  args: [${setMethod.args.map(a => a.type.toString()).join(', ')}]`);
+  printInfo(`  returns.type: ${setMethod.returns.type.toString()}`);
 
-  const initializeMethod = ABIMethod.fromSignature('initialize(address,string,uint64)void')
+  const initializeMethod = ABIMethod.fromSignature('initialize(address,string,uint64)void');
 
-  printInfo(`\nSignature: initialize(address,string,uint64)void`)
-  printInfo(`  name: ${initializeMethod.name}`)
-  printInfo(`  args: [${initializeMethod.args.map((a) => a.type.toString()).join(', ')}]`)
-  printInfo(`  returns: ${initializeMethod.returns.type.toString()}`)
+  printInfo(`\nSignature: initialize(address,string,uint64)void`);
+  printInfo(`  name: ${initializeMethod.name}`);
+  printInfo(`  args: [${initializeMethod.args.map(a => a.type.toString()).join(', ')}]`);
+  printInfo(`  returns: ${initializeMethod.returns.type.toString()}`);
 
   // Step 6: Method selectors
-  printStep(6, 'Method Selectors (getSelector)')
+  printStep(6, 'Method Selectors (getSelector)');
 
-  printInfo('The method selector is a 4-byte identifier used in ABI calls.')
-  printInfo('It is computed as the first 4 bytes of SHA-512/256(signature).')
-  printInfo('')
+  printInfo('The method selector is a 4-byte identifier used in ABI calls.');
+  printInfo('It is computed as the first 4 bytes of SHA-512/256(signature).');
+  printInfo('');
 
   const methods = [
     ABIMethod.fromSignature('transfer(address,uint64)uint64'),
     ABIMethod.fromSignature('hello(string)string'),
     ABIMethod.fromSignature('get()uint64'),
     ABIMethod.fromSignature('set(uint64)void'),
-  ]
+  ];
 
   for (const method of methods) {
-    const selector = method.getSelector()
-    printInfo(`${method.getSignature()}`)
-    printInfo(`  selector: ${formatHex(selector)}`)
+    const selector = method.getSelector();
+    printInfo(`${method.getSignature()}`);
+    printInfo(`  selector: ${formatHex(selector)}`);
   }
 
   // Step 7: Demonstrate selector computation
-  printStep(7, 'Selector Computation Deep Dive')
+  printStep(7, 'Selector Computation Deep Dive');
 
-  const demoMethod = ABIMethod.fromSignature('transfer(address,uint64)uint64')
-  const signature = demoMethod.getSignature()
+  const demoMethod = ABIMethod.fromSignature('transfer(address,uint64)uint64');
+  const signature = demoMethod.getSignature();
 
-  printInfo(`Signature: ${signature}`)
-  printInfo('')
-  printInfo('Computing selector:')
-  printInfo('  1. Take the method signature string')
-  printInfo('  2. Compute SHA-512/256 hash of the signature')
-  printInfo('  3. Take the first 4 bytes as the selector')
-  printInfo('')
+  printInfo(`Signature: ${signature}`);
+  printInfo('');
+  printInfo('Computing selector:');
+  printInfo('  1. Take the method signature string');
+  printInfo('  2. Compute SHA-512/256 hash of the signature');
+  printInfo('  3. Take the first 4 bytes as the selector');
+  printInfo('');
 
   // Compute the hash manually to show the relationship
-  const hash = crypto.createHash('sha512-256').update(signature).digest()
-  const first4Bytes = hash.slice(0, 4)
+  const hash = crypto.createHash('sha512-256').update(signature).digest();
+  const first4Bytes = hash.slice(0, 4);
 
-  printInfo(`  SHA-512/256("${signature}"):`)
-  printInfo(`    Full hash: ${formatHex(hash)}`)
-  printInfo(`    First 4 bytes: ${formatHex(first4Bytes)}`)
-  printInfo('')
-  printInfo(`  getSelector(): ${formatHex(demoMethod.getSelector())}`)
-  printInfo(`  Match: ${Buffer.from(first4Bytes).toString('hex') === Buffer.from(demoMethod.getSelector()).toString('hex')}`)
+  printInfo(`  SHA-512/256("${signature}"):`);
+  printInfo(`    Full hash: ${formatHex(hash)}`);
+  printInfo(`    First 4 bytes: ${formatHex(first4Bytes)}`);
+  printInfo('');
+  printInfo(`  getSelector(): ${formatHex(demoMethod.getSelector())}`);
+  printInfo(
+    `  Match: ${Buffer.from(first4Bytes).toString('hex') === Buffer.from(demoMethod.getSelector()).toString('hex')}`,
+  );
 
   // Step 8: Methods with tuple arguments
-  printStep(8, 'Methods with Tuple Arguments')
+  printStep(8, 'Methods with Tuple Arguments');
 
-  const tupleArgMethod = ABIMethod.fromSignature('processOrder((uint64,address,uint64),bool)uint64')
+  const tupleArgMethod = ABIMethod.fromSignature(
+    'processOrder((uint64,address,uint64),bool)uint64',
+  );
 
-  printInfo(`Signature: processOrder((uint64,address,uint64),bool)uint64`)
-  printInfo(`  name: ${tupleArgMethod.name}`)
-  printInfo(`  args count: ${tupleArgMethod.args.length}`)
-  printInfo(`  args[0].type: ${tupleArgMethod.args[0].type.toString()} (tuple)`)
-  printInfo(`  args[1].type: ${tupleArgMethod.args[1].type.toString()}`)
-  printInfo(`  returns: ${tupleArgMethod.returns.type.toString()}`)
-  printInfo(`  selector: ${formatHex(tupleArgMethod.getSelector())}`)
+  printInfo(`Signature: processOrder((uint64,address,uint64),bool)uint64`);
+  printInfo(`  name: ${tupleArgMethod.name}`);
+  printInfo(`  args count: ${tupleArgMethod.args.length}`);
+  printInfo(`  args[0].type: ${tupleArgMethod.args[0].type.toString()} (tuple)`);
+  printInfo(`  args[1].type: ${tupleArgMethod.args[1].type.toString()}`);
+  printInfo(`  returns: ${tupleArgMethod.returns.type.toString()}`);
+  printInfo(`  selector: ${formatHex(tupleArgMethod.getSelector())}`);
 
-  const nestedTupleMethod = ABIMethod.fromSignature('nested(((uint64,bool),string))void')
+  const nestedTupleMethod = ABIMethod.fromSignature('nested(((uint64,bool),string))void');
 
-  printInfo(`\nSignature: nested(((uint64,bool),string))void`)
-  printInfo(`  name: ${nestedTupleMethod.name}`)
-  printInfo(`  args[0].type: ${nestedTupleMethod.args[0].type.toString()}`)
-  printInfo(`  returns: ${nestedTupleMethod.returns.type.toString()}`)
-  printInfo(`  selector: ${formatHex(nestedTupleMethod.getSelector())}`)
+  printInfo(`\nSignature: nested(((uint64,bool),string))void`);
+  printInfo(`  name: ${nestedTupleMethod.name}`);
+  printInfo(`  args[0].type: ${nestedTupleMethod.args[0].type.toString()}`);
+  printInfo(`  returns: ${nestedTupleMethod.returns.type.toString()}`);
+  printInfo(`  selector: ${formatHex(nestedTupleMethod.getSelector())}`);
 
   // Step 9: Methods with tuple returns
-  printStep(9, 'Methods with Tuple Returns')
+  printStep(9, 'Methods with Tuple Returns');
 
-  const tupleReturnMethod = ABIMethod.fromSignature('getInfo(address)(uint64,string,bool)')
+  const tupleReturnMethod = ABIMethod.fromSignature('getInfo(address)(uint64,string,bool)');
 
-  printInfo(`Signature: getInfo(address)(uint64,string,bool)`)
-  printInfo(`  name: ${tupleReturnMethod.name}`)
-  printInfo(`  args: [${tupleReturnMethod.args.map((a) => a.type.toString()).join(', ')}]`)
-  printInfo(`  returns.type: ${tupleReturnMethod.returns.type.toString()} (tuple)`)
-  printInfo(`  selector: ${formatHex(tupleReturnMethod.getSelector())}`)
+  printInfo(`Signature: getInfo(address)(uint64,string,bool)`);
+  printInfo(`  name: ${tupleReturnMethod.name}`);
+  printInfo(`  args: [${tupleReturnMethod.args.map(a => a.type.toString()).join(', ')}]`);
+  printInfo(`  returns.type: ${tupleReturnMethod.returns.type.toString()} (tuple)`);
+  printInfo(`  selector: ${formatHex(tupleReturnMethod.getSelector())}`);
 
-  const complexReturnMethod = ABIMethod.fromSignature('swap(uint64,uint64)(uint64,uint64,address)')
+  const complexReturnMethod = ABIMethod.fromSignature('swap(uint64,uint64)(uint64,uint64,address)');
 
-  printInfo(`\nSignature: swap(uint64,uint64)(uint64,uint64,address)`)
-  printInfo(`  name: ${complexReturnMethod.name}`)
-  printInfo(`  args: [${complexReturnMethod.args.map((a) => a.type.toString()).join(', ')}]`)
-  printInfo(`  returns: ${complexReturnMethod.returns.type.toString()}`)
-  printInfo(`  selector: ${formatHex(complexReturnMethod.getSelector())}`)
+  printInfo(`\nSignature: swap(uint64,uint64)(uint64,uint64,address)`);
+  printInfo(`  name: ${complexReturnMethod.name}`);
+  printInfo(`  args: [${complexReturnMethod.args.map(a => a.type.toString()).join(', ')}]`);
+  printInfo(`  returns: ${complexReturnMethod.returns.type.toString()}`);
+  printInfo(`  selector: ${formatHex(complexReturnMethod.getSelector())}`);
 
   // Step 10: Methods with array arguments
-  printStep(10, 'Methods with Array Arguments')
+  printStep(10, 'Methods with Array Arguments');
 
-  const arrayArgMethod = ABIMethod.fromSignature('batchTransfer(address[],uint64[])bool')
+  const arrayArgMethod = ABIMethod.fromSignature('batchTransfer(address[],uint64[])bool');
 
-  printInfo(`Signature: batchTransfer(address[],uint64[])bool`)
-  printInfo(`  name: ${arrayArgMethod.name}`)
-  printInfo(`  args: [${arrayArgMethod.args.map((a) => a.type.toString()).join(', ')}]`)
-  printInfo(`  returns: ${arrayArgMethod.returns.type.toString()}`)
-  printInfo(`  selector: ${formatHex(arrayArgMethod.getSelector())}`)
+  printInfo(`Signature: batchTransfer(address[],uint64[])bool`);
+  printInfo(`  name: ${arrayArgMethod.name}`);
+  printInfo(`  args: [${arrayArgMethod.args.map(a => a.type.toString()).join(', ')}]`);
+  printInfo(`  returns: ${arrayArgMethod.returns.type.toString()}`);
+  printInfo(`  selector: ${formatHex(arrayArgMethod.getSelector())}`);
 
-  const staticArrayMethod = ABIMethod.fromSignature('setVotes(uint64[5])void')
+  const staticArrayMethod = ABIMethod.fromSignature('setVotes(uint64[5])void');
 
-  printInfo(`\nSignature: setVotes(uint64[5])void`)
-  printInfo(`  name: ${staticArrayMethod.name}`)
-  printInfo(`  args: [${staticArrayMethod.args.map((a) => a.type.toString()).join(', ')}]`)
-  printInfo(`  returns: ${staticArrayMethod.returns.type.toString()}`)
-  printInfo(`  selector: ${formatHex(staticArrayMethod.getSelector())}`)
+  printInfo(`\nSignature: setVotes(uint64[5])void`);
+  printInfo(`  name: ${staticArrayMethod.name}`);
+  printInfo(`  args: [${staticArrayMethod.args.map(a => a.type.toString()).join(', ')}]`);
+  printInfo(`  returns: ${staticArrayMethod.returns.type.toString()}`);
+  printInfo(`  selector: ${formatHex(staticArrayMethod.getSelector())}`);
 
   // Step 11: getSignature() method
-  printStep(11, 'Reconstructing Signature with getSignature()')
+  printStep(11, 'Reconstructing Signature with getSignature()');
 
-  printInfo('The getSignature() method returns the canonical signature string.')
-  printInfo('')
+  printInfo('The getSignature() method returns the canonical signature string.');
+  printInfo('');
 
   const testMethods = [
     ABIMethod.fromSignature('transfer(address,uint64)uint64'),
     ABIMethod.fromSignature('get()uint64'),
     ABIMethod.fromSignature('set(uint64)void'),
     ABIMethod.fromSignature('process((uint64,bool),string)void'),
-  ]
+  ];
 
   for (const method of testMethods) {
-    printInfo(`  getSignature(): ${method.getSignature()}`)
+    printInfo(`  getSignature(): ${method.getSignature()}`);
   }
 
   // Step 12: Selector uniqueness
-  printStep(12, 'Selector Uniqueness')
+  printStep(12, 'Selector Uniqueness');
 
-  printInfo('Each method signature produces a unique 4-byte selector.')
-  printInfo('Different signatures = different selectors.')
-  printInfo('')
+  printInfo('Each method signature produces a unique 4-byte selector.');
+  printInfo('Different signatures = different selectors.');
+  printInfo('');
 
   const differentMethods = [
     ABIMethod.fromSignature('get()uint64'),
     ABIMethod.fromSignature('get()string'),
     ABIMethod.fromSignature('get(uint64)uint64'),
     ABIMethod.fromSignature('fetch()uint64'),
-  ]
+  ];
 
-  printInfo('Method                  | Selector')
-  printInfo('------------------------|----------')
+  printInfo('Method                  | Selector');
+  printInfo('------------------------|----------');
 
   for (const method of differentMethods) {
-    const sig = method.getSignature().padEnd(22)
-    const sel = formatHex(method.getSelector())
-    printInfo(`${sig}  | ${sel}`)
+    const sig = method.getSignature().padEnd(22);
+    const sel = formatHex(method.getSelector());
+    printInfo(`${sig}  | ${sel}`);
   }
 
   // Step 13: Summary
-  printStep(13, 'Summary')
+  printStep(13, 'Summary');
 
-  printInfo('ABIMethod provides tools for working with ABI method signatures:')
-  printInfo('')
-  printInfo('Parsing:')
-  printInfo('  ABIMethod.fromSignature(sig) - Parse a method signature string')
-  printInfo('')
-  printInfo('Properties:')
-  printInfo('  method.name - Method name (string)')
-  printInfo('  method.args - Array of argument descriptors')
-  printInfo('  method.args[i].type - ABIType of argument i')
-  printInfo('  method.returns.type - ABIType of return value')
-  printInfo('')
-  printInfo('Methods:')
-  printInfo('  getSignature() - Get canonical signature string')
-  printInfo('  getSelector() - Get 4-byte selector (Uint8Array)')
-  printInfo('')
-  printInfo('Selector computation:')
-  printInfo('  selector = SHA-512/256(signature)[0:4]')
-  printInfo('')
-  printInfo('Supported signatures:')
-  printInfo('  - Simple:     name(type1,type2)returnType')
-  printInfo('  - No args:    name()returnType')
-  printInfo('  - Void:       name(type1)void')
-  printInfo('  - Tuples:     name((t1,t2),t3)(r1,r2)')
-  printInfo('  - Arrays:     name(type[],type[N])type')
+  printInfo('ABIMethod provides tools for working with ABI method signatures:');
+  printInfo('');
+  printInfo('Parsing:');
+  printInfo('  ABIMethod.fromSignature(sig) - Parse a method signature string');
+  printInfo('');
+  printInfo('Properties:');
+  printInfo('  method.name - Method name (string)');
+  printInfo('  method.args - Array of argument descriptors');
+  printInfo('  method.args[i].type - ABIType of argument i');
+  printInfo('  method.returns.type - ABIType of return value');
+  printInfo('');
+  printInfo('Methods:');
+  printInfo('  getSignature() - Get canonical signature string');
+  printInfo('  getSelector() - Get 4-byte selector (Uint8Array)');
+  printInfo('');
+  printInfo('Selector computation:');
+  printInfo('  selector = SHA-512/256(signature)[0:4]');
+  printInfo('');
+  printInfo('Supported signatures:');
+  printInfo('  - Simple:     name(type1,type2)returnType');
+  printInfo('  - No args:    name()returnType');
+  printInfo('  - Void:       name(type1)void');
+  printInfo('  - Tuples:     name((t1,t2),t3)(r1,r2)');
+  printInfo('  - Arrays:     name(type[],type[N])type');
 
-  printSuccess('ABI Method example completed successfully!')
+  printSuccess('ABI Method example completed successfully!');
 }
 
-main()
-
+main();
 ```
 
 ---

@@ -1,5 +1,5 @@
 ---
-title: "Smart Contract Deployment"
+title: 'Smart Contract Deployment'
 ---
 
 - **Status**: Approved
@@ -132,14 +132,14 @@ const composer = new AtomicTransactionComposer();
 composer.addMethodCall({
   appID: appId,
   method: new ABIMethod({
-    name: "hello",
-    args: [{ name: "name", type: "string" }],
-    returns: { type: "string" },
+    name: 'hello',
+    args: [{ name: 'name', type: 'string' }],
+    returns: { type: 'string' },
   }), // Not type-safe, no intellisense
   sender: senderAccount.addr,
   signer: makeBasicAccountTransactionSigner(senderAccount),
   suggestedParams: await algod.getTransactionParams().do(),
-  methodArgs: ["World!"], // Not type-safe, no intellisense
+  methodArgs: ['World!'], // Not type-safe, no intellisense
 });
 const result = await composer.execute(algod, 5);
 console.log(result.methodResults[0].returnValue); // Hello, World!
@@ -151,7 +151,7 @@ If instead you generated a client you could having something like this, which gi
 // Assume `appId`, `algod` and `senderAccount` are already in scope
 // HelloWorldAppClient is generated from the smart contract definition (ABI json and app spec json)
 const app = new HelloWorldAppClient(appId, algod, senderAccount);
-const result = app.hello({ name: "World!" }); // Type-safe and intellisense
+const result = app.hello({ name: 'World!' }); // Type-safe and intellisense
 console.log(result); // Hello, World!
 ```
 

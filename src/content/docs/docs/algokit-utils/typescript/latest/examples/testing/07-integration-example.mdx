@@ -1,6 +1,6 @@
 ---
-title: "Integration Example - Complete Test Setup"
-description: "This example demonstrates how all testing package components work together for a real test scenario. It shows:"
+title: 'Integration Example - Complete Test Setup'
+description: 'This example demonstrates how all testing package components work together for a real test scenario. It shows:'
 sidebar:
   order: 7
 ---
@@ -10,13 +10,14 @@ sidebar:
 ## Description
 
 This example demonstrates how all testing package components work together for a real test scenario. It shows:
+
 - Importing all major exports from the testing package
 - Checking mock server availability with checkServerHealth()
 - Connecting to mock server using getMockServer()
 - Constructing client configuration using MockServer.baseUrl and DEFAULT_TOKEN
 - Displaying which test data constants can be used with the connected mock server
 - Helpful setup instructions when the server is unavailable
- This example works with or without a running mock server, providing helpful guidance in either case.
+  This example works with or without a running mock server, providing helpful guidance in either case.
 
 ## Prerequisites
 
@@ -70,169 +71,168 @@ import {
   TEST_APP_ID,
   TEST_ROUND,
   type MockServer,
-} from '@algorandfoundation/algokit-utils/testing'
-import { printError, printHeader, printInfo, printStep, printSuccess } from '../shared/utils.js'
+} from '@algorandfoundation/algokit-utils/testing';
+import { printError, printHeader, printInfo, printStep, printSuccess } from '../shared/utils.js';
 
 async function main() {
-  printHeader('Integration Example - Complete Test Setup')
+  printHeader('Integration Example - Complete Test Setup');
 
   // Step 1: Display all imported exports
-  printStep(1, 'All Major Testing Package Exports')
-  printInfo('This example imports the following from the testing package:')
-  printInfo('')
-  printInfo('  Connection utilities:')
-  printInfo('    - getMockServer       // Connect to a mock server')
-  printInfo('    - checkServerHealth   // Check if server is reachable')
-  printInfo('    - MockServer (type)   // Interface for mock server connection')
-  printInfo('')
-  printInfo('  Configuration constants:')
-  printInfo('    - DEFAULT_TOKEN       // Token for mock server authentication')
-  printInfo('    - MOCK_PORTS          // Default ports for each server type')
-  printInfo('    - EXTERNAL_URL_ENV_VARS // Environment variable names')
-  printInfo('')
-  printInfo('  Test data constants:')
-  printInfo('    - TEST_ADDRESS        // Pre-recorded test address')
-  printInfo('    - TEST_APP_ID         // Pre-recorded application ID')
-  printInfo('    - TEST_ROUND          // Pre-recorded round number')
+  printStep(1, 'All Major Testing Package Exports');
+  printInfo('This example imports the following from the testing package:');
+  printInfo('');
+  printInfo('  Connection utilities:');
+  printInfo('    - getMockServer       // Connect to a mock server');
+  printInfo('    - checkServerHealth   // Check if server is reachable');
+  printInfo('    - MockServer (type)   // Interface for mock server connection');
+  printInfo('');
+  printInfo('  Configuration constants:');
+  printInfo('    - DEFAULT_TOKEN       // Token for mock server authentication');
+  printInfo('    - MOCK_PORTS          // Default ports for each server type');
+  printInfo('    - EXTERNAL_URL_ENV_VARS // Environment variable names');
+  printInfo('');
+  printInfo('  Test data constants:');
+  printInfo('    - TEST_ADDRESS        // Pre-recorded test address');
+  printInfo('    - TEST_APP_ID         // Pre-recorded application ID');
+  printInfo('    - TEST_ROUND          // Pre-recorded round number');
 
   // Step 2: Check mock algod server health
-  printStep(2, 'Checking Mock Algod Server Availability')
-  const algodEnvVar = EXTERNAL_URL_ENV_VARS.algod
-  const algodUrl = process.env[algodEnvVar] || `http://localhost:${MOCK_PORTS.algod.host}`
+  printStep(2, 'Checking Mock Algod Server Availability');
+  const algodEnvVar = EXTERNAL_URL_ENV_VARS.algod;
+  const algodUrl = process.env[algodEnvVar] || `http://localhost:${MOCK_PORTS.algod.host}`;
 
-  printInfo(`Checking server at: ${algodUrl}`)
-  printInfo(`Environment variable: ${algodEnvVar}`)
-  printInfo('')
+  printInfo(`Checking server at: ${algodUrl}`);
+  printInfo(`Environment variable: ${algodEnvVar}`);
+  printInfo('');
 
-  const isServerAvailable = await checkServerHealth(algodUrl)
+  const isServerAvailable = await checkServerHealth(algodUrl);
 
   if (isServerAvailable) {
-    printSuccess('Mock algod server is AVAILABLE!')
-    printInfo('')
+    printSuccess('Mock algod server is AVAILABLE!');
+    printInfo('');
 
     // Step 3: Connect using getMockServer
-    printStep(3, 'Connecting to Mock Algod Server')
-    printInfo("Using getMockServer('algod') to establish connection...")
-    printInfo('')
+    printStep(3, 'Connecting to Mock Algod Server');
+    printInfo("Using getMockServer('algod') to establish connection...");
+    printInfo('');
 
     try {
       // Set environment variable if not already set (for getMockServer to work)
       if (!process.env[algodEnvVar]) {
-        process.env[algodEnvVar] = algodUrl
+        process.env[algodEnvVar] = algodUrl;
       }
 
-      const server: MockServer = await getMockServer('algod')
+      const server: MockServer = await getMockServer('algod');
 
-      printSuccess('Successfully connected!')
-      printInfo('')
-      printInfo('MockServer connection details:')
-      printInfo(`  baseUrl:    ${server.baseUrl}`)
-      printInfo(`  clientType: ${server.clientType}`)
+      printSuccess('Successfully connected!');
+      printInfo('');
+      printInfo('MockServer connection details:');
+      printInfo(`  baseUrl:    ${server.baseUrl}`);
+      printInfo(`  clientType: ${server.clientType}`);
 
       // Step 4: Show client configuration
-      printStep(4, 'Client Configuration')
-      printInfo('Use MockServer.baseUrl and DEFAULT_TOKEN to configure clients:')
-      printInfo('')
-      printInfo('  import { AlgodClient } from "@algorandfoundation/algokit-utils/algod-client"')
-      printInfo('')
-      printInfo('  const client = new AlgodClient({')
-      printInfo(`    baseUrl: "${server.baseUrl}",`)
-      printInfo(`    token: "${DEFAULT_TOKEN}",`)
-      printInfo('  })')
-      printInfo('')
-      printInfo('Configuration values:')
-      printInfo(`  MockServer.baseUrl: ${server.baseUrl}`)
-      printInfo(`  DEFAULT_TOKEN:      ${DEFAULT_TOKEN}`)
+      printStep(4, 'Client Configuration');
+      printInfo('Use MockServer.baseUrl and DEFAULT_TOKEN to configure clients:');
+      printInfo('');
+      printInfo('  import { AlgodClient } from "@algorandfoundation/algokit-utils/algod-client"');
+      printInfo('');
+      printInfo('  const client = new AlgodClient({');
+      printInfo(`    baseUrl: "${server.baseUrl}",`);
+      printInfo(`    token: "${DEFAULT_TOKEN}",`);
+      printInfo('  })');
+      printInfo('');
+      printInfo('Configuration values:');
+      printInfo(`  MockServer.baseUrl: ${server.baseUrl}`);
+      printInfo(`  DEFAULT_TOKEN:      ${DEFAULT_TOKEN}`);
 
       // Step 5: Show test data constants
-      printStep(5, 'Test Data Constants for Mock Server')
-      printInfo('The following test data constants match HAR file recordings:')
-      printInfo('')
-      printInfo('  TEST_ADDRESS:')
-      printInfo(`    ${TEST_ADDRESS}`)
-      printInfo('')
-      printInfo('  TEST_APP_ID:')
-      printInfo(`    ${TEST_APP_ID}`)
-      printInfo('')
-      printInfo('  TEST_ROUND:')
-      printInfo(`    ${TEST_ROUND}`)
-      printInfo('')
-      printInfo('Use these constants in your tests to match pre-recorded responses.')
-      printInfo('The mock server returns deterministic data for these values.')
+      printStep(5, 'Test Data Constants for Mock Server');
+      printInfo('The following test data constants match HAR file recordings:');
+      printInfo('');
+      printInfo('  TEST_ADDRESS:');
+      printInfo(`    ${TEST_ADDRESS}`);
+      printInfo('');
+      printInfo('  TEST_APP_ID:');
+      printInfo(`    ${TEST_APP_ID}`);
+      printInfo('');
+      printInfo('  TEST_ROUND:');
+      printInfo(`    ${TEST_ROUND}`);
+      printInfo('');
+      printInfo('Use these constants in your tests to match pre-recorded responses.');
+      printInfo('The mock server returns deterministic data for these values.');
 
       // Step 6: Summary for connected state
-      printStep(6, 'Integration Complete')
-      printInfo('You now have:')
-      printInfo('  1. A connected MockServer instance')
-      printInfo('  2. Configuration ready for AlgodClient')
-      printInfo('  3. Test data constants for deterministic testing')
-      printInfo('')
-      printInfo('Next steps:')
-      printInfo('  - Create an AlgodClient with the configuration above')
-      printInfo('  - Use test data constants in your test assertions')
-      printInfo('  - See other examples for global setup in Vitest')
+      printStep(6, 'Integration Complete');
+      printInfo('You now have:');
+      printInfo('  1. A connected MockServer instance');
+      printInfo('  2. Configuration ready for AlgodClient');
+      printInfo('  3. Test data constants for deterministic testing');
+      printInfo('');
+      printInfo('Next steps:');
+      printInfo('  - Create an AlgodClient with the configuration above');
+      printInfo('  - Use test data constants in your test assertions');
+      printInfo('  - See other examples for global setup in Vitest');
 
-      printSuccess('Integration example completed successfully!')
+      printSuccess('Integration example completed successfully!');
     } catch (error) {
-      const errorMessage = error instanceof Error ? error.message : String(error)
-      printError(`Connection failed: ${errorMessage}`)
+      const errorMessage = error instanceof Error ? error.message : String(error);
+      printError(`Connection failed: ${errorMessage}`);
     }
   } else {
     // Server is NOT available - provide helpful setup instructions
-    printError('Mock algod server is NOT AVAILABLE')
-    printInfo('')
+    printError('Mock algod server is NOT AVAILABLE');
+    printInfo('');
 
     // Step 3: Setup instructions
-    printStep(3, 'Setup Instructions for Local Development')
-    printInfo('To run the mock server locally, you have several options:')
-    printInfo('')
-    printInfo('Option 1: Using algokit-polytest CLI')
-    printInfo('  npm install -g algokit-polytest')
-    printInfo('  algokit-polytest serve')
-    printInfo('')
-    printInfo('Option 2: Set environment variable to external server')
-    printInfo(`  export ${algodEnvVar}=<your-mock-server-url>`)
-    printInfo('')
-    printInfo('Default local ports:')
-    printInfo(`  Algod:   http://localhost:${MOCK_PORTS.algod.host}`)
-    printInfo(`  Indexer: http://localhost:${MOCK_PORTS.indexer.host}`)
-    printInfo(`  KMD:     http://localhost:${MOCK_PORTS.kmd.host}`)
+    printStep(3, 'Setup Instructions for Local Development');
+    printInfo('To run the mock server locally, you have several options:');
+    printInfo('');
+    printInfo('Option 1: Using algokit-polytest CLI');
+    printInfo('  npm install -g algokit-polytest');
+    printInfo('  algokit-polytest serve');
+    printInfo('');
+    printInfo('Option 2: Set environment variable to external server');
+    printInfo(`  export ${algodEnvVar}=<your-mock-server-url>`);
+    printInfo('');
+    printInfo('Default local ports:');
+    printInfo(`  Algod:   http://localhost:${MOCK_PORTS.algod.host}`);
+    printInfo(`  Indexer: http://localhost:${MOCK_PORTS.indexer.host}`);
+    printInfo(`  KMD:     http://localhost:${MOCK_PORTS.kmd.host}`);
 
     // Step 4: What you can still do without a server
-    printStep(4, 'What You Can Do Without a Running Server')
-    printInfo('Even without a mock server running, you can:')
-    printInfo('')
-    printInfo('  1. View configuration constants:')
-    printInfo(`     DEFAULT_TOKEN = "${DEFAULT_TOKEN}"`)
-    printInfo(`     MOCK_PORTS.algod.host = ${MOCK_PORTS.algod.host}`)
-    printInfo('')
-    printInfo('  2. View test data constants:')
-    printInfo(`     TEST_ADDRESS = "${TEST_ADDRESS.slice(0, 20)}..."`)
-    printInfo(`     TEST_APP_ID = ${TEST_APP_ID}`)
-    printInfo(`     TEST_ROUND = ${TEST_ROUND}`)
-    printInfo('')
-    printInfo('  3. Set up Vitest global setup (starts server automatically):')
-    printInfo('     See examples 05-global-setup-factory.ts and')
-    printInfo('     06-prebuilt-global-setups.ts for details.')
+    printStep(4, 'What You Can Do Without a Running Server');
+    printInfo('Even without a mock server running, you can:');
+    printInfo('');
+    printInfo('  1. View configuration constants:');
+    printInfo(`     DEFAULT_TOKEN = "${DEFAULT_TOKEN}"`);
+    printInfo(`     MOCK_PORTS.algod.host = ${MOCK_PORTS.algod.host}`);
+    printInfo('');
+    printInfo('  2. View test data constants:');
+    printInfo(`     TEST_ADDRESS = "${TEST_ADDRESS.slice(0, 20)}..."`);
+    printInfo(`     TEST_APP_ID = ${TEST_APP_ID}`);
+    printInfo(`     TEST_ROUND = ${TEST_ROUND}`);
+    printInfo('');
+    printInfo('  3. Set up Vitest global setup (starts server automatically):');
+    printInfo('     See examples 05-global-setup-factory.ts and');
+    printInfo('     06-prebuilt-global-setups.ts for details.');
 
     // Step 5: Reference to README
-    printStep(5, 'Documentation Reference')
-    printInfo('For complete setup instructions, see:')
-    printInfo('  - packages/testing/README.md (mock server section)')
-    printInfo('  - https://github.com/algorandfoundation/algokit-utils-ts')
-    printInfo('')
-    printInfo('The README contains:')
-    printInfo('  - Prerequisites and installation steps')
-    printInfo('  - Environment variable configuration')
-    printInfo('  - Vitest integration examples')
-    printInfo('  - Troubleshooting tips')
+    printStep(5, 'Documentation Reference');
+    printInfo('For complete setup instructions, see:');
+    printInfo('  - packages/testing/README.md (mock server section)');
+    printInfo('  - https://github.com/algorandfoundation/algokit-utils-ts');
+    printInfo('');
+    printInfo('The README contains:');
+    printInfo('  - Prerequisites and installation steps');
+    printInfo('  - Environment variable configuration');
+    printInfo('  - Vitest integration examples');
+    printInfo('  - Troubleshooting tips');
 
-    printSuccess('Integration example completed (server unavailable mode)!')
+    printSuccess('Integration example completed (server unavailable mode)!');
   }
 }
 
-main().catch(console.error)
-
+main().catch(console.error);
 ```
 
 ---

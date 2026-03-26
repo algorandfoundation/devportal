@@ -1,6 +1,6 @@
 ---
-title: "Multisig Program Signing (Delegated Multisig Logic Signatures) with KMD"
-description: "This example demonstrates how to sign programs with multisig using the KMD `signMultisigProgram()` method. It shows:"
+title: 'Multisig Program Signing (Delegated Multisig Logic Signatures) with KMD'
+description: 'This example demonstrates how to sign programs with multisig using the KMD `signMultisigProgram()` method. It shows:'
 sidebar:
   order: 13
 ---
@@ -10,19 +10,20 @@ sidebar:
 ## Description
 
 This example demonstrates how to sign programs with multisig using the KMD `signMultisigProgram()` method. It shows:
+
 - Creating a 2-of-3 multisig account
 - Creating a simple TEAL program (logic signature)
 - Compiling the TEAL program using algod tealCompile
 - Signing the program with the first participant (partial signature)
 - Signing the program with the second participant (completing the multisig)
 - Understanding delegated multisig logic signatures
- What is Multisig Program Signing? Multisig program signing creates a "delegated multisig logic signature". This combines two powerful concepts: 1. Multisig: Requiring multiple parties to approve 2. Delegated Logic Signatures: Authorizing a program to act on behalf of an account
- With a delegated multisig lsig:
+  What is Multisig Program Signing? Multisig program signing creates a "delegated multisig logic signature". This combines two powerful concepts: 1. Multisig: Requiring multiple parties to approve 2. Delegated Logic Signatures: Authorizing a program to act on behalf of an account
+  With a delegated multisig lsig:
 - The multisig account authorizes a program to sign transactions
 - Multiple parties must sign the program (meeting the threshold)
 - Once signed, the program can authorize transactions within its logic
 - No further interaction needed from the multisig participants
- Use cases for delegated multisig logic signatures:
+  Use cases for delegated multisig logic signatures:
 - Multi-party controlled recurring payments
 - Joint account automation (e.g., business partners authorizing limit)
 - Escrow with automated release conditions
@@ -85,9 +86,13 @@ npm run example kmd_client/13-multisig-program-signing.ts
  * - signMultisigProgram() - Sign a compiled TEAL program with a multisig participant
  */
 
-import { Address, encodeAddress } from '@algorandfoundation/algokit-utils'
-import type { MultisigSig } from '@algorandfoundation/algokit-utils/kmd-client'
-import { LogicSig, LogicSigAccount, type MultisigSignature } from '@algorandfoundation/algokit-utils/transact'
+import { Address, encodeAddress } from '@algorandfoundation/algokit-utils';
+import type { MultisigSig } from '@algorandfoundation/algokit-utils/kmd-client';
+import {
+  LogicSig,
+  LogicSigAccount,
+  type MultisigSignature,
+} from '@algorandfoundation/algokit-utils/transact';
 import {
   cleanupTestWallet,
   createAlgodClient,
@@ -100,9 +105,9 @@ import {
   printStep,
   printSuccess,
   shortenAddress,
-} from '../shared/utils.js'
+} from '../shared/utils.js';
 // Use algorand-msgpack for decoding the multisig response
-import { IntMode, decode as msgpackDecode } from 'algorand-msgpack'
+import { IntMode, decode as msgpackDecode } from 'algorand-msgpack';
 
 /**
  * Format a byte array for display, showing first and last few bytes
@@ -113,13 +118,13 @@ import { IntMode, decode as msgpackDecode } from 'algorand-msgpack'
  * @returns Formatted hex string with ellipsis if truncated
  */
 function formatBytesForDisplay(bytes: Uint8Array, showFirst = 8, showLast = 8): string {
-  const hex = Buffer.from(bytes).toString('hex')
+  const hex = Buffer.from(bytes).toString('hex');
   if (bytes.length <= showFirst + showLast) {
-    return hex
+    return hex;
   }
-  const firstBytes = hex.slice(0, showFirst * 2)
-  const lastBytes = hex.slice(-(showLast * 2))
-  return `${firstBytes}...${lastBytes}`
+  const firstBytes = hex.slice(0, showFirst * 2);
+  const lastBytes = hex.slice(-(showLast * 2));
+  return `${firstBytes}...${lastBytes}`;
 }
 
 /**
@@ -138,30 +143,30 @@ function decodeKmdMultisigResponse(multisigBytes: Uint8Array): MultisigSig {
     useMap: true,
     rawBinaryStringKeys: true,
     rawBinaryStringValues: true,
-  }) as Map<Uint8Array, unknown>
+  }) as Map<Uint8Array, unknown>;
 
   // Helper to find value by string key in Map with Uint8Array keys
   const findByKey = (map: Map<Uint8Array, unknown>, key: string): unknown => {
-    const keyBytes = new TextEncoder().encode(key)
+    const keyBytes = new TextEncoder().encode(key);
     for (const [k, v] of map) {
       if (k.length === keyBytes.length && k.every((b, i) => b === keyBytes[i])) {
-        return v
+        return v;
       }
     }
-    return undefined
-  }
+    return undefined;
+  };
 
-  const subsigArray = findByKey(decoded, 'subsig') as Array<Map<Uint8Array, unknown>>
-  const threshold = findByKey(decoded, 'thr') as number
-  const version = findByKey(decoded, 'v') as number
+  const subsigArray = findByKey(decoded, 'subsig') as Array<Map<Uint8Array, unknown>>;
+  const threshold = findByKey(decoded, 'thr') as number;
+  const version = findByKey(decoded, 'v') as number;
 
-  const subsignatures = subsigArray.map((subsigMap) => {
-    const publicKey = findByKey(subsigMap, 'pk') as Uint8Array
-    const signature = findByKey(subsigMap, 's') as Uint8Array | undefined
-    return { publicKey, signature }
-  })
+  const subsignatures = subsigArray.map(subsigMap => {
+    const publicKey = findByKey(subsigMap, 'pk') as Uint8Array;
+    const signature = findByKey(subsigMap, 's') as Uint8Array | undefined;
+    return { publicKey, signature };
+  });
 
-  return { subsignatures, threshold, version }
+  return { subsignatures, threshold, version };
 }
 
 /**
@@ -171,124 +176,124 @@ function kmdMultisigToTransactMultisig(kmdMsig: MultisigSig): MultisigSignature 
   return {
     version: kmdMsig.version,
     threshold: kmdMsig.threshold,
-    subsigs: kmdMsig.subsignatures.map((subsig) => ({
+    subsigs: kmdMsig.subsignatures.map(subsig => ({
       publicKey: subsig.publicKey,
       sig: subsig.signature,
     })),
-  }
+  };
 }
 
 /**
  * Count the number of signatures in a KMD MultisigSig
  */
 function countSignatures(msig: MultisigSig): number {
-  return msig.subsignatures.filter((subsig) => subsig.signature !== undefined).length
+  return msig.subsignatures.filter(subsig => subsig.signature !== undefined).length;
 }
 
 async function main() {
-  printHeader('KMD Multisig Program Signing Example')
+  printHeader('KMD Multisig Program Signing Example');
 
-  const kmd = createKmdClient()
-  const algod = createAlgodClient()
-  let walletHandleToken = ''
-  const walletPassword = 'test-password'
+  const kmd = createKmdClient();
+  const algod = createAlgodClient();
+  let walletHandleToken = '';
+  const walletPassword = 'test-password';
 
   try {
     // =========================================================================
     // Step 1: Create a Test Wallet
     // =========================================================================
-    printStep(1, 'Creating a test wallet for multisig program signing')
+    printStep(1, 'Creating a test wallet for multisig program signing');
 
-    const testWallet = await createTestWallet(kmd, walletPassword)
-    walletHandleToken = testWallet.walletHandleToken
+    const testWallet = await createTestWallet(kmd, walletPassword);
+    walletHandleToken = testWallet.walletHandleToken;
 
-    printSuccess(`Test wallet created: ${testWallet.walletName}`)
-    printInfo(`Wallet ID: ${testWallet.walletId}`)
+    printSuccess(`Test wallet created: ${testWallet.walletName}`);
+    printInfo(`Wallet ID: ${testWallet.walletId}`);
 
     // =========================================================================
     // Step 2: Generate 3 Keys for Multisig Participants
     // =========================================================================
-    printStep(2, 'Generating 3 keys to use as multisig participants')
+    printStep(2, 'Generating 3 keys to use as multisig participants');
 
-    const participantAddresses: Address[] = []
-    const publicKeys: Uint8Array[] = []
-    const numParticipants = 3
+    const participantAddresses: Address[] = [];
+    const publicKeys: Uint8Array[] = [];
+    const numParticipants = 3;
 
     for (let i = 1; i <= numParticipants; i++) {
-      const result = await kmd.generateKey({ walletHandleToken })
-      participantAddresses.push(result.address)
-      publicKeys.push(result.address.publicKey)
-      printInfo(`Participant ${i}: ${shortenAddress(result.address.toString())}`)
+      const result = await kmd.generateKey({ walletHandleToken });
+      participantAddresses.push(result.address);
+      publicKeys.push(result.address.publicKey);
+      printInfo(`Participant ${i}: ${shortenAddress(result.address.toString())}`);
     }
 
-    printSuccess(`Generated ${numParticipants} participant keys`)
+    printSuccess(`Generated ${numParticipants} participant keys`);
 
     // =========================================================================
     // Step 3: Create a 2-of-3 Multisig Account
     // =========================================================================
-    printStep(3, 'Creating a 2-of-3 multisig account')
+    printStep(3, 'Creating a 2-of-3 multisig account');
 
-    const threshold = 2 // Minimum signatures required
-    const multisigVersion = 1 // Multisig format version
+    const threshold = 2; // Minimum signatures required
+    const multisigVersion = 1; // Multisig format version
 
     const multisigResult = await kmd.importMultisig({
       walletHandleToken,
       publicKeys,
       threshold,
       multisigVersion,
-    })
+    });
 
-    const multisigAddress = multisigResult.address
+    const multisigAddress = multisigResult.address;
 
-    printSuccess('Multisig account created!')
-    printInfo(`Multisig Address: ${multisigAddress}`)
-    printInfo(`Threshold: ${threshold}-of-${numParticipants}`)
-    printInfo('')
-    printInfo('This multisig address will be used as the delegator for the logic signature.')
+    printSuccess('Multisig account created!');
+    printInfo(`Multisig Address: ${multisigAddress}`);
+    printInfo(`Threshold: ${threshold}-of-${numParticipants}`);
+    printInfo('');
+    printInfo('This multisig address will be used as the delegator for the logic signature.');
 
     // =========================================================================
     // Step 4: Create a Simple TEAL Program
     // =========================================================================
-    printStep(4, 'Creating a simple TEAL program')
+    printStep(4, 'Creating a simple TEAL program');
 
     // Load TEAL logic signature from shared artifacts
     // This program approves payment transactions up to 1 ALGO
     // In production, you'd have more sophisticated logic
-    const tealSource = loadTealSource('delegated-payment-limit.teal')
+    const tealSource = loadTealSource('delegated-payment-limit.teal');
 
-    printInfo('TEAL Program Source:')
-    printInfo('')
-    tealSource.split('\n').forEach((line) => {
-      printInfo(`    ${line}`)
-    })
-    printInfo('')
-    printInfo('This program approves payment transactions up to 1 ALGO.')
-    printInfo('When signed by a multisig account, it creates a "delegated multisig lsig".')
+    printInfo('TEAL Program Source:');
+    printInfo('');
+    tealSource.split('\n').forEach(line => {
+      printInfo(`    ${line}`);
+    });
+    printInfo('');
+    printInfo('This program approves payment transactions up to 1 ALGO.');
+    printInfo('When signed by a multisig account, it creates a "delegated multisig lsig".');
 
     // =========================================================================
     // Step 5: Compile the TEAL Program
     // =========================================================================
-    printStep(5, 'Compiling the TEAL program using algod tealCompile')
+    printStep(5, 'Compiling the TEAL program using algod tealCompile');
 
-    const compileResult = await algod.tealCompile(tealSource)
+    const compileResult = await algod.tealCompile(tealSource);
 
     // Decode base64 result to Uint8Array
-    const programBytes = new Uint8Array(Buffer.from(compileResult.result, 'base64'))
+    const programBytes = new Uint8Array(Buffer.from(compileResult.result, 'base64'));
 
-    printSuccess('TEAL program compiled successfully!')
-    printInfo('')
-    printInfo('Compilation Result:')
-    printInfo(`  Hash (program address): ${compileResult.hash}`)
-    printInfo(`  Compiled size:          ${programBytes.length} bytes`)
-    printInfo(`  Compiled bytes:         ${formatBytesForDisplay(programBytes)}`)
+    printSuccess('TEAL program compiled successfully!');
+    printInfo('');
+    printInfo('Compilation Result:');
+    printInfo(`  Hash (program address): ${compileResult.hash}`);
+    printInfo(`  Compiled size:          ${programBytes.length} bytes`);
+    printInfo(`  Compiled bytes:         ${formatBytesForDisplay(programBytes)}`);
 
     // =========================================================================
     // Step 6: Sign with the First Participant (Partial Signature)
     // =========================================================================
-    printStep(6, 'Signing the program with the first participant')
+    printStep(6, 'Signing the program with the first participant');
 
-    printInfo(`First signer: ${shortenAddress(participantAddresses[0].toString())}`)
-    printInfo('')
+    printInfo(`First signer: ${shortenAddress(participantAddresses[0].toString())}`);
+    printInfo('');
 
     const firstSignResult = await kmd.signMultisigProgram({
       walletHandleToken,
@@ -296,45 +301,45 @@ async function main() {
       program: programBytes,
       publicKey: publicKeys[0],
       walletPassword,
-    })
+    });
 
-    printSuccess('First signature obtained!')
-    printInfo('')
-    printInfo('SignProgramMultisigResponse fields:')
-    printInfo(`  multisig: Uint8Array (${firstSignResult.multisig.length} bytes)`)
-    printInfo('')
+    printSuccess('First signature obtained!');
+    printInfo('');
+    printInfo('SignProgramMultisigResponse fields:');
+    printInfo(`  multisig: Uint8Array (${firstSignResult.multisig.length} bytes)`);
+    printInfo('');
 
     // Decode and display the partial multisig signature
-    const partialKmdMultisig = decodeKmdMultisigResponse(firstSignResult.multisig)
-    const sigCount1 = countSignatures(partialKmdMultisig)
+    const partialKmdMultisig = decodeKmdMultisigResponse(firstSignResult.multisig);
+    const sigCount1 = countSignatures(partialKmdMultisig);
 
-    printInfo('Partial Multisig Signature:')
-    printInfo(`  version:   ${partialKmdMultisig.version}`)
-    printInfo(`  threshold: ${partialKmdMultisig.threshold}`)
-    printInfo(`  subsigs:   ${partialKmdMultisig.subsignatures.length} participants`)
-    printInfo(`  Signatures collected: ${sigCount1} of ${threshold} required`)
-    printInfo('')
-    printInfo('Subsignature details:')
+    printInfo('Partial Multisig Signature:');
+    printInfo(`  version:   ${partialKmdMultisig.version}`);
+    printInfo(`  threshold: ${partialKmdMultisig.threshold}`);
+    printInfo(`  subsigs:   ${partialKmdMultisig.subsignatures.length} participants`);
+    printInfo(`  Signatures collected: ${sigCount1} of ${threshold} required`);
+    printInfo('');
+    printInfo('Subsignature details:');
     partialKmdMultisig.subsignatures.forEach((subsig, i) => {
-      const hasSig = subsig.signature !== undefined
-      const status = hasSig ? '✓ SIGNED' : '○ pending'
-      const addr = encodeAddress(subsig.publicKey)
-      printInfo(`  ${i + 1}. ${shortenAddress(addr)} - ${status}`)
-    })
+      const hasSig = subsig.signature !== undefined;
+      const status = hasSig ? '✓ SIGNED' : '○ pending';
+      const addr = encodeAddress(subsig.publicKey);
+      printInfo(`  ${i + 1}. ${shortenAddress(addr)} - ${status}`);
+    });
 
-    printInfo('')
-    printInfo('Note: With only 1 signature, the multisig lsig is not yet valid.')
-    printInfo(`      We need ${threshold} signatures (${threshold - sigCount1} more required).`)
+    printInfo('');
+    printInfo('Note: With only 1 signature, the multisig lsig is not yet valid.');
+    printInfo(`      We need ${threshold} signatures (${threshold - sigCount1} more required).`);
 
     // =========================================================================
     // Step 7: Sign with the Second Participant (Complete the Multisig)
     // =========================================================================
-    printStep(7, 'Signing the program with the second participant')
+    printStep(7, 'Signing the program with the second participant');
 
-    printInfo(`Second signer: ${shortenAddress(participantAddresses[1].toString())}`)
-    printInfo('')
-    printInfo('Passing the partial multisig from Step 6 to collect the second signature...')
-    printInfo('')
+    printInfo(`Second signer: ${shortenAddress(participantAddresses[1].toString())}`);
+    printInfo('');
+    printInfo('Passing the partial multisig from Step 6 to collect the second signature...');
+    printInfo('');
 
     const secondSignResult = await kmd.signMultisigProgram({
       walletHandleToken,
@@ -343,187 +348,188 @@ async function main() {
       publicKey: publicKeys[1],
       walletPassword,
       partialMultisig: partialKmdMultisig, // Pass the partial signature from first signer
-    })
+    });
 
-    printSuccess('Second signature obtained!')
-    printInfo('')
+    printSuccess('Second signature obtained!');
+    printInfo('');
 
     // Decode and display the completed multisig signature
-    const completedKmdMultisig = decodeKmdMultisigResponse(secondSignResult.multisig)
-    const sigCount2 = countSignatures(completedKmdMultisig)
+    const completedKmdMultisig = decodeKmdMultisigResponse(secondSignResult.multisig);
+    const sigCount2 = countSignatures(completedKmdMultisig);
 
-    printInfo('Completed Multisig Signature:')
-    printInfo(`  version:   ${completedKmdMultisig.version}`)
-    printInfo(`  threshold: ${completedKmdMultisig.threshold}`)
-    printInfo(`  Signatures collected: ${sigCount2} of ${threshold} required`)
-    printInfo('')
-    printInfo('Subsignature details:')
+    printInfo('Completed Multisig Signature:');
+    printInfo(`  version:   ${completedKmdMultisig.version}`);
+    printInfo(`  threshold: ${completedKmdMultisig.threshold}`);
+    printInfo(`  Signatures collected: ${sigCount2} of ${threshold} required`);
+    printInfo('');
+    printInfo('Subsignature details:');
     completedKmdMultisig.subsignatures.forEach((subsig, i) => {
-      const hasSig = subsig.signature !== undefined
-      const status = hasSig ? '✓ SIGNED' : '○ pending'
-      const addr = encodeAddress(subsig.publicKey)
-      printInfo(`  ${i + 1}. ${shortenAddress(addr)} - ${status}`)
-    })
+      const hasSig = subsig.signature !== undefined;
+      const status = hasSig ? '✓ SIGNED' : '○ pending';
+      const addr = encodeAddress(subsig.publicKey);
+      printInfo(`  ${i + 1}. ${shortenAddress(addr)} - ${status}`);
+    });
 
-    printInfo('')
-    printSuccess(`Threshold met! ${sigCount2} >= ${threshold} signatures collected.`)
-    printInfo('The delegated multisig logic signature is now fully authorized.')
+    printInfo('');
+    printSuccess(`Threshold met! ${sigCount2} >= ${threshold} signatures collected.`);
+    printInfo('The delegated multisig logic signature is now fully authorized.');
 
     // =========================================================================
     // Step 8: Create a LogicSigAccount with the Multisig Signature
     // =========================================================================
-    printStep(8, 'Creating a LogicSigAccount with the multisig signature')
+    printStep(8, 'Creating a LogicSigAccount with the multisig signature');
 
-    printInfo('A delegated multisig LogicSigAccount combines:')
-    printInfo('  1. The compiled program (logic)')
-    printInfo('  2. The multisig signature (delegation proof from multiple parties)')
-    printInfo('  3. The multisig delegator address')
-    printInfo('')
+    printInfo('A delegated multisig LogicSigAccount combines:');
+    printInfo('  1. The compiled program (logic)');
+    printInfo('  2. The multisig signature (delegation proof from multiple parties)');
+    printInfo('  3. The multisig delegator address');
+    printInfo('');
 
     // Get the program address (hash of "Program" + logic)
-    const nonDelegatedLsig = new LogicSig(programBytes)
-    const programAddress = nonDelegatedLsig.address()
+    const nonDelegatedLsig = new LogicSig(programBytes);
+    const programAddress = nonDelegatedLsig.address();
 
     // Create a LogicSigAccount for delegation
-    const lsigAccount = new LogicSigAccount(programBytes, [], multisigAddress)
+    const lsigAccount = new LogicSigAccount(programBytes, [], multisigAddress);
 
     // Convert KMD MultisigSig to transact's MultisigSignature format
-    const completedMultisig = kmdMultisigToTransactMultisig(completedKmdMultisig)
-    lsigAccount.msig = completedMultisig
+    const completedMultisig = kmdMultisigToTransactMultisig(completedKmdMultisig);
+    lsigAccount.msig = completedMultisig;
 
-    printSuccess('LogicSigAccount created with multisig signature!')
-    printInfo('')
-    printInfo('LogicSigAccount properties:')
-    printInfo(`  Program address:   ${shortenAddress(programAddress.toString())}`)
-    printInfo(`  Delegator address: ${shortenAddress(multisigAddress.toString())} (multisig)`)
-    printInfo(`  Has msig:          ${lsigAccount.msig !== undefined}`)
-    printInfo(`  Logic size:        ${lsigAccount.logic.length} bytes`)
-    printInfo('')
+    printSuccess('LogicSigAccount created with multisig signature!');
+    printInfo('');
+    printInfo('LogicSigAccount properties:');
+    printInfo(`  Program address:   ${shortenAddress(programAddress.toString())}`);
+    printInfo(`  Delegator address: ${shortenAddress(multisigAddress.toString())} (multisig)`);
+    printInfo(`  Has msig:          ${lsigAccount.msig !== undefined}`);
+    printInfo(`  Logic size:        ${lsigAccount.logic.length} bytes`);
+    printInfo('');
 
     // Show the distinction between program address and delegator
-    printInfo('Important distinction:')
-    printInfo(`  - Program address: ${shortenAddress(programAddress.toString())}`)
-    printInfo('    Hash of the logic - this is the "contract account" in non-delegated mode')
-    printInfo('')
-    printInfo(`  - lsigAccount.addr: ${shortenAddress(lsigAccount.addr.toString())}`)
-    printInfo('    This is the DELEGATOR - the multisig account authorizing the program')
-    printInfo('')
-    printInfo('When using this delegated multisig lsig, transactions will be authorized')
-    printInfo(`as if signed by the multisig account ${shortenAddress(multisigAddress.toString())}.`)
+    printInfo('Important distinction:');
+    printInfo(`  - Program address: ${shortenAddress(programAddress.toString())}`);
+    printInfo('    Hash of the logic - this is the "contract account" in non-delegated mode');
+    printInfo('');
+    printInfo(`  - lsigAccount.addr: ${shortenAddress(lsigAccount.addr.toString())}`);
+    printInfo('    This is the DELEGATOR - the multisig account authorizing the program');
+    printInfo('');
+    printInfo('When using this delegated multisig lsig, transactions will be authorized');
+    printInfo(
+      `as if signed by the multisig account ${shortenAddress(multisigAddress.toString())}.`,
+    );
 
     // =========================================================================
     // Step 9: Explain How Delegated Multisig Logic Signatures Work
     // =========================================================================
-    printStep(9, 'Understanding delegated multisig logic signatures')
+    printStep(9, 'Understanding delegated multisig logic signatures');
 
-    printInfo('Delegated Multisig Logic Signatures combine two concepts:')
-    printInfo('')
-    printInfo('1. MULTISIG AUTHORIZATION:')
-    printInfo('   - Multiple parties (2-of-3 in this example) must approve')
-    printInfo('   - Each party signs the program bytes with their key')
-    printInfo('   - Signatures are collected via partialMultisig parameter')
-    printInfo('   - Once threshold is met, the authorization is complete')
-    printInfo('')
-    printInfo('2. DELEGATED LOGIC SIGNATURE:')
-    printInfo('   - The program defines the rules for transactions')
-    printInfo('   - The multisig signature authorizes the program')
-    printInfo('   - Anyone with the lsig can submit transactions (if program approves)')
-    printInfo('   - No further interaction from the multisig signers needed')
-    printInfo('')
-    printInfo('Key differences from regular multisig transactions:')
-    printInfo('   - Multisig Txn: Signers approve EACH transaction')
-    printInfo('   - Multisig Lsig: Signers approve the PROGRAM once, then')
-    printInfo('                   the program approves transactions automatically')
-    printInfo('')
-    printInfo('Example workflow for using the delegated multisig lsig:')
-    printInfo('')
-    printInfo('  1. Create a Transaction with sender = multisig address')
-    printInfo('')
-    printInfo('  2. Use the LogicSigAccount.signer to sign:')
-    printInfo('')
-    printInfo('     const signedTxns = await lsigAccount.signer([txn], [0])')
-    printInfo('')
-    printInfo('  3. The signed transaction includes:')
-    printInfo('     - lsig.logic:  The compiled TEAL program')
-    printInfo('     - lsig.msig:   The multisig delegation signature')
-    printInfo('')
-    printInfo('  4. When submitted, the network validates:')
-    printInfo('     - The multisig signature is valid (threshold met)')
-    printInfo('     - The program logic approves the transaction')
+    printInfo('Delegated Multisig Logic Signatures combine two concepts:');
+    printInfo('');
+    printInfo('1. MULTISIG AUTHORIZATION:');
+    printInfo('   - Multiple parties (2-of-3 in this example) must approve');
+    printInfo('   - Each party signs the program bytes with their key');
+    printInfo('   - Signatures are collected via partialMultisig parameter');
+    printInfo('   - Once threshold is met, the authorization is complete');
+    printInfo('');
+    printInfo('2. DELEGATED LOGIC SIGNATURE:');
+    printInfo('   - The program defines the rules for transactions');
+    printInfo('   - The multisig signature authorizes the program');
+    printInfo('   - Anyone with the lsig can submit transactions (if program approves)');
+    printInfo('   - No further interaction from the multisig signers needed');
+    printInfo('');
+    printInfo('Key differences from regular multisig transactions:');
+    printInfo('   - Multisig Txn: Signers approve EACH transaction');
+    printInfo('   - Multisig Lsig: Signers approve the PROGRAM once, then');
+    printInfo('                   the program approves transactions automatically');
+    printInfo('');
+    printInfo('Example workflow for using the delegated multisig lsig:');
+    printInfo('');
+    printInfo('  1. Create a Transaction with sender = multisig address');
+    printInfo('');
+    printInfo('  2. Use the LogicSigAccount.signer to sign:');
+    printInfo('');
+    printInfo('     const signedTxns = await lsigAccount.signer([txn], [0])');
+    printInfo('');
+    printInfo('  3. The signed transaction includes:');
+    printInfo('     - lsig.logic:  The compiled TEAL program');
+    printInfo('     - lsig.msig:   The multisig delegation signature');
+    printInfo('');
+    printInfo('  4. When submitted, the network validates:');
+    printInfo('     - The multisig signature is valid (threshold met)');
+    printInfo('     - The program logic approves the transaction');
 
     // =========================================================================
     // Cleanup
     // =========================================================================
-    printStep(10, 'Cleaning up test wallet')
+    printStep(10, 'Cleaning up test wallet');
 
-    await cleanupTestWallet(kmd, walletHandleToken)
-    walletHandleToken = '' // Mark as cleaned up
+    await cleanupTestWallet(kmd, walletHandleToken);
+    walletHandleToken = ''; // Mark as cleaned up
 
-    printSuccess('Test wallet handle released')
+    printSuccess('Test wallet handle released');
 
     // =========================================================================
     // Summary
     // =========================================================================
-    printHeader('Summary')
-    printInfo('This example demonstrated multisig program signing with KMD:')
-    printInfo('')
-    printInfo('  signMultisigProgram() - Sign a TEAL program with multisig')
-    printInfo('     Parameters:')
-    printInfo('       - walletHandleToken: The wallet session token')
-    printInfo('       - address: The multisig account address (delegator)')
-    printInfo('       - program: The compiled TEAL program bytes')
-    printInfo('       - publicKey: The public key of the signer (must be in wallet)')
-    printInfo('       - walletPassword: The wallet password')
-    printInfo('       - partialMultisig: (optional) Existing partial signature to add to')
-    printInfo('     Returns:')
-    printInfo('       - multisig: Uint8Array (msgpack-encoded MultisigSig)')
-    printInfo('')
-    printInfo('Multisig program signing workflow:')
-    printInfo('  1. Create a multisig account with importMultisig()')
-    printInfo('  2. Write a TEAL program with the desired authorization logic')
-    printInfo('  3. Compile the program using algod.tealCompile()')
-    printInfo('  4. Sign with first participant using signMultisigProgram()')
-    printInfo('  5. Sign with additional participants, passing partialMultisig')
-    printInfo('  6. Once threshold is met, create LogicSigAccount with msig')
-    printInfo('  7. Use LogicSigAccount.signer to sign authorized transactions')
-    printInfo('')
-    printInfo('Key points:')
-    printInfo('  - Each participant signs the PROGRAM (not transactions)')
-    printInfo('  - The partialMultisig parameter chains signatures together')
-    printInfo('  - The response contains msgpack-encoded MultisigSignature')
-    printInfo('  - Unlike signMultisigTransaction, program signing is done ONCE')
-    printInfo('  - The resulting lsig can sign unlimited transactions (per program logic)')
-    printInfo('')
-    printInfo('Security considerations:')
-    printInfo('  - Write program logic carefully - it controls your multisig account!')
-    printInfo('  - Multiple parties review and sign the program code')
-    printInfo('  - Consider time bounds, amount limits, and recipient restrictions')
-    printInfo('  - The delegated lsig grants ongoing authorization until program expires')
-    printInfo('')
-    printInfo('Note: The test wallet remains in KMD (wallets cannot be deleted via API).')
+    printHeader('Summary');
+    printInfo('This example demonstrated multisig program signing with KMD:');
+    printInfo('');
+    printInfo('  signMultisigProgram() - Sign a TEAL program with multisig');
+    printInfo('     Parameters:');
+    printInfo('       - walletHandleToken: The wallet session token');
+    printInfo('       - address: The multisig account address (delegator)');
+    printInfo('       - program: The compiled TEAL program bytes');
+    printInfo('       - publicKey: The public key of the signer (must be in wallet)');
+    printInfo('       - walletPassword: The wallet password');
+    printInfo('       - partialMultisig: (optional) Existing partial signature to add to');
+    printInfo('     Returns:');
+    printInfo('       - multisig: Uint8Array (msgpack-encoded MultisigSig)');
+    printInfo('');
+    printInfo('Multisig program signing workflow:');
+    printInfo('  1. Create a multisig account with importMultisig()');
+    printInfo('  2. Write a TEAL program with the desired authorization logic');
+    printInfo('  3. Compile the program using algod.tealCompile()');
+    printInfo('  4. Sign with first participant using signMultisigProgram()');
+    printInfo('  5. Sign with additional participants, passing partialMultisig');
+    printInfo('  6. Once threshold is met, create LogicSigAccount with msig');
+    printInfo('  7. Use LogicSigAccount.signer to sign authorized transactions');
+    printInfo('');
+    printInfo('Key points:');
+    printInfo('  - Each participant signs the PROGRAM (not transactions)');
+    printInfo('  - The partialMultisig parameter chains signatures together');
+    printInfo('  - The response contains msgpack-encoded MultisigSignature');
+    printInfo('  - Unlike signMultisigTransaction, program signing is done ONCE');
+    printInfo('  - The resulting lsig can sign unlimited transactions (per program logic)');
+    printInfo('');
+    printInfo('Security considerations:');
+    printInfo('  - Write program logic carefully - it controls your multisig account!');
+    printInfo('  - Multiple parties review and sign the program code');
+    printInfo('  - Consider time bounds, amount limits, and recipient restrictions');
+    printInfo('  - The delegated lsig grants ongoing authorization until program expires');
+    printInfo('');
+    printInfo('Note: The test wallet remains in KMD (wallets cannot be deleted via API).');
   } catch (error) {
-    printError(`Error: ${error instanceof Error ? error.message : String(error)}`)
-    printInfo('')
-    printInfo('Troubleshooting:')
-    printInfo('  - Ensure LocalNet is running: algokit localnet start')
-    printInfo('  - If LocalNet issues occur: algokit localnet reset')
-    printInfo('  - Check that KMD is accessible on port 4002')
-    printInfo('  - Check that Algod is accessible on port 4001')
+    printError(`Error: ${error instanceof Error ? error.message : String(error)}`);
+    printInfo('');
+    printInfo('Troubleshooting:');
+    printInfo('  - Ensure LocalNet is running: algokit localnet start');
+    printInfo('  - If LocalNet issues occur: algokit localnet reset');
+    printInfo('  - Check that KMD is accessible on port 4002');
+    printInfo('  - Check that Algod is accessible on port 4001');
 
     // Cleanup on error
     if (walletHandleToken) {
-      await cleanupTestWallet(kmd, walletHandleToken)
+      await cleanupTestWallet(kmd, walletHandleToken);
     }
 
-    process.exit(1)
+    process.exit(1);
   }
 }
 
-main().catch((error) => {
-  console.error('Fatal error:', error)
-  process.exit(1)
-})
-
+main().catch(error => {
+  console.error('Fatal error:', error);
+  process.exit(1);
+});
 ```
 
 ---

@@ -2,10 +2,10 @@
 editUrl: false
 next: false
 prev: false
-title: "AlgodApi"
+title: 'AlgodApi'
 ---
 
-Defined in: [packages/algod\_client/src/apis/api-service.ts:70](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/algod_client/src/apis/api-service.ts#L70)
+Defined in: [packages/algod_client/src/apis/api-service.ts:70](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/algod_client/src/apis/api-service.ts#L70)
 
 ## Extended by
 
@@ -17,7 +17,7 @@ Defined in: [packages/algod\_client/src/apis/api-service.ts:70](https://github.c
 
 > **new AlgodApi**(`httpRequest`): `AlgodApi`
 
-Defined in: [packages/algod\_client/src/apis/api-service.ts:71](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/algod_client/src/apis/api-service.ts#L71)
+Defined in: [packages/algod_client/src/apis/api-service.ts:71](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/algod_client/src/apis/api-service.ts#L71)
 
 #### Parameters
 
@@ -35,7 +35,7 @@ Defined in: [packages/algod\_client/src/apis/api-service.ts:71](https://github.c
 
 > `readonly` **httpRequest**: [`BaseHttpRequest`](/docs/algokit-utils/typescript/latest/api/subpaths/algod-client/classes/basehttprequest/)
 
-Defined in: [packages/algod\_client/src/apis/api-service.ts:71](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/algod_client/src/apis/api-service.ts#L71)
+Defined in: [packages/algod_client/src/apis/api-service.ts:71](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/algod_client/src/apis/api-service.ts#L71)
 
 ## Methods
 
@@ -43,7 +43,7 @@ Defined in: [packages/algod\_client/src/apis/api-service.ts:71](https://github.c
 
 > **accountApplicationInformation**(`address`, `applicationId`): `Promise`\<[`AccountApplicationResponse`](/docs/algokit-utils/typescript/latest/api/subpaths/algod-client/type-aliases/accountapplicationresponse/)\>
 
-Defined in: [packages/algod\_client/src/apis/api-service.ts:80](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/algod_client/src/apis/api-service.ts#L80)
+Defined in: [packages/algod_client/src/apis/api-service.ts:80](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/algod_client/src/apis/api-service.ts#L80)
 
 Given a specific account public key and application ID, this call returns the account's application local state and global state (AppLocalState and AppParams, if either exists). Global state will only be returned if the provided address is the application's creator.
 
@@ -61,13 +61,13 @@ Given a specific account public key and application ID, this call returns the ac
 
 `Promise`\<[`AccountApplicationResponse`](/docs/algokit-utils/typescript/latest/api/subpaths/algod-client/type-aliases/accountapplicationresponse/)\>
 
-***
+---
 
 ### accountAssetInformation()
 
 > **accountAssetInformation**(`address`, `assetId`): `Promise`\<[`AccountAssetResponse`](/docs/algokit-utils/typescript/latest/api/subpaths/algod-client/type-aliases/accountassetresponse/)\>
 
-Defined in: [packages/algod\_client/src/apis/api-service.ts:100](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/algod_client/src/apis/api-service.ts#L100)
+Defined in: [packages/algod_client/src/apis/api-service.ts:100](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/algod_client/src/apis/api-service.ts#L100)
 
 Given a specific account public key and asset ID, this call returns the account's asset holding and asset parameters (if either exist). Asset parameters will only be returned if the provided address is the asset's creator.
 
@@ -85,13 +85,13 @@ Given a specific account public key and asset ID, this call returns the account'
 
 `Promise`\<[`AccountAssetResponse`](/docs/algokit-utils/typescript/latest/api/subpaths/algod-client/type-aliases/accountassetresponse/)\>
 
-***
+---
 
 ### accountInformation()
 
 > **accountInformation**(`address`, `params?`): `Promise`\<[`Account`](/docs/algokit-utils/typescript/latest/api/subpaths/algod-client/type-aliases/account/)\>
 
-Defined in: [packages/algod\_client/src/apis/api-service.ts:120](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/algod_client/src/apis/api-service.ts#L120)
+Defined in: [packages/algod_client/src/apis/api-service.ts:120](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/algod_client/src/apis/api-service.ts#L120)
 
 Given a specific account public key, this call returns the account's status, balance and spendable amounts
 
@@ -111,13 +111,13 @@ Given a specific account public key, this call returns the account's status, bal
 
 `Promise`\<[`Account`](/docs/algokit-utils/typescript/latest/api/subpaths/algod-client/type-aliases/account/)\>
 
-***
+---
 
 ### applicationBoxByName()
 
 > **applicationBoxByName**(`applicationId`, `boxName`): `Promise`\<[`Box`](/docs/algokit-utils/typescript/latest/api/subpaths/algod-client/type-aliases/box/)\>
 
-Defined in: [packages/algod\_client/src/apis/api-service.ts:789](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/algod_client/src/apis/api-service.ts#L789)
+Defined in: [packages/algod_client/src/apis/api-service.ts:789](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/algod_client/src/apis/api-service.ts#L789)
 
 Given an application ID and box name, it returns the round, box name, and value.
 
@@ -135,13 +135,13 @@ Given an application ID and box name, it returns the round, box name, and value.
 
 `Promise`\<[`Box`](/docs/algokit-utils/typescript/latest/api/subpaths/algod-client/type-aliases/box/)\>
 
-***
+---
 
 ### applicationBoxes()
 
 > **applicationBoxes**(`applicationId`, `params?`): `Promise`\<[`BoxesResponse`](/docs/algokit-utils/typescript/latest/api/subpaths/algod-client/type-aliases/boxesresponse/)\>
 
-Defined in: [packages/algod\_client/src/apis/api-service.ts:160](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/algod_client/src/apis/api-service.ts#L160)
+Defined in: [packages/algod_client/src/apis/api-service.ts:160](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/algod_client/src/apis/api-service.ts#L160)
 
 Given an application ID, return all Box names. No particular ordering is guaranteed. Request fails when client or server-side configured limits prevent returning all Box names.
 
@@ -161,13 +161,13 @@ Given an application ID, return all Box names. No particular ordering is guarant
 
 `Promise`\<[`BoxesResponse`](/docs/algokit-utils/typescript/latest/api/subpaths/algod-client/type-aliases/boxesresponse/)\>
 
-***
+---
 
 ### applicationById()
 
 > **applicationById**(`applicationId`): `Promise`\<[`Application`](/docs/algokit-utils/typescript/latest/api/subpaths/algod-client/type-aliases/application/)\>
 
-Defined in: [packages/algod\_client/src/apis/api-service.ts:180](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/algod_client/src/apis/api-service.ts#L180)
+Defined in: [packages/algod_client/src/apis/api-service.ts:180](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/algod_client/src/apis/api-service.ts#L180)
 
 Given a application ID, it returns application information including creator, approval and clear programs, global and local schemas, and global state.
 
@@ -181,13 +181,13 @@ Given a application ID, it returns application information including creator, ap
 
 `Promise`\<[`Application`](/docs/algokit-utils/typescript/latest/api/subpaths/algod-client/type-aliases/application/)\>
 
-***
+---
 
 ### assetById()
 
 > **assetById**(`assetId`): `Promise`\<[`Asset`](/docs/algokit-utils/typescript/latest/api/subpaths/algod-client/type-aliases/asset/)\>
 
-Defined in: [packages/algod\_client/src/apis/api-service.ts:200](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/algod_client/src/apis/api-service.ts#L200)
+Defined in: [packages/algod_client/src/apis/api-service.ts:200](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/algod_client/src/apis/api-service.ts#L200)
 
 Given a asset ID, it returns asset information including creator, name, total supply and special addresses.
 
@@ -201,13 +201,13 @@ Given a asset ID, it returns asset information including creator, name, total su
 
 `Promise`\<[`Asset`](/docs/algokit-utils/typescript/latest/api/subpaths/algod-client/type-aliases/asset/)\>
 
-***
+---
 
 ### block()
 
 > **block**(`round`, `params?`): `Promise`\<[`BlockResponse`](/docs/algokit-utils/typescript/latest/api/subpaths/algod-client/type-aliases/blockresponse/)\>
 
-Defined in: [packages/algod\_client/src/apis/api-service.ts:217](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/algod_client/src/apis/api-service.ts#L217)
+Defined in: [packages/algod_client/src/apis/api-service.ts:217](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/algod_client/src/apis/api-service.ts#L217)
 
 #### Parameters
 
@@ -225,13 +225,13 @@ Defined in: [packages/algod\_client/src/apis/api-service.ts:217](https://github.
 
 `Promise`\<[`BlockResponse`](/docs/algokit-utils/typescript/latest/api/subpaths/algod-client/type-aliases/blockresponse/)\>
 
-***
+---
 
 ### blockHash()
 
 > **blockHash**(`round`): `Promise`\<[`BlockHashResponse`](/docs/algokit-utils/typescript/latest/api/subpaths/algod-client/type-aliases/blockhashresponse/)\>
 
-Defined in: [packages/algod\_client/src/apis/api-service.ts:234](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/algod_client/src/apis/api-service.ts#L234)
+Defined in: [packages/algod_client/src/apis/api-service.ts:234](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/algod_client/src/apis/api-service.ts#L234)
 
 #### Parameters
 
@@ -243,13 +243,13 @@ Defined in: [packages/algod\_client/src/apis/api-service.ts:234](https://github.
 
 `Promise`\<[`BlockHashResponse`](/docs/algokit-utils/typescript/latest/api/subpaths/algod-client/type-aliases/blockhashresponse/)\>
 
-***
+---
 
 ### blockTimeStampOffset()
 
 > **blockTimeStampOffset**(): `Promise`\<[`GetBlockTimeStampOffsetResponse`](/docs/algokit-utils/typescript/latest/api/subpaths/algod-client/type-aliases/getblocktimestampoffsetresponse/)\>
 
-Defined in: [packages/algod\_client/src/apis/api-service.ts:254](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/algod_client/src/apis/api-service.ts#L254)
+Defined in: [packages/algod_client/src/apis/api-service.ts:254](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/algod_client/src/apis/api-service.ts#L254)
 
 Gets the current timestamp offset.
 
@@ -257,13 +257,13 @@ Gets the current timestamp offset.
 
 `Promise`\<[`GetBlockTimeStampOffsetResponse`](/docs/algokit-utils/typescript/latest/api/subpaths/algod-client/type-aliases/getblocktimestampoffsetresponse/)\>
 
-***
+---
 
 ### blockTxIds()
 
 > **blockTxIds**(`round`): `Promise`\<[`BlockTxidsResponse`](/docs/algokit-utils/typescript/latest/api/subpaths/algod-client/type-aliases/blocktxidsresponse/)\>
 
-Defined in: [packages/algod\_client/src/apis/api-service.ts:271](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/algod_client/src/apis/api-service.ts#L271)
+Defined in: [packages/algod_client/src/apis/api-service.ts:271](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/algod_client/src/apis/api-service.ts#L271)
 
 #### Parameters
 
@@ -275,13 +275,13 @@ Defined in: [packages/algod\_client/src/apis/api-service.ts:271](https://github.
 
 `Promise`\<[`BlockTxidsResponse`](/docs/algokit-utils/typescript/latest/api/subpaths/algod-client/type-aliases/blocktxidsresponse/)\>
 
-***
+---
 
 ### genesis()
 
 > **genesis**(): `Promise`\<[`Genesis`](/docs/algokit-utils/typescript/latest/api/subpaths/algod-client/type-aliases/genesis/)\>
 
-Defined in: [packages/algod\_client/src/apis/api-service.ts:291](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/algod_client/src/apis/api-service.ts#L291)
+Defined in: [packages/algod_client/src/apis/api-service.ts:291](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/algod_client/src/apis/api-service.ts#L291)
 
 Returns the entire genesis file in json.
 
@@ -289,25 +289,25 @@ Returns the entire genesis file in json.
 
 `Promise`\<[`Genesis`](/docs/algokit-utils/typescript/latest/api/subpaths/algod-client/type-aliases/genesis/)\>
 
-***
+---
 
 ### healthCheck()
 
 > **healthCheck**(): `Promise`\<`void`\>
 
-Defined in: [packages/algod\_client/src/apis/api-service.ts:308](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/algod_client/src/apis/api-service.ts#L308)
+Defined in: [packages/algod_client/src/apis/api-service.ts:308](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/algod_client/src/apis/api-service.ts#L308)
 
 #### Returns
 
 `Promise`\<`void`\>
 
-***
+---
 
 ### ledgerStateDelta()
 
 > **ledgerStateDelta**(`round`): `Promise`\<[`LedgerStateDelta`](/docs/algokit-utils/typescript/latest/api/subpaths/algod-client/type-aliases/ledgerstatedelta/)\>
 
-Defined in: [packages/algod\_client/src/apis/api-service.ts:326](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/algod_client/src/apis/api-service.ts#L326)
+Defined in: [packages/algod_client/src/apis/api-service.ts:326](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/algod_client/src/apis/api-service.ts#L326)
 
 Get ledger deltas for a round.
 
@@ -321,13 +321,13 @@ Get ledger deltas for a round.
 
 `Promise`\<[`LedgerStateDelta`](/docs/algokit-utils/typescript/latest/api/subpaths/algod-client/type-aliases/ledgerstatedelta/)\>
 
-***
+---
 
 ### ledgerStateDeltaForTransactionGroup()
 
 > **ledgerStateDeltaForTransactionGroup**(`id`): `Promise`\<[`LedgerStateDelta`](/docs/algokit-utils/typescript/latest/api/subpaths/algod-client/type-aliases/ledgerstatedelta/)\>
 
-Defined in: [packages/algod\_client/src/apis/api-service.ts:346](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/algod_client/src/apis/api-service.ts#L346)
+Defined in: [packages/algod_client/src/apis/api-service.ts:346](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/algod_client/src/apis/api-service.ts#L346)
 
 Get a ledger delta for a given transaction group.
 
@@ -341,13 +341,13 @@ Get a ledger delta for a given transaction group.
 
 `Promise`\<[`LedgerStateDelta`](/docs/algokit-utils/typescript/latest/api/subpaths/algod-client/type-aliases/ledgerstatedelta/)\>
 
-***
+---
 
 ### lightBlockHeaderProof()
 
 > **lightBlockHeaderProof**(`round`): `Promise`\<[`LightBlockHeaderProof`](/docs/algokit-utils/typescript/latest/api/subpaths/algod-client/type-aliases/lightblockheaderproof/)\>
 
-Defined in: [packages/algod\_client/src/apis/api-service.ts:363](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/algod_client/src/apis/api-service.ts#L363)
+Defined in: [packages/algod_client/src/apis/api-service.ts:363](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/algod_client/src/apis/api-service.ts#L363)
 
 #### Parameters
 
@@ -359,19 +359,20 @@ Defined in: [packages/algod\_client/src/apis/api-service.ts:363](https://github.
 
 `Promise`\<[`LightBlockHeaderProof`](/docs/algokit-utils/typescript/latest/api/subpaths/algod-client/type-aliases/lightblockheaderproof/)\>
 
-***
+---
 
 ### pendingTransactionInformation()
 
 > **pendingTransactionInformation**(`txId`): `Promise`\<[`PendingTransactionResponse`](/docs/algokit-utils/typescript/latest/api/subpaths/algod-client/type-aliases/pendingtransactionresponse/)\>
 
-Defined in: [packages/algod\_client/src/apis/api-service.ts:387](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/algod_client/src/apis/api-service.ts#L387)
+Defined in: [packages/algod_client/src/apis/api-service.ts:387](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/algod_client/src/apis/api-service.ts#L387)
 
-Given a transaction ID of a recently submitted transaction, it returns information about it.  There are several cases when this might succeed:
+Given a transaction ID of a recently submitted transaction, it returns information about it. There are several cases when this might succeed:
+
 - transaction committed (committed round > 0)
 - transaction still in the pool (committed round = 0, pool error = "")
 - transaction removed from pool due to error (committed round = 0, pool error != "")
-Or the transaction may have happened sufficiently long ago that the node no longer remembers it, and this will return an error.
+  Or the transaction may have happened sufficiently long ago that the node no longer remembers it, and this will return an error.
 
 #### Parameters
 
@@ -383,13 +384,13 @@ Or the transaction may have happened sufficiently long ago that the node no long
 
 `Promise`\<[`PendingTransactionResponse`](/docs/algokit-utils/typescript/latest/api/subpaths/algod-client/type-aliases/pendingtransactionresponse/)\>
 
-***
+---
 
 ### pendingTransactions()
 
 > **pendingTransactions**(`params?`): `Promise`\<[`PendingTransactionsResponse`](/docs/algokit-utils/typescript/latest/api/subpaths/algod-client/type-aliases/pendingtransactionsresponse/)\>
 
-Defined in: [packages/algod\_client/src/apis/api-service.ts:407](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/algod_client/src/apis/api-service.ts#L407)
+Defined in: [packages/algod_client/src/apis/api-service.ts:407](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/algod_client/src/apis/api-service.ts#L407)
 
 Get the list of pending transactions, sorted by priority, in decreasing order, truncated at the end at MAX. If MAX = 0, returns all pending transactions.
 
@@ -405,13 +406,13 @@ Get the list of pending transactions, sorted by priority, in decreasing order, t
 
 `Promise`\<[`PendingTransactionsResponse`](/docs/algokit-utils/typescript/latest/api/subpaths/algod-client/type-aliases/pendingtransactionsresponse/)\>
 
-***
+---
 
 ### pendingTransactionsByAddress()
 
 > **pendingTransactionsByAddress**(`address`, `params?`): `Promise`\<[`PendingTransactionsResponse`](/docs/algokit-utils/typescript/latest/api/subpaths/algod-client/type-aliases/pendingtransactionsresponse/)\>
 
-Defined in: [packages/algod\_client/src/apis/api-service.ts:427](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/algod_client/src/apis/api-service.ts#L427)
+Defined in: [packages/algod_client/src/apis/api-service.ts:427](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/algod_client/src/apis/api-service.ts#L427)
 
 Get the list of pending transactions by address, sorted by priority, in decreasing order, truncated at the end at MAX. If MAX = 0, returns all pending transactions.
 
@@ -431,25 +432,25 @@ Get the list of pending transactions by address, sorted by priority, in decreasi
 
 `Promise`\<[`PendingTransactionsResponse`](/docs/algokit-utils/typescript/latest/api/subpaths/algod-client/type-aliases/pendingtransactionsresponse/)\>
 
-***
+---
 
 ### ready()
 
 > **ready**(): `Promise`\<`void`\>
 
-Defined in: [packages/algod\_client/src/apis/api-service.ts:465](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/algod_client/src/apis/api-service.ts#L465)
+Defined in: [packages/algod_client/src/apis/api-service.ts:465](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/algod_client/src/apis/api-service.ts#L465)
 
 #### Returns
 
 `Promise`\<`void`\>
 
-***
+---
 
 ### sendRawTransaction()
 
 > **sendRawTransaction**(`stxOrStxs`): `Promise`\<[`PostTransactionsResponse`](/docs/algokit-utils/typescript/latest/api/subpaths/algod-client/type-aliases/posttransactionsresponse/)\>
 
-Defined in: [packages/algod\_client/src/apis/api-service.ts:773](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/algod_client/src/apis/api-service.ts#L773)
+Defined in: [packages/algod_client/src/apis/api-service.ts:773](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/algod_client/src/apis/api-service.ts#L773)
 
 Send a signed transaction or array of signed transactions to the network.
 
@@ -463,13 +464,13 @@ Send a signed transaction or array of signed transactions to the network.
 
 `Promise`\<[`PostTransactionsResponse`](/docs/algokit-utils/typescript/latest/api/subpaths/algod-client/type-aliases/posttransactionsresponse/)\>
 
-***
+---
 
 ### setBlockTimeStampOffset()
 
 > **setBlockTimeStampOffset**(`offset`): `Promise`\<`void`\>
 
-Defined in: [packages/algod\_client/src/apis/api-service.ts:483](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/algod_client/src/apis/api-service.ts#L483)
+Defined in: [packages/algod_client/src/apis/api-service.ts:483](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/algod_client/src/apis/api-service.ts#L483)
 
 Sets the timestamp offset (seconds) for blocks in dev mode. Providing an offset of 0 will unset this value and try to use the real clock for the timestamp.
 
@@ -483,13 +484,13 @@ Sets the timestamp offset (seconds) for blocks in dev mode. Providing an offset 
 
 `Promise`\<`void`\>
 
-***
+---
 
 ### setSyncRound()
 
 > **setSyncRound**(`round`): `Promise`\<`void`\>
 
-Defined in: [packages/algod\_client/src/apis/api-service.ts:501](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/algod_client/src/apis/api-service.ts#L501)
+Defined in: [packages/algod_client/src/apis/api-service.ts:501](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/algod_client/src/apis/api-service.ts#L501)
 
 Sets the minimum sync round on the ledger.
 
@@ -503,13 +504,13 @@ Sets the minimum sync round on the ledger.
 
 `Promise`\<`void`\>
 
-***
+---
 
 ### simulateRawTransactions()
 
 > **simulateRawTransactions**(`stxOrStxs`): `Promise`\<[`SimulateResponse`](/docs/algokit-utils/typescript/latest/api/subpaths/algod-client/type-aliases/simulateresponse/)\>
 
-Defined in: [packages/algod\_client/src/apis/api-service.ts:822](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/algod_client/src/apis/api-service.ts#L822)
+Defined in: [packages/algod_client/src/apis/api-service.ts:822](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/algod_client/src/apis/api-service.ts#L822)
 
 Simulate an encoded signed transaction or array of encoded signed transactions.
 
@@ -523,13 +524,13 @@ Simulate an encoded signed transaction or array of encoded signed transactions.
 
 `Promise`\<[`SimulateResponse`](/docs/algokit-utils/typescript/latest/api/subpaths/algod-client/type-aliases/simulateresponse/)\>
 
-***
+---
 
 ### simulateTransactions()
 
 > **simulateTransactions**(`body`): `Promise`\<[`SimulateResponse`](/docs/algokit-utils/typescript/latest/api/subpaths/algod-client/type-aliases/simulateresponse/)\>
 
-Defined in: [packages/algod\_client/src/apis/api-service.ts:516](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/algod_client/src/apis/api-service.ts#L516)
+Defined in: [packages/algod_client/src/apis/api-service.ts:516](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/algod_client/src/apis/api-service.ts#L516)
 
 #### Parameters
 
@@ -541,13 +542,13 @@ Defined in: [packages/algod\_client/src/apis/api-service.ts:516](https://github.
 
 `Promise`\<[`SimulateResponse`](/docs/algokit-utils/typescript/latest/api/subpaths/algod-client/type-aliases/simulateresponse/)\>
 
-***
+---
 
 ### stateProof()
 
 > **stateProof**(`round`): `Promise`\<[`StateProof`](/docs/algokit-utils/typescript/latest/api/subpaths/algod-client/type-aliases/stateproof/)\>
 
-Defined in: [packages/algod\_client/src/apis/api-service.ts:538](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/algod_client/src/apis/api-service.ts#L538)
+Defined in: [packages/algod_client/src/apis/api-service.ts:538](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/algod_client/src/apis/api-service.ts#L538)
 
 #### Parameters
 
@@ -559,25 +560,25 @@ Defined in: [packages/algod\_client/src/apis/api-service.ts:538](https://github.
 
 `Promise`\<[`StateProof`](/docs/algokit-utils/typescript/latest/api/subpaths/algod-client/type-aliases/stateproof/)\>
 
-***
+---
 
 ### status()
 
 > **status**(): `Promise`\<[`NodeStatusResponse`](/docs/algokit-utils/typescript/latest/api/subpaths/algod-client/type-aliases/nodestatusresponse/)\>
 
-Defined in: [packages/algod\_client/src/apis/api-service.ts:555](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/algod_client/src/apis/api-service.ts#L555)
+Defined in: [packages/algod_client/src/apis/api-service.ts:555](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/algod_client/src/apis/api-service.ts#L555)
 
 #### Returns
 
 `Promise`\<[`NodeStatusResponse`](/docs/algokit-utils/typescript/latest/api/subpaths/algod-client/type-aliases/nodestatusresponse/)\>
 
-***
+---
 
 ### statusAfterBlock()
 
 > **statusAfterBlock**(`round`): `Promise`\<[`NodeStatusResponse`](/docs/algokit-utils/typescript/latest/api/subpaths/algod-client/type-aliases/nodestatusresponse/)\>
 
-Defined in: [packages/algod\_client/src/apis/api-service.ts:575](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/algod_client/src/apis/api-service.ts#L575)
+Defined in: [packages/algod_client/src/apis/api-service.ts:575](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/algod_client/src/apis/api-service.ts#L575)
 
 Waits for a block to appear after round {round} and returns the node's status at the time. There is a 1 minute timeout, when reached the current status is returned regardless of whether or not it is the round after the given round.
 
@@ -591,13 +592,13 @@ Waits for a block to appear after round {round} and returns the node's status at
 
 `Promise`\<[`NodeStatusResponse`](/docs/algokit-utils/typescript/latest/api/subpaths/algod-client/type-aliases/nodestatusresponse/)\>
 
-***
+---
 
 ### suggestedParams()
 
 > **suggestedParams**(): `Promise`\<\{ `consensusVersion`: `string`; `fee`: `bigint`; `firstValid`: `bigint`; `flatFee`: `boolean`; `genesisHash`: `Uint8Array`; `genesisId`: `string`; `lastValid`: `bigint`; `minFee`: `bigint`; \}\>
 
-Defined in: [packages/algod\_client/src/apis/api-service.ts:797](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/algod_client/src/apis/api-service.ts#L797)
+Defined in: [packages/algod_client/src/apis/api-service.ts:797](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/algod_client/src/apis/api-service.ts#L797)
 
 Returns the common needed parameters for a new transaction.
 
@@ -605,25 +606,25 @@ Returns the common needed parameters for a new transaction.
 
 `Promise`\<\{ `consensusVersion`: `string`; `fee`: `bigint`; `firstValid`: `bigint`; `flatFee`: `boolean`; `genesisHash`: `Uint8Array`; `genesisId`: `string`; `lastValid`: `bigint`; `minFee`: `bigint`; \}\>
 
-***
+---
 
 ### supply()
 
 > **supply**(): `Promise`\<[`SupplyResponse`](/docs/algokit-utils/typescript/latest/api/subpaths/algod-client/type-aliases/supplyresponse/)\>
 
-Defined in: [packages/algod\_client/src/apis/api-service.ts:592](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/algod_client/src/apis/api-service.ts#L592)
+Defined in: [packages/algod_client/src/apis/api-service.ts:592](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/algod_client/src/apis/api-service.ts#L592)
 
 #### Returns
 
 `Promise`\<[`SupplyResponse`](/docs/algokit-utils/typescript/latest/api/subpaths/algod-client/type-aliases/supplyresponse/)\>
 
-***
+---
 
 ### syncRound()
 
 > **syncRound**(): `Promise`\<[`GetSyncRoundResponse`](/docs/algokit-utils/typescript/latest/api/subpaths/algod-client/type-aliases/getsyncroundresponse/)\>
 
-Defined in: [packages/algod\_client/src/apis/api-service.ts:612](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/algod_client/src/apis/api-service.ts#L612)
+Defined in: [packages/algod_client/src/apis/api-service.ts:612](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/algod_client/src/apis/api-service.ts#L612)
 
 Gets the minimum sync round for the ledger.
 
@@ -631,13 +632,13 @@ Gets the minimum sync round for the ledger.
 
 `Promise`\<[`GetSyncRoundResponse`](/docs/algokit-utils/typescript/latest/api/subpaths/algod-client/type-aliases/getsyncroundresponse/)\>
 
-***
+---
 
 ### tealCompile()
 
 > **tealCompile**(`body`, `params?`): `Promise`\<[`CompileResponse`](/docs/algokit-utils/typescript/latest/api/subpaths/algod-client/type-aliases/compileresponse/)\>
 
-Defined in: [packages/algod\_client/src/apis/api-service.ts:632](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/algod_client/src/apis/api-service.ts#L632)
+Defined in: [packages/algod_client/src/apis/api-service.ts:632](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/algod_client/src/apis/api-service.ts#L632)
 
 Given TEAL source code in plain text, return base64 encoded program bytes and base32 SHA512_256 hash of program bytes (Address style). This endpoint is only enabled when a node's configuration file sets EnableDeveloperAPI to true.
 
@@ -657,13 +658,13 @@ Given TEAL source code in plain text, return base64 encoded program bytes and ba
 
 `Promise`\<[`CompileResponse`](/docs/algokit-utils/typescript/latest/api/subpaths/algod-client/type-aliases/compileresponse/)\>
 
-***
+---
 
 ### tealDisassemble()
 
 > **tealDisassemble**(`body`): `Promise`\<[`DisassembleResponse`](/docs/algokit-utils/typescript/latest/api/subpaths/algod-client/type-aliases/disassembleresponse/)\>
 
-Defined in: [packages/algod\_client/src/apis/api-service.ts:657](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/algod_client/src/apis/api-service.ts#L657)
+Defined in: [packages/algod_client/src/apis/api-service.ts:657](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/algod_client/src/apis/api-service.ts#L657)
 
 Given the program bytes, return the TEAL source code in plain text. This endpoint is only enabled when a node's configuration file sets EnableDeveloperAPI to true.
 
@@ -677,13 +678,13 @@ Given the program bytes, return the TEAL source code in plain text. This endpoin
 
 `Promise`\<[`DisassembleResponse`](/docs/algokit-utils/typescript/latest/api/subpaths/algod-client/type-aliases/disassembleresponse/)\>
 
-***
+---
 
 ### transactionGroupLedgerStateDeltasForRound()
 
 > **transactionGroupLedgerStateDeltasForRound**(`round`): `Promise`\<[`TransactionGroupLedgerStateDeltasForRoundResponse`](/docs/algokit-utils/typescript/latest/api/subpaths/algod-client/type-aliases/transactiongroupledgerstatedeltasforroundresponse/)\>
 
-Defined in: [packages/algod\_client/src/apis/api-service.ts:681](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/algod_client/src/apis/api-service.ts#L681)
+Defined in: [packages/algod_client/src/apis/api-service.ts:681](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/algod_client/src/apis/api-service.ts#L681)
 
 Get ledger deltas for transaction groups in a given round.
 
@@ -697,13 +698,13 @@ Get ledger deltas for transaction groups in a given round.
 
 `Promise`\<[`TransactionGroupLedgerStateDeltasForRoundResponse`](/docs/algokit-utils/typescript/latest/api/subpaths/algod-client/type-aliases/transactiongroupledgerstatedeltasforroundresponse/)\>
 
-***
+---
 
 ### transactionParams()
 
 > **transactionParams**(): `Promise`\<\{ `consensusVersion`: `string`; `fee`: `bigint`; `firstValid`: `bigint`; `flatFee`: `boolean`; `genesisHash`: `Uint8Array`; `genesisId`: `string`; `lastValid`: `bigint`; `minFee`: `bigint`; \}\>
 
-Defined in: [packages/algod\_client/src/apis/api-service.ts:815](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/algod_client/src/apis/api-service.ts#L815)
+Defined in: [packages/algod_client/src/apis/api-service.ts:815](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/algod_client/src/apis/api-service.ts#L815)
 
 Returns the common needed parameters for a new transaction.
 
@@ -711,13 +712,13 @@ Returns the common needed parameters for a new transaction.
 
 `Promise`\<\{ `consensusVersion`: `string`; `fee`: `bigint`; `firstValid`: `bigint`; `flatFee`: `boolean`; `genesisHash`: `Uint8Array`; `genesisId`: `string`; `lastValid`: `bigint`; `minFee`: `bigint`; \}\>
 
-***
+---
 
 ### transactionProof()
 
 > **transactionProof**(`round`, `txId`, `params?`): `Promise`\<[`TransactionProof`](/docs/algokit-utils/typescript/latest/api/subpaths/algod-client/type-aliases/transactionproof/)\>
 
-Defined in: [packages/algod\_client/src/apis/api-service.ts:715](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/algod_client/src/apis/api-service.ts#L715)
+Defined in: [packages/algod_client/src/apis/api-service.ts:715](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/algod_client/src/apis/api-service.ts#L715)
 
 #### Parameters
 
@@ -739,13 +740,13 @@ Defined in: [packages/algod\_client/src/apis/api-service.ts:715](https://github.
 
 `Promise`\<[`TransactionProof`](/docs/algokit-utils/typescript/latest/api/subpaths/algod-client/type-aliases/transactionproof/)\>
 
-***
+---
 
 ### unsetSyncRound()
 
 > **unsetSyncRound**(): `Promise`\<`void`\>
 
-Defined in: [packages/algod\_client/src/apis/api-service.ts:735](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/algod_client/src/apis/api-service.ts#L735)
+Defined in: [packages/algod_client/src/apis/api-service.ts:735](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/algod_client/src/apis/api-service.ts#L735)
 
 Unset the ledger sync round.
 
@@ -753,13 +754,13 @@ Unset the ledger sync round.
 
 `Promise`\<`void`\>
 
-***
+---
 
 ### version()
 
 > **version**(): `Promise`\<[`Version`](/docs/algokit-utils/typescript/latest/api/subpaths/algod-client/type-aliases/version/)\>
 
-Defined in: [packages/algod\_client/src/apis/api-service.ts:753](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/algod_client/src/apis/api-service.ts#L753)
+Defined in: [packages/algod_client/src/apis/api-service.ts:753](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/algod_client/src/apis/api-service.ts#L753)
 
 Retrieves the supported API versions, binary build versions, and genesis information.
 

@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "ARC28Event"
+title: 'ARC28Event'
 ---
 
 > **ARC28Event** = `object`
@@ -39,7 +39,7 @@ Optional, user-friendly name for the argument
 
 The type of the argument
 
-***
+---
 
 ### desc?
 
@@ -49,7 +49,7 @@ Defined in: [packages/abi/src/arc28-event.ts:6](https://github.com/algorandfound
 
 Optional, user-friendly description for the event
 
-***
+---
 
 ### name
 

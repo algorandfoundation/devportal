@@ -1,6 +1,6 @@
 ---
-title: "ABI Tuple Type"
-description: "This example demonstrates how to encode and decode tuples using TupleType:"
+title: 'ABI Tuple Type'
+description: 'This example demonstrates how to encode and decode tuples using TupleType:'
 sidebar:
   order: 7
 ---
@@ -10,16 +10,17 @@ sidebar:
 ## Description
 
 This example demonstrates how to encode and decode tuples using TupleType:
+
 - Tuples with mixed static types: (uint64,bool,address)
 - Tuples with dynamic types: (uint64,string,bool)
 - Nested tuples: ((uint64,bool),string)
- Key characteristics of tuple encoding:
+  Key characteristics of tuple encoding:
 - Static-only tuples: all elements encoded consecutively, fixed size
 - Tuples with dynamic elements: head/tail encoding pattern
 - Head: static values inline + offsets for dynamic values
 - Tail: actual data for dynamic elements
 - Nested tuples: inner tuples are encoded first, then treated as their component
- ARC-4 specification: Tuples are sequences of types enclosed in parentheses.
+  ARC-4 specification: Tuples are sequences of types enclosed in parentheses.
 
 ## Prerequisites
 

@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "PaymentItxnParams"
+title: 'PaymentItxnParams'
 ---
 
 Defined in: [itxn.ts:995](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/itxn.ts#L995)
@@ -33,7 +33,7 @@ Return a copy of this PaymentItxnParams object
 
 `PaymentItxnParams`
 
-***
+---
 
 ### set()
 
@@ -53,7 +53,7 @@ Update one or more fields in this PaymentItxnParams object
 
 `void`
 
-***
+---
 
 ### submit()
 

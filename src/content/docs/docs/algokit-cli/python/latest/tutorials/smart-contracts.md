@@ -1,5 +1,5 @@
 ---
-title: "Smart Contract Tutorial"
+title: 'Smart Contract Tutorial'
 ---
 
 _TODO_

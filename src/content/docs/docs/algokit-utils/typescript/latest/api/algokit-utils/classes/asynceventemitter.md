@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "AsyncEventEmitter"
+title: 'AsyncEventEmitter'
 ---
 
 Defined in: [src/async-event-emitter.ts:5](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/async-event-emitter.ts#L5)
@@ -51,7 +51,7 @@ Defined in: [src/async-event-emitter.ts:9](https://github.com/algorandfoundation
 
 ##### K
 
-`K` *extends* `string` \| `symbol`
+`K` _extends_ `string` \| `symbol`
 
 #### Parameters
 
@@ -61,13 +61,13 @@ Defined in: [src/async-event-emitter.ts:9](https://github.com/algorandfoundation
 
 ##### event
 
-`K` *extends* [`EventType`](/docs/algokit-utils/typescript/latest/api/algokit-utils/enumerations/eventtype/) ? [`EventDataMap`](/docs/algokit-utils/typescript/latest/api/algokit-utils/type-aliases/eventdatamap/)\[`K`\] : `unknown`
+`K` _extends_ [`EventType`](/docs/algokit-utils/typescript/latest/api/algokit-utils/enumerations/eventtype/) ? [`EventDataMap`](/docs/algokit-utils/typescript/latest/api/algokit-utils/type-aliases/eventdatamap/)\[`K`\] : `unknown`
 
 #### Returns
 
 `Promise`\<`void`\>
 
-***
+---
 
 ### on()
 
@@ -79,7 +79,7 @@ Defined in: [src/async-event-emitter.ts:15](https://github.com/algorandfoundatio
 
 ##### K
 
-`K` *extends* `string` \| `symbol`
+`K` _extends_ `string` \| `symbol`
 
 #### Parameters
 
@@ -89,13 +89,13 @@ Defined in: [src/async-event-emitter.ts:15](https://github.com/algorandfoundatio
 
 ##### listener
 
-`AsyncEventListener`\<`K` *extends* [`EventType`](/docs/algokit-utils/typescript/latest/api/algokit-utils/enumerations/eventtype/) ? [`EventDataMap`](/docs/algokit-utils/typescript/latest/api/algokit-utils/type-aliases/eventdatamap/)\[`K`\] : `unknown`\>
+`AsyncEventListener`\<`K` _extends_ [`EventType`](/docs/algokit-utils/typescript/latest/api/algokit-utils/enumerations/eventtype/) ? [`EventDataMap`](/docs/algokit-utils/typescript/latest/api/algokit-utils/type-aliases/eventdatamap/)\[`K`\] : `unknown`\>
 
 #### Returns
 
 `AsyncEventEmitter`
 
-***
+---
 
 ### once()
 
@@ -107,7 +107,7 @@ Defined in: [src/async-event-emitter.ts:24](https://github.com/algorandfoundatio
 
 ##### K
 
-`K` *extends* `string` \| `symbol`
+`K` _extends_ `string` \| `symbol`
 
 #### Parameters
 
@@ -117,13 +117,13 @@ Defined in: [src/async-event-emitter.ts:24](https://github.com/algorandfoundatio
 
 ##### listener
 
-`AsyncEventListener`\<`K` *extends* [`EventType`](/docs/algokit-utils/typescript/latest/api/algokit-utils/enumerations/eventtype/) ? [`EventDataMap`](/docs/algokit-utils/typescript/latest/api/algokit-utils/type-aliases/eventdatamap/)\[`K`\] : `unknown`\>
+`AsyncEventListener`\<`K` _extends_ [`EventType`](/docs/algokit-utils/typescript/latest/api/algokit-utils/enumerations/eventtype/) ? [`EventDataMap`](/docs/algokit-utils/typescript/latest/api/algokit-utils/type-aliases/eventdatamap/)\[`K`\] : `unknown`\>
 
 #### Returns
 
 `AsyncEventEmitter`
 
-***
+---
 
 ### removeListener()
 

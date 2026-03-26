@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "OpUpFeeSource"
+title: 'OpUpFeeSource'
 ---
 
 Defined in: [util.ts:130](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/util.ts#L130)
@@ -19,7 +19,7 @@ Defined in: [util.ts:142](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 First the excess will be used, then remaining fees taken from the app account
 
-***
+---
 
 ### AppAccount
 
@@ -29,7 +29,7 @@ Defined in: [util.ts:138](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 The app's account will cover all fees (itxn.fee = Global.minTxFee)
 
-***
+---
 
 ### GroupCredit
 

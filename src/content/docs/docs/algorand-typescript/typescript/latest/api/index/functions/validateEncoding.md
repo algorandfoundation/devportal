@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "validateEncoding"
+title: 'validateEncoding'
 ---
 
 > **validateEncoding**\<`T`\>(`value`): `void`

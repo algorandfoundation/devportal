@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "SendTransactionComposerResults"
+title: 'SendTransactionComposerResults'
 ---
 
 Defined in: [src/transaction/types.ts:67](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/transaction/types.ts#L67)
@@ -24,7 +24,7 @@ Defined in: [src/transaction/types.ts:77](https://github.com/algorandfoundation/
 The responses if the transactions were sent and waited for,
 the index of the confirmation will match the index of the underlying transaction
 
-***
+---
 
 ### groupId
 
@@ -34,7 +34,7 @@ Defined in: [src/transaction/types.ts:69](https://github.com/algorandfoundation/
 
 base64 encoded representation of the group ID of the group
 
-***
+---
 
 ### returns?
 
@@ -44,7 +44,7 @@ Defined in: [src/transaction/types.ts:73](https://github.com/algorandfoundation/
 
 If ABI method(s) were called the processed return values
 
-***
+---
 
 ### transactions
 
@@ -58,7 +58,7 @@ The transactions that have been prepared and/or sent
 
 [`SendTransactionResults`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/sendtransactionresults/).[`transactions`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/sendtransactionresults/#transactions)
 
-***
+---
 
 ### txIds
 

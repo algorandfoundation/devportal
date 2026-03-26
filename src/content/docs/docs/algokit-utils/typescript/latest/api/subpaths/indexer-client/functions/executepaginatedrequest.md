@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "executePaginatedRequest"
+title: 'executePaginatedRequest'
 ---
 
 > **executePaginatedRequest**\<`TResult`, `TRequest`\>(`extractItems`, `buildRequest`): `Promise`\<`TResult`[]\>
@@ -17,7 +17,7 @@ Defined in: [src/indexer-client/indexer-lookup.ts:120](https://github.com/algora
 
 ### TRequest
 
-`TRequest` *extends* `Promise`\<`any`\>
+`TRequest` _extends_ `Promise`\<`any`\>
 
 ## Parameters
 

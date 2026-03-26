@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "ABIMethod"
+title: 'ABIMethod'
 ---
 
 Defined in: [packages/abi/src/abi-method.ts:74](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/abi/src/abi-method.ts#L74)
@@ -55,7 +55,7 @@ Defined in: [packages/abi/src/abi-method.ts:82](https://github.com/algorandfound
 
 Defined in: [packages/abi/src/abi-method.ts:77](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/abi/src/abi-method.ts#L77)
 
-***
+---
 
 ### description?
 
@@ -63,7 +63,7 @@ Defined in: [packages/abi/src/abi-method.ts:77](https://github.com/algorandfound
 
 Defined in: [packages/abi/src/abi-method.ts:76](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/abi/src/abi-method.ts#L76)
 
-***
+---
 
 ### events?
 
@@ -71,7 +71,7 @@ Defined in: [packages/abi/src/abi-method.ts:76](https://github.com/algorandfound
 
 Defined in: [packages/abi/src/abi-method.ts:79](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/abi/src/abi-method.ts#L79)
 
-***
+---
 
 ### name
 
@@ -79,7 +79,7 @@ Defined in: [packages/abi/src/abi-method.ts:79](https://github.com/algorandfound
 
 Defined in: [packages/abi/src/abi-method.ts:75](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/abi/src/abi-method.ts#L75)
 
-***
+---
 
 ### readonly?
 
@@ -87,7 +87,7 @@ Defined in: [packages/abi/src/abi-method.ts:75](https://github.com/algorandfound
 
 Defined in: [packages/abi/src/abi-method.ts:80](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/abi/src/abi-method.ts#L80)
 
-***
+---
 
 ### returns
 
@@ -111,7 +111,7 @@ Returns the method selector of this ABI method.
 
 The 4-byte method selector
 
-***
+---
 
 ### getSignature()
 
@@ -127,7 +127,7 @@ Returns the signature of this ABI method.
 
 The signature, e.g. `my_method(unit64,string)bytes`
 
-***
+---
 
 ### fromSignature()
 

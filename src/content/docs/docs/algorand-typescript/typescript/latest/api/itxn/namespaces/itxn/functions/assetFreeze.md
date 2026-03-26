@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "assetFreeze"
+title: 'assetFreeze'
 ---
 
 > **assetFreeze**(`fields`): [`AssetFreezeItxnParams`](/algorand-typescript/api/itxn/namespaces/itxn/classes/assetfreezeitxnparams/)

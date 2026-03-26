@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "ecdsaPkRecover"
+title: 'ecdsaPkRecover'
 ---
 
 > **ecdsaPkRecover**(`v`, `a`, `b`, `c`, `d`): readonly \[[`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)\<`32`\>, [`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)\<`32`\>\]

@@ -30,7 +30,7 @@ result: sub.TransactionSubscriptionResult = sub.get_subscribed_transactions(
 
 Specifying a subscription requires passing in a `TransactionSubscriptionParams` object, which configures the behaviour:
 
-````python
+```python
 @dataclass(kw_only=True, slots=True)
 class TransactionSubscriptionParams(CoreTransactionSubscriptionParams):
     """Parameters to control a single subscription pull/poll."""
@@ -121,13 +121,13 @@ class CoreTransactionSubscriptionParams:
       use algod from there.
     - "fail": Raise an error.
     """
-````
+```
 
 ## TransactionFilter
 
 The [`filters` parameter](#transactionsubscriptionparams) allows you to specify a set of filters to return a subset of transactions you are interested in. Each filter contains a `filter` property of type `TransactionFilter`:
 
-````python
+```python
 @dataclass(kw_only=True, slots=True)
 class TransactionFilter:
     """Specify a filter to apply to find transactions of interest."""
@@ -186,7 +186,7 @@ class TransactionFilter:
 
     custom_filter: Callable[[Transaction], bool] | None = None
     """Catch-all custom filter to filter for things that the rest of the filters don't provide."""
-````
+```
 
 Each filter you provide within this type will apply an AND logic between the specified fields, e.g.
 

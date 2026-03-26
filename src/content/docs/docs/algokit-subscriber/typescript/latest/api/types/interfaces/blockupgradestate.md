@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "BlockUpgradeState"
+title: 'BlockUpgradeState'
 ---
 
 Defined in: [src/types/subscription.ts:88](https://github.com/algorandfoundation/algokit-subscriber-ts/blob/main/src/types/subscription.ts#L88)
@@ -17,7 +17,7 @@ Defined in: [src/types/subscription.ts:90](https://github.com/algorandfoundation
 
 Current protocol version
 
-***
+---
 
 ### nextProtocol?
 
@@ -27,7 +27,7 @@ Defined in: [src/types/subscription.ts:92](https://github.com/algorandfoundation
 
 The next proposed protocol version.
 
-***
+---
 
 ### nextProtocolApprovals?
 
@@ -37,7 +37,7 @@ Defined in: [src/types/subscription.ts:94](https://github.com/algorandfoundation
 
 Number of blocks which approved the protocol upgrade.
 
-***
+---
 
 ### nextProtocolSwitchOn?
 
@@ -47,7 +47,7 @@ Defined in: [src/types/subscription.ts:98](https://github.com/algorandfoundation
 
 Round on which the protocol upgrade will take effect.
 
-***
+---
 
 ### nextProtocolVoteBefore?
 

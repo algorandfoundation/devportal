@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "KmdAccountManager"
+title: 'KmdAccountManager'
 ---
 
 Defined in: [src/kmd-account-manager.ts:13](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/kmd-account-manager.ts#L13)
@@ -51,10 +51,10 @@ The default LocalNet dispenser account
 #### Example
 
 ```typescript
-const dispenser = await kmdAccountManager.getLocalNetDispenserAccount()
+const dispenser = await kmdAccountManager.getLocalNetDispenserAccount();
 ```
 
-***
+---
 
 ### getOrCreateWalletAccount()
 
@@ -66,7 +66,7 @@ Gets an account with private key loaded from a KMD wallet of the given name, or 
 
 This is useful to get idempotent accounts from LocalNet without having to specify the private key (which will change when resetting the LocalNet).
 
-This significantly speeds up local dev time and improves experience since you can write code that *just works* first go without manual config in a fresh LocalNet.
+This significantly speeds up local dev time and improves experience since you can write code that _just works_ first go without manual config in a fresh LocalNet.
 
 If this is used via `mnemonicAccountFromEnvironment`, then you can even use the same code that runs on production without changes for local development!
 
@@ -95,12 +95,12 @@ An Algorand account with private key loaded - either one that already existed in
 ```typescript
 // Idempotently get (if exists) or create (if it doesn't exist yet) an account by name using KMD
 // if creating it then fund it with 2 ALGO from the default dispenser account
-const newAccount = await kmdAccountManager.getOrCreateWalletAccount('account1', (2).algo())
+const newAccount = await kmdAccountManager.getOrCreateWalletAccount('account1', (2).algo());
 // This will return the same account as above since the name matches
-const existingAccount = await kmdAccountManager.getOrCreateWalletAccount('account1')
+const existingAccount = await kmdAccountManager.getOrCreateWalletAccount('account1');
 ```
 
-***
+---
 
 ### getWalletAccount()
 
@@ -141,11 +141,11 @@ The signing account (with private key loaded) or undefined if no matching wallet
 ```typescript
 const defaultDispenserAccount = await kmdAccountManager.getWalletAccount(
   'unencrypted-default-wallet',
-  a => a.status !== 'Offline' && a.amount > 1_000_000_000
-)
+  a => a.status !== 'Offline' && a.amount > 1_000_000_000,
+);
 ```
 
-***
+---
 
 ### kmd()
 

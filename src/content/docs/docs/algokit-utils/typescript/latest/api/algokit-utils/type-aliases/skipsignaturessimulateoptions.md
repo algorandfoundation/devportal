@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "SkipSignaturesSimulateOptions"
+title: 'SkipSignaturesSimulateOptions'
 ---
 
 > **SkipSignaturesSimulateOptions** = `Expand`\<`Omit`\<[`RawSimulateOptions`](/docs/algokit-utils/typescript/latest/api/algokit-utils/type-aliases/rawsimulateoptions/), `"fixSigners"` \| `"allowEmptySignatures"`\> & `object`\>

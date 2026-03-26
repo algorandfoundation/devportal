@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "urange"
+title: 'urange'
 ---
 
 ## Call Signature

@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "getLocalABIStorageMap"
+title: 'getLocalABIStorageMap'
 ---
 
 > **getLocalABIStorageMap**(`contract`, `mapName`): [`ABIStorageMap`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/type-aliases/abistoragemap/)

@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "BoxReference"
+title: 'BoxReference'
 ---
 
 Defined in: [src/app-manager.ts:64](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/app-manager.ts#L64)
@@ -19,7 +19,7 @@ Defined in: [src/app-manager.ts:68](https://github.com/algorandfoundation/algoki
 
 A unique application id
 
-***
+---
 
 ### name
 

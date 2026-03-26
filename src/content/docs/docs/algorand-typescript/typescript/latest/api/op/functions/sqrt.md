@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "sqrt"
+title: 'sqrt'
 ---
 
 > **sqrt**(`a`): [`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)

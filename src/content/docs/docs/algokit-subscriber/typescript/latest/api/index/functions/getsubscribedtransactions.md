@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "getSubscribedTransactions"
+title: 'getSubscribedTransactions'
 ---
 
 > **getSubscribedTransactions**(`subscription`, `algod`, `indexer?`): `Promise`\<[`TransactionSubscriptionResult`](/docs/algokit-subscriber/typescript/latest/api/types/interfaces/transactionsubscriptionresult/)\>

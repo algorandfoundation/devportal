@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "TemplateVar"
+title: 'TemplateVar'
 ---
 
 > **TemplateVar**\<`T`\>(`variableName`, `prefix?`): `T`
@@ -31,7 +31,7 @@ The key used to identify the variable.
 
 `string` = `'TMPL_'`
 
-The prefix to apply the variable name (Defaults to 'TMPL_')
+The prefix to apply the variable name (Defaults to 'TMPL\_')
 
 ## Returns
 

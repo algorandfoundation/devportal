@@ -1,5 +1,5 @@
 ---
-title: "AlgoKit Task Transfer"
+title: 'AlgoKit Task Transfer'
 ---
 
 The AlgoKit Transfer feature allows you to transfer algos and assets between two accounts.

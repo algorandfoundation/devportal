@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "Scratch"
+title: 'Scratch'
 ---
 
 > `const` **Scratch**: `object`
@@ -17,7 +17,7 @@ Load or store scratch values
 
 > **loadBytes**(`a`): [`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)
 
-Ath scratch space value.  All scratch spaces are 0 at program start.
+Ath scratch space value. All scratch spaces are 0 at program start.
 
 #### Parameters
 
@@ -38,7 +38,7 @@ Min AVM version: 5
 
 > **loadUint64**(`a`): [`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
 
-Ath scratch space value.  All scratch spaces are 0 at program start.
+Ath scratch space value. All scratch spaces are 0 at program start.
 
 #### Parameters
 

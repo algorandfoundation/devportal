@@ -1,6 +1,6 @@
 ---
-title: "Modular imports"
-description: "AlgoKit Utils is designed with a modular architecture that allows you to import only the functionality you need. This keeps your imports explicit and helps with code readability and IDE auto-completion."
+title: 'Modular imports'
+description: 'AlgoKit Utils is designed with a modular architecture that allows you to import only the functionality you need. This keeps your imports explicit and helps with code readability and IDE auto-completion.'
 ---
 
 AlgoKit Utils is designed with a modular architecture that allows you to import only the functionality you need. This keeps your imports explicit and helps with code readability and IDE auto-completion.
@@ -9,18 +9,18 @@ AlgoKit Utils is designed with a modular architecture that allows you to import 
 
 The library is organized into several submodules, each containing related functionality:
 
-| Submodule | Purpose | Key Exports |
-|-----------|---------|-------------|
-| `accounts` | Account management | `AccountManager`, `KmdAccountManager` |
-| `algorand` | Algorand client entry point | `AlgorandClient` |
-| `applications` | App clients, deployment, specs | `AppClient`, `AppFactory`, `AppDeployer`, `AppManager`, `Arc56Contract` |
-| `assets` | Asset management | `AssetManager` |
-| `clients` | API client management | `ClientManager`, `AlgodClient`, `IndexerClient`, `KmdClient`, `TestNetDispenserApiClient` |
-| `models` | Data models | `AlgoAmount`, `AlgoClientConfigs`, `AppState`, `SimulateTransactionResult` |
-| `transactions` | Transaction composition | `TransactionComposer`, `AlgorandClientTransactionCreator`, `AlgorandClientTransactionSender` |
-| `protocols` | Protocol definitions | `AddressWithTransactionSigner`, `TypedAppClientProtocol`, `TypedAppFactoryProtocol` |
-| `errors` | Error handling | `LogicError` |
-| `transact` | Transaction primitives (re-exported from `algokit_transact`) | `Transaction`, `TransactionSigner`, `OnApplicationComplete`, `BoxReference` |
+| Submodule      | Purpose                                                      | Key Exports                                                                                  |
+| -------------- | ------------------------------------------------------------ | -------------------------------------------------------------------------------------------- |
+| `accounts`     | Account management                                           | `AccountManager`, `KmdAccountManager`                                                        |
+| `algorand`     | Algorand client entry point                                  | `AlgorandClient`                                                                             |
+| `applications` | App clients, deployment, specs                               | `AppClient`, `AppFactory`, `AppDeployer`, `AppManager`, `Arc56Contract`                      |
+| `assets`       | Asset management                                             | `AssetManager`                                                                               |
+| `clients`      | API client management                                        | `ClientManager`, `AlgodClient`, `IndexerClient`, `KmdClient`, `TestNetDispenserApiClient`    |
+| `models`       | Data models                                                  | `AlgoAmount`, `AlgoClientConfigs`, `AppState`, `SimulateTransactionResult`                   |
+| `transactions` | Transaction composition                                      | `TransactionComposer`, `AlgorandClientTransactionCreator`, `AlgorandClientTransactionSender` |
+| `protocols`    | Protocol definitions                                         | `AddressWithTransactionSigner`, `TypedAppClientProtocol`, `TypedAppFactoryProtocol`          |
+| `errors`       | Error handling                                               | `LogicError`                                                                                 |
+| `transact`     | Transaction primitives (re-exported from `algokit_transact`) | `Transaction`, `TransactionSigner`, `OnApplicationComplete`, `BoxReference`                  |
 
 ## Using modular imports
 
@@ -228,11 +228,13 @@ This means any public symbol from any submodule is available at the root level. 
 ## When to use modular imports
 
 **Use the root import when:**
+
 - You're writing scripts or quick prototypes
 - You need just a few commonly-used classes like `AlgorandClient` or `AlgoAmount`
 - Brevity is more important than explicitness
 
 **Use submodule imports when:**
+
 - You want clear, self-documenting imports
 - You're building a library or larger application
 - You want to avoid namespace pollution

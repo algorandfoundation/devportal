@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "StateProofTransactionFields"
+title: 'StateProofTransactionFields'
 ---
 
 > **StateProofTransactionFields** = `object`
@@ -21,7 +21,7 @@ Defined in: [packages/transact/src/transactions/state-proof.ts:12](https://githu
 
 State proof message
 
-***
+---
 
 ### stateProof?
 
@@ -31,7 +31,7 @@ Defined in: [packages/transact/src/transactions/state-proof.ts:9](https://github
 
 State proof
 
-***
+---
 
 ### stateProofType
 

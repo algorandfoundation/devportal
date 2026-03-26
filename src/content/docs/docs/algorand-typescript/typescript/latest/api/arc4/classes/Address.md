@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "Address"
+title: 'Address'
 ---
 
 Defined in: [arc4/encoded-types.ts:451](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/arc4/encoded-types.ts#L451)
@@ -66,7 +66,7 @@ Retrieve the encoded bytes for this type
 
 `Arc4ArrayBase.bytes`
 
-***
+---
 
 ### length
 
@@ -86,7 +86,7 @@ Returns the current length of this array
 
 `Arc4ArrayBase.length`
 
-***
+---
 
 ### native
 
@@ -120,7 +120,7 @@ Returns an iterator for the items in this array
 
 `Arc4ArrayBase.[iterator]`
 
-***
+---
 
 ### at()
 
@@ -147,7 +147,7 @@ The index of the item to retrieve
 
 `Arc4ArrayBase.at`
 
-***
+---
 
 ### entries()
 
@@ -165,7 +165,7 @@ Returns an iterator for a tuple of the indexes and items in this array
 
 `Arc4ArrayBase.entries`
 
-***
+---
 
 ### ~~join()~~
 
@@ -194,7 +194,7 @@ Join is not supported in Algorand TypeScript
 
 `Arc4ArrayBase.join`
 
-***
+---
 
 ### keys()
 
@@ -212,7 +212,7 @@ Returns an iterator for the indexes in this array
 
 `Arc4ArrayBase.keys`
 
-***
+---
 
 ### ~~slice()~~
 

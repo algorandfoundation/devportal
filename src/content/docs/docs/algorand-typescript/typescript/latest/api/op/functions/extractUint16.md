@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "extractUint16"
+title: 'extractUint16'
 ---
 
 > **extractUint16**(`a`, `b`): [`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)

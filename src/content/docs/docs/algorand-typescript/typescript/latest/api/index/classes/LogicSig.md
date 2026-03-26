@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "LogicSig"
+title: 'LogicSig'
 ---
 
 Defined in: [logic-sig.ts:7](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/logic-sig.ts#L7)

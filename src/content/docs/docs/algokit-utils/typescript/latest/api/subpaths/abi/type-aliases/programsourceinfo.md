@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "ProgramSourceInfo"
+title: 'ProgramSourceInfo'
 ---
 
 > **ProgramSourceInfo** = `object`
@@ -18,10 +18,11 @@ Defined in: [packages/abi/src/arc56-contract.ts:298](https://github.com/algorand
 Defined in: [packages/abi/src/arc56-contract.ts:305](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/abi/src/arc56-contract.ts#L305)
 
 How the program counter offset is calculated
+
 - none: The pc values in sourceInfo are not offset
 - cblocks: The pc values in sourceInfo are offset by the PC of the first op following the last cblock at the top of the program
 
-***
+---
 
 ### sourceInfo
 

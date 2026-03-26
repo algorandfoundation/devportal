@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "ClientTypedAppClientByNetworkParams"
+title: 'ClientTypedAppClientByNetworkParams'
 ---
 
 > **ClientTypedAppClientByNetworkParams** = `Expand`\<`Omit`\<[`AppClientParams`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/appclientparams/), `"algorand"` \| `"appSpec"` \| `"appId"`\>\>

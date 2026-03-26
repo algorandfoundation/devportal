@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "arc4"
+title: 'arc4'
 ---
 
 ## Classes

@@ -1,8 +1,8 @@
 ---
-title: "Mnemonic Utilities"
-description: "Mnemonic and seed conversion utilities following the Algorand 25-word mnemonic standard."
+title: 'Mnemonic Utilities'
+description: 'Mnemonic and seed conversion utilities following the Algorand 25-word mnemonic standard.'
 sidebar:
-  label: "Mnemonic Utilities"
+  label: 'Mnemonic Utilities'
   order: 0
 ---
 
@@ -13,14 +13,108 @@ Mnemonic and seed conversion utilities following the Algorand 25-word mnemonic s
 ## Examples (5)
 
 <table>
-<thead><tr><th>Example</th><th>Description</th></tr></thead>
-<tbody>
-<tr><td><a href="01-mnemonic-from-seed/">Mnemonic from Seed</a></td><td><p>This example demonstrates how to use mnemonicFromSeed() to convert a 32-byte seed into a 25-word Algorand mnemonic. The mnemonic uses BIP39-style word encoding where each word represents 11 bits of data.</p><p>Key concepts:</p><ul><li>A 32-byte (256-bit) seed produces 24 data words (256 / 11 = ~23.3, rounded up)</li><li>A 25th checksum word is computed from the SHA-512/256 hash of the seed</li><li>The mnemonic is deterministic: same seed always produces same mnemonic</li></ul></td></tr>
-<tr><td><a href="02-seed-from-mnemonic/">Seed from Mnemonic</a></td><td><p>This example demonstrates how to use seedFromMnemonic() to convert a 25-word Algorand mnemonic back to its original 32-byte seed. This is the reverse operation of mnemonicFromSeed().</p><p>Key concepts:</p><ul><li>seedFromMnemonic() reverses the mnemonic encoding process</li><li>The checksum word is verified to ensure mnemonic integrity</li><li>Round-trip conversion: seed -&gt; mnemonic -&gt; seed produces identical bytes</li></ul></td></tr>
-<tr><td><a href="03-secret-key-to-mnemonic/">Secret Key to Mnemonic</a></td><td><p>This example demonstrates how to use secretKeyToMnemonic() to convert a 64-byte Algorand secret key to a 25-word mnemonic.</p><p>Key concepts:</p><ul><li>Algorand secret keys are 64 bytes: bytes 0-31 are the seed, bytes 32-63 are the public key</li><li>secretKeyToMnemonic() extracts the first 32 bytes (seed portion) and converts to mnemonic</li><li>This produces the same result as calling mnemonicFromSeed() on the seed directly</li></ul></td></tr>
-<tr><td><a href="04-master-derivation-key/">Master Derivation Key Functions</a></td><td><p>This example demonstrates the master derivation key (MDK) alias functions and shows their equivalence to the core seed/mnemonic functions.</p><p>Key concepts:</p><ul><li>masterDerivationKeyToMnemonic() is an alias for mnemonicFromSeed()</li><li>mnemonicToMasterDerivationKey() is an alias for seedFromMnemonic()</li><li>These aliases exist for wallet derivation workflows where the terminology</li></ul><p>"master derivation key" is more familiar than "seed"</p></td></tr>
-<tr><td><a href="05-error-handling/">Error Handling for Mnemonic Functions</a></td><td><p>This example demonstrates how to properly handle errors when working with mnemonic functions, including invalid words, bad checksums, and wrong seed lengths.</p><p>Key concepts:</p><ul><li>NOT_IN_WORDS_LIST_ERROR_MSG: Thrown when a mnemonic contains an invalid word</li><li>FAIL_TO_DECODE_MNEMONIC_ERROR_MSG: Thrown when checksum validation fails</li><li>RangeError: Thrown when seed length is not 32 bytes</li></ul></td></tr>
-</tbody>
+  <thead>
+    <tr>
+      <th>Example</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <a href='01-mnemonic-from-seed/'>Mnemonic from Seed</a>
+      </td>
+      <td>
+        <p>
+          This example demonstrates how to use mnemonicFromSeed() to convert a 32-byte seed into a
+          25-word Algorand mnemonic. The mnemonic uses BIP39-style word encoding where each word
+          represents 11 bits of data.
+        </p>
+        <p>Key concepts:</p>
+        <ul>
+          <li>A 32-byte (256-bit) seed produces 24 data words (256 / 11 = ~23.3, rounded up)</li>
+          <li>A 25th checksum word is computed from the SHA-512/256 hash of the seed</li>
+          <li>The mnemonic is deterministic: same seed always produces same mnemonic</li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <a href='02-seed-from-mnemonic/'>Seed from Mnemonic</a>
+      </td>
+      <td>
+        <p>
+          This example demonstrates how to use seedFromMnemonic() to convert a 25-word Algorand
+          mnemonic back to its original 32-byte seed. This is the reverse operation of
+          mnemonicFromSeed().
+        </p>
+        <p>Key concepts:</p>
+        <ul>
+          <li>seedFromMnemonic() reverses the mnemonic encoding process</li>
+          <li>The checksum word is verified to ensure mnemonic integrity</li>
+          <li>Round-trip conversion: seed -&gt; mnemonic -&gt; seed produces identical bytes</li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <a href='03-secret-key-to-mnemonic/'>Secret Key to Mnemonic</a>
+      </td>
+      <td>
+        <p>
+          This example demonstrates how to use secretKeyToMnemonic() to convert a 64-byte Algorand
+          secret key to a 25-word mnemonic.
+        </p>
+        <p>Key concepts:</p>
+        <ul>
+          <li>
+            Algorand secret keys are 64 bytes: bytes 0-31 are the seed, bytes 32-63 are the public
+            key
+          </li>
+          <li>
+            secretKeyToMnemonic() extracts the first 32 bytes (seed portion) and converts to
+            mnemonic
+          </li>
+          <li>This produces the same result as calling mnemonicFromSeed() on the seed directly</li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <a href='04-master-derivation-key/'>Master Derivation Key Functions</a>
+      </td>
+      <td>
+        <p>
+          This example demonstrates the master derivation key (MDK) alias functions and shows their
+          equivalence to the core seed/mnemonic functions.
+        </p>
+        <p>Key concepts:</p>
+        <ul>
+          <li>masterDerivationKeyToMnemonic() is an alias for mnemonicFromSeed()</li>
+          <li>mnemonicToMasterDerivationKey() is an alias for seedFromMnemonic()</li>
+          <li>These aliases exist for wallet derivation workflows where the terminology</li>
+        </ul>
+        <p>"master derivation key" is more familiar than "seed"</p>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <a href='05-error-handling/'>Error Handling for Mnemonic Functions</a>
+      </td>
+      <td>
+        <p>
+          This example demonstrates how to properly handle errors when working with mnemonic
+          functions, including invalid words, bad checksums, and wrong seed lengths.
+        </p>
+        <p>Key concepts:</p>
+        <ul>
+          <li>NOT_IN_WORDS_LIST_ERROR_MSG: Thrown when a mnemonic contains an invalid word</li>
+          <li>FAIL_TO_DECODE_MNEMONIC_ERROR_MSG: Thrown when checksum validation fails</li>
+          <li>RangeError: Thrown when seed length is not 32 bytes</li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
 </table>
 
 ## Quick Start

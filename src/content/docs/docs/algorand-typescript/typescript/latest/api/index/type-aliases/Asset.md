@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "Asset"
+title: 'Asset'
 ---
 
 > **Asset** = `object`
@@ -21,7 +21,7 @@ Defined in: [reference.ts:198](https://github.com/algorandfoundation/puya-ts/blo
 
 Clawback address
 
-***
+---
 
 ### creator
 
@@ -31,7 +31,7 @@ Defined in: [reference.ts:203](https://github.com/algorandfoundation/puya-ts/blo
 
 Creator address
 
-***
+---
 
 ### decimals
 
@@ -43,7 +43,7 @@ Defined in: [reference.ts:153](https://github.com/algorandfoundation/puya-ts/blo
 
 AssetParams.decimals
 
-***
+---
 
 ### defaultFrozen
 
@@ -53,7 +53,7 @@ Defined in: [reference.ts:158](https://github.com/algorandfoundation/puya-ts/blo
 
 Frozen by default or not
 
-***
+---
 
 ### freeze
 
@@ -63,7 +63,7 @@ Defined in: [reference.ts:193](https://github.com/algorandfoundation/puya-ts/blo
 
 Freeze address
 
-***
+---
 
 ### id
 
@@ -73,7 +73,7 @@ Defined in: [reference.ts:143](https://github.com/algorandfoundation/puya-ts/blo
 
 Returns the id of the Asset
 
-***
+---
 
 ### manager
 
@@ -83,7 +83,7 @@ Defined in: [reference.ts:183](https://github.com/algorandfoundation/puya-ts/blo
 
 Manager address
 
-***
+---
 
 ### metadataHash
 
@@ -93,7 +93,7 @@ Defined in: [reference.ts:178](https://github.com/algorandfoundation/puya-ts/blo
 
 Arbitrary commitment
 
-***
+---
 
 ### name
 
@@ -103,7 +103,7 @@ Defined in: [reference.ts:168](https://github.com/algorandfoundation/puya-ts/blo
 
 Asset name
 
-***
+---
 
 ### reserve
 
@@ -113,7 +113,7 @@ Defined in: [reference.ts:188](https://github.com/algorandfoundation/puya-ts/blo
 
 Reserve address
 
-***
+---
 
 ### total
 
@@ -123,7 +123,7 @@ Defined in: [reference.ts:148](https://github.com/algorandfoundation/puya-ts/blo
 
 Total number of units of this asset
 
-***
+---
 
 ### unitName
 
@@ -133,7 +133,7 @@ Defined in: [reference.ts:163](https://github.com/algorandfoundation/puya-ts/blo
 
 Asset unit name
 
-***
+---
 
 ### url
 
@@ -169,7 +169,7 @@ Account
 
 balance: uint64
 
-***
+---
 
 ### frozen()
 

@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "KeyRegistrationInnerTxn"
+title: 'KeyRegistrationInnerTxn'
 ---
 
 Defined in: [itxn.ts:81](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/itxn.ts#L81)
@@ -19,7 +19,7 @@ Defined in: [itxn.ts:91](https://github.com/algorandfoundation/puya-ts/blob/main
 
 microalgos
 
-***
+---
 
 ### firstValid
 
@@ -29,7 +29,7 @@ Defined in: [itxn.ts:95](https://github.com/algorandfoundation/puya-ts/blob/main
 
 round number
 
-***
+---
 
 ### firstValidTime
 
@@ -39,7 +39,7 @@ Defined in: [itxn.ts:99](https://github.com/algorandfoundation/puya-ts/blob/main
 
 UNIX timestamp of block before txn.FirstValid. Fails if negative
 
-***
+---
 
 ### groupIndex
 
@@ -50,7 +50,7 @@ Defined in: [itxn.ts:124](https://github.com/algorandfoundation/puya-ts/blob/mai
 Position of this transaction within an atomic group
 A stand-alone transaction is implicitly element 0 in a group of 1
 
-***
+---
 
 ### lastValid
 
@@ -60,7 +60,7 @@ Defined in: [itxn.ts:103](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 round number
 
-***
+---
 
 ### lease
 
@@ -70,7 +70,7 @@ Defined in: [itxn.ts:111](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 32 byte lease value
 
-***
+---
 
 ### nonparticipation
 
@@ -80,7 +80,7 @@ Defined in: [itxn.ts:156](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 Marks an account nonparticipating for rewards
 
-***
+---
 
 ### note
 
@@ -90,7 +90,7 @@ Defined in: [itxn.ts:107](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 Any data up to 1024 bytes
 
-***
+---
 
 ### rekeyTo
 
@@ -100,7 +100,7 @@ Defined in: [itxn.ts:132](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 32 byte Sender's new AuthAddr
 
-***
+---
 
 ### selectionKey
 
@@ -110,7 +110,7 @@ Defined in: [itxn.ts:140](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 32 byte address
 
-***
+---
 
 ### sender
 
@@ -120,7 +120,7 @@ Defined in: [itxn.ts:87](https://github.com/algorandfoundation/puya-ts/blob/main
 
 32 byte address
 
-***
+---
 
 ### stateProofKey
 
@@ -130,7 +130,7 @@ Defined in: [itxn.ts:160](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 64 byte state proof public key
 
-***
+---
 
 ### txnId
 
@@ -140,7 +140,7 @@ Defined in: [itxn.ts:128](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 The computed ID for this transaction. 32 bytes.
 
-***
+---
 
 ### type
 
@@ -150,7 +150,7 @@ Defined in: [itxn.ts:119](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 Transaction type
 
-***
+---
 
 ### typeBytes
 
@@ -160,7 +160,7 @@ Defined in: [itxn.ts:115](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 Transaction type as bytes
 
-***
+---
 
 ### voteFirst
 
@@ -170,7 +170,7 @@ Defined in: [itxn.ts:144](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 The first round that the participation key is valid.
 
-***
+---
 
 ### voteKey
 
@@ -180,7 +180,7 @@ Defined in: [itxn.ts:136](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 32 byte address
 
-***
+---
 
 ### voteKeyDilution
 
@@ -190,7 +190,7 @@ Defined in: [itxn.ts:152](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 Dilution for the 2-level participation key
 
-***
+---
 
 ### voteLast
 

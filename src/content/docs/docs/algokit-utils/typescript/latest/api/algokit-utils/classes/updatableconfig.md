@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "UpdatableConfig"
+title: 'UpdatableConfig'
 ---
 
 Defined in: [src/updatable-config.ts:28](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/updatable-config.ts#L28)
@@ -45,7 +45,7 @@ Whether or not debug mode is enabled
 
 [`AlgoKitConfig`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/algokitconfig/).[`debug`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/algokitconfig/#debug)
 
-***
+---
 
 ### events
 
@@ -63,7 +63,7 @@ Defined in: [src/updatable-config.ts:59](https://github.com/algorandfoundation/a
 
 [`AlgoKitConfig`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/algokitconfig/).[`events`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/algokitconfig/#events)
 
-***
+---
 
 ### logger
 
@@ -83,7 +83,7 @@ Logger
 
 [`AlgoKitConfig`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/algokitconfig/).[`logger`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/algokitconfig/#logger)
 
-***
+---
 
 ### maxSearchDepth
 
@@ -103,7 +103,7 @@ The maximum depth to search for a specific file
 
 [`AlgoKitConfig`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/algokitconfig/).[`maxSearchDepth`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/algokitconfig/#maxsearchdepth)
 
-***
+---
 
 ### populateAppCallResources
 
@@ -124,7 +124,7 @@ Default value is false.
 
 [`AlgoKitConfig`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/algokitconfig/).[`populateAppCallResources`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/algokitconfig/#populateappcallresources)
 
-***
+---
 
 ### projectRoot
 
@@ -144,7 +144,7 @@ The path to the project root directory
 
 [`AlgoKitConfig`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/algokitconfig/).[`projectRoot`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/algokitconfig/#projectroot)
 
-***
+---
 
 ### traceAll
 
@@ -164,7 +164,7 @@ Indicates whether to trace all operations
 
 [`AlgoKitConfig`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/algokitconfig/).[`traceAll`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/algokitconfig/#traceall)
 
-***
+---
 
 ### traceBufferSizeMb
 
@@ -206,7 +206,7 @@ Partial or complete config to replace
 
 `void`
 
-***
+---
 
 ### getLogger()
 
@@ -230,7 +230,7 @@ Whether or not to return the null logger
 
 The requested logger
 
-***
+---
 
 ### withDebug()
 

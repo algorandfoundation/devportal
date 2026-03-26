@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "LocalStateForAccount"
+title: 'LocalStateForAccount'
 ---
 
 > **LocalStateForAccount**\<`ValueType`\> = `object`
@@ -27,7 +27,7 @@ Defined in: [state.ts:63](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 Gets a boolean value indicating if local state field for a single account currently has a value
 
-***
+---
 
 ### value
 

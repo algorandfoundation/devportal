@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "GITxn"
+title: 'GITxn'
 ---
 
 > `const` **GITxn**: `object`

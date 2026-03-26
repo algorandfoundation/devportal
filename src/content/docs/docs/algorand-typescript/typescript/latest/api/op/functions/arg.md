@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "arg"
+title: 'arg'
 ---
 
 > **arg**(`a`): [`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)

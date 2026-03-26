@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "ApplicationCallInnerTxn"
+title: 'ApplicationCallInnerTxn'
 ---
 
 Defined in: [itxn.ts:417](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/itxn.ts#L417)
@@ -19,7 +19,7 @@ Defined in: [itxn.ts:472](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 ApplicationID from ApplicationCall transaction
 
-***
+---
 
 ### approvalProgram
 
@@ -29,7 +29,7 @@ Defined in: [itxn.ts:488](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 The first page of the Approval program
 
-***
+---
 
 ### clearStateProgram
 
@@ -39,7 +39,7 @@ Defined in: [itxn.ts:492](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 The first page of the Clear State program
 
-***
+---
 
 ### createdApp
 
@@ -49,7 +49,7 @@ Defined in: [itxn.ts:571](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 The id of the created application
 
-***
+---
 
 ### extraProgramPages
 
@@ -59,7 +59,7 @@ Defined in: [itxn.ts:520](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 Number of additional pages for each of the application's approval and clear state program
 
-***
+---
 
 ### fee
 
@@ -69,7 +69,7 @@ Defined in: [itxn.ts:427](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 microalgos
 
-***
+---
 
 ### firstValid
 
@@ -79,7 +79,7 @@ Defined in: [itxn.ts:431](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 round number
 
-***
+---
 
 ### firstValidTime
 
@@ -89,7 +89,7 @@ Defined in: [itxn.ts:435](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 UNIX timestamp of block before txn.FirstValid. Fails if negative
 
-***
+---
 
 ### globalNumBytes
 
@@ -99,7 +99,7 @@ Defined in: [itxn.ts:508](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 Number of global state byteslices this application makes use of.
 
-***
+---
 
 ### globalNumUint
 
@@ -109,7 +109,7 @@ Defined in: [itxn.ts:504](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 Number of global state integers this application makes use of.
 
-***
+---
 
 ### groupIndex
 
@@ -120,7 +120,7 @@ Defined in: [itxn.ts:460](https://github.com/algorandfoundation/puya-ts/blob/mai
 Position of this transaction within an atomic group
 A stand-alone transaction is implicitly element 0 in a group of 1
 
-***
+---
 
 ### lastLog
 
@@ -130,7 +130,7 @@ Defined in: [itxn.ts:524](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 The last message emitted. Empty bytes if none were emitted. App mode only
 
-***
+---
 
 ### lastValid
 
@@ -140,7 +140,7 @@ Defined in: [itxn.ts:439](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 round number
 
-***
+---
 
 ### lease
 
@@ -150,7 +150,7 @@ Defined in: [itxn.ts:447](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 32 byte lease value
 
-***
+---
 
 ### localNumBytes
 
@@ -160,7 +160,7 @@ Defined in: [itxn.ts:516](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 Number of local state byteslices this application makes use of.
 
-***
+---
 
 ### localNumUint
 
@@ -170,7 +170,7 @@ Defined in: [itxn.ts:512](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 Number of local state integers this application makes use of.
 
-***
+---
 
 ### note
 
@@ -180,7 +180,7 @@ Defined in: [itxn.ts:443](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 Any data up to 1024 bytes
 
-***
+---
 
 ### numAccounts
 
@@ -190,7 +190,7 @@ Defined in: [itxn.ts:484](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 Number of ApplicationArgs
 
-***
+---
 
 ### numAppArgs
 
@@ -200,7 +200,7 @@ Defined in: [itxn.ts:480](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 Number of ApplicationArgs
 
-***
+---
 
 ### numApprovalProgramPages
 
@@ -210,7 +210,7 @@ Defined in: [itxn.ts:533](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 Number of Approval Program pages
 
-***
+---
 
 ### numApps
 
@@ -220,7 +220,7 @@ Defined in: [itxn.ts:500](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 Number of Applications
 
-***
+---
 
 ### numAssets
 
@@ -230,7 +230,7 @@ Defined in: [itxn.ts:496](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 Number of Assets
 
-***
+---
 
 ### numClearStateProgramPages
 
@@ -240,7 +240,7 @@ Defined in: [itxn.ts:542](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 Number of Clear State Program pages
 
-***
+---
 
 ### numLogs
 
@@ -250,7 +250,7 @@ Defined in: [itxn.ts:575](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 Number of logs
 
-***
+---
 
 ### onCompletion
 
@@ -260,7 +260,7 @@ Defined in: [itxn.ts:476](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 ApplicationCall transaction on completion action
 
-***
+---
 
 ### rejectVersion
 
@@ -270,7 +270,7 @@ Defined in: [itxn.ts:579](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 Application version for which the txn must reject
 
-***
+---
 
 ### rekeyTo
 
@@ -280,7 +280,7 @@ Defined in: [itxn.ts:468](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 32 byte Sender's new AuthAddr
 
-***
+---
 
 ### sender
 
@@ -290,7 +290,7 @@ Defined in: [itxn.ts:423](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 32 byte address
 
-***
+---
 
 ### txnId
 
@@ -300,7 +300,7 @@ Defined in: [itxn.ts:464](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 The computed ID for this transaction. 32 bytes.
 
-***
+---
 
 ### type
 
@@ -310,7 +310,7 @@ Defined in: [itxn.ts:455](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 Transaction type
 
-***
+---
 
 ### typeBytes
 
@@ -342,7 +342,7 @@ Index of the account to get
 
 [`Account`](/algorand-typescript/api/index/type-aliases/account/)
 
-***
+---
 
 ### appArgs()
 
@@ -364,7 +364,7 @@ Index of the arg to get
 
 [`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)
 
-***
+---
 
 ### approvalProgramPages()
 
@@ -386,7 +386,7 @@ Index of the page to get
 
 [`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)
 
-***
+---
 
 ### apps()
 
@@ -408,7 +408,7 @@ Index of the application to get
 
 [`Application`](/algorand-typescript/api/index/type-aliases/application/)
 
-***
+---
 
 ### assets()
 
@@ -430,7 +430,7 @@ Index of the asset to get
 
 [`Asset`](/algorand-typescript/api/index/type-aliases/asset/)
 
-***
+---
 
 ### clearStateProgramPages()
 
@@ -452,7 +452,7 @@ Index of the page to get
 
 [`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)
 
-***
+---
 
 ### logs()
 

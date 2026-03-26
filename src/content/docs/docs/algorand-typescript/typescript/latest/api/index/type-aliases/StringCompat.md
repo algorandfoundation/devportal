@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "StringCompat"
+title: 'StringCompat'
 ---
 
 > **StringCompat** = `string`

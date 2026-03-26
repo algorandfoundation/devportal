@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "CompileContractOptions"
+title: 'CompileContractOptions'
 ---
 
 > **CompileContractOptions** = `object`
@@ -21,7 +21,7 @@ Defined in: [compiled.ts:59](https://github.com/algorandfoundation/puya-ts/blob/
 
 Number of extra program pages, defaults to minimum required for contract
 
-***
+---
 
 ### globalBytes?
 
@@ -31,7 +31,7 @@ Defined in: [compiled.ts:67](https://github.com/algorandfoundation/puya-ts/blob/
 
 Number of global bytes, defaults to value defined for contract
 
-***
+---
 
 ### globalUints?
 
@@ -41,7 +41,7 @@ Defined in: [compiled.ts:63](https://github.com/algorandfoundation/puya-ts/blob/
 
 Number of global uint64s, defaults to value defined for contract
 
-***
+---
 
 ### localBytes?
 
@@ -51,7 +51,7 @@ Defined in: [compiled.ts:75](https://github.com/algorandfoundation/puya-ts/blob/
 
 Number of local bytes, defaults to value defined for contract
 
-***
+---
 
 ### localUints?
 
@@ -61,7 +61,7 @@ Defined in: [compiled.ts:71](https://github.com/algorandfoundation/puya-ts/blob/
 
 Number of local uint64s, defaults to value defined for contract
 
-***
+---
 
 ### templateVars?
 
@@ -72,7 +72,7 @@ Defined in: [compiled.ts:80](https://github.com/algorandfoundation/puya-ts/blob/
 Template variables to substitute into the contract, key should be without the prefix, must evaluate to a compile time constant
 and match the type of the template var declaration
 
-***
+---
 
 ### templateVarsPrefix?
 
@@ -80,4 +80,4 @@ and match the type of the template var declaration
 
 Defined in: [compiled.ts:84](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/compiled.ts#L84)
 
-Prefix to add to provided template vars, defaults to the prefix supplied on command line (which defaults to TMPL_)
+Prefix to add to provided template vars, defaults to the prefix supplied on command line (which defaults to TMPL\_)

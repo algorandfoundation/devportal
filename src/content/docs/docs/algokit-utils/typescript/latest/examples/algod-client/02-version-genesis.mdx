@@ -1,6 +1,6 @@
 ---
-title: "Version and Genesis Information"
-description: "This example demonstrates how to retrieve node version information and genesis configuration using the AlgodClient methods: version() and genesis()."
+title: 'Version and Genesis Information'
+description: 'This example demonstrates how to retrieve node version information and genesis configuration using the AlgodClient methods: version() and genesis().'
 sidebar:
   order: 2
 ---
@@ -39,154 +39,172 @@ npm run example algod_client/02-version-genesis.ts
  * - LocalNet running (via `algokit localnet start`)
  */
 
-import { createAlgodClient, printError, printHeader, printInfo, printStep, printSuccess } from '../shared/utils.js'
+import {
+  createAlgodClient,
+  printError,
+  printHeader,
+  printInfo,
+  printStep,
+  printSuccess,
+} from '../shared/utils.js';
 
 async function main() {
-  printHeader('Version and Genesis Information Example')
+  printHeader('Version and Genesis Information Example');
 
   // Create an Algod client connected to LocalNet
-  const algod = createAlgodClient()
+  const algod = createAlgodClient();
 
   // =========================================================================
   // Step 1: Get Version Information
   // =========================================================================
-  printStep(1, 'Getting algod version information with version()')
+  printStep(1, 'Getting algod version information with version()');
 
   try {
-    const versionInfo = await algod.version()
+    const versionInfo = await algod.version();
 
-    printSuccess('Version information retrieved successfully!')
-    printInfo('')
-    printInfo('Build information:')
-    printInfo(`  - major: ${versionInfo.build.major}`)
-    printInfo(`  - minor: ${versionInfo.build.minor}`)
-    printInfo(`  - buildNumber: ${versionInfo.build.buildNumber}`)
-    printInfo(`  - commitHash: ${versionInfo.build.commitHash}`)
-    printInfo(`  - branch: ${versionInfo.build.branch}`)
-    printInfo(`  - channel: ${versionInfo.build.channel}`)
+    printSuccess('Version information retrieved successfully!');
+    printInfo('');
+    printInfo('Build information:');
+    printInfo(`  - major: ${versionInfo.build.major}`);
+    printInfo(`  - minor: ${versionInfo.build.minor}`);
+    printInfo(`  - buildNumber: ${versionInfo.build.buildNumber}`);
+    printInfo(`  - commitHash: ${versionInfo.build.commitHash}`);
+    printInfo(`  - branch: ${versionInfo.build.branch}`);
+    printInfo(`  - channel: ${versionInfo.build.channel}`);
 
-    printInfo('')
-    printInfo('Network information:')
-    printInfo(`  - genesisId: ${versionInfo.genesisId}`)
+    printInfo('');
+    printInfo('Network information:');
+    printInfo(`  - genesisId: ${versionInfo.genesisId}`);
 
     // Decode the base64 genesis hash for display
-    const genesisHashBase64 = Buffer.from(versionInfo.genesisHashB64).toString('base64')
-    printInfo(`  - genesisHash (base64): ${genesisHashBase64}`)
+    const genesisHashBase64 = Buffer.from(versionInfo.genesisHashB64).toString('base64');
+    printInfo(`  - genesisHash (base64): ${genesisHashBase64}`);
 
-    printInfo('')
-    printInfo('Supported API versions:')
-    versionInfo.versions.forEach((v) => {
-      printInfo(`  - ${v}`)
-    })
+    printInfo('');
+    printInfo('Supported API versions:');
+    versionInfo.versions.forEach(v => {
+      printInfo(`  - ${v}`);
+    });
   } catch (error) {
-    printError(`Failed to get version information: ${error instanceof Error ? error.message : String(error)}`)
+    printError(
+      `Failed to get version information: ${error instanceof Error ? error.message : String(error)}`,
+    );
   }
 
   // =========================================================================
   // Step 2: Get Genesis Configuration
   // =========================================================================
-  printStep(2, 'Getting genesis configuration with genesis()')
+  printStep(2, 'Getting genesis configuration with genesis()');
 
   try {
-    const genesisConfig = await algod.genesis()
+    const genesisConfig = await algod.genesis();
 
-    printSuccess('Genesis configuration retrieved successfully!')
-    printInfo('')
-    printInfo('Genesis fields:')
-    printInfo(`  - network: ${genesisConfig.network}`)
-    printInfo(`  - id: ${genesisConfig.id}`)
-    printInfo(`  - proto (protocol version): ${genesisConfig.proto}`)
-    printInfo(`  - fees (fee sink address): ${genesisConfig.fees}`)
-    printInfo(`  - rwd (rewards pool address): ${genesisConfig.rwd}`)
+    printSuccess('Genesis configuration retrieved successfully!');
+    printInfo('');
+    printInfo('Genesis fields:');
+    printInfo(`  - network: ${genesisConfig.network}`);
+    printInfo(`  - id: ${genesisConfig.id}`);
+    printInfo(`  - proto (protocol version): ${genesisConfig.proto}`);
+    printInfo(`  - fees (fee sink address): ${genesisConfig.fees}`);
+    printInfo(`  - rwd (rewards pool address): ${genesisConfig.rwd}`);
 
     if (genesisConfig.timestamp !== undefined) {
-      const timestampDate = new Date(genesisConfig.timestamp * 1000)
-      printInfo(`  - timestamp: ${genesisConfig.timestamp} (${timestampDate.toISOString()})`)
+      const timestampDate = new Date(genesisConfig.timestamp * 1000);
+      printInfo(`  - timestamp: ${genesisConfig.timestamp} (${timestampDate.toISOString()})`);
     }
 
     if (genesisConfig.devmode !== undefined) {
-      printInfo(`  - devmode: ${genesisConfig.devmode}`)
+      printInfo(`  - devmode: ${genesisConfig.devmode}`);
     }
 
     if (genesisConfig.comment) {
-      printInfo(`  - comment: ${genesisConfig.comment}`)
+      printInfo(`  - comment: ${genesisConfig.comment}`);
     }
 
     // Display allocation (genesis accounts) information
-    printInfo('')
-    printInfo(`Genesis allocations (${genesisConfig.alloc.length} accounts):`)
+    printInfo('');
+    printInfo(`Genesis allocations (${genesisConfig.alloc.length} accounts):`);
 
     // Show first few accounts as examples
-    const accountsToShow = Math.min(3, genesisConfig.alloc.length)
+    const accountsToShow = Math.min(3, genesisConfig.alloc.length);
     for (let i = 0; i < accountsToShow; i++) {
-      const account = genesisConfig.alloc[i]
-      const algoAmount = Number(account.state.algo) / 1_000_000
-      printInfo(`  Account ${i + 1}:`)
-      printInfo(`    - addr: ${account.addr}`)
-      printInfo(`    - comment: ${account.comment}`)
-      printInfo(`    - algo: ${algoAmount.toLocaleString('en-US')} ALGO (${account.state.algo} microALGO)`)
-      printInfo(`    - onl (online status): ${account.state.onl}`)
+      const account = genesisConfig.alloc[i];
+      const algoAmount = Number(account.state.algo) / 1_000_000;
+      printInfo(`  Account ${i + 1}:`);
+      printInfo(`    - addr: ${account.addr}`);
+      printInfo(`    - comment: ${account.comment}`);
+      printInfo(
+        `    - algo: ${algoAmount.toLocaleString('en-US')} ALGO (${account.state.algo} microALGO)`,
+      );
+      printInfo(`    - onl (online status): ${account.state.onl}`);
     }
 
     if (genesisConfig.alloc.length > accountsToShow) {
-      printInfo(`  ... and ${genesisConfig.alloc.length - accountsToShow} more accounts`)
+      printInfo(`  ... and ${genesisConfig.alloc.length - accountsToShow} more accounts`);
     }
   } catch (error) {
-    printError(`Failed to get genesis configuration: ${error instanceof Error ? error.message : String(error)}`)
+    printError(
+      `Failed to get genesis configuration: ${error instanceof Error ? error.message : String(error)}`,
+    );
   }
 
   // =========================================================================
   // Step 3: Decode and Verify Genesis Hash
   // =========================================================================
-  printStep(3, 'Demonstrating genesis hash decoding')
+  printStep(3, 'Demonstrating genesis hash decoding');
 
   try {
-    const versionInfo = await algod.version()
+    const versionInfo = await algod.version();
 
     // The genesisHashB64 is already a Uint8Array containing the raw bytes
-    const hashBytes = versionInfo.genesisHashB64
+    const hashBytes = versionInfo.genesisHashB64;
 
-    printSuccess('Genesis hash decoded successfully!')
-    printInfo('')
-    printInfo('Genesis hash representations:')
-    printInfo(`  - Raw bytes length: ${hashBytes.length} bytes`)
-    printInfo(`  - Base64 encoded: ${Buffer.from(hashBytes).toString('base64')}`)
-    printInfo(`  - Hex encoded: ${Buffer.from(hashBytes).toString('hex')}`)
+    printSuccess('Genesis hash decoded successfully!');
+    printInfo('');
+    printInfo('Genesis hash representations:');
+    printInfo(`  - Raw bytes length: ${hashBytes.length} bytes`);
+    printInfo(`  - Base64 encoded: ${Buffer.from(hashBytes).toString('base64')}`);
+    printInfo(`  - Hex encoded: ${Buffer.from(hashBytes).toString('hex')}`);
 
-    printInfo('The genesis hash is a SHA512/256 hash (32 bytes) that uniquely identifies the network')
-    printInfo('It is used in transaction signing to ensure transactions are bound to a specific network')
+    printInfo(
+      'The genesis hash is a SHA512/256 hash (32 bytes) that uniquely identifies the network',
+    );
+    printInfo(
+      'It is used in transaction signing to ensure transactions are bound to a specific network',
+    );
   } catch (error) {
-    printError(`Failed to decode genesis hash: ${error instanceof Error ? error.message : String(error)}`)
+    printError(
+      `Failed to decode genesis hash: ${error instanceof Error ? error.message : String(error)}`,
+    );
   }
 
   // =========================================================================
   // Summary
   // =========================================================================
-  printHeader('Summary')
-  printInfo('This example demonstrated:')
-  printInfo('  1. version() - Retrieves algod version and build information')
-  printInfo('  2. genesis() - Retrieves the full genesis configuration')
-  printInfo('  3. Decoding the base64 genesis hash')
-  printInfo('')
-  printInfo('Key version fields:')
-  printInfo('  - build.major/minor/buildNumber: Software version numbers')
-  printInfo('  - build.commitHash: Git commit that built the node')
-  printInfo('  - genesisId: Human-readable network identifier (e.g., "devnet-v1")')
-  printInfo('  - genesisHash: Cryptographic hash uniquely identifying the network')
-  printInfo('')
-  printInfo('Key genesis fields:')
-  printInfo('  - network: The network name')
-  printInfo('  - proto: Initial consensus protocol version')
-  printInfo('  - alloc: Pre-allocated accounts at network genesis')
-  printInfo('  - fees: Address of the fee sink account')
-  printInfo('  - rwd: Address of the rewards pool account')
+  printHeader('Summary');
+  printInfo('This example demonstrated:');
+  printInfo('  1. version() - Retrieves algod version and build information');
+  printInfo('  2. genesis() - Retrieves the full genesis configuration');
+  printInfo('  3. Decoding the base64 genesis hash');
+  printInfo('');
+  printInfo('Key version fields:');
+  printInfo('  - build.major/minor/buildNumber: Software version numbers');
+  printInfo('  - build.commitHash: Git commit that built the node');
+  printInfo('  - genesisId: Human-readable network identifier (e.g., "devnet-v1")');
+  printInfo('  - genesisHash: Cryptographic hash uniquely identifying the network');
+  printInfo('');
+  printInfo('Key genesis fields:');
+  printInfo('  - network: The network name');
+  printInfo('  - proto: Initial consensus protocol version');
+  printInfo('  - alloc: Pre-allocated accounts at network genesis');
+  printInfo('  - fees: Address of the fee sink account');
+  printInfo('  - rwd: Address of the rewards pool account');
 }
 
-main().catch((error) => {
-  console.error('Fatal error:', error)
-  process.exit(1)
-})
-
+main().catch(error => {
+  console.error('Fatal error:', error);
+  process.exit(1);
+});
 ```
 
 ---

@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "argTypeIsTransaction"
+title: 'argTypeIsTransaction'
 ---
 
 > **argTypeIsTransaction**(`type`): `type is ABITransactionType`

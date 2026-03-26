@@ -1,6 +1,6 @@
 ---
-title: "ABI Type Parsing"
-description: "This example demonstrates how to parse ABI type strings into type objects using ABIType.from(). It shows parsing of:"
+title: 'ABI Type Parsing'
+description: 'This example demonstrates how to parse ABI type strings into type objects using ABIType.from(). It shows parsing of:'
 sidebar:
   order: 1
 ---
@@ -10,10 +10,11 @@ sidebar:
 ## Description
 
 This example demonstrates how to parse ABI type strings into type objects using ABIType.from(). It shows parsing of:
+
 - Primitive types: uint8, uint64, uint256, bool, byte, address, string
 - Array types: uint64[], byte[32], address[5]
 - Tuple types: (uint64,address), (bool,string,uint256)
- And demonstrates type properties and instanceof checks for type category detection.
+  And demonstrates type properties and instanceof checks for type category detection.
 
 ## Prerequisites
 
@@ -58,195 +59,207 @@ import {
   ABITupleType,
   ABIType,
   ABIUintType,
-} from '@algorandfoundation/algokit-utils/abi'
-import { printHeader, printInfo, printStep, printSuccess } from '../shared/utils.js'
+} from '@algorandfoundation/algokit-utils/abi';
+import { printHeader, printInfo, printStep, printSuccess } from '../shared/utils.js';
 
 function main() {
-  printHeader('ABI Type Parsing Example')
+  printHeader('ABI Type Parsing Example');
 
   // Step 1: Parse primitive unsigned integer types
-  printStep(1, 'Parse Unsigned Integer Types')
+  printStep(1, 'Parse Unsigned Integer Types');
 
-  const uint8Type = ABIType.from('uint8')
-  const uint64Type = ABIType.from('uint64')
-  const uint256Type = ABIType.from('uint256')
+  const uint8Type = ABIType.from('uint8');
+  const uint64Type = ABIType.from('uint64');
+  const uint256Type = ABIType.from('uint256');
 
-  printInfo(`Parsed 'uint8': ${uint8Type.toString()}`)
-  printInfo(`Parsed 'uint64': ${uint64Type.toString()}`)
-  printInfo(`Parsed 'uint256': ${uint256Type.toString()}`)
+  printInfo(`Parsed 'uint8': ${uint8Type.toString()}`);
+  printInfo(`Parsed 'uint64': ${uint64Type.toString()}`);
+  printInfo(`Parsed 'uint256': ${uint256Type.toString()}`);
 
   // Show uint-specific properties
   if (uint8Type instanceof ABIUintType) {
-    printInfo(`  uint8 bitSize: ${uint8Type.bitSize}`)
-    printInfo(`  uint8 byteLen: ${uint8Type.byteLen()}`)
-    printInfo(`  uint8 isDynamic: ${uint8Type.isDynamic()}`)
+    printInfo(`  uint8 bitSize: ${uint8Type.bitSize}`);
+    printInfo(`  uint8 byteLen: ${uint8Type.byteLen()}`);
+    printInfo(`  uint8 isDynamic: ${uint8Type.isDynamic()}`);
   }
   if (uint64Type instanceof ABIUintType) {
-    printInfo(`  uint64 bitSize: ${uint64Type.bitSize}`)
-    printInfo(`  uint64 byteLen: ${uint64Type.byteLen()}`)
+    printInfo(`  uint64 bitSize: ${uint64Type.bitSize}`);
+    printInfo(`  uint64 byteLen: ${uint64Type.byteLen()}`);
   }
   if (uint256Type instanceof ABIUintType) {
-    printInfo(`  uint256 bitSize: ${uint256Type.bitSize}`)
-    printInfo(`  uint256 byteLen: ${uint256Type.byteLen()}`)
+    printInfo(`  uint256 bitSize: ${uint256Type.bitSize}`);
+    printInfo(`  uint256 byteLen: ${uint256Type.byteLen()}`);
   }
 
   // Step 2: Parse other primitive types
-  printStep(2, 'Parse Other Primitive Types')
+  printStep(2, 'Parse Other Primitive Types');
 
-  const boolType = ABIType.from('bool')
-  const byteType = ABIType.from('byte')
-  const addressType = ABIType.from('address')
-  const stringType = ABIType.from('string')
+  const boolType = ABIType.from('bool');
+  const byteType = ABIType.from('byte');
+  const addressType = ABIType.from('address');
+  const stringType = ABIType.from('string');
 
-  printInfo(`Parsed 'bool': ${boolType.toString()}`)
-  printInfo(`  bool byteLen: ${boolType.byteLen()}`)
-  printInfo(`  bool isDynamic: ${boolType.isDynamic()}`)
+  printInfo(`Parsed 'bool': ${boolType.toString()}`);
+  printInfo(`  bool byteLen: ${boolType.byteLen()}`);
+  printInfo(`  bool isDynamic: ${boolType.isDynamic()}`);
 
-  printInfo(`Parsed 'byte': ${byteType.toString()}`)
-  printInfo(`  byte byteLen: ${byteType.byteLen()}`)
-  printInfo(`  byte isDynamic: ${byteType.isDynamic()}`)
+  printInfo(`Parsed 'byte': ${byteType.toString()}`);
+  printInfo(`  byte byteLen: ${byteType.byteLen()}`);
+  printInfo(`  byte isDynamic: ${byteType.isDynamic()}`);
 
-  printInfo(`Parsed 'address': ${addressType.toString()}`)
-  printInfo(`  address byteLen: ${addressType.byteLen()}`)
-  printInfo(`  address isDynamic: ${addressType.isDynamic()}`)
+  printInfo(`Parsed 'address': ${addressType.toString()}`);
+  printInfo(`  address byteLen: ${addressType.byteLen()}`);
+  printInfo(`  address isDynamic: ${addressType.isDynamic()}`);
 
-  printInfo(`Parsed 'string': ${stringType.toString()}`)
-  printInfo(`  string isDynamic: ${stringType.isDynamic()}`)
+  printInfo(`Parsed 'string': ${stringType.toString()}`);
+  printInfo(`  string isDynamic: ${stringType.isDynamic()}`);
 
   // Step 3: Parse dynamic array types
-  printStep(3, 'Parse Dynamic Array Types')
+  printStep(3, 'Parse Dynamic Array Types');
 
-  const uint64ArrayType = ABIType.from('uint64[]')
-  const addressArrayType = ABIType.from('address[]')
+  const uint64ArrayType = ABIType.from('uint64[]');
+  const addressArrayType = ABIType.from('address[]');
 
-  printInfo(`Parsed 'uint64[]': ${uint64ArrayType.toString()}`)
+  printInfo(`Parsed 'uint64[]': ${uint64ArrayType.toString()}`);
   if (uint64ArrayType instanceof ABIArrayDynamicType) {
-    printInfo(`  childType: ${uint64ArrayType.childType.toString()}`)
-    printInfo(`  isDynamic: ${uint64ArrayType.isDynamic()}`)
+    printInfo(`  childType: ${uint64ArrayType.childType.toString()}`);
+    printInfo(`  isDynamic: ${uint64ArrayType.isDynamic()}`);
   }
 
-  printInfo(`Parsed 'address[]': ${addressArrayType.toString()}`)
+  printInfo(`Parsed 'address[]': ${addressArrayType.toString()}`);
   if (addressArrayType instanceof ABIArrayDynamicType) {
-    printInfo(`  childType: ${addressArrayType.childType.toString()}`)
+    printInfo(`  childType: ${addressArrayType.childType.toString()}`);
   }
 
   // Step 4: Parse static array types
-  printStep(4, 'Parse Static Array Types')
+  printStep(4, 'Parse Static Array Types');
 
-  const byte32Type = ABIType.from('byte[32]')
-  const address5Type = ABIType.from('address[5]')
+  const byte32Type = ABIType.from('byte[32]');
+  const address5Type = ABIType.from('address[5]');
 
-  printInfo(`Parsed 'byte[32]': ${byte32Type.toString()}`)
+  printInfo(`Parsed 'byte[32]': ${byte32Type.toString()}`);
   if (byte32Type instanceof ABIArrayStaticType) {
-    printInfo(`  childType: ${byte32Type.childType.toString()}`)
-    printInfo(`  length: ${byte32Type.length}`)
-    printInfo(`  byteLen: ${byte32Type.byteLen()}`)
-    printInfo(`  isDynamic: ${byte32Type.isDynamic()}`)
+    printInfo(`  childType: ${byte32Type.childType.toString()}`);
+    printInfo(`  length: ${byte32Type.length}`);
+    printInfo(`  byteLen: ${byte32Type.byteLen()}`);
+    printInfo(`  isDynamic: ${byte32Type.isDynamic()}`);
   }
 
-  printInfo(`Parsed 'address[5]': ${address5Type.toString()}`)
+  printInfo(`Parsed 'address[5]': ${address5Type.toString()}`);
   if (address5Type instanceof ABIArrayStaticType) {
-    printInfo(`  childType: ${address5Type.childType.toString()}`)
-    printInfo(`  length: ${address5Type.length}`)
-    printInfo(`  byteLen: ${address5Type.byteLen()}`)
+    printInfo(`  childType: ${address5Type.childType.toString()}`);
+    printInfo(`  length: ${address5Type.length}`);
+    printInfo(`  byteLen: ${address5Type.byteLen()}`);
   }
 
   // Step 5: Parse tuple types
-  printStep(5, 'Parse Tuple Types')
+  printStep(5, 'Parse Tuple Types');
 
-  const simpleTupleType = ABIType.from('(uint64,address)')
-  const complexTupleType = ABIType.from('(bool,string,uint256)')
+  const simpleTupleType = ABIType.from('(uint64,address)');
+  const complexTupleType = ABIType.from('(bool,string,uint256)');
 
-  printInfo(`Parsed '(uint64,address)': ${simpleTupleType.toString()}`)
+  printInfo(`Parsed '(uint64,address)': ${simpleTupleType.toString()}`);
   if (simpleTupleType instanceof ABITupleType) {
-    printInfo(`  childTypes count: ${simpleTupleType.childTypes.length}`)
+    printInfo(`  childTypes count: ${simpleTupleType.childTypes.length}`);
     simpleTupleType.childTypes.forEach((childType, index) => {
-      printInfo(`    [${index}]: ${childType.toString()}`)
-    })
-    printInfo(`  isDynamic: ${simpleTupleType.isDynamic()}`)
-    printInfo(`  byteLen: ${simpleTupleType.byteLen()}`)
+      printInfo(`    [${index}]: ${childType.toString()}`);
+    });
+    printInfo(`  isDynamic: ${simpleTupleType.isDynamic()}`);
+    printInfo(`  byteLen: ${simpleTupleType.byteLen()}`);
   }
 
-  printInfo(`Parsed '(bool,string,uint256)': ${complexTupleType.toString()}`)
+  printInfo(`Parsed '(bool,string,uint256)': ${complexTupleType.toString()}`);
   if (complexTupleType instanceof ABITupleType) {
-    printInfo(`  childTypes count: ${complexTupleType.childTypes.length}`)
+    printInfo(`  childTypes count: ${complexTupleType.childTypes.length}`);
     complexTupleType.childTypes.forEach((childType, index) => {
-      printInfo(`    [${index}]: ${childType.toString()}`)
-    })
-    printInfo(`  isDynamic: ${complexTupleType.isDynamic()} (contains 'string' which is dynamic)`)
+      printInfo(`    [${index}]: ${childType.toString()}`);
+    });
+    printInfo(`  isDynamic: ${complexTupleType.isDynamic()} (contains 'string' which is dynamic)`);
   }
 
   // Step 6: Parse nested tuple types
-  printStep(6, 'Parse Nested Tuple Types')
+  printStep(6, 'Parse Nested Tuple Types');
 
-  const nestedTupleType = ABIType.from('((uint64,bool),address[])')
+  const nestedTupleType = ABIType.from('((uint64,bool),address[])');
 
-  printInfo(`Parsed '((uint64,bool),address[])': ${nestedTupleType.toString()}`)
+  printInfo(`Parsed '((uint64,bool),address[])': ${nestedTupleType.toString()}`);
   if (nestedTupleType instanceof ABITupleType) {
-    printInfo(`  childTypes count: ${nestedTupleType.childTypes.length}`)
+    printInfo(`  childTypes count: ${nestedTupleType.childTypes.length}`);
     nestedTupleType.childTypes.forEach((childType, index) => {
-      printInfo(`    [${index}]: ${childType.toString()}`)
+      printInfo(`    [${index}]: ${childType.toString()}`);
       if (childType instanceof ABITupleType) {
         childType.childTypes.forEach((nestedChild, nestedIndex) => {
-          printInfo(`      [${nestedIndex}]: ${nestedChild.toString()}`)
-        })
+          printInfo(`      [${nestedIndex}]: ${nestedChild.toString()}`);
+        });
       }
-    })
-    printInfo(`  isDynamic: ${nestedTupleType.isDynamic()}`)
+    });
+    printInfo(`  isDynamic: ${nestedTupleType.isDynamic()}`);
   }
 
   // Step 7: Type category detection using instanceof
-  printStep(7, 'Type Category Detection with instanceof')
+  printStep(7, 'Type Category Detection with instanceof');
 
-  const testTypes = ['uint64', 'bool', 'byte', 'address', 'string', 'uint64[]', 'byte[32]', '(uint64,address)']
+  const testTypes = [
+    'uint64',
+    'bool',
+    'byte',
+    'address',
+    'string',
+    'uint64[]',
+    'byte[32]',
+    '(uint64,address)',
+  ];
 
   for (const typeStr of testTypes) {
-    const parsedType = ABIType.from(typeStr)
-    let category = 'Unknown'
+    const parsedType = ABIType.from(typeStr);
+    let category = 'Unknown';
 
     if (parsedType instanceof ABIUintType) {
-      category = 'UintType'
+      category = 'UintType';
     } else if (parsedType instanceof ABIBoolType) {
-      category = 'BoolType'
+      category = 'BoolType';
     } else if (parsedType instanceof ABIByteType) {
-      category = 'ByteType'
+      category = 'ByteType';
     } else if (parsedType instanceof ABIAddressType) {
-      category = 'AddressType'
+      category = 'AddressType';
     } else if (parsedType instanceof ABIStringType) {
-      category = 'StringType'
+      category = 'StringType';
     } else if (parsedType instanceof ABIArrayDynamicType) {
-      category = 'ArrayDynamicType'
+      category = 'ArrayDynamicType';
     } else if (parsedType instanceof ABIArrayStaticType) {
-      category = 'ArrayStaticType'
+      category = 'ArrayStaticType';
     } else if (parsedType instanceof ABITupleType) {
-      category = 'TupleType'
+      category = 'TupleType';
     }
 
-    printInfo(`'${typeStr}' -> ${category}`)
+    printInfo(`'${typeStr}' -> ${category}`);
   }
 
   // Step 8: Demonstrate type equality
-  printStep(8, 'Type Equality Comparison')
+  printStep(8, 'Type Equality Comparison');
 
-  const type1 = ABIType.from('uint64')
-  const type2 = ABIType.from('uint64')
-  const type3 = ABIType.from('uint32')
+  const type1 = ABIType.from('uint64');
+  const type2 = ABIType.from('uint64');
+  const type3 = ABIType.from('uint32');
 
-  printInfo(`ABIType.from('uint64').equals(ABIType.from('uint64')): ${type1.equals(type2)}`)
-  printInfo(`ABIType.from('uint64').equals(ABIType.from('uint32')): ${type1.equals(type3)}`)
+  printInfo(`ABIType.from('uint64').equals(ABIType.from('uint64')): ${type1.equals(type2)}`);
+  printInfo(`ABIType.from('uint64').equals(ABIType.from('uint32')): ${type1.equals(type3)}`);
 
-  const tuple1 = ABIType.from('(uint64,address)')
-  const tuple2 = ABIType.from('(uint64,address)')
-  const tuple3 = ABIType.from('(uint64,bool)')
+  const tuple1 = ABIType.from('(uint64,address)');
+  const tuple2 = ABIType.from('(uint64,address)');
+  const tuple3 = ABIType.from('(uint64,bool)');
 
-  printInfo(`ABIType.from('(uint64,address)').equals(ABIType.from('(uint64,address)')): ${tuple1.equals(tuple2)}`)
-  printInfo(`ABIType.from('(uint64,address)').equals(ABIType.from('(uint64,bool)')): ${tuple1.equals(tuple3)}`)
+  printInfo(
+    `ABIType.from('(uint64,address)').equals(ABIType.from('(uint64,address)')): ${tuple1.equals(tuple2)}`,
+  );
+  printInfo(
+    `ABIType.from('(uint64,address)').equals(ABIType.from('(uint64,bool)')): ${tuple1.equals(tuple3)}`,
+  );
 
-  printSuccess('ABI Type Parsing example completed successfully!')
+  printSuccess('ABI Type Parsing example completed successfully!');
 }
 
-main()
-
+main();
 ```
 
 ---

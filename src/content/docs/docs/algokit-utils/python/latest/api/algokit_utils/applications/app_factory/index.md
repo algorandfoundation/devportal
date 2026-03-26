@@ -1,5 +1,5 @@
 ---
-title: "algokit_utils.applications.app_factory"
+title: 'algokit_utils.applications.app_factory'
 ---
 
 <div class="api-ref">
@@ -9,7 +9,7 @@ title: "algokit_utils.applications.app_factory"
 ## Classes
 
 | [`AppFactoryParams`](#algokit_utils.applications.app_factory.AppFactoryParams)                                           |                                                                            |
-|--------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------|
+| ------------------------------------------------------------------------------------------------------------------------ | -------------------------------------------------------------------------- |
 | [`AppFactoryCreateParams`](#algokit_utils.applications.app_factory.AppFactoryCreateParams)                               | Parameters for creating application with bare call.                        |
 | [`AppFactoryCreateMethodCallParams`](#algokit_utils.applications.app_factory.AppFactoryCreateMethodCallParams)           | Parameters for creating application with method call                       |
 | [`AppFactoryCreateMethodCallResult`](#algokit_utils.applications.app_factory.AppFactoryCreateMethodCallResult)           | Base class for transaction results.                                        |
@@ -21,39 +21,39 @@ title: "algokit_utils.applications.app_factory"
 
 ## Module Contents
 
-### *class* AppFactoryParams
+### _class_ AppFactoryParams
 
-#### algorand *: [AlgorandClient](/docs/algokit-utils/python/latest/api/algokit_utils/algorand/#algokit_utils.algorand.AlgorandClient)*
+#### algorand _: [AlgorandClient](/docs/algokit-utils/python/latest/api/algokit_utils/algorand/#algokit_utils.algorand.AlgorandClient)_
 
-#### app_spec *: Arc56Contract | str*
+#### app*spec *: Arc56Contract | str\_
 
-#### app_name *: str | None* *= None*
+#### app*name *: str | None\_ _= None_
 
-#### default_sender *: str | None* *= None*
+#### default*sender *: str | None\_ _= None_
 
-#### default_signer *: TransactionSigner | None* *= None*
+#### default*signer *: TransactionSigner | None\_ _= None_
 
-#### version *: str | None* *= None*
+#### version _: str | None_ _= None_
 
-#### compilation_params *: [AppClientCompilationParams](/docs/algokit-utils/python/latest/api/algokit_utils/applications/app_client/#algokit_utils.applications.app_client.AppClientCompilationParams) | None* *= None*
+#### compilation*params *: [AppClientCompilationParams](/docs/algokit-utils/python/latest/api/algokit_utils/applications/app_client/#algokit_utils.applications.app_client.AppClientCompilationParams) | None\_ _= None_
 
-### *class* AppFactoryCreateParams
+### _class_ AppFactoryCreateParams
 
 Bases: [`algokit_utils.applications.app_client.AppClientBareCallCreateParams`](/docs/algokit-utils/python/latest/api/algokit_utils/applications/app_client/#algokit_utils.applications.app_client.AppClientBareCallCreateParams)
 
 Parameters for creating application with bare call.
 
-#### on_complete *: CreateOnComplete | None* *= None*
+#### on*complete *: CreateOnComplete | None\_ _= None_
 
 Optional on complete action
 
-### *class* AppFactoryCreateMethodCallParams
+### _class_ AppFactoryCreateMethodCallParams
 
 Bases: [`algokit_utils.applications.app_client.AppClientMethodCallCreateParams`](/docs/algokit-utils/python/latest/api/algokit_utils/applications/app_client/#algokit_utils.applications.app_client.AppClientMethodCallCreateParams)
 
 Parameters for creating application with method call
 
-### *class* AppFactoryCreateMethodCallResult
+### _class_ AppFactoryCreateMethodCallResult
 
 Bases: [`algokit_utils.transactions.transaction_sender.SendSingleTransactionResult`](/docs/algokit-utils/python/latest/api/algokit_utils/transactions/transaction_sender/#algokit_utils.transactions.transaction_sender.SendSingleTransactionResult), `Generic`[`ABIReturnT`]
 
@@ -61,17 +61,17 @@ Base class for transaction results.
 
 Represents the result of sending a single transaction.
 
-#### app_id *: int*
+#### app*id *: int\_
 
-#### app_address *: str*
+#### app*address *: str\_
 
-#### compiled_approval *: Any | None* *= None*
+#### compiled*approval *: Any | None\_ _= None_
 
-#### compiled_clear *: Any | None* *= None*
+#### compiled*clear *: Any | None\_ _= None_
 
-#### abi_return *: ABIReturnT | None* *= None*
+#### abi*return *: ABIReturnT | None\_ _= None_
 
-### *class* SendAppFactoryTransactionResult
+### _class_ SendAppFactoryTransactionResult
 
 Bases: [`algokit_utils.transactions.transaction_sender.SendAppTransactionResult`](/docs/algokit-utils/python/latest/api/algokit_utils/transactions/transaction_sender/#algokit_utils.transactions.transaction_sender.SendAppTransactionResult)[[`algokit_utils.applications.abi.Arc56ReturnValueType`](/docs/algokit-utils/python/latest/api/algokit_utils/applications/abi/#algokit_utils.applications.abi.Arc56ReturnValueType)]
 
@@ -79,7 +79,7 @@ Result of an application transaction.
 
 Contains the ABI return value if applicable.
 
-### *class* SendAppUpdateFactoryTransactionResult
+### _class_ SendAppUpdateFactoryTransactionResult
 
 Bases: [`algokit_utils.transactions.transaction_sender.SendAppUpdateTransactionResult`](/docs/algokit-utils/python/latest/api/algokit_utils/transactions/transaction_sender/#algokit_utils.transactions.transaction_sender.SendAppUpdateTransactionResult)[[`algokit_utils.applications.abi.Arc56ReturnValueType`](/docs/algokit-utils/python/latest/api/algokit_utils/applications/abi/#algokit_utils.applications.abi.Arc56ReturnValueType)]
 
@@ -87,7 +87,7 @@ Result of updating an application.
 
 Contains the compiled approval and clear programs.
 
-### *class* SendAppCreateFactoryTransactionResult
+### _class_ SendAppCreateFactoryTransactionResult
 
 Bases: [`algokit_utils.transactions.transaction_sender.SendAppCreateTransactionResult`](/docs/algokit-utils/python/latest/api/algokit_utils/transactions/transaction_sender/#algokit_utils.transactions.transaction_sender.SendAppCreateTransactionResult)[[`algokit_utils.applications.abi.Arc56ReturnValueType`](/docs/algokit-utils/python/latest/api/algokit_utils/applications/abi/#algokit_utils.applications.abi.Arc56ReturnValueType)]
 
@@ -95,51 +95,51 @@ Result of creating a new application.
 
 Contains the app ID and address of the newly created application.
 
-### *class* AppFactoryDeployResult
+### _class_ AppFactoryDeployResult
 
 Result from deploying an application via AppFactory
 
-#### app *: [ApplicationMetaData](/docs/algokit-utils/python/latest/api/algokit_utils/applications/app_deployer/#algokit_utils.applications.app_deployer.ApplicationMetaData)*
+#### app _: [ApplicationMetaData](/docs/algokit-utils/python/latest/api/algokit_utils/applications/app_deployer/#algokit_utils.applications.app_deployer.ApplicationMetaData)_
 
 The application metadata
 
-#### operation_performed *: OperationPerformed*
+#### operation*performed *: OperationPerformed\_
 
 The operation performed
 
-#### create_result *: [SendAppCreateFactoryTransactionResult](#algokit_utils.applications.app_factory.SendAppCreateFactoryTransactionResult) | None* *= None*
+#### create*result *: [SendAppCreateFactoryTransactionResult](#algokit_utils.applications.app_factory.SendAppCreateFactoryTransactionResult) | None\_ _= None_
 
 The create result
 
-#### update_result *: [SendAppUpdateFactoryTransactionResult](#algokit_utils.applications.app_factory.SendAppUpdateFactoryTransactionResult) | None* *= None*
+#### update*result *: [SendAppUpdateFactoryTransactionResult](#algokit_utils.applications.app_factory.SendAppUpdateFactoryTransactionResult) | None\_ _= None_
 
 The update result
 
-#### delete_result *: [SendAppFactoryTransactionResult](#algokit_utils.applications.app_factory.SendAppFactoryTransactionResult) | None* *= None*
+#### delete*result *: [SendAppFactoryTransactionResult](#algokit_utils.applications.app_factory.SendAppFactoryTransactionResult) | None\_ _= None_
 
 The delete result
 
-#### *classmethod* from_deploy_result(response: [AppDeployResult](/docs/algokit-utils/python/latest/api/algokit_utils/applications/app_deployer/#algokit_utils.applications.app_deployer.AppDeployResult), deploy_params: [AppDeployParams](/docs/algokit-utils/python/latest/api/algokit_utils/applications/app_deployer/#algokit_utils.applications.app_deployer.AppDeployParams), app_spec: Arc56Contract, app_compilation_data: [AppClientCompilationResult](/docs/algokit-utils/python/latest/api/algokit_utils/applications/app_client/#algokit_utils.applications.app_client.AppClientCompilationResult) | None = None) → Self
+#### _classmethod_ from_deploy_result(response: [AppDeployResult](/docs/algokit-utils/python/latest/api/algokit_utils/applications/app_deployer/#algokit_utils.applications.app_deployer.AppDeployResult), deploy_params: [AppDeployParams](/docs/algokit-utils/python/latest/api/algokit_utils/applications/app_deployer/#algokit_utils.applications.app_deployer.AppDeployParams), app_spec: Arc56Contract, app_compilation_data: [AppClientCompilationResult](/docs/algokit-utils/python/latest/api/algokit_utils/applications/app_client/#algokit_utils.applications.app_client.AppClientCompilationResult) | None = None) → Self
 
 Construct an AppFactoryDeployResult from a deployment result.
 
-* **Parameters:**
-  * **response** – The deployment response.
-  * **deploy_params** – The deployment parameters.
-  * **app_spec** – The application specification.
-  * **app_compilation_data** – Optional app compilation data.
-* **Returns:**
+- **Parameters:**
+  - **response** – The deployment response.
+  - **deploy_params** – The deployment parameters.
+  - **app_spec** – The application specification.
+  - **app_compilation_data** – Optional app compilation data.
+- **Returns:**
   An instance of AppFactoryDeployResult.
 
-### *class* AppFactory(params: [AppFactoryParams](#algokit_utils.applications.app_factory.AppFactoryParams))
+### _class_ AppFactory(params: [AppFactoryParams](#algokit_utils.applications.app_factory.AppFactoryParams))
 
 ARC-56/ARC-32 app factory that, for a given app spec, allows you to create
 and deploy one or more app instances and to create one or more app clients
 to interact with those (or other) app instances.
 
-* **Parameters:**
+- **Parameters:**
   **params** – The parameters for the factory
-* **Example:**
+- **Example:**
   ```python
   factory = AppFactory(AppFactoryParams(
          algorand=AlgorandClient.mainnet(),
@@ -148,25 +148,25 @@ to interact with those (or other) app instances.
   )
   ```
 
-#### *property* app_name *: str*
+#### _property_ app*name *: str\_
 
 The name of the app
 
-#### *property* app_spec *: Arc56Contract*
+#### _property_ app*spec *: Arc56Contract\_
 
 The app spec
 
-#### *property* algorand *: [AlgorandClient](/docs/algokit-utils/python/latest/api/algokit_utils/algorand/#algokit_utils.algorand.AlgorandClient)*
+#### _property_ algorand _: [AlgorandClient](/docs/algokit-utils/python/latest/api/algokit_utils/algorand/#algokit_utils.algorand.AlgorandClient)_
 
 The algorand client
 
-#### *property* params *: \_MethodParamsBuilder*
+#### _property_ params _: \_MethodParamsBuilder_
 
 Get parameters to create transactions (create and deploy related calls) for the current app.
 
 A good mental model for this is that these parameters represent a deferred transaction creation.
 
-* **Example:**
+- **Example:**
   ```python
   Create a transaction in the future using Algorand Client
   create_app_params = app_factory.params.create(
@@ -178,7 +178,7 @@ A good mental model for this is that these parameters represent a deferred trans
   # …
   algorand.send.app_create_method_call(create_app_params)
   ```
-* **Example:**
+- **Example:**
   ```python
   Define a nested transaction as an ABI argument
   create_app_params = appFactory.params.create(
@@ -195,18 +195,18 @@ A good mental model for this is that these parameters represent a deferred trans
   )
   ```
 
-#### *property* send *: \_TransactionSender*
+#### _property_ send _: \_TransactionSender_
 
 Get the transaction sender.
 
-* **Returns:**
+- **Returns:**
   The \_TransactionSender instance.
 
-#### *property* create_transaction *: \_TransactionCreator*
+#### _property_ create*transaction *: \_TransactionCreator\_
 
 Get the transaction creator.
 
-* **Returns:**
+- **Returns:**
   The \_TransactionCreator instance.
 
 #### deploy(\*, on_update: OnUpdate | None = None, on_schema_break: OnSchemaBreak | None = None, create_params: [AppClientMethodCallCreateParams](/docs/algokit-utils/python/latest/api/algokit_utils/applications/app_client/#algokit_utils.applications.app_client.AppClientMethodCallCreateParams) | [AppClientBareCallCreateParams](/docs/algokit-utils/python/latest/api/algokit_utils/applications/app_client/#algokit_utils.applications.app_client.AppClientBareCallCreateParams) | None = None, update_params: [AppClientMethodCallParams](/docs/algokit-utils/python/latest/api/algokit_utils/applications/app_client/#algokit_utils.applications.app_client.AppClientMethodCallParams) | [AppClientBareCallParams](/docs/algokit-utils/python/latest/api/algokit_utils/applications/app_client/#algokit_utils.applications.app_client.AppClientBareCallParams) | None = None, delete_params: [AppClientMethodCallParams](/docs/algokit-utils/python/latest/api/algokit_utils/applications/app_client/#algokit_utils.applications.app_client.AppClientMethodCallParams) | [AppClientBareCallParams](/docs/algokit-utils/python/latest/api/algokit_utils/applications/app_client/#algokit_utils.applications.app_client.AppClientBareCallParams) | None = None, existing_deployments: [ApplicationLookup](/docs/algokit-utils/python/latest/api/algokit_utils/applications/app_deployer/#algokit_utils.applications.app_deployer.ApplicationLookup) | None = None, ignore_cache: bool = False, app_name: str | None = None, send_params: [SendParams](/docs/algokit-utils/python/latest/api/algokit_utils/models/transaction/#algokit_utils.models.transaction.SendParams) | None = None, compilation_params: [AppClientCompilationParams](/docs/algokit-utils/python/latest/api/algokit_utils/applications/app_client/#algokit_utils.applications.app_client.AppClientCompilationParams) | None = None) → tuple[[AppClient](/docs/algokit-utils/python/latest/api/algokit_utils/applications/app_client/#algokit_utils.applications.app_client.AppClient), [AppFactoryDeployResult](#algokit_utils.applications.app_factory.AppFactoryDeployResult)]
@@ -223,20 +223,20 @@ various return properties like transaction, confirmation and deleteResult.
 **Note:** if there is an update (different TEAL code) to an existing app (and onUpdate is set to
 ‘replace’) the existing app will be deleted and re-created.
 
-* **Parameters:**
-  * **on_update** – The action to take if there is an update to the app
-  * **on_schema_break** – The action to take if there is a breaking state schema change to the app
-  * **create_params** – The arguments to create the app
-  * **update_params** – The arguments to update the app
-  * **delete_params** – The arguments to delete the app
-  * **existing_deployments** – The existing deployments to use
-  * **ignore_cache** – Whether to ignore the cache
-  * **app_name** – The name of the app
-  * **send_params** – The parameters for the send call
-  * **compilation_params** – The parameters for the compilation
-* **Returns:**
+- **Parameters:**
+  - **on_update** – The action to take if there is an update to the app
+  - **on_schema_break** – The action to take if there is a breaking state schema change to the app
+  - **create_params** – The arguments to create the app
+  - **update_params** – The arguments to update the app
+  - **delete_params** – The arguments to delete the app
+  - **existing_deployments** – The existing deployments to use
+  - **ignore_cache** – Whether to ignore the cache
+  - **app_name** – The name of the app
+  - **send_params** – The parameters for the send call
+  - **compilation_params** – The parameters for the compilation
+- **Returns:**
   The app client and the result of the deployment
-* **Example:**
+- **Example:**
   ```python
   app_client, result = factory.deploy({
     create_params=AppClientMethodCallCreateParams(
@@ -270,16 +270,16 @@ various return properties like transaction, confirmation and deleteResult.
 
 Returns a new AppClient client for an app instance of the given ID.
 
-* **Parameters:**
-  * **app_id** – The id of the app
-  * **app_name** – The name of the app
-  * **default_sender** – The default sender address
-  * **default_signer** – The default signer
-  * **approval_source_map** – The approval source map
-  * **clear_source_map** – The clear source map
-* **Return AppClient:**
+- **Parameters:**
+  - **app_id** – The id of the app
+  - **app_name** – The name of the app
+  - **default_sender** – The default sender address
+  - **default_signer** – The default signer
+  - **approval_source_map** – The approval source map
+  - **clear_source_map** – The clear source map
+- **Return AppClient:**
   The app client
-* **Example:**
+- **Example:**
   ```python
   app_client = factory.get_app_client_by_id(app_id=123)
   ```
@@ -289,18 +289,18 @@ Returns a new AppClient client for an app instance of the given ID.
 Returns a new AppClient client, resolving the app by creator address and name
 using AlgoKit app deployment semantics (i.e. looking for the app creation transaction note).
 
-* **Parameters:**
-  * **creator_address** – The creator address
-  * **app_name** – The name of the app
-  * **default_sender** – The default sender address
-  * **default_signer** – The default signer
-  * **ignore_cache** – Whether to ignore the cache and force a lookup
-  * **app_lookup_cache** – Optional cache of existing app deployments to use instead of querying the indexer
-  * **approval_source_map** – Optional source map for the approval program
-  * **clear_source_map** – Optional source map for the clear state program
-* **Returns:**
+- **Parameters:**
+  - **creator_address** – The creator address
+  - **app_name** – The name of the app
+  - **default_sender** – The default sender address
+  - **default_signer** – The default signer
+  - **ignore_cache** – Whether to ignore the cache and force a lookup
+  - **app_lookup_cache** – Optional cache of existing app deployments to use instead of querying the indexer
+  - **approval_source_map** – Optional source map for the approval program
+  - **clear_source_map** – Optional source map for the clear state program
+- **Returns:**
   An AppClient instance configured for the resolved application
-* **Example:**
+- **Example:**
   ```python
   app_client = factory.get_app_client_by_creator_and_name(
       creator_address='SENDER_ADDRESS',
@@ -314,21 +314,20 @@ using AlgoKit app deployment semantics (i.e. looking for the app creation transa
 
 Import the provided source maps into the factory.
 
-* **Parameters:**
+- **Parameters:**
   **source_maps** – An AppSourceMaps instance containing the approval and clear source maps.
 
 #### compile(compilation_params: [AppClientCompilationParams](/docs/algokit-utils/python/latest/api/algokit_utils/applications/app_client/#algokit_utils.applications.app_client.AppClientCompilationParams) | None = None) → [AppClientCompilationResult](/docs/algokit-utils/python/latest/api/algokit_utils/applications/app_client/#algokit_utils.applications.app_client.AppClientCompilationResult)
 
 Compile the app’s TEAL code.
 
-* **Parameters:**
+- **Parameters:**
   **compilation_params** – The compilation parameters
-* **Return AppClientCompilationResult:**
+- **Return AppClientCompilationResult:**
   The compilation result
-* **Example:**
+- **Example:**
   ```python
   compilation_result = factory.compile()
   ```
-
 
 </div>

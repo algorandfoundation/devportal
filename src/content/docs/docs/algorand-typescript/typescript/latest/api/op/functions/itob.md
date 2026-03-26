@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "itob"
+title: 'itob'
 ---
 
 > **itob**(`a`): [`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)\<`8`\>

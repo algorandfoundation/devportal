@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "groupTransactions"
+title: 'groupTransactions'
 ---
 
 > **groupTransactions**(`transactions`): [`Transaction`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/classes/transaction/)[]

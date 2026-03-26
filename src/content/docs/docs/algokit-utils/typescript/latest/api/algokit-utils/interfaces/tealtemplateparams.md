@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "TealTemplateParams"
+title: 'TealTemplateParams'
 ---
 
 Defined in: [src/app.ts:187](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/app.ts#L187)

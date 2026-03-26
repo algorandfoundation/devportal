@@ -78,7 +78,7 @@ If you'd like to keep the same execution semantics as before, then apply a `read
 **BEFORE - Algorand TypeScript beta**
 
 ```ts
-import { uint64, Uint64 } from '@algorandfoundation/algorand-typescript'
+import { uint64, Uint64 } from '@algorandfoundation/algorand-typescript';
 
 // ... rest of code
 
@@ -116,7 +116,7 @@ Now that native arrays are mutable by default, it was confusing to call the scra
 **BEFORE - Algorand TypeScript beta**
 
 ```ts
-import { uint64, MutableArray } from '@algorandfoundation/algorand-typescript'
+import { uint64, MutableArray } from '@algorandfoundation/algorand-typescript';
 
 // ... rest of code
 
@@ -168,7 +168,7 @@ The 'N' and 'NxM' suffixes have been removed from the ARC4 numeric types, which 
 **BEFORE - Algorand TypeScript beta**
 
 ```ts
-import { arc4 } from '@algorandfoundation/algorand-typescript'
+import { arc4 } from '@algorandfoundation/algorand-typescript';
 
 // ... rest of code
 
@@ -186,7 +186,7 @@ const user = {
 **AFTER - Algorand TypeScript 1.0**
 
 ```ts
-import { arc4 } from '@algorandfoundation/algorand-typescript'
+import { arc4 } from '@algorandfoundation/algorand-typescript';
 
 // ... rest of code
 
@@ -206,7 +206,7 @@ const user = {
 **BEFORE - Algorand TypeScript beta**
 
 ```ts
-import type { PaymentTxn } from '@algorandfoundation/algorand-typescript/gtxn'
+import type { PaymentTxn } from '@algorandfoundation/algorand-typescript/gtxn';
 
 // ... rest of code
 
@@ -218,7 +218,7 @@ function makePayment(payment: PaymentTxn) {
 **AFTER - Algorand TypeScript 1.0**
 
 ```ts
-import type { gtxn } from '@algorandfoundation/algorand-typescript'
+import type { gtxn } from '@algorandfoundation/algorand-typescript';
 
 // ... rest of code
 
@@ -322,7 +322,7 @@ This change can improve test performance by ensuring only relevant files are pro
 **BEFORE - Algorand TypeScript beta**
 
 ```ts
-import { arc4EncodedLength, assert } from '@algorandfoundation/algorand-typescript'
+import { arc4EncodedLength, assert } from '@algorandfoundation/algorand-typescript';
 
 // ... rest of code
 
@@ -335,7 +335,7 @@ assert(arc4EncodedLength<[StaticArray<Bool, 10>, boolean, boolean]>() === 3);
 **AFTER - Algorand TypeScript 1.0**
 
 ```ts
-import { sizeOf, assert } from '@algorandfoundation/algorand-typescript'
+import { sizeOf, assert } from '@algorandfoundation/algorand-typescript';
 
 // ... rest of code
 
@@ -350,40 +350,41 @@ assert(sizeOf<[StaticArray<Bool, 10>, boolean, boolean]>() === 3);
 The signature of `abiCall` helper changes from
 
 ```ts
-import { arc4 } from '@algorandfoundation/algorand-typescript'
-import MyContract from './MyContract.algo'
+import { arc4 } from '@algorandfoundation/algorand-typescript';
+import MyContract from './MyContract.algo';
 
 // ... rest of code
 
-arc4.abiCall(MyContract.prototype.myMethod, { 
+arc4.abiCall(MyContract.prototype.myMethod, {
   // ... implementation
-})
+});
 ```
 
 to
 
 ```ts
-import { arc4 } from '@algorandfoundation/algorand-typescript'
-import MyContract from './MyContract.algo'
+import { arc4 } from '@algorandfoundation/algorand-typescript';
+import MyContract from './MyContract.algo';
 
 // ... rest of code
 
-arc4.abiCall({ method: MyContract.prototype.myMethod, 
+arc4.abiCall({
+  method: MyContract.prototype.myMethod,
   // ... implementation
-})
+});
 ```
 
 The new `method` property exists to provide a natural way to specify the `TMethod` generic parameter, but it is optional and alternatively the generic arg can be specified explicitly with
 
 ```ts
-import { arc4 } from '@algorandfoundation/algorand-typescript'
-import type { MyContract } from '../MyContract/contract.algo'
+import { arc4 } from '@algorandfoundation/algorand-typescript';
+import type { MyContract } from '../MyContract/contract.algo';
 
 // ... rest of code
 
-arc4.abiCall<typeof MyContract.prototype.myMethod>({ 
+arc4.abiCall<typeof MyContract.prototype.myMethod>({
   // ... implementation
-})
+});
 ```
 
 This form of invocation supports using type only imports `import type { MyContract } from '...'` which allow for circular references versus value imports which cannot be circular.
@@ -393,8 +394,8 @@ If, in some unforeseen circumstances, both a type argument and the `method` prop
 **BEFORE - Algorand TypeScript beta**
 
 ```ts
-import { arc4, assert } from '@algorandfoundation/algorand-typescript'
-import Hello, { HelloStubbed } from './Hello.algo'
+import { arc4, assert } from '@algorandfoundation/algorand-typescript';
+import Hello, { HelloStubbed } from './Hello.algo';
 
 // ... rest of code
 
@@ -415,8 +416,8 @@ assert(result3 === 'hello stubbed');
 **AFTER - Algorand TypeScript 1.0**
 
 ```ts
-import { arc4, assert } from '@algorandfoundation/algorand-typescript'
-import Hello, { HelloStubbed } from './Hello.algo'
+import { arc4, assert } from '@algorandfoundation/algorand-typescript';
+import Hello, { HelloStubbed } from './Hello.algo';
 
 // ... rest of code
 
@@ -444,18 +445,18 @@ The function now accepts an `options` object with `strategy: 'unsafe-cast' | 'va
 **BEFORE - Algorand TypeScript beta**
 
 ```ts
-import { arc4 } from '@algorandfoundation/algorand-typescript'
+import { arc4 } from '@algorandfoundation/algorand-typescript';
 
 // ... rest of code
 
 const x = arc4.interpretAsArc4<arc4.UintN<32>>(someBytes);
-const y = arc4.interpretAsArc4<arc4.Byte>(someBytes, "log");
+const y = arc4.interpretAsArc4<arc4.Byte>(someBytes, 'log');
 ```
 
 **AFTER - Algorand TypeScript 1.0**
 
 ```ts
-import { arc4 } from '@algorandfoundation/algorand-typescript'
+import { arc4 } from '@algorandfoundation/algorand-typescript';
 
 // ... rest of code
 
@@ -470,19 +471,19 @@ const y = arc4.convertBytes<arc4.Byte>(someBytes, { prefix: 'log', strategy: 'un
 **BEFORE - Algorand TypeScript beta**
 
 ```ts
-import { Contract, BoxRef, Bytes, bytes } from '@algorandfoundation/algorand-typescript'
+import { Contract, BoxRef, Bytes, bytes } from '@algorandfoundation/algorand-typescript';
 
 // ... rest of code
 
 const box = BoxRef({ key: 'test_key' });
 box.create({ size: 32768 });
 
-const boxValue = Bytes('FOO')
+const boxValue = Bytes('FOO');
 box.put(boxValue);
 
-box.resize(Uint64(6))
-box.splice(Uint64(3), Uint64(3), Bytes('BAR')) // FOOBAR
-box.replace(Uint64(0), Bytes('BAR')) // BARBAR
+box.resize(Uint64(6));
+box.splice(Uint64(3), Uint64(3), Bytes('BAR')); // FOOBAR
+box.replace(Uint64(0), Bytes('BAR')); // BARBAR
 
 const extracted = box.extract(0, 3);
 
@@ -492,24 +493,24 @@ box.resize(extracted.size);
 **AFTER - Algorand TypeScript 1.0**
 
 ```ts
-import { Contract, Box, Bytes, bytes } from '@algorandfoundation/algorand-typescript'
+import { Contract, Box, Bytes, bytes } from '@algorandfoundation/algorand-typescript';
 
 // ... rest of code
 
-const box = Box<bytes>({ key: 'test_key' })
-box.create({ size: 32768 })
+const box = Box<bytes>({ key: 'test_key' });
+box.create({ size: 32768 });
 
-box.value = Bytes('FOO')
+box.value = Bytes('FOO');
 
-box.resize(Uint64(6))
-box.splice(Uint64(3), Uint64(3), Bytes('BAR')) // FOOBAR
-box.replace(Uint64(0), Bytes('BAR')) // BARBAR
+box.resize(Uint64(6));
+box.splice(Uint64(3), Uint64(3), Bytes('BAR')); // FOOBAR
+box.replace(Uint64(0), Bytes('BAR')); // BARBAR
 
-const extracted = box.extract(Uint64(0), Uint64(3)) // BAR
+const extracted = box.extract(Uint64(0), Uint64(3)); // BAR
 
-box.resize(extracted.length)
+box.resize(extracted.length);
 
-return box.value
+return box.value;
 ```
 
 #### Replace `.native` property with `.asUint64()` or `.asBigUint()` methods
@@ -519,7 +520,7 @@ For `Uint` types larger than 64 bits, `.asUint64()` throws an overflow error if 
 **BEFORE - Algorand TypeScript beta**
 
 ```ts
-import { arc4 } from '@algorandfoundation/algorand-typescript'
+import { arc4 } from '@algorandfoundation/algorand-typescript';
 
 // ... rest of code
 
@@ -533,7 +534,7 @@ const a_native = a.native;
 **AFTER - Algorand TypeScript 1.0**
 
 ```ts
-import { arc4 } from '@algorandfoundation/algorand-typescript'
+import { arc4 } from '@algorandfoundation/algorand-typescript';
 
 // ... rest of code
 
@@ -935,7 +936,14 @@ assert(asset3_txn.createdAssetID === 'AST3', 'asset3_txn is correct');
 **AFTER - Algorand TypeScript 1.0**
 
 ```ts
-import { uint64, Contract, itxn, Global, assert, Bytes } from '@algorandfoundation/algorand-typescript'
+import {
+  uint64,
+  Contract,
+  itxn,
+  Global,
+  assert,
+  Bytes,
+} from '@algorandfoundation/algorand-typescript';
 
 // ... rest of code
 
@@ -982,23 +990,23 @@ assert(result === 'hello algo dev');
 **AFTER - Algorand TypeScript 1.0**
 
 ```ts
-import { arc4, assert } from '@algorandfoundation/algorand-typescript'
-import type { HelloStubbed } from './HelloWorld.algo'
+import { arc4, assert } from '@algorandfoundation/algorand-typescript';
+import type { HelloStubbed } from './HelloWorld.algo';
 
 // ... rest of code
 
 const result3 = arc4.abiCall<typeof HelloStubbed.prototype.greet>({
   appId: 1234,
   args: ['algo dev'],
-}).returnValue
+}).returnValue;
 
-assert(result3 === 'hello algo dev')
+assert(result3 === 'hello algo dev');
 ```
 
 Alternatively, reference the method directly.
 
 ```ts
-import { uint64, Contract, arc4, assert } from '@algorandfoundation/algorand-typescript'
+import { uint64, Contract, arc4, assert } from '@algorandfoundation/algorand-typescript';
 
 // ... rest of code
 
@@ -1351,14 +1359,14 @@ assert(a === b); // a and b are referencing the same array
 **AFTER - Algorand TypeScript 1.0**
 
 ```ts
-import { uint64, clone, assertMatch } from '@algorandfoundation/algorand-typescript'
+import { uint64, clone, assertMatch } from '@algorandfoundation/algorand-typescript';
 
 // ... rest of code
 
-const a: uint64[] = [1, 2, 3]
-const b = clone(a)
-b.push(4)
+const a: uint64[] = [1, 2, 3];
+const b = clone(a);
+b.push(4);
 
-assertMatch(a, [1, 2, 3])
-assertMatch(b, [1, 2, 3, 4]) // a and b are different arrays
+assertMatch(a, [1, 2, 3]);
+assertMatch(b, [1, 2, 3, 4]); // a and b are different arrays
 ```

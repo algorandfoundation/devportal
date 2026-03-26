@@ -1,6 +1,6 @@
 ---
-title: "MessagePack"
-description: "This example demonstrates encoding and decoding MessagePack data, which is used for Algorand transaction encoding."
+title: 'MessagePack'
+description: 'This example demonstrates encoding and decoding MessagePack data, which is used for Algorand transaction encoding.'
 sidebar:
   order: 8
 ---
@@ -10,7 +10,8 @@ sidebar:
 ## Description
 
 This example demonstrates encoding and decoding MessagePack data, which is used for Algorand transaction encoding.
- Topics covered:
+Topics covered:
+
 - encodeMsgpack() to serialize data to MessagePack format
 - decodeMsgpack() to deserialize MessagePack bytes
 - Encoding simple objects with various types (strings, numbers, arrays)
@@ -58,121 +59,138 @@ npm run example common/08-msgpack.ts
  * - No LocalNet required
  */
 
-import { arrayEqual, decodeMsgpack, encodeMsgpack, stringifyJson } from '@algorandfoundation/algokit-utils/common'
-import { formatBytes, formatHex, printHeader, printInfo, printStep, printSuccess } from '../shared/utils.js'
+import {
+  arrayEqual,
+  decodeMsgpack,
+  encodeMsgpack,
+  stringifyJson,
+} from '@algorandfoundation/algokit-utils/common';
+import {
+  formatBytes,
+  formatHex,
+  printHeader,
+  printInfo,
+  printStep,
+  printSuccess,
+} from '../shared/utils.js';
 
 // Helper to find a value in a Map where keys are Uint8Array
 function getByStringKey(map: Map<number | bigint | Uint8Array, unknown>, keyStr: string): unknown {
-  const keyBytes = new TextEncoder().encode(keyStr)
+  const keyBytes = new TextEncoder().encode(keyStr);
   for (const [k, v] of map) {
     if (k instanceof Uint8Array && arrayEqual(k, keyBytes)) {
-      return v
+      return v;
     }
   }
-  return undefined
+  return undefined;
 }
 
 // Helper to convert Uint8Array key to string for display
 function keyToString(key: number | bigint | Uint8Array): string {
   if (key instanceof Uint8Array) {
-    return new TextDecoder().decode(key)
+    return new TextDecoder().decode(key);
   }
-  return String(key)
+  return String(key);
 }
 
 // ============================================================================
 // Main Example
 // ============================================================================
 
-printHeader('MessagePack Example')
+printHeader('MessagePack Example');
 
 // ============================================================================
 // Step 1: Basic MessagePack Encoding
 // ============================================================================
-printStep(1, 'Basic MessagePack Encoding')
+printStep(1, 'Basic MessagePack Encoding');
 
-printInfo('MessagePack is a binary serialization format used by Algorand')
-printInfo('encodeMsgpack() converts JavaScript objects to compact binary bytes')
-printInfo('')
+printInfo('MessagePack is a binary serialization format used by Algorand');
+printInfo('encodeMsgpack() converts JavaScript objects to compact binary bytes');
+printInfo('');
 
 const simpleObject = {
   name: 'Alice',
   balance: 1000,
   active: true,
-}
+};
 
-const encoded = encodeMsgpack(simpleObject)
-printInfo('Input object:')
-printInfo(`  { name: 'Alice', balance: 1000, active: true }`)
-printInfo('')
-printInfo(`Encoded MessagePack (${encoded.length} bytes):`)
-printInfo(`  ${formatHex(encoded)}`)
-printInfo(`  Raw bytes: ${formatBytes(encoded)}`)
-printSuccess('Object encoded to MessagePack binary format')
+const encoded = encodeMsgpack(simpleObject);
+printInfo('Input object:');
+printInfo(`  { name: 'Alice', balance: 1000, active: true }`);
+printInfo('');
+printInfo(`Encoded MessagePack (${encoded.length} bytes):`);
+printInfo(`  ${formatHex(encoded)}`);
+printInfo(`  Raw bytes: ${formatBytes(encoded)}`);
+printSuccess('Object encoded to MessagePack binary format');
 
 // ============================================================================
 // Step 2: MessagePack Decoding - Returns a Map
 // ============================================================================
-printStep(2, 'MessagePack Decoding - Returns a Map')
+printStep(2, 'MessagePack Decoding - Returns a Map');
 
-printInfo('decodeMsgpack() decodes binary bytes back to data')
-printInfo('IMPORTANT: By default, objects are returned as Map (not plain objects)')
-printInfo('Keys are Uint8Array by default (for Algorand binary key support)')
-printInfo('')
+printInfo('decodeMsgpack() decodes binary bytes back to data');
+printInfo('IMPORTANT: By default, objects are returned as Map (not plain objects)');
+printInfo('Keys are Uint8Array by default (for Algorand binary key support)');
+printInfo('');
 
-const decoded = decodeMsgpack(encoded)
+const decoded = decodeMsgpack(encoded);
 
-printInfo(`Decoded type: ${decoded.constructor.name}`)
-printInfo(`Is Map: ${decoded instanceof Map}`)
-printInfo('')
-printInfo('Decoded Map entries:')
+printInfo(`Decoded type: ${decoded.constructor.name}`);
+printInfo(`Is Map: ${decoded instanceof Map}`);
+printInfo('');
+printInfo('Decoded Map entries:');
 for (const [key, value] of decoded) {
-  const keyStr = keyToString(key)
-  const valueStr = value instanceof Uint8Array ? `"${new TextDecoder().decode(value)}"` : String(value)
-  printInfo(`  "${keyStr}" => ${valueStr} (${value instanceof Uint8Array ? 'Uint8Array' : typeof value})`)
+  const keyStr = keyToString(key);
+  const valueStr =
+    value instanceof Uint8Array ? `"${new TextDecoder().decode(value)}"` : String(value);
+  printInfo(
+    `  "${keyStr}" => ${valueStr} (${value instanceof Uint8Array ? 'Uint8Array' : typeof value})`,
+  );
 }
-printInfo('')
+printInfo('');
 
 // Access values using helper
-printInfo('Accessing values from decoded Map:')
-printInfo(`  name:    ${new TextDecoder().decode(getByStringKey(decoded, 'name') as Uint8Array)}`)
-printInfo(`  balance: ${getByStringKey(decoded, 'balance')}`)
-printInfo(`  active:  ${getByStringKey(decoded, 'active')}`)
-printInfo('')
-printSuccess('decodeMsgpack() returns Map with Uint8Array keys for object data')
+printInfo('Accessing values from decoded Map:');
+printInfo(`  name:    ${new TextDecoder().decode(getByStringKey(decoded, 'name') as Uint8Array)}`);
+printInfo(`  balance: ${getByStringKey(decoded, 'balance')}`);
+printInfo(`  active:  ${getByStringKey(decoded, 'active')}`);
+printInfo('');
+printSuccess('decodeMsgpack() returns Map with Uint8Array keys for object data');
 
 // ============================================================================
 // Step 3: Key Sorting (Canonical Encoding)
 // ============================================================================
-printStep(3, 'Key Sorting (Canonical Encoding)')
+printStep(3, 'Key Sorting (Canonical Encoding)');
 
-printInfo('encodeMsgpack() sorts keys alphabetically for canonical encoding')
-printInfo('This ensures consistent encoding regardless of property order')
-printInfo('')
+printInfo('encodeMsgpack() sorts keys alphabetically for canonical encoding');
+printInfo('This ensures consistent encoding regardless of property order');
+printInfo('');
 
 // Create object with keys in non-alphabetical order
 const unorderedObject = {
   zebra: 3,
   apple: 1,
   mango: 2,
-}
+};
 
-printInfo('Input object (keys in non-alphabetical order):')
-printInfo('  { zebra: 3, apple: 1, mango: 2 }')
-printInfo('')
+printInfo('Input object (keys in non-alphabetical order):');
+printInfo('  { zebra: 3, apple: 1, mango: 2 }');
+printInfo('');
 
-const encodedUnordered = encodeMsgpack(unorderedObject)
-const decodedUnordered = decodeMsgpack(encodedUnordered)
+const encodedUnordered = encodeMsgpack(unorderedObject);
+const decodedUnordered = decodeMsgpack(encodedUnordered);
 
-printInfo('Decoded Map key order:')
-const keys = Array.from(decodedUnordered.keys() as Iterable<number | bigint | Uint8Array>).map((k) => keyToString(k))
-printInfo(`  Keys: [${keys.map((k) => `"${k}"`).join(', ')}]`)
-printInfo('')
+printInfo('Decoded Map key order:');
+const keys = Array.from(decodedUnordered.keys() as Iterable<number | bigint | Uint8Array>).map(k =>
+  keyToString(k),
+);
+printInfo(`  Keys: [${keys.map(k => `"${k}"`).join(', ')}]`);
+printInfo('');
 
 // Verify alphabetical order
-const isAlphabetical = keys.every((key, i) => i === 0 || keys[i - 1] <= key)
+const isAlphabetical = keys.every((key, i) => i === 0 || keys[i - 1] <= key);
 if (isAlphabetical) {
-  printSuccess('Keys are encoded in alphabetical order (canonical)')
+  printSuccess('Keys are encoded in alphabetical order (canonical)');
 }
 
 // Show that different input orders produce same encoding
@@ -180,51 +198,53 @@ const reorderedObject = {
   apple: 1,
   mango: 2,
   zebra: 3,
-}
-const encodedReordered = encodeMsgpack(reorderedObject)
+};
+const encodedReordered = encodeMsgpack(reorderedObject);
 
-printInfo('')
-printInfo('Same data, different key order in source:')
-printInfo(`  Original encoding:  ${formatHex(encodedUnordered)}`)
-printInfo(`  Reordered encoding: ${formatHex(encodedReordered)}`)
+printInfo('');
+printInfo('Same data, different key order in source:');
+printInfo(`  Original encoding:  ${formatHex(encodedUnordered)}`);
+printInfo(`  Reordered encoding: ${formatHex(encodedReordered)}`);
 
-const encodingsMatch = arrayEqual(encodedUnordered, encodedReordered)
+const encodingsMatch = arrayEqual(encodedUnordered, encodedReordered);
 if (encodingsMatch) {
-  printSuccess('Identical encoding regardless of source key order')
+  printSuccess('Identical encoding regardless of source key order');
 }
 
 // ============================================================================
 // Step 4: Encoding Various Types
 // ============================================================================
-printStep(4, 'Encoding Various Types')
+printStep(4, 'Encoding Various Types');
 
-printInfo('MessagePack supports various JavaScript types:')
-printInfo('')
+printInfo('MessagePack supports various JavaScript types:');
+printInfo('');
 
 // Strings
-const stringData = { message: 'Hello, Algorand!' }
-const encodedString = encodeMsgpack(stringData)
-printInfo(`String:  "Hello, Algorand!" → ${encodedString.length} bytes`)
+const stringData = { message: 'Hello, Algorand!' };
+const encodedString = encodeMsgpack(stringData);
+printInfo(`String:  "Hello, Algorand!" → ${encodedString.length} bytes`);
 
 // Numbers
-const numberData = { small: 42, medium: 1000000, large: 4294967295 }
-const encodedNumbers = encodeMsgpack(numberData)
-printInfo(`Numbers: { small: 42, medium: 1000000, large: 4294967295 } → ${encodedNumbers.length} bytes`)
+const numberData = { small: 42, medium: 1000000, large: 4294967295 };
+const encodedNumbers = encodeMsgpack(numberData);
+printInfo(
+  `Numbers: { small: 42, medium: 1000000, large: 4294967295 } → ${encodedNumbers.length} bytes`,
+);
 
 // Boolean
-const boolData = { enabled: true, disabled: false }
-const encodedBool = encodeMsgpack(boolData)
-printInfo(`Boolean: { enabled: true, disabled: false } → ${encodedBool.length} bytes`)
+const boolData = { enabled: true, disabled: false };
+const encodedBool = encodeMsgpack(boolData);
+printInfo(`Boolean: { enabled: true, disabled: false } → ${encodedBool.length} bytes`);
 
 // Array
-const arrayData = { items: [1, 2, 3, 'four', true] }
-const encodedArray = encodeMsgpack(arrayData)
-printInfo(`Array:   { items: [1, 2, 3, 'four', true] } → ${encodedArray.length} bytes`)
+const arrayData = { items: [1, 2, 3, 'four', true] };
+const encodedArray = encodeMsgpack(arrayData);
+printInfo(`Array:   { items: [1, 2, 3, 'four', true] } → ${encodedArray.length} bytes`);
 
 // Null
-const nullData = { value: null }
-const encodedNull = encodeMsgpack(nullData)
-printInfo(`Null:    { value: null } → ${encodedNull.length} bytes`)
+const nullData = { value: null };
+const encodedNull = encodeMsgpack(nullData);
+printInfo(`Null:    { value: null } → ${encodedNull.length} bytes`);
 
 // Nested object
 const nestedData = {
@@ -233,105 +253,109 @@ const nestedData = {
       value: 'deep',
     },
   },
-}
-const encodedNested = encodeMsgpack(nestedData)
-printInfo(`Nested:  { level1: { level2: { value: 'deep' } } } → ${encodedNested.length} bytes`)
+};
+const encodedNested = encodeMsgpack(nestedData);
+printInfo(`Nested:  { level1: { level2: { value: 'deep' } } } → ${encodedNested.length} bytes`);
 
-printInfo('')
-printSuccess('All common JavaScript types encoded successfully')
+printInfo('');
+printSuccess('All common JavaScript types encoded successfully');
 
 // ============================================================================
 // Step 5: BigInt Value Encoding/Decoding
 // ============================================================================
-printStep(5, 'BigInt Value Encoding/Decoding')
+printStep(5, 'BigInt Value Encoding/Decoding');
 
-printInfo('MessagePack can encode BigInt values for large numbers')
-printInfo('This is essential for Algorand which uses uint64 values')
-printInfo('')
+printInfo('MessagePack can encode BigInt values for large numbers');
+printInfo('This is essential for Algorand which uses uint64 values');
+printInfo('');
 
 // Values that exceed Number.MAX_SAFE_INTEGER
 const bigIntData = {
   normalNumber: 1000000,
   bigNumber: 9007199254740993n, // MAX_SAFE_INTEGER + 2
   maxUint64: 18446744073709551615n, // 2^64 - 1
-}
+};
 
-printInfo('Input with BigInt values:')
-printInfo(`  normalNumber: ${bigIntData.normalNumber}`)
-printInfo(`  bigNumber:    ${bigIntData.bigNumber}n (> MAX_SAFE_INTEGER)`)
-printInfo(`  maxUint64:    ${bigIntData.maxUint64}n (2^64 - 1)`)
-printInfo('')
+printInfo('Input with BigInt values:');
+printInfo(`  normalNumber: ${bigIntData.normalNumber}`);
+printInfo(`  bigNumber:    ${bigIntData.bigNumber}n (> MAX_SAFE_INTEGER)`);
+printInfo(`  maxUint64:    ${bigIntData.maxUint64}n (2^64 - 1)`);
+printInfo('');
 
-const encodedBigInt = encodeMsgpack(bigIntData)
-printInfo(`Encoded to ${encodedBigInt.length} bytes:`)
-printInfo(`  ${formatHex(encodedBigInt)}`)
-printInfo('')
+const encodedBigInt = encodeMsgpack(bigIntData);
+printInfo(`Encoded to ${encodedBigInt.length} bytes:`);
+printInfo(`  ${formatHex(encodedBigInt)}`);
+printInfo('');
 
-const decodedBigInt = decodeMsgpack(encodedBigInt)
-const normalNum = getByStringKey(decodedBigInt, 'normalNumber')
-const bigNum = getByStringKey(decodedBigInt, 'bigNumber')
-const maxU64 = getByStringKey(decodedBigInt, 'maxUint64')
+const decodedBigInt = decodeMsgpack(encodedBigInt);
+const normalNum = getByStringKey(decodedBigInt, 'normalNumber');
+const bigNum = getByStringKey(decodedBigInt, 'bigNumber');
+const maxU64 = getByStringKey(decodedBigInt, 'maxUint64');
 
-printInfo('Decoded values:')
-printInfo(`  normalNumber: ${normalNum} (type: ${typeof normalNum})`)
-printInfo(`  bigNumber:    ${bigNum} (type: ${typeof bigNum})`)
-printInfo(`  maxUint64:    ${maxU64} (type: ${typeof maxU64})`)
-printInfo('')
+printInfo('Decoded values:');
+printInfo(`  normalNumber: ${normalNum} (type: ${typeof normalNum})`);
+printInfo(`  bigNumber:    ${bigNum} (type: ${typeof bigNum})`);
+printInfo(`  maxUint64:    ${maxU64} (type: ${typeof maxU64})`);
+printInfo('');
 
 // Verify bigint preservation
 if (maxU64 === bigIntData.maxUint64) {
-  printSuccess('BigInt values preserved through encode/decode cycle')
+  printSuccess('BigInt values preserved through encode/decode cycle');
 }
 
 // ============================================================================
 // Step 6: Uint8Array (Bytes) Encoding
 // ============================================================================
-printStep(6, 'Uint8Array (Bytes) Encoding')
+printStep(6, 'Uint8Array (Bytes) Encoding');
 
-printInfo('Algorand uses Uint8Array for binary data (addresses, keys, etc.)')
-printInfo('MessagePack has native support for binary (bytes) type')
-printInfo('')
+printInfo('Algorand uses Uint8Array for binary data (addresses, keys, etc.)');
+printInfo('MessagePack has native support for binary (bytes) type');
+printInfo('');
 
 // Create sample byte arrays
-const sampleBytes = new Uint8Array([0x01, 0x02, 0x03, 0x04, 0x05])
-const addressBytes = new Uint8Array(32).fill(0xab) // Simulated 32-byte public key
+const sampleBytes = new Uint8Array([0x01, 0x02, 0x03, 0x04, 0x05]);
+const addressBytes = new Uint8Array(32).fill(0xab); // Simulated 32-byte public key
 
 const bytesData = {
   shortBytes: sampleBytes,
   addressKey: addressBytes,
-}
+};
 
-printInfo('Input with Uint8Array values:')
-printInfo(`  shortBytes:  ${formatHex(sampleBytes)} (${sampleBytes.length} bytes)`)
-printInfo(`  addressKey:  ${formatHex(addressBytes.slice(0, 8))}... (${addressBytes.length} bytes)`)
-printInfo('')
+printInfo('Input with Uint8Array values:');
+printInfo(`  shortBytes:  ${formatHex(sampleBytes)} (${sampleBytes.length} bytes)`);
+printInfo(
+  `  addressKey:  ${formatHex(addressBytes.slice(0, 8))}... (${addressBytes.length} bytes)`,
+);
+printInfo('');
 
-const encodedBytes = encodeMsgpack(bytesData)
-printInfo(`Encoded to ${encodedBytes.length} bytes`)
-printInfo('')
+const encodedBytes = encodeMsgpack(bytesData);
+printInfo(`Encoded to ${encodedBytes.length} bytes`);
+printInfo('');
 
-const decodedBytes = decodeMsgpack(encodedBytes)
-const decodedShort = getByStringKey(decodedBytes, 'shortBytes') as Uint8Array
-const decodedAddress = getByStringKey(decodedBytes, 'addressKey') as Uint8Array
+const decodedBytes = decodeMsgpack(encodedBytes);
+const decodedShort = getByStringKey(decodedBytes, 'shortBytes') as Uint8Array;
+const decodedAddress = getByStringKey(decodedBytes, 'addressKey') as Uint8Array;
 
-printInfo('Decoded values:')
-printInfo(`  shortBytes:  ${formatHex(decodedShort)} (${decodedShort.length} bytes)`)
-printInfo(`  addressKey:  ${formatHex(decodedAddress.slice(0, 8))}... (${decodedAddress.length} bytes)`)
-printInfo('')
+printInfo('Decoded values:');
+printInfo(`  shortBytes:  ${formatHex(decodedShort)} (${decodedShort.length} bytes)`);
+printInfo(
+  `  addressKey:  ${formatHex(decodedAddress.slice(0, 8))}... (${decodedAddress.length} bytes)`,
+);
+printInfo('');
 
 // Verify bytes match
-const bytesMatch = arrayEqual(sampleBytes, decodedShort)
+const bytesMatch = arrayEqual(sampleBytes, decodedShort);
 if (bytesMatch) {
-  printSuccess('Uint8Array values preserved through encode/decode cycle')
+  printSuccess('Uint8Array values preserved through encode/decode cycle');
 }
 
 // ============================================================================
 // Step 7: MessagePack vs JSON Size Comparison
 // ============================================================================
-printStep(7, 'MessagePack vs JSON Size Comparison')
+printStep(7, 'MessagePack vs JSON Size Comparison');
 
-printInfo('MessagePack typically produces smaller output than JSON')
-printInfo('')
+printInfo('MessagePack typically produces smaller output than JSON');
+printInfo('');
 
 // Test data representative of Algorand transaction fields
 const transactionLike = {
@@ -343,105 +367,112 @@ const transactionLike = {
   firstValid: 10000000,
   lastValid: 10001000,
   note: 'Payment for services',
-}
+};
 
-const msgpackSize = encodeMsgpack(transactionLike).length
-const jsonSize = stringifyJson(transactionLike).length
+const msgpackSize = encodeMsgpack(transactionLike).length;
+const jsonSize = stringifyJson(transactionLike).length;
 
-printInfo('Transaction-like data:')
-printInfo(`  MessagePack size: ${msgpackSize} bytes`)
-printInfo(`  JSON size:        ${jsonSize} bytes`)
-printInfo(`  Space saved:      ${jsonSize - msgpackSize} bytes (${((1 - msgpackSize / jsonSize) * 100).toFixed(1)}%)`)
-printInfo('')
+printInfo('Transaction-like data:');
+printInfo(`  MessagePack size: ${msgpackSize} bytes`);
+printInfo(`  JSON size:        ${jsonSize} bytes`);
+printInfo(
+  `  Space saved:      ${jsonSize - msgpackSize} bytes (${((1 - msgpackSize / jsonSize) * 100).toFixed(1)}%)`,
+);
+printInfo('');
 
 // Another comparison with numeric data
 const numericData = {
   values: [1, 10, 100, 1000, 10000, 100000, 1000000],
   metadata: { count: 7, sum: 1111111 },
-}
+};
 
-const numericMsgpack = encodeMsgpack(numericData).length
-const numericJson = stringifyJson(numericData).length
+const numericMsgpack = encodeMsgpack(numericData).length;
+const numericJson = stringifyJson(numericData).length;
 
-printInfo('Numeric-heavy data:')
-printInfo(`  MessagePack size: ${numericMsgpack} bytes`)
-printInfo(`  JSON size:        ${numericJson} bytes`)
-printInfo(`  Space saved:      ${numericJson - numericMsgpack} bytes (${((1 - numericMsgpack / numericJson) * 100).toFixed(1)}%)`)
-printInfo('')
+printInfo('Numeric-heavy data:');
+printInfo(`  MessagePack size: ${numericMsgpack} bytes`);
+printInfo(`  JSON size:        ${numericJson} bytes`);
+printInfo(
+  `  Space saved:      ${numericJson - numericMsgpack} bytes (${((1 - numericMsgpack / numericJson) * 100).toFixed(1)}%)`,
+);
+printInfo('');
 
-printSuccess('MessagePack provides significant space savings over JSON')
+printSuccess('MessagePack provides significant space savings over JSON');
 
 // ============================================================================
 // Step 8: Working with Decoded Map Data
 // ============================================================================
-printStep(8, 'Working with Decoded Map Data')
+printStep(8, 'Working with Decoded Map Data');
 
-printInfo('Since decodeMsgpack() returns a Map with Uint8Array keys,')
-printInfo('you need to match keys by byte content, not reference.')
-printInfo('')
+printInfo('Since decodeMsgpack() returns a Map with Uint8Array keys,');
+printInfo('you need to match keys by byte content, not reference.');
+printInfo('');
 
 const sampleData = {
   name: 'TestTx',
   amount: 5000000n,
   tags: ['transfer', 'urgent'],
-}
+};
 
-const encodedSample = encodeMsgpack(sampleData)
-const decodedMap = decodeMsgpack(encodedSample)
+const encodedSample = encodeMsgpack(sampleData);
+const decodedMap = decodeMsgpack(encodedSample);
 
-printInfo('Getting individual values (using helper):')
-printInfo(`  name:   ${new TextDecoder().decode(getByStringKey(decodedMap, 'name') as Uint8Array)}`)
-printInfo(`  amount: ${getByStringKey(decodedMap, 'amount')}`)
-const tags = getByStringKey(decodedMap, 'tags') as Uint8Array[]
-const tagStrings = tags.map((t) => new TextDecoder().decode(t))
-printInfo(`  tags:   [${tagStrings.join(', ')}]`)
-printInfo('')
+printInfo('Getting individual values (using helper):');
+printInfo(
+  `  name:   ${new TextDecoder().decode(getByStringKey(decodedMap, 'name') as Uint8Array)}`,
+);
+printInfo(`  amount: ${getByStringKey(decodedMap, 'amount')}`);
+const tags = getByStringKey(decodedMap, 'tags') as Uint8Array[];
+const tagStrings = tags.map(t => new TextDecoder().decode(t));
+printInfo(`  tags:   [${tagStrings.join(', ')}]`);
+printInfo('');
 
-printInfo('Iterating over entries:')
+printInfo('Iterating over entries:');
 for (const [key, value] of decodedMap) {
-  const keyStr = keyToString(key)
-  let valueStr: string
+  const keyStr = keyToString(key);
+  let valueStr: string;
   if (value instanceof Uint8Array) {
-    valueStr = `"${new TextDecoder().decode(value)}"`
+    valueStr = `"${new TextDecoder().decode(value)}"`;
   } else if (Array.isArray(value)) {
-    const items = value.map((v) => (v instanceof Uint8Array ? new TextDecoder().decode(v) : String(v)))
-    valueStr = `[${items.join(', ')}]`
+    const items = value.map(v =>
+      v instanceof Uint8Array ? new TextDecoder().decode(v) : String(v),
+    );
+    valueStr = `[${items.join(', ')}]`;
   } else {
-    valueStr = String(value)
+    valueStr = String(value);
   }
-  printInfo(`  ${keyStr}: ${valueStr}`)
+  printInfo(`  ${keyStr}: ${valueStr}`);
 }
-printInfo('')
+printInfo('');
 
-printSuccess('Map provides flexible data access patterns')
+printSuccess('Map provides flexible data access patterns');
 
 // ============================================================================
 // Summary
 // ============================================================================
-printStep(9, 'Summary')
+printStep(9, 'Summary');
 
-printInfo('MessagePack encoding/decoding for Algorand:')
-printInfo('')
-printInfo('  encodeMsgpack(data):')
-printInfo('    - Serializes JavaScript objects to binary MessagePack')
-printInfo('    - Keys are sorted alphabetically (canonical encoding)')
-printInfo('    - Supports strings, numbers, BigInt, Uint8Array, arrays, nested objects')
-printInfo('    - Undefined values are ignored')
-printInfo('')
-printInfo('  decodeMsgpack(bytes):')
-printInfo('    - Deserializes MessagePack bytes to JavaScript')
-printInfo('    - Returns Map by default (not plain object)')
-printInfo('    - Keys are Uint8Array by default (rawBinaryStringKeys: true)')
-printInfo('    - Preserves BigInt for large integers')
-printInfo('    - Preserves Uint8Array for binary data')
-printInfo('')
-printInfo('  Use cases:')
-printInfo('    - Algorand transaction encoding')
-printInfo('    - Compact data serialization')
-printInfo('    - Deterministic encoding (same data = same bytes)')
-printInfo('')
-printSuccess('MessagePack Example completed!')
-
+printInfo('MessagePack encoding/decoding for Algorand:');
+printInfo('');
+printInfo('  encodeMsgpack(data):');
+printInfo('    - Serializes JavaScript objects to binary MessagePack');
+printInfo('    - Keys are sorted alphabetically (canonical encoding)');
+printInfo('    - Supports strings, numbers, BigInt, Uint8Array, arrays, nested objects');
+printInfo('    - Undefined values are ignored');
+printInfo('');
+printInfo('  decodeMsgpack(bytes):');
+printInfo('    - Deserializes MessagePack bytes to JavaScript');
+printInfo('    - Returns Map by default (not plain object)');
+printInfo('    - Keys are Uint8Array by default (rawBinaryStringKeys: true)');
+printInfo('    - Preserves BigInt for large integers');
+printInfo('    - Preserves Uint8Array for binary data');
+printInfo('');
+printInfo('  Use cases:');
+printInfo('    - Algorand transaction encoding');
+printInfo('    - Compact data serialization');
+printInfo('    - Deterministic encoding (same data = same bytes)');
+printInfo('');
+printSuccess('MessagePack Example completed!');
 ```
 
 ---

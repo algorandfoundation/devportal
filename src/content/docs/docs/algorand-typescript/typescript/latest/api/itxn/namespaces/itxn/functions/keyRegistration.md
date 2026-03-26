@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "keyRegistration"
+title: 'keyRegistration'
 ---
 
 > **keyRegistration**(`fields`): [`KeyRegistrationItxnParams`](/algorand-typescript/api/itxn/namespaces/itxn/classes/keyregistrationitxnparams/)

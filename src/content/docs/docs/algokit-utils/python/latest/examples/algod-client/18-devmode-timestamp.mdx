@@ -1,6 +1,6 @@
 ---
-title: "DevMode Timestamp Offset"
-description: "This example demonstrates how to manage block timestamp offset in DevMode using:"
+title: 'DevMode Timestamp Offset'
+description: 'This example demonstrates how to manage block timestamp offset in DevMode using:'
 sidebar:
   order: 18
 ---
@@ -10,16 +10,17 @@ sidebar:
 ## Description
 
 This example demonstrates how to manage block timestamp offset in DevMode using:
+
 - block_time_stamp_offset() - Get the current timestamp offset
 - set_block_time_stamp_offset(offset) - Set a new timestamp offset
- In DevMode, you can control the timestamp of blocks by setting an offset. This is useful for testing time-dependent smart contracts without waiting for real time to pass.
- Key concepts:
+  In DevMode, you can control the timestamp of blocks by setting an offset. This is useful for testing time-dependent smart contracts without waiting for real time to pass.
+  Key concepts:
 - Timestamp offset is in seconds
 - Setting offset to 0 resets to using the real clock
 - New blocks will have timestamps = realTime + offset
 - These endpoints only work on DevMode nodes (LocalNet in dev mode)
- Prerequisites:
- Note: These endpoints return HTTP 404 if not running on a DevMode node.
+  Prerequisites:
+  Note: These endpoints return HTTP 404 if not running on a DevMode node.
 
 ## Prerequisites
 

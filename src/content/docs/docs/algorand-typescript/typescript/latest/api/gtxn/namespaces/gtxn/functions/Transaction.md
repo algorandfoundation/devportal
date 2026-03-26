@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "Transaction"
+title: 'Transaction'
 ---
 
 > **Transaction**(`n`): [`Transaction`](/algorand-typescript/api/gtxn/namespaces/gtxn/type-aliases/transaction/)

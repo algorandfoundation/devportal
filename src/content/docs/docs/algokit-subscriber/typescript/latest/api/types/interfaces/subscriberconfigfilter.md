@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "SubscriberConfigFilter"
+title: 'SubscriberConfigFilter'
 ---
 
 Defined in: [src/types/subscription.ts:385](https://github.com/algorandfoundation/algokit-subscriber-ts/blob/main/src/types/subscription.ts#L385)
@@ -33,7 +33,7 @@ The filter itself.
 
 [`NamedTransactionFilter`](/docs/algokit-subscriber/typescript/latest/api/types/interfaces/namedtransactionfilter/).[`filter`](/docs/algokit-subscriber/typescript/latest/api/types/interfaces/namedtransactionfilter/#filter)
 
-***
+---
 
 ### mapper()?
 
@@ -57,7 +57,7 @@ Note: if you provide multiple filters with the same name then only the mapper of
 
 `Promise`\<`T`[]\>
 
-***
+---
 
 ### name
 

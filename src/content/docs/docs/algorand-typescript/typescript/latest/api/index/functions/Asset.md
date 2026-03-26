@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "Asset"
+title: 'Asset'
 ---
 
 ## Call Signature

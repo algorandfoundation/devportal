@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "encodeLease"
+title: 'encodeLease'
 ---
 
 > **encodeLease**(`lease?`): `Uint8Array`\<`ArrayBufferLike`\> \| `undefined`
@@ -32,9 +32,9 @@ if the length of the data is > 32 bytes or empty
 ## Examples
 
 ```ts
-algokit.encodeLease('UNIQUE_ID')
+algokit.encodeLease('UNIQUE_ID');
 ```
 
 ```ts
-algokit.encodeLease(new Uint8Array([1, 2, 3]))
+algokit.encodeLease(new Uint8Array([1, 2, 3]));
 ```

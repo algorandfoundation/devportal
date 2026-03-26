@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "SignedTransactionMeta"
+title: 'SignedTransactionMeta'
 ---
 
 > `const` **SignedTransactionMeta**: `ObjectModelMetadata`\<[`SignedTransaction`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/type-aliases/signedtransaction/)\>

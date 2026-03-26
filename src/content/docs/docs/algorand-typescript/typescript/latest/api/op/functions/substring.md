@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "substring"
+title: 'substring'
 ---
 
 > **substring**(`a`, `b`, `c`): [`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)

@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "getStructValueFromTupleValue"
+title: 'getStructValueFromTupleValue'
 ---
 
 > **getStructValueFromTupleValue**(`structType`, `tupleValue`): `ABIStructValue`

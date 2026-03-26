@@ -1,6 +1,6 @@
 ---
-title: "Key Import and Export"
-description: "This example demonstrates how to import and export keys using the KMD `importKey()` and `exportKey()` methods."
+title: 'Key Import and Export'
+description: 'This example demonstrates how to import and export keys using the KMD `importKey()` and `exportKey()` methods.'
 sidebar:
   order: 5
 ---
@@ -10,7 +10,8 @@ sidebar:
 ## Description
 
 This example demonstrates how to import and export keys using the KMD `importKey()` and `exportKey()` methods.
- Key concepts:
+Key concepts:
+
 - Importing externally generated keys into a wallet
 - Exporting private keys from a wallet
 - Understanding that imported keys are NOT backed up by the master derivation key
@@ -55,7 +56,7 @@ npm run example kmd_client/05-key-import-export.ts
  * - exportKey() - Export a private key from the wallet
  */
 
-import nacl from 'tweetnacl'
+import nacl from 'tweetnacl';
 import {
   cleanupTestWallet,
   createKmdClient,
@@ -65,226 +66,227 @@ import {
   printInfo,
   printStep,
   printSuccess,
-} from '../shared/utils.js'
+} from '../shared/utils.js';
 
 /**
  * Format a byte array for display, showing first and last few bytes for security
  */
 function formatBytesForDisplay(bytes: Uint8Array, showFirst = 4, showLast = 4): string {
-  const hex = Buffer.from(bytes).toString('hex')
+  const hex = Buffer.from(bytes).toString('hex');
   if (bytes.length <= showFirst + showLast) {
-    return hex
+    return hex;
   }
-  const firstBytes = hex.slice(0, showFirst * 2)
-  const lastBytes = hex.slice(-(showLast * 2))
-  return `${firstBytes}...${lastBytes}`
+  const firstBytes = hex.slice(0, showFirst * 2);
+  const lastBytes = hex.slice(-(showLast * 2));
+  return `${firstBytes}...${lastBytes}`;
 }
 
 /**
  * Compare two Uint8Arrays for equality
  */
 function arraysEqual(a: Uint8Array, b: Uint8Array): boolean {
-  if (a.length !== b.length) return false
+  if (a.length !== b.length) return false;
   for (let i = 0; i < a.length; i++) {
-    if (a[i] !== b[i]) return false
+    if (a[i] !== b[i]) return false;
   }
-  return true
+  return true;
 }
 
 async function main() {
-  printHeader('KMD Key Import and Export Example')
+  printHeader('KMD Key Import and Export Example');
 
-  const kmd = createKmdClient()
-  let walletHandleToken = ''
-  const walletPassword = 'test-password'
+  const kmd = createKmdClient();
+  let walletHandleToken = '';
+  const walletPassword = 'test-password';
 
   try {
     // =========================================================================
     // Step 1: Create a Test Wallet
     // =========================================================================
-    printStep(1, 'Creating a test wallet for key import/export')
+    printStep(1, 'Creating a test wallet for key import/export');
 
-    const testWallet = await createTestWallet(kmd, walletPassword)
-    walletHandleToken = testWallet.walletHandleToken
+    const testWallet = await createTestWallet(kmd, walletPassword);
+    walletHandleToken = testWallet.walletHandleToken;
 
-    printSuccess(`Test wallet created: ${testWallet.walletName}`)
-    printInfo(`Wallet ID: ${testWallet.walletId}`)
+    printSuccess(`Test wallet created: ${testWallet.walletName}`);
+    printInfo(`Wallet ID: ${testWallet.walletId}`);
 
     // =========================================================================
     // Step 2: Create a Random Account Using nacl
     // =========================================================================
-    printStep(2, 'Creating a random account to get a private key')
+    printStep(2, 'Creating a random account to get a private key');
 
     // Generate a random ed25519 keypair using tweetnacl
     // - publicKey: 32 bytes (used to derive the Algorand address)
     // - secretKey: 64 bytes (the private key used for signing)
-    const keypair = nacl.sign.keyPair()
-    const originalPrivateKey = keypair.secretKey
+    const keypair = nacl.sign.keyPair();
+    const originalPrivateKey = keypair.secretKey;
 
-    printSuccess('Random keypair generated!')
-    printInfo('')
-    printInfo('Keypair details:')
-    printInfo(`  Public key (32 bytes): ${formatBytesForDisplay(keypair.publicKey)}`)
-    printInfo(`  Private key (64 bytes): ${formatBytesForDisplay(originalPrivateKey)}`)
-    printInfo('')
-    printInfo('Note: The ed25519 private key is 64 bytes because it contains')
-    printInfo('      both the 32-byte private seed AND the 32-byte public key.')
+    printSuccess('Random keypair generated!');
+    printInfo('');
+    printInfo('Keypair details:');
+    printInfo(`  Public key (32 bytes): ${formatBytesForDisplay(keypair.publicKey)}`);
+    printInfo(`  Private key (64 bytes): ${formatBytesForDisplay(originalPrivateKey)}`);
+    printInfo('');
+    printInfo('Note: The ed25519 private key is 64 bytes because it contains');
+    printInfo('      both the 32-byte private seed AND the 32-byte public key.');
 
     // =========================================================================
     // Step 3: Import the Private Key into the Wallet
     // =========================================================================
-    printStep(3, 'Importing the private key with importKey()')
+    printStep(3, 'Importing the private key with importKey()');
 
     const importResult = await kmd.importKey({
       walletHandleToken,
       privateKey: originalPrivateKey,
-    })
+    });
 
-    printSuccess('Key imported successfully!')
-    printInfo('')
-    printInfo('ImportKeyResponse fields:')
-    printInfo(`  address: ${importResult.address}`)
-    printInfo('')
-    printInfo('The imported address is derived from the public key portion')
-    printInfo('of the private key that was imported.')
+    printSuccess('Key imported successfully!');
+    printInfo('');
+    printInfo('ImportKeyResponse fields:');
+    printInfo(`  address: ${importResult.address}`);
+    printInfo('');
+    printInfo('The imported address is derived from the public key portion');
+    printInfo('of the private key that was imported.');
 
-    const importedAddress = importResult.address
+    const importedAddress = importResult.address;
 
     // =========================================================================
     // Step 4: Verify the Key is in the Wallet
     // =========================================================================
-    printStep(4, 'Verifying the key is in the wallet')
+    printStep(4, 'Verifying the key is in the wallet');
 
     const listResult = await kmd.listKeysInWallet({
       walletHandleToken,
-    })
+    });
 
-    const keyFound = listResult.addresses.some((addr) => addr.toString() === importedAddress.toString())
+    const keyFound = listResult.addresses.some(
+      addr => addr.toString() === importedAddress.toString(),
+    );
 
     if (keyFound) {
-      printSuccess('Imported key found in wallet!')
+      printSuccess('Imported key found in wallet!');
     } else {
-      printError('Imported key not found in wallet list')
+      printError('Imported key not found in wallet list');
     }
 
-    printInfo(`Wallet contains ${listResult.addresses.length} key(s)`)
+    printInfo(`Wallet contains ${listResult.addresses.length} key(s)`);
 
     // =========================================================================
     // Step 5: Export the Private Key
     // =========================================================================
-    printStep(5, 'Exporting the private key with exportKey()')
+    printStep(5, 'Exporting the private key with exportKey()');
 
     const exportResult = await kmd.exportKey({
       walletHandleToken,
       address: importedAddress,
       walletPassword,
-    })
+    });
 
-    const exportedPrivateKey = exportResult.privateKey
+    const exportedPrivateKey = exportResult.privateKey;
 
-    printSuccess('Key exported successfully!')
-    printInfo('')
-    printInfo('ExportKeyResponse fields:')
-    printInfo(`  privateKey (64 bytes): ${formatBytesForDisplay(exportedPrivateKey)}`)
-    printInfo('')
-    printInfo('Note: Exporting private keys requires the wallet password for security.')
+    printSuccess('Key exported successfully!');
+    printInfo('');
+    printInfo('ExportKeyResponse fields:');
+    printInfo(`  privateKey (64 bytes): ${formatBytesForDisplay(exportedPrivateKey)}`);
+    printInfo('');
+    printInfo('Note: Exporting private keys requires the wallet password for security.');
 
     // =========================================================================
     // Step 6: Verify the Exported Key Matches the Original
     // =========================================================================
-    printStep(6, 'Verifying the exported key matches the original')
+    printStep(6, 'Verifying the exported key matches the original');
 
-    const keysMatch = arraysEqual(originalPrivateKey, exportedPrivateKey)
+    const keysMatch = arraysEqual(originalPrivateKey, exportedPrivateKey);
 
     if (keysMatch) {
-      printSuccess('Exported key matches the original key!')
-      printInfo('')
-      printInfo('Verification details:')
-      printInfo(`  Original key length:  ${originalPrivateKey.length} bytes`)
-      printInfo(`  Exported key length:  ${exportedPrivateKey.length} bytes`)
-      printInfo(`  Keys are identical:   true`)
+      printSuccess('Exported key matches the original key!');
+      printInfo('');
+      printInfo('Verification details:');
+      printInfo(`  Original key length:  ${originalPrivateKey.length} bytes`);
+      printInfo(`  Exported key length:  ${exportedPrivateKey.length} bytes`);
+      printInfo(`  Keys are identical:   true`);
     } else {
-      printError('Keys do not match!')
-      printInfo('')
-      printInfo(`Original key: ${formatBytesForDisplay(originalPrivateKey)}`)
-      printInfo(`Exported key: ${formatBytesForDisplay(exportedPrivateKey)}`)
+      printError('Keys do not match!');
+      printInfo('');
+      printInfo(`Original key: ${formatBytesForDisplay(originalPrivateKey)}`);
+      printInfo(`Exported key: ${formatBytesForDisplay(exportedPrivateKey)}`);
     }
 
     // =========================================================================
     // Important Note About Imported Keys
     // =========================================================================
-    printStep(7, 'Important note about imported keys')
+    printStep(7, 'Important note about imported keys');
 
-    printInfo('')
-    printInfo('IMPORTANT: Imported keys are NOT backed up by the master derivation key!')
-    printInfo('')
-    printInfo('When you import a key:')
-    printInfo('  - The key is stored in the wallet database')
-    printInfo('  - It can be used for signing transactions')
-    printInfo('  - It can be exported using exportKey()')
-    printInfo('')
-    printInfo('However, imported keys CANNOT be recovered by:')
-    printInfo('  - Restoring the wallet from its mnemonic/MDK')
-    printInfo('  - Using generateKey() (which only regenerates derived keys)')
-    printInfo('')
-    printInfo('To backup imported keys, you must either:')
-    printInfo('  1. Export the key and store it securely')
-    printInfo('  2. Backup the entire wallet database file')
+    printInfo('');
+    printInfo('IMPORTANT: Imported keys are NOT backed up by the master derivation key!');
+    printInfo('');
+    printInfo('When you import a key:');
+    printInfo('  - The key is stored in the wallet database');
+    printInfo('  - It can be used for signing transactions');
+    printInfo('  - It can be exported using exportKey()');
+    printInfo('');
+    printInfo('However, imported keys CANNOT be recovered by:');
+    printInfo('  - Restoring the wallet from its mnemonic/MDK');
+    printInfo('  - Using generateKey() (which only regenerates derived keys)');
+    printInfo('');
+    printInfo('To backup imported keys, you must either:');
+    printInfo('  1. Export the key and store it securely');
+    printInfo('  2. Backup the entire wallet database file');
 
     // =========================================================================
     // Cleanup
     // =========================================================================
-    printStep(8, 'Cleaning up test wallet')
+    printStep(8, 'Cleaning up test wallet');
 
-    await cleanupTestWallet(kmd, walletHandleToken)
-    walletHandleToken = '' // Mark as cleaned up
+    await cleanupTestWallet(kmd, walletHandleToken);
+    walletHandleToken = ''; // Mark as cleaned up
 
-    printSuccess('Test wallet handle released')
+    printSuccess('Test wallet handle released');
 
     // =========================================================================
     // Summary
     // =========================================================================
-    printHeader('Summary')
-    printInfo('This example demonstrated key import and export in KMD:')
-    printInfo('')
-    printInfo('  1. importKey()  - Import an external private key into a wallet')
-    printInfo('     Parameters:  walletHandleToken, privateKey (64-byte Uint8Array)')
-    printInfo('     Returns:     address of the imported key')
-    printInfo('')
-    printInfo('  2. exportKey()  - Export a private key from a wallet')
-    printInfo('     Parameters:  walletHandleToken, address, walletPassword')
-    printInfo('     Returns:     privateKey (64-byte Uint8Array)')
-    printInfo('')
-    printInfo('Key takeaways:')
-    printInfo('  - Private keys are 64 bytes (32-byte seed + 32-byte public key)')
-    printInfo('  - Importing returns the corresponding Algorand address')
-    printInfo('  - Exporting requires the wallet password for security')
-    printInfo('  - Imported keys are NOT protected by the wallet mnemonic/MDK')
-    printInfo('  - Always backup imported keys separately!')
-    printInfo('')
-    printInfo('Note: The test wallet remains in KMD (wallets cannot be deleted via API).')
+    printHeader('Summary');
+    printInfo('This example demonstrated key import and export in KMD:');
+    printInfo('');
+    printInfo('  1. importKey()  - Import an external private key into a wallet');
+    printInfo('     Parameters:  walletHandleToken, privateKey (64-byte Uint8Array)');
+    printInfo('     Returns:     address of the imported key');
+    printInfo('');
+    printInfo('  2. exportKey()  - Export a private key from a wallet');
+    printInfo('     Parameters:  walletHandleToken, address, walletPassword');
+    printInfo('     Returns:     privateKey (64-byte Uint8Array)');
+    printInfo('');
+    printInfo('Key takeaways:');
+    printInfo('  - Private keys are 64 bytes (32-byte seed + 32-byte public key)');
+    printInfo('  - Importing returns the corresponding Algorand address');
+    printInfo('  - Exporting requires the wallet password for security');
+    printInfo('  - Imported keys are NOT protected by the wallet mnemonic/MDK');
+    printInfo('  - Always backup imported keys separately!');
+    printInfo('');
+    printInfo('Note: The test wallet remains in KMD (wallets cannot be deleted via API).');
   } catch (error) {
-    printError(`Error: ${error instanceof Error ? error.message : String(error)}`)
-    printInfo('')
-    printInfo('Troubleshooting:')
-    printInfo('  - Ensure LocalNet is running: algokit localnet start')
-    printInfo('  - If LocalNet issues occur: algokit localnet reset')
-    printInfo('  - Check that KMD is accessible on port 4002')
+    printError(`Error: ${error instanceof Error ? error.message : String(error)}`);
+    printInfo('');
+    printInfo('Troubleshooting:');
+    printInfo('  - Ensure LocalNet is running: algokit localnet start');
+    printInfo('  - If LocalNet issues occur: algokit localnet reset');
+    printInfo('  - Check that KMD is accessible on port 4002');
 
     // Cleanup on error
     if (walletHandleToken) {
-      await cleanupTestWallet(kmd, walletHandleToken)
+      await cleanupTestWallet(kmd, walletHandleToken);
     }
 
-    process.exit(1)
+    process.exit(1);
   }
 }
 
-main().catch((error) => {
-  console.error('Fatal error:', error)
-  process.exit(1)
-})
-
+main().catch(error => {
+  console.error('Fatal error:', error);
+  process.exit(1);
+});
 ```
 
 ---

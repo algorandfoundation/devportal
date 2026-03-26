@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "isAVMType"
+title: 'isAVMType'
 ---
 
 > **isAVMType**(`type`): `type is AVMType`

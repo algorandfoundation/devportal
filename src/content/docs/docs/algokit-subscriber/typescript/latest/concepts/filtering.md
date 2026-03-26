@@ -22,7 +22,6 @@ Currently this allows you filter based on any combination (AND logic) of:
 - Account (sender and receiver) e.g. `filter: { sender: "ABCDE..F" }` or `filter: { sender: ["ABCDE..F", "ZYXWV..A"] }` and `filter: { receiver: "12345..6" }` or `filter: { receiver: ["ABCDE..F", "ZYXWV..A"] }`
 - Note prefix e.g. `filter: { notePrefix: "xyz" }`
 - Apps
-
   - ID e.g. `filter: { appId: 54321n }` or `filter: { appId: [54321n, 12345n] }`
   - Creation e.g. `filter: { appCreate: true }`
   - Call on-complete(s) e.g. `filter: { appOnComplete: ApplicationOnComplete.optin }` or `filter: { appOnComplete: [ApplicationOnComplete.optin, ApplicationOnComplete.noop] }`
@@ -30,15 +29,16 @@ Currently this allows you filter based on any combination (AND logic) of:
   - Call arguments e.g.
     ```typescript
     filter: {
-      appCallArgumentsMatch: (appCallArguments) =>
-        appCallArguments.length > 1 && Buffer.from(appCallArguments[1]).toString('utf-8') === 'hello_world'
+      appCallArgumentsMatch: appCallArguments =>
+        appCallArguments.length > 1 &&
+        Buffer.from(appCallArguments[1]).toString('utf-8') === 'hello_world';
     }
     ```
   - Emitted ARC-28 event(s) e.g.
 
     ```typescript
     filter: {
-      arc28Events: [{ groupName: 'group1', eventName: 'MyEvent' }]
+      arc28Events: [{ groupName: 'group1', eventName: 'MyEvent' }];
     }
     ```
 

@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "SignedTransaction"
+title: 'SignedTransaction'
 ---
 
 > **SignedTransaction** = `object`
@@ -21,7 +21,7 @@ Defined in: [packages/transact/src/transactions/signed-transaction.ts:33](https:
 
 Optional auth address applicable if the transaction sender is a rekeyed account.
 
-***
+---
 
 ### lsig?
 
@@ -31,7 +31,7 @@ Defined in: [packages/transact/src/transactions/signed-transaction.ts:28](https:
 
 Optional logic signature for the transaction.
 
-***
+---
 
 ### msig?
 
@@ -41,7 +41,7 @@ Defined in: [packages/transact/src/transactions/signed-transaction.ts:23](https:
 
 Optional multisignature signature for the transaction.
 
-***
+---
 
 ### sig?
 
@@ -51,7 +51,7 @@ Defined in: [packages/transact/src/transactions/signed-transaction.ts:18](https:
 
 Optional Ed25519 signature authorizing the transaction.
 
-***
+---
 
 ### txn
 

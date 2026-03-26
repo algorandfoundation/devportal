@@ -1,6 +1,6 @@
 ---
-title: "ABI Method"
-description: "This example demonstrates how to work with ABI methods:"
+title: 'ABI Method'
+description: 'This example demonstrates how to work with ABI methods:'
 sidebar:
   order: 11
 ---
@@ -10,11 +10,12 @@ sidebar:
 ## Description
 
 This example demonstrates how to work with ABI methods:
+
 - Parsing method signatures with Method.from_signature()
 - Accessing method name, args, and return type
 - Generating 4-byte method selectors with get_selector()
 - Understanding the relationship: selector = first 4 bytes of SHA-512/256(signature)
- ABI method signatures follow the pattern: name(arg1Type,arg2Type,...)returnType Examples: 'transfer(address,uint64)uint64', 'hello(string)string'
+  ABI method signatures follow the pattern: name(arg1Type,arg2Type,...)returnType Examples: 'transfer(address,uint64)uint64', 'hello(string)string'
 
 ## Prerequisites
 

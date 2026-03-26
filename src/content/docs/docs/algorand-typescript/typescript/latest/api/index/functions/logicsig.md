@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "logicsig"
+title: 'logicsig'
 ---
 
 > **logicsig**(`options`): \<`T`\>(`logicSig`) => `T`
@@ -27,7 +27,7 @@ An object containing the configuration options
 
 #### T
 
-`T` *extends* `ConstructorFor`\<[`LogicSig`](/algorand-typescript/api/index/classes/logicsig/)\>
+`T` _extends_ `ConstructorFor`\<[`LogicSig`](/algorand-typescript/api/index/classes/logicsig/)\>
 
 ### Parameters
 

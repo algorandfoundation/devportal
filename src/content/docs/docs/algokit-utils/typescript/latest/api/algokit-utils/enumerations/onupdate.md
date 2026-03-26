@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "OnUpdate"
+title: 'OnUpdate'
 ---
 
 Defined in: [src/app.ts:192](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/app.ts#L192)
@@ -19,7 +19,7 @@ Defined in: [src/app.ts:200](https://github.com/algorandfoundation/algokit-utils
 
 Create a new app
 
-***
+---
 
 ### Fail
 
@@ -29,7 +29,7 @@ Defined in: [src/app.ts:194](https://github.com/algorandfoundation/algokit-utils
 
 Fail the deployment
 
-***
+---
 
 ### ReplaceApp
 
@@ -39,7 +39,7 @@ Defined in: [src/app.ts:198](https://github.com/algorandfoundation/algokit-utils
 
 Delete the app and create a new one in its place
 
-***
+---
 
 ### UpdateApp
 

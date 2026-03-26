@@ -1,6 +1,6 @@
 ---
-title: "Client Manager"
-description: "This example demonstrates how to access the underlying raw clients through the ClientManager (algorand.client), and how to get typed app clients:"
+title: 'Client Manager'
+description: 'This example demonstrates how to access the underlying raw clients through the ClientManager (algorand.client), and how to get typed app clients:'
 sidebar:
   order: 14
 ---
@@ -10,6 +10,7 @@ sidebar:
 ## Description
 
 This example demonstrates how to access the underlying raw clients through the ClientManager (algorand.client), and how to get typed app clients:
+
 - algorand.client.algod - Access the raw Algod client
 - algorand.client.indexer - Access the raw Indexer client
 - algorand.client.kmd - Access the raw KMD client
@@ -55,17 +56,25 @@ npm run example algorand_client/14-client-manager.ts
  * - LocalNet running (via `algokit localnet start`)
  */
 
-import { AlgorandClient, algo } from '@algorandfoundation/algokit-utils'
-import type { Arc56Contract } from '@algorandfoundation/algokit-utils/abi'
-import type { AlgoConfig } from '@algorandfoundation/algokit-utils/types/network-client'
-import { loadTealSource, printError, printHeader, printInfo, printStep, printSuccess, shortenAddress } from '../shared/utils.js'
+import { AlgorandClient, algo } from '@algorandfoundation/algokit-utils';
+import type { Arc56Contract } from '@algorandfoundation/algokit-utils/abi';
+import type { AlgoConfig } from '@algorandfoundation/algokit-utils/types/network-client';
+import {
+  loadTealSource,
+  printError,
+  printHeader,
+  printInfo,
+  printStep,
+  printSuccess,
+  shortenAddress,
+} from '../shared/utils.js';
 
 // ============================================================================
 // Simple TEAL Programs for App Client Demonstrations (loaded from shared artifacts)
 // ============================================================================
 
-const SIMPLE_APPROVAL_PROGRAM = loadTealSource('approval-counter-simple.teal')
-const CLEAR_STATE_PROGRAM = loadTealSource('clear-state-approve.teal')
+const SIMPLE_APPROVAL_PROGRAM = loadTealSource('approval-counter-simple.teal');
+const CLEAR_STATE_PROGRAM = loadTealSource('clear-state-approve.teal');
 
 // A minimal ARC-56 compatible app spec for demonstration
 const SIMPLE_APP_SPEC: Arc56Contract = {
@@ -130,146 +139,154 @@ const SIMPLE_APP_SPEC: Arc56Contract = {
     clear: { sourceInfo: [], pcOffsetMethod: 'none' },
   },
   scratchVariables: {},
-}
+};
 
 async function main() {
-  printHeader('Client Manager Example')
+  printHeader('Client Manager Example');
 
   // Initialize client and verify LocalNet is running
-  const algorand = AlgorandClient.defaultLocalNet()
+  const algorand = AlgorandClient.defaultLocalNet();
 
   try {
-    await algorand.client.algod.status()
-    printSuccess('Connected to LocalNet')
+    await algorand.client.algod.status();
+    printSuccess('Connected to LocalNet');
   } catch (error) {
-    printError(`Failed to connect to LocalNet: ${error instanceof Error ? error.message : String(error)}`)
-    printInfo('Make sure LocalNet is running (e.g., algokit localnet start)')
-    return
+    printError(
+      `Failed to connect to LocalNet: ${error instanceof Error ? error.message : String(error)}`,
+    );
+    printInfo('Make sure LocalNet is running (e.g., algokit localnet start)');
+    return;
   }
 
   // Step 1: Access raw Algod client via algorand.client.algod
-  printStep(1, 'Access raw Algod client via algorand.client.algod')
-  printInfo('The Algod client provides direct access to the Algorand node REST API')
+  printStep(1, 'Access raw Algod client via algorand.client.algod');
+  printInfo('The Algod client provides direct access to the Algorand node REST API');
 
-  const algod = algorand.client.algod
+  const algod = algorand.client.algod;
 
   // Get node status
-  const status = await algod.status()
-  printInfo(`\nAlgod status():`)
-  printInfo(`  Last round: ${status.lastRound}`)
-  printInfo(`  Time since last round: ${status.timeSinceLastRound}ns`)
-  printInfo(`  Catchup time: ${status.catchupTime}ns`)
-  printInfo(`  Last version: ${status.lastVersion}`)
+  const status = await algod.status();
+  printInfo(`\nAlgod status():`);
+  printInfo(`  Last round: ${status.lastRound}`);
+  printInfo(`  Time since last round: ${status.timeSinceLastRound}ns`);
+  printInfo(`  Catchup time: ${status.catchupTime}ns`);
+  printInfo(`  Last version: ${status.lastVersion}`);
 
   // Get suggested transaction parameters
-  const suggestedParams = await algod.suggestedParams()
-  printInfo(`\nAlgod suggestedParams():`)
-  printInfo(`  Genesis ID: ${suggestedParams.genesisId}`)
-  printInfo(`  Genesis Hash: ${Buffer.from(suggestedParams.genesisHash ?? new Uint8Array()).toString('base64').slice(0, 20)}...`)
-  printInfo(`  First valid round: ${suggestedParams.firstValid}`)
-  printInfo(`  Last valid round: ${suggestedParams.lastValid}`)
-  printInfo(`  Min fee: ${suggestedParams.minFee}`)
+  const suggestedParams = await algod.suggestedParams();
+  printInfo(`\nAlgod suggestedParams():`);
+  printInfo(`  Genesis ID: ${suggestedParams.genesisId}`);
+  printInfo(
+    `  Genesis Hash: ${Buffer.from(suggestedParams.genesisHash ?? new Uint8Array())
+      .toString('base64')
+      .slice(0, 20)}...`,
+  );
+  printInfo(`  First valid round: ${suggestedParams.firstValid}`);
+  printInfo(`  Last valid round: ${suggestedParams.lastValid}`);
+  printInfo(`  Min fee: ${suggestedParams.minFee}`);
 
   // Get genesis information
-  const genesis = await algod.genesis()
-  printInfo(`\nAlgod genesis():`)
-  printInfo(`  Network: ${genesis.network}`)
-  printInfo(`  Protocol: ${genesis.proto}`)
+  const genesis = await algod.genesis();
+  printInfo(`\nAlgod genesis():`);
+  printInfo(`  Network: ${genesis.network}`);
+  printInfo(`  Protocol: ${genesis.proto}`);
 
   // Get supply information
-  const supply = await algod.supply()
-  printInfo(`\nAlgod supply():`)
-  printInfo(`  Total money: ${supply.totalMoney} microAlgo`)
-  printInfo(`  Online money: ${supply.onlineMoney} microAlgo`)
+  const supply = await algod.supply();
+  printInfo(`\nAlgod supply():`);
+  printInfo(`  Total money: ${supply.totalMoney} microAlgo`);
+  printInfo(`  Online money: ${supply.onlineMoney} microAlgo`);
 
-  printSuccess('Raw Algod client accessed successfully')
+  printSuccess('Raw Algod client accessed successfully');
 
   // Step 2: Access raw Indexer client via algorand.client.indexer
-  printStep(2, 'Access raw Indexer client via algorand.client.indexer')
-  printInfo('The Indexer client provides access to historical blockchain data')
+  printStep(2, 'Access raw Indexer client via algorand.client.indexer');
+  printInfo('The Indexer client provides access to historical blockchain data');
 
-  const indexer = algorand.client.indexer
+  const indexer = algorand.client.indexer;
 
   // Health check
-  const health = await indexer.healthCheck()
-  printInfo(`\nIndexer healthCheck():`)
-  printInfo(`  Database available: ${health.dbAvailable}`)
-  printInfo(`  Is migrating: ${health.isMigrating}`)
-  printInfo(`  Round: ${health.round}`)
-  printInfo(`  Version: ${health.version}`)
+  const health = await indexer.healthCheck();
+  printInfo(`\nIndexer healthCheck():`);
+  printInfo(`  Database available: ${health.dbAvailable}`);
+  printInfo(`  Is migrating: ${health.isMigrating}`);
+  printInfo(`  Round: ${health.round}`);
+  printInfo(`  Version: ${health.version}`);
 
   // Search for transactions
-  const txnSearchResult = await indexer.searchForTransactions({ limit: 3 })
-  printInfo(`\nIndexer searchForTransactions({ limit: 3 }):`)
-  printInfo(`  Found ${txnSearchResult.transactions.length} transactions`)
-  printInfo(`  Current round: ${txnSearchResult.currentRound}`)
+  const txnSearchResult = await indexer.searchForTransactions({ limit: 3 });
+  printInfo(`\nIndexer searchForTransactions({ limit: 3 }):`);
+  printInfo(`  Found ${txnSearchResult.transactions.length} transactions`);
+  printInfo(`  Current round: ${txnSearchResult.currentRound}`);
   for (const txn of txnSearchResult.transactions) {
-    printInfo(`    - ${txn.id?.slice(0, 12) ?? 'unknown'}... (type: ${txn.txType})`)
+    printInfo(`    - ${txn.id?.slice(0, 12) ?? 'unknown'}... (type: ${txn.txType})`);
   }
 
   // Lookup an account
-  const dispenser = await algorand.account.dispenserFromEnvironment()
-  const accountResult = await indexer.lookupAccountById(dispenser.addr.toString())
-  printInfo(`\nIndexer lookupAccountById():`)
-  printInfo(`  Address: ${shortenAddress(accountResult.account.address)}`)
-  printInfo(`  Balance: ${accountResult.account.amount} microAlgo`)
-  printInfo(`  Status: ${accountResult.account.status}`)
+  const dispenser = await algorand.account.dispenserFromEnvironment();
+  const accountResult = await indexer.lookupAccountById(dispenser.addr.toString());
+  printInfo(`\nIndexer lookupAccountById():`);
+  printInfo(`  Address: ${shortenAddress(accountResult.account.address)}`);
+  printInfo(`  Balance: ${accountResult.account.amount} microAlgo`);
+  printInfo(`  Status: ${accountResult.account.status}`);
 
-  printSuccess('Raw Indexer client accessed successfully')
+  printSuccess('Raw Indexer client accessed successfully');
 
   // Step 3: Access raw KMD client via algorand.client.kmd
-  printStep(3, 'Access raw KMD client via algorand.client.kmd')
-  printInfo('The KMD (Key Management Daemon) client manages wallets and keys')
+  printStep(3, 'Access raw KMD client via algorand.client.kmd');
+  printInfo('The KMD (Key Management Daemon) client manages wallets and keys');
 
-  const kmd = algorand.client.kmd
+  const kmd = algorand.client.kmd;
 
   // List wallets
-  const walletsResult = await kmd.listWallets()
-  printInfo(`\nKMD listWallets():`)
-  printInfo(`  Found ${walletsResult.wallets.length} wallet(s)`)
+  const walletsResult = await kmd.listWallets();
+  printInfo(`\nKMD listWallets():`);
+  printInfo(`  Found ${walletsResult.wallets.length} wallet(s)`);
   for (const wallet of walletsResult.wallets) {
-    printInfo(`    - "${wallet.name}" (ID: ${wallet.id.slice(0, 8)}...)`)
+    printInfo(`    - "${wallet.name}" (ID: ${wallet.id.slice(0, 8)}...)`);
   }
 
   // Get the default LocalNet wallet and list keys
-  const defaultWallet = walletsResult.wallets.find((w) => w.name === 'unencrypted-default-wallet')
+  const defaultWallet = walletsResult.wallets.find(w => w.name === 'unencrypted-default-wallet');
   if (defaultWallet) {
     const handleResult = await kmd.initWalletHandle({
       walletId: defaultWallet.id,
       walletPassword: '',
-    })
+    });
 
     const keysResult = await kmd.listKeysInWallet({
       walletHandleToken: handleResult.walletHandleToken,
-    })
+    });
 
-    printInfo(`\nKMD listKeysInWallet() for default wallet:`)
-    printInfo(`  Found ${keysResult.addresses.length} key(s)`)
+    printInfo(`\nKMD listKeysInWallet() for default wallet:`);
+    printInfo(`  Found ${keysResult.addresses.length} key(s)`);
     for (const address of keysResult.addresses.slice(0, 3)) {
-      printInfo(`    - ${shortenAddress(address.toString())}`)
+      printInfo(`    - ${shortenAddress(address.toString())}`);
     }
     if (keysResult.addresses.length > 3) {
-      printInfo(`    ... and ${keysResult.addresses.length - 3} more`)
+      printInfo(`    ... and ${keysResult.addresses.length - 3} more`);
     }
 
     // Release the wallet handle
     await kmd.releaseWalletHandleToken({
       walletHandleToken: handleResult.walletHandleToken,
-    })
+    });
   }
 
-  printSuccess('Raw KMD client accessed successfully')
+  printSuccess('Raw KMD client accessed successfully');
 
   // Step 4: Demonstrate algorand.client.indexerIfPresent
-  printStep(4, 'Demonstrate algorand.client.indexerIfPresent')
-  printInfo('indexerIfPresent returns undefined if Indexer is not configured (instead of throwing)')
+  printStep(4, 'Demonstrate algorand.client.indexerIfPresent');
+  printInfo(
+    'indexerIfPresent returns undefined if Indexer is not configured (instead of throwing)',
+  );
 
   // With LocalNet, indexer is configured
-  const indexerIfPresent = algorand.client.indexerIfPresent
+  const indexerIfPresent = algorand.client.indexerIfPresent;
   if (indexerIfPresent) {
-    printInfo(`\nIndexer is present: true`)
-    const indexerHealth = await indexerIfPresent.healthCheck()
-    printInfo(`  Indexer round: ${indexerHealth.round}`)
+    printInfo(`\nIndexer is present: true`);
+    const indexerHealth = await indexerIfPresent.healthCheck();
+    printInfo(`  Indexer round: ${indexerHealth.round}`);
   }
 
   // Create a client without indexer to demonstrate undefined behavior
@@ -280,21 +297,21 @@ async function main() {
       token: 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
     },
     // Note: No indexerConfig provided
-  }
-  const algodOnlyClient = AlgorandClient.fromConfig(algodOnlyConfig)
+  };
+  const algodOnlyClient = AlgorandClient.fromConfig(algodOnlyConfig);
 
-  const noIndexer = algodOnlyClient.client.indexerIfPresent
-  printInfo(`\nFor client without Indexer configured:`)
-  printInfo(`  indexerIfPresent: ${noIndexer === undefined ? 'undefined' : 'present'}`)
-  printInfo(`  Use this to gracefully handle missing Indexer configuration`)
+  const noIndexer = algodOnlyClient.client.indexerIfPresent;
+  printInfo(`\nFor client without Indexer configured:`);
+  printInfo(`  indexerIfPresent: ${noIndexer === undefined ? 'undefined' : 'present'}`);
+  printInfo(`  Use this to gracefully handle missing Indexer configuration`);
 
-  printSuccess('indexerIfPresent demonstrated')
+  printSuccess('indexerIfPresent demonstrated');
 
   // Step 5: Create an application for app client demonstrations
-  printStep(5, 'Create test application for app client demonstrations')
+  printStep(5, 'Create test application for app client demonstrations');
 
-  const creator = algorand.account.random()
-  await algorand.account.ensureFundedFromEnvironment(creator.addr, algo(10))
+  const creator = algorand.account.random();
+  await algorand.account.ensureFundedFromEnvironment(creator.addr, algo(10));
 
   const createResult = await algorand.send.appCreate({
     sender: creator.addr,
@@ -306,44 +323,44 @@ async function main() {
       localInts: 0,
       localByteSlices: 0,
     },
-  })
+  });
 
-  const appId = createResult.appId
-  printInfo(`\nCreated test application:`)
-  printInfo(`  App ID: ${appId}`)
-  printInfo(`  Creator: ${shortenAddress(creator.addr.toString())}`)
+  const appId = createResult.appId;
+  printInfo(`\nCreated test application:`);
+  printInfo(`  App ID: ${appId}`);
+  printInfo(`  Creator: ${shortenAddress(creator.addr.toString())}`);
 
-  printSuccess('Test application created')
+  printSuccess('Test application created');
 
   // Step 6: Demonstrate algorand.client.getAppClientById()
-  printStep(6, 'Demonstrate algorand.client.getAppClientById()')
-  printInfo('Creates an AppClient for an existing application by its ID')
+  printStep(6, 'Demonstrate algorand.client.getAppClientById()');
+  printInfo('Creates an AppClient for an existing application by its ID');
 
   const appClientById = algorand.client.getAppClientById({
     appSpec: SIMPLE_APP_SPEC,
     appId: appId,
     defaultSender: creator.addr,
-  })
+  });
 
-  printInfo(`\nAppClient created with getAppClientById():`)
-  printInfo(`  App ID: ${appClientById.appId}`)
-  printInfo(`  App Name: ${appClientById.appName}`)
-  printInfo(`  App Address: ${shortenAddress(appClientById.appAddress.toString())}`)
+  printInfo(`\nAppClient created with getAppClientById():`);
+  printInfo(`  App ID: ${appClientById.appId}`);
+  printInfo(`  App Name: ${appClientById.appName}`);
+  printInfo(`  App Address: ${shortenAddress(appClientById.appAddress.toString())}`);
 
   // Use the app client to make a call
-  const callResult = await appClientById.send.bare.call()
-  printInfo(`\nCalled app via AppClient:`)
-  printInfo(`  Transaction ID: ${callResult.txIds[0]}`)
+  const callResult = await appClientById.send.bare.call();
+  printInfo(`\nCalled app via AppClient:`);
+  printInfo(`  Transaction ID: ${callResult.txIds[0]}`);
 
   // Read state using the app client
-  const globalState = await appClientById.state.global.getAll()
-  printInfo(`  Global state after call: counter = ${globalState.counter}`)
+  const globalState = await appClientById.state.global.getAll();
+  printInfo(`  Global state after call: counter = ${globalState.counter}`);
 
-  printSuccess('getAppClientById() demonstrated')
+  printSuccess('getAppClientById() demonstrated');
 
   // Step 7: Demonstrate algorand.client.getAppClientByCreatorAndName()
-  printStep(7, 'Demonstrate algorand.client.getAppClientByCreatorAndName()')
-  printInfo('Creates an AppClient by looking up app ID from creator and app name')
+  printStep(7, 'Demonstrate algorand.client.getAppClientByCreatorAndName()');
+  printInfo('Creates an AppClient by looking up app ID from creator and app name');
 
   // First, deploy an app using the app deployer (which stores name metadata)
   // Note: We don't use deploy-time controls (updatable/deletable) since our TEAL
@@ -366,11 +383,11 @@ async function main() {
     },
     updateParams: { sender: creator.addr },
     deleteParams: { sender: creator.addr },
-  })
+  });
 
-  printInfo(`\nDeployed named app:`)
-  printInfo(`  Name: NamedCounterApp`)
-  printInfo(`  App ID: ${deployedApp.appId}`)
+  printInfo(`\nDeployed named app:`);
+  printInfo(`  Name: NamedCounterApp`);
+  printInfo(`  App ID: ${deployedApp.appId}`);
 
   // Now get the app client by creator and name (async - returns Promise)
   const appClientByName = await algorand.client.getAppClientByCreatorAndName({
@@ -378,137 +395,138 @@ async function main() {
     creatorAddress: creator.addr,
     appName: 'NamedCounterApp',
     defaultSender: creator.addr,
-  })
+  });
 
-  printInfo(`\nAppClient from getAppClientByCreatorAndName():`)
-  printInfo(`  Resolved App ID: ${appClientByName.appId}`)
-  printInfo(`  App Name: ${appClientByName.appName}`)
-  printInfo(`  Note: App ID was resolved by looking up the creator's apps`)
+  printInfo(`\nAppClient from getAppClientByCreatorAndName():`);
+  printInfo(`  Resolved App ID: ${appClientByName.appId}`);
+  printInfo(`  App Name: ${appClientByName.appName}`);
+  printInfo(`  Note: App ID was resolved by looking up the creator's apps`);
 
-  printSuccess('getAppClientByCreatorAndName() demonstrated')
+  printSuccess('getAppClientByCreatorAndName() demonstrated');
 
   // Step 8: Demonstrate algorand.client.getAppFactory()
-  printStep(8, 'Demonstrate algorand.client.getAppFactory()')
-  printInfo('Creates an AppFactory for deploying and managing multiple app instances')
+  printStep(8, 'Demonstrate algorand.client.getAppFactory()');
+  printInfo('Creates an AppFactory for deploying and managing multiple app instances');
 
   const appFactory = algorand.client.getAppFactory({
     appSpec: SIMPLE_APP_SPEC,
     defaultSender: creator.addr,
-  })
+  });
 
-  printInfo(`\nAppFactory created with getAppFactory():`)
-  printInfo(`  App Name: ${appFactory.appName}`)
-  printInfo('')
-  printInfo('AppFactory provides methods for:')
-  printInfo('  - factory.send.bare.create() - Create app with bare call')
-  printInfo('  - factory.send.create() - Create app with ABI method')
-  printInfo('  - factory.deploy() - Idempotent deployment with version management')
-  printInfo('  - factory.params.* - Get transaction params for app operations')
-  printInfo('')
-  printInfo('Note: Creating apps via factory requires a properly compiled ARC-56 app spec')
-  printInfo('with either compiled bytecode or TEAL source that the factory can compile.')
+  printInfo(`\nAppFactory created with getAppFactory():`);
+  printInfo(`  App Name: ${appFactory.appName}`);
+  printInfo('');
+  printInfo('AppFactory provides methods for:');
+  printInfo('  - factory.send.bare.create() - Create app with bare call');
+  printInfo('  - factory.send.create() - Create app with ABI method');
+  printInfo('  - factory.deploy() - Idempotent deployment with version management');
+  printInfo('  - factory.params.* - Get transaction params for app operations');
+  printInfo('');
+  printInfo('Note: Creating apps via factory requires a properly compiled ARC-56 app spec');
+  printInfo('with either compiled bytecode or TEAL source that the factory can compile.');
 
-  printSuccess('getAppFactory() demonstrated')
+  printSuccess('getAppFactory() demonstrated');
 
   // Step 9: Explain when to use raw clients vs AlgorandClient methods
-  printStep(9, 'When to use raw clients vs AlgorandClient methods')
-  printInfo('\nWhen to use AlgorandClient high-level methods (algorand.send.*, algorand.app.*, etc.):')
-  printInfo('  - Creating and sending transactions (automatic signer management)')
-  printInfo('  - Account management and funding')
-  printInfo('  - Reading app state (getGlobalState, getLocalState)')
-  printInfo('  - Common operations that benefit from SDK convenience')
-  printInfo('  - When you want automatic transaction composition and signing')
+  printStep(9, 'When to use raw clients vs AlgorandClient methods');
+  printInfo(
+    '\nWhen to use AlgorandClient high-level methods (algorand.send.*, algorand.app.*, etc.):',
+  );
+  printInfo('  - Creating and sending transactions (automatic signer management)');
+  printInfo('  - Account management and funding');
+  printInfo('  - Reading app state (getGlobalState, getLocalState)');
+  printInfo('  - Common operations that benefit from SDK convenience');
+  printInfo('  - When you want automatic transaction composition and signing');
 
-  printInfo('\nWhen to use raw Algod client (algorand.client.algod):')
-  printInfo('  - Direct node status queries (status(), genesis(), supply())')
-  printInfo('  - Low-level transaction submission (sendRawTransaction)')
-  printInfo('  - Block information queries')
-  printInfo('  - Pending transaction information')
-  printInfo('  - Node configuration queries')
-  printInfo('  - When you need fine-grained control over API calls')
+  printInfo('\nWhen to use raw Algod client (algorand.client.algod):');
+  printInfo('  - Direct node status queries (status(), genesis(), supply())');
+  printInfo('  - Low-level transaction submission (sendRawTransaction)');
+  printInfo('  - Block information queries');
+  printInfo('  - Pending transaction information');
+  printInfo('  - Node configuration queries');
+  printInfo('  - When you need fine-grained control over API calls');
 
-  printInfo('\nWhen to use raw Indexer client (algorand.client.indexer):')
-  printInfo('  - Historical transaction searches with complex filters')
-  printInfo('  - Account lookups with specific query parameters')
-  printInfo('  - Asset and application searches')
-  printInfo('  - Block lookups and searches')
-  printInfo('  - Paginated queries with custom limits')
-  printInfo('  - When AlgorandClient does not expose the specific query you need')
+  printInfo('\nWhen to use raw Indexer client (algorand.client.indexer):');
+  printInfo('  - Historical transaction searches with complex filters');
+  printInfo('  - Account lookups with specific query parameters');
+  printInfo('  - Asset and application searches');
+  printInfo('  - Block lookups and searches');
+  printInfo('  - Paginated queries with custom limits');
+  printInfo('  - When AlgorandClient does not expose the specific query you need');
 
-  printInfo('\nWhen to use raw KMD client (algorand.client.kmd):')
-  printInfo('  - Wallet management (create, list, rename wallets)')
-  printInfo('  - Key generation and import/export')
-  printInfo('  - Signing transactions with KMD-managed keys')
-  printInfo('  - LocalNet development with default wallets')
-  printInfo('  - When you need direct control over key management')
+  printInfo('\nWhen to use raw KMD client (algorand.client.kmd):');
+  printInfo('  - Wallet management (create, list, rename wallets)');
+  printInfo('  - Key generation and import/export');
+  printInfo('  - Signing transactions with KMD-managed keys');
+  printInfo('  - LocalNet development with default wallets');
+  printInfo('  - When you need direct control over key management');
 
-  printInfo('\nWhen to use AppClient (getAppClientById, getAppClientByCreatorAndName):')
-  printInfo('  - Interacting with a specific deployed application')
-  printInfo('  - Type-safe method calls based on ARC-56 app spec')
-  printInfo('  - Reading/writing app state with type information')
-  printInfo('  - When you have the app spec and want IDE autocompletion')
+  printInfo('\nWhen to use AppClient (getAppClientById, getAppClientByCreatorAndName):');
+  printInfo('  - Interacting with a specific deployed application');
+  printInfo('  - Type-safe method calls based on ARC-56 app spec');
+  printInfo('  - Reading/writing app state with type information');
+  printInfo('  - When you have the app spec and want IDE autocompletion');
 
-  printInfo('\nWhen to use AppFactory (getAppFactory):')
-  printInfo('  - Deploying new application instances')
-  printInfo('  - Creating multiple instances of the same app')
-  printInfo('  - Idempotent deployment with version management')
-  printInfo('  - When you need to create apps programmatically')
+  printInfo('\nWhen to use AppFactory (getAppFactory):');
+  printInfo('  - Deploying new application instances');
+  printInfo('  - Creating multiple instances of the same app');
+  printInfo('  - Idempotent deployment with version management');
+  printInfo('  - When you need to create apps programmatically');
 
-  printSuccess('Usage guidance provided')
+  printSuccess('Usage guidance provided');
 
   // Step 10: Summary
-  printStep(10, 'Summary - Client Manager API')
-  printInfo('The ClientManager (algorand.client) provides access to underlying clients:')
-  printInfo('')
-  printInfo('algorand.client.algod:')
-  printInfo('  - Raw AlgodClient for direct node API access')
-  printInfo('  - Methods: status(), suggestedParams(), genesis(), supply(), etc.')
-  printInfo('')
-  printInfo('algorand.client.indexer:')
-  printInfo('  - Raw IndexerClient for historical data queries')
-  printInfo('  - Methods: searchForTransactions(), lookupAccountById(), etc.')
-  printInfo('  - Throws error if Indexer not configured')
-  printInfo('')
-  printInfo('algorand.client.indexerIfPresent:')
-  printInfo('  - Same as indexer but returns undefined if not configured')
-  printInfo('  - Use for graceful handling of optional Indexer')
-  printInfo('')
-  printInfo('algorand.client.kmd:')
-  printInfo('  - Raw KmdClient for wallet/key management')
-  printInfo('  - Methods: listWallets(), listKeysInWallet(), etc.')
-  printInfo('  - Only available on LocalNet or custom KMD setups')
-  printInfo('')
-  printInfo('algorand.client.getAppClientById({ appSpec, appId }):')
-  printInfo('  - Creates AppClient for existing app by ID')
-  printInfo('  - Provides type-safe app interaction')
-  printInfo('')
-  printInfo('algorand.client.getAppClientByCreatorAndName({ appSpec, creatorAddress, appName }):')
-  printInfo('  - Creates AppClient by resolving app ID from creator and name')
-  printInfo('  - Uses AlgoKit app deployment metadata for lookup')
-  printInfo('  - Returns Promise<AppClient>')
-  printInfo('')
-  printInfo('algorand.client.getAppFactory({ appSpec }):')
-  printInfo('  - Creates AppFactory for deploying new app instances')
-  printInfo('  - Supports bare and ABI-based app creation')
-  printInfo('')
-  printInfo('Best practices:')
-  printInfo('  - Use high-level AlgorandClient methods for common operations')
-  printInfo('  - Drop to raw clients when you need specific API features')
-  printInfo('  - Use indexerIfPresent for portable code that may run without Indexer')
-  printInfo('  - Use AppClient/AppFactory for type-safe smart contract interaction')
+  printStep(10, 'Summary - Client Manager API');
+  printInfo('The ClientManager (algorand.client) provides access to underlying clients:');
+  printInfo('');
+  printInfo('algorand.client.algod:');
+  printInfo('  - Raw AlgodClient for direct node API access');
+  printInfo('  - Methods: status(), suggestedParams(), genesis(), supply(), etc.');
+  printInfo('');
+  printInfo('algorand.client.indexer:');
+  printInfo('  - Raw IndexerClient for historical data queries');
+  printInfo('  - Methods: searchForTransactions(), lookupAccountById(), etc.');
+  printInfo('  - Throws error if Indexer not configured');
+  printInfo('');
+  printInfo('algorand.client.indexerIfPresent:');
+  printInfo('  - Same as indexer but returns undefined if not configured');
+  printInfo('  - Use for graceful handling of optional Indexer');
+  printInfo('');
+  printInfo('algorand.client.kmd:');
+  printInfo('  - Raw KmdClient for wallet/key management');
+  printInfo('  - Methods: listWallets(), listKeysInWallet(), etc.');
+  printInfo('  - Only available on LocalNet or custom KMD setups');
+  printInfo('');
+  printInfo('algorand.client.getAppClientById({ appSpec, appId }):');
+  printInfo('  - Creates AppClient for existing app by ID');
+  printInfo('  - Provides type-safe app interaction');
+  printInfo('');
+  printInfo('algorand.client.getAppClientByCreatorAndName({ appSpec, creatorAddress, appName }):');
+  printInfo('  - Creates AppClient by resolving app ID from creator and name');
+  printInfo('  - Uses AlgoKit app deployment metadata for lookup');
+  printInfo('  - Returns Promise<AppClient>');
+  printInfo('');
+  printInfo('algorand.client.getAppFactory({ appSpec }):');
+  printInfo('  - Creates AppFactory for deploying new app instances');
+  printInfo('  - Supports bare and ABI-based app creation');
+  printInfo('');
+  printInfo('Best practices:');
+  printInfo('  - Use high-level AlgorandClient methods for common operations');
+  printInfo('  - Drop to raw clients when you need specific API features');
+  printInfo('  - Use indexerIfPresent for portable code that may run without Indexer');
+  printInfo('  - Use AppClient/AppFactory for type-safe smart contract interaction');
 
   // Clean up - delete the apps we created
-  await algorand.send.appDelete({ sender: creator.addr, appId: appId })
-  await algorand.send.appDelete({ sender: creator.addr, appId: deployedApp.appId })
+  await algorand.send.appDelete({ sender: creator.addr, appId: appId });
+  await algorand.send.appDelete({ sender: creator.addr, appId: deployedApp.appId });
 
-  printSuccess('Client Manager example completed!')
+  printSuccess('Client Manager example completed!');
 }
 
-main().catch((error) => {
-  printError(`Unhandled error: ${error instanceof Error ? error.message : String(error)}`)
-  process.exit(1)
-})
-
+main().catch(error => {
+  printError(`Unhandled error: ${error instanceof Error ? error.message : String(error)}`);
+  process.exit(1);
+});
 ```
 
 ---

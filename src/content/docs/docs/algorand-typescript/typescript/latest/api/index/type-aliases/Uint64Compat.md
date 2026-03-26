@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "Uint64Compat"
+title: 'Uint64Compat'
 ---
 
 > **Uint64Compat** = [`uint64`](/algorand-typescript/api/index/type-aliases/uint64/) \| `bigint` \| `boolean` \| `number`

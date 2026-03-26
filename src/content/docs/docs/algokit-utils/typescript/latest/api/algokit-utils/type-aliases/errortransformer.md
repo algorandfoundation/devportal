@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "ErrorTransformer"
+title: 'ErrorTransformer'
 ---
 
 > **ErrorTransformer** = (`error`) => `Promise`\<`Error`\>

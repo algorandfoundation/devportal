@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "TransactionLogger"
+title: 'TransactionLogger'
 ---
 
 Defined in: [src/testing/transaction-logger.ts:11](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/testing/transaction-logger.ts#L11)
@@ -60,7 +60,7 @@ The `AlgodClient` to wrap
 
 The wrapped `AlgodClient`, any transactions sent using this algod instance will be logged by this transaction logger
 
-***
+---
 
 ### clear()
 
@@ -74,7 +74,7 @@ Clear all logged IDs.
 
 `void`
 
-***
+---
 
 ### logRawTransaction()
 
@@ -94,7 +94,7 @@ The method that captures raw transactions and stores the transaction IDs.
 
 `void`
 
-***
+---
 
 ### waitForIndexer()
 

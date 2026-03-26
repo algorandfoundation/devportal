@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "Uint"
+title: 'Uint'
 ---
 
 Defined in: [arc4/encoded-types.ts:133](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/arc4/encoded-types.ts#L133)
@@ -27,7 +27,7 @@ A fixed bit size unsigned int
 
 ### N
 
-`N` *extends* [`BitSize`](/algorand-typescript/api/arc4/type-aliases/bitsize/)
+`N` _extends_ [`BitSize`](/algorand-typescript/api/arc4/type-aliases/bitsize/)
 
 ## Constructors
 
@@ -89,7 +89,7 @@ Retrieve the decoded native biguint
 
 [`biguint`](/algorand-typescript/api/index/type-aliases/biguint/)
 
-***
+---
 
 ### asUint64()
 

@@ -1,5 +1,5 @@
 ---
-title: "AlgoKit Project List Command"
+title: 'AlgoKit Project List Command'
 ---
 
 The `algokit project list` command is designed to enumerate all projects within an AlgoKit workspace. This command is particularly useful in workspace environments where multiple projects are managed under a single root directory. It provides a straightforward way to view all the projects that are part of the workspace.

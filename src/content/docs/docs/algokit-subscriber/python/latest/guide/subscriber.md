@@ -23,7 +23,7 @@ subscriber = sub.AlgorandSubscriber(
 
 The key configuration is the `AlgorandSubscriberConfig` dataclass:
 
-````python
+```python
 @dataclass(kw_only=True, slots=True)
 class AlgorandSubscriberConfig(CoreTransactionSubscriptionParams):
     """Configuration for the subscriber."""
@@ -111,7 +111,7 @@ class CoreTransactionSubscriptionParams:
       use algod from there.
     - "fail": Raise an error.
     """
-````
+```
 
 `watermark_persistence` allows you to ensure reliability against your code having outages since you can persist the last block your code processed up to and then provide it again the next time your code runs.
 
@@ -158,7 +158,7 @@ Once you have created the `AlgorandSubscriber`, you can register handlers/listen
 
 You can do this via the `on`, `on_batch` and `on_poll` methods:
 
-````python
+```python
 def on(self, filter_name: str, listener: EventListener[Any]) -> "AlgorandSubscriber":
     """Register an event handler to run on every subscribed transaction
     matching the given filter name.
@@ -251,7 +251,7 @@ def on_poll(
             lambda result, _: print(result.subscribed_transactions, result.synced_round_range)
         )
     """
-````
+```
 
 The `EventListener` type is defined as:
 
@@ -324,7 +324,7 @@ for sig in (signal.SIGINT, signal.SIGTERM, signal.SIGQUIT):
 
 Because `start` runs in a blocking loop, you may want to handle errors without crashing. To handle errors, you can register error handlers/listeners using the `on_error` method. This works in a similar way to the other `on*` methods.
 
-````python
+```python
 def on_error(self, listener: EventListener[Exception]) -> "AlgorandSubscriber":
     """Register an error handler to run if an error is thrown during processing or
     event handling.
@@ -357,7 +357,7 @@ def on_error(self, listener: EventListener[Exception]) -> "AlgorandSubscriber":
 
         subscriber.on_error(handle_error)
     """
-````
+```
 
 Multiple error listeners can be added, and each will be called one-by-one in the order the registrations occur.
 

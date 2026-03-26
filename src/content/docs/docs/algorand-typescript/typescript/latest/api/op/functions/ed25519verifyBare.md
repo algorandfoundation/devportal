@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "ed25519verifyBare"
+title: 'ed25519verifyBare'
 ---
 
 > **ed25519verifyBare**(`a`, `b`, `c`): `boolean`

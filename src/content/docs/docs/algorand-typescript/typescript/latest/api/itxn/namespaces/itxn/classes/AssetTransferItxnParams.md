@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "AssetTransferItxnParams"
+title: 'AssetTransferItxnParams'
 ---
 
 Defined in: [itxn.ts:1082](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/itxn.ts#L1082)
@@ -33,7 +33,7 @@ Return a copy of this AssetTransferItxnParams object
 
 `AssetTransferItxnParams`
 
-***
+---
 
 ### set()
 
@@ -53,7 +53,7 @@ Update one or more fields in this AssetTransferItxnParams object
 
 `void`
 
-***
+---
 
 ### submit()
 

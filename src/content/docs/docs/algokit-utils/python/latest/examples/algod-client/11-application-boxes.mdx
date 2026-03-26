@@ -1,6 +1,6 @@
 ---
-title: "Application Boxes"
-description: "This example demonstrates how to query application boxes using the AlgodClient methods: application_boxes() and application_box_by_name()"
+title: 'Application Boxes'
+description: 'This example demonstrates how to query application boxes using the AlgodClient methods: application_boxes() and application_box_by_name()'
 sidebar:
   order: 11
 ---
@@ -10,13 +10,14 @@ sidebar:
 ## Description
 
 This example demonstrates how to query application boxes using the AlgodClient methods: application_boxes() and application_box_by_name()
- API Patterns:
+API Patterns:
+
 - application_boxes(app_id) returns BoxesResponse with .boxes attribute (list of BoxDescriptor)
-- application_box_by_name(app_id, box_name_bytes) returns Box with .name, .value, .round_ attributes
+- application*box_by_name(app_id, box_name_bytes) returns Box with .name, .value, .round* attributes
 - BoxDescriptor.name is bytes (not base64)
 - Box.name and Box.value are bytes (not base64)
-- Box.round_ uses underscore to avoid Python reserved keyword
- Prerequisites:
+- Box.round\_ uses underscore to avoid Python reserved keyword
+  Prerequisites:
 
 ## Prerequisites
 

@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "expw"
+title: 'expw'
 ---
 
 > **expw**(`a`, `b`): readonly \[[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/), [`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)\]

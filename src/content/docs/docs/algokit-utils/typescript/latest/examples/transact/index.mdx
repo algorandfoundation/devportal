@@ -1,8 +1,8 @@
 ---
-title: "Transactions"
-description: "Low-level transaction construction and signing."
+title: 'Transactions'
+description: 'Low-level transaction construction and signing.'
 sidebar:
-  label: "Transactions"
+  label: 'Transactions'
   order: 0
 ---
 
@@ -13,23 +13,276 @@ Low-level transaction construction and signing.
 ## Examples (14)
 
 <table>
-<thead><tr><th>Example</th><th>Description</th></tr></thead>
-<tbody>
-<tr><td><a href="01-payment-transaction/">Payment Transaction</a></td><td><p>This example demonstrates how to send ALGO between accounts using the transact package. It shows the low-level transaction construction pattern with:</p><ul><li>Transaction class with TransactionType.Payment</li><li>PaymentTransactionFields for receiver and amount</li><li>assignFee() to set transaction fee from suggested params</li><li>generateAddressWithSigners for signing</li></ul></td></tr>
-<tr><td><a href="02-payment-close/">Payment with Close</a></td><td><p>This example demonstrates how to close an account by transferring all remaining ALGO to another account using the closeRemainderTo field in PaymentTransactionFields.</p><p>Key concepts:</p><ul><li>closeRemainderTo: Specifies an account to receive all remaining ALGO after the transaction</li><li>When an account is closed, its balance becomes 0</li><li>The close-to account receives: (original balance - sent amount - fee)</li></ul></td></tr>
-<tr><td><a href="03-asset-create/">Asset Create</a></td><td><p>This example demonstrates how to create a new Algorand Standard Asset (ASA) using the transact package. It shows the low-level transaction construction pattern with:</p><ul><li>Transaction class with TransactionType.AssetConfig</li><li>AssetConfigTransactionFields with all configuration options</li><li>Retrieving created asset ID from pending transaction info</li><li>Verifying asset parameters and creator holdings</li></ul></td></tr>
-<tr><td><a href="04-asset-transfer/">Asset Transfer</a></td><td><p>This example demonstrates the full asset transfer flow using the transact package: 1. Create a new Algorand Standard Asset (ASA) 2. Opt-in: receiver sends 0 amount of the asset to themselves 3. Transfer assets from creator to the opted-in receiver 4. Verify receiver's asset balance after transfer</p><p>Uses Transaction class with TransactionType.AssetTransfer and AssetTransferTransactionFields.</p></td></tr>
-<tr><td><a href="05-asset-freeze/">Asset Freeze</a></td><td><p>This example demonstrates how to freeze and unfreeze asset holdings using the transact package: 1. Create an asset with freeze address set 2. Transfer assets to another account 3. Freeze the account's asset holdings (prevent transfers) 4. Verify frozen account cannot transfer 5. Unfreeze the account's asset holdings 6. Verify account can transfer after unfreeze</p><p>Uses Transaction class with TransactionType.AssetFreeze and AssetFreezeTransactionFields.</p></td></tr>
-<tr><td><a href="06-asset-clawback/">Asset Clawback</a></td><td><p>This example demonstrates how to clawback assets from an account using the clawback address and the transact package: 1. Create an asset with clawback address set 2. Transfer assets to a target account 3. Clawback assets from target account using assetSender field 4. Verify target account balance decreased 5. Verify clawback receiver received the assets</p><p>Uses Transaction class with TransactionType.AssetTransfer and the assetSender field in AssetTransferTransactionFields for clawback operations.</p></td></tr>
-<tr><td><a href="07-atomic-group/">Atomic Transaction Group</a></td><td><p>This example demonstrates how to group multiple transactions atomically. All transactions in a group either succeed together or fail together. It shows:</p><ul><li>Creating multiple payment transactions</li><li>Using groupTransactions() to assign a group ID</li><li>Signing all transactions with the same signer</li><li>Submitting as a single atomic group</li></ul></td></tr>
-<tr><td><a href="08-atomic-swap/">Atomic Swap</a></td><td><p>This example demonstrates how to perform an atomic swap of ALGO for ASA between two parties. In an atomic swap:</p><ul><li>Party A sends ASA to Party B</li><li>Party B sends ALGO to Party A</li><li>Each party signs ONLY their own transaction</li><li>Signatures are combined and submitted together</li><li>Both transfers succeed or both fail (atomicity)</li></ul><p>Key difference from regular atomic groups: different parties sign different transactions.</p></td></tr>
-<tr><td><a href="09-single-sig/">Single Signature</a></td><td><p>This example demonstrates how to create an ed25519 keypair and sign transactions using the low-level transact package APIs.</p><p>Key concepts:</p><ul><li>Creating a keypair using tweetnacl (ed25519 signature scheme)</li><li>Using generateAddressWithSigners() to derive an Algorand address from the public key</li><li>Understanding the relationship between ed25519 public key and Algorand address</li><li>Signing transactions with a raw ed25519 signer function</li></ul></td></tr>
-<tr><td><a href="10-multisig/">Multisig</a></td><td><p>This example demonstrates how to create and use a 2-of-3 multisig account.</p><p>Key concepts:</p><ul><li>Creating a MultisigAccount with version, threshold, and addresses</li><li>Deriving the multisig address from the participant addresses</li><li>Signing transactions with a subset of participants (2 of 3)</li><li>Demonstrating that insufficient signatures (1 of 3) will fail</li></ul></td></tr>
-<tr><td><a href="11-logic-sig/">Logic Signature</a></td><td><p>This example demonstrates how to use a logic signature (lsig) to authorize transactions.</p><p>Key concepts:</p><ul><li>Compiling a TEAL program using algod.tealCompile()</li><li>Creating a LogicSig from compiled program bytes</li><li>Understanding the logic signature address (derived from program hash)</li><li>Funding and using a logic signature as a standalone account</li><li>Creating a delegated logic signature where an account delegates signing to a program</li></ul><p>Logic signatures allow transactions to be authorized by a program instead of (or in addition to) a cryptographic signature. This enables smart contracts that can hold and send funds based purely on program logic.</p></td></tr>
-<tr><td><a href="12-fee-calculation/">Fee Calculation</a></td><td><p>This example demonstrates how to estimate transaction size and calculate fees using the transact package:</p><ul><li>estimateTransactionSize() to get estimated byte size</li><li>calculateFee() with different fee parameters</li><li>assignFee() to set fee on transaction</li><li>How feePerByte, minFee, extraFee, and maxFee work</li><li>Compare estimated vs actual transaction sizes</li></ul></td></tr>
-<tr><td><a href="13-encoding-decoding/">Encoding/Decoding</a></td><td><p>This example demonstrates how to serialize and deserialize transactions using the transact package:</p><ul><li>encodeTransaction() to get msgpack bytes with TX prefix</li><li>encodeTransactionRaw() to get msgpack bytes without prefix</li><li>decodeTransaction() to reconstruct transaction from bytes</li><li>encodeSignedTransaction() and decodeSignedTransaction() for signed transactions</li><li>txId() for calculating transaction ID</li></ul></td></tr>
-<tr><td><a href="14-app-call/">Application Call</a></td><td><p>This example demonstrates how to deploy and interact with a smart contract on Algorand using the transact package:</p><ul><li>Compile simple approval and clear TEAL programs using algod.tealCompile()</li><li>Create an app with TransactionType.AppCall and OnApplicationComplete.NoOp</li><li>Use AppCallTransactionFields with approvalProgram, clearStateProgram,</li></ul><p>globalStateSchema, and localStateSchema</p><ul><li>Retrieve the created app ID from pending transaction info</li><li>Call the app with application arguments</li><li>Demonstrate OnApplicationComplete.OptIn for local state</li><li>Delete the app at the end</li></ul></td></tr>
-</tbody>
+  <thead>
+    <tr>
+      <th>Example</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <a href='01-payment-transaction/'>Payment Transaction</a>
+      </td>
+      <td>
+        <p>
+          This example demonstrates how to send ALGO between accounts using the transact package. It
+          shows the low-level transaction construction pattern with:
+        </p>
+        <ul>
+          <li>Transaction class with TransactionType.Payment</li>
+          <li>PaymentTransactionFields for receiver and amount</li>
+          <li>assignFee() to set transaction fee from suggested params</li>
+          <li>generateAddressWithSigners for signing</li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <a href='02-payment-close/'>Payment with Close</a>
+      </td>
+      <td>
+        <p>
+          This example demonstrates how to close an account by transferring all remaining ALGO to
+          another account using the closeRemainderTo field in PaymentTransactionFields.
+        </p>
+        <p>Key concepts:</p>
+        <ul>
+          <li>
+            closeRemainderTo: Specifies an account to receive all remaining ALGO after the
+            transaction
+          </li>
+          <li>When an account is closed, its balance becomes 0</li>
+          <li>The close-to account receives: (original balance - sent amount - fee)</li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <a href='03-asset-create/'>Asset Create</a>
+      </td>
+      <td>
+        <p>
+          This example demonstrates how to create a new Algorand Standard Asset (ASA) using the
+          transact package. It shows the low-level transaction construction pattern with:
+        </p>
+        <ul>
+          <li>Transaction class with TransactionType.AssetConfig</li>
+          <li>AssetConfigTransactionFields with all configuration options</li>
+          <li>Retrieving created asset ID from pending transaction info</li>
+          <li>Verifying asset parameters and creator holdings</li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <a href='04-asset-transfer/'>Asset Transfer</a>
+      </td>
+      <td>
+        <p>
+          This example demonstrates the full asset transfer flow using the transact package: 1.
+          Create a new Algorand Standard Asset (ASA) 2. Opt-in: receiver sends 0 amount of the asset
+          to themselves 3. Transfer assets from creator to the opted-in receiver 4. Verify
+          receiver's asset balance after transfer
+        </p>
+        <p>
+          Uses Transaction class with TransactionType.AssetTransfer and
+          AssetTransferTransactionFields.
+        </p>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <a href='05-asset-freeze/'>Asset Freeze</a>
+      </td>
+      <td>
+        <p>
+          This example demonstrates how to freeze and unfreeze asset holdings using the transact
+          package: 1. Create an asset with freeze address set 2. Transfer assets to another account
+          3. Freeze the account's asset holdings (prevent transfers) 4. Verify frozen account cannot
+          transfer 5. Unfreeze the account's asset holdings 6. Verify account can transfer after
+          unfreeze
+        </p>
+        <p>
+          Uses Transaction class with TransactionType.AssetFreeze and AssetFreezeTransactionFields.
+        </p>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <a href='06-asset-clawback/'>Asset Clawback</a>
+      </td>
+      <td>
+        <p>
+          This example demonstrates how to clawback assets from an account using the clawback
+          address and the transact package: 1. Create an asset with clawback address set 2. Transfer
+          assets to a target account 3. Clawback assets from target account using assetSender field
+          4. Verify target account balance decreased 5. Verify clawback receiver received the assets
+        </p>
+        <p>
+          Uses Transaction class with TransactionType.AssetTransfer and the assetSender field in
+          AssetTransferTransactionFields for clawback operations.
+        </p>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <a href='07-atomic-group/'>Atomic Transaction Group</a>
+      </td>
+      <td>
+        <p>
+          This example demonstrates how to group multiple transactions atomically. All transactions
+          in a group either succeed together or fail together. It shows:
+        </p>
+        <ul>
+          <li>Creating multiple payment transactions</li>
+          <li>Using groupTransactions() to assign a group ID</li>
+          <li>Signing all transactions with the same signer</li>
+          <li>Submitting as a single atomic group</li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <a href='08-atomic-swap/'>Atomic Swap</a>
+      </td>
+      <td>
+        <p>
+          This example demonstrates how to perform an atomic swap of ALGO for ASA between two
+          parties. In an atomic swap:
+        </p>
+        <ul>
+          <li>Party A sends ASA to Party B</li>
+          <li>Party B sends ALGO to Party A</li>
+          <li>Each party signs ONLY their own transaction</li>
+          <li>Signatures are combined and submitted together</li>
+          <li>Both transfers succeed or both fail (atomicity)</li>
+        </ul>
+        <p>
+          Key difference from regular atomic groups: different parties sign different transactions.
+        </p>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <a href='09-single-sig/'>Single Signature</a>
+      </td>
+      <td>
+        <p>
+          This example demonstrates how to create an ed25519 keypair and sign transactions using the
+          low-level transact package APIs.
+        </p>
+        <p>Key concepts:</p>
+        <ul>
+          <li>Creating a keypair using tweetnacl (ed25519 signature scheme)</li>
+          <li>
+            Using generateAddressWithSigners() to derive an Algorand address from the public key
+          </li>
+          <li>Understanding the relationship between ed25519 public key and Algorand address</li>
+          <li>Signing transactions with a raw ed25519 signer function</li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <a href='10-multisig/'>Multisig</a>
+      </td>
+      <td>
+        <p>This example demonstrates how to create and use a 2-of-3 multisig account.</p>
+        <p>Key concepts:</p>
+        <ul>
+          <li>Creating a MultisigAccount with version, threshold, and addresses</li>
+          <li>Deriving the multisig address from the participant addresses</li>
+          <li>Signing transactions with a subset of participants (2 of 3)</li>
+          <li>Demonstrating that insufficient signatures (1 of 3) will fail</li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <a href='11-logic-sig/'>Logic Signature</a>
+      </td>
+      <td>
+        <p>
+          This example demonstrates how to use a logic signature (lsig) to authorize transactions.
+        </p>
+        <p>Key concepts:</p>
+        <ul>
+          <li>Compiling a TEAL program using algod.tealCompile()</li>
+          <li>Creating a LogicSig from compiled program bytes</li>
+          <li>Understanding the logic signature address (derived from program hash)</li>
+          <li>Funding and using a logic signature as a standalone account</li>
+          <li>
+            Creating a delegated logic signature where an account delegates signing to a program
+          </li>
+        </ul>
+        <p>
+          Logic signatures allow transactions to be authorized by a program instead of (or in
+          addition to) a cryptographic signature. This enables smart contracts that can hold and
+          send funds based purely on program logic.
+        </p>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <a href='12-fee-calculation/'>Fee Calculation</a>
+      </td>
+      <td>
+        <p>
+          This example demonstrates how to estimate transaction size and calculate fees using the
+          transact package:
+        </p>
+        <ul>
+          <li>estimateTransactionSize() to get estimated byte size</li>
+          <li>calculateFee() with different fee parameters</li>
+          <li>assignFee() to set fee on transaction</li>
+          <li>How feePerByte, minFee, extraFee, and maxFee work</li>
+          <li>Compare estimated vs actual transaction sizes</li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <a href='13-encoding-decoding/'>Encoding/Decoding</a>
+      </td>
+      <td>
+        <p>
+          This example demonstrates how to serialize and deserialize transactions using the transact
+          package:
+        </p>
+        <ul>
+          <li>encodeTransaction() to get msgpack bytes with TX prefix</li>
+          <li>encodeTransactionRaw() to get msgpack bytes without prefix</li>
+          <li>decodeTransaction() to reconstruct transaction from bytes</li>
+          <li>encodeSignedTransaction() and decodeSignedTransaction() for signed transactions</li>
+          <li>txId() for calculating transaction ID</li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <a href='14-app-call/'>Application Call</a>
+      </td>
+      <td>
+        <p>
+          This example demonstrates how to deploy and interact with a smart contract on Algorand
+          using the transact package:
+        </p>
+        <ul>
+          <li>Compile simple approval and clear TEAL programs using algod.tealCompile()</li>
+          <li>Create an app with TransactionType.AppCall and OnApplicationComplete.NoOp</li>
+          <li>Use AppCallTransactionFields with approvalProgram, clearStateProgram,</li>
+        </ul>
+        <p>globalStateSchema, and localStateSchema</p>
+        <ul>
+          <li>Retrieve the created app ID from pending transaction info</li>
+          <li>Call the app with application arguments</li>
+          <li>Demonstrate OnApplicationComplete.OptIn for local state</li>
+          <li>Delete the app at the end</li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
 </table>
 
 ## Quick Start

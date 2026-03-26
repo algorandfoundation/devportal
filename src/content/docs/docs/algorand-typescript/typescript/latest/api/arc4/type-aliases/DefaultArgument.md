@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "DefaultArgument"
+title: 'DefaultArgument'
 ---
 
 > **DefaultArgument**\<`TContract`\> = \{ `constant`: `string` \| `boolean` \| `number` \| `bigint`; \} \| \{ `from`: keyof `TContract`; \}
@@ -15,7 +15,7 @@ Type alias for a default argument schema
 
 ### TContract
 
-`TContract` *extends* [`Contract`](/algorand-typescript/api/arc4/classes/contract/)
+`TContract` _extends_ [`Contract`](/algorand-typescript/api/arc4/classes/contract/)
 
 The type of the contract containing the method this default argument is for
 

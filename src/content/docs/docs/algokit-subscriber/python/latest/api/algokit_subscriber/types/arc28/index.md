@@ -1,5 +1,5 @@
 ---
-title: "algokit_subscriber.types.arc28"
+title: 'algokit_subscriber.types.arc28'
 ---
 
 <div class="api-ref">
@@ -7,7 +7,7 @@ title: "algokit_subscriber.types.arc28"
 ## Classes
 
 | [`Arc28EventArg`](#class-arc28eventarg)         | Represents an argument of an ARC-28 event.                                             |
-|--------------------------------------------------------------------------|----------------------------------------------------------------------------------------|
+| ----------------------------------------------- | -------------------------------------------------------------------------------------- |
 | [`Arc28Event`](#class-arc28event)               | The definition of metadata for an ARC-28 event as per the ARC-28 specification.        |
 | [`Arc28EventGroup`](#class-arc28eventgroup)     | Specifies a group of ARC-28 event definitions along with instructions for              |
 | [`Arc28EventFilter`](#class-arc28eventfilter)   | A reference to an ARC-28 group and event, used to filter for transactions that emit it |
@@ -15,121 +15,120 @@ title: "algokit_subscriber.types.arc28"
 
 ## Module Contents
 
-### *class* Arc28EventArg
+### _class_ Arc28EventArg
 
 Represents an argument of an ARC-28 event.
 
-#### type *: str*
+#### type _: str_
 
 The type of the argument
 
-#### name *: str | None* *= None*
+#### name _: str | None_ _= None_
 
 An optional, user-friendly name for the argument
 
-#### desc *: str | None* *= None*
+#### desc _: str | None_ _= None_
 
 An optional, user-friendly description for the argument
 
-### *class* Arc28Event
+### _class_ Arc28Event
 
 The definition of metadata for an ARC-28 event as per the ARC-28 specification.
 
-#### name *: str*
+#### name _: str_
 
 The name of the event
 
-#### args *: list[[Arc28EventArg](#class-arc28eventarg)]*
+#### args _: list[[Arc28EventArg](#class-arc28eventarg)]_
 
 The arguments of the event, in order
 
-#### desc *: str | None* *= None*
+#### desc _: str | None_ _= None_
 
 An optional, user-friendly description for the event
 
-#### *property* signature *: str*
+#### _property_ signature _: str_
 
 The signature of the event e.g. EventName(type1,type2)
 
-#### *property* prefix *: bytes*
+#### _property_ prefix _: bytes_
 
 The prefix for the event
 
-#### *property* abi_type *: algokit_abi.abi.ABIType*
+#### _property_ abi*type *: algokit*abi.abi.ABIType*
 
 The ABI type of the event
 
-### *class* Arc28EventGroup
+### _class_ Arc28EventGroup
 
 Specifies a group of ARC-28 event definitions along with instructions for
 when to attempt to process the events.
 
-#### group_name *: str*
+#### group*name *: str\_
 
 The name to designate for this group of events.
 
-#### events *: list[[Arc28Event](#class-arc28event)]* *= []*
+#### events _: list[[Arc28Event](#class-arc28event)]_ _= []_
 
 The list of ARC-28 event definitions.
 
-#### process_for_app_ids *: list[int] | None* *= None*
+#### process*for_app_ids *: list[int] | None\_ _= None_
 
 Optional list of app IDs that this group should apply to.
 
-#### process_transaction *: Callable[[algokit_indexer_client.models.Transaction], bool] | None* *= None*
+#### process*transaction *: Callable[[algokit_indexer_client.models.Transaction], bool] | None\_ _= None_
 
 Optional predicate to indicate if these ARC-28 events should be processed
 for the given transaction.
 
-#### continue_on_error *: bool* *= False*
+#### continue*on_error *: bool\_ _= False_
 
 Whether or not to silently (with warning log) continue if an error is
 encountered processing the ARC-28 event data; default = False.
 
-### *class* Arc28EventFilter
+### _class_ Arc28EventFilter
 
 A reference to an ARC-28 group and event, used to filter for transactions that emit it
 
-#### group_name *: str*
+#### group*name *: str\_
 
 The name of the ARC-28 event group the event belongs to
 
-#### event_name *: str*
+#### event*name *: str\_
 
 The name of the ARC-28 event that was triggered
 
-### *class* EmittedArc28Event
+### _class_ EmittedArc28Event
 
 Represents an ARC-28 event that was emitted.
 
-#### group_name *: str*
+#### group*name *: str\_
 
 The name of the ARC-28 event group the event belongs to
 
-#### event_name *: str*
+#### event*name *: str\_
 
 The name of the ARC-28 event that was triggered
 
-#### event_signature *: str*
+#### event*signature *: str\_
 
 The signature of the event e.g. EventName(type1,type2)
 
-#### event_prefix *: str*
+#### event*prefix *: str\_
 
 The 4-byte hex prefix for the event
 
-#### event_definition *: [Arc28Event](#class-arc28event)*
+#### event*definition *: [Arc28Event](#class-arc28event)\_
 
 The ARC-28 definition of the event
 
-#### args *: list[Any]*
+#### args _: list[Any]_
 
 The ordered arguments extracted from the event that was emitted
 
-#### args_by_name *: dict[str, Any]*
+#### args*by_name *: dict[str, Any]\_
 
 The named arguments extracted from the event that was emitted (where the
 arguments had a name defined)
-
 
 </div>

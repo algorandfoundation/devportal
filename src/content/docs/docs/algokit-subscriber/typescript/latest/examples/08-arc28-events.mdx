@@ -1,6 +1,6 @@
 ---
-title: "ARC-28 Event Subscription"
-description: "This example demonstrates ARC-28 event parsing, filtering, and inspection."
+title: 'ARC-28 Event Subscription'
+description: 'This example demonstrates ARC-28 event parsing, filtering, and inspection.'
 sidebar:
   order: 8
 ---
@@ -10,6 +10,7 @@ sidebar:
 ## Description
 
 This example demonstrates ARC-28 event parsing, filtering, and inspection.
+
 - Define event definitions matching ARC-56 spec
 - Configure config-level arc28Events for event parsing
 - Filter transactions by emitted event names
@@ -45,77 +46,87 @@ npx tsx 08-arc28-events.ts
  * Prerequisites:
  * - LocalNet running (via `algokit localnet start`)
  */
-import { readFileSync } from 'node:fs'
-import { fileURLToPath } from 'node:url'
-import { dirname, join } from 'node:path'
-import { algo, AlgorandClient, AppFactory } from '@algorandfoundation/algokit-utils'
-import { AlgorandSubscriber } from '@algorandfoundation/algokit-subscriber'
-import type { Arc28Event, Arc28EventGroup } from '@algorandfoundation/algokit-subscriber/types/arc-28'
-import { printHeader, printStep, printInfo, printSuccess, printError, shortenAddress } from './shared/utils.js'
+import { readFileSync } from 'node:fs';
+import { fileURLToPath } from 'node:url';
+import { dirname, join } from 'node:path';
+import { algo, AlgorandClient, AppFactory } from '@algorandfoundation/algokit-utils';
+import { AlgorandSubscriber } from '@algorandfoundation/algokit-subscriber';
+import type {
+  Arc28Event,
+  Arc28EventGroup,
+} from '@algorandfoundation/algokit-subscriber/types/arc-28';
+import {
+  printHeader,
+  printStep,
+  printInfo,
+  printSuccess,
+  printError,
+  shortenAddress,
+} from './shared/utils.js';
 
-const __filename = fileURLToPath(import.meta.url)
-const __dirname = dirname(__filename)
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 async function main() {
-  printHeader('08 — ARC-28 Event Subscription')
+  printHeader('08 — ARC-28 Event Subscription');
 
   // Step 1: Connect to LocalNet
-  printStep(1, 'Connect to LocalNet')
-  const algorand = AlgorandClient.defaultLocalNet()
-  const status = await algorand.client.algod.status()
-  printInfo(`Current round: ${status.lastRound.toString()}`)
-  printSuccess('Connected to LocalNet')
+  printStep(1, 'Connect to LocalNet');
+  const algorand = AlgorandClient.defaultLocalNet();
+  const status = await algorand.client.algod.status();
+  printInfo(`Current round: ${status.lastRound.toString()}`);
+  printSuccess('Connected to LocalNet');
 
   // Step 2: Create and fund an account
-  printStep(2, 'Create and fund account')
-  const creator = await algorand.account.fromEnvironment('ARC28_CREATOR', algo(100))
-  const creatorAddr = creator.addr.toString()
-  printInfo(`Creator: ${shortenAddress(creatorAddr)}`)
-  printSuccess('Account created and funded')
+  printStep(2, 'Create and fund account');
+  const creator = await algorand.account.fromEnvironment('ARC28_CREATOR', algo(100));
+  const creatorAddr = creator.addr.toString();
+  printInfo(`Creator: ${shortenAddress(creatorAddr)}`);
+  printSuccess('Account created and funded');
 
   // Step 3: Deploy TestingApp using AppFactory with ARC-56 spec
-  printStep(3, 'Deploy TestingApp via AppFactory')
+  printStep(3, 'Deploy TestingApp via AppFactory');
   const appSpec = JSON.parse(
     readFileSync(join(__dirname, 'shared/artifacts/testing-app.arc56.json'), 'utf-8'),
-  )
+  );
   const factory = new AppFactory({
     appSpec,
     algorand,
     defaultSender: creator.addr,
-  })
+  });
   const { result: createResult, appClient } = await factory.send.bare.create({
     sender: creator.addr,
-  })
-  const appId = createResult.appId
-  const createRound = createResult.confirmation.confirmedRound!
-  printInfo(`App ID: ${appId.toString()}`)
-  printInfo(`Create round: ${createRound.toString()}`)
-  printSuccess('TestingApp deployed')
+  });
+  const appId = createResult.appId;
+  const createRound = createResult.confirmation.confirmedRound!;
+  printInfo(`App ID: ${appId.toString()}`);
+  printInfo(`Create round: ${createRound.toString()}`);
+  printSuccess('TestingApp deployed');
 
   // Step 4: Call emitSwapped(a, b) and emitComplex(a, b, array) to emit events
-  printStep(4, 'Emit ARC-28 events via app calls')
+  printStep(4, 'Emit ARC-28 events via app calls');
 
   const swapResult = await appClient.send.call({
     method: 'emitSwapped',
     args: [42n, 99n],
     sender: creator.addr,
-  })
-  printInfo(`emitSwapped(42, 99) txn: ${swapResult.txIds.at(-1)}`)
+  });
+  printInfo(`emitSwapped(42, 99) txn: ${swapResult.txIds.at(-1)}`);
 
   const complexResult = await appClient.send.call({
     method: 'emitComplex',
     args: [10n, 20n, [1, 2, 3]],
     sender: creator.addr,
-  })
-  printInfo(`emitComplex(10, 20, [1,2,3]) txn: ${complexResult.txIds.at(-1)}`)
-  printSuccess('2 event-emitting app calls sent')
+  });
+  printInfo(`emitComplex(10, 20, [1,2,3]) txn: ${complexResult.txIds.at(-1)}`);
+  printSuccess('2 event-emitting app calls sent');
 
   // Watermark: just before the app creation round
-  const watermarkBefore = createRound - 1n
+  const watermarkBefore = createRound - 1n;
 
   // Step 5: Define ARC-28 event definitions
   // These mirror the events in the ARC-56 spec's "events" section
-  printStep(5, 'Define ARC-28 event definitions')
+  printStep(5, 'Define ARC-28 event definitions');
 
   const swappedEvent: Arc28Event = {
     name: 'Swapped',
@@ -123,7 +134,7 @@ async function main() {
       { type: 'uint64', name: 'field1' },
       { type: 'uint64', name: 'field2' },
     ],
-  }
+  };
 
   const complexEvent: Arc28Event = {
     name: 'Complex',
@@ -131,26 +142,26 @@ async function main() {
       { type: 'uint32[]', name: 'field1' },
       { type: 'uint64', name: 'field2' },
     ],
-  }
+  };
 
-  printInfo(`Swapped signature: Swapped(uint64,uint64)`)
-  printInfo(`Complex signature: Complex(uint32[],uint64)`)
-  printSuccess('Event definitions ready')
+  printInfo(`Swapped signature: Swapped(uint64,uint64)`);
+  printInfo(`Complex signature: Complex(uint32[],uint64)`);
+  printSuccess('Event definitions ready');
 
   // Step 6: Subscribe with arc28Events config (parsing) and arc28Events filter (matching)
   // KEY DISTINCTION:
   //   - Config-level arc28Events (Arc28EventGroup[]): defines HOW to parse events from logs
   //   - Filter-level arc28Events: defines WHICH transactions to match based on emitted events
-  printStep(6, 'Subscribe with arc28Events — event parsing + filtering')
+  printStep(6, 'Subscribe with arc28Events — event parsing + filtering');
 
   const arc28EventGroup: Arc28EventGroup = {
     groupName: 'testing-app-events',
     events: [swappedEvent, complexEvent],
-    processForAppIds: [appId],       // Only parse events from our deployed app
-    continueOnError: true,            // Silently skip unparseable events
-  }
+    processForAppIds: [appId], // Only parse events from our deployed app
+    continueOnError: true, // Silently skip unparseable events
+  };
 
-  let watermark = watermarkBefore
+  let watermark = watermarkBefore;
   const subscriber = new AlgorandSubscriber(
     {
       filters: [
@@ -165,105 +176,125 @@ async function main() {
           },
         },
       ],
-      arc28Events: [arc28EventGroup],  // Config-level: event parsing definitions
+      arc28Events: [arc28EventGroup], // Config-level: event parsing definitions
       syncBehaviour: 'sync-oldest',
       maxRoundsToSync: 100,
       watermarkPersistence: {
         get: async () => watermark,
         set: async (w: bigint) => {
-          watermark = w
+          watermark = w;
         },
       },
     },
     algorand.client.algod,
-  )
+  );
 
-  const result = await subscriber.pollOnce()
-  const matchedTxns = result.subscribedTransactions
+  const result = await subscriber.pollOnce();
+  const matchedTxns = result.subscribedTransactions;
 
-  printInfo(`Matched count: ${matchedTxns.length.toString()}`)
+  printInfo(`Matched count: ${matchedTxns.length.toString()}`);
 
   // Step 7: Inspect parsed ARC-28 events on each matched transaction
-  printStep(7, 'Inspect parsed ARC-28 event data')
+  printStep(7, 'Inspect parsed ARC-28 event data');
 
   for (const txn of matchedTxns) {
-    printInfo(`Transaction: ${txn.id}`)
-    printInfo(`  Filters matched: [${txn.filtersMatched?.join(', ')}]`)
+    printInfo(`Transaction: ${txn.id}`);
+    printInfo(`  Filters matched: [${txn.filtersMatched?.join(', ')}]`);
 
     if (!txn.arc28Events || txn.arc28Events.length === 0) {
-      printInfo(`  Events: none`)
-      continue
+      printInfo(`  Events: none`);
+      continue;
     }
 
     for (const event of txn.arc28Events) {
-      printInfo(`  Event name: ${event.eventName}`)
-      printInfo(`  Event signature: ${event.eventSignature}`)
-      printInfo(`  Event prefix: ${event.eventPrefix}`)
-      printInfo(`  Group name: ${event.groupName}`)
-      printInfo(`  Args (ordered): ${JSON.stringify(event.args, (_, v) => typeof v === 'bigint' ? v.toString() + 'n' : v)}`)
-      printInfo(`  Args (by name): ${JSON.stringify(event.argsByName, (_, v) => typeof v === 'bigint' ? v.toString() + 'n' : v)}`)
+      printInfo(`  Event name: ${event.eventName}`);
+      printInfo(`  Event signature: ${event.eventSignature}`);
+      printInfo(`  Event prefix: ${event.eventPrefix}`);
+      printInfo(`  Group name: ${event.groupName}`);
+      printInfo(
+        `  Args (ordered): ${JSON.stringify(event.args, (_, v) => (typeof v === 'bigint' ? v.toString() + 'n' : v))}`,
+      );
+      printInfo(
+        `  Args (by name): ${JSON.stringify(event.argsByName, (_, v) => (typeof v === 'bigint' ? v.toString() + 'n' : v))}`,
+      );
     }
   }
 
   // Verify: emitSwapped produces 1 Swapped event, emitComplex produces 1 Swapped + 1 Complex
   if (matchedTxns.length !== 2) {
-    throw new Error(`Expected 2 matched transactions, got ${matchedTxns.length}`)
+    throw new Error(`Expected 2 matched transactions, got ${matchedTxns.length}`);
   }
 
   // First transaction: emitSwapped — 1 Swapped event
-  const swapTxn = matchedTxns[0]
+  const swapTxn = matchedTxns[0];
   if (!swapTxn.arc28Events || swapTxn.arc28Events.length !== 1) {
-    throw new Error(`emitSwapped: expected 1 event, got ${swapTxn.arc28Events?.length ?? 0}`)
+    throw new Error(`emitSwapped: expected 1 event, got ${swapTxn.arc28Events?.length ?? 0}`);
   }
   if (swapTxn.arc28Events[0].eventName !== 'Swapped') {
-    throw new Error(`emitSwapped: expected Swapped event, got ${swapTxn.arc28Events[0].eventName}`)
+    throw new Error(`emitSwapped: expected Swapped event, got ${swapTxn.arc28Events[0].eventName}`);
   }
   if (swapTxn.arc28Events[0].args[0] !== 42n || swapTxn.arc28Events[0].args[1] !== 99n) {
-    throw new Error('emitSwapped: unexpected args')
+    throw new Error('emitSwapped: unexpected args');
   }
-  if (swapTxn.arc28Events[0].argsByName['field1'] !== 42n || swapTxn.arc28Events[0].argsByName['field2'] !== 99n) {
-    throw new Error('emitSwapped: unexpected argsByName')
+  if (
+    swapTxn.arc28Events[0].argsByName['field1'] !== 42n ||
+    swapTxn.arc28Events[0].argsByName['field2'] !== 99n
+  ) {
+    throw new Error('emitSwapped: unexpected argsByName');
   }
-  printSuccess('emitSwapped: Swapped event parsed correctly (field1=42, field2=99)')
+  printSuccess('emitSwapped: Swapped event parsed correctly (field1=42, field2=99)');
 
   // Second transaction: emitComplex — 1 Swapped + 1 Complex event
-  const complexTxn = matchedTxns[1]
+  const complexTxn = matchedTxns[1];
   if (!complexTxn.arc28Events || complexTxn.arc28Events.length !== 2) {
-    throw new Error(`emitComplex: expected 2 events, got ${complexTxn.arc28Events?.length ?? 0}`)
+    throw new Error(`emitComplex: expected 2 events, got ${complexTxn.arc28Events?.length ?? 0}`);
   }
   if (complexTxn.arc28Events[0].eventName !== 'Swapped') {
-    throw new Error(`emitComplex: first event should be Swapped, got ${complexTxn.arc28Events[0].eventName}`)
+    throw new Error(
+      `emitComplex: first event should be Swapped, got ${complexTxn.arc28Events[0].eventName}`,
+    );
   }
   if (complexTxn.arc28Events[1].eventName !== 'Complex') {
-    throw new Error(`emitComplex: second event should be Complex, got ${complexTxn.arc28Events[1].eventName}`)
+    throw new Error(
+      `emitComplex: second event should be Complex, got ${complexTxn.arc28Events[1].eventName}`,
+    );
   }
-  printSuccess('emitComplex: Swapped + Complex events parsed correctly')
+  printSuccess('emitComplex: Swapped + Complex events parsed correctly');
 
   // Step 8: Demonstrate continueOnError behavior
-  printStep(8, 'Demonstrate continueOnError: true')
-  printInfo(`continueOnError: true — if an event log cannot be decoded, a warning is logged and the event is skipped`)
-  printInfo(`Behavior: Without continueOnError, a parse failure would throw an error and halt processing`)
-  printSuccess('continueOnError: true is set on the event group — unparseable events are silently skipped')
+  printStep(8, 'Demonstrate continueOnError: true');
+  printInfo(
+    `continueOnError: true — if an event log cannot be decoded, a warning is logged and the event is skipped`,
+  );
+  printInfo(
+    `Behavior: Without continueOnError, a parse failure would throw an error and halt processing`,
+  );
+  printSuccess(
+    'continueOnError: true is set on the event group — unparseable events are silently skipped',
+  );
 
   // Step 9: Summary
-  printStep(9, 'Summary')
-  printInfo(`App ID: ${appId.toString()}`)
-  printInfo(`Event group: "${arc28EventGroup.groupName}" with ${arc28EventGroup.events.length} event definitions`)
-  printInfo(`processForAppIds: [${appId}] — only parse events from this app`)
-  printInfo(`continueOnError: true — skip unparseable events`)
-  printInfo(`Config-level arc28Events: Defines HOW events are parsed from app call logs`)
-  printInfo(`Filter-level arc28Events: Defines WHICH transactions to match (by group + event name)`)
-  printInfo(`emitSwapped result: 1 Swapped event with args [42n, 99n]`)
-  printInfo(`emitComplex result: 2 events: Swapped [10n, 20n] + Complex [[1,2,3], 20n]`)
+  printStep(9, 'Summary');
+  printInfo(`App ID: ${appId.toString()}`);
+  printInfo(
+    `Event group: "${arc28EventGroup.groupName}" with ${arc28EventGroup.events.length} event definitions`,
+  );
+  printInfo(`processForAppIds: [${appId}] — only parse events from this app`);
+  printInfo(`continueOnError: true — skip unparseable events`);
+  printInfo(`Config-level arc28Events: Defines HOW events are parsed from app call logs`);
+  printInfo(
+    `Filter-level arc28Events: Defines WHICH transactions to match (by group + event name)`,
+  );
+  printInfo(`emitSwapped result: 1 Swapped event with args [42n, 99n]`);
+  printInfo(`emitComplex result: 2 events: Swapped [10n, 20n] + Complex [[1,2,3], 20n]`);
 
-  printHeader('Example complete')
+  printHeader('Example complete');
 }
 
-main().catch((err) => {
-  printError(err.message)
-  process.exit(1)
-})
-
+main().catch(err => {
+  printError(err.message);
+  process.exit(1);
+});
 ```
 
 ---

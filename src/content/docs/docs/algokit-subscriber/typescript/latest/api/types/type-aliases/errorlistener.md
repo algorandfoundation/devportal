@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "ErrorListener"
+title: 'ErrorListener'
 ---
 
 > **ErrorListener** = (`error`) => `Promise`\<`void`\> \| `void`

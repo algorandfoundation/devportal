@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "BytesCompat"
+title: 'BytesCompat'
 ---
 
 > **BytesCompat** = [`bytes`](/algorand-typescript/api/index/type-aliases/bytes/) \| `string`

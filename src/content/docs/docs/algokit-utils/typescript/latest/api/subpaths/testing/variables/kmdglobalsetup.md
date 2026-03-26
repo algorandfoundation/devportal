@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "kmdGlobalSetup"
+title: 'kmdGlobalSetup'
 ---
 
 > `const` **kmdGlobalSetup**: () => `Promise`\<() => `Promise`\<`void`\>\>

@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "BlockMetadata"
+title: 'BlockMetadata'
 ---
 
 Defined in: [src/types/subscription.ts:33](https://github.com/algorandfoundation/algokit-subscriber-ts/blob/main/src/types/subscription.ts#L33)
@@ -19,7 +19,7 @@ Defined in: [src/types/subscription.ts:53](https://github.com/algorandfoundation
 
 Full count of transactions and inner transactions (recursively) in this block.
 
-***
+---
 
 ### genesisHash
 
@@ -29,7 +29,7 @@ Defined in: [src/types/subscription.ts:43](https://github.com/algorandfoundation
 
 The base64 genesis hash of the chain.
 
-***
+---
 
 ### genesisId
 
@@ -39,7 +39,7 @@ Defined in: [src/types/subscription.ts:41](https://github.com/algorandfoundation
 
 The genesis ID of the chain.
 
-***
+---
 
 ### hash?
 
@@ -49,7 +49,7 @@ Defined in: [src/types/subscription.ts:35](https://github.com/algorandfoundation
 
 The base64 block hash.
 
-***
+---
 
 ### parentTransactionCount
 
@@ -59,7 +59,7 @@ Defined in: [src/types/subscription.ts:51](https://github.com/algorandfoundation
 
 Count of parent transactions in this block
 
-***
+---
 
 ### participationUpdates?
 
@@ -69,7 +69,7 @@ Defined in: [src/types/subscription.ts:68](https://github.com/algorandfoundation
 
 Participation account data that needs to be checked/acted on by the network.
 
-***
+---
 
 ### previousBlockHash?
 
@@ -79,7 +79,7 @@ Defined in: [src/types/subscription.ts:45](https://github.com/algorandfoundation
 
 The base64 previous block hash.
 
-***
+---
 
 ### proposer?
 
@@ -89,7 +89,7 @@ Defined in: [src/types/subscription.ts:70](https://github.com/algorandfoundation
 
 Address of the proposer of this block
 
-***
+---
 
 ### rewards?
 
@@ -99,7 +99,7 @@ Defined in: [src/types/subscription.ts:49](https://github.com/algorandfoundation
 
 Fields relating to rewards
 
-***
+---
 
 ### round
 
@@ -109,7 +109,7 @@ Defined in: [src/types/subscription.ts:37](https://github.com/algorandfoundation
 
 The round of the block.
 
-***
+---
 
 ### seed
 
@@ -119,7 +119,7 @@ Defined in: [src/types/subscription.ts:47](https://github.com/algorandfoundation
 
 The base64 seed of the block.
 
-***
+---
 
 ### stateProofTracking?
 
@@ -129,7 +129,7 @@ Defined in: [src/types/subscription.ts:64](https://github.com/algorandfoundation
 
 Tracks the status of state proofs.
 
-***
+---
 
 ### timestamp
 
@@ -139,7 +139,7 @@ Defined in: [src/types/subscription.ts:39](https://github.com/algorandfoundation
 
 Block creation timestamp in seconds since epoch
 
-***
+---
 
 ### transactionsRoot
 
@@ -148,9 +148,9 @@ Block creation timestamp in seconds since epoch
 Defined in: [src/types/subscription.ts:58](https://github.com/algorandfoundation/algokit-subscriber-ts/blob/main/src/types/subscription.ts#L58)
 
 TransactionsRoot authenticates the set of transactions appearing in the block. More specifically, it's the root of a merkle tree whose leaves are the block's Txids, in lexicographic order. For the empty block, it's 0. Note that the TxnRoot does not authenticate the signatures on the transactions, only the transactions themselves. Two blocks with the same transactions but in a different order and with different signatures will have the same TxnRoot.
-Pattern : "^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==\|[A-Za-z0-9+/]{3}=)?$"
+Pattern : "^(?:[A-Za-z0-9+/]{4})\*(?:[A-Za-z0-9+/]{2}==\|[A-Za-z0-9+/]{3}=)?$"
 
-***
+---
 
 ### transactionsRootSha256
 
@@ -160,7 +160,7 @@ Defined in: [src/types/subscription.ts:60](https://github.com/algorandfoundation
 
 TransactionsRootSHA256 is an auxiliary TransactionRoot, built using a vector commitment instead of a merkle tree, and SHA256 hash function instead of the default SHA512_256. This commitment can be used on environments where only the SHA256 function exists.
 
-***
+---
 
 ### txnCounter
 
@@ -168,9 +168,9 @@ TransactionsRootSHA256 is an auxiliary TransactionRoot, built using a vector com
 
 Defined in: [src/types/subscription.ts:55](https://github.com/algorandfoundation/algokit-subscriber-ts/blob/main/src/types/subscription.ts#L55)
 
-Number of the next transaction that will be committed after this block.  It is 0 when no transactions have ever been committed (since TxnCounter started being supported).
+Number of the next transaction that will be committed after this block. It is 0 when no transactions have ever been committed (since TxnCounter started being supported).
 
-***
+---
 
 ### upgradeState?
 
@@ -180,7 +180,7 @@ Defined in: [src/types/subscription.ts:62](https://github.com/algorandfoundation
 
 Fields relating to a protocol upgrade.
 
-***
+---
 
 ### upgradeVote?
 

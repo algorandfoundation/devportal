@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "ecdsaVerify"
+title: 'ecdsaVerify'
 ---
 
 > **ecdsaVerify**(`v`, `a`, `b`, `c`, `d`, `e`): `boolean`

@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "AssetTransferFields"
+title: 'AssetTransferFields'
 ---
 
 Defined in: [itxn.ts:771](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/itxn.ts#L771)
@@ -22,7 +22,7 @@ Defined in: [itxn.ts:811](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 value in Asset's units
 
-***
+---
 
 ### assetCloseTo?
 
@@ -32,7 +32,7 @@ Defined in: [itxn.ts:823](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 32 byte address
 
-***
+---
 
 ### assetReceiver?
 
@@ -42,7 +42,7 @@ Defined in: [itxn.ts:819](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 32 byte address
 
-***
+---
 
 ### assetSender?
 
@@ -52,7 +52,7 @@ Defined in: [itxn.ts:815](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 32 byte address. Source of assets if Sender is the Asset's Clawback address.
 
-***
+---
 
 ### fee?
 
@@ -62,7 +62,7 @@ Defined in: [itxn.ts:779](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 microalgos
 
-***
+---
 
 ### firstValid?
 
@@ -72,7 +72,7 @@ Defined in: [itxn.ts:783](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 round number
 
-***
+---
 
 ### firstValidTime?
 
@@ -82,7 +82,7 @@ Defined in: [itxn.ts:787](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 UNIX timestamp of block before txn.FirstValid. Fails if negative
 
-***
+---
 
 ### lastValid?
 
@@ -92,7 +92,7 @@ Defined in: [itxn.ts:791](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 round number
 
-***
+---
 
 ### lease?
 
@@ -102,7 +102,7 @@ Defined in: [itxn.ts:799](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 32 byte lease value
 
-***
+---
 
 ### note?
 
@@ -112,7 +112,7 @@ Defined in: [itxn.ts:795](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 Any data up to 1024 bytes
 
-***
+---
 
 ### rekeyTo?
 
@@ -122,7 +122,7 @@ Defined in: [itxn.ts:803](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 32 byte Sender's new AuthAddr
 
-***
+---
 
 ### sender?
 
@@ -132,7 +132,7 @@ Defined in: [itxn.ts:775](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 32 byte address
 
-***
+---
 
 ### xferAsset?
 

@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "setBit"
+title: 'setBit'
 ---
 
 ## Call Signature

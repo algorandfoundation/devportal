@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "AssetHolding"
+title: 'AssetHolding'
 ---
 
 > `const` **AssetHolding**: `object`

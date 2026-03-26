@@ -13,10 +13,7 @@
   { "label": "CLI Guide", "slug": "cli" },
   {
     "label": "Reference",
-    "items": [
-      { "slug": "reference/abi-routing" },
-      { "slug": "reference/guiding-principles" }
-    ]
+    "items": [{ "slug": "reference/abi-routing" }, { "slug": "reference/guiding-principles" }]
   },
   { "label": "Migration Guides", "slug": "migration-guides" },
   {

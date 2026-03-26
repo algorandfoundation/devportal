@@ -1,6 +1,6 @@
 ---
-title: "Algo amount handling"
-description: "Algo amount handling is one of the core capabilities provided by AlgoKit Utils. It allows you to reliably and tersely specify amounts of microAlgo and Algo and safely convert between them."
+title: 'Algo amount handling'
+description: 'Algo amount handling is one of the core capabilities provided by AlgoKit Utils. It allows you to reliably and tersely specify amounts of microAlgo and Algo and safely convert between them.'
 ---
 
 Algo amount handling is one of the core capabilities provided by AlgoKit Utils. It allows you to reliably and tersely specify amounts of microAlgo and Algo and safely convert between them.
@@ -41,14 +41,14 @@ The `AlgoAmount` class has properties to return Algo and microAlgo:
 
 `AlgoAmount` objects support the following comparison operators against other `AlgoAmount` instances or plain `int` values (treated as microAlgo):
 
-| Operator | Description |
-| -------- | ----------- |
-| `==` | Equal to |
-| `!=` | Not equal to |
-| `<` | Less than |
-| `<=` | Less than or equal to |
-| `>` | Greater than |
-| `>=` | Greater than or equal to |
+| Operator | Description              |
+| -------- | ------------------------ |
+| `==`     | Equal to                 |
+| `!=`     | Not equal to             |
+| `<`      | Less than                |
+| `<=`     | Less than or equal to    |
+| `>`      | Greater than             |
+| `>=`     | Greater than or equal to |
 
 > [!NOTE]
 > Only `__eq__` and `__lt__` are explicitly defined. The remaining operators (`!=`, `<=`, `>`, `>=`) are derived automatically via Python's [`@total_ordering`](https://docs.python.org/3/library/functools.html#functools.total_ordering) decorator.
@@ -81,15 +81,15 @@ total = transaction_fees(3)              # AlgoAmount(micro_algo=3_000)
 
 `AlgoAmount` supports arithmetic operations with other `AlgoAmount` instances or plain `int` values (treated as microAlgo):
 
-| Operator | Right operand | Return type | Description |
-| -------- | ------------- | ----------- | ----------- |
-| `+` | `AlgoAmount \| int` | `AlgoAmount` | Addition |
-| `-` | `AlgoAmount \| int` | `AlgoAmount` | Subtraction |
-| `*` | `int` | `AlgoAmount` | Scalar multiplication |
-| `/` | `int` | `AlgoAmount` | Division (integer, floors result) |
-| `//` | `int` | `AlgoAmount` | Floor division |
-| `+=` | `AlgoAmount \| int` | `AlgoAmount` | In-place addition |
-| `-=` | `AlgoAmount \| int` | `AlgoAmount` | In-place subtraction |
+| Operator | Right operand       | Return type  | Description                       |
+| -------- | ------------------- | ------------ | --------------------------------- |
+| `+`      | `AlgoAmount \| int` | `AlgoAmount` | Addition                          |
+| `-`      | `AlgoAmount \| int` | `AlgoAmount` | Subtraction                       |
+| `*`      | `int`               | `AlgoAmount` | Scalar multiplication             |
+| `/`      | `int`               | `AlgoAmount` | Division (integer, floors result) |
+| `//`     | `int`               | `AlgoAmount` | Floor division                    |
+| `+=`     | `AlgoAmount \| int` | `AlgoAmount` | In-place addition                 |
+| `-=`     | `AlgoAmount \| int` | `AlgoAmount` | In-place subtraction              |
 
 Division by zero raises `ZeroDivisionError`.
 

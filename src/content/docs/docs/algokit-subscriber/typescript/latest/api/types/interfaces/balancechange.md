@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "BalanceChange"
+title: 'BalanceChange'
 ---
 
 Defined in: [src/types/subscription.ts:181](https://github.com/algorandfoundation/algokit-subscriber-ts/blob/main/src/types/subscription.ts#L181)
@@ -19,7 +19,7 @@ Defined in: [src/types/subscription.ts:183](https://github.com/algorandfoundatio
 
 The address that the balance change is for.
 
-***
+---
 
 ### amount
 
@@ -29,7 +29,7 @@ Defined in: [src/types/subscription.ts:187](https://github.com/algorandfoundatio
 
 The amount of the balance change in smallest divisible unit or microAlgos.
 
-***
+---
 
 ### assetId
 
@@ -39,7 +39,7 @@ Defined in: [src/types/subscription.ts:185](https://github.com/algorandfoundatio
 
 The asset ID of the balance change, or 0 for Algos.
 
-***
+---
 
 ### roles
 

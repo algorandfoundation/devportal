@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "uint64"
+title: 'uint64'
 ---
 
 > **uint64** = `object` & `number`

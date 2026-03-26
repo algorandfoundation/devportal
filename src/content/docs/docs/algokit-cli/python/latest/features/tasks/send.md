@@ -1,5 +1,5 @@
 ---
-title: "AlgoKit Task Send"
+title: 'AlgoKit Task Send'
 ---
 
 The AlgoKit Send feature allows you to send signed Algorand transaction(s) to a specified network using the AlgoKit CLI. This feature supports sending single or multiple transactions, either provided directly as a base64 encoded string or from a binary file.

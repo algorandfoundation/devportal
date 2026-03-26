@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "NamedTransactionFilter"
+title: 'NamedTransactionFilter'
 ---
 
 Defined in: [src/types/subscription.ts:283](https://github.com/algorandfoundation/algokit-subscriber-ts/blob/main/src/types/subscription.ts#L283)
@@ -23,7 +23,7 @@ Defined in: [src/types/subscription.ts:287](https://github.com/algorandfoundatio
 
 The filter itself.
 
-***
+---
 
 ### name
 

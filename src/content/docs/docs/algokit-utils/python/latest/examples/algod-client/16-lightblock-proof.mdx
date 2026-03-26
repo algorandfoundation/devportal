@@ -1,6 +1,6 @@
 ---
-title: "Light Block Header Proof"
-description: "This example demonstrates how to get light block header proofs using:"
+title: 'Light Block Header Proof'
+description: 'This example demonstrates how to get light block header proofs using:'
 sidebar:
   order: 16
 ---
@@ -10,15 +10,16 @@ sidebar:
 ## Description
 
 This example demonstrates how to get light block header proofs using:
+
 - light_block_header_proof(round) - Get the proof for a block header
- Light block header proofs are part of Algorand's State Proof system, which allows light clients and other blockchains to verify Algorand's blockchain state without needing to sync all blocks or trust intermediaries.
- Key concepts:
+  Light block header proofs are part of Algorand's State Proof system, which allows light clients and other blockchains to verify Algorand's blockchain state without needing to sync all blocks or trust intermediaries.
+  Key concepts:
 - State proofs are generated at regular intervals (every 256 rounds on MainNet)
 - Light block header proofs verify that a block header is part of the state proof interval
 - The proof uses a vector commitment tree (similar to Merkle tree) structure
 - Only blocks within a state proof interval have available light block header proofs
- Prerequisites:
- Note: On LocalNet in dev mode, state proofs may not be generated, so this example demonstrates the API call and handles the expected errors gracefully.
+  Prerequisites:
+  Note: On LocalNet in dev mode, state proofs may not be generated, so this example demonstrates the API call and handles the expected errors gracefully.
 
 ## Prerequisites
 

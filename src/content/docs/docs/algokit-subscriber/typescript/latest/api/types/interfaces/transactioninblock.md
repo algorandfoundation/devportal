@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "TransactionInBlock"
+title: 'TransactionInBlock'
 ---
 
 Defined in: [src/types/block.ts:7](https://github.com/algorandfoundation/algokit-subscriber-ts/blob/main/src/types/block.ts#L7)
@@ -20,7 +20,7 @@ Defined in: [src/types/block.ts:62](https://github.com/algorandfoundation/algoki
 
 The asset close amount if the sender asset position was closed from this transaction.
 
-***
+---
 
 ### closeAmount?
 
@@ -30,7 +30,7 @@ Defined in: [src/types/block.ts:64](https://github.com/algorandfoundation/algoki
 
 The ALGO close amount if the sender account was closed from this transaction.
 
-***
+---
 
 ### closeRewards?
 
@@ -40,7 +40,7 @@ Defined in: [src/types/block.ts:68](https://github.com/algorandfoundation/algoki
 
 Rewards in microalgos applied to the close remainder to account.
 
-***
+---
 
 ### createdAppId?
 
@@ -50,7 +50,7 @@ Defined in: [src/types/block.ts:60](https://github.com/algorandfoundation/algoki
 
 The app ID if an app was created from this transaction.
 
-***
+---
 
 ### createdAssetId?
 
@@ -60,7 +60,7 @@ Defined in: [src/types/block.ts:58](https://github.com/algorandfoundation/algoki
 
 The asset ID if an asset was created from this transaction.
 
-***
+---
 
 ### genesisHash?
 
@@ -70,7 +70,7 @@ Defined in: [src/types/block.ts:48](https://github.com/algorandfoundation/algoki
 
 The binary genesis hash of the network the transaction is within.
 
-***
+---
 
 ### genesisId?
 
@@ -80,7 +80,7 @@ Defined in: [src/types/block.ts:50](https://github.com/algorandfoundation/algoki
 
 The string genesis ID of the network the transaction is within.
 
-***
+---
 
 ### intraRoundOffset
 
@@ -93,15 +93,10 @@ The offset of the transaction within the round including inner transactions.
 #### Example
 
 ```ts
-- 0
- - 1
-   - 2
-   - 3
-     - 4
- - 5
+-0 - 1 - 2 - 3 - 4 - 5;
 ```
 
-***
+---
 
 ### logs?
 
@@ -111,7 +106,7 @@ Defined in: [src/types/block.ts:66](https://github.com/algorandfoundation/algoki
 
 Any logs that were issued as a result of this transaction.
 
-***
+---
 
 ### parentIntraRoundOffset?
 
@@ -124,15 +119,10 @@ The intra-round offset of the parent transaction if this is an inner transaction
 #### Example
 
 ```ts
-- 0
- - 1
-   - 1
-   - 1
-     - 1
- - 2
+-0 - 1 - 1 - 1 - 1 - 2;
 ```
 
-***
+---
 
 ### parentTransactionId?
 
@@ -142,7 +132,7 @@ Defined in: [src/types/block.ts:46](https://github.com/algorandfoundation/algoki
 
 The ID of the parent transaction if this is an inner transaction.
 
-***
+---
 
 ### receiverRewards?
 
@@ -152,7 +142,7 @@ Defined in: [src/types/block.ts:72](https://github.com/algorandfoundation/algoki
 
 Rewards in microalgos applied to the receiver account.
 
-***
+---
 
 ### roundNumber
 
@@ -162,7 +152,7 @@ Defined in: [src/types/block.ts:52](https://github.com/algorandfoundation/algoki
 
 The round number of the block the transaction is within.
 
-***
+---
 
 ### roundTimestamp
 
@@ -172,7 +162,7 @@ Defined in: [src/types/block.ts:54](https://github.com/algorandfoundation/algoki
 
 The round unix timestamp of the block the transaction is within.
 
-***
+---
 
 ### senderRewards?
 
@@ -182,7 +172,7 @@ Defined in: [src/types/block.ts:70](https://github.com/algorandfoundation/algoki
 
 Rewards in microalgos applied to the sender account.
 
-***
+---
 
 ### signedTxnWithAD
 
@@ -192,7 +182,7 @@ Defined in: [src/types/block.ts:11](https://github.com/algorandfoundation/algoki
 
 The signed transaction with apply data from the block
 
-***
+---
 
 ### transaction
 
@@ -202,7 +192,7 @@ Defined in: [src/types/block.ts:56](https://github.com/algorandfoundation/algoki
 
 The transaction as a `Transaction` object.
 
-***
+---
 
 ### transactionId
 

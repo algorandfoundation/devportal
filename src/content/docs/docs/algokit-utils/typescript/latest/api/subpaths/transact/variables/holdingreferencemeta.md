@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "HoldingReferenceMeta"
+title: 'HoldingReferenceMeta'
 ---
 
 > `const` **HoldingReferenceMeta**: `ObjectModelMetadata`\<[`HoldingReference`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/type-aliases/holdingreference/)\>

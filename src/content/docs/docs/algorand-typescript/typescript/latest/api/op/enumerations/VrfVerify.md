@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "VrfVerify"
+title: 'VrfVerify'
 ---
 
 Defined in: [op.ts:49](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/op.ts#L49)

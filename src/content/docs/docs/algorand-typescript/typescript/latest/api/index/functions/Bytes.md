@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "Bytes"
+title: 'Bytes'
 ---
 
 ## Call Signature
@@ -57,7 +57,7 @@ Create a byte array from a utf8 string
 
 #### TLength
 
-`TLength` *extends* [`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
+`TLength` _extends_ [`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
 
 ### Parameters
 
@@ -103,7 +103,7 @@ No op, returns the provided byte array.
 
 #### TLength
 
-`TLength` *extends* [`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
+`TLength` _extends_ [`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
 
 ### Parameters
 
@@ -149,7 +149,7 @@ Create a byte array from a biguint value encoded as a variable length big-endian
 
 #### TLength
 
-`TLength` *extends* [`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
+`TLength` _extends_ [`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
 
 ### Parameters
 
@@ -195,7 +195,7 @@ Create a byte array from a uint64 value encoded as a a variable length 64-bit nu
 
 #### TLength
 
-`TLength` *extends* [`uint64`](/algorand-typescript/api/index/type-aliases/uint64/) = `8`
+`TLength` _extends_ [`uint64`](/algorand-typescript/api/index/type-aliases/uint64/) = `8`
 
 ### Parameters
 
@@ -241,7 +241,7 @@ Create a byte array from an Iterable<uint64> where each item is interpreted as a
 
 #### TLength
 
-`TLength` *extends* [`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
+`TLength` _extends_ [`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
 
 ### Parameters
 
@@ -281,7 +281,7 @@ Create an empty byte array
 
 #### TLength
 
-`TLength` *extends* [`uint64`](/algorand-typescript/api/index/type-aliases/uint64/) = [`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
+`TLength` _extends_ [`uint64`](/algorand-typescript/api/index/type-aliases/uint64/) = [`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
 
 ### Parameters
 

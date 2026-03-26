@@ -1,5 +1,5 @@
 ---
-title: "AlgoKit Generate"
+title: 'AlgoKit Generate'
 ---
 
 The `algokit generate` [command](/docs/algokit-cli/python/latest/cli/#generate) is used to generate components used in an AlgoKit project. It also allows for custom generate commands which are loaded from the .algokit.toml file in your project directory.
@@ -69,24 +69,24 @@ response = app_client.hello(name="World")
 
 ```typescript
 // A similar working example can be seen in the algokit python template with typescript deployer, when using TypeScript deployment
-import { HelloWorldAppClient } from "./artifacts/HelloWorldApp/client";
+import { HelloWorldAppClient } from './artifacts/HelloWorldApp/client';
 
 const appClient = new HelloWorldAppClient(
   {
-    resolveBy: "creatorAndName",
+    resolveBy: 'creatorAndName',
     findExistingUsing: indexer,
     sender: deployer,
     creatorAddress: deployer.addr,
   },
-  algod
+  algod,
 );
 const app = await appClient.deploy({
   allowDelete: isLocal,
   allowUpdate: isLocal,
-  onSchemaBreak: isLocal ? "replace" : "fail",
-  onUpdate: isLocal ? "update" : "fail",
+  onSchemaBreak: isLocal ? 'replace' : 'fail',
+  onUpdate: isLocal ? 'update' : 'fail',
 });
-const response = await appClient.hello({ name: "world" });
+const response = await appClient.hello({ name: 'world' });
 ```
 
 ### Examples

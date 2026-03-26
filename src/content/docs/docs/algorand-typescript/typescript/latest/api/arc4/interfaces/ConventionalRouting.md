@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "ConventionalRouting"
+title: 'ConventionalRouting'
 ---
 
 Defined in: [arc4/index.ts:31](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/arc4/index.ts#L31)
@@ -25,7 +25,7 @@ Defined in: [arc4/index.ts:35](https://github.com/algorandfoundation/puya-ts/blo
 
 The function to invoke when closing out of this application
 
-***
+---
 
 ### createApplication?
 
@@ -35,7 +35,7 @@ Defined in: [arc4/index.ts:39](https://github.com/algorandfoundation/puya-ts/blo
 
 The function to invoke when creating this application
 
-***
+---
 
 ### deleteApplication?
 
@@ -45,7 +45,7 @@ Defined in: [arc4/index.ts:43](https://github.com/algorandfoundation/puya-ts/blo
 
 The function to invoke when deleting this application
 
-***
+---
 
 ### optInToApplication?
 
@@ -55,7 +55,7 @@ Defined in: [arc4/index.ts:47](https://github.com/algorandfoundation/puya-ts/blo
 
 The function to invoke when opting in to this application
 
-***
+---
 
 ### updateApplication?
 

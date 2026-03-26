@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "AssetTransferInnerTxn"
+title: 'AssetTransferInnerTxn'
 ---
 
 Defined in: [itxn.ts:273](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/itxn.ts#L273)
@@ -19,7 +19,7 @@ Defined in: [itxn.ts:332](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 value in Asset's units
 
-***
+---
 
 ### assetCloseTo
 
@@ -29,7 +29,7 @@ Defined in: [itxn.ts:344](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 32 byte address
 
-***
+---
 
 ### assetReceiver
 
@@ -39,7 +39,7 @@ Defined in: [itxn.ts:340](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 32 byte address
 
-***
+---
 
 ### assetSender
 
@@ -49,7 +49,7 @@ Defined in: [itxn.ts:336](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 32 byte address. Source of assets if Sender is the Asset's Clawback address.
 
-***
+---
 
 ### fee
 
@@ -59,7 +59,7 @@ Defined in: [itxn.ts:283](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 microalgos
 
-***
+---
 
 ### firstValid
 
@@ -69,7 +69,7 @@ Defined in: [itxn.ts:287](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 round number
 
-***
+---
 
 ### firstValidTime
 
@@ -79,7 +79,7 @@ Defined in: [itxn.ts:291](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 UNIX timestamp of block before txn.FirstValid. Fails if negative
 
-***
+---
 
 ### groupIndex
 
@@ -90,7 +90,7 @@ Defined in: [itxn.ts:316](https://github.com/algorandfoundation/puya-ts/blob/mai
 Position of this transaction within an atomic group
 A stand-alone transaction is implicitly element 0 in a group of 1
 
-***
+---
 
 ### lastValid
 
@@ -100,7 +100,7 @@ Defined in: [itxn.ts:295](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 round number
 
-***
+---
 
 ### lease
 
@@ -110,7 +110,7 @@ Defined in: [itxn.ts:303](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 32 byte lease value
 
-***
+---
 
 ### note
 
@@ -120,7 +120,7 @@ Defined in: [itxn.ts:299](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 Any data up to 1024 bytes
 
-***
+---
 
 ### rekeyTo
 
@@ -130,7 +130,7 @@ Defined in: [itxn.ts:324](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 32 byte Sender's new AuthAddr
 
-***
+---
 
 ### sender
 
@@ -140,7 +140,7 @@ Defined in: [itxn.ts:279](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 32 byte address
 
-***
+---
 
 ### txnId
 
@@ -150,7 +150,7 @@ Defined in: [itxn.ts:320](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 The computed ID for this transaction. 32 bytes.
 
-***
+---
 
 ### type
 
@@ -160,7 +160,7 @@ Defined in: [itxn.ts:311](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 Transaction type
 
-***
+---
 
 ### typeBytes
 
@@ -170,7 +170,7 @@ Defined in: [itxn.ts:307](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 Transaction type as bytes
 
-***
+---
 
 ### xferAsset
 

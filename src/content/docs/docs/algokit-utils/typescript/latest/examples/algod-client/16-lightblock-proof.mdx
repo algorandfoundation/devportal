@@ -1,6 +1,6 @@
 ---
-title: "Light Block Header Proof"
-description: "This example demonstrates how to get light block header proofs using:"
+title: 'Light Block Header Proof'
+description: 'This example demonstrates how to get light block header proofs using:'
 sidebar:
   order: 16
 ---
@@ -10,9 +10,10 @@ sidebar:
 ## Description
 
 This example demonstrates how to get light block header proofs using:
+
 - lightBlockHeaderProof(round) - Get the proof for a block header
- Light block header proofs are part of Algorand's State Proof system, which allows light clients and other blockchains to verify Algorand's blockchain state without needing to sync all blocks or trust intermediaries.
- Key concepts:
+  Light block header proofs are part of Algorand's State Proof system, which allows light clients and other blockchains to verify Algorand's blockchain state without needing to sync all blocks or trust intermediaries.
+  Key concepts:
 - State proofs are generated at regular intervals (every 256 rounds on MainNet)
 - Light block header proofs verify that a block header is part of the state proof interval
 - The proof uses a vector commitment tree (similar to Merkle tree) structure
@@ -60,7 +61,7 @@ npm run example algod_client/16-lightblock-proof.ts
  * demonstrates the API call and handles the expected errors gracefully.
  */
 
-import type { LightBlockHeaderProof } from '@algorandfoundation/algokit-utils/algod-client'
+import type { LightBlockHeaderProof } from '@algorandfoundation/algokit-utils/algod-client';
 import {
   createAlgodClient,
   printError,
@@ -68,65 +69,67 @@ import {
   printInfo,
   printStep,
   printSuccess,
-} from '../shared/utils.js'
+} from '../shared/utils.js';
 
 async function main() {
-  printHeader('Light Block Header Proof Example')
+  printHeader('Light Block Header Proof Example');
 
   // Create clients
-  const algod = createAlgodClient()
+  const algod = createAlgodClient();
 
   // =========================================================================
   // Step 1: Understand Light Block Header Proofs and State Proofs
   // =========================================================================
-  printStep(1, 'Understanding light block header proofs and state proofs')
+  printStep(1, 'Understanding light block header proofs and state proofs');
 
-  printInfo('Light block header proofs are part of Algorand\'s State Proof system.')
-  printInfo('')
-  printInfo('What are State Proofs?')
-  printInfo('  - Cryptographic proofs that attest to the state of the Algorand blockchain')
-  printInfo('  - Generated at regular intervals (StateProofInterval, typically 256 rounds)')
-  printInfo('  - Allow light clients to verify blockchain state without syncing all blocks')
-  printInfo('  - Enable secure cross-chain bridges and interoperability')
-  printInfo('')
-  printInfo('What are Light Block Header Proofs?')
-  printInfo('  - Prove that a specific block header is included in a state proof interval')
-  printInfo('  - Use a vector commitment tree (Merkle-like structure)')
-  printInfo('  - The proof contains: index, treedepth, and the proof data')
-  printInfo('  - Combined with the block header, allows verification against the state proof')
-  printInfo('')
+  printInfo("Light block header proofs are part of Algorand's State Proof system.");
+  printInfo('');
+  printInfo('What are State Proofs?');
+  printInfo('  - Cryptographic proofs that attest to the state of the Algorand blockchain');
+  printInfo('  - Generated at regular intervals (StateProofInterval, typically 256 rounds)');
+  printInfo('  - Allow light clients to verify blockchain state without syncing all blocks');
+  printInfo('  - Enable secure cross-chain bridges and interoperability');
+  printInfo('');
+  printInfo('What are Light Block Header Proofs?');
+  printInfo('  - Prove that a specific block header is included in a state proof interval');
+  printInfo('  - Use a vector commitment tree (Merkle-like structure)');
+  printInfo('  - The proof contains: index, treedepth, and the proof data');
+  printInfo('  - Combined with the block header, allows verification against the state proof');
+  printInfo('');
 
   // =========================================================================
   // Step 2: Get current round information
   // =========================================================================
-  printStep(2, 'Getting current round information')
+  printStep(2, 'Getting current round information');
 
-  const status = await algod.status()
-  printInfo(`Current round: ${status.lastRound.toLocaleString('en-US')}`)
-  printInfo('')
+  const status = await algod.status();
+  printInfo(`Current round: ${status.lastRound.toLocaleString('en-US')}`);
+  printInfo('');
 
   // =========================================================================
   // Step 3: Understand state proof intervals
   // =========================================================================
-  printStep(3, 'Understanding state proof intervals')
+  printStep(3, 'Understanding state proof intervals');
 
-  printInfo('State proofs are generated at regular intervals:')
-  printInfo('  - MainNet/TestNet: Every 256 rounds (StateProofInterval)')
-  printInfo('  - Light block header proofs are only available for rounds within a state proof interval')
-  printInfo('  - The interval typically covers rounds [N*256 + 1, (N+1)*256] for some N')
-  printInfo('')
-  printInfo('Relationship between blocks and state proofs:')
-  printInfo('  - Each state proof covers a range of block headers')
-  printInfo('  - Light block header proofs verify membership in this range')
-  printInfo('  - The proof index indicates position within the state proof\'s vector commitment')
-  printInfo('')
+  printInfo('State proofs are generated at regular intervals:');
+  printInfo('  - MainNet/TestNet: Every 256 rounds (StateProofInterval)');
+  printInfo(
+    '  - Light block header proofs are only available for rounds within a state proof interval',
+  );
+  printInfo('  - The interval typically covers rounds [N*256 + 1, (N+1)*256] for some N');
+  printInfo('');
+  printInfo('Relationship between blocks and state proofs:');
+  printInfo('  - Each state proof covers a range of block headers');
+  printInfo('  - Light block header proofs verify membership in this range');
+  printInfo("  - The proof index indicates position within the state proof's vector commitment");
+  printInfo('');
 
   // Try to get consensus parameters to show state proof interval
   try {
-    const version = await algod.version()
-    printInfo(`Genesis ID: ${version.genesisId}`)
-    printInfo(`Genesis Hash: ${Buffer.from(version.genesisHashB64).toString('base64')}`)
-    printInfo('')
+    const version = await algod.version();
+    printInfo(`Genesis ID: ${version.genesisId}`);
+    printInfo(`Genesis Hash: ${Buffer.from(version.genesisHashB64).toString('base64')}`);
+    printInfo('');
   } catch (error) {
     // Ignore version errors
   }
@@ -134,194 +137,205 @@ async function main() {
   // =========================================================================
   // Step 4: Try to get light block header proof for current round
   // =========================================================================
-  printStep(4, 'Attempting to get light block header proof for current round')
+  printStep(4, 'Attempting to get light block header proof for current round');
 
-  printInfo(`Trying lightBlockHeaderProof(${status.lastRound})...`)
-  printInfo('')
+  printInfo(`Trying lightBlockHeaderProof(${status.lastRound})...`);
+  printInfo('');
 
   try {
-    const proof = await algod.lightBlockHeaderProof(status.lastRound)
-    printSuccess('Successfully retrieved light block header proof!')
-    printInfo('')
-    displayLightBlockHeaderProof(proof, status.lastRound)
+    const proof = await algod.lightBlockHeaderProof(status.lastRound);
+    printSuccess('Successfully retrieved light block header proof!');
+    printInfo('');
+    displayLightBlockHeaderProof(proof, status.lastRound);
   } catch (error) {
-    const errorMessage = error instanceof Error ? error.message : String(error)
+    const errorMessage = error instanceof Error ? error.message : String(error);
 
     // Handle expected cases where proof is not available
-    if (errorMessage.includes('state proof') || errorMessage.includes('not found') || errorMessage.includes('404')) {
-      printInfo('Light block header proof is not available for this round.')
-      printInfo('This is expected behavior - proofs are only available for specific rounds.')
-      printInfo('')
-      printInfo('Possible reasons:')
-      printInfo('  1. The round is not part of a completed state proof interval')
-      printInfo('  2. State proofs are not enabled on this network (LocalNet dev mode)')
-      printInfo('  3. The block is too recent (state proof not yet generated)')
-      printInfo('  4. The block is too old (state proof data may be pruned)')
-    } else if (errorMessage.includes('501') || errorMessage.includes('not supported') || errorMessage.includes('Not Implemented')) {
-      printInfo('Light block header proofs are not supported on this node.')
-      printInfo('This feature requires a node with state proof support enabled.')
+    if (
+      errorMessage.includes('state proof') ||
+      errorMessage.includes('not found') ||
+      errorMessage.includes('404')
+    ) {
+      printInfo('Light block header proof is not available for this round.');
+      printInfo('This is expected behavior - proofs are only available for specific rounds.');
+      printInfo('');
+      printInfo('Possible reasons:');
+      printInfo('  1. The round is not part of a completed state proof interval');
+      printInfo('  2. State proofs are not enabled on this network (LocalNet dev mode)');
+      printInfo('  3. The block is too recent (state proof not yet generated)');
+      printInfo('  4. The block is too old (state proof data may be pruned)');
+    } else if (
+      errorMessage.includes('501') ||
+      errorMessage.includes('not supported') ||
+      errorMessage.includes('Not Implemented')
+    ) {
+      printInfo('Light block header proofs are not supported on this node.');
+      printInfo('This feature requires a node with state proof support enabled.');
     } else {
-      printError(`Error: ${errorMessage}`)
+      printError(`Error: ${errorMessage}`);
     }
-    printInfo('')
+    printInfo('');
   }
 
   // =========================================================================
   // Step 5: Try multiple rounds to find available proofs
   // =========================================================================
-  printStep(5, 'Scanning rounds for available light block header proofs')
+  printStep(5, 'Scanning rounds for available light block header proofs');
 
-  printInfo('Checking several rounds to see if any have available proofs...')
-  printInfo('')
+  printInfo('Checking several rounds to see if any have available proofs...');
+  printInfo('');
 
   // Try a range of rounds
   const roundsToTry = [
-    BigInt(1),                      // Very early round
-    BigInt(256),                    // First state proof interval boundary
-    BigInt(512),                    // Second interval boundary
-    status.lastRound - 256n,        // One interval ago
-    status.lastRound - 100n,        // Recent rounds
-    status.lastRound,               // Current round
-  ].filter(r => r > 0n)
+    BigInt(1), // Very early round
+    BigInt(256), // First state proof interval boundary
+    BigInt(512), // Second interval boundary
+    status.lastRound - 256n, // One interval ago
+    status.lastRound - 100n, // Recent rounds
+    status.lastRound, // Current round
+  ].filter(r => r > 0n);
 
-  let foundProof = false
+  let foundProof = false;
   for (const round of roundsToTry) {
     try {
-      const proof = await algod.lightBlockHeaderProof(round)
-      printSuccess(`Found proof for round ${round.toLocaleString('en-US')}!`)
-      displayLightBlockHeaderProof(proof, round)
-      foundProof = true
-      break
+      const proof = await algod.lightBlockHeaderProof(round);
+      printSuccess(`Found proof for round ${round.toLocaleString('en-US')}!`);
+      displayLightBlockHeaderProof(proof, round);
+      foundProof = true;
+      break;
     } catch {
-      printInfo(`Round ${round.toLocaleString('en-US')}: No proof available`)
+      printInfo(`Round ${round.toLocaleString('en-US')}: No proof available`);
     }
   }
 
   if (!foundProof) {
-    printInfo('')
-    printInfo('No light block header proofs found for any tested round.')
-    printInfo('This is expected on LocalNet in dev mode where state proofs are not generated.')
+    printInfo('');
+    printInfo('No light block header proofs found for any tested round.');
+    printInfo('This is expected on LocalNet in dev mode where state proofs are not generated.');
   }
-  printInfo('')
+  printInfo('');
 
   // =========================================================================
   // Step 6: Demonstrate error handling for invalid rounds
   // =========================================================================
-  printStep(6, 'Demonstrating error handling for invalid rounds')
+  printStep(6, 'Demonstrating error handling for invalid rounds');
 
-  printInfo('Testing error handling for various invalid round scenarios:')
-  printInfo('')
+  printInfo('Testing error handling for various invalid round scenarios:');
+  printInfo('');
 
   // Try a future round
-  const futureRound = status.lastRound + 10000n
-  printInfo(`  Future round (${futureRound.toLocaleString('en-US')}):`)
+  const futureRound = status.lastRound + 10000n;
+  printInfo(`  Future round (${futureRound.toLocaleString('en-US')}):`);
   try {
-    await algod.lightBlockHeaderProof(futureRound)
-    printInfo('    Unexpectedly succeeded')
+    await algod.lightBlockHeaderProof(futureRound);
+    printInfo('    Unexpectedly succeeded');
   } catch (error) {
-    const errorMessage = error instanceof Error ? error.message : String(error)
-    printInfo(`    Error (expected): ${errorMessage.substring(0, 80)}...`)
+    const errorMessage = error instanceof Error ? error.message : String(error);
+    printInfo(`    Error (expected): ${errorMessage.substring(0, 80)}...`);
   }
-  printInfo('')
+  printInfo('');
 
   // Try round 0 (invalid)
-  printInfo('  Round 0 (invalid):')
+  printInfo('  Round 0 (invalid):');
   try {
-    await algod.lightBlockHeaderProof(0)
-    printInfo('    Unexpectedly succeeded')
+    await algod.lightBlockHeaderProof(0);
+    printInfo('    Unexpectedly succeeded');
   } catch (error) {
-    const errorMessage = error instanceof Error ? error.message : String(error)
-    printInfo(`    Error (expected): ${errorMessage.substring(0, 80)}...`)
+    const errorMessage = error instanceof Error ? error.message : String(error);
+    printInfo(`    Error (expected): ${errorMessage.substring(0, 80)}...`);
   }
-  printInfo('')
+  printInfo('');
 
   // =========================================================================
   // Summary
   // =========================================================================
-  printHeader('Summary')
+  printHeader('Summary');
 
-  printInfo('Light Block Header Proof - Key Points:')
-  printInfo('')
-  printInfo('1. Part of Algorand\'s State Proof System:')
-  printInfo('   - Enables trustless verification of Algorand\'s blockchain state')
-  printInfo('   - Critical for cross-chain bridges and light clients')
-  printInfo('   - Uses post-quantum secure cryptographic techniques (Falcon signatures)')
-  printInfo('')
-  printInfo('2. State Proof Intervals:')
-  printInfo('   - Proofs are generated every StateProofInterval rounds (256 on MainNet)')
-  printInfo('   - Each interval commits to a range of block headers')
-  printInfo('   - Light block header proofs verify membership in this commitment')
-  printInfo('')
-  printInfo('3. Availability:')
-  printInfo('   - Only available for rounds within completed state proof intervals')
-  printInfo('   - Not available on LocalNet dev mode (state proofs not generated)')
-  printInfo('   - May not be available for very old rounds (data pruning)')
-  printInfo('')
-  printInfo('LightBlockHeaderProof Type Structure:')
-  printInfo('  index: number      - Position of the block header in the vector commitment')
-  printInfo('  treedepth: number  - Depth of the vector commitment tree')
-  printInfo('  proof: Uint8Array  - The encoded proof data (Merkle path)')
-  printInfo('')
-  printInfo('API Method:')
-  printInfo('  lightBlockHeaderProof(round: number | bigint): Promise<LightBlockHeaderProof>')
-  printInfo('')
-  printInfo('Use Cases:')
-  printInfo('  1. Cross-Chain Bridges:')
-  printInfo('     - Verify Algorand transactions on other blockchains')
-  printInfo('     - Provide cryptographic proof of block inclusion')
-  printInfo('  2. Light Clients:')
-  printInfo('     - Verify blockchain state without full node sync')
-  printInfo('     - Reduce bandwidth and storage requirements')
-  printInfo('  3. Auditing:')
-  printInfo('     - Prove block existence at a specific round')
-  printInfo('     - Third-party verification without trust assumptions')
-  printInfo('')
-  printInfo('Verification Process:')
-  printInfo('  1. Get the light block header proof for the target round')
-  printInfo('  2. Get the block header for that round')
-  printInfo('  3. Verify the proof against the state proof\'s vector commitment root')
-  printInfo('  4. Verify the state proof signature (signed by supermajority of stake)')
-  printInfo('  5. If all checks pass, the block header is cryptographically verified')
+  printInfo('Light Block Header Proof - Key Points:');
+  printInfo('');
+  printInfo("1. Part of Algorand's State Proof System:");
+  printInfo("   - Enables trustless verification of Algorand's blockchain state");
+  printInfo('   - Critical for cross-chain bridges and light clients');
+  printInfo('   - Uses post-quantum secure cryptographic techniques (Falcon signatures)');
+  printInfo('');
+  printInfo('2. State Proof Intervals:');
+  printInfo('   - Proofs are generated every StateProofInterval rounds (256 on MainNet)');
+  printInfo('   - Each interval commits to a range of block headers');
+  printInfo('   - Light block header proofs verify membership in this commitment');
+  printInfo('');
+  printInfo('3. Availability:');
+  printInfo('   - Only available for rounds within completed state proof intervals');
+  printInfo('   - Not available on LocalNet dev mode (state proofs not generated)');
+  printInfo('   - May not be available for very old rounds (data pruning)');
+  printInfo('');
+  printInfo('LightBlockHeaderProof Type Structure:');
+  printInfo('  index: number      - Position of the block header in the vector commitment');
+  printInfo('  treedepth: number  - Depth of the vector commitment tree');
+  printInfo('  proof: Uint8Array  - The encoded proof data (Merkle path)');
+  printInfo('');
+  printInfo('API Method:');
+  printInfo('  lightBlockHeaderProof(round: number | bigint): Promise<LightBlockHeaderProof>');
+  printInfo('');
+  printInfo('Use Cases:');
+  printInfo('  1. Cross-Chain Bridges:');
+  printInfo('     - Verify Algorand transactions on other blockchains');
+  printInfo('     - Provide cryptographic proof of block inclusion');
+  printInfo('  2. Light Clients:');
+  printInfo('     - Verify blockchain state without full node sync');
+  printInfo('     - Reduce bandwidth and storage requirements');
+  printInfo('  3. Auditing:');
+  printInfo('     - Prove block existence at a specific round');
+  printInfo('     - Third-party verification without trust assumptions');
+  printInfo('');
+  printInfo('Verification Process:');
+  printInfo('  1. Get the light block header proof for the target round');
+  printInfo('  2. Get the block header for that round');
+  printInfo("  3. Verify the proof against the state proof's vector commitment root");
+  printInfo('  4. Verify the state proof signature (signed by supermajority of stake)');
+  printInfo('  5. If all checks pass, the block header is cryptographically verified');
 }
 
 /**
  * Display details from a LightBlockHeaderProof
  */
 function displayLightBlockHeaderProof(proof: LightBlockHeaderProof, round: bigint): void {
-  printInfo('  LightBlockHeaderProof fields:')
-  printInfo(`    Round: ${round.toLocaleString('en-US')}`)
-  printInfo('')
-  printInfo(`    index: ${proof.index}`)
-  printInfo('           Position of the block header in the vector commitment tree')
-  printInfo('           (i.e., which leaf in the tree corresponds to this block)')
-  printInfo('')
-  printInfo(`    treedepth: ${proof.treedepth}`)
-  printInfo(`               Number of edges from leaf to root (tree can hold ${Math.pow(2, proof.treedepth)} headers)`)
-  printInfo('')
+  printInfo('  LightBlockHeaderProof fields:');
+  printInfo(`    Round: ${round.toLocaleString('en-US')}`);
+  printInfo('');
+  printInfo(`    index: ${proof.index}`);
+  printInfo('           Position of the block header in the vector commitment tree');
+  printInfo('           (i.e., which leaf in the tree corresponds to this block)');
+  printInfo('');
+  printInfo(`    treedepth: ${proof.treedepth}`);
+  printInfo(
+    `               Number of edges from leaf to root (tree can hold ${Math.pow(2, proof.treedepth)} headers)`,
+  );
+  printInfo('');
   if (proof.proof.length > 0) {
-    printInfo(`    proof: ${Buffer.from(proof.proof).toString('hex').substring(0, 64)}...`)
-    printInfo(`           (${proof.proof.length} bytes total - Merkle path data)`)
+    printInfo(`    proof: ${Buffer.from(proof.proof).toString('hex').substring(0, 64)}...`);
+    printInfo(`           (${proof.proof.length} bytes total - Merkle path data)`);
   } else {
-    printInfo('    proof: (empty)')
-    printInfo('           (Single header in commitment, no sibling hashes needed)')
+    printInfo('    proof: (empty)');
+    printInfo('           (Single header in commitment, no sibling hashes needed)');
   }
-  printInfo('')
+  printInfo('');
 
   // Calculate the state proof interval this block belongs to
-  const stateProofInterval = 256n // Default interval
-  const intervalNumber = round / stateProofInterval
-  const intervalStart = intervalNumber * stateProofInterval + 1n
-  const intervalEnd = (intervalNumber + 1n) * stateProofInterval
-  printInfo(`    State Proof Interval: ${intervalNumber.toLocaleString('en-US')}`)
-  printInfo(`    Interval Range: rounds ${intervalStart.toLocaleString('en-US')} to ${intervalEnd.toLocaleString('en-US')}`)
-  printInfo('')
+  const stateProofInterval = 256n; // Default interval
+  const intervalNumber = round / stateProofInterval;
+  const intervalStart = intervalNumber * stateProofInterval + 1n;
+  const intervalEnd = (intervalNumber + 1n) * stateProofInterval;
+  printInfo(`    State Proof Interval: ${intervalNumber.toLocaleString('en-US')}`);
+  printInfo(
+    `    Interval Range: rounds ${intervalStart.toLocaleString('en-US')} to ${intervalEnd.toLocaleString('en-US')}`,
+  );
+  printInfo('');
 }
 
-main().catch((error) => {
-  console.error('Fatal error:', error)
-  process.exit(1)
-})
-
+main().catch(error => {
+  console.error('Fatal error:', error);
+  process.exit(1);
+});
 ```
 
 ---

@@ -1,6 +1,6 @@
 ---
-title: "Multisig Account Management"
-description: "This example demonstrates how to manage multisig accounts using KMD:"
+title: 'Multisig Account Management'
+description: 'This example demonstrates how to manage multisig accounts using KMD:'
 sidebar:
   order: 9
 ---
@@ -10,16 +10,17 @@ sidebar:
 ## Description
 
 This example demonstrates how to manage multisig accounts using KMD:
+
 - list_multisig() - List all multisig accounts in a wallet
 - export_multisig() - Get the multisig preimage information
 - delete_multisig() - Remove a multisig account from the wallet
- Key concepts:
+  Key concepts:
 - Multisig accounts can be listed to see all multisigs in a wallet
 - The multisig preimage contains the original parameters: publicKeys, threshold, version
 - Deleting a multisig only removes it from the wallet, not from the blockchain
 - Funds in a deleted multisig address remain on the blockchain
- Prerequisites:
- Covered operations:
+  Prerequisites:
+  Covered operations:
 - generate_key() - Generate keys to use as multisig participants
 - import_multisig() - Create a multisig account from public keys
 - list_multisig() - List all multisig accounts in the wallet

@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "EllipticCurve"
+title: 'EllipticCurve'
 ---
 
 > `const` **EllipticCurve**: `object`

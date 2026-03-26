@@ -1,6 +1,6 @@
 ---
-title: "Transaction composer"
-description: "The `TransactionComposer` class allows you to easily compose one or more compliant Algorand transactions and execute and/or simulate them."
+title: 'Transaction composer'
+description: 'The `TransactionComposer` class allows you to easily compose one or more compliant Algorand transactions and execute and/or simulate them.'
 ---
 
 The `TransactionComposer` class allows you to easily compose one or more compliant Algorand transactions and execute and/or simulate them.
@@ -63,26 +63,26 @@ result = (
 
 Each `add_*` method accepts a corresponding params dataclass. All param types are defined in `algokit_utils.transactions.types` and extend `CommonTxnParams`.
 
-| Composer method | Params type | Key fields (beyond common) |
-| --- | --- | --- |
-| `add_payment` | `PaymentParams` | `receiver`, `amount`, `close_remainder_to` |
-| `add_asset_create` | `AssetCreateParams` | `total`, `asset_name`, `unit_name`, `url`, `decimals`, `default_frozen`, `manager`, `reserve`, `freeze`, `clawback`, `metadata_hash` |
-| `add_asset_config` | `AssetConfigParams` | `asset_id`, `manager`, `reserve`, `freeze`, `clawback` |
-| `add_asset_freeze` | `AssetFreezeParams` | `asset_id`, `account`, `frozen` |
-| `add_asset_destroy` | `AssetDestroyParams` | `asset_id` |
-| `add_asset_transfer` | `AssetTransferParams` | `asset_id`, `amount`, `receiver`, `close_asset_to`, `clawback_target` |
-| `add_asset_opt_in` | `AssetOptInParams` | `asset_id` |
-| `add_asset_opt_out` | `AssetOptOutParams` | `asset_id`, `creator` |
-| `add_app_call` | `AppCallParams` | `app_id`, `args`, `on_complete`, reference arrays |
-| `add_app_create` | `AppCreateParams` | `approval_program`, `clear_state_program`, `schema`, `on_complete`, `args`, `extra_program_pages`, reference arrays |
-| `add_app_update` | `AppUpdateParams` | `app_id`, `approval_program`, `clear_state_program`, `on_complete`, `args`, reference arrays |
-| `add_app_delete` | `AppDeleteParams` | `app_id`, `on_complete`, `args`, reference arrays |
-| `add_app_call_method_call` | `AppCallMethodCallParams` | `app_id`, `method`, `args`, `on_complete`, reference arrays |
-| `add_app_create_method_call` | `AppCreateMethodCallParams` | `method`, `approval_program`, `clear_state_program`, `schema`, `extra_program_pages`, reference arrays |
-| `add_app_update_method_call` | `AppUpdateMethodCallParams` | `app_id`, `method`, `approval_program`, `clear_state_program`, reference arrays |
-| `add_app_delete_method_call` | `AppDeleteMethodCallParams` | `app_id`, `method`, reference arrays |
-| `add_online_key_registration` | `OnlineKeyRegistrationParams` | `vote_key`, `selection_key`, `state_proof_key`, `vote_first`, `vote_last`, `vote_key_dilution`, `nonparticipation` |
-| `add_offline_key_registration` | `OfflineKeyRegistrationParams` | `prevent_account_from_ever_participating_again` |
+| Composer method                | Params type                    | Key fields (beyond common)                                                                                                           |
+| ------------------------------ | ------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------ |
+| `add_payment`                  | `PaymentParams`                | `receiver`, `amount`, `close_remainder_to`                                                                                           |
+| `add_asset_create`             | `AssetCreateParams`            | `total`, `asset_name`, `unit_name`, `url`, `decimals`, `default_frozen`, `manager`, `reserve`, `freeze`, `clawback`, `metadata_hash` |
+| `add_asset_config`             | `AssetConfigParams`            | `asset_id`, `manager`, `reserve`, `freeze`, `clawback`                                                                               |
+| `add_asset_freeze`             | `AssetFreezeParams`            | `asset_id`, `account`, `frozen`                                                                                                      |
+| `add_asset_destroy`            | `AssetDestroyParams`           | `asset_id`                                                                                                                           |
+| `add_asset_transfer`           | `AssetTransferParams`          | `asset_id`, `amount`, `receiver`, `close_asset_to`, `clawback_target`                                                                |
+| `add_asset_opt_in`             | `AssetOptInParams`             | `asset_id`                                                                                                                           |
+| `add_asset_opt_out`            | `AssetOptOutParams`            | `asset_id`, `creator`                                                                                                                |
+| `add_app_call`                 | `AppCallParams`                | `app_id`, `args`, `on_complete`, reference arrays                                                                                    |
+| `add_app_create`               | `AppCreateParams`              | `approval_program`, `clear_state_program`, `schema`, `on_complete`, `args`, `extra_program_pages`, reference arrays                  |
+| `add_app_update`               | `AppUpdateParams`              | `app_id`, `approval_program`, `clear_state_program`, `on_complete`, `args`, reference arrays                                         |
+| `add_app_delete`               | `AppDeleteParams`              | `app_id`, `on_complete`, `args`, reference arrays                                                                                    |
+| `add_app_call_method_call`     | `AppCallMethodCallParams`      | `app_id`, `method`, `args`, `on_complete`, reference arrays                                                                          |
+| `add_app_create_method_call`   | `AppCreateMethodCallParams`    | `method`, `approval_program`, `clear_state_program`, `schema`, `extra_program_pages`, reference arrays                               |
+| `add_app_update_method_call`   | `AppUpdateMethodCallParams`    | `app_id`, `method`, `approval_program`, `clear_state_program`, reference arrays                                                      |
+| `add_app_delete_method_call`   | `AppDeleteMethodCallParams`    | `app_id`, `method`, reference arrays                                                                                                 |
+| `add_online_key_registration`  | `OnlineKeyRegistrationParams`  | `vote_key`, `selection_key`, `state_proof_key`, `vote_first`, `vote_last`, `vote_key_dilution`, `nonparticipation`                   |
+| `add_offline_key_registration` | `OfflineKeyRegistrationParams` | `prevent_account_from_ever_participating_again`                                                                                      |
 
 > [!NOTE]
 > "Reference arrays" refers to the optional fields `account_references`, `app_references`, `asset_references`, and `box_references` available on all app call param types.
@@ -91,19 +91,19 @@ Each `add_*` method accepts a corresponding params dataclass. All param types ar
 
 All param types inherit these fields from `CommonTxnParams`:
 
-| Field | Type | Description |
-| --- | --- | --- |
-| `sender` | `str` | The address of the account sending the transaction (required) |
-| `signer` | `TransactionSigner \| AddressWithTransactionSigner \| None` | The signer to use; defaults to the registered signer for `sender` |
-| `rekey_to` | `str \| None` | Rekey the sender account to this address |
-| `note` | `bytes \| None` | Arbitrary note to attach |
-| `lease` | `bytes \| None` | Lease to prevent duplicate transactions |
-| `static_fee` | `AlgoAmount \| None` | Exact fee (overrides calculated fee) |
-| `extra_fee` | `AlgoAmount \| None` | Additional fee on top of the calculated fee |
-| `max_fee` | `AlgoAmount \| None` | Maximum fee cap; errors if exceeded |
-| `validity_window` | `int \| None` | Number of rounds the transaction is valid |
-| `first_valid_round` | `int \| None` | Explicit first valid round |
-| `last_valid_round` | `int \| None` | Explicit last valid round |
+| Field               | Type                                                        | Description                                                       |
+| ------------------- | ----------------------------------------------------------- | ----------------------------------------------------------------- |
+| `sender`            | `str`                                                       | The address of the account sending the transaction (required)     |
+| `signer`            | `TransactionSigner \| AddressWithTransactionSigner \| None` | The signer to use; defaults to the registered signer for `sender` |
+| `rekey_to`          | `str \| None`                                               | Rekey the sender account to this address                          |
+| `note`              | `bytes \| None`                                             | Arbitrary note to attach                                          |
+| `lease`             | `bytes \| None`                                             | Lease to prevent duplicate transactions                           |
+| `static_fee`        | `AlgoAmount \| None`                                        | Exact fee (overrides calculated fee)                              |
+| `extra_fee`         | `AlgoAmount \| None`                                        | Additional fee on top of the calculated fee                       |
+| `max_fee`           | `AlgoAmount \| None`                                        | Maximum fee cap; errors if exceeded                               |
+| `validity_window`   | `int \| None`                                               | Number of rounds the transaction is valid                         |
+| `first_valid_round` | `int \| None`                                               | Explicit first valid round                                        |
+| `last_valid_round`  | `int \| None`                                               | Explicit last valid round                                         |
 
 #### Example: `PaymentParams` structure
 
@@ -364,9 +364,9 @@ ErrorTransformer = Callable[[Exception], Exception]
 
 Two guard-rail exceptions are defined in `algokit_utils.transactions.transaction_composer`:
 
-| Exception | Raised when |
-| --- | --- |
-| `ErrorTransformerError` | A transformer itself raises an exception |
+| Exception                           | Raised when                                   |
+| ----------------------------------- | --------------------------------------------- |
+| `ErrorTransformerError`             | A transformer itself raises an exception      |
 | `InvalidErrorTransformerValueError` | A transformer returns a non-`Exception` value |
 
 When a transaction fails, the composer wraps the underlying error into a `TransactionComposerError` (which carries `traces`, `sent_transactions`, and `simulate_response` for debugging) before passing it through the transformer chain.

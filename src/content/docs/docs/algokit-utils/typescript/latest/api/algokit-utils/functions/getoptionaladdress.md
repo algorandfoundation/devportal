@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "getOptionalAddress"
+title: 'getOptionalAddress'
 ---
 
 > **getOptionalAddress**(`addr`): [`Address`](/docs/algokit-utils/typescript/latest/api/algokit-utils/classes/address/) \| `undefined`

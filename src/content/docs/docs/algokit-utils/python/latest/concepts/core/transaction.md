@@ -1,6 +1,6 @@
 ---
-title: "Transaction management"
-description: "Transaction management is one of the core capabilities provided by AlgoKit Utils. It allows you to construct, simulate and send single, or grouped transactions with consistent and highly configurable semantics, including configurable control of transaction notes, logging, fees, multiple sender account types, and sending behaviour."
+title: 'Transaction management'
+description: 'Transaction management is one of the core capabilities provided by AlgoKit Utils. It allows you to construct, simulate and send single, or grouped transactions with consistent and highly configurable semantics, including configurable control of transaction notes, logging, fees, multiple sender account types, and sending behaviour.'
 ---
 
 Transaction management is one of the core capabilities provided by AlgoKit Utils. It allows you to construct, simulate and send single, or grouped transactions with consistent and highly configurable semantics, including configurable control of transaction notes, logging, fees, multiple sender account types, and sending behaviour.
@@ -105,40 +105,40 @@ class SendTransactionComposerResults:
 
 ## Comparison of result types
 
-| Type | `abi_return` | `app_id` / `app_address` | `compiled_approval` / `compiled_clear` | `asset_id` | `simulate_response` |
-| --- | --- | --- | --- | --- | --- |
-| `SendSingleTransactionResult` | — | — | — | — | — |
-| `SendSingleAssetCreateTransactionResult` | — | — | — | yes | — |
-| `SendAppTransactionResult` | `ABIReturn` | — | — | — | — |
-| `SendAppUpdateTransactionResult` | `ABIReturn` | — | yes | — | — |
-| `SendAppCreateTransactionResult` | `ABIReturn` | yes | yes | — | — |
-| `SendAppFactoryTransactionResult` | `Arc56ReturnValueType` | — | — | — | — |
-| `SendAppCreateFactoryTransactionResult` | `Arc56ReturnValueType` | yes | yes | — | — |
-| `SendTransactionComposerResults` | — (list in `returns`) | — | — | — | yes |
+| Type                                     | `abi_return`           | `app_id` / `app_address` | `compiled_approval` / `compiled_clear` | `asset_id` | `simulate_response` |
+| ---------------------------------------- | ---------------------- | ------------------------ | -------------------------------------- | ---------- | ------------------- |
+| `SendSingleTransactionResult`            | —                      | —                        | —                                      | —          | —                   |
+| `SendSingleAssetCreateTransactionResult` | —                      | —                        | —                                      | yes        | —                   |
+| `SendAppTransactionResult`               | `ABIReturn`            | —                        | —                                      | —          | —                   |
+| `SendAppUpdateTransactionResult`         | `ABIReturn`            | —                        | yes                                    | —          | —                   |
+| `SendAppCreateTransactionResult`         | `ABIReturn`            | yes                      | yes                                    | —          | —                   |
+| `SendAppFactoryTransactionResult`        | `Arc56ReturnValueType` | —                        | —                                      | —          | —                   |
+| `SendAppCreateFactoryTransactionResult`  | `Arc56ReturnValueType` | yes                      | yes                                    | —          | —                   |
+| `SendTransactionComposerResults`         | — (list in `returns`)  | —                        | —                                      | —          | yes                 |
 
 ## Where you'll encounter each result type
 
-| Method | Return type |
-| --- | --- |
-| `TransactionComposer.send()` | `SendTransactionComposerResults` |
-| `.send.payment()` | `SendSingleTransactionResult` |
-| `.send.asset_create()` | `SendSingleAssetCreateTransactionResult` |
-| `.send.asset_config()` | `SendSingleTransactionResult` |
-| `.send.asset_freeze()` | `SendSingleTransactionResult` |
-| `.send.asset_destroy()` | `SendSingleTransactionResult` |
-| `.send.asset_transfer()` | `SendSingleTransactionResult` |
-| `.send.asset_opt_in()` | `SendSingleTransactionResult` |
-| `.send.asset_opt_out()` | `SendSingleTransactionResult` |
-| `.send.app_call()` | `SendAppTransactionResult` |
-| `.send.app_create()` | `SendAppCreateTransactionResult` |
-| `.send.app_update()` | `SendAppUpdateTransactionResult` |
-| `.send.app_delete()` | `SendAppTransactionResult` |
-| `.send.app_call_method_call()` | `SendAppTransactionResult` |
-| `.send.app_create_method_call()` | `SendAppCreateTransactionResult` |
-| `.send.app_update_method_call()` | `SendAppUpdateTransactionResult` |
-| `.send.app_delete_method_call()` | `SendAppTransactionResult` |
-| `.send.online_key_registration()` | `SendSingleTransactionResult` |
-| `.send.offline_key_registration()` | `SendSingleTransactionResult` |
+| Method                             | Return type                              |
+| ---------------------------------- | ---------------------------------------- |
+| `TransactionComposer.send()`       | `SendTransactionComposerResults`         |
+| `.send.payment()`                  | `SendSingleTransactionResult`            |
+| `.send.asset_create()`             | `SendSingleAssetCreateTransactionResult` |
+| `.send.asset_config()`             | `SendSingleTransactionResult`            |
+| `.send.asset_freeze()`             | `SendSingleTransactionResult`            |
+| `.send.asset_destroy()`            | `SendSingleTransactionResult`            |
+| `.send.asset_transfer()`           | `SendSingleTransactionResult`            |
+| `.send.asset_opt_in()`             | `SendSingleTransactionResult`            |
+| `.send.asset_opt_out()`            | `SendSingleTransactionResult`            |
+| `.send.app_call()`                 | `SendAppTransactionResult`               |
+| `.send.app_create()`               | `SendAppCreateTransactionResult`         |
+| `.send.app_update()`               | `SendAppUpdateTransactionResult`         |
+| `.send.app_delete()`               | `SendAppTransactionResult`               |
+| `.send.app_call_method_call()`     | `SendAppTransactionResult`               |
+| `.send.app_create_method_call()`   | `SendAppCreateTransactionResult`         |
+| `.send.app_update_method_call()`   | `SendAppUpdateTransactionResult`         |
+| `.send.app_delete_method_call()`   | `SendAppTransactionResult`               |
+| `.send.online_key_registration()`  | `SendSingleTransactionResult`            |
+| `.send.offline_key_registration()` | `SendSingleTransactionResult`            |
 
 ## Usage example
 

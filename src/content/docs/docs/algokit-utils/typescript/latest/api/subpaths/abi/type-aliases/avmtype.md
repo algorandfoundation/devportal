@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "AVMType"
+title: 'AVMType'
 ---
 
 > **AVMType** = [`AVMBytes`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/type-aliases/avmbytes/) \| [`AVMString`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/type-aliases/avmstring/) \| [`AVMUint64`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/type-aliases/avmuint64/)

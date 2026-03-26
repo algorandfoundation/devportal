@@ -2,21 +2,14 @@
 title: AlgoKit Subscriber Python
 description: Subscribe to the Algorand blockchain with a simple, flexible Python library.
 ---
-import { Card, CardGrid, Tabs, TabItem } from "@astrojs/starlight/components";
+
+import { Card, CardGrid, Tabs, TabItem } from '@astrojs/starlight/components';
 
 ## Installation
 
 <Tabs>
-  <TabItem label="pip">
-    ```bash
-    pip install algokit-subscriber
-    ```
-  </TabItem>
-  <TabItem label="uv">
-    ```bash
-    uv add algokit-subscriber
-    ```
-  </TabItem>
+  <TabItem label='pip'>```bash pip install algokit-subscriber ```</TabItem>
+  <TabItem label='uv'>```bash uv add algokit-subscriber ```</TabItem>
 </Tabs>
 
 ## Quick Example
@@ -60,16 +53,16 @@ subscriber.poll_once()
 ## Features
 
 <CardGrid>
-  <Card title="Real-time Subscriptions" icon="rocket">
+  <Card title='Real-time Subscriptions' icon='rocket'>
     Subscribe to transactions at the tip of the chain with low-latency processing.
   </Card>
-  <Card title="Indexing & Catchup" icon="magnifier">
+  <Card title='Indexing & Catchup' icon='magnifier'>
     Build indexes from the beginning of the chain with fast indexer catchup.
   </Card>
-  <Card title="ARC-28 Events" icon="document">
+  <Card title='ARC-28 Events' icon='document'>
     Subscribe to and process ARC-28 events from smart contract calls.
   </Card>
-  <Card title="Resilient Watermarking" icon="approve-check">
+  <Card title='Resilient Watermarking' icon='approve-check'>
     Persist watermarks for reliable at-least-once delivery across outages.
   </Card>
 </CardGrid>

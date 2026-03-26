@@ -1,6 +1,6 @@
 ---
-title: "Inner Transaction Subscription"
-description: "This example demonstrates inner transaction subscription and parent-child relationships."
+title: 'Inner Transaction Subscription'
+description: 'This example demonstrates inner transaction subscription and parent-child relationships.'
 sidebar:
   order: 9
 ---
@@ -10,6 +10,7 @@ sidebar:
 ## Description
 
 This example demonstrates inner transaction subscription and parent-child relationships.
+
 - Subscribe to inner payment transactions by sender/receiver
 - Verify parentTransactionId links to the parent app call
 - Inspect inner transaction ID format
@@ -43,86 +44,94 @@ npx tsx 09-inner-transactions.ts
  * Prerequisites:
  * - LocalNet running (via `algokit localnet start`)
  */
-import { readFileSync } from 'node:fs'
-import { fileURLToPath } from 'node:url'
-import { dirname, join } from 'node:path'
-import { algo, AlgorandClient, AppFactory } from '@algorandfoundation/algokit-utils'
-import { AlgorandSubscriber } from '@algorandfoundation/algokit-subscriber'
-import { printHeader, printStep, printInfo, printSuccess, printError, shortenAddress, formatAlgo } from './shared/utils.js'
+import { readFileSync } from 'node:fs';
+import { fileURLToPath } from 'node:url';
+import { dirname, join } from 'node:path';
+import { algo, AlgorandClient, AppFactory } from '@algorandfoundation/algokit-utils';
+import { AlgorandSubscriber } from '@algorandfoundation/algokit-subscriber';
+import {
+  printHeader,
+  printStep,
+  printInfo,
+  printSuccess,
+  printError,
+  shortenAddress,
+  formatAlgo,
+} from './shared/utils.js';
 
-const __filename = fileURLToPath(import.meta.url)
-const __dirname = dirname(__filename)
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 async function main() {
-  printHeader('09 — Inner Transaction Subscription')
+  printHeader('09 — Inner Transaction Subscription');
 
   // Step 1: Connect to LocalNet
-  printStep(1, 'Connect to LocalNet')
-  const algorand = AlgorandClient.defaultLocalNet()
-  const status = await algorand.client.algod.status()
-  printInfo(`Current round: ${status.lastRound.toString()}`)
-  printSuccess('Connected to LocalNet')
+  printStep(1, 'Connect to LocalNet');
+  const algorand = AlgorandClient.defaultLocalNet();
+  const status = await algorand.client.algod.status();
+  printInfo(`Current round: ${status.lastRound.toString()}`);
+  printSuccess('Connected to LocalNet');
 
   // Step 2: Create and fund an account
-  printStep(2, 'Create and fund account')
-  const caller = await algorand.account.fromEnvironment('INNER_TXN_CALLER', algo(100))
-  const callerAddr = caller.addr.toString()
-  printInfo(`Caller: ${shortenAddress(callerAddr)}`)
-  printSuccess('Account created and funded')
+  printStep(2, 'Create and fund account');
+  const caller = await algorand.account.fromEnvironment('INNER_TXN_CALLER', algo(100));
+  const callerAddr = caller.addr.toString();
+  printInfo(`Caller: ${shortenAddress(callerAddr)}`);
+  printSuccess('Account created and funded');
 
   // Step 3: Deploy TestingApp using AppFactory with ARC-56 spec
-  printStep(3, 'Deploy TestingApp via AppFactory')
+  printStep(3, 'Deploy TestingApp via AppFactory');
   const appSpec = JSON.parse(
     readFileSync(join(__dirname, 'shared/artifacts/testing-app.arc56.json'), 'utf-8'),
-  )
+  );
   const factory = new AppFactory({
     appSpec,
     algorand,
     defaultSender: caller.addr,
-  })
+  });
   const { result: createResult, appClient } = await factory.send.bare.create({
     sender: caller.addr,
-  })
-  const appId = createResult.appId
-  const createRound = createResult.confirmation.confirmedRound!
-  printInfo(`App ID: ${appId.toString()}`)
-  printInfo(`Create round: ${createRound.toString()}`)
-  printSuccess('TestingApp deployed')
+  });
+  const appId = createResult.appId;
+  const createRound = createResult.confirmation.confirmedRound!;
+  printInfo(`App ID: ${appId.toString()}`);
+  printInfo(`Create round: ${createRound.toString()}`);
+  printSuccess('TestingApp deployed');
 
   // Step 4: Fund the app account so it can issue inner payment transactions
-  printStep(4, 'Fund app account for inner transactions')
-  const appAddress = appClient.appAddress.toString()
-  printInfo(`App address: ${shortenAddress(appAddress)}`)
+  printStep(4, 'Fund app account for inner transactions');
+  const appAddress = appClient.appAddress.toString();
+  printInfo(`App address: ${shortenAddress(appAddress)}`);
 
   await algorand.send.payment({
     sender: caller.addr,
     receiver: appClient.appAddress,
     amount: algo(10),
-  })
-  printSuccess('App account funded with 10 ALGO')
+  });
+  printSuccess('App account funded with 10 ALGO');
 
   // Step 5: Call issue_transfer_to_sender to create an inner payment transaction
-  printStep(5, 'Call issue_transfer_to_sender (creates inner payment)')
-  const transferAmount = 1_000_000n // 1 ALGO in microAlgos
+  printStep(5, 'Call issue_transfer_to_sender (creates inner payment)');
+  const transferAmount = 1_000_000n; // 1 ALGO in microAlgos
   const issueResult = await appClient.send.call({
     method: 'issue_transfer_to_sender',
     args: [transferAmount],
     sender: caller.addr,
-    extraFee: algo(0.001),  // Cover the inner transaction fee
-  })
-  const appCallTxnId = issueResult.txIds.at(-1)
-  const appCallRound = issueResult.confirmation.confirmedRound!
-  printInfo(`App call txn: ${appCallTxnId}`)
-  printInfo(`Confirmed round: ${appCallRound.toString()}`)
-  printInfo(`Transfer amount: ${formatAlgo(transferAmount)}`)
-  printSuccess('issue_transfer_to_sender called — inner payment created')
+    extraFee: algo(0.001), // Cover the inner transaction fee
+  });
+  const appCallTxnId = issueResult.txIds.at(-1);
+  const appCallRound = issueResult.confirmation.confirmedRound!;
+  printInfo(`App call txn: ${appCallTxnId}`);
+  printInfo(`Confirmed round: ${appCallRound.toString()}`);
+  printInfo(`Transfer amount: ${formatAlgo(transferAmount)}`);
+  printSuccess('issue_transfer_to_sender called — inner payment created');
 
   // Watermark: just before the app call round to capture only the inner transaction
-  const watermarkBefore = appCallRound - 1n
+  const watermarkBefore = appCallRound - 1n;
 
   // Step 6: Subscribe with a payment filter matching the inner transaction by receiver
-  printStep(6, 'Subscribe with payment filter matching inner transaction')
-  let watermark = watermarkBefore
+  printStep(6, 'Subscribe with payment filter matching inner transaction');
+  let watermark = watermarkBefore;
   const subscriber = new AlgorandSubscriber(
     {
       filters: [
@@ -139,51 +148,51 @@ async function main() {
       watermarkPersistence: {
         get: async () => watermark,
         set: async (w: bigint) => {
-          watermark = w
+          watermark = w;
         },
       },
     },
     algorand.client.algod,
-  )
+  );
 
-  const result = await subscriber.pollOnce()
-  const matchedTxns = result.subscribedTransactions
+  const result = await subscriber.pollOnce();
+  const matchedTxns = result.subscribedTransactions;
 
-  printInfo(`Matched count: ${matchedTxns.length.toString()}`)
+  printInfo(`Matched count: ${matchedTxns.length.toString()}`);
 
   if (matchedTxns.length !== 1) {
-    throw new Error(`Expected 1 matched inner transaction, got ${matchedTxns.length}`)
+    throw new Error(`Expected 1 matched inner transaction, got ${matchedTxns.length}`);
   }
-  printSuccess('Payment filter matched 1 inner transaction')
+  printSuccess('Payment filter matched 1 inner transaction');
 
-  const innerTxn = matchedTxns[0]
+  const innerTxn = matchedTxns[0];
 
   // Step 7: Show inner transaction has parentTransactionId set
-  printStep(7, 'Inspect inner transaction — parentTransactionId')
-  printInfo(`Inner txn ID: ${innerTxn.id}`)
-  printInfo(`parentTransactionId: ${innerTxn.parentTransactionId ?? 'undefined'}`)
+  printStep(7, 'Inspect inner transaction — parentTransactionId');
+  printInfo(`Inner txn ID: ${innerTxn.id}`);
+  printInfo(`parentTransactionId: ${innerTxn.parentTransactionId ?? 'undefined'}`);
 
   if (!innerTxn.parentTransactionId) {
-    throw new Error('Expected inner transaction to have parentTransactionId set')
+    throw new Error('Expected inner transaction to have parentTransactionId set');
   }
-  printSuccess('parentTransactionId is set on the inner transaction')
+  printSuccess('parentTransactionId is set on the inner transaction');
 
   // Step 8: Show inner transaction ID follows <rootTxId>/inner/<N> format
-  printStep(8, 'Verify inner transaction ID format')
-  const innerIdPattern = /^[A-Z0-9]+\/inner\/\d+$/
-  printInfo(`Expected format: <rootTxId>/inner/<N>`)
-  printInfo(`Actual ID: ${innerTxn.id}`)
+  printStep(8, 'Verify inner transaction ID format');
+  const innerIdPattern = /^[A-Z0-9]+\/inner\/\d+$/;
+  printInfo(`Expected format: <rootTxId>/inner/<N>`);
+  printInfo(`Actual ID: ${innerTxn.id}`);
 
   if (!innerIdPattern.test(innerTxn.id)) {
-    throw new Error(`Inner transaction ID does not match expected format: ${innerTxn.id}`)
+    throw new Error(`Inner transaction ID does not match expected format: ${innerTxn.id}`);
   }
-  printSuccess(`Inner transaction ID matches <rootTxId>/inner/<N> format`)
+  printSuccess(`Inner transaction ID matches <rootTxId>/inner/<N> format`);
 
   // Step 9: Show parent transaction's innerTxns array contains the inner transaction
-  printStep(9, 'Verify parent has innerTxns containing this transaction')
+  printStep(9, 'Verify parent has innerTxns containing this transaction');
 
   // Poll again to get the parent app call transaction
-  let watermark2 = watermarkBefore
+  let watermark2 = watermarkBefore;
   const parentSubscriber = new AlgorandSubscriber(
     {
       filters: [
@@ -200,82 +209,85 @@ async function main() {
       watermarkPersistence: {
         get: async () => watermark2,
         set: async (w: bigint) => {
-          watermark2 = w
+          watermark2 = w;
         },
       },
     },
     algorand.client.algod,
-  )
+  );
 
-  const parentResult = await parentSubscriber.pollOnce()
-  const parentTxn = parentResult.subscribedTransactions.find((t) => t.id === innerTxn.parentTransactionId)
+  const parentResult = await parentSubscriber.pollOnce();
+  const parentTxn = parentResult.subscribedTransactions.find(
+    t => t.id === innerTxn.parentTransactionId,
+  );
 
   if (!parentTxn) {
-    throw new Error(`Could not find parent transaction with ID: ${innerTxn.parentTransactionId}`)
+    throw new Error(`Could not find parent transaction with ID: ${innerTxn.parentTransactionId}`);
   }
 
-  printInfo(`Parent txn ID: ${parentTxn.id}`)
-  printInfo(`Parent innerTxns count: ${(parentTxn.innerTxns?.length ?? 0).toString()}`)
+  printInfo(`Parent txn ID: ${parentTxn.id}`);
+  printInfo(`Parent innerTxns count: ${(parentTxn.innerTxns?.length ?? 0).toString()}`);
 
   if (!parentTxn.innerTxns || parentTxn.innerTxns.length === 0) {
-    throw new Error('Parent transaction has no innerTxns')
+    throw new Error('Parent transaction has no innerTxns');
   }
 
-  const matchedInner = parentTxn.innerTxns.find((t) => t.id === innerTxn.id)
+  const matchedInner = parentTxn.innerTxns.find(t => t.id === innerTxn.id);
   if (!matchedInner) {
     // Inner txns on the parent may use a different ID format; check by payment details
     const paymentInner = parentTxn.innerTxns.find(
-      (t) => t.paymentTransaction?.receiver === callerAddr,
-    )
+      t => t.paymentTransaction?.receiver === callerAddr,
+    );
     if (paymentInner) {
-      printInfo(`Inner txn in parent: ${paymentInner.id ?? '(present)'}`)
+      printInfo(`Inner txn in parent: ${paymentInner.id ?? '(present)'}`);
     } else {
-      throw new Error('Inner transaction not found in parent innerTxns array')
+      throw new Error('Inner transaction not found in parent innerTxns array');
     }
   } else {
-    printInfo(`Inner txn in parent: ${matchedInner.id}`)
+    printInfo(`Inner txn in parent: ${matchedInner.id}`);
   }
-  printSuccess('Parent transaction innerTxns array contains the inner transaction')
+  printSuccess('Parent transaction innerTxns array contains the inner transaction');
 
   // Step 10: Print parent-child relationship clearly
-  printStep(10, 'Parent-child relationship')
-  console.log()
-  console.log('  Parent (app call):')
-  printInfo(`    ID: ${parentTxn.id}`)
-  printInfo(`    Type: appl (application call)`)
-  printInfo(`    App ID: ${parentTxn.applicationTransaction?.applicationId?.toString() ?? appId.toString()}`)
-  printInfo(`    Method: issue_transfer_to_sender(uint64)void`)
-  printInfo(`    Sender: ${shortenAddress(callerAddr)}`)
-  printInfo(`    innerTxns count: ${(parentTxn.innerTxns?.length ?? 0).toString()}`)
-  console.log()
-  console.log('  └── Inner (payment):')
-  printInfo(`      ID: ${innerTxn.id}`)
-  printInfo(`      Type: pay (payment)`)
-  printInfo(`      Sender: ${shortenAddress(appAddress)}`)
-  printInfo(`      Receiver: ${shortenAddress(callerAddr)}`)
-  printInfo(`      Amount: ${formatAlgo(innerTxn.paymentTransaction?.amount ?? 0n)}`)
-  printInfo(`      parentTransactionId: ${innerTxn.parentTransactionId!}`)
-  console.log()
-  printSuccess('Parent-child relationship displayed')
+  printStep(10, 'Parent-child relationship');
+  console.log();
+  console.log('  Parent (app call):');
+  printInfo(`    ID: ${parentTxn.id}`);
+  printInfo(`    Type: appl (application call)`);
+  printInfo(
+    `    App ID: ${parentTxn.applicationTransaction?.applicationId?.toString() ?? appId.toString()}`,
+  );
+  printInfo(`    Method: issue_transfer_to_sender(uint64)void`);
+  printInfo(`    Sender: ${shortenAddress(callerAddr)}`);
+  printInfo(`    innerTxns count: ${(parentTxn.innerTxns?.length ?? 0).toString()}`);
+  console.log();
+  console.log('  └── Inner (payment):');
+  printInfo(`      ID: ${innerTxn.id}`);
+  printInfo(`      Type: pay (payment)`);
+  printInfo(`      Sender: ${shortenAddress(appAddress)}`);
+  printInfo(`      Receiver: ${shortenAddress(callerAddr)}`);
+  printInfo(`      Amount: ${formatAlgo(innerTxn.paymentTransaction?.amount ?? 0n)}`);
+  printInfo(`      parentTransactionId: ${innerTxn.parentTransactionId!}`);
+  console.log();
+  printSuccess('Parent-child relationship displayed');
 
   // Summary
-  printStep(11, 'Summary')
-  printInfo(`App ID: ${appId.toString()}`)
-  printInfo(`App address: ${shortenAddress(appAddress)}`)
-  printInfo(`Method called: issue_transfer_to_sender(1_000_000) — 1 ALGO inner payment`)
-  printInfo(`Inner txn matched: by payment filter (sender: app, receiver: caller)`)
-  printInfo(`parentTransactionId: set on inner txn — links to parent app call`)
-  printInfo(`Inner txn ID format: <rootTxId>/inner/<N>`)
-  printInfo(`Parent innerTxns: contains the inner transaction`)
+  printStep(11, 'Summary');
+  printInfo(`App ID: ${appId.toString()}`);
+  printInfo(`App address: ${shortenAddress(appAddress)}`);
+  printInfo(`Method called: issue_transfer_to_sender(1_000_000) — 1 ALGO inner payment`);
+  printInfo(`Inner txn matched: by payment filter (sender: app, receiver: caller)`);
+  printInfo(`parentTransactionId: set on inner txn — links to parent app call`);
+  printInfo(`Inner txn ID format: <rootTxId>/inner/<N>`);
+  printInfo(`Parent innerTxns: contains the inner transaction`);
 
-  printHeader('Example complete')
+  printHeader('Example complete');
 }
 
-main().catch((err) => {
-  printError(err.message)
-  process.exit(1)
-})
-
+main().catch(err => {
+  printError(err.message);
+  process.exit(1);
+});
 ```
 
 ---

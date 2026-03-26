@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "Uint32"
+title: 'Uint32'
 ---
 
 Defined in: [arc4/encoded-types.ts:178](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/arc4/encoded-types.ts#L178)
@@ -77,7 +77,7 @@ Retrieve the decoded native biguint
 
 [`Uint`](/algorand-typescript/api/arc4/classes/uint/).[`asBigUint`](/algorand-typescript/api/arc4/classes/uint/#asbiguint)
 
-***
+---
 
 ### asUint64()
 

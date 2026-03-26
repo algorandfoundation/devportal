@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "algodGlobalSetup"
+title: 'algodGlobalSetup'
 ---
 
 > `const` **algodGlobalSetup**: () => `Promise`\<() => `Promise`\<`void`\>\>

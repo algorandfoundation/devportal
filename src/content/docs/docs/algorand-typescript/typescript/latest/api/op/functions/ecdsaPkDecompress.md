@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "ecdsaPkDecompress"
+title: 'ecdsaPkDecompress'
 ---
 
 > **ecdsaPkDecompress**(`v`, `a`): readonly \[[`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)\<`32`\>, [`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)\<`32`\>\]

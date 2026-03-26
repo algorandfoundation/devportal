@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "transactionParamsCodec"
+title: 'transactionParamsCodec'
 ---
 
 > `const` **transactionParamsCodec**: `ObjectModelCodec`\<[`TransactionParams`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/type-aliases/transactionparams/)\>

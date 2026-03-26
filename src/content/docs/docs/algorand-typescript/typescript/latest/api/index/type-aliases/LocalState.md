@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "LocalState"
+title: 'LocalState'
 ---
 
 > **LocalState**\<`ValueType`\> = (`account`) => [`LocalStateForAccount`](/algorand-typescript/api/index/type-aliases/localstateforaccount/)\<`ValueType`\>

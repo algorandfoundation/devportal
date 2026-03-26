@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "AppMetadata"
+title: 'AppMetadata'
 ---
 
 Defined in: [src/app-deployer.ts:75](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/app-deployer.ts#L75)
@@ -23,7 +23,7 @@ Defined in: [src/app-deployer.ts:79](https://github.com/algorandfoundation/algok
 
 The Algorand address of the account associated with the app
 
-***
+---
 
 ### appId
 
@@ -33,7 +33,7 @@ Defined in: [src/app-deployer.ts:77](https://github.com/algorandfoundation/algok
 
 The id of the app
 
-***
+---
 
 ### createdMetadata
 
@@ -43,7 +43,7 @@ Defined in: [src/app-deployer.ts:85](https://github.com/algorandfoundation/algok
 
 The metadata when the app was created
 
-***
+---
 
 ### createdRound
 
@@ -53,7 +53,7 @@ Defined in: [src/app-deployer.ts:81](https://github.com/algorandfoundation/algok
 
 The round the app was created
 
-***
+---
 
 ### deletable?
 
@@ -67,7 +67,7 @@ Whether or not the app is deletable / permanent / unspecified
 
 [`AppDeployMetadata`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/appdeploymetadata/).[`deletable`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/appdeploymetadata/#deletable)
 
-***
+---
 
 ### deleted
 
@@ -77,7 +77,7 @@ Defined in: [src/app-deployer.ts:87](https://github.com/algorandfoundation/algok
 
 Whether or not the app is deleted
 
-***
+---
 
 ### name
 
@@ -91,7 +91,7 @@ The unique name identifier of the app within the creator account
 
 [`AppDeployMetadata`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/appdeploymetadata/).[`name`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/appdeploymetadata/#name)
 
-***
+---
 
 ### updatable?
 
@@ -105,7 +105,7 @@ Whether or not the app is updatable / immutable / unspecified
 
 [`AppDeployMetadata`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/appdeploymetadata/).[`updatable`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/appdeploymetadata/#updatable)
 
-***
+---
 
 ### updatedRound
 
@@ -115,7 +115,7 @@ Defined in: [src/app-deployer.ts:83](https://github.com/algorandfoundation/algok
 
 The last round that the app was updated
 
-***
+---
 
 ### version
 

@@ -1,6 +1,6 @@
 ---
-title: "ABI Static Array Type"
-description: "This example demonstrates how to encode and decode fixed-length arrays using StaticArrayType:"
+title: 'ABI Static Array Type'
+description: 'This example demonstrates how to encode and decode fixed-length arrays using StaticArrayType:'
 sidebar:
   order: 5
 ---
@@ -10,14 +10,15 @@ sidebar:
 ## Description
 
 This example demonstrates how to encode and decode fixed-length arrays using StaticArrayType:
+
 - byte[32]: Fixed 32 bytes, common for hashes and cryptographic data
 - uint64[3]: Fixed array of 3 unsigned 64-bit integers
 - address[2]: Fixed array of 2 Algorand addresses
- Key characteristics of static arrays:
+  Key characteristics of static arrays:
 - Fixed length known at compile time
 - No length prefix in encoding (unlike dynamic arrays)
 - Elements are encoded consecutively
-- Encoded length = elementSize * arrayLength
+- Encoded length = elementSize \* arrayLength
 
 ## Prerequisites
 

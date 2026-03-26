@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "AppDeployer"
+title: 'AppDeployer'
 ---
 
 Defined in: [src/app-deployer.ts:113](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/app-deployer.ts#L113)
@@ -46,7 +46,7 @@ An optional indexer instance; supply if you want to indexer to look up app metad
 #### Example
 
 ```ts
-const deployer = new AppDeployer(appManager, transactionSender, indexer)
+const deployer = new AppDeployer(appManager, transactionSender, indexer);
 ```
 
 ## Methods
@@ -107,7 +107,7 @@ Optional cached value of the existing apps for the given creator; use this to av
 
 `boolean`
 
-Whether or not to ignore the app metadata cache and force a lookup, default: use the cache *
+Whether or not to ignore the app metadata cache and force a lookup, default: use the cache \*
 
 ###### maxRoundsToWaitForConfirmation?
 
@@ -127,9 +127,9 @@ The deployment metadata
 
 What action to perform if a schema break (storage schema or extra pages change) is detected:
 
-* `fail` - Fail the deployment (throw an error, **default**)
-* `replace` - Delete the old app and create a new one
-* `append` - Deploy a new app and leave the old one as is
+- `fail` - Fail the deployment (throw an error, **default**)
+- `replace` - Delete the old app and create a new one
+- `append` - Deploy a new app and leave the old one as is
 
 ###### onUpdate?
 
@@ -137,10 +137,10 @@ What action to perform if a schema break (storage schema or extra pages change) 
 
 What action to perform if a TEAL code update is detected:
 
-* `fail` - Fail the deployment (throw an error, **default**)
-* `update` - Update the app with the new TEAL code
-* `replace` - Delete the old app and create a new one
-* `append` - Deploy a new app and leave the old one as is
+- `fail` - Fail the deployment (throw an error, **default**)
+- `update` - Update the app with the new TEAL code
+- `replace` - Delete the old app and create a new one
+- `append` - Deploy a new app and leave the old one as is
 
 ###### populateAppCallResources?
 
@@ -178,22 +178,22 @@ const deployResult = await deployer.deploy({
       globalByteSlices: 0,
       globalInts: 0,
       localByteSlices: 0,
-      localInts: 0
-    }
+      localInts: 0,
+    },
   },
   updateParams: {
-    sender: 'SENDER_ADDRESS'
+    sender: 'SENDER_ADDRESS',
   },
   deleteParams: {
-    sender: 'SENDER_ADDRESS'
+    sender: 'SENDER_ADDRESS',
   },
   metadata: { name: 'my_app', version: '2.0', updatable: false, deletable: false },
   onSchemaBreak: 'append',
-  onUpdate: 'append'
- })
+  onUpdate: 'append',
+});
 ```
 
-***
+---
 
 ### getCreatorAppsByName()
 
@@ -232,4 +232,5 @@ A name-based lookup of the app metadata
 #### Example
 
 ```ts
-const result = await deployer.getCreatorAppsByName(creator)
+const result = await deployer.getCreatorAppsByName(creator);
+```

@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "encodeArc4"
+title: 'encodeArc4'
 ---
 
 > **encodeArc4**\<`T`\>(`value`): [`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)

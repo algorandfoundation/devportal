@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "ARC4Encoded"
+title: 'ARC4Encoded'
 ---
 
 Defined in: [arc4/encoded-types.ts:87](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/arc4/encoded-types.ts#L87)

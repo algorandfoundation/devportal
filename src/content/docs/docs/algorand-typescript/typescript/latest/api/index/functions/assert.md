@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "assert"
+title: 'assert'
 ---
 
 > **assert**(`condition`, `message?`): `asserts condition`

@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "ITxnCreate"
+title: 'ITxnCreate'
 ---
 
 > `const` **ITxnCreate**: `object`

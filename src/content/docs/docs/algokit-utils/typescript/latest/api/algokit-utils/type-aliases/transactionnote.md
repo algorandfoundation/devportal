@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "TransactionNote"
+title: 'TransactionNote'
 ---
 
 > **TransactionNote** = `Uint8Array` \| [`TransactionNoteData`](/docs/algokit-utils/typescript/latest/api/algokit-utils/type-aliases/transactionnotedata/) \| [`Arc2TransactionNote`](/docs/algokit-utils/typescript/latest/api/algokit-utils/type-aliases/arc2transactionnote/)

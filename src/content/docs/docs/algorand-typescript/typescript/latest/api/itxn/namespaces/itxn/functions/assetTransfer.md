@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "assetTransfer"
+title: 'assetTransfer'
 ---
 
 > **assetTransfer**(`fields`): [`AssetTransferItxnParams`](/algorand-typescript/api/itxn/namespaces/itxn/classes/assettransferitxnparams/)

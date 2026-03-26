@@ -1,6 +1,6 @@
 ---
-title: "Multisig Program Signing (Delegated Multisig Logic Signatures) with KMD"
-description: "This example demonstrates how to sign programs with multisig using the KMD sign_multisig_program() method. It shows:"
+title: 'Multisig Program Signing (Delegated Multisig Logic Signatures) with KMD'
+description: 'This example demonstrates how to sign programs with multisig using the KMD sign_multisig_program() method. It shows:'
 sidebar:
   order: 13
 ---
@@ -10,25 +10,26 @@ sidebar:
 ## Description
 
 This example demonstrates how to sign programs with multisig using the KMD sign_multisig_program() method. It shows:
+
 - Creating a 2-of-3 multisig account
 - Creating a simple TEAL program (logic signature)
 - Compiling the TEAL program using algod teal_compile
 - Signing the program with the first participant (partial signature)
 - Signing the program with the second participant (completing the multisig)
 - Understanding delegated multisig logic signatures
- What is Multisig Program Signing? Multisig program signing creates a "delegated multisig logic signature". This combines two powerful concepts: 1. Multisig: Requiring multiple parties to approve 2. Delegated Logic Signatures: Authorizing a program to act on behalf of an account
- With a delegated multisig lsig:
+  What is Multisig Program Signing? Multisig program signing creates a "delegated multisig logic signature". This combines two powerful concepts: 1. Multisig: Requiring multiple parties to approve 2. Delegated Logic Signatures: Authorizing a program to act on behalf of an account
+  With a delegated multisig lsig:
 - The multisig account authorizes a program to sign transactions
 - Multiple parties must sign the program (meeting the threshold)
 - Once signed, the program can authorize transactions within its logic
 - No further interaction needed from the multisig participants
- Use cases for delegated multisig logic signatures:
+  Use cases for delegated multisig logic signatures:
 - Multi-party controlled recurring payments
 - Joint account automation (e.g., business partners authorizing limit)
 - Escrow with automated release conditions
 - DAO treasury with programmatic spending rules
- Prerequisites:
- Covered operations:
+  Prerequisites:
+  Covered operations:
 - sign_multisig_program() - Sign a compiled TEAL program with a multisig participant
 
 ## Prerequisites

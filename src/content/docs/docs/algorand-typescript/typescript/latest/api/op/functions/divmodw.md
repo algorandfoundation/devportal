@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "divmodw"
+title: 'divmodw'
 ---
 
 > **divmodw**(`a`, `b`, `c`, `d`): readonly \[[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/), [`uint64`](/algorand-typescript/api/index/type-aliases/uint64/), [`uint64`](/algorand-typescript/api/index/type-aliases/uint64/), [`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)\]

@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "TestNetDispenserApiClient"
+title: 'TestNetDispenserApiClient'
 ---
 
 Defined in: [src/dispenser-client.ts:73](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/dispenser-client.ts#L73)
@@ -62,7 +62,7 @@ Defined in: [src/dispenser-client.ts:93](https://github.com/algorandfoundation/a
 
 The authentication token used for API requests.
 
-***
+---
 
 ### requestTimeout
 
@@ -79,6 +79,7 @@ Defined in: [src/dispenser-client.ts:97](https://github.com/algorandfoundation/a
 The timeout for API requests, in seconds.
 
 Methods:
+
 - `fund` - Sends a funding request to the dispenser API to fund the specified address with the given amount of Algo.
 - `refund` - Sends a refund request to the dispenser API for the specified refundTxnId.
 - `limit` - Sends a request to the dispenser API to get the funding limit for the Algo asset.
@@ -113,7 +114,7 @@ The amount of µAlgo to fund.
 
 DispenserFundResponse: An object containing the transaction ID and funded amount.
 
-***
+---
 
 ### getLimit()
 
@@ -129,7 +130,7 @@ Sends a request to the dispenser API to get the funding limit for the Algo asset
 
 DispenserLimitResponse: An object containing the funding limit amount.
 
-***
+---
 
 ### refund()
 

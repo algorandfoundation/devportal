@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "Ecdsa"
+title: 'Ecdsa'
 ---
 
 Defined in: [op.ts:29](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/op.ts#L29)
@@ -17,7 +17,7 @@ Defined in: [op.ts:33](https://github.com/algorandfoundation/puya-ts/blob/main/p
 
 secp256k1 curve, used in Bitcoin
 
-***
+---
 
 ### Secp256r1
 

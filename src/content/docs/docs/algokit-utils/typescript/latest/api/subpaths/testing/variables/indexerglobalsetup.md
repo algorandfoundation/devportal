@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "indexerGlobalSetup"
+title: 'indexerGlobalSetup'
 ---
 
 > `const` **indexerGlobalSetup**: () => `Promise`\<() => `Promise`\<`void`\>\>

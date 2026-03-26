@@ -1,5 +1,5 @@
 ---
-title: "algokit_utils.protocols.account"
+title: 'algokit_utils.protocols.account'
 ---
 
 <div class="api-ref">
@@ -7,6 +7,5 @@ title: "algokit_utils.protocols.account"
 # algokit_utils.protocols.account
 
 Account protocols - re-exported for convenience.
-
 
 </div>

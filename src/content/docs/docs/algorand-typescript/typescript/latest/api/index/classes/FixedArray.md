@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "FixedArray"
+title: 'FixedArray'
 ---
 
 Defined in: [arrays.ts:9](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/arrays.ts#L9)
@@ -19,7 +19,7 @@ The type of a single item in the array
 
 ### TLength
 
-`TLength` *extends* `number`
+`TLength` _extends_ `number`
 
 The fixed length of the array
 
@@ -102,7 +102,7 @@ Returns an iterator for the items in this array
 
 `IterableIterator`\<`TItem`\>
 
-***
+---
 
 ### at()
 
@@ -125,7 +125,7 @@ The index of the item to retrieve
 
 `TItem`
 
-***
+---
 
 ### concat()
 
@@ -147,7 +147,7 @@ Another array to concat with this one
 
 `TItem`[]
 
-***
+---
 
 ### entries()
 
@@ -161,7 +161,7 @@ Returns an iterator for a tuple of the indexes and items in this array
 
 `ArrayIterator`\<readonly \[[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/), `TItem`\]\>
 
-***
+---
 
 ### ~~join()~~
 
@@ -190,7 +190,7 @@ Join is not supported in Algorand TypeScript
 
 `ConcatArray.join`
 
-***
+---
 
 ### keys()
 
@@ -204,7 +204,7 @@ Returns an iterator for the indexes in this array
 
 `IterableIterator`\<[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)\>
 
-***
+---
 
 ### ~~slice()~~
 

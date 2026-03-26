@@ -1,6 +1,6 @@
 ---
-title: "ABI Struct Type"
-description: "This example demonstrates how to encode and decode named structs using ABIStructType:"
+title: 'ABI Struct Type'
+description: 'This example demonstrates how to encode and decode named structs using ABIStructType:'
 sidebar:
   order: 8
 ---
@@ -10,16 +10,17 @@ sidebar:
 ## Description
 
 This example demonstrates how to encode and decode named structs using ABIStructType:
+
 - Creating ABIStructType with named fields
 - Encoding struct values as objects with named keys
 - Comparing struct encoding to equivalent tuple encoding
 - Accessing struct field names and types
 - Decoding back to struct values with named fields
- Key characteristics of struct encoding:
+  Key characteristics of struct encoding:
 - Structs are named tuples - the encoding is identical to the equivalent tuple
 - Field names provide semantic meaning but don't affect the binary encoding
 - Decoded values are objects with named properties (not arrays like tuples)
- ARC-4 specification: Structs are tuples with named fields for improved readability.
+  ARC-4 specification: Structs are tuples with named fields for improved readability.
 
 ## Prerequisites
 
@@ -66,14 +67,14 @@ import {
   ABITupleType,
   ABIType,
   ABIUintType,
-} from '@algorandfoundation/algokit-utils/abi'
-import { formatHex, printHeader, printInfo, printStep, printSuccess } from '../shared/utils.js'
+} from '@algorandfoundation/algokit-utils/abi';
+import { formatHex, printHeader, printInfo, printStep, printSuccess } from '../shared/utils.js';
 
 function main() {
-  printHeader('ABI Struct Type Example')
+  printHeader('ABI Struct Type Example');
 
   // Step 1: Creating ABIStructType with named fields
-  printStep(1, 'Creating ABIStructType with Named Fields')
+  printStep(1, 'Creating ABIStructType with Named Fields');
 
   // Create a struct: { name: string, age: uint64, active: bool }
   const userStruct = ABIStructType.fromStruct('User', {
@@ -82,127 +83,138 @@ function main() {
       { name: 'age', type: 'uint64' },
       { name: 'active', type: 'bool' },
     ],
-  })
+  });
 
-  printInfo('Created struct using ABIStructType.fromStruct():')
-  printInfo(`  Struct name: ${userStruct.structName}`)
-  printInfo(`  Display name: ${userStruct.displayName}`)
-  printInfo(`  ABI type name: ${userStruct.name}`)
-  printInfo(`  Number of fields: ${userStruct.structFields.length}`)
-  printInfo(`  isDynamic(): ${userStruct.isDynamic()} (because string is dynamic)`)
+  printInfo('Created struct using ABIStructType.fromStruct():');
+  printInfo(`  Struct name: ${userStruct.structName}`);
+  printInfo(`  Display name: ${userStruct.displayName}`);
+  printInfo(`  ABI type name: ${userStruct.name}`);
+  printInfo(`  Number of fields: ${userStruct.structFields.length}`);
+  printInfo(`  isDynamic(): ${userStruct.isDynamic()} (because string is dynamic)`);
 
-  printInfo('\nStruct fields:')
+  printInfo('\nStruct fields:');
   userStruct.structFields.forEach((field, i) => {
-    const fieldType = field.type as ABIType
-    printInfo(`  [${i}] ${field.name}: ${fieldType.toString()}`)
-  })
+    const fieldType = field.type as ABIType;
+    printInfo(`  [${i}] ${field.name}: ${fieldType.toString()}`);
+  });
 
   // Step 2: Encoding struct values as objects with named keys
-  printStep(2, 'Encoding Struct Values as Objects')
+  printStep(2, 'Encoding Struct Values as Objects');
 
   const userValue = {
     name: 'Alice',
     age: 30n,
     active: true,
-  }
+  };
 
-  const userEncoded = userStruct.encode(userValue)
+  const userEncoded = userStruct.encode(userValue);
 
-  printInfo(`Input object: { name: "${userValue.name}", age: ${userValue.age}, active: ${userValue.active} }`)
-  printInfo(`Encoded: ${formatHex(userEncoded)}`)
-  printInfo(`Total bytes: ${userEncoded.length}`)
+  printInfo(
+    `Input object: { name: "${userValue.name}", age: ${userValue.age}, active: ${userValue.active} }`,
+  );
+  printInfo(`Encoded: ${formatHex(userEncoded)}`);
+  printInfo(`Total bytes: ${userEncoded.length}`);
 
   // Break down the encoding
-  printInfo('\nByte layout (head/tail encoding because string is dynamic):')
-  printInfo('HEAD SECTION:')
+  printInfo('\nByte layout (head/tail encoding because string is dynamic):');
+  printInfo('HEAD SECTION:');
 
   // string is dynamic - 2-byte offset
-  const nameOffset = (userEncoded[0] << 8) | userEncoded[1]
-  printInfo(`  [0-1]   name offset:  ${formatHex(userEncoded.slice(0, 2))} = ${nameOffset} (points to tail)`)
+  const nameOffset = (userEncoded[0] << 8) | userEncoded[1];
+  printInfo(
+    `  [0-1]   name offset:  ${formatHex(userEncoded.slice(0, 2))} = ${nameOffset} (points to tail)`,
+  );
 
   // uint64 is static - 8 bytes
-  printInfo(`  [2-9]   age (uint64): ${formatHex(userEncoded.slice(2, 10))} = ${userValue.age}`)
+  printInfo(`  [2-9]   age (uint64): ${formatHex(userEncoded.slice(2, 10))} = ${userValue.age}`);
 
   // bool is static - 1 byte
-  printInfo(`  [10]    active (bool): ${formatHex(userEncoded.slice(10, 11))} = ${userValue.active}`)
+  printInfo(
+    `  [10]    active (bool): ${formatHex(userEncoded.slice(10, 11))} = ${userValue.active}`,
+  );
 
-  printInfo('\nTAIL SECTION:')
-  const nameLenBytes = userEncoded.slice(nameOffset, nameOffset + 2)
-  const nameLen = (nameLenBytes[0] << 8) | nameLenBytes[1]
-  const nameContent = userEncoded.slice(nameOffset + 2, nameOffset + 2 + nameLen)
-  printInfo(`  [${nameOffset}-${nameOffset + 1}]   string length: ${formatHex(nameLenBytes)} = ${nameLen} bytes`)
-  printInfo(`  [${nameOffset + 2}-${nameOffset + 1 + nameLen}]  string content: ${formatHex(nameContent)} = "${userValue.name}"`)
+  printInfo('\nTAIL SECTION:');
+  const nameLenBytes = userEncoded.slice(nameOffset, nameOffset + 2);
+  const nameLen = (nameLenBytes[0] << 8) | nameLenBytes[1];
+  const nameContent = userEncoded.slice(nameOffset + 2, nameOffset + 2 + nameLen);
+  printInfo(
+    `  [${nameOffset}-${nameOffset + 1}]   string length: ${formatHex(nameLenBytes)} = ${nameLen} bytes`,
+  );
+  printInfo(
+    `  [${nameOffset + 2}-${nameOffset + 1 + nameLen}]  string content: ${formatHex(nameContent)} = "${userValue.name}"`,
+  );
 
   // Step 3: Struct encoding is identical to equivalent tuple encoding
-  printStep(3, 'Struct Encoding vs Tuple Encoding')
+  printStep(3, 'Struct Encoding vs Tuple Encoding');
 
   // Create equivalent tuple type
-  const equivalentTuple = ABIType.from('(string,uint64,bool)') as ABITupleType
-  const tupleValue: [string, bigint, boolean] = ['Alice', 30n, true]
-  const tupleEncoded = equivalentTuple.encode(tupleValue)
+  const equivalentTuple = ABIType.from('(string,uint64,bool)') as ABITupleType;
+  const tupleValue: [string, bigint, boolean] = ['Alice', 30n, true];
+  const tupleEncoded = equivalentTuple.encode(tupleValue);
 
-  printInfo(`Struct type: ${userStruct.name}`)
-  printInfo(`Tuple type:  ${equivalentTuple.name}`)
+  printInfo(`Struct type: ${userStruct.name}`);
+  printInfo(`Tuple type:  ${equivalentTuple.name}`);
 
-  printInfo('\nStruct encoded:')
-  printInfo(`  ${formatHex(userEncoded)}`)
+  printInfo('\nStruct encoded:');
+  printInfo(`  ${formatHex(userEncoded)}`);
 
-  printInfo('\nTuple encoded (same values):')
-  printInfo(`  ${formatHex(tupleEncoded)}`)
+  printInfo('\nTuple encoded (same values):');
+  printInfo(`  ${formatHex(tupleEncoded)}`);
 
   // Compare byte by byte
-  const encodingsMatch = userEncoded.length === tupleEncoded.length &&
-    userEncoded.every((byte, i) => byte === tupleEncoded[i])
+  const encodingsMatch =
+    userEncoded.length === tupleEncoded.length &&
+    userEncoded.every((byte, i) => byte === tupleEncoded[i]);
 
-  printInfo(`\nEncodings are identical: ${encodingsMatch}`)
-  printInfo('This confirms structs are just named tuples with the same binary encoding.')
+  printInfo(`\nEncodings are identical: ${encodingsMatch}`);
+  printInfo('This confirms structs are just named tuples with the same binary encoding.');
 
   // Step 4: Accessing struct field names and types via the type object
-  printStep(4, 'Accessing Struct Field Names and Types')
+  printStep(4, 'Accessing Struct Field Names and Types');
 
-  printInfo('Field information from structFields property:')
+  printInfo('Field information from structFields property:');
   userStruct.structFields.forEach((field, i) => {
-    const fieldType = field.type as ABIType
-    printInfo(`\n  Field ${i}:`)
-    printInfo(`    Name: ${field.name}`)
-    printInfo(`    Type: ${fieldType.toString()}`)
-    printInfo(`    isDynamic: ${fieldType.isDynamic()}`)
+    const fieldType = field.type as ABIType;
+    printInfo(`\n  Field ${i}:`);
+    printInfo(`    Name: ${field.name}`);
+    printInfo(`    Type: ${fieldType.toString()}`);
+    printInfo(`    isDynamic: ${fieldType.isDynamic()}`);
     if (!fieldType.isDynamic()) {
-      printInfo(`    byteLen: ${fieldType.byteLen()}`)
+      printInfo(`    byteLen: ${fieldType.byteLen()}`);
     }
-  })
+  });
 
-  printInfo('\nConverting struct to tuple type:')
-  const tupleFromStruct = userStruct.toABITupleType()
-  printInfo(`  toABITupleType(): ${tupleFromStruct.toString()}`)
-  printInfo(`  childTypes.length: ${tupleFromStruct.childTypes.length}`)
+  printInfo('\nConverting struct to tuple type:');
+  const tupleFromStruct = userStruct.toABITupleType();
+  printInfo(`  toABITupleType(): ${tupleFromStruct.toString()}`);
+  printInfo(`  childTypes.length: ${tupleFromStruct.childTypes.length}`);
 
   // Step 5: Decoding back to struct value with named fields
-  printStep(5, 'Decoding to Struct with Named Fields')
+  printStep(5, 'Decoding to Struct with Named Fields');
 
-  const userDecoded = userStruct.decode(userEncoded)
+  const userDecoded = userStruct.decode(userEncoded);
 
-  printInfo('Decoded struct value (object with named keys):')
-  printInfo(`  typeof decoded: ${typeof userDecoded}`)
-  printInfo(`  decoded.name: "${(userDecoded as { name: string }).name}"`)
-  printInfo(`  decoded.age: ${(userDecoded as { age: bigint }).age}`)
-  printInfo(`  decoded.active: ${(userDecoded as { active: boolean }).active}`)
+  printInfo('Decoded struct value (object with named keys):');
+  printInfo(`  typeof decoded: ${typeof userDecoded}`);
+  printInfo(`  decoded.name: "${(userDecoded as { name: string }).name}"`);
+  printInfo(`  decoded.age: ${(userDecoded as { age: bigint }).age}`);
+  printInfo(`  decoded.active: ${(userDecoded as { active: boolean }).active}`);
 
   // Compare with tuple decoding
-  const tupleDecoded = equivalentTuple.decode(userEncoded)
-  printInfo('\nCompare with tuple decoding (array with index access):')
-  printInfo(`  typeof decoded: ${typeof tupleDecoded}`)
-  printInfo(`  Array.isArray: ${Array.isArray(tupleDecoded)}`)
-  printInfo(`  decoded[0]: "${tupleDecoded[0]}"`)
-  printInfo(`  decoded[1]: ${tupleDecoded[1]}`)
-  printInfo(`  decoded[2]: ${tupleDecoded[2]}`)
+  const tupleDecoded = equivalentTuple.decode(userEncoded);
+  printInfo('\nCompare with tuple decoding (array with index access):');
+  printInfo(`  typeof decoded: ${typeof tupleDecoded}`);
+  printInfo(`  Array.isArray: ${Array.isArray(tupleDecoded)}`);
+  printInfo(`  decoded[0]: "${tupleDecoded[0]}"`);
+  printInfo(`  decoded[1]: ${tupleDecoded[1]}`);
+  printInfo(`  decoded[2]: ${tupleDecoded[2]}`);
 
-  printInfo('\nKey difference:')
-  printInfo('  Struct decode() returns an OBJECT with named properties')
-  printInfo('  Tuple decode() returns an ARRAY with indexed elements')
+  printInfo('\nKey difference:');
+  printInfo('  Struct decode() returns an OBJECT with named properties');
+  printInfo('  Tuple decode() returns an ARRAY with indexed elements');
 
   // Step 6: Static struct example
-  printStep(6, 'Static Struct Example')
+  printStep(6, 'Static Struct Example');
 
   // Create a struct with all static fields
   const pointStruct = ABIStructType.fromStruct('Point', {
@@ -210,53 +222,54 @@ function main() {
       { name: 'x', type: 'uint32' },
       { name: 'y', type: 'uint32' },
     ],
-  })
+  });
 
-  printInfo('Static struct (all fields are static types):')
-  printInfo(`  Struct name: ${pointStruct.structName}`)
-  printInfo(`  ABI type: ${pointStruct.name}`)
-  printInfo(`  isDynamic(): ${pointStruct.isDynamic()}`)
-  printInfo(`  byteLen(): ${pointStruct.byteLen()} (4 + 4 = 8 bytes)`)
+  printInfo('Static struct (all fields are static types):');
+  printInfo(`  Struct name: ${pointStruct.structName}`);
+  printInfo(`  ABI type: ${pointStruct.name}`);
+  printInfo(`  isDynamic(): ${pointStruct.isDynamic()}`);
+  printInfo(`  byteLen(): ${pointStruct.byteLen()} (4 + 4 = 8 bytes)`);
 
-  const pointValue = { x: 100, y: 200 }
-  const pointEncoded = pointStruct.encode(pointValue)
-  const pointDecoded = pointStruct.decode(pointEncoded) as { x: number; y: number }
+  const pointValue = { x: 100, y: 200 };
+  const pointEncoded = pointStruct.encode(pointValue);
+  const pointDecoded = pointStruct.decode(pointEncoded) as { x: number; y: number };
 
-  printInfo(`\nEncode { x: ${pointValue.x}, y: ${pointValue.y} }:`)
-  printInfo(`  Encoded: ${formatHex(pointEncoded)}`)
-  printInfo(`  Total bytes: ${pointEncoded.length}`)
+  printInfo(`\nEncode { x: ${pointValue.x}, y: ${pointValue.y} }:`);
+  printInfo(`  Encoded: ${formatHex(pointEncoded)}`);
+  printInfo(`  Total bytes: ${pointEncoded.length}`);
 
-  printInfo('\nByte layout (all static, no offsets):')
-  printInfo(`  [0-3] x (uint32): ${formatHex(pointEncoded.slice(0, 4))} = ${pointValue.x}`)
-  printInfo(`  [4-7] y (uint32): ${formatHex(pointEncoded.slice(4, 8))} = ${pointValue.y}`)
+  printInfo('\nByte layout (all static, no offsets):');
+  printInfo(`  [0-3] x (uint32): ${formatHex(pointEncoded.slice(0, 4))} = ${pointValue.x}`);
+  printInfo(`  [4-7] y (uint32): ${formatHex(pointEncoded.slice(4, 8))} = ${pointValue.y}`);
 
-  printInfo(`\nDecoded: { x: ${pointDecoded.x}, y: ${pointDecoded.y} }`)
+  printInfo(`\nDecoded: { x: ${pointDecoded.x}, y: ${pointDecoded.y} }`);
 
   // Step 7: Encoding struct as array (tuple-style)
-  printStep(7, 'Encoding Struct as Array (Tuple-style)')
+  printStep(7, 'Encoding Struct as Array (Tuple-style)');
 
-  printInfo('ABIStructType.encode() accepts both objects and arrays:')
+  printInfo('ABIStructType.encode() accepts both objects and arrays:');
 
   // Encode as object
-  const objEncoded = userStruct.encode({ name: 'Bob', age: 25n, active: false })
+  const objEncoded = userStruct.encode({ name: 'Bob', age: 25n, active: false });
 
   // Encode as array (tuple-style)
-  const arrEncoded = userStruct.encode(['Bob', 25n, false])
+  const arrEncoded = userStruct.encode(['Bob', 25n, false]);
 
-  printInfo('\nEncoded as object { name: "Bob", age: 25n, active: false }:')
-  printInfo(`  ${formatHex(objEncoded)}`)
+  printInfo('\nEncoded as object { name: "Bob", age: 25n, active: false }:');
+  printInfo(`  ${formatHex(objEncoded)}`);
 
-  printInfo('\nEncoded as array ["Bob", 25n, false]:')
-  printInfo(`  ${formatHex(arrEncoded)}`)
+  printInfo('\nEncoded as array ["Bob", 25n, false]:');
+  printInfo(`  ${formatHex(arrEncoded)}`);
 
-  const arrayObjMatch = objEncoded.length === arrEncoded.length &&
-    objEncoded.every((byte, i) => byte === arrEncoded[i])
+  const arrayObjMatch =
+    objEncoded.length === arrEncoded.length &&
+    objEncoded.every((byte, i) => byte === arrEncoded[i]);
 
-  printInfo(`\nEncodings are identical: ${arrayObjMatch}`)
-  printInfo('Both input formats produce the same encoded bytes.')
+  printInfo(`\nEncodings are identical: ${arrayObjMatch}`);
+  printInfo('Both input formats produce the same encoded bytes.');
 
   // Step 8: Nested struct example
-  printStep(8, 'Nested Struct Example')
+  printStep(8, 'Nested Struct Example');
 
   // Person struct containing Address struct
   const personStruct = ABIStructType.fromStruct('Person', {
@@ -269,10 +282,10 @@ function main() {
       { name: 'street', type: 'string' },
       { name: 'city', type: 'string' },
     ],
-  })
+  });
 
-  printInfo('Nested struct Person containing Address:')
-  printInfo(`  Person ABI type: ${personStruct.name}`)
+  printInfo('Nested struct Person containing Address:');
+  printInfo(`  Person ABI type: ${personStruct.name}`);
 
   const personValue = {
     name: 'Charlie',
@@ -281,83 +294,86 @@ function main() {
       street: '123 Main St',
       city: 'Boston',
     },
-  }
+  };
 
-  const personEncoded = personStruct.encode(personValue)
+  const personEncoded = personStruct.encode(personValue);
   const personDecoded = personStruct.decode(personEncoded) as {
-    name: string
-    age: number
-    address: { street: string; city: string }
-  }
+    name: string;
+    age: number;
+    address: { street: string; city: string };
+  };
 
-  printInfo(`\nInput: { name: "${personValue.name}", age: ${personValue.age}, address: {...} }`)
-  printInfo(`Encoded: ${formatHex(personEncoded)}`)
-  printInfo(`Total bytes: ${personEncoded.length}`)
+  printInfo(`\nInput: { name: "${personValue.name}", age: ${personValue.age}, address: {...} }`);
+  printInfo(`Encoded: ${formatHex(personEncoded)}`);
+  printInfo(`Total bytes: ${personEncoded.length}`);
 
-  printInfo('\nDecoded nested struct:')
-  printInfo(`  decoded.name: "${personDecoded.name}"`)
-  printInfo(`  decoded.age: ${personDecoded.age}`)
-  printInfo(`  decoded.address.street: "${personDecoded.address.street}"`)
-  printInfo(`  decoded.address.city: "${personDecoded.address.city}"`)
+  printInfo('\nDecoded nested struct:');
+  printInfo(`  decoded.name: "${personDecoded.name}"`);
+  printInfo(`  decoded.age: ${personDecoded.age}`);
+  printInfo(`  decoded.address.street: "${personDecoded.address.street}"`);
+  printInfo(`  decoded.address.city: "${personDecoded.address.city}"`);
 
   // Step 9: Creating ABIStructType programmatically
-  printStep(9, 'Creating ABIStructType Programmatically')
+  printStep(9, 'Creating ABIStructType Programmatically');
 
   // Create struct type using constructor directly
   const customStruct = new ABIStructType('Score', [
     { name: 'playerId', type: new ABIUintType(64) },
     { name: 'score', type: new ABIUintType(32) },
     { name: 'isHighScore', type: new ABIBoolType() },
-  ])
+  ]);
 
-  printInfo('Created with: new ABIStructType("Score", [...])')
-  printInfo(`  Struct name: ${customStruct.structName}`)
-  printInfo(`  ABI type: ${customStruct.name}`)
-  printInfo(`  isDynamic(): ${customStruct.isDynamic()}`)
-  printInfo(`  byteLen(): ${customStruct.byteLen()} (8 + 4 + 1 = 13 bytes)`)
+  printInfo('Created with: new ABIStructType("Score", [...])');
+  printInfo(`  Struct name: ${customStruct.structName}`);
+  printInfo(`  ABI type: ${customStruct.name}`);
+  printInfo(`  isDynamic(): ${customStruct.isDynamic()}`);
+  printInfo(`  byteLen(): ${customStruct.byteLen()} (8 + 4 + 1 = 13 bytes)`);
 
-  const scoreValue = { playerId: 12345n, score: 9999, isHighScore: true }
-  const scoreEncoded = customStruct.encode(scoreValue)
+  const scoreValue = { playerId: 12345n, score: 9999, isHighScore: true };
+  const scoreEncoded = customStruct.encode(scoreValue);
   const scoreDecoded = customStruct.decode(scoreEncoded) as {
-    playerId: bigint
-    score: number
-    isHighScore: boolean
-  }
+    playerId: bigint;
+    score: number;
+    isHighScore: boolean;
+  };
 
-  printInfo(`\nEncode: { playerId: ${scoreValue.playerId}, score: ${scoreValue.score}, isHighScore: ${scoreValue.isHighScore} }`)
-  printInfo(`  Encoded: ${formatHex(scoreEncoded)}`)
-  printInfo(`  Decoded: { playerId: ${scoreDecoded.playerId}, score: ${scoreDecoded.score}, isHighScore: ${scoreDecoded.isHighScore} }`)
+  printInfo(
+    `\nEncode: { playerId: ${scoreValue.playerId}, score: ${scoreValue.score}, isHighScore: ${scoreValue.isHighScore} }`,
+  );
+  printInfo(`  Encoded: ${formatHex(scoreEncoded)}`);
+  printInfo(
+    `  Decoded: { playerId: ${scoreDecoded.playerId}, score: ${scoreDecoded.score}, isHighScore: ${scoreDecoded.isHighScore} }`,
+  );
 
   // Step 10: Summary
-  printStep(10, 'Summary')
+  printStep(10, 'Summary');
 
-  printInfo('ABIStructType key properties:')
-  printInfo('  - structName: The name of the struct')
-  printInfo('  - structFields: Array of { name, type } field definitions')
-  printInfo('  - toABITupleType(): Converts to equivalent tuple type')
-  printInfo('  - isDynamic(): true if ANY field is dynamic')
-  printInfo('  - byteLen(): only valid for static structs')
+  printInfo('ABIStructType key properties:');
+  printInfo('  - structName: The name of the struct');
+  printInfo('  - structFields: Array of { name, type } field definitions');
+  printInfo('  - toABITupleType(): Converts to equivalent tuple type');
+  printInfo('  - isDynamic(): true if ANY field is dynamic');
+  printInfo('  - byteLen(): only valid for static structs');
 
-  printInfo('\nStruct vs Tuple:')
-  printInfo('  - Structs are named tuples with identical binary encoding')
-  printInfo('  - Field names provide semantic meaning, not encoding differences')
-  printInfo('  - encode() accepts objects OR arrays')
-  printInfo('  - decode() returns objects with named properties (not arrays)')
+  printInfo('\nStruct vs Tuple:');
+  printInfo('  - Structs are named tuples with identical binary encoding');
+  printInfo('  - Field names provide semantic meaning, not encoding differences');
+  printInfo('  - encode() accepts objects OR arrays');
+  printInfo('  - decode() returns objects with named properties (not arrays)');
 
-  printInfo('\nCreating struct types:')
-  printInfo('  - ABIStructType.fromStruct(name, structs) - from struct definitions')
-  printInfo('  - new ABIStructType(name, fields) - programmatic with ABIType instances')
+  printInfo('\nCreating struct types:');
+  printInfo('  - ABIStructType.fromStruct(name, structs) - from struct definitions');
+  printInfo('  - new ABIStructType(name, fields) - programmatic with ABIType instances');
 
-  printInfo('\nNested structs:')
-  printInfo('  - Structs can contain other structs')
-  printInfo('  - Pass all struct definitions in the structs record')
-  printInfo('  - Nested struct values are objects within objects')
+  printInfo('\nNested structs:');
+  printInfo('  - Structs can contain other structs');
+  printInfo('  - Pass all struct definitions in the structs record');
+  printInfo('  - Nested struct values are objects within objects');
 
-  printSuccess('ABI Struct Type example completed successfully!')
+  printSuccess('ABI Struct Type example completed successfully!');
 }
 
-main()
-
+main();
 ```
 
 ---

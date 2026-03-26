@@ -1,6 +1,6 @@
 ---
-title: "Application Call"
-description: "This example demonstrates how to deploy and interact with a smart contract on Algorand using the transact package:"
+title: 'Application Call'
+description: 'This example demonstrates how to deploy and interact with a smart contract on Algorand using the transact package:'
 sidebar:
   order: 14
 ---
@@ -10,15 +10,16 @@ sidebar:
 ## Description
 
 This example demonstrates how to deploy and interact with a smart contract on Algorand using the transact package:
+
 - Compile simple approval and clear TEAL programs using algod.teal_compile()
 - Create an app with TransactionType.AppCall and OnApplicationComplete.NoOp
 - Use Transaction with application_call=AppCallTransactionFields(...)
-including approval_program, clear_state_program, global_state_schema, and local_state_schema
+  including approval_program, clear_state_program, global_state_schema, and local_state_schema
 - Retrieve the created app ID from pending transaction info
 - Call the app with application arguments
 - Demonstrate OnApplicationComplete.OptIn for local state
 - Delete the app at the end
- Prerequisites:
+  Prerequisites:
 
 ## Prerequisites
 

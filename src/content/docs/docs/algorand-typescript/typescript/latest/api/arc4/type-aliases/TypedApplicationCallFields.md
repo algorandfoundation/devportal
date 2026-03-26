@@ -2,10 +2,10 @@
 editUrl: false
 next: false
 prev: false
-title: "TypedApplicationCallFields"
+title: 'TypedApplicationCallFields'
 ---
 
-> **TypedApplicationCallFields**\<`TArgs`\> = `Omit`\<[`ApplicationCallFields`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/applicationcallfields/), `"appArgs"`\> & `TArgs` *extends* \[\] ? `object` : `object`
+> **TypedApplicationCallFields**\<`TArgs`\> = `Omit`\<[`ApplicationCallFields`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/applicationcallfields/), `"appArgs"`\> & `TArgs` _extends_ \[\] ? `object` : `object`
 
 Defined in: [arc4/c2c.ts:58](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/arc4/c2c.ts#L58)
 

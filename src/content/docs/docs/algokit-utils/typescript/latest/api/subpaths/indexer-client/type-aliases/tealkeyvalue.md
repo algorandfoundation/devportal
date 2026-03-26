@@ -2,12 +2,12 @@
 editUrl: false
 next: false
 prev: false
-title: "TealKeyValue"
+title: 'TealKeyValue'
 ---
 
 > **TealKeyValue** = `object`
 
-Defined in: [packages/indexer\_client/src/models/teal-key-value.ts:9](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/indexer_client/src/models/teal-key-value.ts#L9)
+Defined in: [packages/indexer_client/src/models/teal-key-value.ts:9](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/indexer_client/src/models/teal-key-value.ts#L9)
 
 Represents a key-value pair in an application store.
 
@@ -17,12 +17,12 @@ Represents a key-value pair in an application store.
 
 > **key**: `Uint8Array`
 
-Defined in: [packages/indexer\_client/src/models/teal-key-value.ts:10](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/indexer_client/src/models/teal-key-value.ts#L10)
+Defined in: [packages/indexer_client/src/models/teal-key-value.ts:10](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/indexer_client/src/models/teal-key-value.ts#L10)
 
-***
+---
 
 ### value
 
 > **value**: [`TealValue`](/docs/algokit-utils/typescript/latest/api/subpaths/indexer-client/type-aliases/tealvalue/)
 
-Defined in: [packages/indexer\_client/src/models/teal-key-value.ts:11](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/indexer_client/src/models/teal-key-value.ts#L11)
+Defined in: [packages/indexer_client/src/models/teal-key-value.ts:11](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/indexer_client/src/models/teal-key-value.ts#L11)

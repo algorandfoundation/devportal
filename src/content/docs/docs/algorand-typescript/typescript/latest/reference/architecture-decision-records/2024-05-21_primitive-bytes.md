@@ -1,5 +1,5 @@
 ---
-title: "Primitive bytes"
+title: 'Primitive bytes'
 ---
 
 # Architecture Decision Record - Primitive bytes
@@ -40,11 +40,11 @@ EcmaScript provides two relevant types for bytes and strings.
 - **Uint8Array**: A variable length mutable array of 8-bit numbers. Supports indexing/slicing of 'bytes'.
 
 ```ts
-const b1 = 'somebytes'
+const b1 = 'somebytes';
 
-const b2 = new Uint8Array([1, 2, 3, 4])
+const b2 = new Uint8Array([1, 2, 3, 4]);
 
-const b3 = b1 + b1
+const b3 = b1 + b1;
 ```
 
 Whilst binary data is often a representation of a utf-8 string, it is not always - so direct use of the string type is not a natural fit. It doesn't allow us to represent alternative encodings (b16/b64) and the existing api surface is very 'string' centric. Much of the api would also be expensive to implement on the AVM leading to a bunch of 'dead' methods hanging off the type (or a significant amount of work implementing all the methods). The signatures of these methods also use `number` which is [not a semantically relevant type](/docs/algorand-typescript/typescript/latest/reference/architecture-decision-records/2024-05-21_primitive-bytes/2024-05-21_primitive-integer-types/).
@@ -58,8 +58,8 @@ The Uint8Array type is fit for purpose as an encoding mechanism but the API is n
 TEALScript uses a branded `string` to represent `bytes` and native `string` to represent UTF-8 bytes. Base64/Base16 encoding/decoding is performed with specific methods.
 
 ```typescript
-const someString = 'foo'
-const someHexValue = hex('0xdeadbeef') // branded "bytes"
+const someString = 'foo';
+const someHexValue = hex('0xdeadbeef'); // branded "bytes"
 ```
 
 Bytes and UTF-8 strings are typed via branded `string` types. UTF-8 strings are the most common use case for strings, thus have the JavaScript `String` prototype functions when working with byteslice, which provides a familiar set of function signatures. This option also enables the usage of `+` for concatenation.
@@ -77,48 +77,41 @@ A `Bytes` class is defined with a very specific API tailored to operations which
 ```ts
 class Bytes {
   constructor(v: string) {
-    this.v = v
+    this.v = v;
   }
 
   concat(other: Bytes): Bytes {
-    return new Bytes(this.v + other.v)
+    return new Bytes(this.v + other.v);
   }
 
   at(x: uint64): Bytes {
-    return new Bytes(this.v[x])
+    return new Bytes(this.v[x]);
   }
-  
-  static fromHex(v: string): Bytes {
-      
-  }
-  
-  static fromBase64(v: string): Bytes {
-      
-  }
-  
+
+  static fromHex(v: string): Bytes {}
+
+  static fromBase64(v: string): Bytes {}
 
   /* etc */
 }
-
-
 ```
 
 This solution provides great type safety and requires no transpilation to run _correctly_ on Node.js. However, non-primitive types in Node.js have equality checked by reference. Again the `new` keyword feels unnatural. Due to lack of overloading, `+` will not work as expected however concatenations do not require the same understanding of "order of operations" and nesting as numeric operations, so a `concat` method isn't as unwieldy (but still isn't idiomatic).
 
 ```ts
-const a = new Bytes("Hello")
-const b = new Bytes("World")
-const ab = a.concat(b)
+const a = new Bytes('Hello');
+const b = new Bytes('World');
+const ab = a.concat(b);
 
 function testValue(x: Bytes) {
   // No compile error, but will work on reference not value
   switch (x) {
     case a:
-      return b
+      return b;
     case b:
-      return a
+      return a;
   }
-  return new Bytes('default')
+  return new Bytes('default');
 }
 ```
 
@@ -130,30 +123,31 @@ We can iron out some of the rough edges of using a class by only exposing a fact
 
 ```ts
 export type bytes = {
-  readonly length: uint64
+  readonly length: uint64;
 
-  at(i: Uint64Compat): bytes
+  at(i: Uint64Compat): bytes;
 
-  concat(other: BytesCompat): bytes
-} & symbol
+  concat(other: BytesCompat): bytes;
+} & symbol;
 
-export function Bytes(value: TemplateStringsArray, ...replacements: BytesCompat[]): bytes
-export function Bytes(value: BytesCompat): bytes
-export function Bytes(value: BytesCompat | TemplateStringsArray, ...replacements: BytesCompat[]): bytes {
+export function Bytes(value: TemplateStringsArray, ...replacements: BytesCompat[]): bytes;
+export function Bytes(value: BytesCompat): bytes;
+export function Bytes(
+  value: BytesCompat | TemplateStringsArray,
+  ...replacements: BytesCompat[]
+): bytes {
   /* implementation */
 }
 
-const a = Bytes('Hello')
-const b = Bytes.fromHex('ABFF')
-const c = Bytes.fromBase64('...')
-const d = Bytes.fromInts(255, 123, 28, 20)
-const e = Bytes`${a} World!`
+const a = Bytes('Hello');
+const b = Bytes.fromHex('ABFF');
+const c = Bytes.fromBase64('...');
+const d = Bytes.fromInts(255, 123, 28, 20);
+const e = Bytes`${a} World!`;
 
 function testValue(x: bytes, y: bytes): bytes {
-  return Bytes`${x} and ${y}`
+  return Bytes`${x} and ${y}`;
 }
-
-
 ```
 
 Having `bytes` behave like a primitive value type (value equality) whilst not _actually_ being a primitive is not strictly semantically compatible with EcmaScript however the lowercase type names (plus factory with no `new` keyword) communicates the intention of it being a primitive value type and there is an existing precedence of introducing new value types to the language in a similar pattern (`bigint` and `BigInt`). Essentially - if EcmaScript were to have a primitive bytes type, this is most likely what it would look like.
@@ -164,7 +158,7 @@ Option 3 can be excluded because the requirement for a `new` keyword feels unnat
 
 Option 1 and 2 are not preferred as they make maintaining semantic compatibility with EcmaScript impractical.
 
-Option 4 gives us the most natural feeling api whilst still giving us full control over the api surface. It doesn't support the `+` operator, but supports interpolation and `.concat` which gives us most of what `+` provides other than augmented assignment (ie. `+=`). 
+Option 4 gives us the most natural feeling api whilst still giving us full control over the api surface. It doesn't support the `+` operator, but supports interpolation and `.concat` which gives us most of what `+` provides other than augmented assignment (ie. `+=`).
 
 ## Selected option
 

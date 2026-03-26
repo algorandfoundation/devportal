@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "transactionFees"
+title: 'transactionFees'
 ---
 
 > **transactionFees**(`numberOfTransactions`): [`AlgoAmount`](/docs/algokit-utils/typescript/latest/api/algokit-utils/classes/algoamount/)

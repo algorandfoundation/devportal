@@ -29,9 +29,10 @@ export function conditionalTransform(
   condition: string | ((path: string) => boolean),
   ...transforms: TransformFunction[]
 ): TransformFunction {
-  const conditionFn = typeof condition === 'string'
-    ? (path: string) => matchesPath(condition, path)
-    : condition;
+  const conditionFn =
+    typeof condition === 'string'
+      ? (path: string) => matchesPath(condition, path)
+      : condition;
 
   return (content: string, context) => {
     if (conditionFn(context.path)) {
@@ -309,7 +310,9 @@ export function createContentBasedFrontmatterTransform(
 
     if (match) {
       // Normalize matchIndices to always be an array
-      const indices = Array.isArray(matchIndices) ? matchIndices : [matchIndices];
+      const indices = Array.isArray(matchIndices)
+        ? matchIndices
+        : [matchIndices];
 
       // Extract values from the specified capture groups
       extractedValues = indices.map(index => {

@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "ABIType"
+title: 'ABIType'
 ---
 
 Defined in: [packages/abi/src/abi-type.ts:38](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/abi/src/abi-type.ts#L38)
@@ -52,7 +52,7 @@ Returns a user-friendly display name for this type.
 
 The display name for this type
 
-***
+---
 
 ### name
 
@@ -90,7 +90,7 @@ The number of bytes needed to encode this type
 
 Error if the type is dynamic
 
-***
+---
 
 ### decode()
 
@@ -114,7 +114,7 @@ The bytes to decode
 
 The decoded value
 
-***
+---
 
 ### encode()
 
@@ -138,7 +138,7 @@ The value to encode
 
 The encoded bytes
 
-***
+---
 
 ### equals()
 
@@ -162,7 +162,7 @@ The other ABI type to compare with
 
 True if the types are equal, false otherwise
 
-***
+---
 
 ### isDynamic()
 
@@ -178,7 +178,7 @@ Checks if this ABI type is dynamic (variable-length).
 
 True if the type is dynamic, false otherwise
 
-***
+---
 
 ### toString()
 
@@ -194,7 +194,7 @@ Returns the ARC-4 type name string representation.
 
 The ARC-4 type string
 
-***
+---
 
 ### from()
 

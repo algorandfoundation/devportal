@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "KeyRegistrationItxnParams"
+title: 'KeyRegistrationItxnParams'
 ---
 
 Defined in: [itxn.ts:1024](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/itxn.ts#L1024)
@@ -33,7 +33,7 @@ Return a copy of this KeyRegistrationItxnParams object
 
 `KeyRegistrationItxnParams`
 
-***
+---
 
 ### set()
 
@@ -53,7 +53,7 @@ Update one or more fields in this KeyRegistrationItxnParams object
 
 `void`
 
-***
+---
 
 ### submit()
 

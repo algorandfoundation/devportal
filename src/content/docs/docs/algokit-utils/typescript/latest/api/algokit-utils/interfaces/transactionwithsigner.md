@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "TransactionWithSigner"
+title: 'TransactionWithSigner'
 ---
 
 Defined in: [src/transaction/transaction.ts:8](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/transaction/transaction.ts#L8)
@@ -19,7 +19,7 @@ Defined in: [src/transaction/transaction.ts:12](https://github.com/algorandfound
 
 A transaction signer that can authorize txn
 
-***
+---
 
 ### txn
 

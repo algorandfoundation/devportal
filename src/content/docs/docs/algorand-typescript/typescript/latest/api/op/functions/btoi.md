@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "btoi"
+title: 'btoi'
 ---
 
 > **btoi**(`a`): [`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)

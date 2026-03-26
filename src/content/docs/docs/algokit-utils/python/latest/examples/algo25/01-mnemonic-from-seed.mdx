@@ -1,6 +1,6 @@
 ---
-title: "Mnemonic from Seed"
-description: "This example demonstrates how to use mnemonic_from_seed() to convert a 32-byte seed into a 25-word Algorand mnemonic. The mnemonic uses BIP39-style word encoding where each word represents 11 bits of data."
+title: 'Mnemonic from Seed'
+description: 'This example demonstrates how to use mnemonic_from_seed() to convert a 32-byte seed into a 25-word Algorand mnemonic. The mnemonic uses BIP39-style word encoding where each word represents 11 bits of data.'
 sidebar:
   order: 1
 ---
@@ -10,7 +10,8 @@ sidebar:
 ## Description
 
 This example demonstrates how to use mnemonic_from_seed() to convert a 32-byte seed into a 25-word Algorand mnemonic. The mnemonic uses BIP39-style word encoding where each word represents 11 bits of data.
- Key concepts:
+Key concepts:
+
 - A 32-byte (256-bit) seed produces 24 data words (256 / 11 = ~23.3, rounded up)
 - A 25th checksum word is computed from the SHA-512/256 hash of the seed
 - The mnemonic is deterministic: same seed always produces same mnemonic

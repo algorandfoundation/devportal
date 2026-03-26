@@ -1,5 +1,5 @@
 ---
-title: "algokit_utils.assets.asset_manager"
+title: 'algokit_utils.assets.asset_manager'
 ---
 
 <div class="api-ref">
@@ -8,130 +8,130 @@ title: "algokit_utils.assets.asset_manager"
 
 ## Classes
 
-| [`AccountAssetInformation`](#algokit_utils.assets.asset_manager.AccountAssetInformation)   | Information about an account's holding of a particular asset.                                   |
-|--------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------|
-| [`AssetInformation`](#algokit_utils.assets.asset_manager.AssetInformation)                 | Information about an Algorand Standard Asset (ASA).                                             |
-| [`BulkAssetOptInOutResult`](#algokit_utils.assets.asset_manager.BulkAssetOptInOutResult)   | Result from performing a bulk opt-in or bulk opt-out for an account against a series of assets. |
-| [`AssetManager`](#algokit_utils.assets.asset_manager.AssetManager)                         | A manager for Algorand Standard Assets (ASAs).                                                  |
+| [`AccountAssetInformation`](#algokit_utils.assets.asset_manager.AccountAssetInformation) | Information about an account's holding of a particular asset.                                   |
+| ---------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------- |
+| [`AssetInformation`](#algokit_utils.assets.asset_manager.AssetInformation)               | Information about an Algorand Standard Asset (ASA).                                             |
+| [`BulkAssetOptInOutResult`](#algokit_utils.assets.asset_manager.BulkAssetOptInOutResult) | Result from performing a bulk opt-in or bulk opt-out for an account against a series of assets. |
+| [`AssetManager`](#algokit_utils.assets.asset_manager.AssetManager)                       | A manager for Algorand Standard Assets (ASAs).                                                  |
 
 ## Module Contents
 
-### *class* AccountAssetInformation
+### _class_ AccountAssetInformation
 
 Information about an account’s holding of a particular asset.
 
-#### asset_id *: int*
+#### asset*id *: int\_
 
 The ID of the asset
 
-#### balance *: int*
+#### balance _: int_
 
 The amount of the asset held by the account
 
-#### frozen *: bool*
+#### frozen _: bool_
 
 Whether the asset is frozen for this account
 
-#### round *: int*
+#### round _: int_
 
 The round this information was retrieved at
 
-### *class* AssetInformation
+### _class_ AssetInformation
 
 Information about an Algorand Standard Asset (ASA).
 
-#### asset_id *: int*
+#### asset*id *: int\_
 
 The ID of the asset
 
-#### creator *: str*
+#### creator _: str_
 
 The address of the account that created the asset
 
-#### total *: int*
+#### total _: int_
 
 The total amount of the smallest divisible units that were created of the asset
 
-#### decimals *: int*
+#### decimals _: int_
 
 The amount of decimal places the asset was created with
 
-#### default_frozen *: bool | None* *= None*
+#### default*frozen *: bool | None\_ _= None_
 
 Whether the asset was frozen by default for all accounts, defaults to None
 
-#### manager *: str | None* *= None*
+#### manager _: str | None_ _= None_
 
 The address of the optional account that can manage the configuration of the asset and destroy it,
 defaults to None
 
-#### reserve *: str | None* *= None*
+#### reserve _: str | None_ _= None_
 
 The address of the optional account that holds the reserve (uncirculated supply) units of the asset,
 defaults to None
 
-#### freeze *: str | None* *= None*
+#### freeze _: str | None_ _= None_
 
 The address of the optional account that can be used to freeze or unfreeze holdings of this asset,
 defaults to None
 
-#### clawback *: str | None* *= None*
+#### clawback _: str | None_ _= None_
 
 The address of the optional account that can clawback holdings of this asset from any account,
 defaults to None
 
-#### unit_name *: str | None* *= None*
+#### unit*name *: str | None\_ _= None_
 
 The optional name of the unit of this asset (e.g. ticker name), defaults to None
 
-#### unit_name_b64 *: bytes | None* *= None*
+#### unit*name_b64 *: bytes | None\_ _= None_
 
 The optional name of the unit of this asset as bytes, defaults to None
 
-#### asset_name *: str | None* *= None*
+#### asset*name *: str | None\_ _= None_
 
 The optional name of the asset, defaults to None
 
-#### asset_name_b64 *: bytes | None* *= None*
+#### asset*name_b64 *: bytes | None\_ _= None_
 
 The optional name of the asset as bytes, defaults to None
 
-#### url *: str | None* *= None*
+#### url _: str | None_ _= None_
 
 The optional URL where more information about the asset can be retrieved, defaults to None
 
-#### url_b64 *: bytes | None* *= None*
+#### url*b64 *: bytes | None\_ _= None_
 
 The optional URL where more information about the asset can be retrieved as bytes, defaults to None
 
-#### metadata_hash *: bytes | None* *= None*
+#### metadata*hash *: bytes | None\_ _= None_
 
 The 32-byte hash of some metadata that is relevant to the asset and/or asset holders, defaults to None
 
-### *class* BulkAssetOptInOutResult
+### _class_ BulkAssetOptInOutResult
 
 Result from performing a bulk opt-in or bulk opt-out for an account against a series of assets.
 
-* **Variables:**
-  * **asset_id** – The ID of the asset opted into / out of
-  * **transaction_id** – The transaction ID of the resulting opt in / out
+- **Variables:**
+  - **asset_id** – The ID of the asset opted into / out of
+  - **transaction_id** – The transaction ID of the resulting opt in / out
 
-#### asset_id *: int*
+#### asset*id *: int\_
 
 The ID of the asset opted into / out of
 
-#### transaction_id *: str*
+#### transaction*id *: str\_
 
 The transaction ID of the resulting opt in / out
 
-### *class* AssetManager(algod_client: AlgodClient, new_group: Callable[[], [TransactionComposer](/docs/algokit-utils/python/latest/api/algokit_utils/transactions/transaction_composer/#algokit_utils.transactions.transaction_composer.TransactionComposer)])
+### _class_ AssetManager(algod_client: AlgodClient, new_group: Callable[[], [TransactionComposer](/docs/algokit-utils/python/latest/api/algokit_utils/transactions/transaction_composer/#algokit_utils.transactions.transaction_composer.TransactionComposer)])
 
 A manager for Algorand Standard Assets (ASAs).
 
-* **Parameters:**
-  * **algod_client** – An AlgodClient instance
-  * **new_group** – A function that creates a new TransactionComposer transaction group
-* **Example:**
+- **Parameters:**
+  - **algod_client** – An AlgodClient instance
+  - **new_group** – A function that creates a new TransactionComposer transaction group
+- **Example:**
   ```python
   asset_manager = AssetManager(algod_client)
   ```
@@ -145,11 +145,11 @@ AssetInformation dataclass. All values are sourced from typed model attributes
 (e.g. asset.params.total, asset.params.manager, asset.params.unit_name)
 rather than dictionary keys (legacy: asset_info[“params”][“total”], etc.).
 
-* **Parameters:**
+- **Parameters:**
   **asset_id** – The asset identifier
-* **Returns:**
+- **Returns:**
   AssetInformation with strongly typed fields
-* **Example:**
+- **Example:**
   ```python
   asset_manager = AssetManager(algod_client)
   info = asset_manager.get_by_id(1234567890)
@@ -160,14 +160,14 @@ rather than dictionary keys (legacy: asset_info[“params”][“total”], etc.
 
 Returns the given sender account’s asset holding for a given asset.
 
-* **Parameters:**
-  * **sender** – The address of the sender/account to look up
-  * **asset_id** – The ID of the asset to return a holding for
-* **Returns:**
+- **Parameters:**
+  - **sender** – The address of the sender/account to look up
+  - **asset_id** – The ID of the asset to return a holding for
+- **Returns:**
   The account asset holding information
-* **Raises:**
+- **Raises:**
   **ValueError** – If the account has no holding for the specified asset
-* **Example:**
+- **Example:**
   ```python
   asset_manager = AssetManager(algod_client)
   account_asset_info = asset_manager.get_account_information(sender, asset_id)
@@ -177,23 +177,23 @@ Returns the given sender account’s asset holding for a given asset.
 
 Opt an account in to a list of Algorand Standard Assets.
 
-* **Parameters:**
-  * **account** – The account to opt-in
-  * **asset_ids** – The list of asset IDs to opt-in to
-  * **signer** – The signer to use for the transaction, defaults to None
-  * **rekey_to** – The address to rekey the account to, defaults to None
-  * **note** – The note to include in the transaction, defaults to None
-  * **lease** – The lease to include in the transaction, defaults to None
-  * **static_fee** – The static fee to include in the transaction, defaults to None
-  * **extra_fee** – The extra fee to include in the transaction, defaults to None
-  * **max_fee** – The maximum fee to include in the transaction, defaults to None
-  * **validity_window** – The validity window to include in the transaction, defaults to None
-  * **first_valid_round** – The first valid round to include in the transaction, defaults to None
-  * **last_valid_round** – The last valid round to include in the transaction, defaults to None
-  * **send_params** – The send parameters to use for the transaction, defaults to None
-* **Returns:**
+- **Parameters:**
+  - **account** – The account to opt-in
+  - **asset_ids** – The list of asset IDs to opt-in to
+  - **signer** – The signer to use for the transaction, defaults to None
+  - **rekey_to** – The address to rekey the account to, defaults to None
+  - **note** – The note to include in the transaction, defaults to None
+  - **lease** – The lease to include in the transaction, defaults to None
+  - **static_fee** – The static fee to include in the transaction, defaults to None
+  - **extra_fee** – The extra fee to include in the transaction, defaults to None
+  - **max_fee** – The maximum fee to include in the transaction, defaults to None
+  - **validity_window** – The validity window to include in the transaction, defaults to None
+  - **first_valid_round** – The first valid round to include in the transaction, defaults to None
+  - **last_valid_round** – The last valid round to include in the transaction, defaults to None
+  - **send_params** – The send parameters to use for the transaction, defaults to None
+- **Returns:**
   An array of records matching asset ID to transaction ID of the opt in
-* **Example:**
+- **Example:**
   ```python
   asset_manager = AssetManager(algod_client)
   results = asset_manager.bulk_opt_in(account, asset_ids)
@@ -203,30 +203,29 @@ Opt an account in to a list of Algorand Standard Assets.
 
 Opt an account out of a list of Algorand Standard Assets.
 
-* **Parameters:**
-  * **account** – The account to opt-out
-  * **asset_ids** – The list of asset IDs to opt-out of
-  * **ensure_zero_balance** – Whether to check if the account has a zero balance first, defaults to True
-  * **signer** – The signer to use for the transaction, defaults to None
-  * **rekey_to** – The address to rekey the account to, defaults to None
-  * **note** – The note to include in the transaction, defaults to None
-  * **lease** – The lease to include in the transaction, defaults to None
-  * **static_fee** – The static fee to include in the transaction, defaults to None
-  * **extra_fee** – The extra fee to include in the transaction, defaults to None
-  * **max_fee** – The maximum fee to include in the transaction, defaults to None
-  * **validity_window** – The validity window to include in the transaction, defaults to None
-  * **first_valid_round** – The first valid round to include in the transaction, defaults to None
-  * **last_valid_round** – The last valid round to include in the transaction, defaults to None
-  * **send_params** – The send parameters to use for the transaction, defaults to None
-* **Raises:**
+- **Parameters:**
+  - **account** – The account to opt-out
+  - **asset_ids** – The list of asset IDs to opt-out of
+  - **ensure_zero_balance** – Whether to check if the account has a zero balance first, defaults to True
+  - **signer** – The signer to use for the transaction, defaults to None
+  - **rekey_to** – The address to rekey the account to, defaults to None
+  - **note** – The note to include in the transaction, defaults to None
+  - **lease** – The lease to include in the transaction, defaults to None
+  - **static_fee** – The static fee to include in the transaction, defaults to None
+  - **extra_fee** – The extra fee to include in the transaction, defaults to None
+  - **max_fee** – The maximum fee to include in the transaction, defaults to None
+  - **validity_window** – The validity window to include in the transaction, defaults to None
+  - **first_valid_round** – The first valid round to include in the transaction, defaults to None
+  - **last_valid_round** – The last valid round to include in the transaction, defaults to None
+  - **send_params** – The send parameters to use for the transaction, defaults to None
+- **Raises:**
   **ValueError** – If ensure_zero_balance is True and account has non-zero balance or is not opted in
-* **Returns:**
+- **Returns:**
   An array of records matching asset ID to transaction ID of the opt out
-* **Example:**
+- **Example:**
   ```python
   asset_manager = AssetManager(algod_client)
   results = asset_manager.bulk_opt_out(account, asset_ids)
   ```
-
 
 </div>

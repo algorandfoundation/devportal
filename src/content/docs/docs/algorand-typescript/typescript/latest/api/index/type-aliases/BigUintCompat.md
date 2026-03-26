@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "BigUintCompat"
+title: 'BigUintCompat'
 ---
 
 > **BigUintCompat** = `bigint` \| [`bytes`](/algorand-typescript/api/index/type-aliases/bytes/) \| `number` \| `boolean`

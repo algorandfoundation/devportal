@@ -2,14 +2,14 @@
 editUrl: false
 next: false
 prev: false
-title: "LogSnapshotConfig"
+title: 'LogSnapshotConfig'
 ---
 
 Defined in: [src/testing/types.ts:140](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/testing/types.ts#L140)
 
 Configuration for preparing a captured log snapshot.
 This helps ensure that the provided configuration items won't appear
- with random values in the log snapshot, but rather will get substituted with predictable ids.
+with random values in the log snapshot, but rather will get substituted with predictable ids.
 
 ## Properties
 
@@ -21,7 +21,7 @@ Defined in: [src/testing/types.ts:144](https://github.com/algorandfoundation/alg
 
 Any accounts/addresses to replace the address for predictably
 
-***
+---
 
 ### apps?
 
@@ -31,7 +31,7 @@ Defined in: [src/testing/types.ts:146](https://github.com/algorandfoundation/alg
 
 Any app IDs to replace predictably
 
-***
+---
 
 ### filterPredicate()?
 
@@ -51,7 +51,7 @@ Optional filter predicate to filter out logs
 
 `boolean`
 
-***
+---
 
 ### transactions?
 

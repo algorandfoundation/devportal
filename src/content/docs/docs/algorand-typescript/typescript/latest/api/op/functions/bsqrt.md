@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "bsqrt"
+title: 'bsqrt'
 ---
 
 > **bsqrt**(`a`): [`biguint`](/algorand-typescript/api/index/type-aliases/biguint/)

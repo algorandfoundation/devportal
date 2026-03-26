@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "PaymentTxn"
+title: 'PaymentTxn'
 ---
 
 > **PaymentTxn**(`n`): [`PaymentTxn`](/algorand-typescript/api/gtxn/namespaces/gtxn/interfaces/paymenttxn/)

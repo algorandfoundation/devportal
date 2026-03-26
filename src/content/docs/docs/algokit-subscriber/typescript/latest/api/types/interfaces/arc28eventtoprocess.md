@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "Arc28EventToProcess"
+title: 'Arc28EventToProcess'
 ---
 
 Defined in: [src/types/arc-28.ts:24](https://github.com/algorandfoundation/algokit-subscriber-ts/blob/main/src/types/arc-28.ts#L24)
@@ -23,7 +23,7 @@ Defined in: [src/types/arc-28.ts:34](https://github.com/algorandfoundation/algok
 
 The ARC-28 definition of the event
 
-***
+---
 
 ### eventName
 
@@ -33,7 +33,7 @@ Defined in: [src/types/arc-28.ts:28](https://github.com/algorandfoundation/algok
 
 The name of the ARC-28 event that was triggered
 
-***
+---
 
 ### eventPrefix
 
@@ -43,7 +43,7 @@ Defined in: [src/types/arc-28.ts:32](https://github.com/algorandfoundation/algok
 
 The 4-byte hex prefix for the event
 
-***
+---
 
 ### eventSignature
 
@@ -53,7 +53,7 @@ Defined in: [src/types/arc-28.ts:30](https://github.com/algorandfoundation/algok
 
 The signature of the event e.g. `EventName(type1,type2)`
 
-***
+---
 
 ### groupName
 

@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "TransactionComposerParams"
+title: 'TransactionComposerParams'
 ---
 
 > **TransactionComposerParams** = `object`
@@ -21,7 +21,7 @@ Defined in: [src/composer.ts:191](https://github.com/algorandfoundation/algokit-
 
 The algod client to use to get suggestedParams and send the transaction group
 
-***
+---
 
 ### appManager?
 
@@ -33,7 +33,7 @@ An existing `AppManager` to use to manage app compilation and cache compilation 
 
 If not specified then an ephemeral one will be created.
 
-***
+---
 
 ### composerConfig?
 
@@ -41,7 +41,7 @@ If not specified then an ephemeral one will be created.
 
 Defined in: [src/composer.ts:210](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/composer.ts#L210)
 
-***
+---
 
 ### defaultValidityWindow?
 
@@ -52,7 +52,7 @@ Defined in: [src/composer.ts:199](https://github.com/algorandfoundation/algokit-
 How many rounds a transaction should be valid for by default; if not specified
 then will be 10 rounds (or 1000 rounds if issuing transactions to LocalNet).
 
-***
+---
 
 ### errorTransformers?
 
@@ -63,7 +63,7 @@ Defined in: [src/composer.ts:209](https://github.com/algorandfoundation/algokit-
 An array of error transformers to use when an error is caught in simulate or execute
 callbacks can later be registered with `registerErrorTransformer`
 
-***
+---
 
 ### getSigner()
 
@@ -83,7 +83,7 @@ The function used to get the TransactionSigner for a given address
 
 [`TransactionSigner`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/type-aliases/transactionsigner/)
 
-***
+---
 
 ### getSuggestedParams()?
 

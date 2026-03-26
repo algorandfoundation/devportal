@@ -1,6 +1,6 @@
 ---
-title: "ABI Bool Array Packing"
-description: "This example demonstrates how bool arrays are packed efficiently in ARC-4:"
+title: 'ABI Bool Array Packing'
+description: 'This example demonstrates how bool arrays are packed efficiently in ARC-4:'
 sidebar:
   order: 10
 ---
@@ -10,11 +10,12 @@ sidebar:
 ## Description
 
 This example demonstrates how bool arrays are packed efficiently in ARC-4:
+
 - 8 booleans fit in 1 byte (1 bit per boolean)
 - bool[8] encodes to exactly 1 byte
 - bool[16] encodes to 2 bytes
 - Partial byte arrays (e.g., bool[5]) still use full bytes
- Key characteristics of bool array packing:
+  Key characteristics of bool array packing:
 - Each bool is stored as a single bit, not a full byte
 - Bools are packed left-to-right starting from the MSB (most significant bit)
 - Array length is rounded up to the next full byte

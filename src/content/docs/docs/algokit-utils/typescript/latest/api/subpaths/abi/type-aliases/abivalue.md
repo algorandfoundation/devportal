@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "ABIValue"
+title: 'ABIValue'
 ---
 
 > **ABIValue** = `boolean` \| [`Address`](/docs/algokit-utils/typescript/latest/api/algokit-utils/classes/address/) \| `number` \| `bigint` \| `string` \| `Uint8Array` \| `ABIValue`[] \| `ABIStructValue`

@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "BlockUpgradeVote"
+title: 'BlockUpgradeVote'
 ---
 
 Defined in: [src/types/subscription.ts:125](https://github.com/algorandfoundation/algokit-subscriber-ts/blob/main/src/types/subscription.ts#L125)
@@ -17,7 +17,7 @@ Defined in: [src/types/subscription.ts:129](https://github.com/algorandfoundatio
 
 (upgradeyes) Indicates a yes vote for the current proposal.
 
-***
+---
 
 ### upgradeDelay?
 
@@ -27,7 +27,7 @@ Defined in: [src/types/subscription.ts:134](https://github.com/algorandfoundatio
 
 (upgradedelay) Indicates the time between acceptance and execution.
 
-***
+---
 
 ### upgradePropose?
 

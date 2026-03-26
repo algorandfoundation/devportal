@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "PaymentTransactionFields"
+title: 'PaymentTransactionFields'
 ---
 
 > **PaymentTransactionFields** = `object`
@@ -25,7 +25,7 @@ The amount of microALGO to send.
 
 Specified in microALGO (1 ALGO = 1,000,000 microALGO).
 
-***
+---
 
 ### closeRemainderTo?
 
@@ -39,7 +39,7 @@ If specified, this indicates that the sender account should be closed after the 
 and all remaining funds (minus fees) should be transferred to the specified address.
 This effectively removes the sender account from the ledger.
 
-***
+---
 
 ### receiver
 

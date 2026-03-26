@@ -1,5 +1,5 @@
 ---
-title: "AlgoKit sandbox approach"
+title: 'AlgoKit sandbox approach'
 ---
 
 - **Status**: Approved

@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "sendTransactionComposer"
+title: 'sendTransactionComposer'
 ---
 
 > **sendTransactionComposer**(`atcSend`): `Promise`\<[`SendTransactionComposerResults`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/sendtransactioncomposerresults/)\>

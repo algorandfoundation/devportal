@@ -1,6 +1,6 @@
 ---
-title: "Master Derivation Key Functions"
-description: "This example demonstrates the master derivation key (MDK) alias functions and shows their equivalence to the core seed/mnemonic functions."
+title: 'Master Derivation Key Functions'
+description: 'This example demonstrates the master derivation key (MDK) alias functions and shows their equivalence to the core seed/mnemonic functions.'
 sidebar:
   order: 4
 ---
@@ -10,11 +10,12 @@ sidebar:
 ## Description
 
 This example demonstrates the master derivation key (MDK) alias functions and shows their equivalence to the core seed/mnemonic functions.
- Key concepts:
+Key concepts:
+
 - masterDerivationKeyToMnemonic() is an alias for mnemonicFromSeed()
 - mnemonicToMasterDerivationKey() is an alias for seedFromMnemonic()
 - These aliases exist for wallet derivation workflows where the terminology
-"master derivation key" is more familiar than "seed"
+  "master derivation key" is more familiar than "seed"
 
 ## Prerequisites
 
@@ -55,161 +56,162 @@ import {
   mnemonicFromSeed,
   mnemonicToMasterDerivationKey,
   seedFromMnemonic,
-} from '@algorandfoundation/algokit-utils/algo25'
-import { formatHex, printHeader, printInfo, printStep, printSuccess } from '../shared/utils.js'
+} from '@algorandfoundation/algokit-utils/algo25';
+import { formatHex, printHeader, printInfo, printStep, printSuccess } from '../shared/utils.js';
 
 /**
  * Compare two Uint8Arrays for equality
  */
 function arrayEqual(a: Uint8Array, b: Uint8Array): boolean {
-  if (a.length !== b.length) return false
+  if (a.length !== b.length) return false;
   for (let i = 0; i < a.length; i++) {
-    if (a[i] !== b[i]) return false
+    if (a[i] !== b[i]) return false;
   }
-  return true
+  return true;
 }
 
 function main() {
-  printHeader('Master Derivation Key Functions Example')
+  printHeader('Master Derivation Key Functions Example');
 
   // Step 1: Generate a random 32-byte master derivation key (MDK)
-  printStep(1, 'Generate a Random 32-byte Master Derivation Key')
+  printStep(1, 'Generate a Random 32-byte Master Derivation Key');
 
-  const mdk = new Uint8Array(32)
-  crypto.getRandomValues(mdk)
+  const mdk = new Uint8Array(32);
+  crypto.getRandomValues(mdk);
 
-  printInfo(`Master Derivation Key (MDK): ${mdk.length} bytes`)
-  printInfo(`Hex: ${formatHex(mdk)}`)
-  printInfo('')
-  printInfo('A master derivation key is simply a 32-byte seed.')
-  printInfo('The term "MDK" is used in wallet derivation contexts.')
+  printInfo(`Master Derivation Key (MDK): ${mdk.length} bytes`);
+  printInfo(`Hex: ${formatHex(mdk)}`);
+  printInfo('');
+  printInfo('A master derivation key is simply a 32-byte seed.');
+  printInfo('The term "MDK" is used in wallet derivation contexts.');
 
   // Step 2: Convert MDK to mnemonic using masterDerivationKeyToMnemonic
-  printStep(2, 'Convert MDK to Mnemonic using masterDerivationKeyToMnemonic()')
+  printStep(2, 'Convert MDK to Mnemonic using masterDerivationKeyToMnemonic()');
 
-  const mnemonicFromMdk = masterDerivationKeyToMnemonic(mdk)
-  const words = mnemonicFromMdk.split(' ')
+  const mnemonicFromMdk = masterDerivationKeyToMnemonic(mdk);
+  const words = mnemonicFromMdk.split(' ');
 
-  printInfo(`Mnemonic has ${words.length} words`)
-  printInfo('Mnemonic words:')
+  printInfo(`Mnemonic has ${words.length} words`);
+  printInfo('Mnemonic words:');
   for (let i = 0; i < words.length; i += 5) {
-    const row = words.slice(i, i + 5)
-    const numbered = row.map((w, j) => `${(i + j + 1).toString().padStart(2, ' ')}. ${w.padEnd(10)}`).join(' ')
-    printInfo(`  ${numbered}`)
+    const row = words.slice(i, i + 5);
+    const numbered = row
+      .map((w, j) => `${(i + j + 1).toString().padStart(2, ' ')}. ${w.padEnd(10)}`)
+      .join(' ');
+    printInfo(`  ${numbered}`);
   }
 
   // Step 3: Convert mnemonic back to MDK using mnemonicToMasterDerivationKey
-  printStep(3, 'Convert Mnemonic Back to MDK using mnemonicToMasterDerivationKey()')
+  printStep(3, 'Convert Mnemonic Back to MDK using mnemonicToMasterDerivationKey()');
 
-  const recoveredMdk = mnemonicToMasterDerivationKey(mnemonicFromMdk)
+  const recoveredMdk = mnemonicToMasterDerivationKey(mnemonicFromMdk);
 
-  printInfo(`Recovered MDK: ${recoveredMdk.length} bytes`)
-  printInfo(`Hex: ${formatHex(recoveredMdk)}`)
+  printInfo(`Recovered MDK: ${recoveredMdk.length} bytes`);
+  printInfo(`Hex: ${formatHex(recoveredMdk)}`);
 
-  const mdkMatch = arrayEqual(mdk, recoveredMdk)
-  printInfo('')
-  printInfo(`Original MDK matches recovered MDK: ${mdkMatch ? 'Yes' : 'No'}`)
+  const mdkMatch = arrayEqual(mdk, recoveredMdk);
+  printInfo('');
+  printInfo(`Original MDK matches recovered MDK: ${mdkMatch ? 'Yes' : 'No'}`);
 
   if (mdkMatch) {
-    printSuccess('Round-trip conversion successful!')
+    printSuccess('Round-trip conversion successful!');
   }
 
   // Step 4: Show equivalence: masterDerivationKeyToMnemonic === mnemonicFromSeed
-  printStep(4, 'Demonstrate Equivalence: masterDerivationKeyToMnemonic === mnemonicFromSeed')
+  printStep(4, 'Demonstrate Equivalence: masterDerivationKeyToMnemonic === mnemonicFromSeed');
 
-  const mnemonicViaMdk = masterDerivationKeyToMnemonic(mdk)
-  const mnemonicViaSeed = mnemonicFromSeed(mdk)
+  const mnemonicViaMdk = masterDerivationKeyToMnemonic(mdk);
+  const mnemonicViaSeed = mnemonicFromSeed(mdk);
 
-  printInfo('Using masterDerivationKeyToMnemonic(mdk):')
-  printInfo(`  "${mnemonicViaMdk.split(' ').slice(0, 5).join(' ')}..."`)
-  printInfo('')
-  printInfo('Using mnemonicFromSeed(mdk):')
-  printInfo(`  "${mnemonicViaSeed.split(' ').slice(0, 5).join(' ')}..."`)
-  printInfo('')
+  printInfo('Using masterDerivationKeyToMnemonic(mdk):');
+  printInfo(`  "${mnemonicViaMdk.split(' ').slice(0, 5).join(' ')}..."`);
+  printInfo('');
+  printInfo('Using mnemonicFromSeed(mdk):');
+  printInfo(`  "${mnemonicViaSeed.split(' ').slice(0, 5).join(' ')}..."`);
+  printInfo('');
 
-  const mnemonicsEqual = mnemonicViaMdk === mnemonicViaSeed
-  printInfo(`Results identical: ${mnemonicsEqual ? 'Yes' : 'No'}`)
+  const mnemonicsEqual = mnemonicViaMdk === mnemonicViaSeed;
+  printInfo(`Results identical: ${mnemonicsEqual ? 'Yes' : 'No'}`);
 
   if (mnemonicsEqual) {
-    printSuccess('masterDerivationKeyToMnemonic(mdk) === mnemonicFromSeed(mdk)')
+    printSuccess('masterDerivationKeyToMnemonic(mdk) === mnemonicFromSeed(mdk)');
   }
 
   // Step 5: Show equivalence: mnemonicToMasterDerivationKey === seedFromMnemonic
-  printStep(5, 'Demonstrate Equivalence: mnemonicToMasterDerivationKey === seedFromMnemonic')
+  printStep(5, 'Demonstrate Equivalence: mnemonicToMasterDerivationKey === seedFromMnemonic');
 
-  const mdkFromAlias = mnemonicToMasterDerivationKey(mnemonicFromMdk)
-  const seedFromCore = seedFromMnemonic(mnemonicFromMdk)
+  const mdkFromAlias = mnemonicToMasterDerivationKey(mnemonicFromMdk);
+  const seedFromCore = seedFromMnemonic(mnemonicFromMdk);
 
-  printInfo('Using mnemonicToMasterDerivationKey(mnemonic):')
-  printInfo(`  ${formatHex(mdkFromAlias)}`)
-  printInfo('')
-  printInfo('Using seedFromMnemonic(mnemonic):')
-  printInfo(`  ${formatHex(seedFromCore)}`)
-  printInfo('')
+  printInfo('Using mnemonicToMasterDerivationKey(mnemonic):');
+  printInfo(`  ${formatHex(mdkFromAlias)}`);
+  printInfo('');
+  printInfo('Using seedFromMnemonic(mnemonic):');
+  printInfo(`  ${formatHex(seedFromCore)}`);
+  printInfo('');
 
-  const seedsEqual = arrayEqual(mdkFromAlias, seedFromCore)
-  printInfo(`Results identical: ${seedsEqual ? 'Yes' : 'No'}`)
+  const seedsEqual = arrayEqual(mdkFromAlias, seedFromCore);
+  printInfo(`Results identical: ${seedsEqual ? 'Yes' : 'No'}`);
 
   if (seedsEqual) {
-    printSuccess('mnemonicToMasterDerivationKey(mn) equals seedFromMnemonic(mn)')
+    printSuccess('mnemonicToMasterDerivationKey(mn) equals seedFromMnemonic(mn)');
   }
 
   // Step 6: Explain why these aliases exist
-  printStep(6, 'Why These Convenience Aliases Exist')
+  printStep(6, 'Why These Convenience Aliases Exist');
 
-  printInfo('The MDK alias functions exist for wallet derivation workflows:')
-  printInfo('')
-  printInfo('Terminology mapping:')
-  printInfo('  ┌────────────────────────────────┬────────────────────────────────┐')
-  printInfo('  │     Wallet Context             │     Cryptographic Context      │')
-  printInfo('  ├────────────────────────────────┼────────────────────────────────┤')
-  printInfo('  │  Master Derivation Key (MDK)   │         Seed                   │')
-  printInfo('  │  masterDerivationKeyToMnemonic │         mnemonicFromSeed       │')
-  printInfo('  │  mnemonicToMasterDerivationKey │         seedFromMnemonic       │')
-  printInfo('  └────────────────────────────────┴────────────────────────────────┘')
-  printInfo('')
-  printInfo('In hierarchical deterministic (HD) wallet implementations,')
-  printInfo('the "master derivation key" is used to derive child keys.')
-  printInfo('This is the same 32-byte value as the seed, just with')
-  printInfo('terminology that matches wallet derivation standards.')
+  printInfo('The MDK alias functions exist for wallet derivation workflows:');
+  printInfo('');
+  printInfo('Terminology mapping:');
+  printInfo('  ┌────────────────────────────────┬────────────────────────────────┐');
+  printInfo('  │     Wallet Context             │     Cryptographic Context      │');
+  printInfo('  ├────────────────────────────────┼────────────────────────────────┤');
+  printInfo('  │  Master Derivation Key (MDK)   │         Seed                   │');
+  printInfo('  │  masterDerivationKeyToMnemonic │         mnemonicFromSeed       │');
+  printInfo('  │  mnemonicToMasterDerivationKey │         seedFromMnemonic       │');
+  printInfo('  └────────────────────────────────┴────────────────────────────────┘');
+  printInfo('');
+  printInfo('In hierarchical deterministic (HD) wallet implementations,');
+  printInfo('the "master derivation key" is used to derive child keys.');
+  printInfo('This is the same 32-byte value as the seed, just with');
+  printInfo('terminology that matches wallet derivation standards.');
 
   // Step 7: Practical usage examples
-  printStep(7, 'When to Use MDK vs Seed Functions')
+  printStep(7, 'When to Use MDK vs Seed Functions');
 
-  printInfo('Use MDK functions when:')
-  printInfo('  - Working with KMD (Key Management Daemon)')
-  printInfo('  - Implementing HD wallet derivation')
-  printInfo('  - Following wallet-specific documentation that uses MDK terminology')
-  printInfo('')
-  printInfo('Use seed functions when:')
-  printInfo('  - Working with general cryptographic operations')
-  printInfo('  - Following Algorand core documentation')
-  printInfo('  - The context is account creation rather than wallet derivation')
-  printInfo('')
-  printInfo('Both function pairs are interchangeable - choose based on context.')
+  printInfo('Use MDK functions when:');
+  printInfo('  - Working with KMD (Key Management Daemon)');
+  printInfo('  - Implementing HD wallet derivation');
+  printInfo('  - Following wallet-specific documentation that uses MDK terminology');
+  printInfo('');
+  printInfo('Use seed functions when:');
+  printInfo('  - Working with general cryptographic operations');
+  printInfo('  - Following Algorand core documentation');
+  printInfo('  - The context is account creation rather than wallet derivation');
+  printInfo('');
+  printInfo('Both function pairs are interchangeable - choose based on context.');
 
   // Step 8: Summary
-  printStep(8, 'Summary')
+  printStep(8, 'Summary');
 
-  printInfo('Master Derivation Key functions are convenience aliases:')
-  printInfo('')
-  printInfo('  masterDerivationKeyToMnemonic(mdk)')
-  printInfo('    └─ Alias for: mnemonicFromSeed(mdk)')
-  printInfo('    └─ Input: 32-byte Uint8Array')
-  printInfo('    └─ Output: 25-word mnemonic string')
-  printInfo('')
-  printInfo('  mnemonicToMasterDerivationKey(mn)')
-  printInfo('    └─ Alias for: seedFromMnemonic(mn)')
-  printInfo('    └─ Input: 25-word mnemonic string')
-  printInfo('    └─ Output: 32-byte Uint8Array')
-  printInfo('')
-  printInfo('The aliases exist to provide familiar terminology for wallet workflows.')
+  printInfo('Master Derivation Key functions are convenience aliases:');
+  printInfo('');
+  printInfo('  masterDerivationKeyToMnemonic(mdk)');
+  printInfo('    └─ Alias for: mnemonicFromSeed(mdk)');
+  printInfo('    └─ Input: 32-byte Uint8Array');
+  printInfo('    └─ Output: 25-word mnemonic string');
+  printInfo('');
+  printInfo('  mnemonicToMasterDerivationKey(mn)');
+  printInfo('    └─ Alias for: seedFromMnemonic(mn)');
+  printInfo('    └─ Input: 25-word mnemonic string');
+  printInfo('    └─ Output: 32-byte Uint8Array');
+  printInfo('');
+  printInfo('The aliases exist to provide familiar terminology for wallet workflows.');
 
-  printSuccess('Master Derivation Key Functions example completed successfully!')
+  printSuccess('Master Derivation Key Functions example completed successfully!');
 }
 
-main()
-
+main();
 ```
 
 ---

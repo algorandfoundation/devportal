@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "fromHex"
+title: 'fromHex'
 ---
 
 ## Call Signature
@@ -37,7 +37,7 @@ Create a new bytes value from a hexadecimal encoded string
 
 #### TLength
 
-`TLength` *extends* [`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
+`TLength` _extends_ [`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
 
 ### Parameters
 

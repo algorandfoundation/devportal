@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "AnyTransactionComposeFields"
+title: 'AnyTransactionComposeFields'
 ---
 
 Defined in: [itxn-compose.ts:26](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/itxn-compose.ts#L26)
@@ -29,7 +29,7 @@ Index of the account to get
 
 [`ApplicationCallFields`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/applicationcallfields/).[`accounts`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/applicationcallfields/#accounts)
 
-***
+---
 
 ### amount?
 
@@ -43,7 +43,7 @@ microalgos
 
 [`PaymentFields`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/paymentfields/).[`amount`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/paymentfields/#amount)
 
-***
+---
 
 ### appArgs?
 
@@ -61,7 +61,7 @@ Index of the arg to get
 
 [`ApplicationCallFields`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/applicationcallfields/).[`appArgs`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/applicationcallfields/#appargs)
 
-***
+---
 
 ### appId?
 
@@ -75,7 +75,7 @@ ApplicationID from ApplicationCall transaction
 
 [`ApplicationCallFields`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/applicationcallfields/).[`appId`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/applicationcallfields/#appid)
 
-***
+---
 
 ### approvalProgram?
 
@@ -93,7 +93,7 @@ Index of the page to get
 
 [`ApplicationCallFields`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/applicationcallfields/).[`approvalProgram`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/applicationcallfields/#approvalprogram)
 
-***
+---
 
 ### apps?
 
@@ -111,7 +111,7 @@ Index of the application to get
 
 [`ApplicationCallFields`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/applicationcallfields/).[`apps`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/applicationcallfields/#apps)
 
-***
+---
 
 ### assetAmount?
 
@@ -125,7 +125,7 @@ value in Asset's units
 
 [`AssetTransferFields`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/assettransferfields/).[`assetAmount`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/assettransferfields/#assetamount)
 
-***
+---
 
 ### assetCloseTo?
 
@@ -139,7 +139,7 @@ Defined in: [itxn.ts:823](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 [`AssetTransferFields`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/assettransferfields/).[`assetCloseTo`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/assettransferfields/#assetcloseto)
 
-***
+---
 
 ### assetName?
 
@@ -153,7 +153,7 @@ The asset name
 
 [`AssetConfigFields`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/assetconfigfields/).[`assetName`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/assetconfigfields/#assetname)
 
-***
+---
 
 ### assetReceiver?
 
@@ -167,7 +167,7 @@ Defined in: [itxn.ts:819](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 [`AssetTransferFields`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/assettransferfields/).[`assetReceiver`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/assettransferfields/#assetreceiver)
 
-***
+---
 
 ### assets?
 
@@ -185,7 +185,7 @@ Index of the asset to get
 
 [`ApplicationCallFields`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/applicationcallfields/).[`assets`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/applicationcallfields/#assets)
 
-***
+---
 
 ### assetSender?
 
@@ -199,7 +199,7 @@ Defined in: [itxn.ts:815](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 [`AssetTransferFields`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/assettransferfields/).[`assetSender`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/assettransferfields/#assetsender)
 
-***
+---
 
 ### clawback?
 
@@ -213,7 +213,7 @@ Defined in: [itxn.ts:769](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 [`AssetConfigFields`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/assetconfigfields/).[`clawback`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/assetconfigfields/#clawback)
 
-***
+---
 
 ### clearStateProgram?
 
@@ -231,7 +231,7 @@ Index of the page to get
 
 [`ApplicationCallFields`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/applicationcallfields/).[`clearStateProgram`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/applicationcallfields/#clearstateprogram)
 
-***
+---
 
 ### closeRemainderTo?
 
@@ -245,7 +245,7 @@ Defined in: [itxn.ts:625](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 [`PaymentFields`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/paymentfields/).[`closeRemainderTo`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/paymentfields/#closeremainderto)
 
-***
+---
 
 ### configAsset?
 
@@ -259,7 +259,7 @@ Asset ID in asset config transaction
 
 [`AssetConfigFields`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/assetconfigfields/).[`configAsset`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/assetconfigfields/#configasset)
 
-***
+---
 
 ### decimals?
 
@@ -273,7 +273,7 @@ Number of digits to display after the decimal place when displaying the asset
 
 [`AssetConfigFields`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/assetconfigfields/).[`decimals`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/assetconfigfields/#decimals)
 
-***
+---
 
 ### defaultFrozen?
 
@@ -287,7 +287,7 @@ Whether the asset's slots are frozen by default or not, 0 or 1
 
 [`AssetConfigFields`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/assetconfigfields/).[`defaultFrozen`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/assetconfigfields/#defaultfrozen)
 
-***
+---
 
 ### extraProgramPages?
 
@@ -301,7 +301,7 @@ Number of additional pages for each of the application's approval and clear stat
 
 [`ApplicationCallFields`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/applicationcallfields/).[`extraProgramPages`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/applicationcallfields/#extraprogrampages)
 
-***
+---
 
 ### fee?
 
@@ -315,7 +315,7 @@ microalgos
 
 [`PaymentFields`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/paymentfields/).[`fee`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/paymentfields/#fee)
 
-***
+---
 
 ### firstValid?
 
@@ -329,7 +329,7 @@ round number
 
 [`PaymentFields`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/paymentfields/).[`firstValid`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/paymentfields/#firstvalid)
 
-***
+---
 
 ### firstValidTime?
 
@@ -343,7 +343,7 @@ UNIX timestamp of block before txn.FirstValid. Fails if negative
 
 [`PaymentFields`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/paymentfields/).[`firstValidTime`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/paymentfields/#firstvalidtime)
 
-***
+---
 
 ### freeze?
 
@@ -357,7 +357,7 @@ Defined in: [itxn.ts:765](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 [`AssetConfigFields`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/assetconfigfields/).[`freeze`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/assetconfigfields/#freeze)
 
-***
+---
 
 ### freezeAccount?
 
@@ -371,7 +371,7 @@ Defined in: [itxn.ts:865](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 [`AssetFreezeFields`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/assetfreezefields/).[`freezeAccount`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/assetfreezefields/#freezeaccount)
 
-***
+---
 
 ### freezeAsset?
 
@@ -385,7 +385,7 @@ Asset ID being frozen or un-frozen
 
 [`AssetFreezeFields`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/assetfreezefields/).[`freezeAsset`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/assetfreezefields/#freezeasset)
 
-***
+---
 
 ### frozen?
 
@@ -399,7 +399,7 @@ The new frozen value
 
 [`AssetFreezeFields`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/assetfreezefields/).[`frozen`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/assetfreezefields/#frozen)
 
-***
+---
 
 ### globalNumBytes?
 
@@ -413,7 +413,7 @@ Number of global state byteslices this application makes use of.
 
 [`ApplicationCallFields`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/applicationcallfields/).[`globalNumBytes`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/applicationcallfields/#globalnumbytes)
 
-***
+---
 
 ### globalNumUint?
 
@@ -427,7 +427,7 @@ Number of global state integers this application makes use of.
 
 [`ApplicationCallFields`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/applicationcallfields/).[`globalNumUint`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/applicationcallfields/#globalnumuint)
 
-***
+---
 
 ### lastValid?
 
@@ -441,7 +441,7 @@ round number
 
 [`PaymentFields`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/paymentfields/).[`lastValid`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/paymentfields/#lastvalid)
 
-***
+---
 
 ### lease?
 
@@ -455,7 +455,7 @@ Defined in: [itxn.ts:609](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 [`PaymentFields`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/paymentfields/).[`lease`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/paymentfields/#lease)
 
-***
+---
 
 ### localNumBytes?
 
@@ -469,7 +469,7 @@ Number of local state byteslices this application makes use of.
 
 [`ApplicationCallFields`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/applicationcallfields/).[`localNumBytes`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/applicationcallfields/#localnumbytes)
 
-***
+---
 
 ### localNumUint?
 
@@ -483,7 +483,7 @@ Number of local state integers this application makes use of.
 
 [`ApplicationCallFields`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/applicationcallfields/).[`localNumUint`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/applicationcallfields/#localnumuint)
 
-***
+---
 
 ### manager?
 
@@ -497,7 +497,7 @@ Defined in: [itxn.ts:757](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 [`AssetConfigFields`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/assetconfigfields/).[`manager`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/assetconfigfields/#manager)
 
-***
+---
 
 ### metadataHash?
 
@@ -511,7 +511,7 @@ Defined in: [itxn.ts:753](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 [`AssetConfigFields`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/assetconfigfields/).[`metadataHash`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/assetconfigfields/#metadatahash)
 
-***
+---
 
 ### nonparticipation?
 
@@ -525,7 +525,7 @@ Marks an account nonparticipating for rewards
 
 [`KeyRegistrationFields`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/keyregistrationfields/).[`nonparticipation`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/keyregistrationfields/#nonparticipation)
 
-***
+---
 
 ### note?
 
@@ -539,7 +539,7 @@ Any data up to 1024 bytes
 
 [`PaymentFields`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/paymentfields/).[`note`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/paymentfields/#note)
 
-***
+---
 
 ### onCompletion?
 
@@ -553,7 +553,7 @@ ApplicationCall transaction on completion action
 
 [`ApplicationCallFields`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/applicationcallfields/).[`onCompletion`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/applicationcallfields/#oncompletion)
 
-***
+---
 
 ### receiver?
 
@@ -567,7 +567,7 @@ Defined in: [itxn.ts:617](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 [`PaymentFields`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/paymentfields/).[`receiver`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/paymentfields/#receiver)
 
-***
+---
 
 ### rejectVersion?
 
@@ -581,7 +581,7 @@ Application version for which the txn must reject
 
 [`ApplicationCallFields`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/applicationcallfields/).[`rejectVersion`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/applicationcallfields/#rejectversion)
 
-***
+---
 
 ### rekeyTo?
 
@@ -595,7 +595,7 @@ Defined in: [itxn.ts:613](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 [`PaymentFields`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/paymentfields/).[`rekeyTo`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/paymentfields/#rekeyto)
 
-***
+---
 
 ### reserve?
 
@@ -609,7 +609,7 @@ Defined in: [itxn.ts:761](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 [`AssetConfigFields`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/assetconfigfields/).[`reserve`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/assetconfigfields/#reserve)
 
-***
+---
 
 ### selectionKey?
 
@@ -623,7 +623,7 @@ Defined in: [itxn.ts:667](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 [`KeyRegistrationFields`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/keyregistrationfields/).[`selectionKey`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/keyregistrationfields/#selectionkey)
 
-***
+---
 
 ### sender?
 
@@ -637,7 +637,7 @@ Defined in: [itxn.ts:585](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 [`PaymentFields`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/paymentfields/).[`sender`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/paymentfields/#sender)
 
-***
+---
 
 ### stateProofKey?
 
@@ -651,7 +651,7 @@ Defined in: [itxn.ts:687](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 [`KeyRegistrationFields`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/keyregistrationfields/).[`stateProofKey`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/keyregistrationfields/#stateproofkey)
 
-***
+---
 
 ### total?
 
@@ -665,7 +665,7 @@ Total number of units of this asset created
 
 [`AssetConfigFields`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/assetconfigfields/).[`total`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/assetconfigfields/#total)
 
-***
+---
 
 ### type
 
@@ -673,7 +673,7 @@ Total number of units of this asset created
 
 Defined in: [itxn-compose.ts:33](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/itxn-compose.ts#L33)
 
-***
+---
 
 ### unitName?
 
@@ -687,7 +687,7 @@ Unit name of the asset
 
 [`AssetConfigFields`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/assetconfigfields/).[`unitName`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/assetconfigfields/#unitname)
 
-***
+---
 
 ### url?
 
@@ -701,7 +701,7 @@ URL
 
 [`AssetConfigFields`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/assetconfigfields/).[`url`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/assetconfigfields/#url)
 
-***
+---
 
 ### voteFirst?
 
@@ -715,7 +715,7 @@ The first round that the participation key is valid.
 
 [`KeyRegistrationFields`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/keyregistrationfields/).[`voteFirst`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/keyregistrationfields/#votefirst)
 
-***
+---
 
 ### voteKey?
 
@@ -729,7 +729,7 @@ Defined in: [itxn.ts:663](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 [`KeyRegistrationFields`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/keyregistrationfields/).[`voteKey`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/keyregistrationfields/#votekey)
 
-***
+---
 
 ### voteKeyDilution?
 
@@ -743,7 +743,7 @@ Dilution for the 2-level participation key
 
 [`KeyRegistrationFields`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/keyregistrationfields/).[`voteKeyDilution`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/keyregistrationfields/#votekeydilution)
 
-***
+---
 
 ### voteLast?
 
@@ -757,7 +757,7 @@ The last round that the participation key is valid.
 
 [`KeyRegistrationFields`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/keyregistrationfields/).[`voteLast`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/keyregistrationfields/#votelast)
 
-***
+---
 
 ### xferAsset?
 

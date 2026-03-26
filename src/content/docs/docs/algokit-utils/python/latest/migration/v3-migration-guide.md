@@ -1,6 +1,6 @@
 ---
-title: "v3 Migration Guide"
-description: "Guide for migrating from algokit-utils-py v2.x to v3.x — from stateless functions to the new AlgorandClient class-based interface."
+title: 'v3 Migration Guide'
+description: 'Guide for migrating from algokit-utils-py v2.x to v3.x — from stateless functions to the new AlgorandClient class-based interface.'
 ---
 
 Version 3 of `algokit-utils-py` moved from a stateless function-based interface to a stateful class-based interfaces. This change allows for:
@@ -237,31 +237,26 @@ result = algorand.send.asset_opt_in(
 ## Breaking Changes
 
 1. **Client Management**
-
    - Removal of standalone client creation functions
    - All clients now accessed through `AlgorandClient`
 
 2. **Account Management**
-
    - Account creation functions moved to `AccountManager` accessible via `algorand.account` property
    - Unified `TransactionSignerAccountProtocol` with compliant and typed `SigningAccount`, `TransactionSignerAccount`, `LogicSigAccount`, `MultiSigAccount` classes encapsulating low level `algosdk` abstractions.
    - Improved typing for account operations, such as obtaining account information from `algod`, returning a typed information object.
 
 3. **Transaction Management**
-
    - Consistent and intuitive transaction creation and sending interface accessible via `algorand.{send|params|create_transaction}` properties
    - New transaction composition interface accessible via `algorand.new_group`
    - Removing necessity to interact with low level and untyped `algosdk` abstractions for assembling, signing and sending transaction(s).
 
 4. **Application Client**
-
    - Split into `AppClient`, `AppDeployer` and `AppFactory`
    - `deploy` method in `AppFactory`/`AppDeployer` no longer auto increments the contract version by default. It is the user's responsibility to explicitly manage versioning of their smart contracts (if desired).
    - New intuitive structured interface for creating or sending `AppCall`|`AppMethodCall` transactions
    - ARC-56 support along with automatic conversion of specs from ARC-32 to ARC-56
 
 5. **State Management**
-
    - New hierarchical state access available via `app_client.state.{global_state|local_state|box}` properties
    - Improved typing for state values
    - Support for ARC-56 state schemas

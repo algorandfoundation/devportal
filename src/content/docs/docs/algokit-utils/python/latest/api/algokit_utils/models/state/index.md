@@ -1,5 +1,5 @@
 ---
-title: "algokit_utils.models.state"
+title: 'algokit_utils.models.state'
 ---
 
 <div class="api-ref">
@@ -8,64 +8,63 @@ title: "algokit_utils.models.state"
 
 ## Attributes
 
-| [`TealTemplateParams`](#algokit_utils.models.state.TealTemplateParams)   |    |
-|--------------------------------------------------------------------------|----|
-| [`BoxIdentifier`](#algokit_utils.models.state.BoxIdentifier)             |    |
-| [`BoxReference`](#algokit_utils.models.state.BoxReference)               |    |
+| [`TealTemplateParams`](#algokit_utils.models.state.TealTemplateParams) |     |
+| ---------------------------------------------------------------------- | --- |
+| [`BoxIdentifier`](#algokit_utils.models.state.BoxIdentifier)           |     |
+| [`BoxReference`](#algokit_utils.models.state.BoxReference)             |     |
 
 ## Classes
 
 | [`BoxName`](#algokit_utils.models.state.BoxName)           | The name of the box                            |
-|------------------------------------------------------------|------------------------------------------------|
+| ---------------------------------------------------------- | ---------------------------------------------- |
 | [`BoxValue`](#algokit_utils.models.state.BoxValue)         | The value of the box                           |
 | [`DataTypeFlag`](#algokit_utils.models.state.DataTypeFlag) | Enum where members are also (and must be) ints |
 
 ## Module Contents
 
-### *class* BoxName
+### _class_ BoxName
 
 The name of the box
 
-#### name *: str*
+#### name _: str_
 
 The name of the box as a string.
 If the name can’t be decoded from UTF-8, the string representation of the bytes is returned instead.
 
-#### name_raw *: bytes*
+#### name*raw *: bytes\_
 
 The name of the box as raw bytes
 
-#### name_base64 *: str*
+#### name*base64 *: str\_
 
 The name of the box as a base64 encoded string
 
-### *class* BoxValue
+### _class_ BoxValue
 
 The value of the box
 
-#### name *: [BoxName](#algokit_utils.models.state.BoxName)*
+#### name _: [BoxName](#algokit_utils.models.state.BoxName)_
 
 The name of the box
 
-#### value *: bytes*
+#### value _: bytes_
 
 The value of the box as raw bytes
 
-### *class* DataTypeFlag
+### _class_ DataTypeFlag
 
 Bases: `enum.IntEnum`
 
 Enum where members are also (and must be) ints
 
-#### BYTES *= 1*
+#### BYTES _= 1_
 
-#### UINT *= 2*
+#### UINT _= 2_
 
-### *type* TealTemplateParams *= Mapping[str, str | int | bytes] | dict[str, str | int | bytes]*
+### _type_ TealTemplateParams _= Mapping[str, str | int | bytes] | dict[str, str | int | bytes]_
 
-### *type* BoxIdentifier *= str | bytes | AddressWithTransactionSigner*
+### _type_ BoxIdentifier _= str | bytes | AddressWithTransactionSigner_
 
 ### BoxReference
-
 
 </div>

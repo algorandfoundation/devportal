@@ -1,5 +1,5 @@
 ---
-title: "AlgoKit Project"
+title: 'AlgoKit Project'
 ---
 
 `algokit project` is a collection of commands and command groups useful for managing AlgoKit-compliant [project workspaces](/docs/algokit-cli/python/latest/features/init/#workspaces-vs-standalone-projects).

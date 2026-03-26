@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "MerkleSignatureVerifier"
+title: 'MerkleSignatureVerifier'
 ---
 
 > **MerkleSignatureVerifier** = `object`
@@ -17,7 +17,7 @@ Defined in: [packages/transact/src/transactions/state-proof.ts:35](https://githu
 
 Defined in: [packages/transact/src/transactions/state-proof.ts:36](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/transact/src/transactions/state-proof.ts#L36)
 
-***
+---
 
 ### keyLifetime
 

@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "AlgorandTestAutomationContext"
+title: 'AlgorandTestAutomationContext'
 ---
 
 Defined in: [src/testing/types.ts:21](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/testing/types.ts#L21)
@@ -19,7 +19,7 @@ Defined in: [src/testing/types.ts:25](https://github.com/algorandfoundation/algo
 
 Algod client instance that will log transactions in `transactionLogger`
 
-***
+---
 
 ### algorand
 
@@ -29,7 +29,7 @@ Defined in: [src/testing/types.ts:23](https://github.com/algorandfoundation/algo
 
 An AlgorandClient instance loaded with the current context, including testAccount and any generated accounts loaded as signers
 
-***
+---
 
 ### generateAccount()
 
@@ -49,7 +49,7 @@ Generate and fund an additional ephemerally created account
 
 `Promise`\<[`Address`](/docs/algokit-utils/typescript/latest/api/algokit-utils/classes/address/) & `object`\>
 
-***
+---
 
 ### indexer
 
@@ -59,7 +59,7 @@ Defined in: [src/testing/types.ts:27](https://github.com/algorandfoundation/algo
 
 Indexer client instance
 
-***
+---
 
 ### kmd
 
@@ -69,7 +69,7 @@ Defined in: [src/testing/types.ts:29](https://github.com/algorandfoundation/algo
 
 KMD client instance
 
-***
+---
 
 ### testAccount
 
@@ -101,7 +101,7 @@ Default, funded test account that is ephemerally created
 
 > **signer**: [`TransactionSigner`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/type-aliases/transactionsigner/)
 
-***
+---
 
 ### transactionLogger
 
@@ -111,7 +111,7 @@ Defined in: [src/testing/types.ts:31](https://github.com/algorandfoundation/algo
 
 Transaction logger that will log transaction IDs for all transactions issued by `algod`
 
-***
+---
 
 ### waitForIndexer()
 
@@ -125,7 +125,7 @@ Wait for the indexer to catch up with all transactions logged by `transactionLog
 
 `Promise`\<`void`\>
 
-***
+---
 
 ### waitForIndexerTransaction()
 

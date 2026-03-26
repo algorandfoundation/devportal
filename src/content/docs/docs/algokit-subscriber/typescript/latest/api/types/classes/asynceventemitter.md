@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "AsyncEventEmitter"
+title: 'AsyncEventEmitter'
 ---
 
 Defined in: [src/types/async-event-emitter.ts:10](https://github.com/algorandfoundation/algokit-subscriber-ts/blob/main/src/types/async-event-emitter.ts#L10)
@@ -82,7 +82,7 @@ The event payload
 
 `Promise`\<`void`\>
 
-***
+---
 
 ### on()
 
@@ -112,7 +112,7 @@ The listener to trigger
 
 The `AsyncEventEmitter` so you can chain registrations
 
-***
+---
 
 ### once()
 
@@ -142,7 +142,7 @@ The listener to trigger
 
 The `AsyncEventEmitter` so you can chain registrations
 
-***
+---
 
 ### removeListener()
 

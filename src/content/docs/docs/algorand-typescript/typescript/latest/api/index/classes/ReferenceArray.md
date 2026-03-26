@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "ReferenceArray"
+title: 'ReferenceArray'
 ---
 
 Defined in: [reference-array.ts:7](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/reference-array.ts#L7)
@@ -74,7 +74,7 @@ Returns an iterator for the items in this array
 
 `IterableIterator`\<`TItem`\>
 
-***
+---
 
 ### at()
 
@@ -97,7 +97,7 @@ The index of the item to retrieve
 
 `TItem`
 
-***
+---
 
 ### entries()
 
@@ -111,7 +111,7 @@ Returns an iterator for a tuple of the indexes and items in this array
 
 `IterableIterator`\<readonly \[[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/), `TItem`\]\>
 
-***
+---
 
 ### keys()
 
@@ -125,7 +125,7 @@ Returns an iterator for the indexes in this array
 
 `IterableIterator`\<[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)\>
 
-***
+---
 
 ### pop()
 
@@ -139,7 +139,7 @@ Pop a single item from this array
 
 `TItem`
 
-***
+---
 
 ### push()
 
@@ -161,7 +161,7 @@ The items to be added to this array
 
 `void`
 
-***
+---
 
 ### ~~slice()~~
 

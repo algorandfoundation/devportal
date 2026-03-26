@@ -1,5 +1,5 @@
 ---
-title: "AlgoKit"
+title: 'AlgoKit'
 ---
 
 The Algorand AlgoKit CLI is the one-stop shop tool for developers building on the Algorand network. The goal of AlgoKit is to help developers build and launch secure, automated production-ready applications rapidly.

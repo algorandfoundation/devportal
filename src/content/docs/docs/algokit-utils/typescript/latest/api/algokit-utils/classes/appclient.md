@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "AppClient"
+title: 'AppClient'
 ---
 
 Defined in: [src/app-client.ts:434](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/app-client.ts#L434)
@@ -40,7 +40,7 @@ The `AppClient` instance
 
 #### Example
 
-```typescript
+````typescript
 const appClient = new AppClient({
   appId: 12345678n,
   appSpec: appSpec,
@@ -161,16 +161,16 @@ A good mental model for this is that these parameters represent a deferred trans
 const myMethodCall = appClient.params.call({method: 'my_method', args: [123, 'hello']})
 // ...
 await algorand.send.AppMethodCall(myMethodCall)
-```
+````
 
 ```typescript
-const myMethodCall = appClient.params.call({method: 'my_method', args: [123, 'hello']})
-await appClient.send.call({method: 'my_method2', args: [myMethodCall]})
+const myMethodCall = appClient.params.call({ method: 'my_method', args: [123, 'hello'] });
+await appClient.send.call({ method: 'my_method2', args: [myMethodCall] });
 ```
 
 ##### Returns
 
-***
+---
 
 ### send
 
@@ -184,7 +184,7 @@ Send transactions to the current app
 
 ##### Returns
 
-***
+---
 
 ### state
 
@@ -249,8 +249,8 @@ The name of the map to read from
 `any`
 
 The key within the map (without any map prefix) as either a Buffer with the bytes or a value
- that will be converted to bytes by encoding it using the specified ABI key type
- in the ARC-56 spec
+that will be converted to bytes by encoding it using the specified ABI key type
+in the ARC-56 spec
 
 ###### Returns
 
@@ -329,8 +329,8 @@ The name of the map to read from
 `any`
 
 The key within the map (without any map prefix) as either a Buffer with the bytes or a value
- that will be converted to bytes by encoding it using the specified ABI key type
- in the ARC-56 spec
+that will be converted to bytes by encoding it using the specified ABI key type
+in the ARC-56 spec
 
 ###### appState?
 
@@ -431,8 +431,8 @@ The name of the map to read from
 `any`
 
 The key within the map (without any map prefix) as either a Buffer with the bytes or a value
- that will be converted to bytes by encoding it using the specified ABI key type
- in the ARC-56 spec
+that will be converted to bytes by encoding it using the specified ABI key type
+in the ARC-56 spec
 
 ###### appState?
 
@@ -530,10 +530,10 @@ A new app client with the altered params
 #### Example
 
 ```typescript
-const appClient2 = appClient.clone({ defaultSender: 'NEW_SENDER_ADDRESS' })
+const appClient2 = appClient.clone({ defaultSender: 'NEW_SENDER_ADDRESS' });
 ```
 
-***
+---
 
 ### compile()
 
@@ -563,7 +563,7 @@ Any compilation parameters to use
 
 The compiled code and any compilation results (including source maps)
 
-***
+---
 
 ### exportSourceMaps()
 
@@ -579,7 +579,7 @@ Export the current source maps for the app.
 
 The source maps
 
-***
+---
 
 ### exposeLogicError()
 
@@ -610,7 +610,7 @@ Whether or not the code was running the clear state program (defaults to approva
 
 The new error, or if there was no logic error or source map then the wrapped error with source details
 
-***
+---
 
 ### fundAppAccount()
 
@@ -640,7 +640,7 @@ Amount to send
 
 If given, close the sender account and send the remaining balance to this address
 
-*Warning:* Be careful with this parameter as it can lead to loss of funds if not used correctly.
+_Warning:_ Be careful with this parameter as it can lead to loss of funds if not used correctly.
 
 ###### coverAppCallInnerTransactionFees?
 
@@ -676,7 +676,7 @@ The last round this transaction is valid. It is recommended to use `validityWind
 Prevent multiple transactions with the same lease being included within the validity window.
 
 A [lease](https://dev.algorand.co/concepts/transactions/leases)
- enforces a mutually exclusive transaction (useful to prevent double-posting and other scenarios).
+enforces a mutually exclusive transaction (useful to prevent double-posting and other scenarios).
 
 ###### maxFee?
 
@@ -721,8 +721,8 @@ The optional sender to send the transaction from, will use the application clien
 [`AddressWithTransactionSigner`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/interfaces/addresswithtransactionsigner/) \| [`TransactionSigner`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/type-aliases/transactionsigner/)
 
 The function used to sign transaction(s); if not specified then
- an attempt will be made to find a registered signer for the
- given `sender` or use a default signer (if configured).
+an attempt will be made to find a registered signer for the
+given `sender` or use a default signer (if configured).
 
 ###### staticFee?
 
@@ -751,10 +751,10 @@ The result of the funding
 #### Example
 
 ```typescript
-await appClient.fundAppAccount({ amount: algo(1) })
+await appClient.fundAppAccount({ amount: algo(1) });
 ```
 
-***
+---
 
 ### getABIMethod()
 
@@ -779,7 +779,7 @@ e.g. `my_method` or `my_method(unit64,string)bytes`
 
 A tuple with: [ARC-56 `Method`, algosdk `ABIMethod`]
 
-***
+---
 
 ### getBoxNames()
 
@@ -798,10 +798,10 @@ The names of the boxes
 #### Example
 
 ```typescript
-const boxNames = await appClient.getBoxNames()
+const boxNames = await appClient.getBoxNames();
 ```
 
-***
+---
 
 ### getBoxValue()
 
@@ -828,10 +828,10 @@ The current box value as a byte array
 #### Example
 
 ```typescript
-const boxValue = await appClient.getBoxValue('boxName')
+const boxValue = await appClient.getBoxValue('boxName');
 ```
 
-***
+---
 
 ### getBoxValueFromABIType()
 
@@ -862,10 +862,10 @@ The current box value as a byte array
 #### Example
 
 ```typescript
-const boxValue = await appClient.getBoxValueFromABIType('boxName', new ABIUintType(32))
+const boxValue = await appClient.getBoxValueFromABIType('boxName', new ABIUintType(32));
 ```
 
-***
+---
 
 ### getBoxValues()
 
@@ -893,10 +893,10 @@ The (name, value) pair of the boxes with values as raw byte arrays
 #### Example
 
 ```typescript
-const boxValues = await appClient.getBoxValues()
+const boxValues = await appClient.getBoxValues();
 ```
 
-***
+---
 
 ### getBoxValuesFromABIType()
 
@@ -930,10 +930,10 @@ The (name, value) pair of the boxes with values as the ABI Value
 #### Example
 
 ```typescript
-const boxValues = await appClient.getBoxValuesFromABIType(new ABIUintType(32))
+const boxValues = await appClient.getBoxValuesFromABIType(new ABIUintType(32));
 ```
 
-***
+---
 
 ### getGlobalState()
 
@@ -952,10 +952,10 @@ The global state
 #### Example
 
 ```typescript
-const globalState = await appClient.getGlobalState()
+const globalState = await appClient.getGlobalState();
 ```
 
-***
+---
 
 ### getLocalState()
 
@@ -982,10 +982,10 @@ The local state
 #### Example
 
 ```typescript
-const localState = await appClient.getLocalState('ACCOUNT_ADDRESS')
+const localState = await appClient.getLocalState('ACCOUNT_ADDRESS');
 ```
 
-***
+---
 
 ### importSourceMaps()
 
@@ -1007,7 +1007,7 @@ The source maps to import
 
 `void`
 
-***
+---
 
 ### processMethodCallReturn()
 
@@ -1024,11 +1024,11 @@ If the return type is an ARC-56 struct then the struct will be returned.
 
 ##### TReturn
 
-`TReturn` *extends* [`ABIValue`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/type-aliases/abivalue/) \| `undefined`
+`TReturn` _extends_ [`ABIValue`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/type-aliases/abivalue/) \| `undefined`
 
 ##### TResult
 
-`TResult` *extends* `object` = \{ `confirmation`: [`PendingTransactionResponse`](/docs/algokit-utils/typescript/latest/api/subpaths/algod-client/type-aliases/pendingtransactionresponse/); `confirmations`: [`PendingTransactionResponse`](/docs/algokit-utils/typescript/latest/api/subpaths/algod-client/type-aliases/pendingtransactionresponse/)[]; `groupId`: `string` \| `undefined`; `return?`: [`ABIReturn`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/type-aliases/abireturn/); `returns?`: [`ABIReturn`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/type-aliases/abireturn/)[]; `transaction`: [`Transaction`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/classes/transaction/); `transactions`: [`Transaction`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/classes/transaction/)[]; `txIds`: `string`[]; \}
+`TResult` _extends_ `object` = \{ `confirmation`: [`PendingTransactionResponse`](/docs/algokit-utils/typescript/latest/api/subpaths/algod-client/type-aliases/pendingtransactionresponse/); `confirmations`: [`PendingTransactionResponse`](/docs/algokit-utils/typescript/latest/api/subpaths/algod-client/type-aliases/pendingtransactionresponse/)[]; `groupId`: `string` \| `undefined`; `return?`: [`ABIReturn`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/type-aliases/abireturn/); `returns?`: [`ABIReturn`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/type-aliases/abireturn/)[]; `transaction`: [`Transaction`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/classes/transaction/); `transactions`: [`Transaction`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/classes/transaction/)[]; `txIds`: `string`[]; \}
 
 #### Parameters
 
@@ -1044,7 +1044,7 @@ The SendAppTransactionResult to be mapped
 
 The smart contract response with an updated return value
 
-***
+---
 
 ### compile()
 
@@ -1086,7 +1086,7 @@ Any compilation parameters to use
 
 The compiled code and any compilation results (including source maps)
 
-***
+---
 
 ### exposeLogicError()
 
@@ -1157,7 +1157,7 @@ program bytes
 
 The new error, or if there was no logic error or source map then the wrapped error with source details
 
-***
+---
 
 ### fromCreatorAndName()
 
@@ -1205,9 +1205,10 @@ Optional source map for the approval program
 `string` \| [`Arc56Contract`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/type-aliases/arc56contract/) \| `AppSpec`
 
 The ARC-56 or ARC-32 application spec as either:
- * Parsed JSON ARC-56 `Contract`
- * Parsed JSON ARC-32 `AppSpec`
- * Raw JSON string (in either ARC-56 or ARC-32 format)
+
+- Parsed JSON ARC-56 `Contract`
+- Parsed JSON ARC-32 `AppSpec`
+- Raw JSON string (in either ARC-56 or ARC-32 format)
 
 ###### clearSourceMap?
 
@@ -1247,7 +1248,7 @@ The `AppClient` instance
 
 #### Example
 
-```typescript
+````typescript
 const appClient = await AppClient.fromCreatorAndName({
   creatorAddress: 'CREATOR_ADDRESS',
   name: 'APP_NAME',
@@ -1363,4 +1364,4 @@ The normalised ARC-56 contract object
 
 ```typescript
 const arc56AppSpec = AppClient.normaliseAppSpec(appSpec)
-```
+````

@@ -1,5 +1,5 @@
 ---
-title: "AlgoKit Task Wallet"
+title: 'AlgoKit Task Wallet'
 ---
 
 Manage your Algorand addresses and accounts effortlessly with the AlgoKit Wallet feature. This feature allows you to create short aliases for your addresses and accounts on AlgoKit CLI.

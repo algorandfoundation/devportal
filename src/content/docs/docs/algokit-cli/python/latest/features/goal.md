@@ -1,5 +1,5 @@
 ---
-title: "AlgoKit Goal"
+title: 'AlgoKit Goal'
 ---
 
 AlgoKit goal command provides the user with a mechanism to run [goal cli](https://dev.algorand.co/algokit/algokit-cli/goal/) commands against the current [AlgoKit LocalNet](/docs/algokit-cli/python/latest/features/localnet/).

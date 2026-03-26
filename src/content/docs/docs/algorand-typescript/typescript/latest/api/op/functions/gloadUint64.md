@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "gloadUint64"
+title: 'gloadUint64'
 ---
 
 > **gloadUint64**(`a`, `b`): [`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)

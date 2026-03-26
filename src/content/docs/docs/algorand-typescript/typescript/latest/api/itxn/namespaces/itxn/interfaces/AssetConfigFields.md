@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "AssetConfigFields"
+title: 'AssetConfigFields'
 ---
 
 Defined in: [itxn.ts:689](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/itxn.ts#L689)
@@ -22,7 +22,7 @@ Defined in: [itxn.ts:745](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 The asset name
 
-***
+---
 
 ### clawback?
 
@@ -32,7 +32,7 @@ Defined in: [itxn.ts:769](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 32 byte address
 
-***
+---
 
 ### configAsset?
 
@@ -42,7 +42,7 @@ Defined in: [itxn.ts:725](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 Asset ID in asset config transaction
 
-***
+---
 
 ### decimals?
 
@@ -52,7 +52,7 @@ Defined in: [itxn.ts:733](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 Number of digits to display after the decimal place when displaying the asset
 
-***
+---
 
 ### defaultFrozen?
 
@@ -62,7 +62,7 @@ Defined in: [itxn.ts:737](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 Whether the asset's slots are frozen by default or not, 0 or 1
 
-***
+---
 
 ### fee?
 
@@ -72,7 +72,7 @@ Defined in: [itxn.ts:697](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 microalgos
 
-***
+---
 
 ### firstValid?
 
@@ -82,7 +82,7 @@ Defined in: [itxn.ts:701](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 round number
 
-***
+---
 
 ### firstValidTime?
 
@@ -92,7 +92,7 @@ Defined in: [itxn.ts:705](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 UNIX timestamp of block before txn.FirstValid. Fails if negative
 
-***
+---
 
 ### freeze?
 
@@ -102,7 +102,7 @@ Defined in: [itxn.ts:765](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 32 byte address
 
-***
+---
 
 ### lastValid?
 
@@ -112,7 +112,7 @@ Defined in: [itxn.ts:709](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 round number
 
-***
+---
 
 ### lease?
 
@@ -122,7 +122,7 @@ Defined in: [itxn.ts:717](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 32 byte lease value
 
-***
+---
 
 ### manager?
 
@@ -132,7 +132,7 @@ Defined in: [itxn.ts:757](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 32 byte address
 
-***
+---
 
 ### metadataHash?
 
@@ -142,7 +142,7 @@ Defined in: [itxn.ts:753](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 32 byte commitment to unspecified asset metadata
 
-***
+---
 
 ### note?
 
@@ -152,7 +152,7 @@ Defined in: [itxn.ts:713](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 Any data up to 1024 bytes
 
-***
+---
 
 ### rekeyTo?
 
@@ -162,7 +162,7 @@ Defined in: [itxn.ts:721](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 32 byte Sender's new AuthAddr
 
-***
+---
 
 ### reserve?
 
@@ -172,7 +172,7 @@ Defined in: [itxn.ts:761](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 32 byte address
 
-***
+---
 
 ### sender?
 
@@ -182,7 +182,7 @@ Defined in: [itxn.ts:693](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 32 byte address
 
-***
+---
 
 ### total?
 
@@ -192,7 +192,7 @@ Defined in: [itxn.ts:729](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 Total number of units of this asset created
 
-***
+---
 
 ### unitName?
 
@@ -202,7 +202,7 @@ Defined in: [itxn.ts:741](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 Unit name of the asset
 
-***
+---
 
 ### url?
 

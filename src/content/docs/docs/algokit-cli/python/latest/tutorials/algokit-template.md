@@ -1,5 +1,5 @@
 ---
-title: "Creating AlgoKit Templates"
+title: 'Creating AlgoKit Templates'
 ---
 
 This README serves as a guide on how to create custom templates for AlgoKit, a tool for initializing Algorand smart contract projects.
@@ -124,7 +124,7 @@ Example:
 project_name:
   type: str
   help: What is the name of this project.
-  placeholder: "algorand-app"
+  placeholder: 'algorand-app'
 ```
 
 This would prompt the user for the project name, and the input can then be used in the template using the Jinja syntax `{{ project_name }}`.
@@ -149,13 +149,13 @@ This process ensures that any Python scripts included as tasks within your Copie
 It's important to note that the use of `_copier_python` is not recommended. Here's an example of specifying a Python script execution in your `copier.yaml` without needing to explicitly use `_copier_python`:
 
 ```yaml
-- "{{ python_path }} your_python_script.py"
+- '{{ python_path }} your_python_script.py'
 ```
 
 If you'd like your template to be backwards compatible with versions of `algokit-cli` older than `v1.11.3` when executing custom python scripts via `copier` tasks, you can use a conditional statement to determine the Python path:
 
 ```yaml
-- "{{ python_path if python_path else _copier_python }} your_python_script.py"
+- '{{ python_path if python_path else _copier_python }} your_python_script.py'
 # _copier_python above is used for backwards compatibility with versions < v1.11.3 of the algokit cli
 ```
 
@@ -190,10 +190,10 @@ _task:
 contract_name:
   type: str
   help: Name of your new contract.
-  placeholder: "my-new-contract"
-  default: "my-new-contract"
+  placeholder: 'my-new-contract'
+  default: 'my-new-contract'
 
-_templates_suffix: ".j2"
+_templates_suffix: '.j2'
 ```
 
 Note that `_templates_suffix` must be different from the `_templates_suffix` defined in the root `copier.yaml` file. This is because the generator's `copier.yaml` file is processed separately from the root `copier.yaml` file.

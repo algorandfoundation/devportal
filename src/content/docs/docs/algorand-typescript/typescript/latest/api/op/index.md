@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "op"
+title: 'op'
 ---
 
 ## Enumerations
@@ -77,8 +77,8 @@ title: "op"
 - [setBit](/algorand-typescript/api/op/functions/setbit/)
 - [setByte](/algorand-typescript/api/op/functions/setbyte/)
 - [sha256](/algorand-typescript/api/op/functions/sha256/)
-- [sha3\_256](/algorand-typescript/api/op/functions/sha3_256/)
-- [sha512\_256](/algorand-typescript/api/op/functions/sha512_256/)
+- [sha3_256](/algorand-typescript/api/op/functions/sha3_256/)
+- [sha512_256](/algorand-typescript/api/op/functions/sha512_256/)
 - [shl](/algorand-typescript/api/op/functions/shl/)
 - [shr](/algorand-typescript/api/op/functions/shr/)
 - [sqrt](/algorand-typescript/api/op/functions/sqrt/)

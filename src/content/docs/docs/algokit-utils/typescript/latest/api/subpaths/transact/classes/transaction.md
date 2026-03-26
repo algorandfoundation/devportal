@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "Transaction"
+title: 'Transaction'
 ---
 
 Defined in: [packages/transact/src/transactions/transaction.ts:160](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/transact/src/transactions/transaction.ts#L160)
@@ -45,7 +45,7 @@ App call specific fields
 
 `TransactionParams.appCall`
 
-***
+---
 
 ### assetConfig?
 
@@ -59,7 +59,7 @@ Asset config specific fields
 
 `TransactionParams.assetConfig`
 
-***
+---
 
 ### assetFreeze?
 
@@ -73,7 +73,7 @@ Asset freeze specific fields
 
 `TransactionParams.assetFreeze`
 
-***
+---
 
 ### assetTransfer?
 
@@ -87,7 +87,7 @@ Asset transfer specific fields
 
 `TransactionParams.assetTransfer`
 
-***
+---
 
 ### fee?
 
@@ -103,7 +103,7 @@ When not set, the fee will be interpreted as 0 by the network.
 
 `TransactionParams.fee`
 
-***
+---
 
 ### firstValid
 
@@ -117,7 +117,7 @@ First round for when the transaction is valid.
 
 `TransactionParams.firstValid`
 
-***
+---
 
 ### genesisHash?
 
@@ -133,7 +133,7 @@ Used to identify which network the transaction is for.
 
 `TransactionParams.genesisHash`
 
-***
+---
 
 ### genesisId?
 
@@ -149,7 +149,7 @@ A human-readable string used alongside genesis hash to identify the network.
 
 `TransactionParams.genesisId`
 
-***
+---
 
 ### group?
 
@@ -165,7 +165,7 @@ Transactions with the same group ID must execute together or not at all.
 
 `TransactionParams.group`
 
-***
+---
 
 ### heartbeat?
 
@@ -179,7 +179,7 @@ Heartbeat specific fields
 
 `TransactionParams.heartbeat`
 
-***
+---
 
 ### keyRegistration?
 
@@ -193,7 +193,7 @@ Key registration specific fields
 
 `TransactionParams.keyRegistration`
 
-***
+---
 
 ### lastValid
 
@@ -209,7 +209,7 @@ After this round, the transaction will be expired.
 
 `TransactionParams.lastValid`
 
-***
+---
 
 ### lease?
 
@@ -228,7 +228,7 @@ No other transaction sent by the same sender can be confirmed until the lease ex
 
 `TransactionParams.lease`
 
-***
+---
 
 ### note?
 
@@ -244,7 +244,7 @@ Can contain arbitrary data up to 1KB in size.
 
 `TransactionParams.note`
 
-***
+---
 
 ### payment?
 
@@ -258,7 +258,7 @@ Payment specific fields
 
 `TransactionParams.payment`
 
-***
+---
 
 ### rekeyTo?
 
@@ -276,7 +276,7 @@ the original address.
 
 `TransactionParams.rekeyTo`
 
-***
+---
 
 ### sender
 
@@ -292,7 +292,7 @@ Fees are deducted from this account.
 
 `TransactionParams.sender`
 
-***
+---
 
 ### stateProof?
 
@@ -306,7 +306,7 @@ State proof specific fields
 
 `TransactionParams.stateProof`
 
-***
+---
 
 ### type
 

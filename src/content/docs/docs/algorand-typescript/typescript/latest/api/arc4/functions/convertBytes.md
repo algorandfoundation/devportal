@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "convertBytes"
+title: 'convertBytes'
 ---
 
 > **convertBytes**\<`T`\>(`bytes`, `options`): `T`
@@ -15,7 +15,7 @@ Interpret the provided bytes as an ARC4 encoded type
 
 ### T
 
-`T` *extends* [`ARC4Encoded`](/algorand-typescript/api/arc4/classes/arc4encoded/)
+`T` _extends_ [`ARC4Encoded`](/algorand-typescript/api/arc4/classes/arc4encoded/)
 
 ## Parameters
 
@@ -40,8 +40,8 @@ The prefix (if any), present in the bytes value. This prefix will be validated a
 `"unsafe-cast"` \| `"validate"`
 
 The strategy used for converting bytes.
-        `unsafe-cast`: Reinterpret the value as an ARC4 encoded type without validation
-        `validate`: Asserts the encoding of the raw bytes matches the expected type
+`unsafe-cast`: Reinterpret the value as an ARC4 encoded type without validation
+`validate`: Asserts the encoding of the raw bytes matches the expected type
 
 ## Returns
 

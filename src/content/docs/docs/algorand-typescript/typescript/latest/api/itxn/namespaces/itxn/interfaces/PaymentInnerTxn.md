@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "PaymentInnerTxn"
+title: 'PaymentInnerTxn'
 ---
 
 Defined in: [itxn.ts:13](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/itxn.ts#L13)
@@ -19,7 +19,7 @@ Defined in: [itxn.ts:72](https://github.com/algorandfoundation/puya-ts/blob/main
 
 microalgos
 
-***
+---
 
 ### closeRemainderTo
 
@@ -29,7 +29,7 @@ Defined in: [itxn.ts:76](https://github.com/algorandfoundation/puya-ts/blob/main
 
 32 byte address
 
-***
+---
 
 ### fee
 
@@ -39,7 +39,7 @@ Defined in: [itxn.ts:23](https://github.com/algorandfoundation/puya-ts/blob/main
 
 microalgos
 
-***
+---
 
 ### firstValid
 
@@ -49,7 +49,7 @@ Defined in: [itxn.ts:27](https://github.com/algorandfoundation/puya-ts/blob/main
 
 round number
 
-***
+---
 
 ### firstValidTime
 
@@ -59,7 +59,7 @@ Defined in: [itxn.ts:31](https://github.com/algorandfoundation/puya-ts/blob/main
 
 UNIX timestamp of block before txn.FirstValid. Fails if negative
 
-***
+---
 
 ### groupIndex
 
@@ -70,7 +70,7 @@ Defined in: [itxn.ts:56](https://github.com/algorandfoundation/puya-ts/blob/main
 Position of this transaction within an atomic group
 A stand-alone transaction is implicitly element 0 in a group of 1
 
-***
+---
 
 ### lastValid
 
@@ -80,7 +80,7 @@ Defined in: [itxn.ts:35](https://github.com/algorandfoundation/puya-ts/blob/main
 
 round number
 
-***
+---
 
 ### lease
 
@@ -90,7 +90,7 @@ Defined in: [itxn.ts:43](https://github.com/algorandfoundation/puya-ts/blob/main
 
 32 byte lease value
 
-***
+---
 
 ### note
 
@@ -100,7 +100,7 @@ Defined in: [itxn.ts:39](https://github.com/algorandfoundation/puya-ts/blob/main
 
 Any data up to 1024 bytes
 
-***
+---
 
 ### receiver
 
@@ -110,7 +110,7 @@ Defined in: [itxn.ts:68](https://github.com/algorandfoundation/puya-ts/blob/main
 
 32 byte address
 
-***
+---
 
 ### rekeyTo
 
@@ -120,7 +120,7 @@ Defined in: [itxn.ts:64](https://github.com/algorandfoundation/puya-ts/blob/main
 
 32 byte Sender's new AuthAddr
 
-***
+---
 
 ### sender
 
@@ -130,7 +130,7 @@ Defined in: [itxn.ts:19](https://github.com/algorandfoundation/puya-ts/blob/main
 
 32 byte address
 
-***
+---
 
 ### txnId
 
@@ -140,7 +140,7 @@ Defined in: [itxn.ts:60](https://github.com/algorandfoundation/puya-ts/blob/main
 
 The computed ID for this transaction. 32 bytes.
 
-***
+---
 
 ### type
 
@@ -150,7 +150,7 @@ Defined in: [itxn.ts:51](https://github.com/algorandfoundation/puya-ts/blob/main
 
 Transaction type
 
-***
+---
 
 ### typeBytes
 

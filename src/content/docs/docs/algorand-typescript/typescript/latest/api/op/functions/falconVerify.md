@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "falconVerify"
+title: 'falconVerify'
 ---
 
 > **falconVerify**(`a`, `b`, `c`): `boolean`

@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "encodeSignedTransactionToJson"
+title: 'encodeSignedTransactionToJson'
 ---
 
 > **encodeSignedTransactionToJson**(`signedTransaction`, `space?`): `string`

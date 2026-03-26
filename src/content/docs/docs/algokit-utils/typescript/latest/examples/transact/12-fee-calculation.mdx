@@ -1,6 +1,6 @@
 ---
-title: "Fee Calculation"
-description: "This example demonstrates how to estimate transaction size and calculate fees using the transact package:"
+title: 'Fee Calculation'
+description: 'This example demonstrates how to estimate transaction size and calculate fees using the transact package:'
 sidebar:
   order: 12
 ---
@@ -10,6 +10,7 @@ sidebar:
 ## Description
 
 This example demonstrates how to estimate transaction size and calculate fees using the transact package:
+
 - estimateTransactionSize() to get estimated byte size
 - calculateFee() with different fee parameters
 - assignFee() to set fee on transaction
@@ -49,7 +50,7 @@ npm run example transact/12-fee-calculation.ts
  * - LocalNet running (via `algokit localnet start`)
  */
 
-import { AlgorandClient } from '@algorandfoundation/algokit-utils'
+import { AlgorandClient } from '@algorandfoundation/algokit-utils';
 import {
   assignFee,
   calculateFee,
@@ -60,7 +61,7 @@ import {
   type AppCallTransactionFields,
   type AssetTransferTransactionFields,
   type PaymentTransactionFields,
-} from '@algorandfoundation/algokit-utils/transact'
+} from '@algorandfoundation/algokit-utils/transact';
 import {
   createAlgodClient,
   printHeader,
@@ -68,47 +69,47 @@ import {
   printStep,
   printSuccess,
   shortenAddress,
-} from '../shared/utils.js'
+} from '../shared/utils.js';
 
 /**
  * Gets a funded account from LocalNet's KMD wallet
  */
 async function getLocalNetFundedAccount(algorand: AlgorandClient) {
-  return await algorand.account.kmd.getLocalNetDispenserAccount()
+  return await algorand.account.kmd.getLocalNetDispenserAccount();
 }
 
 async function main() {
-  printHeader('Fee Calculation Example')
+  printHeader('Fee Calculation Example');
 
   // Step 1: Initialize clients
-  printStep(1, 'Initialize Algod Client')
-  const algod = createAlgodClient()
-  const algorand = AlgorandClient.defaultLocalNet()
-  printInfo('Connected to LocalNet Algod')
+  printStep(1, 'Initialize Algod Client');
+  const algod = createAlgodClient();
+  const algorand = AlgorandClient.defaultLocalNet();
+  printInfo('Connected to LocalNet Algod');
 
   // Step 2: Get accounts
-  printStep(2, 'Get Accounts')
-  const sender = await getLocalNetFundedAccount(algorand)
-  printInfo(`Sender address: ${shortenAddress(sender.addr.toString())}`)
+  printStep(2, 'Get Accounts');
+  const sender = await getLocalNetFundedAccount(algorand);
+  printInfo(`Sender address: ${shortenAddress(sender.addr.toString())}`);
 
-  const receiver = algorand.account.random()
-  printInfo(`Receiver address: ${shortenAddress(receiver.addr.toString())}`)
+  const receiver = algorand.account.random();
+  printInfo(`Receiver address: ${shortenAddress(receiver.addr.toString())}`);
 
   // Step 3: Get suggested transaction parameters
-  printStep(3, 'Get Suggested Transaction Parameters')
-  const suggestedParams = await algod.suggestedParams()
-  printInfo(`First valid round: ${suggestedParams.firstValid}`)
-  printInfo(`Last valid round: ${suggestedParams.lastValid}`)
-  printInfo(`Fee per byte from network: ${suggestedParams.fee} microALGO`)
-  printInfo(`Minimum fee from network: ${suggestedParams.minFee} microALGO`)
+  printStep(3, 'Get Suggested Transaction Parameters');
+  const suggestedParams = await algod.suggestedParams();
+  printInfo(`First valid round: ${suggestedParams.firstValid}`);
+  printInfo(`Last valid round: ${suggestedParams.lastValid}`);
+  printInfo(`Fee per byte from network: ${suggestedParams.fee} microALGO`);
+  printInfo(`Minimum fee from network: ${suggestedParams.minFee} microALGO`);
 
   // Step 4: Create a simple payment transaction and estimate its size
-  printStep(4, 'Estimate Payment Transaction Size')
+  printStep(4, 'Estimate Payment Transaction Size');
 
   const paymentFields: PaymentTransactionFields = {
     receiver: receiver.addr,
     amount: 1_000_000n, // 1 ALGO
-  }
+  };
 
   const paymentTx = new Transaction({
     type: TransactionType.Payment,
@@ -118,19 +119,19 @@ async function main() {
     genesisHash: suggestedParams.genesisHash,
     genesisId: suggestedParams.genesisId,
     payment: paymentFields,
-  })
+  });
 
-  const paymentEstimatedSize = estimateTransactionSize(paymentTx)
-  printInfo(`Payment transaction estimated size: ${paymentEstimatedSize} bytes`)
+  const paymentEstimatedSize = estimateTransactionSize(paymentTx);
+  printInfo(`Payment transaction estimated size: ${paymentEstimatedSize} bytes`);
 
   // Step 5: Create an asset transfer transaction and estimate its size
-  printStep(5, 'Estimate Asset Transfer Transaction Size')
+  printStep(5, 'Estimate Asset Transfer Transaction Size');
 
   const assetTransferFields: AssetTransferTransactionFields = {
     assetId: 123456n, // Example asset ID
     receiver: receiver.addr,
     amount: 1000n,
-  }
+  };
 
   const assetTransferTx = new Transaction({
     type: TransactionType.AssetTransfer,
@@ -140,24 +141,21 @@ async function main() {
     genesisHash: suggestedParams.genesisHash,
     genesisId: suggestedParams.genesisId,
     assetTransfer: assetTransferFields,
-  })
+  });
 
-  const assetTransferEstimatedSize = estimateTransactionSize(assetTransferTx)
-  printInfo(`Asset transfer transaction estimated size: ${assetTransferEstimatedSize} bytes`)
+  const assetTransferEstimatedSize = estimateTransactionSize(assetTransferTx);
+  printInfo(`Asset transfer transaction estimated size: ${assetTransferEstimatedSize} bytes`);
 
   // Step 6: Create an app call transaction and estimate its size
-  printStep(6, 'Estimate App Call Transaction Size')
+  printStep(6, 'Estimate App Call Transaction Size');
 
   const appCallFields: AppCallTransactionFields = {
     appId: 0n, // App creation (0 = new app)
     onComplete: OnApplicationComplete.NoOp,
     approvalProgram: new Uint8Array([0x09, 0x81, 0x01]), // Simple approval program: #pragma version 9; int 1
     clearStateProgram: new Uint8Array([0x09, 0x81, 0x01]), // Simple clear program: #pragma version 9; int 1
-    args: [
-      new TextEncoder().encode('arg1'),
-      new TextEncoder().encode('arg2'),
-    ],
-  }
+    args: [new TextEncoder().encode('arg1'), new TextEncoder().encode('arg2')],
+  };
 
   const appCallTx = new Transaction({
     type: TransactionType.AppCall,
@@ -167,55 +165,57 @@ async function main() {
     genesisHash: suggestedParams.genesisHash,
     genesisId: suggestedParams.genesisId,
     appCall: appCallFields,
-  })
+  });
 
-  const appCallEstimatedSize = estimateTransactionSize(appCallTx)
-  printInfo(`App call transaction estimated size: ${appCallEstimatedSize} bytes`)
+  const appCallEstimatedSize = estimateTransactionSize(appCallTx);
+  printInfo(`App call transaction estimated size: ${appCallEstimatedSize} bytes`);
 
   // Step 7: Demonstrate calculateFee with feePerByte and minFee
-  printStep(7, 'Calculate Fee with feePerByte and minFee')
+  printStep(7, 'Calculate Fee with feePerByte and minFee');
 
   // When feePerByte is 0, minFee is used
   const feeWithZeroPerByte = calculateFee(paymentTx, {
     feePerByte: 0n,
     minFee: 1000n,
-  })
-  printInfo(`Fee with feePerByte=0, minFee=1000: ${feeWithZeroPerByte} microALGO`)
+  });
+  printInfo(`Fee with feePerByte=0, minFee=1000: ${feeWithZeroPerByte} microALGO`);
 
   // When feePerByte results in fee less than minFee, minFee is used
   const feeWithLowPerByte = calculateFee(paymentTx, {
     feePerByte: 1n, // 1 microALGO per byte
     minFee: 1000n,
-  })
-  printInfo(`Fee with feePerByte=1, minFee=1000: ${feeWithLowPerByte} microALGO`)
-  printInfo(`  (feePerByte * ${paymentEstimatedSize} = ${1n * paymentEstimatedSize} < minFee, so minFee is used)`)
+  });
+  printInfo(`Fee with feePerByte=1, minFee=1000: ${feeWithLowPerByte} microALGO`);
+  printInfo(
+    `  (feePerByte * ${paymentEstimatedSize} = ${1n * paymentEstimatedSize} < minFee, so minFee is used)`,
+  );
 
   // When feePerByte results in fee greater than minFee
   const feeWithHighPerByte = calculateFee(paymentTx, {
     feePerByte: 10n, // 10 microALGO per byte
     minFee: 1000n,
-  })
-  printInfo(`Fee with feePerByte=10, minFee=1000: ${feeWithHighPerByte} microALGO`)
-  printInfo(`  (feePerByte * ${paymentEstimatedSize} = ${10n * paymentEstimatedSize} > minFee)`)
+  });
+  printInfo(`Fee with feePerByte=10, minFee=1000: ${feeWithHighPerByte} microALGO`);
+  printInfo(`  (feePerByte * ${paymentEstimatedSize} = ${10n * paymentEstimatedSize} > minFee)`);
 
   // Step 8: Demonstrate calculateFee with extraFee
-  printStep(8, 'Calculate Fee with extraFee')
+  printStep(8, 'Calculate Fee with extraFee');
 
   const feeWithExtra = calculateFee(paymentTx, {
     feePerByte: suggestedParams.fee,
     minFee: suggestedParams.minFee,
     extraFee: 500n, // Add 500 microALGO extra
-  })
+  });
   const baseFee = calculateFee(paymentTx, {
     feePerByte: suggestedParams.fee,
     minFee: suggestedParams.minFee,
-  })
-  printInfo(`Base fee: ${baseFee} microALGO`)
-  printInfo(`Fee with extraFee=500: ${feeWithExtra} microALGO`)
-  printInfo(`  (baseFee ${baseFee} + extraFee 500 = ${feeWithExtra})`)
+  });
+  printInfo(`Base fee: ${baseFee} microALGO`);
+  printInfo(`Fee with extraFee=500: ${feeWithExtra} microALGO`);
+  printInfo(`  (baseFee ${baseFee} + extraFee 500 = ${feeWithExtra})`);
 
   // Step 9: Demonstrate calculateFee with maxFee (error case)
-  printStep(9, 'Calculate Fee with maxFee Limit')
+  printStep(9, 'Calculate Fee with maxFee Limit');
 
   // maxFee throws an error if calculated fee exceeds it
   try {
@@ -223,11 +223,11 @@ async function main() {
       feePerByte: 10n,
       minFee: 1000n,
       maxFee: 500n, // maxFee less than calculated fee will throw
-    })
-    printInfo('This should not be reached')
+    });
+    printInfo('This should not be reached');
   } catch (error) {
-    printInfo(`maxFee=500 with feePerByte=10 throws error:`)
-    printInfo(`  "${(error as Error).message}"`)
+    printInfo(`maxFee=500 with feePerByte=10 throws error:`);
+    printInfo(`  "${(error as Error).message}"`);
   }
 
   // maxFee that allows the fee through
@@ -235,82 +235,83 @@ async function main() {
     feePerByte: suggestedParams.fee,
     minFee: suggestedParams.minFee,
     maxFee: 10000n, // Allow up to 10000 microALGO
-  })
-  printInfo(`Fee with maxFee=10000: ${feeWithMaxFee} microALGO (within limit)`)
+  });
+  printInfo(`Fee with maxFee=10000: ${feeWithMaxFee} microALGO (within limit)`);
 
   // Step 10: Use assignFee to set fee on transaction
-  printStep(10, 'Assign Fee to Transaction')
+  printStep(10, 'Assign Fee to Transaction');
 
   const txWithFee = assignFee(paymentTx, {
     feePerByte: suggestedParams.fee,
     minFee: suggestedParams.minFee,
-  })
-  printInfo(`Original transaction fee: ${paymentTx.fee ?? 'not set'}`)
-  printInfo(`Transaction fee after assignFee: ${txWithFee.fee} microALGO`)
+  });
+  printInfo(`Original transaction fee: ${paymentTx.fee ?? 'not set'}`);
+  printInfo(`Transaction fee after assignFee: ${txWithFee.fee} microALGO`);
 
   // Step 11: Compare estimated vs actual signed transaction sizes
-  printStep(11, 'Compare Estimated vs Actual Transaction Sizes')
+  printStep(11, 'Compare Estimated vs Actual Transaction Sizes');
 
   // Sign the transaction
-  const signedTxns = await sender.signer([txWithFee], [0])
-  const signedTxBytes = signedTxns[0]
+  const signedTxns = await sender.signer([txWithFee], [0]);
+  const signedTxBytes = signedTxns[0];
 
   // Decode the signed transaction to get the actual size
-  printInfo(`Estimated transaction size: ${paymentEstimatedSize} bytes`)
-  printInfo(`Actual signed transaction size: ${signedTxBytes.length} bytes`)
+  printInfo(`Estimated transaction size: ${paymentEstimatedSize} bytes`);
+  printInfo(`Actual signed transaction size: ${signedTxBytes.length} bytes`);
 
-  const sizeDifference = BigInt(signedTxBytes.length) - paymentEstimatedSize
+  const sizeDifference = BigInt(signedTxBytes.length) - paymentEstimatedSize;
   if (sizeDifference >= 0) {
-    printInfo(`Difference: +${sizeDifference} bytes (actual is larger)`)
+    printInfo(`Difference: +${sizeDifference} bytes (actual is larger)`);
   } else {
-    printInfo(`Difference: ${sizeDifference} bytes (estimate was larger)`)
+    printInfo(`Difference: ${sizeDifference} bytes (estimate was larger)`);
   }
-  printInfo('Note: The estimate includes signature overhead, so sizes should be close')
+  printInfo('Note: The estimate includes signature overhead, so sizes should be close');
 
   // Step 12: Compare sizes across transaction types
-  printStep(12, 'Size Comparison Across Transaction Types')
+  printStep(12, 'Size Comparison Across Transaction Types');
 
-  printInfo('Transaction type size comparison:')
-  printInfo(`  Payment:        ${paymentEstimatedSize} bytes`)
-  printInfo(`  Asset Transfer: ${assetTransferEstimatedSize} bytes`)
-  printInfo(`  App Call:       ${appCallEstimatedSize} bytes`)
-  printInfo('')
-  printInfo('App calls tend to be larger due to programs and arguments.')
-  printInfo('Asset transfers include the asset ID field.')
-  printInfo('Payments are typically the smallest transaction type.')
+  printInfo('Transaction type size comparison:');
+  printInfo(`  Payment:        ${paymentEstimatedSize} bytes`);
+  printInfo(`  Asset Transfer: ${assetTransferEstimatedSize} bytes`);
+  printInfo(`  App Call:       ${appCallEstimatedSize} bytes`);
+  printInfo('');
+  printInfo('App calls tend to be larger due to programs and arguments.');
+  printInfo('Asset transfers include the asset ID field.');
+  printInfo('Payments are typically the smallest transaction type.');
 
   // Step 13: Fee calculation for covering inner transactions
-  printStep(13, 'Calculate Extra Fee for Inner Transactions')
+  printStep(13, 'Calculate Extra Fee for Inner Transactions');
 
   // When an app makes inner transactions, the outer transaction needs to pay for them
-  const innerTxCount = 3
-  const feePerInnerTx = suggestedParams.minFee
-  const extraFeeForInnerTxs = BigInt(innerTxCount) * feePerInnerTx
+  const innerTxCount = 3;
+  const feePerInnerTx = suggestedParams.minFee;
+  const extraFeeForInnerTxs = BigInt(innerTxCount) * feePerInnerTx;
 
   const feeForAppWithInnerTxs = calculateFee(appCallTx, {
     feePerByte: suggestedParams.fee,
     minFee: suggestedParams.minFee,
     extraFee: extraFeeForInnerTxs,
-  })
+  });
 
   const baseAppFee = calculateFee(appCallTx, {
     feePerByte: suggestedParams.fee,
     minFee: suggestedParams.minFee,
-  })
+  });
 
-  printInfo(`Scenario: App call that makes ${innerTxCount} inner transactions`)
-  printInfo(`Base app call fee: ${baseAppFee} microALGO`)
-  printInfo(`Extra fee for inner txns: ${extraFeeForInnerTxs} microALGO (${innerTxCount} x ${feePerInnerTx})`)
-  printInfo(`Total fee: ${feeForAppWithInnerTxs} microALGO`)
+  printInfo(`Scenario: App call that makes ${innerTxCount} inner transactions`);
+  printInfo(`Base app call fee: ${baseAppFee} microALGO`);
+  printInfo(
+    `Extra fee for inner txns: ${extraFeeForInnerTxs} microALGO (${innerTxCount} x ${feePerInnerTx})`,
+  );
+  printInfo(`Total fee: ${feeForAppWithInnerTxs} microALGO`);
 
-  printSuccess('Fee calculation example completed!')
+  printSuccess('Fee calculation example completed!');
 }
 
-main().catch((error) => {
-  console.error('Error:', error)
-  process.exit(1)
-})
-
+main().catch(error => {
+  console.error('Error:', error);
+  process.exit(1);
+});
 ```
 
 ---

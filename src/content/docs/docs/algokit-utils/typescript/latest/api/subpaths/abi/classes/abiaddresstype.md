@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "ABIAddressType"
+title: 'ABIAddressType'
 ---
 
 Defined in: [packages/abi/src/abi-type.ts:285](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/abi/src/abi-type.ts#L285)
@@ -49,7 +49,7 @@ The display name for this type
 
 [`ABIType`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/classes/abitype/).[`displayName`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/classes/abitype/#displayname)
 
-***
+---
 
 ### name
 
@@ -95,7 +95,7 @@ Error if the type is dynamic
 
 [`ABIType`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/classes/abitype/).[`byteLen`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/classes/abitype/#bytelen)
 
-***
+---
 
 ### decode()
 
@@ -123,7 +123,7 @@ The decoded value
 
 [`ABIType`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/classes/abitype/).[`decode`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/classes/abitype/#decode)
 
-***
+---
 
 ### encode()
 
@@ -151,7 +151,7 @@ The encoded bytes
 
 [`ABIType`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/classes/abitype/).[`encode`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/classes/abitype/#encode)
 
-***
+---
 
 ### equals()
 
@@ -179,7 +179,7 @@ True if the types are equal, false otherwise
 
 [`ABIType`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/classes/abitype/).[`equals`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/classes/abitype/#equals)
 
-***
+---
 
 ### isDynamic()
 
@@ -199,7 +199,7 @@ True if the type is dynamic, false otherwise
 
 [`ABIType`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/classes/abitype/).[`isDynamic`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/classes/abitype/#isdynamic)
 
-***
+---
 
 ### toString()
 
@@ -219,7 +219,7 @@ The ARC-4 type string
 
 [`ABIType`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/classes/abitype/).[`toString`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/classes/abitype/#tostring)
 
-***
+---
 
 ### from()
 

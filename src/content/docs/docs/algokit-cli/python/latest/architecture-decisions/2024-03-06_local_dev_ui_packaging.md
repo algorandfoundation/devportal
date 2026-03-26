@@ -1,5 +1,5 @@
 ---
-title: "Local dev UI packaging"
+title: 'Local dev UI packaging'
 ---
 
 - **Status**: Draft
@@ -79,7 +79,6 @@ Link to PoC is here: [Electron PoC](https://github.com/negar-abbasi/electron-poc
 - Tauri supports all requirements for the local development interface via their JavaScript API without the need to write any Rust.
 - It can manage the [file systems](https://tauri.app/v1/api/js/fs), launch another [process](https://tauri.app/v1/api/js/process), run a [shell command](https://tauri.app/v1/api/js/shell).
 - Tauri integrates well with major web frameworks. [`create-tauri-app`](https://github.com/tauri-apps/create-tauri-app) and a good template project can be bootstrapped and working within minutes.
-
   - Once bootstrapped, the web app can be bundled individually and deployed as a website. Below is the `npm script` Tauri generates for a Vite project, we can see that it supports `vite build`
 
   ```json

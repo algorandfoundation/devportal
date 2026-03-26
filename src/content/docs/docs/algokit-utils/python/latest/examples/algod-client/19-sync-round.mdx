@@ -1,6 +1,6 @@
 ---
-title: "Sync Round Management"
-description: "This example demonstrates how to manage the sync round using:"
+title: 'Sync Round Management'
+description: 'This example demonstrates how to manage the sync round using:'
 sidebar:
   order: 19
 ---
@@ -10,24 +10,25 @@ sidebar:
 ## Description
 
 This example demonstrates how to manage the sync round using:
+
 - sync_round() - Get the minimum sync round the ledger will cache
 - set_sync_round(round) - Set the minimum sync round
 - unset_sync_round() - Unset/reset the sync round
- What is the sync round? The sync round is a configuration that controls the minimum round the node will keep data for. When set, the node will:
+  What is the sync round? The sync round is a configuration that controls the minimum round the node will keep data for. When set, the node will:
 - Only keep block data from this round onwards
 - Allow old block data to be deleted/pruned
 - Reduce storage requirements for archival data
- This is useful for:
+  This is useful for:
 - Nodes that only need recent data (not full archival history)
 - Indexers that only need data from a specific point forward
 - Applications that don't need ancient historical data
- Key concepts:
-- sync_round() returns GetSyncRoundResponse with round_ attribute
+  Key concepts:
+- sync*round() returns GetSyncRoundResponse with round* attribute
 - set_sync_round(round) sets the minimum round to keep
 - unset_sync_round() removes the sync round restriction
 - Historical data below the sync round may be unavailable
- Prerequisites:
- Note: On some nodes, these endpoints may require admin privileges or return errors if the feature is not supported.
+  Prerequisites:
+  Note: On some nodes, these endpoints may require admin privileges or return errors if the feature is not supported.
 
 ## Prerequisites
 

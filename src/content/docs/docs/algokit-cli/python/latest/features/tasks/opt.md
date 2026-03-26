@@ -1,5 +1,5 @@
 ---
-title: "AlgoKit Task Asset opt-(in|out)"
+title: 'AlgoKit Task Asset opt-(in|out)'
 ---
 
 AlgoKit Task Asset opt-(in|out) allows you to opt-in or opt-out of Algorand Asset(s). This task supports single or multiple assets.

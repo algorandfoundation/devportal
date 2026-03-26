@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "BoxMap"
+title: 'BoxMap'
 ---
 
 > **BoxMap**\<`TKey`, `TValue`\> = [`Box`](/algorand-typescript/api/index/type-aliases/box/)\<`TValue`\>

@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "clone"
+title: 'clone'
 ---
 
 > **clone**\<`T`\>(`value`): `T`

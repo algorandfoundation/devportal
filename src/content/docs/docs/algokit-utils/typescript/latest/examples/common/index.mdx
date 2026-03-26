@@ -1,8 +1,8 @@
 ---
-title: "Common Utilities"
-description: "Utility functions and helpers."
+title: 'Common Utilities'
+description: 'Utility functions and helpers.'
 sidebar:
-  label: "Common Utilities"
+  label: 'Common Utilities'
   order: 0
 ---
 
@@ -13,21 +13,246 @@ Utility functions and helpers.
 ## Examples (12)
 
 <table>
-<thead><tr><th>Example</th><th>Description</th></tr></thead>
-<tbody>
-<tr><td><a href="01-address-basics/">Address Basics</a></td><td><p>This example demonstrates basic address operations using the Address class:</p><ul><li>Parsing addresses from base32 strings with Address.fromString()</li><li>Creating the zero address with Address.zeroAddress()</li><li>Encoding addresses back to base32 strings with Address.toString()</li><li>Comparing addresses for equality with Address.equals()</li><li>Computing the 4-byte checksum with Address.checksum()</li><li>Validating addresses with isValidAddress()</li><li>Accessing the 32-byte public key property</li><li>Using address constants: ALGORAND_ADDRESS_LENGTH, ALGORAND_ZERO_ADDRESS_STRING</li></ul></td></tr>
-<tr><td><a href="02-address-encoding/">Address Encoding</a></td><td><p>This example demonstrates how to encode and decode addresses between different formats and compute application addresses:</p><ul><li>encodeAddress() to convert 32-byte public key to base32 string</li><li>decodeAddress() to convert base32 string to Address object</li><li>getApplicationAddress() to compute an app's escrow address from app ID</li><li>getAddress() helper that accepts string, Address, or Addressable</li><li>Round-trip verification: encode(decode(address)) equals original</li><li>Understanding the relationship between public key bytes and checksum</li></ul></td></tr>
-<tr><td><a href="03-array-utilities/">Array Utilities</a></td><td><p>This example demonstrates the array utility functions for comparing and concatenating byte arrays:</p><ul><li>arrayEqual() for comparing two arrays element-by-element</li><li>concatArrays() for joining multiple Uint8Arrays into a new array</li></ul></td></tr>
-<tr><td><a href="04-constants/">Constants Reference</a></td><td><p>This example displays all the protocol constants available in the common package. These constants define limits, sizes, and separators used throughout Algorand.</p></td></tr>
-<tr><td><a href="05-crypto-hash/">Crypto Hash (SHA-512/256)</a></td><td><p>This example demonstrates the hash() function for computing Algorand-compatible SHA-512/256 hashes. This hash algorithm is used throughout Algorand for:</p><ul><li>Transaction IDs</li><li>Address checksums</li><li>Application escrow addresses</li><li>State proof verification</li></ul></td></tr>
-<tr><td><a href="06-logger/">Logger Type</a></td><td><p>This example demonstrates the Logger interface for consistent logging across the AlgoKit Utils SDK.</p><p>Topics covered:</p><ul><li>Logger type definition with all log levels</li><li>Console-based Logger implementation</li><li>No-op (silent) logger for production</li><li>Custom formatting logger</li><li>Compatibility with common logging patterns</li></ul></td></tr>
-<tr><td><a href="07-json-bigint/">JSON BigInt</a></td><td><p>This example demonstrates parsing and stringifying JSON with BigInt support for handling large numbers safely without precision loss.</p><p>Topics covered:</p><ul><li>parseJson() for parsing JSON strings with large numbers</li><li>Numbers &gt; Number.MAX_SAFE_INTEGER are parsed as BigInt</li><li>Numbers &lt;= Number.MAX_SAFE_INTEGER are parsed as regular numbers</li><li>stringifyJson() for serializing objects containing BigInt values</li><li>Round-trip preservation: stringifyJson(parseJson(str))</li><li>Comparison with native JSON.parse() showing precision loss</li><li>Algorand-relevant examples with microAlgo amounts</li></ul></td></tr>
-<tr><td><a href="08-msgpack/">MessagePack</a></td><td><p>This example demonstrates encoding and decoding MessagePack data, which is used for Algorand transaction encoding.</p><p>Topics covered:</p><ul><li>encodeMsgpack() to serialize data to MessagePack format</li><li>decodeMsgpack() to deserialize MessagePack bytes</li><li>Encoding simple objects with various types (strings, numbers, arrays)</li><li>Key sorting: encodeMsgpack() sorts keys alphabetically (canonical encoding)</li><li>Map returns: decodeMsgpack() returns a Map by default for object data</li><li>BigInt value encoding/decoding</li><li>Uint8Array (bytes) encoding</li><li>Size comparison: MessagePack vs JSON</li></ul></td></tr>
-<tr><td><a href="09-primitive-codecs/">Primitive Codecs</a></td><td><p>This example demonstrates how to use primitive codec types for encoding/decoding basic values in wire format (JSON or MessagePack).</p><p>Topics covered:</p><ul><li>Codec interface: encode(), decode(), defaultValue() methods</li><li>numberCodec for encoding/decoding numbers</li><li>bigIntCodec for encoding/decoding BigInt values</li><li>booleanCodec for encoding/decoding boolean values</li><li>stringCodec for encoding/decoding UTF-8 strings</li><li>bytesCodec for encoding/decoding raw bytes</li><li>bytesBase64Codec for base64 encoding</li><li>addressCodec for encoding/decoding Algorand addresses</li><li>Round-trip verification: decode(encode(value)) equals original</li></ul></td></tr>
-<tr><td><a href="10-composite-codecs/">Composite Codecs</a></td><td><p>This example demonstrates how to use composite codec types for encoding/decoding arrays, maps, and records in wire format (JSON or MessagePack).</p><p>Topics covered:</p><ul><li>ArrayCodec for encoding/decoding typed arrays</li><li>Pre-built array codecs: numberArrayCodec, stringArrayCodec, bigIntArrayCodec,</li></ul><p>booleanArrayCodec, bytesArrayCodec, addressArrayCodec</p><ul><li>MapCodec for encoding/decoding Map&lt;K, V&gt; types</li><li>RecordCodec for encoding/decoding Record&lt;string, V&gt; types</li><li>Creating custom ArrayCodec with a specific element codec</li><li>Encoding nested structures (array of arrays, map of arrays)</li><li>Round-trip verification for each composite codec</li></ul></td></tr>
-<tr><td><a href="11-model-codecs/">Model Codecs</a></td><td><p>This example demonstrates how to use model codecs for encoding/decoding complex object structures with field metadata.</p><p>Topics covered:</p><ul><li>ObjectModelCodec for encoding/decoding typed objects</li><li>Defining field metadata with FieldMetadata type</li><li>Encoding format options: 'json' vs 'msgpack'</li><li>PrimitiveModelCodec for simple value types</li><li>ArrayModelCodec for array model types</li><li>Handling optional fields</li><li>Field renaming with wireKey vs property name</li><li>Round-trip encoding with ObjectModelCodec</li></ul></td></tr>
-<tr><td><a href="12-sourcemap/">Sourcemap</a></td><td><p>This example demonstrates how to use ProgramSourceMap for mapping TEAL program counters (PC) to source locations for debugging purposes.</p><p>Topics covered:</p><ul><li>ProgramSourceMap class construction from sourcemap data</li><li>Sourcemap format: version, sources, names, mappings</li><li>getPcs() to get all program counter values</li><li>getLocationForPc() to get source location for a specific PC</li><li>SourceLocation properties: line, column, sourceIndex, nameIndex</li><li>getPcsOnSourceLine() to find PCs for a source line</li><li>How sourcemaps enable TEAL debugging by mapping PC to source</li></ul></td></tr>
-</tbody>
+  <thead>
+    <tr>
+      <th>Example</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <a href='01-address-basics/'>Address Basics</a>
+      </td>
+      <td>
+        <p>This example demonstrates basic address operations using the Address class:</p>
+        <ul>
+          <li>Parsing addresses from base32 strings with Address.fromString()</li>
+          <li>Creating the zero address with Address.zeroAddress()</li>
+          <li>Encoding addresses back to base32 strings with Address.toString()</li>
+          <li>Comparing addresses for equality with Address.equals()</li>
+          <li>Computing the 4-byte checksum with Address.checksum()</li>
+          <li>Validating addresses with isValidAddress()</li>
+          <li>Accessing the 32-byte public key property</li>
+          <li>Using address constants: ALGORAND_ADDRESS_LENGTH, ALGORAND_ZERO_ADDRESS_STRING</li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <a href='02-address-encoding/'>Address Encoding</a>
+      </td>
+      <td>
+        <p>
+          This example demonstrates how to encode and decode addresses between different formats and
+          compute application addresses:
+        </p>
+        <ul>
+          <li>encodeAddress() to convert 32-byte public key to base32 string</li>
+          <li>decodeAddress() to convert base32 string to Address object</li>
+          <li>getApplicationAddress() to compute an app's escrow address from app ID</li>
+          <li>getAddress() helper that accepts string, Address, or Addressable</li>
+          <li>Round-trip verification: encode(decode(address)) equals original</li>
+          <li>Understanding the relationship between public key bytes and checksum</li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <a href='03-array-utilities/'>Array Utilities</a>
+      </td>
+      <td>
+        <p>
+          This example demonstrates the array utility functions for comparing and concatenating byte
+          arrays:
+        </p>
+        <ul>
+          <li>arrayEqual() for comparing two arrays element-by-element</li>
+          <li>concatArrays() for joining multiple Uint8Arrays into a new array</li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <a href='04-constants/'>Constants Reference</a>
+      </td>
+      <td>
+        <p>
+          This example displays all the protocol constants available in the common package. These
+          constants define limits, sizes, and separators used throughout Algorand.
+        </p>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <a href='05-crypto-hash/'>Crypto Hash (SHA-512/256)</a>
+      </td>
+      <td>
+        <p>
+          This example demonstrates the hash() function for computing Algorand-compatible
+          SHA-512/256 hashes. This hash algorithm is used throughout Algorand for:
+        </p>
+        <ul>
+          <li>Transaction IDs</li>
+          <li>Address checksums</li>
+          <li>Application escrow addresses</li>
+          <li>State proof verification</li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <a href='06-logger/'>Logger Type</a>
+      </td>
+      <td>
+        <p>
+          This example demonstrates the Logger interface for consistent logging across the AlgoKit
+          Utils SDK.
+        </p>
+        <p>Topics covered:</p>
+        <ul>
+          <li>Logger type definition with all log levels</li>
+          <li>Console-based Logger implementation</li>
+          <li>No-op (silent) logger for production</li>
+          <li>Custom formatting logger</li>
+          <li>Compatibility with common logging patterns</li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <a href='07-json-bigint/'>JSON BigInt</a>
+      </td>
+      <td>
+        <p>
+          This example demonstrates parsing and stringifying JSON with BigInt support for handling
+          large numbers safely without precision loss.
+        </p>
+        <p>Topics covered:</p>
+        <ul>
+          <li>parseJson() for parsing JSON strings with large numbers</li>
+          <li>Numbers &gt; Number.MAX_SAFE_INTEGER are parsed as BigInt</li>
+          <li>Numbers &lt;= Number.MAX_SAFE_INTEGER are parsed as regular numbers</li>
+          <li>stringifyJson() for serializing objects containing BigInt values</li>
+          <li>Round-trip preservation: stringifyJson(parseJson(str))</li>
+          <li>Comparison with native JSON.parse() showing precision loss</li>
+          <li>Algorand-relevant examples with microAlgo amounts</li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <a href='08-msgpack/'>MessagePack</a>
+      </td>
+      <td>
+        <p>
+          This example demonstrates encoding and decoding MessagePack data, which is used for
+          Algorand transaction encoding.
+        </p>
+        <p>Topics covered:</p>
+        <ul>
+          <li>encodeMsgpack() to serialize data to MessagePack format</li>
+          <li>decodeMsgpack() to deserialize MessagePack bytes</li>
+          <li>Encoding simple objects with various types (strings, numbers, arrays)</li>
+          <li>Key sorting: encodeMsgpack() sorts keys alphabetically (canonical encoding)</li>
+          <li>Map returns: decodeMsgpack() returns a Map by default for object data</li>
+          <li>BigInt value encoding/decoding</li>
+          <li>Uint8Array (bytes) encoding</li>
+          <li>Size comparison: MessagePack vs JSON</li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <a href='09-primitive-codecs/'>Primitive Codecs</a>
+      </td>
+      <td>
+        <p>
+          This example demonstrates how to use primitive codec types for encoding/decoding basic
+          values in wire format (JSON or MessagePack).
+        </p>
+        <p>Topics covered:</p>
+        <ul>
+          <li>Codec interface: encode(), decode(), defaultValue() methods</li>
+          <li>numberCodec for encoding/decoding numbers</li>
+          <li>bigIntCodec for encoding/decoding BigInt values</li>
+          <li>booleanCodec for encoding/decoding boolean values</li>
+          <li>stringCodec for encoding/decoding UTF-8 strings</li>
+          <li>bytesCodec for encoding/decoding raw bytes</li>
+          <li>bytesBase64Codec for base64 encoding</li>
+          <li>addressCodec for encoding/decoding Algorand addresses</li>
+          <li>Round-trip verification: decode(encode(value)) equals original</li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <a href='10-composite-codecs/'>Composite Codecs</a>
+      </td>
+      <td>
+        <p>
+          This example demonstrates how to use composite codec types for encoding/decoding arrays,
+          maps, and records in wire format (JSON or MessagePack).
+        </p>
+        <p>Topics covered:</p>
+        <ul>
+          <li>ArrayCodec for encoding/decoding typed arrays</li>
+          <li>Pre-built array codecs: numberArrayCodec, stringArrayCodec, bigIntArrayCodec,</li>
+        </ul>
+        <p>booleanArrayCodec, bytesArrayCodec, addressArrayCodec</p>
+        <ul>
+          <li>MapCodec for encoding/decoding Map&lt;K, V&gt; types</li>
+          <li>RecordCodec for encoding/decoding Record&lt;string, V&gt; types</li>
+          <li>Creating custom ArrayCodec with a specific element codec</li>
+          <li>Encoding nested structures (array of arrays, map of arrays)</li>
+          <li>Round-trip verification for each composite codec</li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <a href='11-model-codecs/'>Model Codecs</a>
+      </td>
+      <td>
+        <p>
+          This example demonstrates how to use model codecs for encoding/decoding complex object
+          structures with field metadata.
+        </p>
+        <p>Topics covered:</p>
+        <ul>
+          <li>ObjectModelCodec for encoding/decoding typed objects</li>
+          <li>Defining field metadata with FieldMetadata type</li>
+          <li>Encoding format options: 'json' vs 'msgpack'</li>
+          <li>PrimitiveModelCodec for simple value types</li>
+          <li>ArrayModelCodec for array model types</li>
+          <li>Handling optional fields</li>
+          <li>Field renaming with wireKey vs property name</li>
+          <li>Round-trip encoding with ObjectModelCodec</li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <a href='12-sourcemap/'>Sourcemap</a>
+      </td>
+      <td>
+        <p>
+          This example demonstrates how to use ProgramSourceMap for mapping TEAL program counters
+          (PC) to source locations for debugging purposes.
+        </p>
+        <p>Topics covered:</p>
+        <ul>
+          <li>ProgramSourceMap class construction from sourcemap data</li>
+          <li>Sourcemap format: version, sources, names, mappings</li>
+          <li>getPcs() to get all program counter values</li>
+          <li>getLocationForPc() to get source location for a specific PC</li>
+          <li>SourceLocation properties: line, column, sourceIndex, nameIndex</li>
+          <li>getPcsOnSourceLine() to find PCs for a source line</li>
+          <li>How sourcemaps enable TEAL debugging by mapping PC to source</li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
 </table>
 
 ## Quick Start

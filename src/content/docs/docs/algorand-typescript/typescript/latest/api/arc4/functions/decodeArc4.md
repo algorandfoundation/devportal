@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "decodeArc4"
+title: 'decodeArc4'
 ---
 
 > **decodeArc4**\<`T`\>(`bytes`, `prefix?`): `T`

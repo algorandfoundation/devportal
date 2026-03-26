@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "TransactionFilter"
+title: 'TransactionFilter'
 ---
 
 Defined in: [src/types/subscription.ts:291](https://github.com/algorandfoundation/algokit-subscriber-ts/blob/main/src/types/subscription.ts#L291)
@@ -29,7 +29,7 @@ readonly `Uint8Array`\<`ArrayBufferLike`\>[]
 
 `boolean`
 
-***
+---
 
 ### appCreate?
 
@@ -39,7 +39,7 @@ Defined in: [src/types/subscription.ts:303](https://github.com/algorandfoundatio
 
 Filter to transactions that are creating an app.
 
-***
+---
 
 ### appId?
 
@@ -49,7 +49,7 @@ Defined in: [src/types/subscription.ts:301](https://github.com/algorandfoundatio
 
 Filter to transactions against the app with the given ID(s).
 
-***
+---
 
 ### appOnComplete?
 
@@ -59,7 +59,7 @@ Defined in: [src/types/subscription.ts:305](https://github.com/algorandfoundatio
 
 Filter to transactions that have given on complete(s).
 
-***
+---
 
 ### arc28Events?
 
@@ -78,7 +78,7 @@ Note: the definitions for these events must be passed in to the subscription con
 
 > **groupName**: `string`
 
-***
+---
 
 ### assetCreate?
 
@@ -88,7 +88,7 @@ Defined in: [src/types/subscription.ts:309](https://github.com/algorandfoundatio
 
 Filter to transactions that are creating an asset.
 
-***
+---
 
 ### assetId?
 
@@ -98,7 +98,7 @@ Defined in: [src/types/subscription.ts:307](https://github.com/algorandfoundatio
 
 Filter to transactions against the asset with the given ID(s).
 
-***
+---
 
 ### balanceChanges?
 
@@ -150,7 +150,7 @@ Match transactions with balance changes being greater than or equal to the given
 
 Match transactions with balance changes for an account with one of the given role(s)
 
-***
+---
 
 ### customFilter()?
 
@@ -170,7 +170,7 @@ Catch-all custom filter to filter for things that the rest of the filters don't 
 
 `boolean`
 
-***
+---
 
 ### maxAmount?
 
@@ -181,7 +181,7 @@ Defined in: [src/types/subscription.ts:315](https://github.com/algorandfoundatio
 Filter to transactions where the amount being transferred is less than
 or equal to the given maximum (microAlgos or decimal units of an ASA if type: axfer).
 
-***
+---
 
 ### methodSignature?
 
@@ -192,7 +192,7 @@ Defined in: [src/types/subscription.ts:318](https://github.com/algorandfoundatio
 Filter to app transactions that have the given ARC-0004 method selector(s) for
 the given method signature as the first app argument.
 
-***
+---
 
 ### minAmount?
 
@@ -203,7 +203,7 @@ Defined in: [src/types/subscription.ts:312](https://github.com/algorandfoundatio
 Filter to transactions where the amount being transferred is greater
 than or equal to the given minimum (microAlgos or decimal units of an ASA if type: axfer).
 
-***
+---
 
 ### notePrefix?
 
@@ -213,7 +213,7 @@ Defined in: [src/types/subscription.ts:299](https://github.com/algorandfoundatio
 
 Filter to transactions with a note having the given prefix.
 
-***
+---
 
 ### receiver?
 
@@ -223,7 +223,7 @@ Defined in: [src/types/subscription.ts:297](https://github.com/algorandfoundatio
 
 Filter to transactions being received by the specified address(es).
 
-***
+---
 
 ### sender?
 
@@ -233,7 +233,7 @@ Defined in: [src/types/subscription.ts:295](https://github.com/algorandfoundatio
 
 Filter to transactions sent from the specified address(es).
 
-***
+---
 
 ### type?
 

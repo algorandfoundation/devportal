@@ -1,6 +1,6 @@
 ---
-title: "ABI Complex Nested Types"
-description: "This example demonstrates how to work with deeply nested ABI types combining arrays, tuples, and structs:"
+title: 'ABI Complex Nested Types'
+description: 'This example demonstrates how to work with deeply nested ABI types combining arrays, tuples, and structs:'
 sidebar:
   order: 14
 ---
@@ -10,11 +10,12 @@ sidebar:
 ## Description
 
 This example demonstrates how to work with deeply nested ABI types combining arrays, tuples, and structs:
+
 - Array of tuples: (uint64,string)[]
 - Tuple containing arrays: (uint64[],string[])
 - Nested structs with arrays
 - Deeply nested type: ((uint64,bool)[],string,(address,uint256))[]
- Key concepts:
+  Key concepts:
 - Dynamic types (strings, dynamic arrays) always use head/tail encoding
 - Offsets in head section point to data positions in tail section
 - Nesting depth affects encoding complexity but follows consistent rules

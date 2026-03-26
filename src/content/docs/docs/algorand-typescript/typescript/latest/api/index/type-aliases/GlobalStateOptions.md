@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "GlobalStateOptions"
+title: 'GlobalStateOptions'
 ---
 
 > **GlobalStateOptions**\<`ValueType`\> = `object`
@@ -27,7 +27,7 @@ Defined in: [state.ts:36](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 An initial value to assign to this global state field when the application is created
 
-***
+---
 
 ### key?
 

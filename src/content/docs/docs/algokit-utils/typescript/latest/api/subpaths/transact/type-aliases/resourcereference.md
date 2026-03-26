@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "ResourceReference"
+title: 'ResourceReference'
 ---
 
 > **ResourceReference** = `object`
@@ -21,7 +21,7 @@ Defined in: [packages/transact/src/transactions/app-call.ts:204](https://github.
 
 Any account addresses whose balance record is accessible by the executing ApprovalProgram or ClearStateProgram.
 
-***
+---
 
 ### appId?
 
@@ -31,7 +31,7 @@ Defined in: [packages/transact/src/transactions/app-call.ts:206](https://github.
 
 Application ID whose GlobalState may be read by the executing ApprovalProgram or ClearStateProgram.
 
-***
+---
 
 ### assetId?
 
@@ -41,7 +41,7 @@ Defined in: [packages/transact/src/transactions/app-call.ts:208](https://github.
 
 Asset ID whose AssetParams may be read by the executing ApprovalProgram or ClearStateProgram.
 
-***
+---
 
 ### box?
 
@@ -51,7 +51,7 @@ Defined in: [packages/transact/src/transactions/app-call.ts:214](https://github.
 
 Defines a box by its name and the application ID it belongs to.
 
-***
+---
 
 ### holding?
 
@@ -61,7 +61,7 @@ Defined in: [packages/transact/src/transactions/app-call.ts:210](https://github.
 
 Defines a holding by referring to an Address and Asset it belongs to.
 
-***
+---
 
 ### locals?
 

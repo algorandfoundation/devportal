@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "prepareGroupForSending"
+title: 'prepareGroupForSending'
 ---
 
 > **prepareGroupForSending**(`composer`, `sendParams`, `additionalContext?`): `Promise`\<[`TransactionComposer`](/docs/algokit-utils/typescript/latest/api/algokit-utils/classes/transactioncomposer/)\>

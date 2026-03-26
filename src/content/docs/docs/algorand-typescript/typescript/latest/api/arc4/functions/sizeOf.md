@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "sizeOf"
+title: 'sizeOf'
 ---
 
 > **sizeOf**\<`T`\>(): [`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)

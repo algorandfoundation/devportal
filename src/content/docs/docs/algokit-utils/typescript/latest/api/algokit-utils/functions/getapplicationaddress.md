@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "getApplicationAddress"
+title: 'getApplicationAddress'
 ---
 
 > **getApplicationAddress**(`appID`): [`Address`](/docs/algokit-utils/typescript/latest/api/algokit-utils/classes/address/)

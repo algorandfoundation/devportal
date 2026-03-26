@@ -1,6 +1,6 @@
 ---
 title: Code Examples
-description: "15 runnable Python examples demonstrating AlgoKit Subscriber features"
+description: '15 runnable Python examples demonstrating AlgoKit Subscriber features'
 sidebar:
   order: 0
 ---
@@ -32,28 +32,218 @@ uv run python 01_basic_poll_once.py
 ## Examples (15)
 
 <table>
-<thead><tr><th>Example</th><th>Description</th></tr></thead>
-<tbody>
-<tr><td><a href="01-basic-poll-once/">Basic Poll Once</a></td><td><p>Demonstrates a single poll_once() call with a sender filter. Creates a funded sender account, sends 2 self-payment transactions, then uses AlgorandSubscriber to find and verify the matched transactions.</p></td></tr>
-<tr><td><a href="02-continuous-subscriber/">Continuous Subscriber</a></td><td><p>Demonstrates continuous polling with start/stop and event handlers.</p><ul><li>Create a subscriber with frequency_in_seconds and wait_for_block_when_at_tip</li><li>Register event handlers with subscriber.on()</li><li>Start continuous polling with subscriber.start()</li><li>Graceful shutdown with signal handlers</li></ul></td></tr>
-<tr><td><a href="03-payment-filters/">Payment Filters</a></td><td><p>Demonstrates payment transaction filters:</p><ul><li>Filter by sender, receiver, amount range, and note prefix</li><li>Verify each filter matches the expected transactions</li></ul></td></tr>
-<tr><td><a href="04-asset-transfer/">Asset Transfer</a></td><td><p>Demonstrates ASA lifecycle subscription:</p><ul><li>Subscribe to asset creation with assetCreate filter</li><li>Subscribe to asset transfers with type and assetId filters</li><li>Track opt-in and transfer transactions</li></ul></td></tr>
-<tr><td><a href="05-app-call/">App Call Subscription</a></td><td><p>Demonstrates application call subscription with ABI method filtering:</p><ul><li>Deploy TestingApp from ARC-56 spec</li><li>Call set_global, emitSwapped, opt_in ABI methods</li><li>Filter by app_create, method_signature, app_on_complete, app_call_arguments_match</li><li>Verify each filter matches the expected transactions</li></ul></td></tr>
-<tr><td><a href="06-multiple-filters/">Multiple Named Filters</a></td><td><p>Demonstrates multiple named filters with deduplication:</p><ul><li>Define multiple filters on a single subscriber</li><li>Verify transactions are deduplicated across filters</li><li>Inspect filtersMatched on each transaction</li></ul></td></tr>
-<tr><td><a href="07-balance-changes/">Balance Change Tracking</a></td><td><p>Demonstrates balance change filtering for ALGO and ASA transfers:</p><ul><li>Filter by assetId, role, minAbsoluteAmount, and address</li><li>Inspect balanceChanges array on matched transactions</li><li>Explore BalanceChangeRole enum values</li></ul></td></tr>
-<tr><td><a href="08-arc28-events/">ARC-28 Event Subscription</a></td><td><p>Demonstrates ARC-28 event parsing, filtering, and inspection:</p><ul><li>Define event definitions matching ARC-56 spec</li><li>Configure config-level arc28_events for event parsing</li><li>Filter transactions by emitted event names</li><li>Inspect parsed event data (args, args_by_name)</li></ul></td></tr>
-<tr><td><a href="09-inner-transactions/">Inner Transaction Subscription</a></td><td><p>Demonstrates inner transaction subscription and parent-child relationships:</p><ul><li>Subscribe to inner payment transactions by sender/receiver</li><li>Verify parentTransactionId links to the parent app call</li><li>Inspect inner transaction ID format</li><li>Verify parent transaction's inner_txns array</li></ul></td></tr>
-<tr><td><a href="10-batch-and-mappers/">Batch Handling &amp; Data Mappers</a></td><td><p>Demonstrates mapper transforms with on_batch and on handler patterns:</p><ul><li>Define a mapper to transform list[SubscribedTransaction] to custom types</li><li>Compare on_batch (fires once per poll) vs on (fires per transaction)</li><li>Verify type safety with mapped data</li></ul></td></tr>
-<tr><td><a href="11-watermark-persistence/">Watermark Persistence</a></td><td><p>Demonstrates file-backed watermark persistence across multiple polls:</p><ul><li>Implement get/set callbacks using a temp file</li><li>Poll twice: batch 1 catches first 2 txns, batch 2 catches next 2 txns</li><li>Verify watermark advances between polls</li><li>Verify no duplication across polls</li><li>Explain at-least-once delivery semantics</li></ul></td></tr>
-<tr><td><a href="12-sync-behaviours/">Sync Behaviours</a></td><td><p>Demonstrates all 4 sync behaviours and maxRoundsToSync comparison:</p><ul><li>sync-oldest: incremental catchup from watermark</li><li>skip-sync-newest: jump to tip, discard history</li><li>sync-oldest-start-now: hybrid first-start behavior</li><li>fail: throw when too far behind</li></ul></td></tr>
-<tr><td><a href="13-custom-filters/">Custom Filters</a></td><td><p>Demonstrates custom filter predicates with multi-condition logic:</p><ul><li>Use customFilter for complex matching (amount + note + sender allowlist)</li><li>Compose customFilter with standard filter fields</li><li>Inspect full SubscribedTransaction fields available in customFilter</li></ul></td></tr>
-<tr><td><a href="14-stateless-subscriptions/">Stateless Subscriptions</a></td><td><p>Demonstrates getSubscribedTransactions for serverless patterns.</p><ul><li>Use the stateless function instead of the AlgorandSubscriber class</li><li>Manage watermark externally between calls</li><li>Verify no overlap between consecutive calls</li></ul></td></tr>
-<tr><td><a href="15-lifecycle-hooks/">Lifecycle Hooks &amp; Error Handling</a></td><td><p>Demonstrates lifecycle hooks and retry patterns.</p><ul><li>Hook execution order: on_before_poll -&gt; processing -&gt; on_poll -&gt; inspect</li><li>start(inspect) callback in continuous polling</li><li>Error recovery with on_error and retry logic</li></ul></td></tr>
-</tbody>
+  <thead>
+    <tr>
+      <th>Example</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <a href='01-basic-poll-once/'>Basic Poll Once</a>
+      </td>
+      <td>
+        <p>
+          Demonstrates a single poll_once() call with a sender filter. Creates a funded sender
+          account, sends 2 self-payment transactions, then uses AlgorandSubscriber to find and
+          verify the matched transactions.
+        </p>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <a href='02-continuous-subscriber/'>Continuous Subscriber</a>
+      </td>
+      <td>
+        <p>Demonstrates continuous polling with start/stop and event handlers.</p>
+        <ul>
+          <li>Create a subscriber with frequency_in_seconds and wait_for_block_when_at_tip</li>
+          <li>Register event handlers with subscriber.on()</li>
+          <li>Start continuous polling with subscriber.start()</li>
+          <li>Graceful shutdown with signal handlers</li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <a href='03-payment-filters/'>Payment Filters</a>
+      </td>
+      <td>
+        <p>Demonstrates payment transaction filters:</p>
+        <ul>
+          <li>Filter by sender, receiver, amount range, and note prefix</li>
+          <li>Verify each filter matches the expected transactions</li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <a href='04-asset-transfer/'>Asset Transfer</a>
+      </td>
+      <td>
+        <p>Demonstrates ASA lifecycle subscription:</p>
+        <ul>
+          <li>Subscribe to asset creation with assetCreate filter</li>
+          <li>Subscribe to asset transfers with type and assetId filters</li>
+          <li>Track opt-in and transfer transactions</li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <a href='05-app-call/'>App Call Subscription</a>
+      </td>
+      <td>
+        <p>Demonstrates application call subscription with ABI method filtering:</p>
+        <ul>
+          <li>Deploy TestingApp from ARC-56 spec</li>
+          <li>Call set_global, emitSwapped, opt_in ABI methods</li>
+          <li>Filter by app_create, method_signature, app_on_complete, app_call_arguments_match</li>
+          <li>Verify each filter matches the expected transactions</li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <a href='06-multiple-filters/'>Multiple Named Filters</a>
+      </td>
+      <td>
+        <p>Demonstrates multiple named filters with deduplication:</p>
+        <ul>
+          <li>Define multiple filters on a single subscriber</li>
+          <li>Verify transactions are deduplicated across filters</li>
+          <li>Inspect filtersMatched on each transaction</li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <a href='07-balance-changes/'>Balance Change Tracking</a>
+      </td>
+      <td>
+        <p>Demonstrates balance change filtering for ALGO and ASA transfers:</p>
+        <ul>
+          <li>Filter by assetId, role, minAbsoluteAmount, and address</li>
+          <li>Inspect balanceChanges array on matched transactions</li>
+          <li>Explore BalanceChangeRole enum values</li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <a href='08-arc28-events/'>ARC-28 Event Subscription</a>
+      </td>
+      <td>
+        <p>Demonstrates ARC-28 event parsing, filtering, and inspection:</p>
+        <ul>
+          <li>Define event definitions matching ARC-56 spec</li>
+          <li>Configure config-level arc28_events for event parsing</li>
+          <li>Filter transactions by emitted event names</li>
+          <li>Inspect parsed event data (args, args_by_name)</li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <a href='09-inner-transactions/'>Inner Transaction Subscription</a>
+      </td>
+      <td>
+        <p>Demonstrates inner transaction subscription and parent-child relationships:</p>
+        <ul>
+          <li>Subscribe to inner payment transactions by sender/receiver</li>
+          <li>Verify parentTransactionId links to the parent app call</li>
+          <li>Inspect inner transaction ID format</li>
+          <li>Verify parent transaction's inner_txns array</li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <a href='10-batch-and-mappers/'>Batch Handling &amp; Data Mappers</a>
+      </td>
+      <td>
+        <p>Demonstrates mapper transforms with on_batch and on handler patterns:</p>
+        <ul>
+          <li>Define a mapper to transform list[SubscribedTransaction] to custom types</li>
+          <li>Compare on_batch (fires once per poll) vs on (fires per transaction)</li>
+          <li>Verify type safety with mapped data</li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <a href='11-watermark-persistence/'>Watermark Persistence</a>
+      </td>
+      <td>
+        <p>Demonstrates file-backed watermark persistence across multiple polls:</p>
+        <ul>
+          <li>Implement get/set callbacks using a temp file</li>
+          <li>Poll twice: batch 1 catches first 2 txns, batch 2 catches next 2 txns</li>
+          <li>Verify watermark advances between polls</li>
+          <li>Verify no duplication across polls</li>
+          <li>Explain at-least-once delivery semantics</li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <a href='12-sync-behaviours/'>Sync Behaviours</a>
+      </td>
+      <td>
+        <p>Demonstrates all 4 sync behaviours and maxRoundsToSync comparison:</p>
+        <ul>
+          <li>sync-oldest: incremental catchup from watermark</li>
+          <li>skip-sync-newest: jump to tip, discard history</li>
+          <li>sync-oldest-start-now: hybrid first-start behavior</li>
+          <li>fail: throw when too far behind</li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <a href='13-custom-filters/'>Custom Filters</a>
+      </td>
+      <td>
+        <p>Demonstrates custom filter predicates with multi-condition logic:</p>
+        <ul>
+          <li>Use customFilter for complex matching (amount + note + sender allowlist)</li>
+          <li>Compose customFilter with standard filter fields</li>
+          <li>Inspect full SubscribedTransaction fields available in customFilter</li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <a href='14-stateless-subscriptions/'>Stateless Subscriptions</a>
+      </td>
+      <td>
+        <p>Demonstrates getSubscribedTransactions for serverless patterns.</p>
+        <ul>
+          <li>Use the stateless function instead of the AlgorandSubscriber class</li>
+          <li>Manage watermark externally between calls</li>
+          <li>Verify no overlap between consecutive calls</li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <a href='15-lifecycle-hooks/'>Lifecycle Hooks &amp; Error Handling</a>
+      </td>
+      <td>
+        <p>Demonstrates lifecycle hooks and retry patterns.</p>
+        <ul>
+          <li>Hook execution order: on_before_poll -&gt; processing -&gt; on_poll -&gt; inspect</li>
+          <li>start(inspect) callback in continuous polling</li>
+          <li>Error recovery with on_error and retry logic</li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
 </table>
 
 <style>
-{`
+  {`
 table {
   width: 100%;
 }

@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "BoxValuesRequestParams"
+title: 'BoxValuesRequestParams'
 ---
 
 Defined in: [src/app-manager.ts:90](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/app-manager.ts#L90)
@@ -19,7 +19,7 @@ Defined in: [src/app-manager.ts:92](https://github.com/algorandfoundation/algoki
 
 The ID of the app return box names for
 
-***
+---
 
 ### boxNames
 
@@ -29,7 +29,7 @@ Defined in: [src/app-manager.ts:94](https://github.com/algorandfoundation/algoki
 
 The names of the boxes to return either as a string, binary array or BoxName`
 
-***
+---
 
 ### type
 

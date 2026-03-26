@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "GlobalState"
+title: 'GlobalState'
 ---
 
 > **GlobalState**\<`ValueType`\> = `object`
@@ -29,7 +29,7 @@ Defined in: [state.ts:21](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 Gets a boolean value indicating if global state field currently has a value
 
-***
+---
 
 ### value
 

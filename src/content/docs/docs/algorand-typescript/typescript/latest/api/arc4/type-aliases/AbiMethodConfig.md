@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "AbiMethodConfig"
+title: 'AbiMethodConfig'
 ---
 
 > **AbiMethodConfig**\<`TContract`\> = `object`
@@ -15,7 +15,7 @@ Configuration options for an abi method
 
 ### TContract
 
-`TContract` *extends* [`Contract`](/algorand-typescript/api/arc4/classes/contract/)
+`TContract` _extends_ [`Contract`](/algorand-typescript/api/arc4/classes/contract/)
 
 the type of the contract this method is a part of
 
@@ -32,10 +32,10 @@ Which on complete action(s) are allowed when invoking this method.
 #### Default
 
 ```ts
-'NoOp'
+'NoOp';
 ```
 
-***
+---
 
 ### defaultArguments?
 
@@ -47,7 +47,7 @@ Specify default arguments that can be populated by clients calling this method.
 
 A map of parameter names to the default argument source
 
-***
+---
 
 ### name?
 
@@ -57,7 +57,7 @@ Defined in: [arc4/index.ts:122](https://github.com/algorandfoundation/puya-ts/bl
 
 Override the name used to generate the abi method selector
 
-***
+---
 
 ### onCreate?
 
@@ -70,10 +70,10 @@ Whether this method should be callable when creating the application.
 #### Default
 
 ```ts
-'disallow'
+'disallow';
 ```
 
-***
+---
 
 ### readonly?
 
@@ -86,10 +86,10 @@ Does the method only perform read operations (no mutation of chain state)
 #### Default
 
 ```ts
-false
+false;
 ```
 
-***
+---
 
 ### resourceEncoding?
 
@@ -104,7 +104,7 @@ value: Application, Asset and Account arguments are passed by their uint64 id (A
 
 The resource must still be 'available' to this transaction but can take advantage of resource sharing within the transaction group.
 
-***
+---
 
 ### validateEncoding?
 

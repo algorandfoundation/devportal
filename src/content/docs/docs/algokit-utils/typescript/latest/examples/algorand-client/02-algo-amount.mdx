@@ -1,6 +1,6 @@
 ---
-title: "AlgoAmount Utility"
-description: "This example demonstrates how to use the AlgoAmount utility class to work with ALGO and microALGO amounts safely, avoiding floating point precision issues."
+title: 'AlgoAmount Utility'
+description: 'This example demonstrates how to use the AlgoAmount utility class to work with ALGO and microALGO amounts safely, avoiding floating point precision issues.'
 sidebar:
   order: 2
 ---
@@ -10,7 +10,8 @@ sidebar:
 ## Description
 
 This example demonstrates how to use the AlgoAmount utility class to work with ALGO and microALGO amounts safely, avoiding floating point precision issues.
- Topics covered:
+Topics covered:
+
 - Creating AlgoAmount using static factory methods
 - Accessing values in ALGO and microALGO
 - String formatting
@@ -56,271 +57,303 @@ npm run example algorand_client/02-algo-amount.ts
  * - No LocalNet required
  */
 
-import { algo, ALGORAND_MIN_TX_FEE, AlgorandClient, algos, microAlgo, microAlgos, transactionFees } from '@algorandfoundation/algokit-utils'
-import { AlgoAmount } from '@algorandfoundation/algokit-utils/types/amount'
-import { printError, printHeader, printInfo, printStep, printSuccess, shortenAddress } from '../shared/utils.js'
+import {
+  algo,
+  ALGORAND_MIN_TX_FEE,
+  AlgorandClient,
+  algos,
+  microAlgo,
+  microAlgos,
+  transactionFees,
+} from '@algorandfoundation/algokit-utils';
+import { AlgoAmount } from '@algorandfoundation/algokit-utils/types/amount';
+import {
+  printError,
+  printHeader,
+  printInfo,
+  printStep,
+  printSuccess,
+  shortenAddress,
+} from '../shared/utils.js';
 
 async function main() {
-  printHeader('AlgoAmount Utility Example')
+  printHeader('AlgoAmount Utility Example');
 
   // Step 1: Creating AlgoAmount using static factory methods
-  printStep(1, 'Creating AlgoAmount using static factory methods')
-  printInfo('AlgoAmount provides four static factory methods:')
-  printInfo('  - AlgoAmount.Algo(amount) - Create from ALGO value')
-  printInfo('  - AlgoAmount.Algos(amount) - Alias for Algo()')
-  printInfo('  - AlgoAmount.MicroAlgo(amount) - Create from microALGO value')
-  printInfo('  - AlgoAmount.MicroAlgos(amount) - Alias for MicroAlgo()')
+  printStep(1, 'Creating AlgoAmount using static factory methods');
+  printInfo('AlgoAmount provides four static factory methods:');
+  printInfo('  - AlgoAmount.Algo(amount) - Create from ALGO value');
+  printInfo('  - AlgoAmount.Algos(amount) - Alias for Algo()');
+  printInfo('  - AlgoAmount.MicroAlgo(amount) - Create from microALGO value');
+  printInfo('  - AlgoAmount.MicroAlgos(amount) - Alias for MicroAlgo()');
 
   // Create using AlgoAmount.Algo()
-  const oneAndHalfAlgo = AlgoAmount.Algo(1.5)
-  printInfo(`\nAlgoAmount.Algo(1.5): ${oneAndHalfAlgo.algo} ALGO = ${oneAndHalfAlgo.microAlgo} µALGO`)
+  const oneAndHalfAlgo = AlgoAmount.Algo(1.5);
+  printInfo(
+    `\nAlgoAmount.Algo(1.5): ${oneAndHalfAlgo.algo} ALGO = ${oneAndHalfAlgo.microAlgo} µALGO`,
+  );
 
   // Create using AlgoAmount.Algos() - alias
-  const twoAlgos = AlgoAmount.Algos(2)
-  printInfo(`AlgoAmount.Algos(2): ${twoAlgos.algo} ALGO = ${twoAlgos.microAlgo} µALGO`)
+  const twoAlgos = AlgoAmount.Algos(2);
+  printInfo(`AlgoAmount.Algos(2): ${twoAlgos.algo} ALGO = ${twoAlgos.microAlgo} µALGO`);
 
   // Create using AlgoAmount.MicroAlgo()
-  const fiftyThousandMicroAlgo = AlgoAmount.MicroAlgo(50_000)
-  printInfo(`AlgoAmount.MicroAlgo(50000): ${fiftyThousandMicroAlgo.algo} ALGO = ${fiftyThousandMicroAlgo.microAlgo} µALGO`)
+  const fiftyThousandMicroAlgo = AlgoAmount.MicroAlgo(50_000);
+  printInfo(
+    `AlgoAmount.MicroAlgo(50000): ${fiftyThousandMicroAlgo.algo} ALGO = ${fiftyThousandMicroAlgo.microAlgo} µALGO`,
+  );
 
   // Create using AlgoAmount.MicroAlgos() - alias
-  const hundredThousandMicroAlgo = AlgoAmount.MicroAlgos(100_000)
-  printInfo(`AlgoAmount.MicroAlgos(100000): ${hundredThousandMicroAlgo.algo} ALGO = ${hundredThousandMicroAlgo.microAlgo} µALGO`)
+  const hundredThousandMicroAlgo = AlgoAmount.MicroAlgos(100_000);
+  printInfo(
+    `AlgoAmount.MicroAlgos(100000): ${hundredThousandMicroAlgo.algo} ALGO = ${hundredThousandMicroAlgo.microAlgo} µALGO`,
+  );
 
-  printSuccess('Created AlgoAmount instances using all factory methods')
+  printSuccess('Created AlgoAmount instances using all factory methods');
 
   // Step 2: Using helper functions
-  printStep(2, 'Using convenience helper functions')
-  printInfo('The library exports helper functions for cleaner syntax:')
-  printInfo('  - algo(amount) - Equivalent to AlgoAmount.Algo()')
-  printInfo('  - algos(amount) - Equivalent to AlgoAmount.Algos()')
-  printInfo('  - microAlgo(amount) - Equivalent to AlgoAmount.MicroAlgo()')
-  printInfo('  - microAlgos(amount) - Equivalent to AlgoAmount.MicroAlgos()')
+  printStep(2, 'Using convenience helper functions');
+  printInfo('The library exports helper functions for cleaner syntax:');
+  printInfo('  - algo(amount) - Equivalent to AlgoAmount.Algo()');
+  printInfo('  - algos(amount) - Equivalent to AlgoAmount.Algos()');
+  printInfo('  - microAlgo(amount) - Equivalent to AlgoAmount.MicroAlgo()');
+  printInfo('  - microAlgos(amount) - Equivalent to AlgoAmount.MicroAlgos()');
 
-  const threeAlgo = algo(3)
-  printInfo(`\nalgo(3): ${threeAlgo.algo} ALGO = ${threeAlgo.microAlgo} µALGO`)
+  const threeAlgo = algo(3);
+  printInfo(`\nalgo(3): ${threeAlgo.algo} ALGO = ${threeAlgo.microAlgo} µALGO`);
 
-  const fiveAlgos = algos(5)
-  printInfo(`algos(5): ${fiveAlgos.algo} ALGO = ${fiveAlgos.microAlgo} µALGO`)
+  const fiveAlgos = algos(5);
+  printInfo(`algos(5): ${fiveAlgos.algo} ALGO = ${fiveAlgos.microAlgo} µALGO`);
 
-  const tenMicroAlgo = microAlgo(10)
-  printInfo(`microAlgo(10): ${tenMicroAlgo.algo} ALGO = ${tenMicroAlgo.microAlgo} µALGO`)
+  const tenMicroAlgo = microAlgo(10);
+  printInfo(`microAlgo(10): ${tenMicroAlgo.algo} ALGO = ${tenMicroAlgo.microAlgo} µALGO`);
 
-  const twentyMicroAlgos = microAlgos(20)
-  printInfo(`microAlgos(20): ${twentyMicroAlgos.algo} ALGO = ${twentyMicroAlgos.microAlgo} µALGO`)
+  const twentyMicroAlgos = microAlgos(20);
+  printInfo(`microAlgos(20): ${twentyMicroAlgos.algo} ALGO = ${twentyMicroAlgos.microAlgo} µALGO`);
 
   // Transaction fees helper
-  const threeTransactionFees = transactionFees(3)
-  printInfo(`\ntransactionFees(3): ${threeTransactionFees.microAlgo} µALGO (covers 3 standard transactions)`)
-  printInfo(`ALGORAND_MIN_TX_FEE: ${ALGORAND_MIN_TX_FEE.microAlgo} µALGO (minimum transaction fee)`)
+  const threeTransactionFees = transactionFees(3);
+  printInfo(
+    `\ntransactionFees(3): ${threeTransactionFees.microAlgo} µALGO (covers 3 standard transactions)`,
+  );
+  printInfo(
+    `ALGORAND_MIN_TX_FEE: ${ALGORAND_MIN_TX_FEE.microAlgo} µALGO (minimum transaction fee)`,
+  );
 
-  printSuccess('Demonstrated convenience helper functions')
+  printSuccess('Demonstrated convenience helper functions');
 
   // Step 3: Accessing values in ALGO and microALGO
-  printStep(3, 'Accessing values using .algo and .microAlgo properties')
-  printInfo('AlgoAmount provides getter properties to access the value:')
-  printInfo('  - .algo / .algos - Get value in ALGO (as number)')
-  printInfo('  - .microAlgo / .microAlgos - Get value in µALGO (as bigint)')
+  printStep(3, 'Accessing values using .algo and .microAlgo properties');
+  printInfo('AlgoAmount provides getter properties to access the value:');
+  printInfo('  - .algo / .algos - Get value in ALGO (as number)');
+  printInfo('  - .microAlgo / .microAlgos - Get value in µALGO (as bigint)');
 
-  const amount = AlgoAmount.Algo(2.5)
-  printInfo(`\nFor amount = AlgoAmount.Algo(2.5):`)
-  printInfo(`  .algo: ${amount.algo} (type: ${typeof amount.algo})`)
-  printInfo(`  .algos: ${amount.algos} (alias for .algo)`)
-  printInfo(`  .microAlgo: ${amount.microAlgo} (type: ${typeof amount.microAlgo})`)
-  printInfo(`  .microAlgos: ${amount.microAlgos} (alias for .microAlgo)`)
+  const amount = AlgoAmount.Algo(2.5);
+  printInfo(`\nFor amount = AlgoAmount.Algo(2.5):`);
+  printInfo(`  .algo: ${amount.algo} (type: ${typeof amount.algo})`);
+  printInfo(`  .algos: ${amount.algos} (alias for .algo)`);
+  printInfo(`  .microAlgo: ${amount.microAlgo} (type: ${typeof amount.microAlgo})`);
+  printInfo(`  .microAlgos: ${amount.microAlgos} (alias for .microAlgo)`);
 
-  printSuccess('Accessed values using all getter properties')
+  printSuccess('Accessed values using all getter properties');
 
   // Step 4: String formatting with toString()
-  printStep(4, 'String formatting with toString()')
-  printInfo('The toString() method formats the amount for human-readable display')
+  printStep(4, 'String formatting with toString()');
+  printInfo('The toString() method formats the amount for human-readable display');
 
-  const formattedAmount = AlgoAmount.Algo(1.234567)
-  printInfo(`\nAlgoAmount.Algo(1.234567).toString(): "${formattedAmount.toString()}"`)
+  const formattedAmount = AlgoAmount.Algo(1.234567);
+  printInfo(`\nAlgoAmount.Algo(1.234567).toString(): "${formattedAmount.toString()}"`);
 
-  const largeAmount = AlgoAmount.MicroAlgo(1_234_567_890)
-  printInfo(`AlgoAmount.MicroAlgo(1234567890).toString(): "${largeAmount.toString()}"`)
+  const largeAmount = AlgoAmount.MicroAlgo(1_234_567_890);
+  printInfo(`AlgoAmount.MicroAlgo(1234567890).toString(): "${largeAmount.toString()}"`);
 
   // Custom formatting using properties
-  printInfo('\nCustom formatting examples:')
-  printInfo(`  ${amount.algo.toFixed(2)} ALGO`)
-  printInfo(`  ${amount.microAlgo.toLocaleString('en-US')} µALGO`)
+  printInfo('\nCustom formatting examples:');
+  printInfo(`  ${amount.algo.toFixed(2)} ALGO`);
+  printInfo(`  ${amount.microAlgo.toLocaleString('en-US')} µALGO`);
 
-  printSuccess('Demonstrated string formatting')
+  printSuccess('Demonstrated string formatting');
 
   // Step 5: Arithmetic operations
-  printStep(5, 'Arithmetic operations (addition, subtraction)')
-  printInfo('AlgoAmount uses bigint internally for precision.')
-  printInfo('Arithmetic is done by accessing .microAlgo and creating new AlgoAmount:')
+  printStep(5, 'Arithmetic operations (addition, subtraction)');
+  printInfo('AlgoAmount uses bigint internally for precision.');
+  printInfo('Arithmetic is done by accessing .microAlgo and creating new AlgoAmount:');
 
-  const amountA = AlgoAmount.Algo(5)
-  const amountB = AlgoAmount.Algo(2.5)
-  printInfo(`\namountA = AlgoAmount.Algo(5): ${amountA.algo} ALGO`)
-  printInfo(`amountB = AlgoAmount.Algo(2.5): ${amountB.algo} ALGO`)
+  const amountA = AlgoAmount.Algo(5);
+  const amountB = AlgoAmount.Algo(2.5);
+  printInfo(`\namountA = AlgoAmount.Algo(5): ${amountA.algo} ALGO`);
+  printInfo(`amountB = AlgoAmount.Algo(2.5): ${amountB.algo} ALGO`);
 
   // Addition
-  const sum = AlgoAmount.MicroAlgo(amountA.microAlgo + amountB.microAlgo)
-  printInfo(`\nAddition: amountA + amountB`)
-  printInfo(`  AlgoAmount.MicroAlgo(${amountA.microAlgo} + ${amountB.microAlgo})`)
-  printInfo(`  = ${sum.algo} ALGO (${sum.microAlgo} µALGO)`)
+  const sum = AlgoAmount.MicroAlgo(amountA.microAlgo + amountB.microAlgo);
+  printInfo(`\nAddition: amountA + amountB`);
+  printInfo(`  AlgoAmount.MicroAlgo(${amountA.microAlgo} + ${amountB.microAlgo})`);
+  printInfo(`  = ${sum.algo} ALGO (${sum.microAlgo} µALGO)`);
 
   // Subtraction
-  const difference = AlgoAmount.MicroAlgo(amountA.microAlgo - amountB.microAlgo)
-  printInfo(`\nSubtraction: amountA - amountB`)
-  printInfo(`  AlgoAmount.MicroAlgo(${amountA.microAlgo} - ${amountB.microAlgo})`)
-  printInfo(`  = ${difference.algo} ALGO (${difference.microAlgo} µALGO)`)
+  const difference = AlgoAmount.MicroAlgo(amountA.microAlgo - amountB.microAlgo);
+  printInfo(`\nSubtraction: amountA - amountB`);
+  printInfo(`  AlgoAmount.MicroAlgo(${amountA.microAlgo} - ${amountB.microAlgo})`);
+  printInfo(`  = ${difference.algo} ALGO (${difference.microAlgo} µALGO)`);
 
   // Adding transaction fees
-  const amountWithFee = AlgoAmount.MicroAlgo(amountA.microAlgo + ALGORAND_MIN_TX_FEE.microAlgo)
-  printInfo(`\nAdding transaction fee:`)
-  printInfo(`  ${amountA.algo} ALGO + ${ALGORAND_MIN_TX_FEE.microAlgo} µALGO fee = ${amountWithFee.algo} ALGO`)
+  const amountWithFee = AlgoAmount.MicroAlgo(amountA.microAlgo + ALGORAND_MIN_TX_FEE.microAlgo);
+  printInfo(`\nAdding transaction fee:`);
+  printInfo(
+    `  ${amountA.algo} ALGO + ${ALGORAND_MIN_TX_FEE.microAlgo} µALGO fee = ${amountWithFee.algo} ALGO`,
+  );
 
-  printSuccess('Demonstrated arithmetic operations')
+  printSuccess('Demonstrated arithmetic operations');
 
   // Step 6: Comparison operations
-  printStep(6, 'Comparison operations')
-  printInfo('AlgoAmount implements valueOf() which enables comparison operators')
-  printInfo('valueOf() returns the microAlgo value as a number')
+  printStep(6, 'Comparison operations');
+  printInfo('AlgoAmount implements valueOf() which enables comparison operators');
+  printInfo('valueOf() returns the microAlgo value as a number');
 
-  const small = AlgoAmount.Algo(1)
-  const medium = AlgoAmount.Algo(5)
-  const large = AlgoAmount.Algo(10)
-  const equalToMedium = AlgoAmount.MicroAlgo(5_000_000)
+  const small = AlgoAmount.Algo(1);
+  const medium = AlgoAmount.Algo(5);
+  const large = AlgoAmount.Algo(10);
+  const equalToMedium = AlgoAmount.MicroAlgo(5_000_000);
 
-  printInfo(`\nsmall = 1 ALGO, medium = 5 ALGO, large = 10 ALGO, equalToMedium = 5_000_000 µALGO`)
+  printInfo(`\nsmall = 1 ALGO, medium = 5 ALGO, large = 10 ALGO, equalToMedium = 5_000_000 µALGO`);
 
-  printInfo(`\nComparison results:`)
-  printInfo(`  small < medium: ${small < medium}`)
-  printInfo(`  medium < large: ${medium < large}`)
-  printInfo(`  large > small: ${large > small}`)
-  printInfo(`  medium >= equalToMedium: ${medium >= equalToMedium}`)
-  printInfo(`  medium <= equalToMedium: ${medium <= equalToMedium}`)
+  printInfo(`\nComparison results:`);
+  printInfo(`  small < medium: ${small < medium}`);
+  printInfo(`  medium < large: ${medium < large}`);
+  printInfo(`  large > small: ${large > small}`);
+  printInfo(`  medium >= equalToMedium: ${medium >= equalToMedium}`);
+  printInfo(`  medium <= equalToMedium: ${medium <= equalToMedium}`);
 
   // Direct microAlgo comparison for exact equality (recommended)
-  printInfo(`\nFor exact equality, compare microAlgo values (bigint):`)
-  printInfo(`  medium.microAlgo === equalToMedium.microAlgo: ${medium.microAlgo === equalToMedium.microAlgo}`)
+  printInfo(`\nFor exact equality, compare microAlgo values (bigint):`);
+  printInfo(
+    `  medium.microAlgo === equalToMedium.microAlgo: ${medium.microAlgo === equalToMedium.microAlgo}`,
+  );
 
-  printSuccess('Demonstrated comparison operations')
+  printSuccess('Demonstrated comparison operations');
 
   // Step 7: Avoiding floating point precision issues
-  printStep(7, 'Avoiding floating point precision issues')
-  printInfo('JavaScript floating point arithmetic has precision issues.')
-  printInfo('AlgoAmount avoids this by using bigint internally.')
+  printStep(7, 'Avoiding floating point precision issues');
+  printInfo('JavaScript floating point arithmetic has precision issues.');
+  printInfo('AlgoAmount avoids this by using bigint internally.');
 
   // Classic floating point problem
-  const floatResult = 0.1 + 0.2
-  printInfo(`\nClassic floating point problem:`)
-  printInfo(`  0.1 + 0.2 = ${floatResult} (not 0.3!)`)
-  printInfo(`  0.1 + 0.2 === 0.3: ${floatResult === 0.3}`)
+  const floatResult = 0.1 + 0.2;
+  printInfo(`\nClassic floating point problem:`);
+  printInfo(`  0.1 + 0.2 = ${floatResult} (not 0.3!)`);
+  printInfo(`  0.1 + 0.2 === 0.3: ${floatResult === 0.3}`);
 
   // AlgoAmount handles this correctly
-  const algoA = AlgoAmount.Algo(0.1)
-  const algoB = AlgoAmount.Algo(0.2)
-  const algoSum = AlgoAmount.MicroAlgo(algoA.microAlgo + algoB.microAlgo)
+  const algoA = AlgoAmount.Algo(0.1);
+  const algoB = AlgoAmount.Algo(0.2);
+  const algoSum = AlgoAmount.MicroAlgo(algoA.microAlgo + algoB.microAlgo);
 
-  printInfo(`\nUsing AlgoAmount:`)
-  printInfo(`  AlgoAmount.Algo(0.1).microAlgo = ${algoA.microAlgo}`)
-  printInfo(`  AlgoAmount.Algo(0.2).microAlgo = ${algoB.microAlgo}`)
-  printInfo(`  Sum in microAlgo: ${algoA.microAlgo} + ${algoB.microAlgo} = ${algoSum.microAlgo}`)
-  printInfo(`  Sum in Algo: ${algoSum.algo}`)
-  printInfo(`  ${algoSum.microAlgo} === ${AlgoAmount.Algo(0.3).microAlgo}: ${algoSum.microAlgo === AlgoAmount.Algo(0.3).microAlgo}`)
+  printInfo(`\nUsing AlgoAmount:`);
+  printInfo(`  AlgoAmount.Algo(0.1).microAlgo = ${algoA.microAlgo}`);
+  printInfo(`  AlgoAmount.Algo(0.2).microAlgo = ${algoB.microAlgo}`);
+  printInfo(`  Sum in microAlgo: ${algoA.microAlgo} + ${algoB.microAlgo} = ${algoSum.microAlgo}`);
+  printInfo(`  Sum in Algo: ${algoSum.algo}`);
+  printInfo(
+    `  ${algoSum.microAlgo} === ${AlgoAmount.Algo(0.3).microAlgo}: ${algoSum.microAlgo === AlgoAmount.Algo(0.3).microAlgo}`,
+  );
 
   // Another precision example
-  printInfo(`\nAnother example with 1.23456789 ALGO:`)
-  const preciseAmount = AlgoAmount.Algo(1.23456789)
-  printInfo(`  AlgoAmount.Algo(1.23456789).microAlgo = ${preciseAmount.microAlgo}`)
-  printInfo(`  Stored as: 1,234,568 µALGO (rounded to 6 decimal places)`)
+  printInfo(`\nAnother example with 1.23456789 ALGO:`);
+  const preciseAmount = AlgoAmount.Algo(1.23456789);
+  printInfo(`  AlgoAmount.Algo(1.23456789).microAlgo = ${preciseAmount.microAlgo}`);
+  printInfo(`  Stored as: 1,234,568 µALGO (rounded to 6 decimal places)`);
 
-  printSuccess('Demonstrated floating point precision handling')
+  printSuccess('Demonstrated floating point precision handling');
 
   // Step 8: Using AlgoAmount with payment transactions
-  printStep(8, 'Using AlgoAmount with payment transactions')
-  printInfo('AlgoAmount integrates seamlessly with AlgorandClient payment methods')
-  printInfo('This step requires LocalNet to be running')
+  printStep(8, 'Using AlgoAmount with payment transactions');
+  printInfo('AlgoAmount integrates seamlessly with AlgorandClient payment methods');
+  printInfo('This step requires LocalNet to be running');
 
   try {
-    const algorand = AlgorandClient.defaultLocalNet()
+    const algorand = AlgorandClient.defaultLocalNet();
 
     // Verify connection
-    await algorand.client.algod.status()
+    await algorand.client.algod.status();
 
     // Get accounts
-    const dispenser = await algorand.account.dispenserFromEnvironment()
-    const receiver = algorand.account.random()
+    const dispenser = await algorand.account.dispenserFromEnvironment();
+    const receiver = algorand.account.random();
 
-    printInfo(`\nSender (dispenser): ${shortenAddress(dispenser.addr.toString())}`)
-    printInfo(`Receiver (random): ${shortenAddress(receiver.addr.toString())}`)
+    printInfo(`\nSender (dispenser): ${shortenAddress(dispenser.addr.toString())}`);
+    printInfo(`Receiver (random): ${shortenAddress(receiver.addr.toString())}`);
 
     // Get initial balance
-    const initialBalance = (await algorand.account.getInformation(dispenser.addr)).balance
-    printInfo(`\nInitial sender balance: ${initialBalance.algo} ALGO`)
+    const initialBalance = (await algorand.account.getInformation(dispenser.addr)).balance;
+    printInfo(`\nInitial sender balance: ${initialBalance.algo} ALGO`);
 
     // Send payment using AlgoAmount
-    const paymentAmount = AlgoAmount.Algo(1.5)
-    printInfo(`\nSending ${paymentAmount.algo} ALGO (${paymentAmount.microAlgo} µALGO)...`)
+    const paymentAmount = AlgoAmount.Algo(1.5);
+    printInfo(`\nSending ${paymentAmount.algo} ALGO (${paymentAmount.microAlgo} µALGO)...`);
 
     const result = await algorand.send.payment({
       sender: dispenser.addr,
       receiver: receiver.addr,
       amount: paymentAmount,
-    })
+    });
 
-    printInfo(`Transaction ID: ${result.txIds[0]}`)
-    printInfo(`Confirmed in round: ${result.confirmation.confirmedRound}`)
+    printInfo(`Transaction ID: ${result.txIds[0]}`);
+    printInfo(`Confirmed in round: ${result.confirmation.confirmedRound}`);
 
     // Check balances after
-    const senderBalance = (await algorand.account.getInformation(dispenser.addr)).balance
-    const receiverBalance = (await algorand.account.getInformation(receiver.addr)).balance
+    const senderBalance = (await algorand.account.getInformation(dispenser.addr)).balance;
+    const receiverBalance = (await algorand.account.getInformation(receiver.addr)).balance;
 
-    printInfo(`\nFinal balances:`)
-    printInfo(`  Sender: ${senderBalance.algo} ALGO`)
-    printInfo(`  Receiver: ${receiverBalance.algo} ALGO (${receiverBalance.microAlgo} µALGO)`)
+    printInfo(`\nFinal balances:`);
+    printInfo(`  Sender: ${senderBalance.algo} ALGO`);
+    printInfo(`  Receiver: ${receiverBalance.algo} ALGO (${receiverBalance.microAlgo} µALGO)`);
 
     // Verify the receiver got exactly the right amount
-    printInfo(`\nVerification:`)
-    printInfo(`  Expected receiver balance: ${paymentAmount.microAlgo} µALGO`)
-    printInfo(`  Actual receiver balance: ${receiverBalance.microAlgo} µALGO`)
-    printInfo(`  Match: ${receiverBalance.microAlgo === paymentAmount.microAlgo}`)
+    printInfo(`\nVerification:`);
+    printInfo(`  Expected receiver balance: ${paymentAmount.microAlgo} µALGO`);
+    printInfo(`  Actual receiver balance: ${receiverBalance.microAlgo} µALGO`);
+    printInfo(`  Match: ${receiverBalance.microAlgo === paymentAmount.microAlgo}`);
 
-    printSuccess('Payment transaction completed successfully!')
+    printSuccess('Payment transaction completed successfully!');
   } catch (error) {
-    printError(`Failed to run payment example: ${error instanceof Error ? error.message : String(error)}`)
-    printInfo('Make sure LocalNet is running (e.g., algokit localnet start)')
-    printInfo('This step demonstrates AlgoAmount integration with transactions')
+    printError(
+      `Failed to run payment example: ${error instanceof Error ? error.message : String(error)}`,
+    );
+    printInfo('Make sure LocalNet is running (e.g., algokit localnet start)');
+    printInfo('This step demonstrates AlgoAmount integration with transactions');
   }
 
   // Step 9: Summary
-  printStep(9, 'Summary')
-  printInfo('AlgoAmount is a wrapper class for safe ALGO/µALGO handling:')
-  printInfo('')
-  printInfo('Factory methods:')
-  printInfo('  - AlgoAmount.Algo(n) / AlgoAmount.Algos(n) - From ALGO')
-  printInfo('  - AlgoAmount.MicroAlgo(n) / AlgoAmount.MicroAlgos(n) - From µALGO')
-  printInfo('  - algo(n), algos(n), microAlgo(n), microAlgos(n) - Helper functions')
-  printInfo('')
-  printInfo('Properties:')
-  printInfo('  - .algo / .algos - Get value in ALGO (number)')
-  printInfo('  - .microAlgo / .microAlgos - Get value in µALGO (bigint)')
-  printInfo('')
-  printInfo('Operations:')
-  printInfo('  - Arithmetic: Use .microAlgo + wrap result in AlgoAmount.MicroAlgo()')
-  printInfo('  - Comparison: <, >, <=, >= work directly; use .microAlgo for ===')
-  printInfo('  - Formatting: .toString() or access properties for custom format')
-  printInfo('')
-  printInfo('Best practices:')
-  printInfo('  - Always use AlgoAmount for financial calculations')
-  printInfo('  - Perform arithmetic on .microAlgo (bigint) to avoid precision loss')
-  printInfo('  - Use helper functions (algo, microAlgo) for cleaner code')
-  printInfo('  - Use transactionFees(n) when calculating fees for multiple transactions')
+  printStep(9, 'Summary');
+  printInfo('AlgoAmount is a wrapper class for safe ALGO/µALGO handling:');
+  printInfo('');
+  printInfo('Factory methods:');
+  printInfo('  - AlgoAmount.Algo(n) / AlgoAmount.Algos(n) - From ALGO');
+  printInfo('  - AlgoAmount.MicroAlgo(n) / AlgoAmount.MicroAlgos(n) - From µALGO');
+  printInfo('  - algo(n), algos(n), microAlgo(n), microAlgos(n) - Helper functions');
+  printInfo('');
+  printInfo('Properties:');
+  printInfo('  - .algo / .algos - Get value in ALGO (number)');
+  printInfo('  - .microAlgo / .microAlgos - Get value in µALGO (bigint)');
+  printInfo('');
+  printInfo('Operations:');
+  printInfo('  - Arithmetic: Use .microAlgo + wrap result in AlgoAmount.MicroAlgo()');
+  printInfo('  - Comparison: <, >, <=, >= work directly; use .microAlgo for ===');
+  printInfo('  - Formatting: .toString() or access properties for custom format');
+  printInfo('');
+  printInfo('Best practices:');
+  printInfo('  - Always use AlgoAmount for financial calculations');
+  printInfo('  - Perform arithmetic on .microAlgo (bigint) to avoid precision loss');
+  printInfo('  - Use helper functions (algo, microAlgo) for cleaner code');
+  printInfo('  - Use transactionFees(n) when calculating fees for multiple transactions');
 
-  printSuccess('AlgoAmount Utility example completed!')
+  printSuccess('AlgoAmount Utility example completed!');
 }
 
-main().catch((error) => {
-  printError(`Unhandled error: ${error instanceof Error ? error.message : String(error)}`)
-  process.exit(1)
-})
-
+main().catch(error => {
+  printError(`Unhandled error: ${error instanceof Error ? error.message : String(error)}`);
+  process.exit(1);
+});
 ```
 
 ---

@@ -2,18 +2,19 @@
 editUrl: false
 next: false
 prev: false
-title: "SubscribedTransaction"
+title: 'SubscribedTransaction'
 ---
 
 Defined in: [src/types/subscription.ts:163](https://github.com/algorandfoundation/algokit-subscriber-ts/blob/main/src/types/subscription.ts#L163)
 
 The common model used to expose a transaction that is returned from a subscription.
 
-Substantively, based on the Indexer  [`TransactionResult` model](https://dev.algorand.co/reference/rest-apis/indexer#transaction) format with some modifications to:
-* Add the `parentTransactionId` field so inner transactions have a reference to their parent
-* Override the type of `inner-txns` to be `SubscribedTransaction[]` so inner transactions (recursively) get these extra fields too
-* Add emitted ARC-28 events via `arc28Events`
-* Balance changes in algo or assets
+Substantively, based on the Indexer [`TransactionResult` model](https://dev.algorand.co/reference/rest-apis/indexer#transaction) format with some modifications to:
+
+- Add the `parentTransactionId` field so inner transactions have a reference to their parent
+- Override the type of `inner-txns` to be `SubscribedTransaction[]` so inner transactions (recursively) get these extra fields too
+- Add emitted ARC-28 events via `arc28Events`
+- Balance changes in algo or assets
 
 ## Extends
 
@@ -25,13 +26,13 @@ Substantively, based on the Indexer  [`TransactionResult` model](https://dev.alg
 
 > `optional` **applicationTransaction**: `TransactionApplication`
 
-Defined in: node\_modules/@algorandfoundation/algokit-utils/packages/indexer\_client/src/models/transaction.d.ts:24
+Defined in: node_modules/@algorandfoundation/algokit-utils/packages/indexer_client/src/models/transaction.d.ts:24
 
 #### Inherited from
 
 `IndexerTransaction.applicationTransaction`
 
-***
+---
 
 ### arc28Events?
 
@@ -41,49 +42,49 @@ Defined in: [src/types/subscription.ts:173](https://github.com/algorandfoundatio
 
 Any ARC-28 events emitted from an app call.
 
-***
+---
 
 ### assetConfigTransaction?
 
 > `optional` **assetConfigTransaction**: `TransactionAssetConfig`
 
-Defined in: node\_modules/@algorandfoundation/algokit-utils/packages/indexer\_client/src/models/transaction.d.ts:25
+Defined in: node_modules/@algorandfoundation/algokit-utils/packages/indexer_client/src/models/transaction.d.ts:25
 
 #### Inherited from
 
 `IndexerTransaction.assetConfigTransaction`
 
-***
+---
 
 ### assetFreezeTransaction?
 
 > `optional` **assetFreezeTransaction**: `TransactionAssetFreeze`
 
-Defined in: node\_modules/@algorandfoundation/algokit-utils/packages/indexer\_client/src/models/transaction.d.ts:26
+Defined in: node_modules/@algorandfoundation/algokit-utils/packages/indexer_client/src/models/transaction.d.ts:26
 
 #### Inherited from
 
 `IndexerTransaction.assetFreezeTransaction`
 
-***
+---
 
 ### assetTransferTransaction?
 
 > `optional` **assetTransferTransaction**: `TransactionAssetTransfer`
 
-Defined in: node\_modules/@algorandfoundation/algokit-utils/packages/indexer\_client/src/models/transaction.d.ts:27
+Defined in: node_modules/@algorandfoundation/algokit-utils/packages/indexer_client/src/models/transaction.d.ts:27
 
 #### Inherited from
 
 `IndexerTransaction.assetTransferTransaction`
 
-***
+---
 
 ### authAddr?
 
 > `optional` **authAddr**: `Address`
 
-Defined in: node\_modules/@algorandfoundation/algokit-utils/packages/indexer\_client/src/models/transaction.d.ts:33
+Defined in: node_modules/@algorandfoundation/algokit-utils/packages/indexer_client/src/models/transaction.d.ts:33
 
 \[sgnr\] this is included with signed transactions when the signing address does not equal the sender. The backend can use this to ensure that auth addr is equal to the accounts auth addr.
 
@@ -91,7 +92,7 @@ Defined in: node\_modules/@algorandfoundation/algokit-utils/packages/indexer\_cl
 
 `IndexerTransaction.authAddr`
 
-***
+---
 
 ### balanceChanges?
 
@@ -101,13 +102,13 @@ Defined in: [src/types/subscription.ts:177](https://github.com/algorandfoundatio
 
 The balance changes in the transaction.
 
-***
+---
 
 ### closeRewards?
 
 > `optional` **closeRewards**: `bigint`
 
-Defined in: node\_modules/@algorandfoundation/algokit-utils/packages/indexer\_client/src/models/transaction.d.ts:37
+Defined in: node_modules/@algorandfoundation/algokit-utils/packages/indexer_client/src/models/transaction.d.ts:37
 
 \[rc\] rewards applied to close-remainder-to account.
 
@@ -115,13 +116,13 @@ Defined in: node\_modules/@algorandfoundation/algokit-utils/packages/indexer\_cl
 
 `IndexerTransaction.closeRewards`
 
-***
+---
 
 ### closingAmount?
 
 > `optional` **closingAmount**: `bigint`
 
-Defined in: node\_modules/@algorandfoundation/algokit-utils/packages/indexer\_client/src/models/transaction.d.ts:41
+Defined in: node_modules/@algorandfoundation/algokit-utils/packages/indexer_client/src/models/transaction.d.ts:41
 
 \[ca\] closing amount for transaction.
 
@@ -129,13 +130,13 @@ Defined in: node\_modules/@algorandfoundation/algokit-utils/packages/indexer\_cl
 
 `IndexerTransaction.closingAmount`
 
-***
+---
 
 ### confirmedRound?
 
 > `optional` **confirmedRound**: `bigint`
 
-Defined in: node\_modules/@algorandfoundation/algokit-utils/packages/indexer\_client/src/models/transaction.d.ts:45
+Defined in: node_modules/@algorandfoundation/algokit-utils/packages/indexer_client/src/models/transaction.d.ts:45
 
 Round when the transaction was confirmed.
 
@@ -143,13 +144,13 @@ Round when the transaction was confirmed.
 
 `IndexerTransaction.confirmedRound`
 
-***
+---
 
 ### createdAppId?
 
 > `optional` **createdAppId**: `bigint`
 
-Defined in: node\_modules/@algorandfoundation/algokit-utils/packages/indexer\_client/src/models/transaction.d.ts:49
+Defined in: node_modules/@algorandfoundation/algokit-utils/packages/indexer_client/src/models/transaction.d.ts:49
 
 Specifies an application index (ID) if an application was created with this transaction.
 
@@ -157,13 +158,13 @@ Specifies an application index (ID) if an application was created with this tran
 
 `IndexerTransaction.createdAppId`
 
-***
+---
 
 ### createdAssetId?
 
 > `optional` **createdAssetId**: `bigint`
 
-Defined in: node\_modules/@algorandfoundation/algokit-utils/packages/indexer\_client/src/models/transaction.d.ts:53
+Defined in: node_modules/@algorandfoundation/algokit-utils/packages/indexer_client/src/models/transaction.d.ts:53
 
 Specifies an asset index (ID) if an asset was created with this transaction.
 
@@ -171,13 +172,13 @@ Specifies an asset index (ID) if an asset was created with this transaction.
 
 `IndexerTransaction.createdAssetId`
 
-***
+---
 
 ### fee
 
 > **fee**: `bigint`
 
-Defined in: node\_modules/@algorandfoundation/algokit-utils/packages/indexer\_client/src/models/transaction.d.ts:57
+Defined in: node_modules/@algorandfoundation/algokit-utils/packages/indexer_client/src/models/transaction.d.ts:57
 
 \[fee\] Transaction fee.
 
@@ -185,7 +186,7 @@ Defined in: node\_modules/@algorandfoundation/algokit-utils/packages/indexer\_cl
 
 `IndexerTransaction.fee`
 
-***
+---
 
 ### filtersMatched?
 
@@ -195,13 +196,13 @@ Defined in: [src/types/subscription.ts:175](https://github.com/algorandfoundatio
 
 The names of any filters that matched the given transaction to result in it being 'subscribed'.
 
-***
+---
 
 ### firstValid
 
 > **firstValid**: `bigint`
 
-Defined in: node\_modules/@algorandfoundation/algokit-utils/packages/indexer\_client/src/models/transaction.d.ts:61
+Defined in: node_modules/@algorandfoundation/algokit-utils/packages/indexer_client/src/models/transaction.d.ts:61
 
 \[fv\] First valid round for this transaction.
 
@@ -209,13 +210,13 @@ Defined in: node\_modules/@algorandfoundation/algokit-utils/packages/indexer\_cl
 
 `IndexerTransaction.firstValid`
 
-***
+---
 
 ### genesisHash?
 
 > `optional` **genesisHash**: `Uint8Array`\<`ArrayBufferLike`\>
 
-Defined in: node\_modules/@algorandfoundation/algokit-utils/packages/indexer\_client/src/models/transaction.d.ts:65
+Defined in: node_modules/@algorandfoundation/algokit-utils/packages/indexer_client/src/models/transaction.d.ts:65
 
 \[gh\] Hash of genesis block.
 
@@ -223,13 +224,13 @@ Defined in: node\_modules/@algorandfoundation/algokit-utils/packages/indexer\_cl
 
 `IndexerTransaction.genesisHash`
 
-***
+---
 
 ### genesisId?
 
 > `optional` **genesisId**: `string`
 
-Defined in: node\_modules/@algorandfoundation/algokit-utils/packages/indexer\_client/src/models/transaction.d.ts:69
+Defined in: node_modules/@algorandfoundation/algokit-utils/packages/indexer_client/src/models/transaction.d.ts:69
 
 \[gen\] genesis block ID.
 
@@ -237,25 +238,25 @@ Defined in: node\_modules/@algorandfoundation/algokit-utils/packages/indexer\_cl
 
 `IndexerTransaction.genesisId`
 
-***
+---
 
 ### globalStateDelta?
 
 > `optional` **globalStateDelta**: `StateDelta`
 
-Defined in: node\_modules/@algorandfoundation/algokit-utils/packages/indexer\_client/src/models/transaction.d.ts:135
+Defined in: node_modules/@algorandfoundation/algokit-utils/packages/indexer_client/src/models/transaction.d.ts:135
 
 #### Inherited from
 
 `IndexerTransaction.globalStateDelta`
 
-***
+---
 
 ### group?
 
 > `optional` **group**: `Uint8Array`\<`ArrayBufferLike`\>
 
-Defined in: node\_modules/@algorandfoundation/algokit-utils/packages/indexer\_client/src/models/transaction.d.ts:73
+Defined in: node_modules/@algorandfoundation/algokit-utils/packages/indexer_client/src/models/transaction.d.ts:73
 
 \[grp\] Base64 encoded byte array of a sha512/256 digest. When present indicates that this transaction is part of a transaction group and the value is the sha512/256 hash of the transactions in that group.
 
@@ -263,19 +264,19 @@ Defined in: node\_modules/@algorandfoundation/algokit-utils/packages/indexer\_cl
 
 `IndexerTransaction.group`
 
-***
+---
 
 ### heartbeatTransaction?
 
 > `optional` **heartbeatTransaction**: `TransactionHeartbeat`
 
-Defined in: node\_modules/@algorandfoundation/algokit-utils/packages/indexer\_client/src/models/transaction.d.ts:29
+Defined in: node_modules/@algorandfoundation/algokit-utils/packages/indexer_client/src/models/transaction.d.ts:29
 
 #### Inherited from
 
 `IndexerTransaction.heartbeatTransaction`
 
-***
+---
 
 ### id
 
@@ -289,7 +290,7 @@ Transaction ID
 
 `IndexerTransaction.id`
 
-***
+---
 
 ### innerTxns?
 
@@ -303,13 +304,13 @@ Inner transactions produced by application execution.
 
 `IndexerTransaction.innerTxns`
 
-***
+---
 
 ### intraRoundOffset?
 
 > `optional` **intraRoundOffset**: `number`
 
-Defined in: node\_modules/@algorandfoundation/algokit-utils/packages/indexer\_client/src/models/transaction.d.ts:81
+Defined in: node_modules/@algorandfoundation/algokit-utils/packages/indexer_client/src/models/transaction.d.ts:81
 
 Offset into the round where this transaction was confirmed.
 
@@ -317,25 +318,25 @@ Offset into the round where this transaction was confirmed.
 
 `IndexerTransaction.intraRoundOffset`
 
-***
+---
 
 ### keyregTransaction?
 
 > `optional` **keyregTransaction**: `TransactionKeyreg`
 
-Defined in: node\_modules/@algorandfoundation/algokit-utils/packages/indexer\_client/src/models/transaction.d.ts:82
+Defined in: node_modules/@algorandfoundation/algokit-utils/packages/indexer_client/src/models/transaction.d.ts:82
 
 #### Inherited from
 
 `IndexerTransaction.keyregTransaction`
 
-***
+---
 
 ### lastValid
 
 > **lastValid**: `bigint`
 
-Defined in: node\_modules/@algorandfoundation/algokit-utils/packages/indexer\_client/src/models/transaction.d.ts:86
+Defined in: node_modules/@algorandfoundation/algokit-utils/packages/indexer_client/src/models/transaction.d.ts:86
 
 \[lv\] Last valid round for this transaction.
 
@@ -343,27 +344,27 @@ Defined in: node\_modules/@algorandfoundation/algokit-utils/packages/indexer\_cl
 
 `IndexerTransaction.lastValid`
 
-***
+---
 
 ### lease?
 
 > `optional` **lease**: `Uint8Array`\<`ArrayBufferLike`\>
 
-Defined in: node\_modules/@algorandfoundation/algokit-utils/packages/indexer\_client/src/models/transaction.d.ts:90
+Defined in: node_modules/@algorandfoundation/algokit-utils/packages/indexer_client/src/models/transaction.d.ts:90
 
-\[lx\] Base64 encoded 32-byte array. Lease enforces mutual exclusion of transactions.  If this field is nonzero, then once the transaction is confirmed, it acquires the lease identified by the (Sender, Lease) pair of the transaction until the LastValid round passes.  While this transaction possesses the lease, no other transaction specifying this lease can be confirmed.
+\[lx\] Base64 encoded 32-byte array. Lease enforces mutual exclusion of transactions. If this field is nonzero, then once the transaction is confirmed, it acquires the lease identified by the (Sender, Lease) pair of the transaction until the LastValid round passes. While this transaction possesses the lease, no other transaction specifying this lease can be confirmed.
 
 #### Inherited from
 
 `IndexerTransaction.lease`
 
-***
+---
 
 ### localStateDelta?
 
 > `optional` **localStateDelta**: `AccountStateDelta`[]
 
-Defined in: node\_modules/@algorandfoundation/algokit-utils/packages/indexer\_client/src/models/transaction.d.ts:134
+Defined in: node_modules/@algorandfoundation/algokit-utils/packages/indexer_client/src/models/transaction.d.ts:134
 
 \[ld\] Local state key/value changes for the application being executed by this transaction.
 
@@ -371,13 +372,13 @@ Defined in: node\_modules/@algorandfoundation/algokit-utils/packages/indexer\_cl
 
 `IndexerTransaction.localStateDelta`
 
-***
+---
 
 ### logs?
 
 > `optional` **logs**: `Uint8Array`\<`ArrayBufferLike`\>[]
 
-Defined in: node\_modules/@algorandfoundation/algokit-utils/packages/indexer\_client/src/models/transaction.d.ts:139
+Defined in: node_modules/@algorandfoundation/algokit-utils/packages/indexer_client/src/models/transaction.d.ts:139
 
 \[lg\] Logs for the application being executed by this transaction.
 
@@ -385,13 +386,13 @@ Defined in: node\_modules/@algorandfoundation/algokit-utils/packages/indexer\_cl
 
 `IndexerTransaction.logs`
 
-***
+---
 
 ### note?
 
 > `optional` **note**: `Uint8Array`\<`ArrayBufferLike`\>
 
-Defined in: node\_modules/@algorandfoundation/algokit-utils/packages/indexer\_client/src/models/transaction.d.ts:94
+Defined in: node_modules/@algorandfoundation/algokit-utils/packages/indexer_client/src/models/transaction.d.ts:94
 
 \[note\] Free form data.
 
@@ -399,7 +400,7 @@ Defined in: node\_modules/@algorandfoundation/algokit-utils/packages/indexer\_cl
 
 `IndexerTransaction.note`
 
-***
+---
 
 ### parentIntraRoundOffset?
 
@@ -409,7 +410,7 @@ Defined in: [src/types/subscription.ts:167](https://github.com/algorandfoundatio
 
 The intra-round offset of the parent of this transaction (if it's an inner transaction).
 
-***
+---
 
 ### parentTransactionId?
 
@@ -419,25 +420,25 @@ Defined in: [src/types/subscription.ts:169](https://github.com/algorandfoundatio
 
 The transaction ID of the parent of this transaction (if it's an inner transaction).
 
-***
+---
 
 ### paymentTransaction?
 
 > `optional` **paymentTransaction**: `TransactionPayment`
 
-Defined in: node\_modules/@algorandfoundation/algokit-utils/packages/indexer\_client/src/models/transaction.d.ts:95
+Defined in: node_modules/@algorandfoundation/algokit-utils/packages/indexer_client/src/models/transaction.d.ts:95
 
 #### Inherited from
 
 `IndexerTransaction.paymentTransaction`
 
-***
+---
 
 ### receiverRewards?
 
 > `optional` **receiverRewards**: `bigint`
 
-Defined in: node\_modules/@algorandfoundation/algokit-utils/packages/indexer\_client/src/models/transaction.d.ts:99
+Defined in: node_modules/@algorandfoundation/algokit-utils/packages/indexer_client/src/models/transaction.d.ts:99
 
 \[rr\] rewards applied to receiver account.
 
@@ -445,13 +446,13 @@ Defined in: node\_modules/@algorandfoundation/algokit-utils/packages/indexer\_cl
 
 `IndexerTransaction.receiverRewards`
 
-***
+---
 
 ### rekeyTo?
 
 > `optional` **rekeyTo**: `Address`
 
-Defined in: node\_modules/@algorandfoundation/algokit-utils/packages/indexer\_client/src/models/transaction.d.ts:103
+Defined in: node_modules/@algorandfoundation/algokit-utils/packages/indexer_client/src/models/transaction.d.ts:103
 
 \[rekey\] when included in a valid transaction, the accounts auth addr will be updated with this value and future signatures must be signed with the key represented by this address.
 
@@ -459,13 +460,13 @@ Defined in: node\_modules/@algorandfoundation/algokit-utils/packages/indexer\_cl
 
 `IndexerTransaction.rekeyTo`
 
-***
+---
 
 ### roundTime?
 
 > `optional` **roundTime**: `number`
 
-Defined in: node\_modules/@algorandfoundation/algokit-utils/packages/indexer\_client/src/models/transaction.d.ts:107
+Defined in: node_modules/@algorandfoundation/algokit-utils/packages/indexer_client/src/models/transaction.d.ts:107
 
 Time when the block this transaction is in was confirmed.
 
@@ -473,13 +474,13 @@ Time when the block this transaction is in was confirmed.
 
 `IndexerTransaction.roundTime`
 
-***
+---
 
 ### sender
 
 > **sender**: `string`
 
-Defined in: node\_modules/@algorandfoundation/algokit-utils/packages/indexer\_client/src/models/transaction.d.ts:111
+Defined in: node_modules/@algorandfoundation/algokit-utils/packages/indexer_client/src/models/transaction.d.ts:111
 
 \[snd\] Sender's address.
 
@@ -487,13 +488,13 @@ Defined in: node\_modules/@algorandfoundation/algokit-utils/packages/indexer\_cl
 
 `IndexerTransaction.sender`
 
-***
+---
 
 ### senderRewards?
 
 > `optional` **senderRewards**: `bigint`
 
-Defined in: node\_modules/@algorandfoundation/algokit-utils/packages/indexer\_client/src/models/transaction.d.ts:115
+Defined in: node_modules/@algorandfoundation/algokit-utils/packages/indexer_client/src/models/transaction.d.ts:115
 
 \[rs\] rewards applied to sender account.
 
@@ -501,49 +502,50 @@ Defined in: node\_modules/@algorandfoundation/algokit-utils/packages/indexer\_cl
 
 `IndexerTransaction.senderRewards`
 
-***
+---
 
 ### signature?
 
 > `optional` **signature**: `TransactionSignature`
 
-Defined in: node\_modules/@algorandfoundation/algokit-utils/packages/indexer\_client/src/models/transaction.d.ts:116
+Defined in: node_modules/@algorandfoundation/algokit-utils/packages/indexer_client/src/models/transaction.d.ts:116
 
 #### Inherited from
 
 `IndexerTransaction.signature`
 
-***
+---
 
 ### stateProofTransaction?
 
 > `optional` **stateProofTransaction**: `TransactionStateProof`
 
-Defined in: node\_modules/@algorandfoundation/algokit-utils/packages/indexer\_client/src/models/transaction.d.ts:28
+Defined in: node_modules/@algorandfoundation/algokit-utils/packages/indexer_client/src/models/transaction.d.ts:28
 
 #### Inherited from
 
 `IndexerTransaction.stateProofTransaction`
 
-***
+---
 
 ### txType
 
 > **txType**: `"pay"` \| `"keyreg"` \| `"acfg"` \| `"axfer"` \| `"afrz"` \| `"appl"` \| `"stpf"` \| `"hb"`
 
-Defined in: node\_modules/@algorandfoundation/algokit-utils/packages/indexer\_client/src/models/transaction.d.ts:130
+Defined in: node_modules/@algorandfoundation/algokit-utils/packages/indexer_client/src/models/transaction.d.ts:130
 
 \[type\] Indicates what type of transaction this is. Different types have different fields.
 
 Valid types, and where their fields are stored:
-* \[pay\] payment-transaction
-* \[keyreg\] keyreg-transaction
-* \[acfg\] asset-config-transaction
-* \[axfer\] asset-transfer-transaction
-* \[afrz\] asset-freeze-transaction
-* \[appl\] application-transaction
-* \[stpf\] state-proof-transaction
-* \[hb\] heartbeat-transaction
+
+- \[pay\] payment-transaction
+- \[keyreg\] keyreg-transaction
+- \[acfg\] asset-config-transaction
+- \[axfer\] asset-transfer-transaction
+- \[afrz\] asset-freeze-transaction
+- \[appl\] application-transaction
+- \[stpf\] state-proof-transaction
+- \[hb\] heartbeat-transaction
 
 #### Inherited from
 

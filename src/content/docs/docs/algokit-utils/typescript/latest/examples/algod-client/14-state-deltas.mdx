@@ -1,6 +1,6 @@
 ---
-title: "Ledger State Deltas"
-description: "This example demonstrates how to retrieve ledger state deltas using:"
+title: 'Ledger State Deltas'
+description: 'This example demonstrates how to retrieve ledger state deltas using:'
 sidebar:
   order: 14
 ---
@@ -10,11 +10,12 @@ sidebar:
 ## Description
 
 This example demonstrates how to retrieve ledger state deltas using:
+
 - ledgerStateDelta(round) - Get state changes for a specific round
 - ledgerStateDeltaForTransactionGroup(txId) - Get deltas for a specific transaction group
 - transactionGroupLedgerStateDeltasForRound(round) - Get all transaction group deltas in a round
- State deltas show what changed in the ledger (accounts, balances, apps, assets) between rounds.
- Note: These endpoints may require node configuration to enable (EnableDeveloperAPI=true).
+  State deltas show what changed in the ledger (accounts, balances, apps, assets) between rounds.
+  Note: These endpoints may require node configuration to enable (EnableDeveloperAPI=true).
 
 ## Prerequisites
 
@@ -50,11 +51,11 @@ npm run example algod_client/14-state-deltas.ts
  * - LocalNet running (via `algokit localnet start`)
  */
 
-import { algo } from '@algorandfoundation/algokit-utils'
+import { algo } from '@algorandfoundation/algokit-utils';
 import type {
   LedgerStateDelta,
   TransactionGroupLedgerStateDeltasForRoundResponse,
-} from '@algorandfoundation/algokit-utils/algod-client'
+} from '@algorandfoundation/algokit-utils/algod-client';
 import {
   createAlgodClient,
   createAlgorandClient,
@@ -65,347 +66,386 @@ import {
   printStep,
   printSuccess,
   shortenAddress,
-} from '../shared/utils.js'
+} from '../shared/utils.js';
 
 async function main() {
-  printHeader('Ledger State Deltas Example')
+  printHeader('Ledger State Deltas Example');
 
   // Create clients
-  const algod = createAlgodClient()
-  const algorand = createAlgorandClient()
+  const algod = createAlgodClient();
+  const algorand = createAlgorandClient();
 
   // =========================================================================
   // Step 1: Set up accounts and submit a transaction to create state changes
   // =========================================================================
-  printStep(1, 'Setting up accounts and submitting a payment transaction')
+  printStep(1, 'Setting up accounts and submitting a payment transaction');
 
   // Get a funded account from LocalNet (the dispenser)
-  const sender = await algorand.account.dispenserFromEnvironment()
-  printInfo(`Sender address: ${shortenAddress(sender.addr.toString())}`)
+  const sender = await algorand.account.dispenserFromEnvironment();
+  printInfo(`Sender address: ${shortenAddress(sender.addr.toString())}`);
 
   // Get sender initial balance
-  const senderInfoBefore = await algod.accountInformation(sender.addr.toString())
-  printInfo(`Sender initial balance: ${formatMicroAlgo(senderInfoBefore.amount)}`)
+  const senderInfoBefore = await algod.accountInformation(sender.addr.toString());
+  printInfo(`Sender initial balance: ${formatMicroAlgo(senderInfoBefore.amount)}`);
 
   // Create a new random account as receiver
-  const receiver = algorand.account.random()
-  printInfo(`Receiver address: ${shortenAddress(receiver.addr.toString())}`)
+  const receiver = algorand.account.random();
+  printInfo(`Receiver address: ${shortenAddress(receiver.addr.toString())}`);
 
   // Submit a payment transaction - this will create state changes (balance changes)
-  const paymentAmount = algo(5)
-  printInfo(`Sending ${paymentAmount.algo} ALGO to receiver...`)
+  const paymentAmount = algo(5);
+  printInfo(`Sending ${paymentAmount.algo} ALGO to receiver...`);
 
   const result = await algorand.send.payment({
     sender: sender.addr,
     receiver: receiver.addr,
     amount: paymentAmount,
-  })
+  });
 
-  const txId = result.txIds[0]
-  const confirmedRound = result.confirmation.confirmedRound!
+  const txId = result.txIds[0];
+  const confirmedRound = result.confirmation.confirmedRound!;
 
-  printSuccess(`Transaction confirmed!`)
-  printInfo(`Transaction ID: ${txId}`)
-  printInfo(`Confirmed in round: ${confirmedRound.toLocaleString('en-US')}`)
-  printInfo('')
+  printSuccess(`Transaction confirmed!`);
+  printInfo(`Transaction ID: ${txId}`);
+  printInfo(`Confirmed in round: ${confirmedRound.toLocaleString('en-US')}`);
+  printInfo('');
 
   // Get balances after transaction
-  const senderInfoAfter = await algod.accountInformation(sender.addr.toString())
-  const receiverInfo = await algod.accountInformation(receiver.addr.toString())
+  const senderInfoAfter = await algod.accountInformation(sender.addr.toString());
+  const receiverInfo = await algod.accountInformation(receiver.addr.toString());
 
-  printInfo(`Sender balance after: ${formatMicroAlgo(senderInfoAfter.amount)}`)
-  printInfo(`Receiver balance after: ${formatMicroAlgo(receiverInfo.amount)}`)
-  printInfo('')
+  printInfo(`Sender balance after: ${formatMicroAlgo(senderInfoAfter.amount)}`);
+  printInfo(`Receiver balance after: ${formatMicroAlgo(receiverInfo.amount)}`);
+  printInfo('');
 
   // =========================================================================
   // Step 2: Demonstrate ledgerStateDelta(round)
   // =========================================================================
-  printStep(2, 'Getting ledger state delta for a round using ledgerStateDelta(round)')
+  printStep(2, 'Getting ledger state delta for a round using ledgerStateDelta(round)');
 
-  printInfo('ledgerStateDelta(round) returns all state changes that occurred in a specific round.')
-  printInfo('This includes account balance changes, app state changes, and more.')
-  printInfo('')
+  printInfo('ledgerStateDelta(round) returns all state changes that occurred in a specific round.');
+  printInfo('This includes account balance changes, app state changes, and more.');
+  printInfo('');
 
   try {
-    const stateDelta = await algod.ledgerStateDelta(confirmedRound)
-    printSuccess('Successfully retrieved state delta for the round!')
-    printInfo('')
+    const stateDelta = await algod.ledgerStateDelta(confirmedRound);
+    printSuccess('Successfully retrieved state delta for the round!');
+    printInfo('');
 
-    displayStateDelta(stateDelta, 'ledgerStateDelta')
+    displayStateDelta(stateDelta, 'ledgerStateDelta');
   } catch (error) {
-    const errorMessage = error instanceof Error ? error.message : String(error)
-    if (errorMessage.includes('not supported') || errorMessage.includes('not enabled') || errorMessage.includes('404')) {
-      printError('ledgerStateDelta endpoint may not be enabled on this node.')
-      printInfo('Node configuration may need EnableDeveloperAPI=true or specific delta tracking settings.')
+    const errorMessage = error instanceof Error ? error.message : String(error);
+    if (
+      errorMessage.includes('not supported') ||
+      errorMessage.includes('not enabled') ||
+      errorMessage.includes('404')
+    ) {
+      printError('ledgerStateDelta endpoint may not be enabled on this node.');
+      printInfo(
+        'Node configuration may need EnableDeveloperAPI=true or specific delta tracking settings.',
+      );
     } else {
-      printError(`Error getting state delta: ${errorMessage}`)
+      printError(`Error getting state delta: ${errorMessage}`);
     }
-    printInfo('')
+    printInfo('');
   }
 
   // =========================================================================
   // Step 3: Demonstrate ledgerStateDeltaForTransactionGroup(txId)
   // =========================================================================
-  printStep(3, 'Getting state delta for a specific transaction group using ledgerStateDeltaForTransactionGroup(txId)')
+  printStep(
+    3,
+    'Getting state delta for a specific transaction group using ledgerStateDeltaForTransactionGroup(txId)',
+  );
 
-  printInfo('ledgerStateDeltaForTransactionGroup(txId) returns the state changes')
-  printInfo('caused by a specific transaction group, identified by any transaction ID in the group.')
-  printInfo('')
+  printInfo('ledgerStateDeltaForTransactionGroup(txId) returns the state changes');
+  printInfo(
+    'caused by a specific transaction group, identified by any transaction ID in the group.',
+  );
+  printInfo('');
 
   try {
-    const txGroupDelta = await algod.ledgerStateDeltaForTransactionGroup(txId)
-    printSuccess('Successfully retrieved state delta for the transaction group!')
-    printInfo('')
+    const txGroupDelta = await algod.ledgerStateDeltaForTransactionGroup(txId);
+    printSuccess('Successfully retrieved state delta for the transaction group!');
+    printInfo('');
 
-    displayStateDelta(txGroupDelta, 'ledgerStateDeltaForTransactionGroup')
+    displayStateDelta(txGroupDelta, 'ledgerStateDeltaForTransactionGroup');
   } catch (error) {
-    const errorMessage = error instanceof Error ? error.message : String(error)
+    const errorMessage = error instanceof Error ? error.message : String(error);
     if (errorMessage.includes('tracer') || errorMessage.includes('501')) {
-      printError('ledgerStateDeltaForTransactionGroup requires delta tracking to be enabled.')
-      printInfo('This endpoint needs EnableDeveloperAPI=true AND EnableTxnEvalTracer=true in node config.')
-      printInfo('On LocalNet, this may require custom configuration.')
-    } else if (errorMessage.includes('not supported') || errorMessage.includes('not enabled') || errorMessage.includes('404')) {
-      printError('ledgerStateDeltaForTransactionGroup endpoint may not be enabled on this node.')
+      printError('ledgerStateDeltaForTransactionGroup requires delta tracking to be enabled.');
+      printInfo(
+        'This endpoint needs EnableDeveloperAPI=true AND EnableTxnEvalTracer=true in node config.',
+      );
+      printInfo('On LocalNet, this may require custom configuration.');
+    } else if (
+      errorMessage.includes('not supported') ||
+      errorMessage.includes('not enabled') ||
+      errorMessage.includes('404')
+    ) {
+      printError('ledgerStateDeltaForTransactionGroup endpoint may not be enabled on this node.');
     } else {
-      printError(`Error getting transaction group delta: ${errorMessage}`)
+      printError(`Error getting transaction group delta: ${errorMessage}`);
     }
-    printInfo('')
+    printInfo('');
   }
 
   // =========================================================================
   // Step 4: Demonstrate transactionGroupLedgerStateDeltasForRound(round)
   // =========================================================================
-  printStep(4, 'Getting all transaction group deltas for a round using transactionGroupLedgerStateDeltasForRound(round)')
+  printStep(
+    4,
+    'Getting all transaction group deltas for a round using transactionGroupLedgerStateDeltasForRound(round)',
+  );
 
-  printInfo('transactionGroupLedgerStateDeltasForRound(round) returns deltas for ALL')
-  printInfo('transaction groups that were included in a specific round.')
-  printInfo('Each entry includes the delta and the transaction IDs in that group.')
-  printInfo('')
+  printInfo('transactionGroupLedgerStateDeltasForRound(round) returns deltas for ALL');
+  printInfo('transaction groups that were included in a specific round.');
+  printInfo('Each entry includes the delta and the transaction IDs in that group.');
+  printInfo('');
 
   try {
-    const roundDeltas = await algod.transactionGroupLedgerStateDeltasForRound(confirmedRound)
-    printSuccess('Successfully retrieved all transaction group deltas for the round!')
-    printInfo('')
+    const roundDeltas = await algod.transactionGroupLedgerStateDeltasForRound(confirmedRound);
+    printSuccess('Successfully retrieved all transaction group deltas for the round!');
+    printInfo('');
 
-    displayRoundDeltas(roundDeltas)
+    displayRoundDeltas(roundDeltas);
   } catch (error) {
-    const errorMessage = error instanceof Error ? error.message : String(error)
+    const errorMessage = error instanceof Error ? error.message : String(error);
     if (errorMessage.includes('tracer') || errorMessage.includes('501')) {
-      printError('transactionGroupLedgerStateDeltasForRound requires delta tracking to be enabled.')
-      printInfo('This endpoint needs EnableDeveloperAPI=true AND EnableTxnEvalTracer=true in node config.')
-      printInfo('On LocalNet, this may require custom configuration.')
-    } else if (errorMessage.includes('not supported') || errorMessage.includes('not enabled') || errorMessage.includes('404')) {
-      printError('transactionGroupLedgerStateDeltasForRound endpoint may not be enabled on this node.')
+      printError(
+        'transactionGroupLedgerStateDeltasForRound requires delta tracking to be enabled.',
+      );
+      printInfo(
+        'This endpoint needs EnableDeveloperAPI=true AND EnableTxnEvalTracer=true in node config.',
+      );
+      printInfo('On LocalNet, this may require custom configuration.');
+    } else if (
+      errorMessage.includes('not supported') ||
+      errorMessage.includes('not enabled') ||
+      errorMessage.includes('404')
+    ) {
+      printError(
+        'transactionGroupLedgerStateDeltasForRound endpoint may not be enabled on this node.',
+      );
     } else {
-      printError(`Error getting round deltas: ${errorMessage}`)
+      printError(`Error getting round deltas: ${errorMessage}`);
     }
-    printInfo('')
+    printInfo('');
   }
 
   // =========================================================================
   // Step 5: Submit more transactions to see different state changes
   // =========================================================================
-  printStep(5, 'Submitting additional transactions to demonstrate more state changes')
+  printStep(5, 'Submitting additional transactions to demonstrate more state changes');
 
   // Create another account and do a multi-transaction round
-  const receiver2 = algorand.account.random()
-  printInfo(`Created second receiver: ${shortenAddress(receiver2.addr.toString())}`)
+  const receiver2 = algorand.account.random();
+  printInfo(`Created second receiver: ${shortenAddress(receiver2.addr.toString())}`);
 
   // Send payments to create more activity
   const result2 = await algorand.send.payment({
     sender: sender.addr,
     receiver: receiver2.addr,
     amount: algo(3),
-  })
+  });
 
-  const confirmedRound2 = result2.confirmation.confirmedRound!
-  printSuccess(`Second transaction confirmed in round ${confirmedRound2.toLocaleString('en-US')}`)
-  printInfo('')
+  const confirmedRound2 = result2.confirmation.confirmedRound!;
+  printSuccess(`Second transaction confirmed in round ${confirmedRound2.toLocaleString('en-US')}`);
+  printInfo('');
 
   // Try to get deltas for this new round
   try {
-    const roundDeltas2 = await algod.transactionGroupLedgerStateDeltasForRound(confirmedRound2)
-    printSuccess(`Found ${roundDeltas2.deltas.length} transaction group(s) in round ${confirmedRound2.toLocaleString('en-US')}`)
+    const roundDeltas2 = await algod.transactionGroupLedgerStateDeltasForRound(confirmedRound2);
+    printSuccess(
+      `Found ${roundDeltas2.deltas.length} transaction group(s) in round ${confirmedRound2.toLocaleString('en-US')}`,
+    );
 
     for (let i = 0; i < roundDeltas2.deltas.length; i++) {
-      const groupDelta = roundDeltas2.deltas[i]
-      printInfo(`\n  Transaction Group ${i + 1}:`)
-      printInfo(`    Transaction IDs: ${groupDelta.ids.length}`)
+      const groupDelta = roundDeltas2.deltas[i];
+      printInfo(`\n  Transaction Group ${i + 1}:`);
+      printInfo(`    Transaction IDs: ${groupDelta.ids.length}`);
       for (const id of groupDelta.ids) {
-        printInfo(`      - ${id}`)
+        printInfo(`      - ${id}`);
       }
 
       // Show account changes summary
-      const accounts = groupDelta.delta.accounts
+      const accounts = groupDelta.delta.accounts;
       if (accounts.accounts && accounts.accounts.length > 0) {
-        printInfo(`    Accounts modified: ${accounts.accounts.length}`)
+        printInfo(`    Accounts modified: ${accounts.accounts.length}`);
       }
     }
   } catch (error) {
-    const errorMessage = error instanceof Error ? error.message : String(error)
+    const errorMessage = error instanceof Error ? error.message : String(error);
     if (errorMessage.includes('tracer') || errorMessage.includes('501')) {
-      printInfo('(Skipped - requires EnableTxnEvalTracer node configuration)')
+      printInfo('(Skipped - requires EnableTxnEvalTracer node configuration)');
     } else {
-      printError(`Could not get deltas: ${errorMessage}`)
+      printError(`Could not get deltas: ${errorMessage}`);
     }
   }
-  printInfo('')
+  printInfo('');
 
   // =========================================================================
   // Summary
   // =========================================================================
-  printHeader('Summary')
+  printHeader('Summary');
 
-  printInfo('This example demonstrated three ways to get ledger state deltas:')
-  printInfo('')
-  printInfo('1. ledgerStateDelta(round):')
-  printInfo('   - Returns ALL state changes for a specific round')
-  printInfo('   - Includes: account balances, app state, asset holdings')
-  printInfo('   - LedgerStateDelta contains: accounts, block, totals, kvMods, txIds, creatables')
-  printInfo('')
-  printInfo('2. ledgerStateDeltaForTransactionGroup(txId):')
-  printInfo('   - Returns state changes for a SPECIFIC transaction group')
-  printInfo('   - Accepts any transaction ID from the group')
-  printInfo('   - Useful for tracking changes from your transactions')
-  printInfo('')
-  printInfo('3. transactionGroupLedgerStateDeltasForRound(round):')
-  printInfo('   - Returns deltas for ALL transaction groups in a round')
-  printInfo('   - TransactionGroupLedgerStateDeltasForRoundResponse has deltas array')
-  printInfo('   - Each LedgerStateDeltaForTransactionGroup has: delta, ids (transaction IDs)')
-  printInfo('')
-  printInfo('State Delta Structure (LedgerStateDelta):')
-  printInfo('  accounts: LedgerAccountDeltas')
-  printInfo('    - accounts?: LedgerBalanceRecord[] (address + microAlgos)')
-  printInfo('    - appResources?: LedgerAppResourceRecord[]')
-  printInfo('    - assetResources?: LedgerAssetResourceRecord[]')
-  printInfo('  block: Block (block header information)')
-  printInfo('  totals: LedgerAccountTotals (online, offline, notParticipating algo counts)')
-  printInfo('  stateProofNext: bigint')
-  printInfo('  prevTimestamp: bigint')
-  printInfo('  kvMods?: Map<Uint8Array, LedgerKvValueDelta> (key-value store changes)')
-  printInfo('  txIds?: Map<Uint8Array, LedgerIncludedTransactions>')
-  printInfo('  creatables?: Map<number, LedgerModifiedCreatable>')
-  printInfo('')
-  printInfo('Note: Node configuration requirements:')
-  printInfo('  - ledgerStateDelta(round) - Works with default LocalNet configuration')
-  printInfo('  - ledgerStateDeltaForTransactionGroup(txId) - Requires EnableTxnEvalTracer=true')
-  printInfo('  - transactionGroupLedgerStateDeltasForRound(round) - Requires EnableTxnEvalTracer=true')
-  printInfo('  - All endpoints need EnableDeveloperAPI=true (enabled by default on LocalNet)')
+  printInfo('This example demonstrated three ways to get ledger state deltas:');
+  printInfo('');
+  printInfo('1. ledgerStateDelta(round):');
+  printInfo('   - Returns ALL state changes for a specific round');
+  printInfo('   - Includes: account balances, app state, asset holdings');
+  printInfo('   - LedgerStateDelta contains: accounts, block, totals, kvMods, txIds, creatables');
+  printInfo('');
+  printInfo('2. ledgerStateDeltaForTransactionGroup(txId):');
+  printInfo('   - Returns state changes for a SPECIFIC transaction group');
+  printInfo('   - Accepts any transaction ID from the group');
+  printInfo('   - Useful for tracking changes from your transactions');
+  printInfo('');
+  printInfo('3. transactionGroupLedgerStateDeltasForRound(round):');
+  printInfo('   - Returns deltas for ALL transaction groups in a round');
+  printInfo('   - TransactionGroupLedgerStateDeltasForRoundResponse has deltas array');
+  printInfo('   - Each LedgerStateDeltaForTransactionGroup has: delta, ids (transaction IDs)');
+  printInfo('');
+  printInfo('State Delta Structure (LedgerStateDelta):');
+  printInfo('  accounts: LedgerAccountDeltas');
+  printInfo('    - accounts?: LedgerBalanceRecord[] (address + microAlgos)');
+  printInfo('    - appResources?: LedgerAppResourceRecord[]');
+  printInfo('    - assetResources?: LedgerAssetResourceRecord[]');
+  printInfo('  block: Block (block header information)');
+  printInfo('  totals: LedgerAccountTotals (online, offline, notParticipating algo counts)');
+  printInfo('  stateProofNext: bigint');
+  printInfo('  prevTimestamp: bigint');
+  printInfo('  kvMods?: Map<Uint8Array, LedgerKvValueDelta> (key-value store changes)');
+  printInfo('  txIds?: Map<Uint8Array, LedgerIncludedTransactions>');
+  printInfo('  creatables?: Map<number, LedgerModifiedCreatable>');
+  printInfo('');
+  printInfo('Note: Node configuration requirements:');
+  printInfo('  - ledgerStateDelta(round) - Works with default LocalNet configuration');
+  printInfo('  - ledgerStateDeltaForTransactionGroup(txId) - Requires EnableTxnEvalTracer=true');
+  printInfo(
+    '  - transactionGroupLedgerStateDeltasForRound(round) - Requires EnableTxnEvalTracer=true',
+  );
+  printInfo('  - All endpoints need EnableDeveloperAPI=true (enabled by default on LocalNet)');
 }
 
 /**
  * Display details from a LedgerStateDelta
  */
 function displayStateDelta(delta: LedgerStateDelta, source: string): void {
-  printInfo(`State Delta from ${source}:`)
-  printInfo('')
+  printInfo(`State Delta from ${source}:`);
+  printInfo('');
 
   // Block information
-  printInfo('  Block Information:')
-  printInfo(`    Round: ${delta.block.header.round.toLocaleString('en-US')}`)
-  printInfo(`    Timestamp: ${new Date(Number(delta.block.header.timestamp) * 1000).toISOString()}`)
-  printInfo(`    Previous timestamp: ${delta.prevTimestamp.toLocaleString('en-US')}`)
+  printInfo('  Block Information:');
+  printInfo(`    Round: ${delta.block.header.round.toLocaleString('en-US')}`);
+  printInfo(
+    `    Timestamp: ${new Date(Number(delta.block.header.timestamp) * 1000).toISOString()}`,
+  );
+  printInfo(`    Previous timestamp: ${delta.prevTimestamp.toLocaleString('en-US')}`);
   if (delta.block.header.proposer) {
-    printInfo(`    Proposer: ${shortenAddress(delta.block.header.proposer.toString())}`)
+    printInfo(`    Proposer: ${shortenAddress(delta.block.header.proposer.toString())}`);
   }
-  printInfo('')
+  printInfo('');
 
   // Account changes
-  printInfo('  Account Changes (LedgerAccountDeltas):')
-  const accounts = delta.accounts
+  printInfo('  Account Changes (LedgerAccountDeltas):');
+  const accounts = delta.accounts;
 
   if (accounts.accounts && accounts.accounts.length > 0) {
-    printInfo(`    Modified accounts: ${accounts.accounts.length}`)
-    for (const record of accounts.accounts.slice(0, 5)) { // Show first 5
-      const baseData = record.accountData.accountBaseData
-      printInfo(`      - ${shortenAddress(record.address.toString())}`)
-      printInfo(`        Balance: ${formatMicroAlgo(baseData.microAlgos)}`)
-      printInfo(`        Status: ${getAccountStatus(baseData.status)}`)
+    printInfo(`    Modified accounts: ${accounts.accounts.length}`);
+    for (const record of accounts.accounts.slice(0, 5)) {
+      // Show first 5
+      const baseData = record.accountData.accountBaseData;
+      printInfo(`      - ${shortenAddress(record.address.toString())}`);
+      printInfo(`        Balance: ${formatMicroAlgo(baseData.microAlgos)}`);
+      printInfo(`        Status: ${getAccountStatus(baseData.status)}`);
     }
     if (accounts.accounts.length > 5) {
-      printInfo(`      ... and ${accounts.accounts.length - 5} more`)
+      printInfo(`      ... and ${accounts.accounts.length - 5} more`);
     }
   } else {
-    printInfo('    No account balance changes')
+    printInfo('    No account balance changes');
   }
 
   if (accounts.appResources && accounts.appResources.length > 0) {
-    printInfo(`    App resources modified: ${accounts.appResources.length}`)
+    printInfo(`    App resources modified: ${accounts.appResources.length}`);
     for (const app of accounts.appResources.slice(0, 3)) {
-      printInfo(`      - App ${app.appId}: ${app.params.deleted ? 'DELETED' : 'MODIFIED'}`)
+      printInfo(`      - App ${app.appId}: ${app.params.deleted ? 'DELETED' : 'MODIFIED'}`);
     }
   }
 
   if (accounts.assetResources && accounts.assetResources.length > 0) {
-    printInfo(`    Asset resources modified: ${accounts.assetResources.length}`)
+    printInfo(`    Asset resources modified: ${accounts.assetResources.length}`);
     for (const asset of accounts.assetResources.slice(0, 3)) {
-      printInfo(`      - Asset ${asset.assetId}: ${asset.params.deleted ? 'DELETED' : 'MODIFIED'}`)
+      printInfo(`      - Asset ${asset.assetId}: ${asset.params.deleted ? 'DELETED' : 'MODIFIED'}`);
     }
   }
-  printInfo('')
+  printInfo('');
 
   // Totals
-  printInfo('  Account Totals (LedgerAccountTotals):')
-  printInfo(`    Online money: ${formatMicroAlgo(delta.totals.online.money)}`)
-  printInfo(`    Offline money: ${formatMicroAlgo(delta.totals.offline.money)}`)
-  printInfo(`    Not participating: ${formatMicroAlgo(delta.totals.notParticipating.money)}`)
-  printInfo(`    Rewards level: ${delta.totals.rewardsLevel.toLocaleString('en-US')}`)
-  printInfo('')
+  printInfo('  Account Totals (LedgerAccountTotals):');
+  printInfo(`    Online money: ${formatMicroAlgo(delta.totals.online.money)}`);
+  printInfo(`    Offline money: ${formatMicroAlgo(delta.totals.offline.money)}`);
+  printInfo(`    Not participating: ${formatMicroAlgo(delta.totals.notParticipating.money)}`);
+  printInfo(`    Rewards level: ${delta.totals.rewardsLevel.toLocaleString('en-US')}`);
+  printInfo('');
 
   // KV mods
   if (delta.kvMods && delta.kvMods.size > 0) {
-    printInfo(`  KV Store Modifications: ${delta.kvMods.size} keys changed`)
+    printInfo(`  KV Store Modifications: ${delta.kvMods.size} keys changed`);
   }
 
   // Transaction IDs
   if (delta.txIds && delta.txIds.size > 0) {
-    printInfo(`  Transactions included: ${delta.txIds.size}`)
+    printInfo(`  Transactions included: ${delta.txIds.size}`);
   }
 
   // Creatables
   if (delta.creatables && delta.creatables.size > 0) {
-    printInfo(`  Creatables modified: ${delta.creatables.size}`)
+    printInfo(`  Creatables modified: ${delta.creatables.size}`);
     delta.creatables.forEach((creatable, id) => {
-      const type = creatable.creatableType === 0 ? 'Asset' : 'Application'
-      const action = creatable.created ? 'CREATED' : 'DELETED'
-      printInfo(`    - ${type} ${id}: ${action} by ${shortenAddress(creatable.creator.toString())}`)
-    })
+      const type = creatable.creatableType === 0 ? 'Asset' : 'Application';
+      const action = creatable.created ? 'CREATED' : 'DELETED';
+      printInfo(
+        `    - ${type} ${id}: ${action} by ${shortenAddress(creatable.creator.toString())}`,
+      );
+    });
   }
-  printInfo('')
+  printInfo('');
 }
 
 /**
  * Display details from a TransactionGroupLedgerStateDeltasForRoundResponse
  */
 function displayRoundDeltas(response: TransactionGroupLedgerStateDeltasForRoundResponse): void {
-  printInfo('Transaction Group Deltas for Round:')
-  printInfo(`  Total transaction groups: ${response.deltas.length}`)
-  printInfo('')
+  printInfo('Transaction Group Deltas for Round:');
+  printInfo(`  Total transaction groups: ${response.deltas.length}`);
+  printInfo('');
 
   for (let i = 0; i < response.deltas.length; i++) {
-    const groupDelta = response.deltas[i]
-    printInfo(`  Group ${i + 1}:`)
-    printInfo(`    Transaction IDs in group: ${groupDelta.ids.length}`)
+    const groupDelta = response.deltas[i];
+    printInfo(`  Group ${i + 1}:`);
+    printInfo(`    Transaction IDs in group: ${groupDelta.ids.length}`);
 
     for (const txId of groupDelta.ids) {
-      printInfo(`      - ${txId}`)
+      printInfo(`      - ${txId}`);
     }
 
     // Summary of delta
-    const accounts = groupDelta.delta.accounts
-    const modifiedCount = accounts.accounts?.length ?? 0
-    const appCount = accounts.appResources?.length ?? 0
-    const assetCount = accounts.assetResources?.length ?? 0
+    const accounts = groupDelta.delta.accounts;
+    const modifiedCount = accounts.accounts?.length ?? 0;
+    const appCount = accounts.appResources?.length ?? 0;
+    const assetCount = accounts.assetResources?.length ?? 0;
 
-    printInfo(`    State changes:`)
-    printInfo(`      - Accounts modified: ${modifiedCount}`)
+    printInfo(`    State changes:`);
+    printInfo(`      - Accounts modified: ${modifiedCount}`);
     if (appCount > 0) {
-      printInfo(`      - App resources: ${appCount}`)
+      printInfo(`      - App resources: ${appCount}`);
     }
     if (assetCount > 0) {
-      printInfo(`      - Asset resources: ${assetCount}`)
+      printInfo(`      - Asset resources: ${assetCount}`);
     }
-    printInfo('')
+    printInfo('');
   }
 }
 
@@ -415,21 +455,20 @@ function displayRoundDeltas(response: TransactionGroupLedgerStateDeltasForRoundR
 function getAccountStatus(status: number): string {
   switch (status) {
     case 0:
-      return 'Offline'
+      return 'Offline';
     case 1:
-      return 'Online'
+      return 'Online';
     case 2:
-      return 'NotParticipating'
+      return 'NotParticipating';
     default:
-      return `Unknown (${status})`
+      return `Unknown (${status})`;
   }
 }
 
-main().catch((error) => {
-  console.error('Fatal error:', error)
-  process.exit(1)
-})
-
+main().catch(error => {
+  console.error('Fatal error:', error);
+  process.exit(1);
+});
 ```
 
 ---

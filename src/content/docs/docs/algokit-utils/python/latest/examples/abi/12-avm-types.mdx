@@ -1,6 +1,6 @@
 ---
-title: "AVM Type Encoding"
-description: "This example demonstrates how to work with AVM-specific types:"
+title: 'AVM Type Encoding'
+description: 'This example demonstrates how to work with AVM-specific types:'
 sidebar:
   order: 12
 ---
@@ -10,11 +10,12 @@ sidebar:
 ## Description
 
 This example demonstrates how to work with AVM-specific types:
+
 - AVMBytes: Raw byte arrays (no length prefix, unlike ABI string/bytes)
 - AVMString: UTF-8 strings (no length prefix, unlike ABI string)
 - AVMUint64: 64-bit unsigned integers (8 bytes, big-endian)
- AVM types represent how data is stored natively on the AVM stack, while ABI types follow the ARC-4 encoding specification with length prefixes.
- The Python SDK provides the AVMType enum in algokit_abi.arc56 with values: AVMType.BYTES, AVMType.STRING, AVMType.UINT64
+  AVM types represent how data is stored natively on the AVM stack, while ABI types follow the ARC-4 encoding specification with length prefixes.
+  The Python SDK provides the AVMType enum in algokit_abi.arc56 with values: AVMType.BYTES, AVMType.STRING, AVMType.UINT64
 
 ## Prerequisites
 

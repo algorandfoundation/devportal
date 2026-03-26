@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "AssetConfigTxn"
+title: 'AssetConfigTxn'
 ---
 
 > **AssetConfigTxn**(`n`): [`AssetConfigTxn`](/algorand-typescript/api/gtxn/namespaces/gtxn/interfaces/assetconfigtxn/)

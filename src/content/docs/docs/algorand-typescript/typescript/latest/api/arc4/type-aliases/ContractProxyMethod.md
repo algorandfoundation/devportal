@@ -2,10 +2,10 @@
 editUrl: false
 next: false
 prev: false
-title: "ContractProxyMethod"
+title: 'ContractProxyMethod'
 ---
 
-> **ContractProxyMethod**\<`TMethod`\> = `TMethod` *extends* (...`args`) => infer TReturn ? (`fields?`) => [`TypedApplicationCallResponse`](/algorand-typescript/api/arc4/type-aliases/typedapplicationcallresponse/)\<`TReturn`\> : `never`
+> **ContractProxyMethod**\<`TMethod`\> = `TMethod` _extends_ (...`args`) => infer TReturn ? (`fields?`) => [`TypedApplicationCallResponse`](/algorand-typescript/api/arc4/type-aliases/typedapplicationcallresponse/)\<`TReturn`\> : `never`
 
 Defined in: [arc4/c2c.ts:71](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/arc4/c2c.ts#L71)
 

@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "PaymentFields"
+title: 'PaymentFields'
 ---
 
 Defined in: [itxn.ts:581](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/itxn.ts#L581)
@@ -22,7 +22,7 @@ Defined in: [itxn.ts:621](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 microalgos
 
-***
+---
 
 ### closeRemainderTo?
 
@@ -32,7 +32,7 @@ Defined in: [itxn.ts:625](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 32 byte address
 
-***
+---
 
 ### fee?
 
@@ -42,7 +42,7 @@ Defined in: [itxn.ts:589](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 microalgos
 
-***
+---
 
 ### firstValid?
 
@@ -52,7 +52,7 @@ Defined in: [itxn.ts:593](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 round number
 
-***
+---
 
 ### firstValidTime?
 
@@ -62,7 +62,7 @@ Defined in: [itxn.ts:597](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 UNIX timestamp of block before txn.FirstValid. Fails if negative
 
-***
+---
 
 ### lastValid?
 
@@ -72,7 +72,7 @@ Defined in: [itxn.ts:601](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 round number
 
-***
+---
 
 ### lease?
 
@@ -82,7 +82,7 @@ Defined in: [itxn.ts:609](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 32 byte lease value
 
-***
+---
 
 ### note?
 
@@ -92,7 +92,7 @@ Defined in: [itxn.ts:605](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 Any data up to 1024 bytes
 
-***
+---
 
 ### receiver?
 
@@ -102,7 +102,7 @@ Defined in: [itxn.ts:617](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 32 byte address
 
-***
+---
 
 ### rekeyTo?
 
@@ -112,7 +112,7 @@ Defined in: [itxn.ts:613](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 32 byte Sender's new AuthAddr
 
-***
+---
 
 ### sender?
 

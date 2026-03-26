@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "concat"
+title: 'concat'
 ---
 
 > **concat**(`a`, `b`): [`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)

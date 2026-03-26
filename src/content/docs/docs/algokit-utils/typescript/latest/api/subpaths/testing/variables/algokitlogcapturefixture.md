@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "algoKitLogCaptureFixture"
+title: 'algoKitLogCaptureFixture'
 ---
 
 > `const` **algoKitLogCaptureFixture**: () => [`AlgoKitLogCaptureFixture`](/docs/algokit-utils/typescript/latest/api/subpaths/testing/interfaces/algokitlogcapturefixture/)
@@ -20,12 +20,12 @@ The fixture
 ## Example
 
 ```typescript
-const logs = algoKitLogCaptureFixture()
+const logs = algoKitLogCaptureFixture();
 
-beforeEach(logs.beforeEach)
-afterEach(logs.afterEach)
+beforeEach(logs.beforeEach);
+afterEach(logs.afterEach);
 
 test('My test', () => {
-    const capturedLogs = logs.testLogger.capturedLogs
-})
+  const capturedLogs = logs.testLogger.capturedLogs;
+});
 ```

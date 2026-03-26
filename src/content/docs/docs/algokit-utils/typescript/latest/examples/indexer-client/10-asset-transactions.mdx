@@ -1,6 +1,6 @@
 ---
-title: "Asset Transactions"
-description: "This example demonstrates how to lookup transactions for a specific asset using the IndexerClient lookupAssetTransactions() method."
+title: 'Asset Transactions'
+description: 'This example demonstrates how to lookup transactions for a specific asset using the IndexerClient lookupAssetTransactions() method.'
 sidebar:
   order: 10
 ---
@@ -49,61 +49,63 @@ import {
   printStep,
   printSuccess,
   shortenAddress,
-} from '../shared/utils.js'
+} from '../shared/utils.js';
 
 async function main() {
-  printHeader('Asset Transactions Example')
+  printHeader('Asset Transactions Example');
 
   // Create clients
-  const indexer = createIndexerClient()
-  const algorand = createAlgorandClient()
+  const indexer = createIndexerClient();
+  const algorand = createAlgorandClient();
 
   // =========================================================================
   // Step 1: Get a funded account and create additional accounts
   // =========================================================================
-  printStep(1, 'Setting up accounts for demonstration')
+  printStep(1, 'Setting up accounts for demonstration');
 
-  let creatorAddress: string
-  let holder1Address: string
-  let holder2Address: string
+  let creatorAddress: string;
+  let holder1Address: string;
+  let holder2Address: string;
 
   try {
     // Get the dispenser account as the creator
-    const dispenser = await algorand.account.dispenserFromEnvironment()
-    creatorAddress = dispenser.addr.toString()
-    printSuccess(`Creator account (dispenser): ${shortenAddress(creatorAddress)}`)
+    const dispenser = await algorand.account.dispenserFromEnvironment();
+    creatorAddress = dispenser.addr.toString();
+    printSuccess(`Creator account (dispenser): ${shortenAddress(creatorAddress)}`);
 
     // Create additional accounts to hold the asset
-    const holder1 = await createRandomAccount(algorand)
-    holder1Address = holder1.addr.toString()
-    printSuccess(`Holder 1: ${shortenAddress(holder1Address)}`)
+    const holder1 = await createRandomAccount(algorand);
+    holder1Address = holder1.addr.toString();
+    printSuccess(`Holder 1: ${shortenAddress(holder1Address)}`);
 
-    const holder2 = await createRandomAccount(algorand)
-    holder2Address = holder2.addr.toString()
-    printSuccess(`Holder 2: ${shortenAddress(holder2Address)}`)
+    const holder2 = await createRandomAccount(algorand);
+    holder2Address = holder2.addr.toString();
+    printSuccess(`Holder 2: ${shortenAddress(holder2Address)}`);
   } catch (error) {
-    printError(`Failed to set up accounts: ${error instanceof Error ? error.message : String(error)}`)
-    printInfo('')
-    printInfo('Make sure LocalNet is running: algokit localnet start')
-    printInfo('If issues persist, try: algokit localnet reset')
-    return
+    printError(
+      `Failed to set up accounts: ${error instanceof Error ? error.message : String(error)}`,
+    );
+    printInfo('');
+    printInfo('Make sure LocalNet is running: algokit localnet start');
+    printInfo('If issues persist, try: algokit localnet reset');
+    return;
   }
 
   // =========================================================================
   // Step 2: Create a test asset with freeze address
   // =========================================================================
-  printStep(2, 'Creating a test asset with freeze address')
+  printStep(2, 'Creating a test asset with freeze address');
 
-  let assetId: bigint
-  let startRound: bigint
+  let assetId: bigint;
+  let startRound: bigint;
 
   try {
     // Record the starting round for later filtering
-    const status = await algorand.client.algod.status()
-    startRound = status.lastRound
+    const status = await algorand.client.algod.status();
+    startRound = status.lastRound;
 
     // Create asset with freeze address to enable freeze transactions
-    printInfo('Creating test asset: TxnToken (TXN)...')
+    printInfo('Creating test asset: TxnToken (TXN)...');
     const result = await algorand.send.assetCreate({
       sender: creatorAddress,
       total: 10_000_000n, // 10,000 units with 3 decimals
@@ -116,81 +118,85 @@ async function main() {
       reserve: creatorAddress,
       freeze: creatorAddress, // Enable freeze functionality
       clawback: creatorAddress,
-    })
-    assetId = result.assetId
-    printSuccess(`Created TxnToken with Asset ID: ${assetId}`)
-    printInfo(`  - freeze address: ${shortenAddress(creatorAddress)} (enables freeze transactions)`)
+    });
+    assetId = result.assetId;
+    printSuccess(`Created TxnToken with Asset ID: ${assetId}`);
+    printInfo(
+      `  - freeze address: ${shortenAddress(creatorAddress)} (enables freeze transactions)`,
+    );
   } catch (error) {
-    printError(`Failed to create test asset: ${error instanceof Error ? error.message : String(error)}`)
-    printInfo('')
-    printInfo('If LocalNet errors occur, try: algokit localnet reset')
-    return
+    printError(
+      `Failed to create test asset: ${error instanceof Error ? error.message : String(error)}`,
+    );
+    printInfo('');
+    printInfo('If LocalNet errors occur, try: algokit localnet reset');
+    return;
   }
 
   // =========================================================================
   // Step 3: Perform several asset transactions (opt-in, transfer, freeze)
   // =========================================================================
-  printStep(3, 'Performing several asset transactions')
+  printStep(3, 'Performing several asset transactions');
 
   try {
     // 1. Holder 1: Opt-in (axfer to self with 0 amount)
-    printInfo('Holder 1 opting into asset...')
+    printInfo('Holder 1 opting into asset...');
     await algorand.send.assetOptIn({
       sender: holder1Address,
       assetId,
-    })
-    printSuccess('Holder 1 opted in (axfer)')
+    });
+    printSuccess('Holder 1 opted in (axfer)');
 
     // 2. Transfer to Holder 1
-    printInfo('Transferring 1000 TXN to Holder 1...')
+    printInfo('Transferring 1000 TXN to Holder 1...');
     await algorand.send.assetTransfer({
       sender: creatorAddress,
       receiver: holder1Address,
       assetId,
       amount: 1_000_000n, // 1000 TXN (with 3 decimals)
-    })
-    printSuccess('Transfer to Holder 1 complete (axfer)')
+    });
+    printSuccess('Transfer to Holder 1 complete (axfer)');
 
     // 3. Holder 2: Opt-in
-    printInfo('Holder 2 opting into asset...')
+    printInfo('Holder 2 opting into asset...');
     await algorand.send.assetOptIn({
       sender: holder2Address,
       assetId,
-    })
-    printSuccess('Holder 2 opted in (axfer)')
+    });
+    printSuccess('Holder 2 opted in (axfer)');
 
     // 4. Transfer to Holder 2
-    printInfo('Transferring 500 TXN to Holder 2...')
+    printInfo('Transferring 500 TXN to Holder 2...');
     await algorand.send.assetTransfer({
       sender: creatorAddress,
       receiver: holder2Address,
       assetId,
       amount: 500_000n, // 500 TXN (with 3 decimals)
-    })
-    printSuccess('Transfer to Holder 2 complete (axfer)')
+    });
+    printSuccess('Transfer to Holder 2 complete (axfer)');
 
     // 5. Freeze Holder 1's account
-    printInfo('Freezing Holder 1 account...')
+    printInfo('Freezing Holder 1 account...');
     await algorand.send.assetFreeze({
       sender: creatorAddress,
       assetId,
       freezeTarget: holder1Address,
       frozen: true,
-    })
-    printSuccess('Holder 1 account frozen (afrz)')
+    });
+    printSuccess('Holder 1 account frozen (afrz)');
 
     // 6. Unfreeze Holder 1's account
-    printInfo('Unfreezing Holder 1 account...')
+    printInfo('Unfreezing Holder 1 account...');
     await algorand.send.assetFreeze({
       sender: creatorAddress,
       assetId,
       freezeTarget: holder1Address,
       frozen: false,
-    })
-    printSuccess('Holder 1 account unfrozen (afrz)')
+    });
+    printSuccess('Holder 1 account unfrozen (afrz)');
 
     // 7. Reconfigure asset (acfg)
-    printInfo('Reconfiguring asset (updating manager)...')
+    printInfo('Reconfiguring asset (updating manager)...');
     await algorand.send.assetConfig({
       sender: creatorAddress,
       assetId,
@@ -198,451 +204,480 @@ async function main() {
       reserve: creatorAddress,
       freeze: creatorAddress,
       clawback: creatorAddress,
-    })
-    printSuccess('Asset reconfigured (acfg)')
+    });
+    printSuccess('Asset reconfigured (acfg)');
 
-    printInfo('')
-    printInfo('Transaction summary:')
-    printInfo('  - 1 asset creation (acfg)')
-    printInfo('  - 2 opt-ins (axfer with 0 amount)')
-    printInfo('  - 2 transfers (axfer with positive amount)')
-    printInfo('  - 2 freeze operations (afrz)')
-    printInfo('  - 1 asset reconfiguration (acfg)')
+    printInfo('');
+    printInfo('Transaction summary:');
+    printInfo('  - 1 asset creation (acfg)');
+    printInfo('  - 2 opt-ins (axfer with 0 amount)');
+    printInfo('  - 2 transfers (axfer with positive amount)');
+    printInfo('  - 2 freeze operations (afrz)');
+    printInfo('  - 1 asset reconfiguration (acfg)');
 
     // Small delay to allow indexer to catch up
-    printInfo('')
-    printInfo('Waiting for indexer to index transactions...')
-    await new Promise((resolve) => setTimeout(resolve, 3000))
+    printInfo('');
+    printInfo('Waiting for indexer to index transactions...');
+    await new Promise(resolve => setTimeout(resolve, 3000));
   } catch (error) {
-    printError(`Failed to create asset transactions: ${error instanceof Error ? error.message : String(error)}`)
-    printInfo('')
-    printInfo('If LocalNet errors occur, try: algokit localnet reset')
-    return
+    printError(
+      `Failed to create asset transactions: ${error instanceof Error ? error.message : String(error)}`,
+    );
+    printInfo('');
+    printInfo('If LocalNet errors occur, try: algokit localnet reset');
+    return;
   }
 
   // =========================================================================
   // Step 4: Basic lookupAssetTransactions() - Get all transactions for asset
   // =========================================================================
-  printStep(4, 'Looking up all transactions for asset with lookupAssetTransactions()')
+  printStep(4, 'Looking up all transactions for asset with lookupAssetTransactions()');
 
   try {
     // lookupAssetTransactions() returns all transactions involving an asset
     // Note: Results are returned oldest to newest
-    const txnsResult = await indexer.lookupAssetTransactions(assetId)
+    const txnsResult = await indexer.lookupAssetTransactions(assetId);
 
-    printSuccess(`Found ${txnsResult.transactions.length} transaction(s) for Asset ID ${assetId}`)
-    printInfo('Note: Results are returned oldest to newest')
-    printInfo('')
+    printSuccess(`Found ${txnsResult.transactions.length} transaction(s) for Asset ID ${assetId}`);
+    printInfo('Note: Results are returned oldest to newest');
+    printInfo('');
 
     if (txnsResult.transactions.length > 0) {
-      printInfo('Asset transactions:')
+      printInfo('Asset transactions:');
       for (const tx of txnsResult.transactions) {
-        printInfo(`  Transaction: ${tx.id ? shortenAddress(tx.id, 8, 6) : 'N/A'}`)
-        printInfo(`    - txType: ${tx.txType}`)
-        printInfo(`    - sender: ${shortenAddress(tx.sender)}`)
+        printInfo(`  Transaction: ${tx.id ? shortenAddress(tx.id, 8, 6) : 'N/A'}`);
+        printInfo(`    - txType: ${tx.txType}`);
+        printInfo(`    - sender: ${shortenAddress(tx.sender)}`);
         if (tx.confirmedRound !== undefined) {
-          printInfo(`    - confirmedRound: ${tx.confirmedRound}`)
+          printInfo(`    - confirmedRound: ${tx.confirmedRound}`);
         }
 
         // Show type-specific details
         if (tx.txType === 'axfer' && tx.assetTransferTransaction) {
-          printInfo(`    - receiver: ${shortenAddress(tx.assetTransferTransaction.receiver)}`)
-          printInfo(`    - amount: ${tx.assetTransferTransaction.amount.toLocaleString('en-US')}`)
+          printInfo(`    - receiver: ${shortenAddress(tx.assetTransferTransaction.receiver)}`);
+          printInfo(`    - amount: ${tx.assetTransferTransaction.amount.toLocaleString('en-US')}`);
         } else if (tx.txType === 'afrz' && tx.assetFreezeTransaction) {
-          printInfo(`    - frozenAddress: ${shortenAddress(tx.assetFreezeTransaction.address)}`)
-          printInfo(`    - newFreezeStatus: ${tx.assetFreezeTransaction.newFreezeStatus}`)
+          printInfo(`    - frozenAddress: ${shortenAddress(tx.assetFreezeTransaction.address)}`);
+          printInfo(`    - newFreezeStatus: ${tx.assetFreezeTransaction.newFreezeStatus}`);
         } else if (tx.txType === 'acfg') {
           if (tx.createdAssetId) {
-            printInfo(`    - createdAssetId: ${tx.createdAssetId} (asset creation)`)
+            printInfo(`    - createdAssetId: ${tx.createdAssetId} (asset creation)`);
           } else {
-            printInfo(`    - assetId: ${tx.assetConfigTransaction?.assetId} (reconfiguration)`)
+            printInfo(`    - assetId: ${tx.assetConfigTransaction?.assetId} (reconfiguration)`);
           }
         }
-        printInfo('')
+        printInfo('');
       }
     }
 
-    printInfo(`Query performed at round: ${txnsResult.currentRound}`)
+    printInfo(`Query performed at round: ${txnsResult.currentRound}`);
   } catch (error) {
-    printError(`lookupAssetTransactions failed: ${error instanceof Error ? error.message : String(error)}`)
+    printError(
+      `lookupAssetTransactions failed: ${error instanceof Error ? error.message : String(error)}`,
+    );
   }
 
   // =========================================================================
   // Step 5: Filter by address and addressRole - Sender
   // =========================================================================
-  printStep(5, 'Filtering by address with addressRole=sender')
+  printStep(5, 'Filtering by address with addressRole=sender');
 
   try {
     // addressRole can be: sender, receiver, freeze-target
-    printInfo('Available addressRole values: sender, receiver, freeze-target')
-    printInfo('')
+    printInfo('Available addressRole values: sender, receiver, freeze-target');
+    printInfo('');
 
-    printInfo(`Searching for transactions where ${shortenAddress(creatorAddress)} is sender...`)
+    printInfo(`Searching for transactions where ${shortenAddress(creatorAddress)} is sender...`);
     const senderTxns = await indexer.lookupAssetTransactions(assetId, {
       address: creatorAddress,
       addressRole: 'sender',
-    })
+    });
 
-    printSuccess(`Found ${senderTxns.transactions.length} transaction(s) where creator is sender`)
+    printSuccess(`Found ${senderTxns.transactions.length} transaction(s) where creator is sender`);
     if (senderTxns.transactions.length > 0) {
       for (const tx of senderTxns.transactions.slice(0, 5)) {
-        printInfo(`  - ${tx.id ? shortenAddress(tx.id, 8, 6) : 'N/A'}: ${tx.txType}`)
+        printInfo(`  - ${tx.id ? shortenAddress(tx.id, 8, 6) : 'N/A'}: ${tx.txType}`);
       }
     }
   } catch (error) {
-    printError(`addressRole=sender filter failed: ${error instanceof Error ? error.message : String(error)}`)
+    printError(
+      `addressRole=sender filter failed: ${error instanceof Error ? error.message : String(error)}`,
+    );
   }
 
   // =========================================================================
   // Step 6: Filter by address and addressRole - Receiver
   // =========================================================================
-  printStep(6, 'Filtering by address with addressRole=receiver')
+  printStep(6, 'Filtering by address with addressRole=receiver');
 
   try {
-    printInfo(`Searching for transactions where ${shortenAddress(holder1Address)} is receiver...`)
+    printInfo(`Searching for transactions where ${shortenAddress(holder1Address)} is receiver...`);
     const receiverTxns = await indexer.lookupAssetTransactions(assetId, {
       address: holder1Address,
       addressRole: 'receiver',
-    })
+    });
 
-    printSuccess(`Found ${receiverTxns.transactions.length} transaction(s) where Holder 1 is receiver`)
+    printSuccess(
+      `Found ${receiverTxns.transactions.length} transaction(s) where Holder 1 is receiver`,
+    );
     if (receiverTxns.transactions.length > 0) {
       for (const tx of receiverTxns.transactions) {
         if (tx.assetTransferTransaction) {
           printInfo(
             `  - ${tx.id ? shortenAddress(tx.id, 8, 6) : 'N/A'}: ${tx.txType}, amount: ${tx.assetTransferTransaction.amount.toLocaleString('en-US')}`,
-          )
+          );
         } else {
-          printInfo(`  - ${tx.id ? shortenAddress(tx.id, 8, 6) : 'N/A'}: ${tx.txType}`)
+          printInfo(`  - ${tx.id ? shortenAddress(tx.id, 8, 6) : 'N/A'}: ${tx.txType}`);
         }
       }
     }
   } catch (error) {
-    printError(`addressRole=receiver filter failed: ${error instanceof Error ? error.message : String(error)}`)
+    printError(
+      `addressRole=receiver filter failed: ${error instanceof Error ? error.message : String(error)}`,
+    );
   }
 
   // =========================================================================
   // Step 7: Filter by address and addressRole - Freeze-target
   // =========================================================================
-  printStep(7, 'Filtering by address with addressRole=freeze-target')
+  printStep(7, 'Filtering by address with addressRole=freeze-target');
 
   try {
     // freeze-target filters for accounts that were the target of freeze operations
-    printInfo(`Searching for freeze transactions targeting ${shortenAddress(holder1Address)}...`)
+    printInfo(`Searching for freeze transactions targeting ${shortenAddress(holder1Address)}...`);
     const freezeTargetTxns = await indexer.lookupAssetTransactions(assetId, {
       address: holder1Address,
       addressRole: 'freeze-target',
-    })
+    });
 
-    printSuccess(`Found ${freezeTargetTxns.transactions.length} freeze transaction(s) targeting Holder 1`)
+    printSuccess(
+      `Found ${freezeTargetTxns.transactions.length} freeze transaction(s) targeting Holder 1`,
+    );
     if (freezeTargetTxns.transactions.length > 0) {
       for (const tx of freezeTargetTxns.transactions) {
         if (tx.assetFreezeTransaction) {
           printInfo(
             `  - ${tx.id ? shortenAddress(tx.id, 8, 6) : 'N/A'}: ${tx.txType}, newFreezeStatus: ${tx.assetFreezeTransaction.newFreezeStatus}`,
-          )
+          );
         }
       }
     }
-    printInfo('')
-    printInfo('Note: freeze-target is specifically for afrz transactions targeting an account')
+    printInfo('');
+    printInfo('Note: freeze-target is specifically for afrz transactions targeting an account');
   } catch (error) {
-    printError(`addressRole=freeze-target filter failed: ${error instanceof Error ? error.message : String(error)}`)
+    printError(
+      `addressRole=freeze-target filter failed: ${error instanceof Error ? error.message : String(error)}`,
+    );
   }
 
   // =========================================================================
   // Step 8: Filter by txType - Asset Transfer (axfer)
   // =========================================================================
-  printStep(8, 'Filtering by txType for specific asset operations')
+  printStep(8, 'Filtering by txType for specific asset operations');
 
   try {
     // txType values relevant to assets: acfg (config), axfer (transfer), afrz (freeze)
-    printInfo('Asset-related txType values: acfg (config), axfer (transfer), afrz (freeze)')
-    printInfo('')
+    printInfo('Asset-related txType values: acfg (config), axfer (transfer), afrz (freeze)');
+    printInfo('');
 
     // Search for asset transfers only
-    printInfo('Searching for asset transfer transactions (txType=axfer)...')
+    printInfo('Searching for asset transfer transactions (txType=axfer)...');
     const axferTxns = await indexer.lookupAssetTransactions(assetId, {
       txType: 'axfer',
-    })
-    printSuccess(`Found ${axferTxns.transactions.length} asset transfer transaction(s)`)
+    });
+    printSuccess(`Found ${axferTxns.transactions.length} asset transfer transaction(s)`);
     if (axferTxns.transactions.length > 0) {
       for (const tx of axferTxns.transactions.slice(0, 4)) {
-        const amount = tx.assetTransferTransaction?.amount ?? 0n
-        const amountStr = amount === 0n ? '0 (opt-in)' : amount.toLocaleString('en-US')
-        printInfo(`  - ${tx.id ? shortenAddress(tx.id, 8, 6) : 'N/A'}: amount=${amountStr}`)
+        const amount = tx.assetTransferTransaction?.amount ?? 0n;
+        const amountStr = amount === 0n ? '0 (opt-in)' : amount.toLocaleString('en-US');
+        printInfo(`  - ${tx.id ? shortenAddress(tx.id, 8, 6) : 'N/A'}: amount=${amountStr}`);
       }
     }
-    printInfo('')
+    printInfo('');
 
     // Search for asset freeze transactions
-    printInfo('Searching for asset freeze transactions (txType=afrz)...')
+    printInfo('Searching for asset freeze transactions (txType=afrz)...');
     const afrzTxns = await indexer.lookupAssetTransactions(assetId, {
       txType: 'afrz',
-    })
-    printSuccess(`Found ${afrzTxns.transactions.length} asset freeze transaction(s)`)
+    });
+    printSuccess(`Found ${afrzTxns.transactions.length} asset freeze transaction(s)`);
     if (afrzTxns.transactions.length > 0) {
       for (const tx of afrzTxns.transactions) {
-        const frozen = tx.assetFreezeTransaction?.newFreezeStatus ?? false
-        printInfo(`  - ${tx.id ? shortenAddress(tx.id, 8, 6) : 'N/A'}: frozen=${frozen}`)
+        const frozen = tx.assetFreezeTransaction?.newFreezeStatus ?? false;
+        printInfo(`  - ${tx.id ? shortenAddress(tx.id, 8, 6) : 'N/A'}: frozen=${frozen}`);
       }
     }
-    printInfo('')
+    printInfo('');
 
     // Search for asset config transactions
-    printInfo('Searching for asset config transactions (txType=acfg)...')
+    printInfo('Searching for asset config transactions (txType=acfg)...');
     const acfgTxns = await indexer.lookupAssetTransactions(assetId, {
       txType: 'acfg',
-    })
-    printSuccess(`Found ${acfgTxns.transactions.length} asset config transaction(s)`)
+    });
+    printSuccess(`Found ${acfgTxns.transactions.length} asset config transaction(s)`);
     if (acfgTxns.transactions.length > 0) {
       for (const tx of acfgTxns.transactions) {
         if (tx.createdAssetId) {
-          printInfo(`  - ${tx.id ? shortenAddress(tx.id, 8, 6) : 'N/A'}: asset creation`)
+          printInfo(`  - ${tx.id ? shortenAddress(tx.id, 8, 6) : 'N/A'}: asset creation`);
         } else {
-          printInfo(`  - ${tx.id ? shortenAddress(tx.id, 8, 6) : 'N/A'}: asset reconfiguration`)
+          printInfo(`  - ${tx.id ? shortenAddress(tx.id, 8, 6) : 'N/A'}: asset reconfiguration`);
         }
       }
     }
   } catch (error) {
-    printError(`txType filter failed: ${error instanceof Error ? error.message : String(error)}`)
+    printError(`txType filter failed: ${error instanceof Error ? error.message : String(error)}`);
   }
 
   // =========================================================================
   // Step 9: Filter by round range (minRound, maxRound)
   // =========================================================================
-  printStep(9, 'Filtering by round range (minRound, maxRound)')
+  printStep(9, 'Filtering by round range (minRound, maxRound)');
 
   try {
     // Get current round
-    const latestTxns = await indexer.lookupAssetTransactions(assetId, { limit: 1 })
-    const currentRound = latestTxns.currentRound
+    const latestTxns = await indexer.lookupAssetTransactions(assetId, { limit: 1 });
+    const currentRound = latestTxns.currentRound;
 
-    printInfo(`Transactions created starting from round: ${startRound}`)
-    printInfo(`Current round: ${currentRound}`)
-    printInfo('')
+    printInfo(`Transactions created starting from round: ${startRound}`);
+    printInfo(`Current round: ${currentRound}`);
+    printInfo('');
 
     // Filter by round range
-    printInfo(`Searching for transactions from round ${startRound} to ${currentRound}...`)
+    printInfo(`Searching for transactions from round ${startRound} to ${currentRound}...`);
     const roundFilteredTxns = await indexer.lookupAssetTransactions(assetId, {
       minRound: startRound,
       maxRound: currentRound,
-    })
+    });
 
-    printSuccess(`Found ${roundFilteredTxns.transactions.length} transaction(s) in round range`)
+    printSuccess(`Found ${roundFilteredTxns.transactions.length} transaction(s) in round range`);
     if (roundFilteredTxns.transactions.length > 0) {
-      const rounds = roundFilteredTxns.transactions.map((tx) => tx.confirmedRound).filter((r) => r !== undefined)
+      const rounds = roundFilteredTxns.transactions
+        .map(tx => tx.confirmedRound)
+        .filter(r => r !== undefined);
       if (rounds.length > 0) {
-        const minFoundRound = rounds.reduce((a, b) => (a! < b! ? a : b))
-        const maxFoundRound = rounds.reduce((a, b) => (a! > b! ? a : b))
-        printInfo(`  Rounds of found transactions: ${minFoundRound} to ${maxFoundRound}`)
+        const minFoundRound = rounds.reduce((a, b) => (a! < b! ? a : b));
+        const maxFoundRound = rounds.reduce((a, b) => (a! > b! ? a : b));
+        printInfo(`  Rounds of found transactions: ${minFoundRound} to ${maxFoundRound}`);
       }
     }
   } catch (error) {
-    printError(`round filter failed: ${error instanceof Error ? error.message : String(error)}`)
+    printError(`round filter failed: ${error instanceof Error ? error.message : String(error)}`);
   }
 
   // =========================================================================
   // Step 10: Filter by time range (beforeTime, afterTime)
   // =========================================================================
-  printStep(10, 'Filtering by time range (beforeTime, afterTime)')
+  printStep(10, 'Filtering by time range (beforeTime, afterTime)');
 
   try {
     // Time filters use RFC 3339 format (ISO 8601, e.g., "2026-01-26T10:00:00.000Z")
-    const now = new Date()
-    const oneHourAgo = new Date(now.getTime() - 60 * 60 * 1000)
+    const now = new Date();
+    const oneHourAgo = new Date(now.getTime() - 60 * 60 * 1000);
 
-    const afterTimeStr = oneHourAgo.toISOString()
-    const beforeTimeStr = now.toISOString()
+    const afterTimeStr = oneHourAgo.toISOString();
+    const beforeTimeStr = now.toISOString();
 
-    printInfo('Time filters use RFC 3339 format (ISO 8601)')
-    printInfo(`  afterTime: ${afterTimeStr}`)
-    printInfo(`  beforeTime: ${beforeTimeStr}`)
-    printInfo('')
+    printInfo('Time filters use RFC 3339 format (ISO 8601)');
+    printInfo(`  afterTime: ${afterTimeStr}`);
+    printInfo(`  beforeTime: ${beforeTimeStr}`);
+    printInfo('');
 
-    printInfo('Searching for transactions in the last hour...')
+    printInfo('Searching for transactions in the last hour...');
     const timeFilteredTxns = await indexer.lookupAssetTransactions(assetId, {
       afterTime: afterTimeStr,
       beforeTime: beforeTimeStr,
-    })
+    });
 
-    printSuccess(`Found ${timeFilteredTxns.transactions.length} transaction(s) in time range`)
+    printSuccess(`Found ${timeFilteredTxns.transactions.length} transaction(s) in time range`);
     if (timeFilteredTxns.transactions.length > 0) {
-      const times = timeFilteredTxns.transactions.map((tx) => tx.roundTime).filter((t) => t !== undefined)
+      const times = timeFilteredTxns.transactions
+        .map(tx => tx.roundTime)
+        .filter(t => t !== undefined);
       if (times.length > 0) {
-        const minTime = Math.min(...(times as number[]))
-        const maxTime = Math.max(...(times as number[]))
-        printInfo(`  Time range of found transactions:`)
-        printInfo(`    - Earliest: ${new Date(minTime * 1000).toISOString()}`)
-        printInfo(`    - Latest: ${new Date(maxTime * 1000).toISOString()}`)
+        const minTime = Math.min(...(times as number[]));
+        const maxTime = Math.max(...(times as number[]));
+        printInfo(`  Time range of found transactions:`);
+        printInfo(`    - Earliest: ${new Date(minTime * 1000).toISOString()}`);
+        printInfo(`    - Latest: ${new Date(maxTime * 1000).toISOString()}`);
       }
     }
   } catch (error) {
-    printError(`time filter failed: ${error instanceof Error ? error.message : String(error)}`)
+    printError(`time filter failed: ${error instanceof Error ? error.message : String(error)}`);
   }
 
   // =========================================================================
   // Step 11: Filter by currency amount
   // =========================================================================
-  printStep(11, 'Filtering by currency amount (currencyGreaterThan, currencyLessThan)')
+  printStep(11, 'Filtering by currency amount (currencyGreaterThan, currencyLessThan)');
 
   try {
     // currencyGreaterThan/currencyLessThan filter by transaction amount
-    printInfo('Searching for transfers with amount > 0 (excludes opt-ins)...')
+    printInfo('Searching for transfers with amount > 0 (excludes opt-ins)...');
     const nonZeroTxns = await indexer.lookupAssetTransactions(assetId, {
       txType: 'axfer',
       currencyGreaterThan: 0n,
-    })
+    });
 
-    printSuccess(`Found ${nonZeroTxns.transactions.length} transfer(s) with amount > 0`)
+    printSuccess(`Found ${nonZeroTxns.transactions.length} transfer(s) with amount > 0`);
     if (nonZeroTxns.transactions.length > 0) {
       for (const tx of nonZeroTxns.transactions) {
-        const amount = tx.assetTransferTransaction?.amount ?? 0n
-        printInfo(`  - ${tx.id ? shortenAddress(tx.id, 8, 6) : 'N/A'}: amount=${amount.toLocaleString('en-US')}`)
+        const amount = tx.assetTransferTransaction?.amount ?? 0n;
+        printInfo(
+          `  - ${tx.id ? shortenAddress(tx.id, 8, 6) : 'N/A'}: amount=${amount.toLocaleString('en-US')}`,
+        );
       }
     }
-    printInfo('')
+    printInfo('');
 
     // Filter for large transfers only
-    printInfo('Searching for transfers with amount > 500,000 (> 500 TXN)...')
+    printInfo('Searching for transfers with amount > 500,000 (> 500 TXN)...');
     const largeTxns = await indexer.lookupAssetTransactions(assetId, {
       txType: 'axfer',
       currencyGreaterThan: 500_000n,
-    })
+    });
 
-    printSuccess(`Found ${largeTxns.transactions.length} large transfer(s)`)
+    printSuccess(`Found ${largeTxns.transactions.length} large transfer(s)`);
     if (largeTxns.transactions.length > 0) {
       for (const tx of largeTxns.transactions) {
-        const amount = tx.assetTransferTransaction?.amount ?? 0n
-        printInfo(`  - ${tx.id ? shortenAddress(tx.id, 8, 6) : 'N/A'}: amount=${amount.toLocaleString('en-US')}`)
+        const amount = tx.assetTransferTransaction?.amount ?? 0n;
+        printInfo(
+          `  - ${tx.id ? shortenAddress(tx.id, 8, 6) : 'N/A'}: amount=${amount.toLocaleString('en-US')}`,
+        );
       }
     }
   } catch (error) {
-    printError(`currency filter failed: ${error instanceof Error ? error.message : String(error)}`)
+    printError(`currency filter failed: ${error instanceof Error ? error.message : String(error)}`);
   }
 
   // =========================================================================
   // Step 12: Combining multiple filters
   // =========================================================================
-  printStep(12, 'Combining multiple filters')
+  printStep(12, 'Combining multiple filters');
 
   try {
-    printInfo('You can combine multiple filters to narrow down results.')
-    printInfo('')
+    printInfo('You can combine multiple filters to narrow down results.');
+    printInfo('');
 
     // Combine txType and address
-    printInfo(`Searching for asset transfers TO ${shortenAddress(holder1Address)}...`)
+    printInfo(`Searching for asset transfers TO ${shortenAddress(holder1Address)}...`);
     const combinedTxns1 = await indexer.lookupAssetTransactions(assetId, {
       txType: 'axfer',
       address: holder1Address,
       addressRole: 'receiver',
-    })
-    printSuccess(`Found ${combinedTxns1.transactions.length} transfer(s) to Holder 1`)
+    });
+    printSuccess(`Found ${combinedTxns1.transactions.length} transfer(s) to Holder 1`);
     for (const tx of combinedTxns1.transactions) {
-      const amount = tx.assetTransferTransaction?.amount ?? 0n
-      printInfo(`  - ${tx.id ? shortenAddress(tx.id, 8, 6) : 'N/A'}: amount=${amount.toLocaleString('en-US')}`)
+      const amount = tx.assetTransferTransaction?.amount ?? 0n;
+      printInfo(
+        `  - ${tx.id ? shortenAddress(tx.id, 8, 6) : 'N/A'}: amount=${amount.toLocaleString('en-US')}`,
+      );
     }
-    printInfo('')
+    printInfo('');
 
     // Combine round range and txType
-    printInfo('Searching for freeze transactions in recent rounds...')
-    const latestResult = await indexer.lookupAssetTransactions(assetId, { limit: 1 })
+    printInfo('Searching for freeze transactions in recent rounds...');
+    const latestResult = await indexer.lookupAssetTransactions(assetId, { limit: 1 });
     const combinedTxns2 = await indexer.lookupAssetTransactions(assetId, {
       txType: 'afrz',
       minRound: startRound,
       maxRound: latestResult.currentRound,
-    })
-    printSuccess(`Found ${combinedTxns2.transactions.length} freeze transaction(s) in recent rounds`)
+    });
+    printSuccess(
+      `Found ${combinedTxns2.transactions.length} freeze transaction(s) in recent rounds`,
+    );
     for (const tx of combinedTxns2.transactions) {
-      const frozen = tx.assetFreezeTransaction?.newFreezeStatus ?? false
-      printInfo(`  - ${tx.id ? shortenAddress(tx.id, 8, 6) : 'N/A'}: frozen=${frozen}, round=${tx.confirmedRound}`)
+      const frozen = tx.assetFreezeTransaction?.newFreezeStatus ?? false;
+      printInfo(
+        `  - ${tx.id ? shortenAddress(tx.id, 8, 6) : 'N/A'}: frozen=${frozen}, round=${tx.confirmedRound}`,
+      );
     }
   } catch (error) {
-    printError(`combined filters failed: ${error instanceof Error ? error.message : String(error)}`)
+    printError(
+      `combined filters failed: ${error instanceof Error ? error.message : String(error)}`,
+    );
   }
 
   // =========================================================================
   // Step 13: Pagination with limit and next
   // =========================================================================
-  printStep(13, 'Demonstrating pagination with limit and next')
+  printStep(13, 'Demonstrating pagination with limit and next');
 
   try {
-    printInfo('Using limit=3 to demonstrate pagination...')
-    const page1 = await indexer.lookupAssetTransactions(assetId, { limit: 3 })
+    printInfo('Using limit=3 to demonstrate pagination...');
+    const page1 = await indexer.lookupAssetTransactions(assetId, { limit: 3 });
 
-    printInfo(`Page 1: Retrieved ${page1.transactions.length} transaction(s)`)
+    printInfo(`Page 1: Retrieved ${page1.transactions.length} transaction(s)`);
     for (const tx of page1.transactions) {
-      printInfo(`  - ${tx.id ? shortenAddress(tx.id, 8, 6) : 'N/A'}: ${tx.txType}`)
+      printInfo(`  - ${tx.id ? shortenAddress(tx.id, 8, 6) : 'N/A'}: ${tx.txType}`);
     }
 
     if (page1.nextToken) {
-      printInfo(`  Next token available: ${page1.nextToken.substring(0, 20)}...`)
-      printInfo('')
+      printInfo(`  Next token available: ${page1.nextToken.substring(0, 20)}...`);
+      printInfo('');
 
-      printInfo('Fetching next page...')
+      printInfo('Fetching next page...');
       const page2 = await indexer.lookupAssetTransactions(assetId, {
         limit: 3,
         next: page1.nextToken,
-      })
+      });
 
-      printInfo(`Page 2: Retrieved ${page2.transactions.length} transaction(s)`)
+      printInfo(`Page 2: Retrieved ${page2.transactions.length} transaction(s)`);
       for (const tx of page2.transactions) {
-        printInfo(`  - ${tx.id ? shortenAddress(tx.id, 8, 6) : 'N/A'}: ${tx.txType}`)
+        printInfo(`  - ${tx.id ? shortenAddress(tx.id, 8, 6) : 'N/A'}: ${tx.txType}`);
       }
 
       if (page2.nextToken) {
-        printInfo(`  More pages available (nextToken present)`)
+        printInfo(`  More pages available (nextToken present)`);
       } else {
-        printInfo(`  No more pages (no nextToken)`)
+        printInfo(`  No more pages (no nextToken)`);
       }
     } else {
-      printInfo('  No pagination needed (all results fit in one page)')
+      printInfo('  No pagination needed (all results fit in one page)');
     }
   } catch (error) {
-    printError(`pagination failed: ${error instanceof Error ? error.message : String(error)}`)
+    printError(`pagination failed: ${error instanceof Error ? error.message : String(error)}`);
   }
 
   // =========================================================================
   // Summary
   // =========================================================================
-  printHeader('Summary')
-  printInfo('This example demonstrated lookupAssetTransactions() with various filters:')
-  printInfo('')
-  printInfo('Key characteristics:')
-  printInfo('  - Results are returned oldest to newest')
-  printInfo('  - Returns all transaction types involving the asset (acfg, axfer, afrz)')
-  printInfo('')
-  printInfo('Transaction types for assets:')
-  printInfo('  - acfg: Asset configuration (create, reconfigure, destroy)')
-  printInfo('  - axfer: Asset transfer (opt-in with 0 amount, transfers, close-out)')
-  printInfo('  - afrz: Asset freeze (freeze/unfreeze account holdings)')
-  printInfo('')
-  printInfo('Address filtering with addressRole:')
-  printInfo('  - sender: Transactions where address is the sender')
-  printInfo('  - receiver: Transactions where address is the receiver')
-  printInfo('  - freeze-target: Freeze transactions targeting the address')
-  printInfo('')
-  printInfo('Other filter parameters:')
-  printInfo('  - txType: Filter by transaction type (acfg, axfer, afrz)')
-  printInfo('  - minRound/maxRound: Filter by round range')
-  printInfo('  - beforeTime/afterTime: Filter by time (RFC 3339 format)')
-  printInfo('  - currencyGreaterThan/currencyLessThan: Filter by amount')
-  printInfo('  - sigType: Filter by signature type (sig, msig, lsig)')
-  printInfo('  - notePrefix: Filter by note prefix')
-  printInfo('  - txId: Find specific transaction by ID')
-  printInfo('  - excludeCloseTo: Exclude close-to transactions')
-  printInfo('  - rekeyTo: Filter for rekey transactions')
-  printInfo('')
-  printInfo('Pagination:')
-  printInfo('  - limit: Maximum number of results per page')
-  printInfo('  - next: Token from previous response to get next page')
+  printHeader('Summary');
+  printInfo('This example demonstrated lookupAssetTransactions() with various filters:');
+  printInfo('');
+  printInfo('Key characteristics:');
+  printInfo('  - Results are returned oldest to newest');
+  printInfo('  - Returns all transaction types involving the asset (acfg, axfer, afrz)');
+  printInfo('');
+  printInfo('Transaction types for assets:');
+  printInfo('  - acfg: Asset configuration (create, reconfigure, destroy)');
+  printInfo('  - axfer: Asset transfer (opt-in with 0 amount, transfers, close-out)');
+  printInfo('  - afrz: Asset freeze (freeze/unfreeze account holdings)');
+  printInfo('');
+  printInfo('Address filtering with addressRole:');
+  printInfo('  - sender: Transactions where address is the sender');
+  printInfo('  - receiver: Transactions where address is the receiver');
+  printInfo('  - freeze-target: Freeze transactions targeting the address');
+  printInfo('');
+  printInfo('Other filter parameters:');
+  printInfo('  - txType: Filter by transaction type (acfg, axfer, afrz)');
+  printInfo('  - minRound/maxRound: Filter by round range');
+  printInfo('  - beforeTime/afterTime: Filter by time (RFC 3339 format)');
+  printInfo('  - currencyGreaterThan/currencyLessThan: Filter by amount');
+  printInfo('  - sigType: Filter by signature type (sig, msig, lsig)');
+  printInfo('  - notePrefix: Filter by note prefix');
+  printInfo('  - txId: Find specific transaction by ID');
+  printInfo('  - excludeCloseTo: Exclude close-to transactions');
+  printInfo('  - rekeyTo: Filter for rekey transactions');
+  printInfo('');
+  printInfo('Pagination:');
+  printInfo('  - limit: Maximum number of results per page');
+  printInfo('  - next: Token from previous response to get next page');
 }
 
-main().catch((error) => {
-  console.error('Fatal error:', error)
-  process.exit(1)
-})
-
+main().catch(error => {
+  console.error('Fatal error:', error);
+  process.exit(1);
+});
 ```
 
 ---

@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "BaseContract"
+title: 'BaseContract'
 ---
 
 Defined in: [base-contract.ts:9](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/base-contract.ts#L9)
@@ -37,7 +37,7 @@ The program to be run when the On Completion Action is != ClearState (3)
 
 `boolean` \| [`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
 
-***
+---
 
 ### clearStateProgram()
 

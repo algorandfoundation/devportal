@@ -1,5 +1,5 @@
 ---
-title: "AlgoKit Task Mint"
+title: 'AlgoKit Task Mint'
 ---
 
 The AlgoKit Mint feature allows you to mint new fungible or non-fungible assets on the Algorand blockchain. This feature supports the creation of assets, validation of asset parameters, and uploading of asset metadata and image to IPFS using the Piñata provider. Immutable assets are compliant with [ARC3](https://arc.algorand.foundation/ARCs/arc-0003), while mutable are based using [ARC19](https://arc.algorand.foundation/ARCs/arc-0019) standard.

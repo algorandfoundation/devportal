@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "BlockRewards"
+title: 'BlockRewards'
 ---
 
 Defined in: [src/types/subscription.ts:73](https://github.com/algorandfoundation/algokit-subscriber-ts/blob/main/src/types/subscription.ts#L73)
@@ -17,7 +17,7 @@ Defined in: [src/types/subscription.ts:75](https://github.com/algorandfoundation
 
 FeeSink is an address that accepts transaction fees, it can only spend to the incentive pool.
 
-***
+---
 
 ### rewardsCalculationRound
 
@@ -27,7 +27,7 @@ Defined in: [src/types/subscription.ts:77](https://github.com/algorandfoundation
 
 The number of leftover MicroAlgos after the distribution of rewards-rate MicroAlgos for every reward unit in the next round.
 
-***
+---
 
 ### rewardsLevel
 
@@ -37,7 +37,7 @@ Defined in: [src/types/subscription.ts:79](https://github.com/algorandfoundation
 
 How many rewards, in MicroAlgos, have been distributed to each RewardUnit of MicroAlgos since genesis.
 
-***
+---
 
 ### rewardsPool
 
@@ -47,7 +47,7 @@ Defined in: [src/types/subscription.ts:81](https://github.com/algorandfoundation
 
 RewardsPool is an address that accepts periodic injections from the fee-sink and continually redistributes them as rewards.
 
-***
+---
 
 ### rewardsRate
 
@@ -57,7 +57,7 @@ Defined in: [src/types/subscription.ts:83](https://github.com/algorandfoundation
 
 Number of new MicroAlgos added to the participation stake from rewards at the next round.
 
-***
+---
 
 ### rewardsResidue
 

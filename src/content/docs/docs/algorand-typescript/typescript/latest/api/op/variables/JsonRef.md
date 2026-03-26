@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "JsonRef"
+title: 'JsonRef'
 ---
 
 > `const` **JsonRef**: `object`

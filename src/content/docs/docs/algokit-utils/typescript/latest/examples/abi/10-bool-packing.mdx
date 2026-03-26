@@ -1,6 +1,6 @@
 ---
-title: "ABI Bool Array Packing"
-description: "This example demonstrates how bool arrays are packed efficiently in ARC-4:"
+title: 'ABI Bool Array Packing'
+description: 'This example demonstrates how bool arrays are packed efficiently in ARC-4:'
 sidebar:
   order: 10
 ---
@@ -10,11 +10,12 @@ sidebar:
 ## Description
 
 This example demonstrates how bool arrays are packed efficiently in ARC-4:
+
 - 8 booleans fit in 1 byte (1 bit per boolean)
 - bool[8] encodes to exactly 1 byte
 - bool[16] encodes to 2 bytes
 - Partial byte arrays (e.g., bool[5]) still use full bytes
- Key characteristics of bool array packing:
+  Key characteristics of bool array packing:
 - Each bool is stored as a single bit, not a full byte
 - Bools are packed left-to-right starting from the MSB (most significant bit)
 - Array length is rounded up to the next full byte
@@ -57,14 +58,18 @@ npm run example abi/10-bool-packing.ts
  * - No LocalNet required
  */
 
-import { ABIArrayDynamicType, ABIArrayStaticType, ABIType } from '@algorandfoundation/algokit-utils/abi'
-import { formatHex, printHeader, printInfo, printStep, printSuccess } from '../shared/utils.js'
+import {
+  ABIArrayDynamicType,
+  ABIArrayStaticType,
+  ABIType,
+} from '@algorandfoundation/algokit-utils/abi';
+import { formatHex, printHeader, printInfo, printStep, printSuccess } from '../shared/utils.js';
 
 /**
  * Format a byte as a binary string showing all 8 bits
  */
 function formatBinary(byte: number): string {
-  return byte.toString(2).padStart(8, '0')
+  return byte.toString(2).padStart(8, '0');
 }
 
 /**
@@ -72,287 +77,311 @@ function formatBinary(byte: number): string {
  */
 function formatBinaryBytes(bytes: Uint8Array): string {
   return Array.from(bytes)
-    .map((b) => formatBinary(b))
-    .join(' ')
+    .map(b => formatBinary(b))
+    .join(' ');
 }
 
 function main() {
-  printHeader('ABI Bool Array Packing Example')
+  printHeader('ABI Bool Array Packing Example');
 
   // Step 1: Introduction to bool array packing
-  printStep(1, 'Introduction to Bool Array Packing')
+  printStep(1, 'Introduction to Bool Array Packing');
 
-  printInfo('In ARC-4 ABI encoding, boolean arrays use bit-packing:')
-  printInfo('  - Each bool takes 1 bit (not 1 byte)')
-  printInfo('  - 8 bools fit in 1 byte')
-  printInfo('  - Bools are packed from MSB (bit 7) to LSB (bit 0)')
-  printInfo('  - true = 1, false = 0')
+  printInfo('In ARC-4 ABI encoding, boolean arrays use bit-packing:');
+  printInfo('  - Each bool takes 1 bit (not 1 byte)');
+  printInfo('  - 8 bools fit in 1 byte');
+  printInfo('  - Bools are packed from MSB (bit 7) to LSB (bit 0)');
+  printInfo('  - true = 1, false = 0');
 
   // Step 2: bool[8] - exactly 1 byte
-  printStep(2, 'bool[8] Encoding - Exactly 1 Byte')
+  printStep(2, 'bool[8] Encoding - Exactly 1 Byte');
 
-  const bool8Type = ABIType.from('bool[8]') as ABIArrayStaticType
+  const bool8Type = ABIType.from('bool[8]') as ABIArrayStaticType;
 
-  printInfo(`Type: ${bool8Type.toString()}`)
-  printInfo(`childType: ${bool8Type.childType.toString()}`)
-  printInfo(`length: ${bool8Type.length}`)
-  printInfo(`byteLen(): ${bool8Type.byteLen()}`)
-  printInfo(`isDynamic(): ${bool8Type.isDynamic()}`)
+  printInfo(`Type: ${bool8Type.toString()}`);
+  printInfo(`childType: ${bool8Type.childType.toString()}`);
+  printInfo(`length: ${bool8Type.length}`);
+  printInfo(`byteLen(): ${bool8Type.byteLen()}`);
+  printInfo(`isDynamic(): ${bool8Type.isDynamic()}`);
 
   // All true - should be 0b11111111 = 0xFF
-  const allTrue8 = [true, true, true, true, true, true, true, true]
-  const allTrue8Encoded = bool8Type.encode(allTrue8)
+  const allTrue8 = [true, true, true, true, true, true, true, true];
+  const allTrue8Encoded = bool8Type.encode(allTrue8);
 
-  printInfo(`\nAll true: [${allTrue8.join(', ')}]`)
-  printInfo(`  Encoded: ${formatHex(allTrue8Encoded)}`)
-  printInfo(`  Binary:  ${formatBinaryBytes(allTrue8Encoded)}`)
-  printInfo(`  Length:  ${allTrue8Encoded.length} byte`)
+  printInfo(`\nAll true: [${allTrue8.join(', ')}]`);
+  printInfo(`  Encoded: ${formatHex(allTrue8Encoded)}`);
+  printInfo(`  Binary:  ${formatBinaryBytes(allTrue8Encoded)}`);
+  printInfo(`  Length:  ${allTrue8Encoded.length} byte`);
 
   // All false - should be 0b00000000 = 0x00
-  const allFalse8 = [false, false, false, false, false, false, false, false]
-  const allFalse8Encoded = bool8Type.encode(allFalse8)
+  const allFalse8 = [false, false, false, false, false, false, false, false];
+  const allFalse8Encoded = bool8Type.encode(allFalse8);
 
-  printInfo(`\nAll false: [${allFalse8.join(', ')}]`)
-  printInfo(`  Encoded: ${formatHex(allFalse8Encoded)}`)
-  printInfo(`  Binary:  ${formatBinaryBytes(allFalse8Encoded)}`)
-  printInfo(`  Length:  ${allFalse8Encoded.length} byte`)
+  printInfo(`\nAll false: [${allFalse8.join(', ')}]`);
+  printInfo(`  Encoded: ${formatHex(allFalse8Encoded)}`);
+  printInfo(`  Binary:  ${formatBinaryBytes(allFalse8Encoded)}`);
+  printInfo(`  Length:  ${allFalse8Encoded.length} byte`);
 
   // Alternating pattern - should be 0b10101010 = 0xAA
-  const alternating8 = [true, false, true, false, true, false, true, false]
-  const alternating8Encoded = bool8Type.encode(alternating8)
+  const alternating8 = [true, false, true, false, true, false, true, false];
+  const alternating8Encoded = bool8Type.encode(alternating8);
 
-  printInfo(`\nAlternating: [${alternating8.join(', ')}]`)
-  printInfo(`  Encoded: ${formatHex(alternating8Encoded)}`)
-  printInfo(`  Binary:  ${formatBinaryBytes(alternating8Encoded)}`)
-  printInfo(`  Expected: 10101010 = 0xAA`)
-  printInfo(`  Matches: ${alternating8Encoded[0] === 0xaa}`)
+  printInfo(`\nAlternating: [${alternating8.join(', ')}]`);
+  printInfo(`  Encoded: ${formatHex(alternating8Encoded)}`);
+  printInfo(`  Binary:  ${formatBinaryBytes(alternating8Encoded)}`);
+  printInfo(`  Expected: 10101010 = 0xAA`);
+  printInfo(`  Matches: ${alternating8Encoded[0] === 0xaa}`);
 
   // Step 3: Bit position mapping
-  printStep(3, 'Bit Position Mapping')
+  printStep(3, 'Bit Position Mapping');
 
-  printInfo('Bools map to bit positions (MSB first):')
-  printInfo('  Array index:  [0]  [1]  [2]  [3]  [4]  [5]  [6]  [7]')
-  printInfo('  Bit position: b7   b6   b5   b4   b3   b2   b1   b0')
-  printInfo('  Bit value:    128  64   32   16   8    4    2    1')
+  printInfo('Bools map to bit positions (MSB first):');
+  printInfo('  Array index:  [0]  [1]  [2]  [3]  [4]  [5]  [6]  [7]');
+  printInfo('  Bit position: b7   b6   b5   b4   b3   b2   b1   b0');
+  printInfo('  Bit value:    128  64   32   16   8    4    2    1');
 
   // Single true at each position
-  printInfo('\nSingle true at each position:')
+  printInfo('\nSingle true at each position:');
 
   for (let i = 0; i < 8; i++) {
-    const bools = new Array(8).fill(false)
-    bools[i] = true
-    const encoded = bool8Type.encode(bools)
-    const expectedByte = 1 << (7 - i) // MSB first
-    printInfo(`  Index ${i}: ${formatBinary(encoded[0])} = 0x${encoded[0].toString(16).padStart(2, '0')} (expected: 0x${expectedByte.toString(16).padStart(2, '0')})`)
+    const bools = new Array(8).fill(false);
+    bools[i] = true;
+    const encoded = bool8Type.encode(bools);
+    const expectedByte = 1 << (7 - i); // MSB first
+    printInfo(
+      `  Index ${i}: ${formatBinary(encoded[0])} = 0x${encoded[0].toString(16).padStart(2, '0')} (expected: 0x${expectedByte.toString(16).padStart(2, '0')})`,
+    );
   }
 
   // Step 4: bool[16] - 2 bytes
-  printStep(4, 'bool[16] Encoding - 2 Bytes')
+  printStep(4, 'bool[16] Encoding - 2 Bytes');
 
-  const bool16Type = ABIType.from('bool[16]') as ABIArrayStaticType
+  const bool16Type = ABIType.from('bool[16]') as ABIArrayStaticType;
 
-  printInfo(`Type: ${bool16Type.toString()}`)
-  printInfo(`byteLen(): ${bool16Type.byteLen()}`)
+  printInfo(`Type: ${bool16Type.toString()}`);
+  printInfo(`byteLen(): ${bool16Type.byteLen()}`);
 
   // First 8 true, rest false
-  const firstHalf16 = [true, true, true, true, true, true, true, true, false, false, false, false, false, false, false, false]
-  const firstHalf16Encoded = bool16Type.encode(firstHalf16)
+  const firstHalf16 = [
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+  ];
+  const firstHalf16Encoded = bool16Type.encode(firstHalf16);
 
-  printInfo(`\nFirst 8 true, rest false:`)
-  printInfo(`  Encoded: ${formatHex(firstHalf16Encoded)}`)
-  printInfo(`  Binary:  ${formatBinaryBytes(firstHalf16Encoded)}`)
-  printInfo(`  Byte 0:  ${formatBinary(firstHalf16Encoded[0])} (positions 0-7)`)
-  printInfo(`  Byte 1:  ${formatBinary(firstHalf16Encoded[1])} (positions 8-15)`)
+  printInfo(`\nFirst 8 true, rest false:`);
+  printInfo(`  Encoded: ${formatHex(firstHalf16Encoded)}`);
+  printInfo(`  Binary:  ${formatBinaryBytes(firstHalf16Encoded)}`);
+  printInfo(`  Byte 0:  ${formatBinary(firstHalf16Encoded[0])} (positions 0-7)`);
+  printInfo(`  Byte 1:  ${formatBinary(firstHalf16Encoded[1])} (positions 8-15)`);
 
   // All true 16
-  const allTrue16 = new Array(16).fill(true)
-  const allTrue16Encoded = bool16Type.encode(allTrue16)
+  const allTrue16 = new Array(16).fill(true);
+  const allTrue16Encoded = bool16Type.encode(allTrue16);
 
-  printInfo(`\nAll 16 true:`)
-  printInfo(`  Encoded: ${formatHex(allTrue16Encoded)}`)
-  printInfo(`  Binary:  ${formatBinaryBytes(allTrue16Encoded)}`)
-  printInfo(`  Length:  ${allTrue16Encoded.length} bytes`)
+  printInfo(`\nAll 16 true:`);
+  printInfo(`  Encoded: ${formatHex(allTrue16Encoded)}`);
+  printInfo(`  Binary:  ${formatBinaryBytes(allTrue16Encoded)}`);
+  printInfo(`  Length:  ${allTrue16Encoded.length} bytes`);
 
   // Step 5: Partial byte arrays (bool[5])
-  printStep(5, 'Partial Byte Arrays - bool[5]')
+  printStep(5, 'Partial Byte Arrays - bool[5]');
 
-  const bool5Type = ABIType.from('bool[5]') as ABIArrayStaticType
+  const bool5Type = ABIType.from('bool[5]') as ABIArrayStaticType;
 
-  printInfo(`Type: ${bool5Type.toString()}`)
-  printInfo(`byteLen(): ${bool5Type.byteLen()}`)
-  printInfo(`Note: 5 bools still require 1 full byte (bits 0-4 used, bits 5-7 are padding zeros)`)
+  printInfo(`Type: ${bool5Type.toString()}`);
+  printInfo(`byteLen(): ${bool5Type.byteLen()}`);
+  printInfo(`Note: 5 bools still require 1 full byte (bits 0-4 used, bits 5-7 are padding zeros)`);
 
-  const bool5Values = [true, true, true, true, true]
-  const bool5Encoded = bool5Type.encode(bool5Values)
+  const bool5Values = [true, true, true, true, true];
+  const bool5Encoded = bool5Type.encode(bool5Values);
 
-  printInfo(`\nAll 5 true: [${bool5Values.join(', ')}]`)
-  printInfo(`  Encoded: ${formatHex(bool5Encoded)}`)
-  printInfo(`  Binary:  ${formatBinaryBytes(bool5Encoded)}`)
-  printInfo(`  Expected: 11111000 (5 ones + 3 padding zeros)`)
-  printInfo(`  Expected value: 0xF8 = ${0xf8}`)
-  printInfo(`  Matches: ${bool5Encoded[0] === 0xf8}`)
+  printInfo(`\nAll 5 true: [${bool5Values.join(', ')}]`);
+  printInfo(`  Encoded: ${formatHex(bool5Encoded)}`);
+  printInfo(`  Binary:  ${formatBinaryBytes(bool5Encoded)}`);
+  printInfo(`  Expected: 11111000 (5 ones + 3 padding zeros)`);
+  printInfo(`  Expected value: 0xF8 = ${0xf8}`);
+  printInfo(`  Matches: ${bool5Encoded[0] === 0xf8}`);
 
   // Different bool[5] patterns
-  const bool5Pattern = [true, false, true, false, true]
-  const bool5PatternEncoded = bool5Type.encode(bool5Pattern)
+  const bool5Pattern = [true, false, true, false, true];
+  const bool5PatternEncoded = bool5Type.encode(bool5Pattern);
 
-  printInfo(`\nPattern [T,F,T,F,T]:`)
-  printInfo(`  Encoded: ${formatHex(bool5PatternEncoded)}`)
-  printInfo(`  Binary:  ${formatBinaryBytes(bool5PatternEncoded)}`)
-  printInfo(`  Expected: 10101000 (pattern + 3 padding zeros)`)
+  printInfo(`\nPattern [T,F,T,F,T]:`);
+  printInfo(`  Encoded: ${formatHex(bool5PatternEncoded)}`);
+  printInfo(`  Binary:  ${formatBinaryBytes(bool5PatternEncoded)}`);
+  printInfo(`  Expected: 10101000 (pattern + 3 padding zeros)`);
 
   // Step 6: Various partial byte sizes
-  printStep(6, 'Byte Length Formula for Bool Arrays')
+  printStep(6, 'Byte Length Formula for Bool Arrays');
 
-  printInfo('Formula: byteLen = ceil(arrayLength / 8)')
-  printInfo('')
-  printInfo('Length | Bytes | Formula')
-  printInfo('-------|-------|--------')
+  printInfo('Formula: byteLen = ceil(arrayLength / 8)');
+  printInfo('');
+  printInfo('Length | Bytes | Formula');
+  printInfo('-------|-------|--------');
 
-  const boolSizes = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 15, 16, 17, 24, 32]
+  const boolSizes = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 15, 16, 17, 24, 32];
 
   for (const size of boolSizes) {
-    const type = ABIType.from(`bool[${size}]`) as ABIArrayStaticType
-    const expectedBytes = Math.ceil(size / 8)
-    printInfo(`${String(size).padStart(6)} | ${String(type.byteLen()).padStart(5)} | ceil(${size}/8) = ${expectedBytes}`)
+    const type = ABIType.from(`bool[${size}]`) as ABIArrayStaticType;
+    const expectedBytes = Math.ceil(size / 8);
+    printInfo(
+      `${String(size).padStart(6)} | ${String(type.byteLen()).padStart(5)} | ceil(${size}/8) = ${expectedBytes}`,
+    );
   }
 
   // Step 7: Compare bool[] vs uint8[] encoding size
-  printStep(7, 'Size Comparison: bool[] vs uint8[]')
+  printStep(7, 'Size Comparison: bool[] vs uint8[]');
 
-  printInfo('Comparison of encoded sizes for same element count:')
-  printInfo('')
-  printInfo('Count | bool[N] bytes | uint8[N] bytes | Savings')
-  printInfo('------|---------------|----------------|--------')
+  printInfo('Comparison of encoded sizes for same element count:');
+  printInfo('');
+  printInfo('Count | bool[N] bytes | uint8[N] bytes | Savings');
+  printInfo('------|---------------|----------------|--------');
 
-  const counts = [8, 16, 32, 64, 100, 256]
+  const counts = [8, 16, 32, 64, 100, 256];
 
   for (const count of counts) {
-    const boolType = ABIType.from(`bool[${count}]`) as ABIArrayStaticType
-    const uint8Type = ABIType.from(`uint8[${count}]`) as ABIArrayStaticType
+    const boolType = ABIType.from(`bool[${count}]`) as ABIArrayStaticType;
+    const uint8Type = ABIType.from(`uint8[${count}]`) as ABIArrayStaticType;
 
-    const boolBytes = boolType.byteLen()
-    const uint8Bytes = uint8Type.byteLen()
-    const savings = ((1 - boolBytes / uint8Bytes) * 100).toFixed(1)
+    const boolBytes = boolType.byteLen();
+    const uint8Bytes = uint8Type.byteLen();
+    const savings = ((1 - boolBytes / uint8Bytes) * 100).toFixed(1);
 
-    printInfo(`${String(count).padStart(5)} | ${String(boolBytes).padStart(13)} | ${String(uint8Bytes).padStart(14)} | ${savings}%`)
+    printInfo(
+      `${String(count).padStart(5)} | ${String(boolBytes).padStart(13)} | ${String(uint8Bytes).padStart(14)} | ${savings}%`,
+    );
   }
 
-  printInfo('\nBool arrays use 8x less space than uint8 arrays for boolean data!')
+  printInfo('\nBool arrays use 8x less space than uint8 arrays for boolean data!');
 
   // Step 8: Dynamic bool arrays
-  printStep(8, 'Dynamic Bool Arrays')
+  printStep(8, 'Dynamic Bool Arrays');
 
-  const boolDynamicType = ABIType.from('bool[]') as ABIArrayDynamicType
+  const boolDynamicType = ABIType.from('bool[]') as ABIArrayDynamicType;
 
-  printInfo(`Type: ${boolDynamicType.toString()}`)
-  printInfo(`childType: ${boolDynamicType.childType.toString()}`)
-  printInfo(`isDynamic(): ${boolDynamicType.isDynamic()}`)
+  printInfo(`Type: ${boolDynamicType.toString()}`);
+  printInfo(`childType: ${boolDynamicType.childType.toString()}`);
+  printInfo(`isDynamic(): ${boolDynamicType.isDynamic()}`);
 
   // Encode a dynamic bool array
-  const dynamicBools = [true, true, false, true, true, false, false, true, true, false]
-  const dynamicEncoded = boolDynamicType.encode(dynamicBools)
+  const dynamicBools = [true, true, false, true, true, false, false, true, true, false];
+  const dynamicEncoded = boolDynamicType.encode(dynamicBools);
 
-  printInfo(`\nDynamic array: [${dynamicBools.join(', ')}] (${dynamicBools.length} elements)`)
-  printInfo(`  Encoded: ${formatHex(dynamicEncoded)}`)
-  printInfo(`  Length:  ${dynamicEncoded.length} bytes`)
+  printInfo(`\nDynamic array: [${dynamicBools.join(', ')}] (${dynamicBools.length} elements)`);
+  printInfo(`  Encoded: ${formatHex(dynamicEncoded)}`);
+  printInfo(`  Length:  ${dynamicEncoded.length} bytes`);
 
   // Break down the encoding
-  const lengthPrefix = (dynamicEncoded[0] << 8) | dynamicEncoded[1]
-  const dataBytes = dynamicEncoded.slice(2)
+  const lengthPrefix = (dynamicEncoded[0] << 8) | dynamicEncoded[1];
+  const dataBytes = dynamicEncoded.slice(2);
 
-  printInfo(`\nEncoding breakdown:`)
-  printInfo(`  Length prefix: ${formatHex(dynamicEncoded.slice(0, 2))} = ${lengthPrefix} elements`)
-  printInfo(`  Data bytes:    ${formatHex(dataBytes)}`)
-  printInfo(`  Data binary:   ${formatBinaryBytes(dataBytes)}`)
+  printInfo(`\nEncoding breakdown:`);
+  printInfo(`  Length prefix: ${formatHex(dynamicEncoded.slice(0, 2))} = ${lengthPrefix} elements`);
+  printInfo(`  Data bytes:    ${formatHex(dataBytes)}`);
+  printInfo(`  Data binary:   ${formatBinaryBytes(dataBytes)}`);
 
   // Step 9: Decoding packed bool arrays
-  printStep(9, 'Decoding Packed Bool Arrays')
+  printStep(9, 'Decoding Packed Bool Arrays');
 
   // Static array decode
-  const encodeValues = [true, false, true, true, false, false, true, false]
-  const encoded = bool8Type.encode(encodeValues)
-  const decoded = bool8Type.decode(encoded) as boolean[]
+  const encodeValues = [true, false, true, true, false, false, true, false];
+  const encoded = bool8Type.encode(encodeValues);
+  const decoded = bool8Type.decode(encoded) as boolean[];
 
-  printInfo(`Original:  [${encodeValues.join(', ')}]`)
-  printInfo(`Encoded:   ${formatHex(encoded)} = ${formatBinaryBytes(encoded)}`)
-  printInfo(`Decoded:   [${decoded.join(', ')}]`)
-  printInfo(`Round-trip: ${decoded.every((v, i) => v === encodeValues[i])}`)
+  printInfo(`Original:  [${encodeValues.join(', ')}]`);
+  printInfo(`Encoded:   ${formatHex(encoded)} = ${formatBinaryBytes(encoded)}`);
+  printInfo(`Decoded:   [${decoded.join(', ')}]`);
+  printInfo(`Round-trip: ${decoded.every((v, i) => v === encodeValues[i])}`);
 
   // Dynamic array decode
-  const dynamicDecoded = boolDynamicType.decode(dynamicEncoded) as boolean[]
+  const dynamicDecoded = boolDynamicType.decode(dynamicEncoded) as boolean[];
 
-  printInfo(`\nDynamic original: [${dynamicBools.join(', ')}]`)
-  printInfo(`Dynamic decoded:  [${dynamicDecoded.join(', ')}]`)
-  printInfo(`Round-trip: ${dynamicDecoded.every((v, i) => v === dynamicBools[i])}`)
+  printInfo(`\nDynamic original: [${dynamicBools.join(', ')}]`);
+  printInfo(`Dynamic decoded:  [${dynamicDecoded.join(', ')}]`);
+  printInfo(`Round-trip: ${dynamicDecoded.every((v, i) => v === dynamicBools[i])}`);
 
   // Step 10: Bit-level view visualization
-  printStep(10, 'Bit-Level View Visualization')
+  printStep(10, 'Bit-Level View Visualization');
 
-  printInfo('Detailed bit-level view of bool[8] encoding:')
-  printInfo('')
+  printInfo('Detailed bit-level view of bool[8] encoding:');
+  printInfo('');
 
-  const visualBools = [true, false, true, true, false, true, false, true]
-  const visualEncoded = bool8Type.encode(visualBools)
+  const visualBools = [true, false, true, true, false, true, false, true];
+  const visualEncoded = bool8Type.encode(visualBools);
 
-  printInfo(`Values: [${visualBools.join(', ')}]`)
-  printInfo(`Byte:   ${formatHex(visualEncoded)} = ${formatBinary(visualEncoded[0])}`)
-  printInfo('')
-  printInfo('Position |  0  |  1  |  2  |  3  |  4  |  5  |  6  |  7  |')
-  printInfo('---------|-----|-----|-----|-----|-----|-----|-----|-----|')
-  printInfo(`Value    |  ${visualBools.map((b) => (b ? 'T' : 'F')).join('  |  ')}  |`)
-  printInfo(`Bit      |  ${Array.from(formatBinary(visualEncoded[0])).join('  |  ')}  |`)
-  printInfo(`Weight   | 128 |  64 |  32 |  16 |  8  |  4  |  2  |  1  |`)
+  printInfo(`Values: [${visualBools.join(', ')}]`);
+  printInfo(`Byte:   ${formatHex(visualEncoded)} = ${formatBinary(visualEncoded[0])}`);
+  printInfo('');
+  printInfo('Position |  0  |  1  |  2  |  3  |  4  |  5  |  6  |  7  |');
+  printInfo('---------|-----|-----|-----|-----|-----|-----|-----|-----|');
+  printInfo(`Value    |  ${visualBools.map(b => (b ? 'T' : 'F')).join('  |  ')}  |`);
+  printInfo(`Bit      |  ${Array.from(formatBinary(visualEncoded[0])).join('  |  ')}  |`);
+  printInfo(`Weight   | 128 |  64 |  32 |  16 |  8  |  4  |  2  |  1  |`);
 
   // Calculate the byte value step by step
-  let byteValue = 0
-  const contributions: string[] = []
+  let byteValue = 0;
+  const contributions: string[] = [];
 
   for (let i = 0; i < 8; i++) {
     if (visualBools[i]) {
-      const bitValue = 1 << (7 - i)
-      byteValue += bitValue
-      contributions.push(String(bitValue))
+      const bitValue = 1 << (7 - i);
+      byteValue += bitValue;
+      contributions.push(String(bitValue));
     }
   }
 
-  printInfo('')
-  printInfo(`Byte value = ${contributions.join(' + ')} = ${byteValue} = 0x${byteValue.toString(16).padStart(2, '0')}`)
+  printInfo('');
+  printInfo(
+    `Byte value = ${contributions.join(' + ')} = ${byteValue} = 0x${byteValue.toString(16).padStart(2, '0')}`,
+  );
 
   // Step 11: Summary
-  printStep(11, 'Summary')
+  printStep(11, 'Summary');
 
-  printInfo('Bool array packing in ARC-4:')
-  printInfo('')
-  printInfo('Packing rules:')
-  printInfo('  - Each bool = 1 bit')
-  printInfo('  - 8 bools pack into 1 byte')
-  printInfo('  - Bit order: MSB first (index 0 = bit 7)')
-  printInfo('  - Padding: zeros added to complete the last byte')
-  printInfo('')
-  printInfo('Size formula:')
-  printInfo('  - Static:  byteLen = ceil(arrayLength / 8)')
-  printInfo('  - Dynamic: 2 (length prefix) + ceil(arrayLength / 8)')
-  printInfo('')
-  printInfo('Space efficiency:')
-  printInfo('  - 8x more efficient than storing bools as uint8')
-  printInfo('  - bool[256] = 32 bytes vs uint8[256] = 256 bytes')
-  printInfo('')
-  printInfo('Bit values by position:')
-  printInfo('  Position 0 (MSB): 0x80 = 128')
-  printInfo('  Position 1:       0x40 = 64')
-  printInfo('  Position 2:       0x20 = 32')
-  printInfo('  Position 3:       0x10 = 16')
-  printInfo('  Position 4:       0x08 = 8')
-  printInfo('  Position 5:       0x04 = 4')
-  printInfo('  Position 6:       0x02 = 2')
-  printInfo('  Position 7 (LSB): 0x01 = 1')
+  printInfo('Bool array packing in ARC-4:');
+  printInfo('');
+  printInfo('Packing rules:');
+  printInfo('  - Each bool = 1 bit');
+  printInfo('  - 8 bools pack into 1 byte');
+  printInfo('  - Bit order: MSB first (index 0 = bit 7)');
+  printInfo('  - Padding: zeros added to complete the last byte');
+  printInfo('');
+  printInfo('Size formula:');
+  printInfo('  - Static:  byteLen = ceil(arrayLength / 8)');
+  printInfo('  - Dynamic: 2 (length prefix) + ceil(arrayLength / 8)');
+  printInfo('');
+  printInfo('Space efficiency:');
+  printInfo('  - 8x more efficient than storing bools as uint8');
+  printInfo('  - bool[256] = 32 bytes vs uint8[256] = 256 bytes');
+  printInfo('');
+  printInfo('Bit values by position:');
+  printInfo('  Position 0 (MSB): 0x80 = 128');
+  printInfo('  Position 1:       0x40 = 64');
+  printInfo('  Position 2:       0x20 = 32');
+  printInfo('  Position 3:       0x10 = 16');
+  printInfo('  Position 4:       0x08 = 8');
+  printInfo('  Position 5:       0x04 = 4');
+  printInfo('  Position 6:       0x02 = 2');
+  printInfo('  Position 7 (LSB): 0x01 = 1');
 
-  printSuccess('ABI Bool Array Packing example completed successfully!')
+  printSuccess('ABI Bool Array Packing example completed successfully!');
 }
 
-main()
-
+main();
 ```
 
 ---

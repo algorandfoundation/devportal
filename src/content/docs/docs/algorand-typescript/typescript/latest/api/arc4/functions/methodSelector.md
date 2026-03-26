@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "methodSelector"
+title: 'methodSelector'
 ---
 
 ## Call Signature
@@ -43,7 +43,7 @@ Returns the ARC4 method selector for a given ARC4 method signature. The method s
 
 `string`
 
-An ARC4 method signature string (Eg. `hello(string)string`.  Must be a compile time constant)
+An ARC4 method signature string (Eg. `hello(string)string`. Must be a compile time constant)
 
 ### Returns
 

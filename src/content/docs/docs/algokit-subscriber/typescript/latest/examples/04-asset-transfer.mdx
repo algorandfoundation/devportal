@@ -1,6 +1,6 @@
 ---
-title: "Asset Transfer Subscription"
-description: "This example demonstrates ASA lifecycle subscription."
+title: 'Asset Transfer Subscription'
+description: 'This example demonstrates ASA lifecycle subscription.'
 sidebar:
   order: 4
 ---
@@ -10,6 +10,7 @@ sidebar:
 ## Description
 
 This example demonstrates ASA lifecycle subscription.
+
 - Subscribe to asset creation with assetCreate filter
 - Subscribe to asset transfers with type and assetId filters
 - Track opt-in and transfer transactions
@@ -43,104 +44,115 @@ npx tsx 04-asset-transfer.ts
  * Prerequisites:
  * - LocalNet running (via `algokit localnet start`)
  */
-import { algo, AlgorandClient } from '@algorandfoundation/algokit-utils'
-import { printHeader, printStep, printInfo, printSuccess, printError, shortenAddress, createFilterTester } from './shared/utils.js'
+import { algo, AlgorandClient } from '@algorandfoundation/algokit-utils';
+import {
+  printHeader,
+  printStep,
+  printInfo,
+  printSuccess,
+  printError,
+  shortenAddress,
+  createFilterTester,
+} from './shared/utils.js';
 
 async function main() {
-  printHeader('04 — Asset Transfer Subscription')
+  printHeader('04 — Asset Transfer Subscription');
 
   // Step 1: Connect to LocalNet
-  printStep(1, 'Connect to LocalNet')
-  const algorand = AlgorandClient.defaultLocalNet()
-  const status = await algorand.client.algod.status()
-  printInfo(`Current round: ${status.lastRound.toString()}`)
-  printSuccess('Connected to LocalNet')
+  printStep(1, 'Connect to LocalNet');
+  const algorand = AlgorandClient.defaultLocalNet();
+  const status = await algorand.client.algod.status();
+  printInfo(`Current round: ${status.lastRound.toString()}`);
+  printSuccess('Connected to LocalNet');
 
   // Step 2: Create 2 accounts (creator, receiver)
-  printStep(2, 'Create and fund 2 accounts (creator, receiver)')
-  const creator = await algorand.account.fromEnvironment('ASSET_CREATOR', algo(100))
-  const receiver = await algorand.account.fromEnvironment('ASSET_RECEIVER', algo(100))
-  const creatorAddr = creator.addr.toString()
-  const receiverAddr = receiver.addr.toString()
-  printInfo(`Creator: ${shortenAddress(creatorAddr)}`)
-  printInfo(`Receiver: ${shortenAddress(receiverAddr)}`)
-  printSuccess('2 accounts created and funded')
+  printStep(2, 'Create and fund 2 accounts (creator, receiver)');
+  const creator = await algorand.account.fromEnvironment('ASSET_CREATOR', algo(100));
+  const receiver = await algorand.account.fromEnvironment('ASSET_RECEIVER', algo(100));
+  const creatorAddr = creator.addr.toString();
+  const receiverAddr = receiver.addr.toString();
+  printInfo(`Creator: ${shortenAddress(creatorAddr)}`);
+  printInfo(`Receiver: ${shortenAddress(receiverAddr)}`);
+  printSuccess('2 accounts created and funded');
 
   // Step 3: Create an ASA (fungible token) from creator account
-  printStep(3, 'Create ASA from creator account')
+  printStep(3, 'Create ASA from creator account');
   const createResult = await algorand.send.assetCreate({
     sender: creator.addr,
     total: 1_000_000n,
     decimals: 0,
     assetName: 'TestToken',
     unitName: 'TT',
-  })
-  const assetId = createResult.assetId
-  const createRound = createResult.confirmation.confirmedRound!
-  printInfo(`Created asset ID: ${assetId.toString()}`)
-  printInfo(`Confirmed round: ${createRound.toString()}`)
-  printSuccess('ASA created')
+  });
+  const assetId = createResult.assetId;
+  const createRound = createResult.confirmation.confirmedRound!;
+  printInfo(`Created asset ID: ${assetId.toString()}`);
+  printInfo(`Confirmed round: ${createRound.toString()}`);
+  printSuccess('ASA created');
 
   // Step 4: Receiver opts in to the asset
-  printStep(4, 'Receiver opts in to asset')
+  printStep(4, 'Receiver opts in to asset');
   const optInResult = await algorand.send.assetOptIn({
     sender: receiver.addr,
     assetId,
-  })
-  printInfo(`Opt-in txn ID: ${optInResult.txIds.at(-1)}`)
-  printSuccess('Receiver opted in')
+  });
+  printInfo(`Opt-in txn ID: ${optInResult.txIds.at(-1)}`);
+  printSuccess('Receiver opted in');
 
   // Step 5: Creator transfers tokens to receiver
-  printStep(5, 'Transfer 500 tokens from creator to receiver')
+  printStep(5, 'Transfer 500 tokens from creator to receiver');
   const transferResult = await algorand.send.assetTransfer({
     sender: creator.addr,
     receiver: receiver.addr,
     assetId,
     amount: 500n,
-  })
-  printInfo(`Transfer txn ID: ${transferResult.txIds.at(-1)}`)
-  printSuccess('Transferred 500 tokens')
+  });
+  printInfo(`Transfer txn ID: ${transferResult.txIds.at(-1)}`);
+  printSuccess('Transferred 500 tokens');
 
   // Watermark: just before the asset creation round
-  const watermarkBefore = createRound - 1n
+  const watermarkBefore = createRound - 1n;
 
-  const testFilter = createFilterTester(algorand.client.algod, watermarkBefore)
+  const testFilter = createFilterTester(algorand.client.algod, watermarkBefore);
 
   // Step 6: Subscribe with assetCreate filter — matches the creation transaction
-  printStep(6, 'Filter: assetCreate = true')
+  printStep(6, 'Filter: assetCreate = true');
   const createTxns = await testFilter(
-    'asset-create', { assetCreate: true }, 1,
+    'asset-create',
+    { assetCreate: true },
+    1,
     'assetCreate filter matched 1 creation transaction',
-    (txn) => printInfo(`  Created asset: ${txn.createdAssetId} | txn: ${txn.id}`),
-  )
+    txn => printInfo(`  Created asset: ${txn.createdAssetId} | txn: ${txn.id}`),
+  );
 
   // Step 7: Subscribe with type=axfer + assetId filter — matches opt-in and transfer
-  printStep(7, 'Filter: type = axfer, assetId = created asset')
+  printStep(7, 'Filter: type = axfer, assetId = created asset');
   const axferTxns = await testFilter(
-    'asset-transfers', { type: 'axfer', assetId: assetId }, 2,
+    'asset-transfers',
+    { type: 'axfer', assetId: assetId },
+    2,
     'axfer filter matched 2 transactions (opt-in + transfer)',
-    (txn) => {
-      const axfer = txn.assetTransferTransaction!
+    txn => {
+      const axfer = txn.assetTransferTransaction!;
       printInfo(
         `  Transfer: ${shortenAddress(txn.sender)} -> ${shortenAddress(axfer.receiver)} | amount: ${axfer.amount} | txn: ${txn.id}`,
-      )
+      );
     },
-  )
+  );
 
   // Step 8: Summary
-  printStep(8, 'Summary')
-  printInfo(`Asset ID: ${assetId.toString()}`)
-  printInfo(`assetCreate filter: ${createTxns.length} matched (creation)`)
-  printInfo(`axfer + assetId filter: ${axferTxns.length} matched (opt-in + transfer)`)
+  printStep(8, 'Summary');
+  printInfo(`Asset ID: ${assetId.toString()}`);
+  printInfo(`assetCreate filter: ${createTxns.length} matched (creation)`);
+  printInfo(`axfer + assetId filter: ${axferTxns.length} matched (opt-in + transfer)`);
 
-  printHeader('Example complete')
+  printHeader('Example complete');
 }
 
-main().catch((err) => {
-  printError(err.message)
-  process.exit(1)
-})
-
+main().catch(err => {
+  printError(err.message);
+  process.exit(1);
+});
 ```
 
 ---

@@ -1,5 +1,5 @@
 ---
-title: "AlgoKit Project Bootstrap"
+title: 'AlgoKit Project Bootstrap'
 ---
 
 The AlgoKit Project Bootstrap feature allows you to bootstrap different project dependencies by looking up specific files in your current directory and immediate sub directories by convention.

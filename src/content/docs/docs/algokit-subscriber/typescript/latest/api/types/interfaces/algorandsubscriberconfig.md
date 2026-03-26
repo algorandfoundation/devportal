@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "AlgorandSubscriberConfig"
+title: 'AlgorandSubscriberConfig'
 ---
 
 Defined in: [src/types/subscription.ts:367](https://github.com/algorandfoundation/algokit-subscriber-ts/blob/main/src/types/subscription.ts#L367)
@@ -27,7 +27,7 @@ Any ARC-28 event definitions to process from app call logs
 
 [`CoreTransactionSubscriptionParams`](/docs/algokit-subscriber/typescript/latest/api/types/interfaces/coretransactionsubscriptionparams/).[`arc28Events`](/docs/algokit-subscriber/typescript/latest/api/types/interfaces/coretransactionsubscriptionparams/#arc28events)
 
-***
+---
 
 ### filters
 
@@ -41,7 +41,7 @@ The set of filters to subscribe to / emit events for, along with optional data m
 
 [`CoreTransactionSubscriptionParams`](/docs/algokit-subscriber/typescript/latest/api/types/interfaces/coretransactionsubscriptionparams/).[`filters`](/docs/algokit-subscriber/typescript/latest/api/types/interfaces/coretransactionsubscriptionparams/#filters)
 
-***
+---
 
 ### frequencyInSeconds?
 
@@ -51,7 +51,7 @@ Defined in: [src/types/subscription.ts:371](https://github.com/algorandfoundatio
 
 The frequency to poll for new blocks in seconds; defaults to 1s
 
-***
+---
 
 ### maxIndexerRoundsToSync?
 
@@ -72,7 +72,7 @@ boundary based on the number of rounds specified here.
 
 [`CoreTransactionSubscriptionParams`](/docs/algokit-subscriber/typescript/latest/api/types/interfaces/coretransactionsubscriptionparams/).[`maxIndexerRoundsToSync`](/docs/algokit-subscriber/typescript/latest/api/types/interfaces/coretransactionsubscriptionparams/#maxindexerroundstosync)
 
-***
+---
 
 ### maxRoundsToSync?
 
@@ -92,7 +92,7 @@ your catchup speed when using `sync-oldest`.
 
 [`CoreTransactionSubscriptionParams`](/docs/algokit-subscriber/typescript/latest/api/types/interfaces/coretransactionsubscriptionparams/).[`maxRoundsToSync`](/docs/algokit-subscriber/typescript/latest/api/types/interfaces/coretransactionsubscriptionparams/#maxroundstosync)
 
-***
+---
 
 ### syncBehaviour
 
@@ -102,26 +102,27 @@ Defined in: [src/types/subscription.ts:279](https://github.com/algorandfoundatio
 
 If the current tip of the configured Algorand blockchain is more than `maxRoundsToSync`
 past `watermark` then how should that be handled:
- * `skip-sync-newest`: Discard old blocks/transactions and sync the newest; useful
-   for real-time notification scenarios where you don't care about history and
-   are happy to lose old transactions.
- * `sync-oldest`: Sync from the oldest rounds forward `maxRoundsToSync` rounds
-   using algod; note: this will be slow if you are starting from 0 and requires
-   an archival node.
- * `sync-oldest-start-now`: Same as `sync-oldest`, but if the `watermark` is `0`
-   then start at the current round i.e. don't sync historical records, but once
-   subscribing starts sync everything; note: if it falls behind it requires an
-   archival node.
- * `catchup-with-indexer`: Sync to round `currentRound - maxRoundsToSync + 1`
-   using indexer (much faster than using algod for long time periods) and then
-   use algod from there.
- * `fail`: Throw an error.
+
+- `skip-sync-newest`: Discard old blocks/transactions and sync the newest; useful
+  for real-time notification scenarios where you don't care about history and
+  are happy to lose old transactions.
+- `sync-oldest`: Sync from the oldest rounds forward `maxRoundsToSync` rounds
+  using algod; note: this will be slow if you are starting from 0 and requires
+  an archival node.
+- `sync-oldest-start-now`: Same as `sync-oldest`, but if the `watermark` is `0`
+  then start at the current round i.e. don't sync historical records, but once
+  subscribing starts sync everything; note: if it falls behind it requires an
+  archival node.
+- `catchup-with-indexer`: Sync to round `currentRound - maxRoundsToSync + 1`
+  using indexer (much faster than using algod for long time periods) and then
+  use algod from there.
+- `fail`: Throw an error.
 
 #### Inherited from
 
 [`CoreTransactionSubscriptionParams`](/docs/algokit-subscriber/typescript/latest/api/types/interfaces/coretransactionsubscriptionparams/).[`syncBehaviour`](/docs/algokit-subscriber/typescript/latest/api/types/interfaces/coretransactionsubscriptionparams/#syncbehaviour)
 
-***
+---
 
 ### waitForBlockWhenAtTip?
 
@@ -131,7 +132,7 @@ Defined in: [src/types/subscription.ts:373](https://github.com/algorandfoundatio
 
 Whether to wait via algod `/status/wait-for-block-after` endpoint when at the tip of the chain; reduces latency of subscription
 
-***
+---
 
 ### watermarkPersistence
 

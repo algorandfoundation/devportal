@@ -1,8 +1,8 @@
 ---
-title: "KMD Client"
-description: "Key Management Daemon operations for wallet and key management."
+title: 'KMD Client'
+description: 'Key Management Daemon operations for wallet and key management.'
 sidebar:
-  label: "KMD Client"
+  label: 'KMD Client'
   order: 0
 ---
 
@@ -13,22 +13,334 @@ Key Management Daemon operations for wallet and key management.
 ## Examples (13)
 
 <table>
-<thead><tr><th>Example</th><th>Description</th></tr></thead>
-<tbody>
-<tr><td><a href="01-version/">KMD Version Information</a></td><td><p>This example demonstrates how to retrieve version information from the KMD (Key Management Daemon) server using the version() method.</p><p>Prerequisites:</p></td></tr>
-<tr><td><a href="02-wallet-management/">Wallet Creation and Listing</a></td><td><p>This example demonstrates how to create, list, rename, and get info about wallets using the KMD (Key Management Daemon) client.</p><p>Prerequisites:</p><p>Covered operations:</p><ul><li>create_wallet() - Create a new wallet</li><li>list_wallets() - List all available wallets</li><li>wallet_info() - Get detailed wallet information (requires wallet handle)</li><li>rename_wallet() - Rename an existing wallet</li></ul></td></tr>
-<tr><td><a href="03-wallet-sessions/">Wallet Session Management</a></td><td><p>This example demonstrates how to manage wallet sessions using KMD handle tokens. Handle tokens are used to unlock wallets and perform operations on them. They have an expiration time and should be released when no longer needed.</p><p>Prerequisites:</p><p>Covered operations:</p><ul><li>init_wallet_handle() - Unlock a wallet and get a handle token</li><li>wallet_info() - Check token expiration time (expires_seconds)</li><li>renew_wallet_handle() - Extend token validity</li><li>release_wallet_handle() - Invalidate the token</li></ul></td></tr>
-<tr><td><a href="04-key-generation/">Key Generation</a></td><td><p>This example demonstrates how to generate new keys in a wallet using the KMD generate_key() method. Keys are generated deterministically from the wallet's master derivation key, which means they can be recovered if you have the wallet's mnemonic or master derivation key.</p><p>Prerequisites:</p><p>Covered operations:</p><ul><li>generate_key() - Generate a new key in the wallet</li><li>list_keys() - List all keys in the wallet</li></ul></td></tr>
-<tr><td><a href="05-key-import-export/">Key Import and Export</a></td><td><p>This example demonstrates how to import and export keys using the KMD import_key() and export_key() methods.</p><p>Key concepts:</p><ul><li>Importing externally generated keys into a wallet</li><li>Exporting private keys from a wallet</li><li>Understanding that imported keys are NOT backed up by the master derivation key</li></ul><p>Prerequisites:</p><p>Covered operations:</p><ul><li>import_key() - Import an external private key into the wallet</li><li>export_key() - Export a private key from the wallet</li></ul></td></tr>
-<tr><td><a href="06-key-listing-deletion/">Key Listing and Deletion</a></td><td><p>This example demonstrates how to list all keys in a wallet and delete specific keys using the KMD list_keys() and delete_key() methods.</p><p>Prerequisites:</p><p>Covered operations:</p><ul><li>list_keys()  - List all keys (addresses) in a wallet</li><li>delete_key() - Delete a specific key from the wallet</li></ul></td></tr>
-<tr><td><a href="07-master-key-export/">Master Key Export</a></td><td><p>This example demonstrates how to export the master derivation key (MDK) for wallet backup using the KMD export_master_key() method.</p><p>Key concepts:</p><ul><li>The master derivation key (MDK) is the root key used to deterministically</li></ul><p>generate all keys in the wallet</p><ul><li>With the MDK, you can recreate a wallet and regenerate all derived keys</li><li>Imported keys CANNOT be recovered from the MDK</li><li>The MDK should be stored securely as it can regenerate all wallet keys</li></ul><p>Prerequisites:</p><p>Covered operations:</p><ul><li>export_master_key() - Export the master derivation key from a wallet</li></ul></td></tr>
-<tr><td><a href="08-multisig-setup/">Multisig Account Setup</a></td><td><p>This example demonstrates how to create multisig accounts using the KMD import_multisig() method.</p><p>Key concepts:</p><ul><li>A multisig account requires M-of-N signatures to authorize transactions</li><li>The threshold (M) is the minimum number of signatures required</li><li>The public keys (N) are the participants who can sign</li><li>The multisig version parameter (currently always 1) defines the format</li><li>The resulting multisig address is deterministically derived from the</li></ul><p>public keys, threshold, and version</p><p>Prerequisites:</p><p>Covered operations:</p><ul><li>generate_key() - Generate keys to use as multisig participants</li><li>import_multisig() - Create a multisig account from public keys</li></ul></td></tr>
-<tr><td><a href="09-multisig-management/">Multisig Account Management</a></td><td><p>This example demonstrates how to manage multisig accounts using KMD:</p><ul><li>list_multisig() - List all multisig accounts in a wallet</li><li>export_multisig() - Get the multisig preimage information</li><li>delete_multisig() - Remove a multisig account from the wallet</li></ul><p>Key concepts:</p><ul><li>Multisig accounts can be listed to see all multisigs in a wallet</li><li>The multisig preimage contains the original parameters: publicKeys, threshold, version</li><li>Deleting a multisig only removes it from the wallet, not from the blockchain</li><li>Funds in a deleted multisig address remain on the blockchain</li></ul><p>Prerequisites:</p><p>Covered operations:</p><ul><li>generate_key() - Generate keys to use as multisig participants</li><li>import_multisig() - Create a multisig account from public keys</li><li>list_multisig() - List all multisig accounts in the wallet</li><li>export_multisig() - Export the multisig preimage (configuration)</li><li>delete_multisig() - Delete a multisig account from the wallet</li></ul></td></tr>
-<tr><td><a href="10-transaction-signing/">Transaction Signing with KMD</a></td><td><p>This example demonstrates how to sign transactions using the KMD sign_transaction() method. It shows the complete workflow of creating a wallet, generating a key, funding it, signing a transaction, and submitting it to the network.</p><p>Prerequisites:</p><p>Covered operations:</p><ul><li>sign_transaction() - Sign a transaction using a key from the wallet</li></ul></td></tr>
-<tr><td><a href="11-multisig-signing/">Multisig Transaction Signing with KMD</a></td><td><p>This example demonstrates how to sign multisig transactions using the KMD sign_multisig_transaction() method. It shows:</p><ul><li>Creating a multisig account with 2-of-3 threshold</li><li>Funding the multisig account via the dispenser</li><li>Creating a payment transaction from the multisig account</li><li>Signing with the first participant (partial signature)</li><li>Signing with the second participant (completing the multisig)</li><li>Submitting the fully signed transaction to the network</li></ul><p>Prerequisites:</p><p>Covered operations:</p><ul><li>sign_multisig_transaction() - Sign a multisig transaction with a participant key</li></ul></td></tr>
-<tr><td><a href="12-program-signing/">Program Signing (Delegated Logic Signatures) with KMD</a></td><td><p>This example demonstrates how to sign programs/contracts using the KMD sign_program() method. It shows:</p><ul><li>Creating a simple TEAL program (logic signature)</li><li>Compiling the TEAL program using algod's teal_compile</li><li>Signing the compiled program bytes with sign_program()</li><li>Understanding the resulting signature for delegated logic signatures</li><li>How to use the signature with a LogicSigAccount</li></ul><p>What is Program Signing? Program signing creates a "delegated logic signature" (delegated lsig). This allows an account holder to authorize a smart contract (TEAL program) to sign transactions on their behalf. When you sign a program: 1. You're attesting that you authorize this program to act for your account 2. Transactions signed by this delegated lsig will be authorized by your account 3. The program logic determines which transactions are approved</p><p>Use cases for delegated logic signatures:</p><ul><li>Recurring payments (program checks amount and frequency)</li><li>Subscription services (program validates payment recipients)</li><li>Limited spending authorizations (program enforces constraints)</li><li>Conditional transfers (program checks external conditions)</li></ul><p>Prerequisites:</p><p>Covered operations:</p><ul><li>sign_program() - Sign a compiled TEAL program with a wallet key</li></ul></td></tr>
-<tr><td><a href="13-multisig-program-signing/">Multisig Program Signing (Delegated Multisig Logic Signatures) with KMD</a></td><td><p>This example demonstrates how to sign programs with multisig using the KMD sign_multisig_program() method. It shows:</p><ul><li>Creating a 2-of-3 multisig account</li><li>Creating a simple TEAL program (logic signature)</li><li>Compiling the TEAL program using algod teal_compile</li><li>Signing the program with the first participant (partial signature)</li><li>Signing the program with the second participant (completing the multisig)</li><li>Understanding delegated multisig logic signatures</li></ul><p>What is Multisig Program Signing? Multisig program signing creates a "delegated multisig logic signature". This combines two powerful concepts: 1. Multisig: Requiring multiple parties to approve 2. Delegated Logic Signatures: Authorizing a program to act on behalf of an account</p><p>With a delegated multisig lsig:</p><ul><li>The multisig account authorizes a program to sign transactions</li><li>Multiple parties must sign the program (meeting the threshold)</li><li>Once signed, the program can authorize transactions within its logic</li><li>No further interaction needed from the multisig participants</li></ul><p>Use cases for delegated multisig logic signatures:</p><ul><li>Multi-party controlled recurring payments</li><li>Joint account automation (e.g., business partners authorizing limit)</li><li>Escrow with automated release conditions</li><li>DAO treasury with programmatic spending rules</li></ul><p>Prerequisites:</p><p>Covered operations:</p><ul><li>sign_multisig_program() - Sign a compiled TEAL program with a multisig participant</li></ul></td></tr>
-</tbody>
+  <thead>
+    <tr>
+      <th>Example</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <a href='01-version/'>KMD Version Information</a>
+      </td>
+      <td>
+        <p>
+          This example demonstrates how to retrieve version information from the KMD (Key Management
+          Daemon) server using the version() method.
+        </p>
+        <p>Prerequisites:</p>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <a href='02-wallet-management/'>Wallet Creation and Listing</a>
+      </td>
+      <td>
+        <p>
+          This example demonstrates how to create, list, rename, and get info about wallets using
+          the KMD (Key Management Daemon) client.
+        </p>
+        <p>Prerequisites:</p>
+        <p>Covered operations:</p>
+        <ul>
+          <li>create_wallet() - Create a new wallet</li>
+          <li>list_wallets() - List all available wallets</li>
+          <li>wallet_info() - Get detailed wallet information (requires wallet handle)</li>
+          <li>rename_wallet() - Rename an existing wallet</li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <a href='03-wallet-sessions/'>Wallet Session Management</a>
+      </td>
+      <td>
+        <p>
+          This example demonstrates how to manage wallet sessions using KMD handle tokens. Handle
+          tokens are used to unlock wallets and perform operations on them. They have an expiration
+          time and should be released when no longer needed.
+        </p>
+        <p>Prerequisites:</p>
+        <p>Covered operations:</p>
+        <ul>
+          <li>init_wallet_handle() - Unlock a wallet and get a handle token</li>
+          <li>wallet_info() - Check token expiration time (expires_seconds)</li>
+          <li>renew_wallet_handle() - Extend token validity</li>
+          <li>release_wallet_handle() - Invalidate the token</li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <a href='04-key-generation/'>Key Generation</a>
+      </td>
+      <td>
+        <p>
+          This example demonstrates how to generate new keys in a wallet using the KMD
+          generate_key() method. Keys are generated deterministically from the wallet's master
+          derivation key, which means they can be recovered if you have the wallet's mnemonic or
+          master derivation key.
+        </p>
+        <p>Prerequisites:</p>
+        <p>Covered operations:</p>
+        <ul>
+          <li>generate_key() - Generate a new key in the wallet</li>
+          <li>list_keys() - List all keys in the wallet</li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <a href='05-key-import-export/'>Key Import and Export</a>
+      </td>
+      <td>
+        <p>
+          This example demonstrates how to import and export keys using the KMD import_key() and
+          export_key() methods.
+        </p>
+        <p>Key concepts:</p>
+        <ul>
+          <li>Importing externally generated keys into a wallet</li>
+          <li>Exporting private keys from a wallet</li>
+          <li>Understanding that imported keys are NOT backed up by the master derivation key</li>
+        </ul>
+        <p>Prerequisites:</p>
+        <p>Covered operations:</p>
+        <ul>
+          <li>import_key() - Import an external private key into the wallet</li>
+          <li>export_key() - Export a private key from the wallet</li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <a href='06-key-listing-deletion/'>Key Listing and Deletion</a>
+      </td>
+      <td>
+        <p>
+          This example demonstrates how to list all keys in a wallet and delete specific keys using
+          the KMD list_keys() and delete_key() methods.
+        </p>
+        <p>Prerequisites:</p>
+        <p>Covered operations:</p>
+        <ul>
+          <li>list_keys() - List all keys (addresses) in a wallet</li>
+          <li>delete_key() - Delete a specific key from the wallet</li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <a href='07-master-key-export/'>Master Key Export</a>
+      </td>
+      <td>
+        <p>
+          This example demonstrates how to export the master derivation key (MDK) for wallet backup
+          using the KMD export_master_key() method.
+        </p>
+        <p>Key concepts:</p>
+        <ul>
+          <li>The master derivation key (MDK) is the root key used to deterministically</li>
+        </ul>
+        <p>generate all keys in the wallet</p>
+        <ul>
+          <li>With the MDK, you can recreate a wallet and regenerate all derived keys</li>
+          <li>Imported keys CANNOT be recovered from the MDK</li>
+          <li>The MDK should be stored securely as it can regenerate all wallet keys</li>
+        </ul>
+        <p>Prerequisites:</p>
+        <p>Covered operations:</p>
+        <ul>
+          <li>export_master_key() - Export the master derivation key from a wallet</li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <a href='08-multisig-setup/'>Multisig Account Setup</a>
+      </td>
+      <td>
+        <p>
+          This example demonstrates how to create multisig accounts using the KMD import_multisig()
+          method.
+        </p>
+        <p>Key concepts:</p>
+        <ul>
+          <li>A multisig account requires M-of-N signatures to authorize transactions</li>
+          <li>The threshold (M) is the minimum number of signatures required</li>
+          <li>The public keys (N) are the participants who can sign</li>
+          <li>The multisig version parameter (currently always 1) defines the format</li>
+          <li>The resulting multisig address is deterministically derived from the</li>
+        </ul>
+        <p>public keys, threshold, and version</p>
+        <p>Prerequisites:</p>
+        <p>Covered operations:</p>
+        <ul>
+          <li>generate_key() - Generate keys to use as multisig participants</li>
+          <li>import_multisig() - Create a multisig account from public keys</li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <a href='09-multisig-management/'>Multisig Account Management</a>
+      </td>
+      <td>
+        <p>This example demonstrates how to manage multisig accounts using KMD:</p>
+        <ul>
+          <li>list_multisig() - List all multisig accounts in a wallet</li>
+          <li>export_multisig() - Get the multisig preimage information</li>
+          <li>delete_multisig() - Remove a multisig account from the wallet</li>
+        </ul>
+        <p>Key concepts:</p>
+        <ul>
+          <li>Multisig accounts can be listed to see all multisigs in a wallet</li>
+          <li>
+            The multisig preimage contains the original parameters: publicKeys, threshold, version
+          </li>
+          <li>Deleting a multisig only removes it from the wallet, not from the blockchain</li>
+          <li>Funds in a deleted multisig address remain on the blockchain</li>
+        </ul>
+        <p>Prerequisites:</p>
+        <p>Covered operations:</p>
+        <ul>
+          <li>generate_key() - Generate keys to use as multisig participants</li>
+          <li>import_multisig() - Create a multisig account from public keys</li>
+          <li>list_multisig() - List all multisig accounts in the wallet</li>
+          <li>export_multisig() - Export the multisig preimage (configuration)</li>
+          <li>delete_multisig() - Delete a multisig account from the wallet</li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <a href='10-transaction-signing/'>Transaction Signing with KMD</a>
+      </td>
+      <td>
+        <p>
+          This example demonstrates how to sign transactions using the KMD sign_transaction()
+          method. It shows the complete workflow of creating a wallet, generating a key, funding it,
+          signing a transaction, and submitting it to the network.
+        </p>
+        <p>Prerequisites:</p>
+        <p>Covered operations:</p>
+        <ul>
+          <li>sign_transaction() - Sign a transaction using a key from the wallet</li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <a href='11-multisig-signing/'>Multisig Transaction Signing with KMD</a>
+      </td>
+      <td>
+        <p>
+          This example demonstrates how to sign multisig transactions using the KMD
+          sign_multisig_transaction() method. It shows:
+        </p>
+        <ul>
+          <li>Creating a multisig account with 2-of-3 threshold</li>
+          <li>Funding the multisig account via the dispenser</li>
+          <li>Creating a payment transaction from the multisig account</li>
+          <li>Signing with the first participant (partial signature)</li>
+          <li>Signing with the second participant (completing the multisig)</li>
+          <li>Submitting the fully signed transaction to the network</li>
+        </ul>
+        <p>Prerequisites:</p>
+        <p>Covered operations:</p>
+        <ul>
+          <li>sign_multisig_transaction() - Sign a multisig transaction with a participant key</li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <a href='12-program-signing/'>Program Signing (Delegated Logic Signatures) with KMD</a>
+      </td>
+      <td>
+        <p>
+          This example demonstrates how to sign programs/contracts using the KMD sign_program()
+          method. It shows:
+        </p>
+        <ul>
+          <li>Creating a simple TEAL program (logic signature)</li>
+          <li>Compiling the TEAL program using algod's teal_compile</li>
+          <li>Signing the compiled program bytes with sign_program()</li>
+          <li>Understanding the resulting signature for delegated logic signatures</li>
+          <li>How to use the signature with a LogicSigAccount</li>
+        </ul>
+        <p>
+          What is Program Signing? Program signing creates a "delegated logic signature" (delegated
+          lsig). This allows an account holder to authorize a smart contract (TEAL program) to sign
+          transactions on their behalf. When you sign a program: 1. You're attesting that you
+          authorize this program to act for your account 2. Transactions signed by this delegated
+          lsig will be authorized by your account 3. The program logic determines which transactions
+          are approved
+        </p>
+        <p>Use cases for delegated logic signatures:</p>
+        <ul>
+          <li>Recurring payments (program checks amount and frequency)</li>
+          <li>Subscription services (program validates payment recipients)</li>
+          <li>Limited spending authorizations (program enforces constraints)</li>
+          <li>Conditional transfers (program checks external conditions)</li>
+        </ul>
+        <p>Prerequisites:</p>
+        <p>Covered operations:</p>
+        <ul>
+          <li>sign_program() - Sign a compiled TEAL program with a wallet key</li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <a href='13-multisig-program-signing/'>
+          Multisig Program Signing (Delegated Multisig Logic Signatures) with KMD
+        </a>
+      </td>
+      <td>
+        <p>
+          This example demonstrates how to sign programs with multisig using the KMD
+          sign_multisig_program() method. It shows:
+        </p>
+        <ul>
+          <li>Creating a 2-of-3 multisig account</li>
+          <li>Creating a simple TEAL program (logic signature)</li>
+          <li>Compiling the TEAL program using algod teal_compile</li>
+          <li>Signing the program with the first participant (partial signature)</li>
+          <li>Signing the program with the second participant (completing the multisig)</li>
+          <li>Understanding delegated multisig logic signatures</li>
+        </ul>
+        <p>
+          What is Multisig Program Signing? Multisig program signing creates a "delegated multisig
+          logic signature". This combines two powerful concepts: 1. Multisig: Requiring multiple
+          parties to approve 2. Delegated Logic Signatures: Authorizing a program to act on behalf
+          of an account
+        </p>
+        <p>With a delegated multisig lsig:</p>
+        <ul>
+          <li>The multisig account authorizes a program to sign transactions</li>
+          <li>Multiple parties must sign the program (meeting the threshold)</li>
+          <li>Once signed, the program can authorize transactions within its logic</li>
+          <li>No further interaction needed from the multisig participants</li>
+        </ul>
+        <p>Use cases for delegated multisig logic signatures:</p>
+        <ul>
+          <li>Multi-party controlled recurring payments</li>
+          <li>Joint account automation (e.g., business partners authorizing limit)</li>
+          <li>Escrow with automated release conditions</li>
+          <li>DAO treasury with programmatic spending rules</li>
+        </ul>
+        <p>Prerequisites:</p>
+        <p>Covered operations:</p>
+        <ul>
+          <li>
+            sign_multisig_program() - Sign a compiled TEAL program with a multisig participant
+          </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
 </table>
 
 ## Quick Start

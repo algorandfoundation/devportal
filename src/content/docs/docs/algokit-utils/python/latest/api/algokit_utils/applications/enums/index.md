@@ -1,5 +1,5 @@
 ---
-title: "algokit_utils.applications.enums"
+title: 'algokit_utils.applications.enums'
 ---
 
 <div class="api-ref">
@@ -8,74 +8,73 @@ title: "algokit_utils.applications.enums"
 
 ## Classes
 
-| [`OnSchemaBreak`](#algokit_utils.applications.enums.OnSchemaBreak)           | Action to take if an Application's schema has breaking changes   |
-|------------------------------------------------------------------------------|------------------------------------------------------------------|
-| [`OnUpdate`](#algokit_utils.applications.enums.OnUpdate)                     | Action to take if an Application has been updated                |
-| [`OperationPerformed`](#algokit_utils.applications.enums.OperationPerformed) | Describes the actions taken during deployment                    |
+| [`OnSchemaBreak`](#algokit_utils.applications.enums.OnSchemaBreak)           | Action to take if an Application's schema has breaking changes |
+| ---------------------------------------------------------------------------- | -------------------------------------------------------------- |
+| [`OnUpdate`](#algokit_utils.applications.enums.OnUpdate)                     | Action to take if an Application has been updated              |
+| [`OperationPerformed`](#algokit_utils.applications.enums.OperationPerformed) | Describes the actions taken during deployment                  |
 
 ## Module Contents
 
-### *class* OnSchemaBreak(\*args, \*\*kwds)
+### _class_ OnSchemaBreak(\*args, \*\*kwds)
 
 Bases: `enum.Enum`
 
 Action to take if an Application’s schema has breaking changes
 
-#### Fail *= 0*
+#### Fail _= 0_
 
 Fail the deployment
 
-#### ReplaceApp *= 2*
+#### ReplaceApp _= 2_
 
 Create a new Application and delete the old Application in a single transaction
 
-#### AppendApp *= 3*
+#### AppendApp _= 3_
 
 Create a new Application
 
-### *class* OnUpdate(\*args, \*\*kwds)
+### _class_ OnUpdate(\*args, \*\*kwds)
 
 Bases: `enum.Enum`
 
 Action to take if an Application has been updated
 
-#### Fail *= 0*
+#### Fail _= 0_
 
 Fail the deployment
 
-#### UpdateApp *= 1*
+#### UpdateApp _= 1_
 
 Update the Application with the new approval and clear programs
 
-#### ReplaceApp *= 2*
+#### ReplaceApp _= 2_
 
 Create a new Application and delete the old Application in a single transaction
 
-#### AppendApp *= 3*
+#### AppendApp _= 3_
 
 Create a new application
 
-### *class* OperationPerformed(\*args, \*\*kwds)
+### _class_ OperationPerformed(\*args, \*\*kwds)
 
 Bases: `enum.Enum`
 
 Describes the actions taken during deployment
 
-#### Nothing *= 0*
+#### Nothing _= 0_
 
 An existing Application was found
 
-#### Create *= 1*
+#### Create _= 1_
 
 No existing Application was found, created a new Application
 
-#### Update *= 2*
+#### Update _= 2_
 
 An existing Application was found, but was out of date, updated to latest version
 
-#### Replace *= 3*
+#### Replace _= 3_
 
 An existing Application was found, but was out of date, created a new Application and deleted the original
-
 
 </div>

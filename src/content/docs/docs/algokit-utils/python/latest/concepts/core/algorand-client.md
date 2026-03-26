@@ -1,5 +1,5 @@
 ---
-title: "Algorand client"
+title: 'Algorand client'
 description: "`AlgorandClient` is a client class that brokers easy access to Algorand functionality. It's the `default entrypoint` into AlgoKit Utils functionality."
 ---
 

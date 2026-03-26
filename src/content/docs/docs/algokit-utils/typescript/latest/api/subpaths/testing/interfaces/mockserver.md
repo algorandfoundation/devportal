@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "MockServer"
+title: 'MockServer'
 ---
 
 Defined in: [packages/testing/src/mockServer.ts:31](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/testing/src/mockServer.ts#L31)
@@ -19,7 +19,7 @@ Defined in: [packages/testing/src/mockServer.ts:33](https://github.com/algorandf
 
 Base URL of the mock server
 
-***
+---
 
 ### clientType
 

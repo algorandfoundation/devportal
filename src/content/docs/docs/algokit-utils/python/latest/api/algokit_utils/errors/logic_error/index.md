@@ -1,5 +1,5 @@
 ---
-title: "algokit_utils.errors.logic_error"
+title: 'algokit_utils.errors.logic_error'
 ---
 
 <div class="api-ref">
@@ -8,23 +8,23 @@ title: "algokit_utils.errors.logic_error"
 
 ## Exceptions
 
-| [`LogicError`](#algokit_utils.errors.logic_error.LogicError)   | Common base class for all non-exit exceptions.   |
-|----------------------------------------------------------------|--------------------------------------------------|
+| [`LogicError`](#algokit_utils.errors.logic_error.LogicError) | Common base class for all non-exit exceptions. |
+| ------------------------------------------------------------ | ---------------------------------------------- |
 
 ## Classes
 
-| [`LogicErrorData`](#algokit_utils.errors.logic_error.LogicErrorData)   | dict() -> new empty dictionary   |
-|------------------------------------------------------------------------|----------------------------------|
+| [`LogicErrorData`](#algokit_utils.errors.logic_error.LogicErrorData) | dict() -> new empty dictionary |
+| -------------------------------------------------------------------- | ------------------------------ |
 
 ## Functions
 
-| [`parse_logic_error`](#algokit_utils.errors.logic_error.parse_logic_error)(→ LogicErrorData | None)                       |                                                                               |
-|---------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------|
+| [`parse_logic_error`](#algokit_utils.errors.logic_error.parse_logic_error)(→ LogicErrorData                               | None)                                                                         |     |
+| ------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------- | --- |
 | [`create_simulate_traces_for_logic_error`](#algokit_utils.errors.logic_error.create_simulate_traces_for_logic_error)(...) | Extract simulation traces from a simulate response for logic error debugging. |
 
 ## Module Contents
 
-### *class* LogicErrorData
+### _class_ LogicErrorData
 
 Bases: `TypedDict`
 
@@ -35,7 +35,8 @@ dict(mapping) -> new dictionary initialized from a mapping object’s
 
 dict(iterable) -> new dictionary initialized as if via:
 : d = {}
-  for k, v in iterable:
+for k, v in iterable:
+
   <br/>
   > d[k] = v
 
@@ -46,23 +47,23 @@ dict(
 ```
 
 kwargs) -> new dictionary initialized with the name=value pairs
-: in the keyword argument list.  For example:  dict(one=1, two=2)
+: in the keyword argument list. For example: dict(one=1, two=2)
 
-#### transaction_id *: str*
+#### transaction*id *: str\_
 
-#### message *: str*
+#### message _: str_
 
-#### pc *: int*
+#### pc _: int_
 
 ### parse_logic_error(error_str: str) → [LogicErrorData](#algokit_utils.errors.logic_error.LogicErrorData) | None
 
-### *exception* LogicError(\*, logic_error_str: str, program: str, source_map: ProgramSourceMap | None, transaction_id: str, message: str, pc: int, logic_error: Exception | None = None, traces: list[SimulateTransactionResult] | None = None, get_line_for_pc: Callable[[int], int | None] | None = None)
+### _exception_ LogicError(\*, logic_error_str: str, program: str, source_map: ProgramSourceMap | None, transaction_id: str, message: str, pc: int, logic_error: Exception | None = None, traces: list[SimulateTransactionResult] | None = None, get_line_for_pc: Callable[[int], int | None] | None = None)
 
 Bases: `Exception`
 
 Common base class for all non-exit exceptions.
 
-#### logic_error *= None*
+#### logic*error *= None\_
 
 #### logic_error_str
 
@@ -76,7 +77,7 @@ Common base class for all non-exit exceptions.
 
 #### pc
 
-#### traces *= None*
+#### traces _= None_
 
 #### line_no
 
@@ -91,6 +92,5 @@ Args:
 
 Returns:
 : A list of SimulateTransactionResult objects extracted from the simulation response.
-
 
 </div>

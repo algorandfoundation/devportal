@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "Arc28Event"
+title: 'Arc28Event'
 ---
 
 Defined in: [src/types/arc-28.ts:7](https://github.com/algorandfoundation/algokit-subscriber-ts/blob/main/src/types/arc-28.ts#L7)
@@ -37,7 +37,7 @@ Optional, user-friendly name for the argument
 
 The type of the argument
 
-***
+---
 
 ### desc?
 
@@ -47,7 +47,7 @@ Defined in: [src/types/arc-28.ts:11](https://github.com/algorandfoundation/algok
 
 Optional, user-friendly description for the event
 
-***
+---
 
 ### name
 

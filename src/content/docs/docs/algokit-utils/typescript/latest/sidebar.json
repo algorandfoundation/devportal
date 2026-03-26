@@ -66,12 +66,24 @@
       { "label": "algokit-utils", "autogenerate": { "directory": "api/algokit-utils" } },
       { "label": "Subpaths/abi", "autogenerate": { "directory": "api/Subpaths/abi" } },
       { "label": "Subpaths/algo25", "autogenerate": { "directory": "api/Subpaths/algo25" } },
-      { "label": "Subpaths/algod-client", "autogenerate": { "directory": "api/Subpaths/algod-client" } },
-      { "label": "Subpaths/indexer-client", "autogenerate": { "directory": "api/Subpaths/indexer-client" } },
-      { "label": "Subpaths/kmd-client", "autogenerate": { "directory": "api/Subpaths/kmd-client" } },
+      {
+        "label": "Subpaths/algod-client",
+        "autogenerate": { "directory": "api/Subpaths/algod-client" }
+      },
+      {
+        "label": "Subpaths/indexer-client",
+        "autogenerate": { "directory": "api/Subpaths/indexer-client" }
+      },
+      {
+        "label": "Subpaths/kmd-client",
+        "autogenerate": { "directory": "api/Subpaths/kmd-client" }
+      },
       { "label": "Subpaths/testing", "autogenerate": { "directory": "api/Subpaths/testing" } },
       { "label": "Subpaths/transact", "autogenerate": { "directory": "api/Subpaths/transact" } },
-      { "label": "Subpaths/transaction", "autogenerate": { "directory": "api/Subpaths/transaction" } }
+      {
+        "label": "Subpaths/transaction",
+        "autogenerate": { "directory": "api/Subpaths/transaction" }
+      }
     ]
   }
 ]

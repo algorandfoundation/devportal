@@ -32,17 +32,17 @@ def emit_swapped(self, a: arc4.String, b: arc4.UInt64) -> None:
 Algorand TypeScript uses the same Puya compiler as Algorand Python and has similar syntax for emitting ARC-28 events:
 
 ```typescript
-import { Contract, arc4, emit } from '@algorandfoundation/algorand-typescript'
+import { Contract, arc4, emit } from '@algorandfoundation/algorand-typescript';
 
 class MyEvent extends arc4.Struct {
-  a: arc4.Str
-  b: arc4.Uint64
+  a: arc4.Str;
+  b: arc4.Uint64;
 }
 
 class MyContract extends Contract {
   @arc4.abimethod()
   emitSwapped(a: arc4.Str, b: arc4.Uint64): void {
-    emit(new MyEvent({ a, b }))
+    emit(new MyEvent({ a, b }));
   }
 }
 ```

@@ -1,6 +1,6 @@
 ---
-title: "Transaction Composer (Atomic Transaction Groups)"
-description: "This example demonstrates how to build atomic transaction groups using the transaction composer:"
+title: 'Transaction Composer (Atomic Transaction Groups)'
+description: 'This example demonstrates how to build atomic transaction groups using the transaction composer:'
 sidebar:
   order: 10
 ---
@@ -10,6 +10,7 @@ sidebar:
 ## Description
 
 This example demonstrates how to build atomic transaction groups using the transaction composer:
+
 - algorand.newGroup() creates a new transaction composer
 - Adding multiple transactions using .addPayment(), .addAssetOptIn(), etc.
 - Method chaining: algorand.newGroup().addPayment(...).addPayment(...)
@@ -55,66 +56,76 @@ npm run example algorand_client/10-transaction-composer.ts
  * - LocalNet running (via `algokit localnet start`)
  */
 
-import { AlgorandClient, algo } from '@algorandfoundation/algokit-utils'
-import { formatAlgo, printError, printHeader, printInfo, printStep, printSuccess, shortenAddress } from '../shared/utils.js'
+import { AlgorandClient, algo } from '@algorandfoundation/algokit-utils';
+import {
+  formatAlgo,
+  printError,
+  printHeader,
+  printInfo,
+  printStep,
+  printSuccess,
+  shortenAddress,
+} from '../shared/utils.js';
 
 async function main() {
-  printHeader('Transaction Composer Example')
+  printHeader('Transaction Composer Example');
 
   // Initialize client and verify LocalNet is running
-  const algorand = AlgorandClient.defaultLocalNet()
+  const algorand = AlgorandClient.defaultLocalNet();
 
   try {
-    await algorand.client.algod.status()
-    printSuccess('Connected to LocalNet')
+    await algorand.client.algod.status();
+    printSuccess('Connected to LocalNet');
   } catch (error) {
-    printError(`Failed to connect to LocalNet: ${error instanceof Error ? error.message : String(error)}`)
-    printInfo('Make sure LocalNet is running (e.g., algokit localnet start)')
-    return
+    printError(
+      `Failed to connect to LocalNet: ${error instanceof Error ? error.message : String(error)}`,
+    );
+    printInfo('Make sure LocalNet is running (e.g., algokit localnet start)');
+    return;
   }
 
   // Step 1: Create and fund test accounts
-  printStep(1, 'Create and fund test accounts')
-  printInfo('Creating multiple accounts to demonstrate atomic transactions with different signers')
+  printStep(1, 'Create and fund test accounts');
+  printInfo('Creating multiple accounts to demonstrate atomic transactions with different signers');
 
-  const alice = algorand.account.random()
-  const bob = algorand.account.random()
-  const charlie = algorand.account.random()
+  const alice = algorand.account.random();
+  const bob = algorand.account.random();
+  const charlie = algorand.account.random();
 
-  printInfo(`\nCreated accounts:`)
-  printInfo(`  Alice: ${shortenAddress(alice.addr.toString())}`)
-  printInfo(`  Bob: ${shortenAddress(bob.addr.toString())}`)
-  printInfo(`  Charlie: ${shortenAddress(charlie.addr.toString())}`)
+  printInfo(`\nCreated accounts:`);
+  printInfo(`  Alice: ${shortenAddress(alice.addr.toString())}`);
+  printInfo(`  Bob: ${shortenAddress(bob.addr.toString())}`);
+  printInfo(`  Charlie: ${shortenAddress(charlie.addr.toString())}`);
 
   // Fund accounts
-  await algorand.account.ensureFundedFromEnvironment(alice.addr, algo(20))
-  await algorand.account.ensureFundedFromEnvironment(bob.addr, algo(10))
-  await algorand.account.ensureFundedFromEnvironment(charlie.addr, algo(5))
+  await algorand.account.ensureFundedFromEnvironment(alice.addr, algo(20));
+  await algorand.account.ensureFundedFromEnvironment(bob.addr, algo(10));
+  await algorand.account.ensureFundedFromEnvironment(charlie.addr, algo(5));
 
-  printSuccess('Created and funded test accounts')
+  printSuccess('Created and funded test accounts');
 
   // Step 2: Demonstrate algorand.newGroup() to create a new transaction composer
-  printStep(2, 'Demonstrate algorand.newGroup() to create a new transaction composer')
-  printInfo('algorand.newGroup() returns a TransactionComposer for building atomic groups')
-  printInfo('')
-  printInfo('The TransactionComposer provides:')
-  printInfo('  - .addPayment() - Add payment transactions')
-  printInfo('  - .addAssetCreate() - Add asset creation transactions')
-  printInfo('  - .addAssetOptIn() - Add asset opt-in transactions')
-  printInfo('  - .addAssetTransfer() - Add asset transfer transactions')
-  printInfo('  - .addAppCall() - Add application call transactions')
-  printInfo('  - .simulate() - Simulate the group before sending')
-  printInfo('  - .send() - Execute the atomic transaction group')
+  printStep(2, 'Demonstrate algorand.newGroup() to create a new transaction composer');
+  printInfo('algorand.newGroup() returns a TransactionComposer for building atomic groups');
+  printInfo('');
+  printInfo('The TransactionComposer provides:');
+  printInfo('  - .addPayment() - Add payment transactions');
+  printInfo('  - .addAssetCreate() - Add asset creation transactions');
+  printInfo('  - .addAssetOptIn() - Add asset opt-in transactions');
+  printInfo('  - .addAssetTransfer() - Add asset transfer transactions');
+  printInfo('  - .addAppCall() - Add application call transactions');
+  printInfo('  - .simulate() - Simulate the group before sending');
+  printInfo('  - .send() - Execute the atomic transaction group');
 
-  const composer = algorand.newGroup()
-  printInfo(`\nCreated new transaction composer`)
-  printInfo(`  Initial transaction count: ${composer.count()}`)
+  const composer = algorand.newGroup();
+  printInfo(`\nCreated new transaction composer`);
+  printInfo(`  Initial transaction count: ${composer.count()}`);
 
-  printSuccess('Transaction composer created')
+  printSuccess('Transaction composer created');
 
   // Step 3: Add multiple transactions to the group
-  printStep(3, 'Add multiple transactions using .addPayment(), etc.')
-  printInfo('Each add method returns the composer for chaining')
+  printStep(3, 'Add multiple transactions using .addPayment(), etc.');
+  printInfo('Each add method returns the composer for chaining');
 
   // Add first payment
   composer.addPayment({
@@ -122,9 +133,9 @@ async function main() {
     receiver: bob.addr,
     amount: algo(1),
     note: 'Payment 1: Alice to Bob',
-  })
-  printInfo(`\nAdded payment: Alice -> Bob (1 ALGO)`)
-  printInfo(`  Transaction count: ${composer.count()}`)
+  });
+  printInfo(`\nAdded payment: Alice -> Bob (1 ALGO)`);
+  printInfo(`  Transaction count: ${composer.count()}`);
 
   // Add second payment
   composer.addPayment({
@@ -132,15 +143,15 @@ async function main() {
     receiver: charlie.addr,
     amount: algo(0.5),
     note: 'Payment 2: Alice to Charlie',
-  })
-  printInfo(`Added payment: Alice -> Charlie (0.5 ALGO)`)
-  printInfo(`  Transaction count: ${composer.count()}`)
+  });
+  printInfo(`Added payment: Alice -> Charlie (0.5 ALGO)`);
+  printInfo(`  Transaction count: ${composer.count()}`);
 
-  printSuccess('Added multiple transactions to the group')
+  printSuccess('Added multiple transactions to the group');
 
   // Step 4: Demonstrate method chaining
-  printStep(4, 'Demonstrate chaining: algorand.newGroup().addPayment(...).addPayment(...)')
-  printInfo('Methods can be chained for fluent, readable code')
+  printStep(4, 'Demonstrate chaining: algorand.newGroup().addPayment(...).addPayment(...)');
+  printInfo('Methods can be chained for fluent, readable code');
 
   const chainedComposer = algorand
     .newGroup()
@@ -161,100 +172,105 @@ async function main() {
       receiver: bob.addr,
       amount: algo(0.25),
       note: 'Chained payment 3',
-    })
+    });
 
-  printInfo(`\nChained 3 payments in a single fluent expression`)
-  printInfo(`  Transaction count: ${chainedComposer.count()}`)
+  printInfo(`\nChained 3 payments in a single fluent expression`);
+  printInfo(`  Transaction count: ${chainedComposer.count()}`);
 
-  printSuccess('Demonstrated method chaining')
+  printSuccess('Demonstrated method chaining');
 
   // Step 5: Demonstrate .simulate() to simulate before sending
-  printStep(5, 'Demonstrate .simulate() to simulate the transaction group before sending')
-  printInfo('Simulation allows you to preview results and check for failures without sending')
+  printStep(5, 'Demonstrate .simulate() to simulate the transaction group before sending');
+  printInfo('Simulation allows you to preview results and check for failures without sending');
 
-  const simulateResult = await chainedComposer.simulate({ skipSignatures: true })
+  const simulateResult = await chainedComposer.simulate({ skipSignatures: true });
 
-  printInfo(`\nSimulation results:`)
-  printInfo(`  Transactions simulated: ${simulateResult.transactions.length}`)
-  printInfo(`  Transaction IDs:`)
+  printInfo(`\nSimulation results:`);
+  printInfo(`  Transactions simulated: ${simulateResult.transactions.length}`);
+  printInfo(`  Transaction IDs:`);
   for (let i = 0; i < simulateResult.txIds.length; i++) {
-    printInfo(`    [${i}]: ${simulateResult.txIds[i]}`)
+    printInfo(`    [${i}]: ${simulateResult.txIds[i]}`);
   }
-  printInfo(`  Group ID: ${simulateResult.groupId}`)
+  printInfo(`  Group ID: ${simulateResult.groupId}`);
 
   // Check simulation response for failures
-  const simulateResponse = simulateResult.simulateResponse
-  const groupResult = simulateResponse.txnGroups[0]
+  const simulateResponse = simulateResult.simulateResponse;
+  const groupResult = simulateResponse.txnGroups[0];
 
-  printInfo(`\nSimulation response:`)
-  printInfo(`  Would succeed: ${!groupResult.failureMessage}`)
+  printInfo(`\nSimulation response:`);
+  printInfo(`  Would succeed: ${!groupResult.failureMessage}`);
   if (groupResult.failureMessage) {
-    printInfo(`  Failure message: ${groupResult.failureMessage}`)
-    printInfo(`  Failed at index: ${groupResult.failedAt?.join(', ') ?? 'N/A'}`)
+    printInfo(`  Failure message: ${groupResult.failureMessage}`);
+    printInfo(`  Failed at index: ${groupResult.failedAt?.join(', ') ?? 'N/A'}`);
   }
 
   // Show transaction results from simulation
-  printInfo(`\nSimulated transaction results:`)
+  printInfo(`\nSimulated transaction results:`);
   for (let i = 0; i < groupResult.txnResults.length; i++) {
-    const txnResult = groupResult.txnResults[i]
-    printInfo(`  [${i}]: Confirmed round: ${txnResult.txnResult.confirmedRound ?? 'N/A (simulated)'}`)
+    const txnResult = groupResult.txnResults[i];
+    printInfo(
+      `  [${i}]: Confirmed round: ${txnResult.txnResult.confirmedRound ?? 'N/A (simulated)'}`,
+    );
   }
 
-  printSuccess('Simulation completed successfully')
+  printSuccess('Simulation completed successfully');
 
   // Step 6: Demonstrate .send() to execute the atomic transaction group
-  printStep(6, 'Demonstrate .send() to execute the atomic transaction group')
-  printInfo('Calling .send() signs and submits all transactions atomically')
+  printStep(6, 'Demonstrate .send() to execute the atomic transaction group');
+  printInfo('Calling .send() signs and submits all transactions atomically');
 
   // Use the original composer (not the chained one which was already used for simulation)
-  const sendResult = await composer.send()
+  const sendResult = await composer.send();
 
-  printInfo(`\nSend results:`)
-  printInfo(`  Transactions sent: ${sendResult.transactions.length}`)
-  printInfo(`  Group ID: ${sendResult.groupId}`)
-  printInfo(`\nTransaction IDs and confirmations:`)
+  printInfo(`\nSend results:`);
+  printInfo(`  Transactions sent: ${sendResult.transactions.length}`);
+  printInfo(`  Group ID: ${sendResult.groupId}`);
+  printInfo(`\nTransaction IDs and confirmations:`);
   for (let i = 0; i < sendResult.txIds.length; i++) {
-    const txId = sendResult.txIds[i]
-    const confirmation = sendResult.confirmations[i]
-    printInfo(`  [${i}]: ${txId}`)
-    printInfo(`       Confirmed in round: ${confirmation.confirmedRound}`)
+    const txId = sendResult.txIds[i];
+    const confirmation = sendResult.confirmations[i];
+    printInfo(`  [${i}]: ${txId}`);
+    printInfo(`       Confirmed in round: ${confirmation.confirmedRound}`);
   }
 
-  printSuccess('Atomic transaction group executed')
+  printSuccess('Atomic transaction group executed');
 
   // Step 7: Show that all transactions succeed or fail together (atomicity)
-  printStep(7, 'Show that all transactions succeed or fail together (atomicity)')
-  printInfo('Atomic groups ensure all-or-nothing execution')
-  printInfo('')
-  printInfo('Key atomicity properties:')
-  printInfo('  - All transactions share the same group ID')
-  printInfo('  - If any transaction fails, none are committed')
-  printInfo('  - Transactions are executed in order within the group')
-  printInfo('')
+  printStep(7, 'Show that all transactions succeed or fail together (atomicity)');
+  printInfo('Atomic groups ensure all-or-nothing execution');
+  printInfo('');
+  printInfo('Key atomicity properties:');
+  printInfo('  - All transactions share the same group ID');
+  printInfo('  - If any transaction fails, none are committed');
+  printInfo('  - Transactions are executed in order within the group');
+  printInfo('');
 
   // Verify all transactions have the same group ID
-  const transactions = sendResult.transactions
-  const firstGroupId = transactions[0].group
+  const transactions = sendResult.transactions;
+  const firstGroupId = transactions[0].group;
   const allSameGroup = transactions.every(
-    (txn) => txn.group && firstGroupId && Buffer.from(txn.group).toString('base64') === Buffer.from(firstGroupId).toString('base64'),
-  )
+    txn =>
+      txn.group &&
+      firstGroupId &&
+      Buffer.from(txn.group).toString('base64') === Buffer.from(firstGroupId).toString('base64'),
+  );
 
-  printInfo(`All transactions have same group ID: ${allSameGroup}`)
-  printInfo(`Group ID (base64): ${sendResult.groupId}`)
+  printInfo(`All transactions have same group ID: ${allSameGroup}`);
+  printInfo(`Group ID (base64): ${sendResult.groupId}`);
 
   // Verify all confirmations are in the same round
-  const firstRound = sendResult.confirmations[0].confirmedRound
-  const allSameRound = sendResult.confirmations.every((conf) => conf.confirmedRound === firstRound)
+  const firstRound = sendResult.confirmations[0].confirmedRound;
+  const allSameRound = sendResult.confirmations.every(conf => conf.confirmedRound === firstRound);
 
-  printInfo(`All transactions confirmed in same round: ${allSameRound}`)
-  printInfo(`Confirmed round: ${firstRound}`)
+  printInfo(`All transactions confirmed in same round: ${allSameRound}`);
+  printInfo(`Confirmed round: ${firstRound}`);
 
-  printSuccess('Atomicity verified')
+  printSuccess('Atomicity verified');
 
   // Step 8: Demonstrate adding transactions with different signers
-  printStep(8, 'Demonstrate adding transactions with different signers')
-  printInfo('Atomic groups can include transactions from multiple signers')
-  printInfo('Each transaction uses the signer registered for its sender')
+  printStep(8, 'Demonstrate adding transactions with different signers');
+  printInfo('Atomic groups can include transactions from multiple signers');
+  printInfo('Each transaction uses the signer registered for its sender');
 
   // Create an asset first (Alice creates it with manager role for cleanup)
   const assetCreateResult = await algorand.send.assetCreate({
@@ -264,12 +280,12 @@ async function main() {
     assetName: 'Multi-Signer Token',
     unitName: 'MST',
     manager: alice.addr, // Manager role needed to destroy the asset later
-  })
-  const assetId = assetCreateResult.assetId
+  });
+  const assetId = assetCreateResult.assetId;
 
-  printInfo(`\nCreated asset for multi-signer demo:`)
-  printInfo(`  Asset ID: ${assetId}`)
-  printInfo(`  Asset name: Multi-Signer Token`)
+  printInfo(`\nCreated asset for multi-signer demo:`);
+  printInfo(`  Asset ID: ${assetId}`);
+  printInfo(`  Asset name: Multi-Signer Token`);
 
   // Build a multi-signer atomic group:
   // 1. Bob opts in to the asset (signed by Bob)
@@ -293,121 +309,127 @@ async function main() {
       amount: algo(0.1),
       note: 'Payment for asset',
     })
-    .send()
+    .send();
 
-  printInfo(`\nMulti-signer atomic group executed:`)
-  printInfo(`  Transactions: ${multiSignerResult.transactions.length}`)
-  printInfo(`  Group ID: ${multiSignerResult.groupId}`)
-  printInfo(`\nSigner breakdown:`)
-  printInfo(`  [0] Asset Opt-In: Sender ${shortenAddress(multiSignerResult.transactions[0].sender.toString())} (Bob)`)
-  printInfo(`  [1] Asset Transfer: Sender ${shortenAddress(multiSignerResult.transactions[1].sender.toString())} (Alice)`)
-  printInfo(`  [2] Payment: Sender ${shortenAddress(multiSignerResult.transactions[2].sender.toString())} (Charlie)`)
+  printInfo(`\nMulti-signer atomic group executed:`);
+  printInfo(`  Transactions: ${multiSignerResult.transactions.length}`);
+  printInfo(`  Group ID: ${multiSignerResult.groupId}`);
+  printInfo(`\nSigner breakdown:`);
+  printInfo(
+    `  [0] Asset Opt-In: Sender ${shortenAddress(multiSignerResult.transactions[0].sender.toString())} (Bob)`,
+  );
+  printInfo(
+    `  [1] Asset Transfer: Sender ${shortenAddress(multiSignerResult.transactions[1].sender.toString())} (Alice)`,
+  );
+  printInfo(
+    `  [2] Payment: Sender ${shortenAddress(multiSignerResult.transactions[2].sender.toString())} (Charlie)`,
+  );
 
-  printSuccess('Multi-signer atomic group completed')
+  printSuccess('Multi-signer atomic group completed');
 
   // Step 9: Show the group ID assigned to transactions
-  printStep(9, 'Show the group ID assigned to transactions')
-  printInfo('All transactions in a group share a unique group ID')
-  printInfo('The group ID is a hash of all transactions in the group')
+  printStep(9, 'Show the group ID assigned to transactions');
+  printInfo('All transactions in a group share a unique group ID');
+  printInfo('The group ID is a hash of all transactions in the group');
 
-  printInfo(`\nGroup ID details:`)
-  printInfo(`  Group ID (base64): ${multiSignerResult.groupId}`)
-  printInfo(`  Group ID length: ${multiSignerResult.groupId?.length ?? 0} characters (base64)`)
+  printInfo(`\nGroup ID details:`);
+  printInfo(`  Group ID (base64): ${multiSignerResult.groupId}`);
+  printInfo(`  Group ID length: ${multiSignerResult.groupId?.length ?? 0} characters (base64)`);
 
-  printInfo(`\nTransaction group membership:`)
+  printInfo(`\nTransaction group membership:`);
   for (let i = 0; i < multiSignerResult.transactions.length; i++) {
-    const txn = multiSignerResult.transactions[i]
-    const groupBase64 = txn.group ? Buffer.from(txn.group).toString('base64') : 'N/A'
-    printInfo(`  Transaction [${i}]:`)
-    printInfo(`    Type: ${txn.type}`)
-    printInfo(`    Sender: ${shortenAddress(txn.sender.toString())}`)
-    printInfo(`    Group ID matches: ${groupBase64 === multiSignerResult.groupId}`)
+    const txn = multiSignerResult.transactions[i];
+    const groupBase64 = txn.group ? Buffer.from(txn.group).toString('base64') : 'N/A';
+    printInfo(`  Transaction [${i}]:`);
+    printInfo(`    Type: ${txn.type}`);
+    printInfo(`    Sender: ${shortenAddress(txn.sender.toString())}`);
+    printInfo(`    Group ID matches: ${groupBase64 === multiSignerResult.groupId}`);
   }
 
-  printSuccess('Group ID demonstrated')
+  printSuccess('Group ID demonstrated');
 
   // Step 10: Display all transaction IDs and confirmations
-  printStep(10, 'Display all transaction IDs and confirmations')
-  printInfo('Complete summary of the multi-signer atomic group')
+  printStep(10, 'Display all transaction IDs and confirmations');
+  printInfo('Complete summary of the multi-signer atomic group');
 
-  printInfo(`\n${'─'.repeat(70)}`)
-  printInfo(`Transaction Group Summary`)
-  printInfo(`${'─'.repeat(70)}`)
-  printInfo(`Group ID: ${multiSignerResult.groupId}`)
-  printInfo(`Total Transactions: ${multiSignerResult.transactions.length}`)
-  printInfo(`${'─'.repeat(70)}`)
+  printInfo(`\n${'─'.repeat(70)}`);
+  printInfo(`Transaction Group Summary`);
+  printInfo(`${'─'.repeat(70)}`);
+  printInfo(`Group ID: ${multiSignerResult.groupId}`);
+  printInfo(`Total Transactions: ${multiSignerResult.transactions.length}`);
+  printInfo(`${'─'.repeat(70)}`);
 
   for (let i = 0; i < multiSignerResult.transactions.length; i++) {
-    const txn = multiSignerResult.transactions[i]
-    const confirmation = multiSignerResult.confirmations[i]
-    const txId = multiSignerResult.txIds[i]
+    const txn = multiSignerResult.transactions[i];
+    const confirmation = multiSignerResult.confirmations[i];
+    const txId = multiSignerResult.txIds[i];
 
-    printInfo(`\nTransaction [${i}]:`)
-    printInfo(`  Transaction ID: ${txId}`)
-    printInfo(`  Type: ${txn.type}`)
-    printInfo(`  Sender: ${shortenAddress(txn.sender.toString())}`)
-    printInfo(`  Fee: ${txn.fee ?? 0n} µALGO`)
-    printInfo(`  First Valid: ${txn.firstValid}`)
-    printInfo(`  Last Valid: ${txn.lastValid}`)
-    printInfo(`  Confirmed Round: ${confirmation.confirmedRound}`)
+    printInfo(`\nTransaction [${i}]:`);
+    printInfo(`  Transaction ID: ${txId}`);
+    printInfo(`  Type: ${txn.type}`);
+    printInfo(`  Sender: ${shortenAddress(txn.sender.toString())}`);
+    printInfo(`  Fee: ${txn.fee ?? 0n} µALGO`);
+    printInfo(`  First Valid: ${txn.firstValid}`);
+    printInfo(`  Last Valid: ${txn.lastValid}`);
+    printInfo(`  Confirmed Round: ${confirmation.confirmedRound}`);
   }
 
-  printInfo(`\n${'─'.repeat(70)}`)
+  printInfo(`\n${'─'.repeat(70)}`);
 
   // Verify final balances
-  const aliceInfo = await algorand.account.getInformation(alice.addr)
-  const bobInfo = await algorand.account.getInformation(bob.addr)
-  const charlieInfo = await algorand.account.getInformation(charlie.addr)
+  const aliceInfo = await algorand.account.getInformation(alice.addr);
+  const bobInfo = await algorand.account.getInformation(bob.addr);
+  const charlieInfo = await algorand.account.getInformation(charlie.addr);
 
-  printInfo(`\nFinal account balances:`)
-  printInfo(`  Alice: ${formatAlgo(aliceInfo.balance)}`)
-  printInfo(`  Bob: ${formatAlgo(bobInfo.balance)}`)
-  printInfo(`  Charlie: ${formatAlgo(charlieInfo.balance)}`)
+  printInfo(`\nFinal account balances:`);
+  printInfo(`  Alice: ${formatAlgo(aliceInfo.balance)}`);
+  printInfo(`  Bob: ${formatAlgo(bobInfo.balance)}`);
+  printInfo(`  Charlie: ${formatAlgo(charlieInfo.balance)}`);
 
   // Check Bob's asset balance
-  const bobAssets = bobInfo.assets
-  const bobAssetHolding = bobAssets?.find((a) => a.assetId === assetId)
-  printInfo(`\nBob's asset holdings:`)
-  printInfo(`  Asset ID ${assetId}: ${bobAssetHolding?.amount ?? 0} units`)
+  const bobAssets = bobInfo.assets;
+  const bobAssetHolding = bobAssets?.find(a => a.assetId === assetId);
+  printInfo(`\nBob's asset holdings:`);
+  printInfo(`  Asset ID ${assetId}: ${bobAssetHolding?.amount ?? 0} units`);
 
-  printSuccess('Transaction Composer example completed!')
+  printSuccess('Transaction Composer example completed!');
 
   // Step 11: Summary of TransactionComposer API
-  printStep(11, 'Summary - TransactionComposer API')
-  printInfo('The TransactionComposer provides a fluent API for atomic transaction groups:')
-  printInfo('')
-  printInfo('Creating a composer:')
-  printInfo('  const composer = algorand.newGroup()')
-  printInfo('')
-  printInfo('Adding transactions:')
-  printInfo('  .addPayment({ sender, receiver, amount, ... })')
-  printInfo('  .addAssetCreate({ sender, total, decimals, ... })')
-  printInfo('  .addAssetOptIn({ sender, assetId })')
-  printInfo('  .addAssetTransfer({ sender, receiver, assetId, amount })')
-  printInfo('  .addAssetOptOut({ sender, assetId, creator })')
-  printInfo('  .addAssetConfig({ sender, assetId, ... })')
-  printInfo('  .addAssetFreeze({ sender, assetId, account, frozen })')
-  printInfo('  .addAssetDestroy({ sender, assetId })')
-  printInfo('  .addAppCreate({ sender, approvalProgram, clearStateProgram })')
-  printInfo('  .addAppUpdate({ sender, appId, approvalProgram, clearStateProgram })')
-  printInfo('  .addAppCall({ sender, appId, ... })')
-  printInfo('  .addAppDelete({ sender, appId })')
-  printInfo('  .addTransaction(txn, signer?) - Add a pre-built transaction')
-  printInfo('')
-  printInfo('Executing:')
-  printInfo('  .simulate({ skipSignatures: true }) - Preview without signing')
-  printInfo('  .send() - Sign and submit atomically')
-  printInfo('')
-  printInfo('Utility methods:')
-  printInfo('  .count() - Get number of transactions in the group')
-  printInfo('  .build() - Build transactions without sending')
-  printInfo('  .buildTransactions() - Get raw unsigned transactions')
-  printInfo('')
-  printInfo('Key concepts:')
-  printInfo('  - All transactions in a group share a unique group ID')
-  printInfo('  - Atomic execution: all succeed or all fail')
-  printInfo('  - Multiple signers supported (each tx uses its sender\'s signer)')
-  printInfo('  - Maximum 16 transactions per group')
+  printStep(11, 'Summary - TransactionComposer API');
+  printInfo('The TransactionComposer provides a fluent API for atomic transaction groups:');
+  printInfo('');
+  printInfo('Creating a composer:');
+  printInfo('  const composer = algorand.newGroup()');
+  printInfo('');
+  printInfo('Adding transactions:');
+  printInfo('  .addPayment({ sender, receiver, amount, ... })');
+  printInfo('  .addAssetCreate({ sender, total, decimals, ... })');
+  printInfo('  .addAssetOptIn({ sender, assetId })');
+  printInfo('  .addAssetTransfer({ sender, receiver, assetId, amount })');
+  printInfo('  .addAssetOptOut({ sender, assetId, creator })');
+  printInfo('  .addAssetConfig({ sender, assetId, ... })');
+  printInfo('  .addAssetFreeze({ sender, assetId, account, frozen })');
+  printInfo('  .addAssetDestroy({ sender, assetId })');
+  printInfo('  .addAppCreate({ sender, approvalProgram, clearStateProgram })');
+  printInfo('  .addAppUpdate({ sender, appId, approvalProgram, clearStateProgram })');
+  printInfo('  .addAppCall({ sender, appId, ... })');
+  printInfo('  .addAppDelete({ sender, appId })');
+  printInfo('  .addTransaction(txn, signer?) - Add a pre-built transaction');
+  printInfo('');
+  printInfo('Executing:');
+  printInfo('  .simulate({ skipSignatures: true }) - Preview without signing');
+  printInfo('  .send() - Sign and submit atomically');
+  printInfo('');
+  printInfo('Utility methods:');
+  printInfo('  .count() - Get number of transactions in the group');
+  printInfo('  .build() - Build transactions without sending');
+  printInfo('  .buildTransactions() - Get raw unsigned transactions');
+  printInfo('');
+  printInfo('Key concepts:');
+  printInfo('  - All transactions in a group share a unique group ID');
+  printInfo('  - Atomic execution: all succeed or all fail');
+  printInfo("  - Multiple signers supported (each tx uses its sender's signer)");
+  printInfo('  - Maximum 16 transactions per group');
 
   // Clean up - Bob opts out (returns assets to Alice), then Alice destroys the asset
   await algorand.send.assetOptOut({
@@ -415,18 +437,17 @@ async function main() {
     assetId: assetId,
     creator: alice.addr,
     ensureZeroBalance: false,
-  })
+  });
   await algorand.send.assetDestroy({
     sender: alice.addr,
     assetId: assetId,
-  })
+  });
 }
 
-main().catch((error) => {
-  printError(`Unhandled error: ${error instanceof Error ? error.message : String(error)}`)
-  process.exit(1)
-})
-
+main().catch(error => {
+  printError(`Unhandled error: ${error instanceof Error ? error.message : String(error)}`);
+  process.exit(1);
+});
 ```
 
 ---

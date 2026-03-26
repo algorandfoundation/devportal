@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "MerkleArrayProof"
+title: 'MerkleArrayProof'
 ---
 
 > **MerkleArrayProof** = `object`
@@ -17,7 +17,7 @@ Defined in: [packages/transact/src/transactions/state-proof.ts:25](https://githu
 
 Defined in: [packages/transact/src/transactions/state-proof.ts:27](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/transact/src/transactions/state-proof.ts#L27)
 
-***
+---
 
 ### path
 
@@ -25,7 +25,7 @@ Defined in: [packages/transact/src/transactions/state-proof.ts:27](https://githu
 
 Defined in: [packages/transact/src/transactions/state-proof.ts:26](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/transact/src/transactions/state-proof.ts#L26)
 
-***
+---
 
 ### treeDepth
 

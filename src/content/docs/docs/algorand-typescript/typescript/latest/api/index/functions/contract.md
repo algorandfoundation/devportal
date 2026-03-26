@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "contract"
+title: 'contract'
 ---
 
 > **contract**(`options`): \<`T`\>(`contract`, `ctx`) => `never`
@@ -27,7 +27,7 @@ An object containing the configuration options
 
 #### T
 
-`T` *extends* `ConstructorFor`\<[`BaseContract`](/algorand-typescript/api/index/classes/basecontract/)\>
+`T` _extends_ `ConstructorFor`\<[`BaseContract`](/algorand-typescript/api/index/classes/basecontract/)\>
 
 ### Parameters
 

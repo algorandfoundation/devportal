@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "AssetParams"
+title: 'AssetParams'
 ---
 
 > `const` **AssetParams**: `object`

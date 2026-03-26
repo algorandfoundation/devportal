@@ -2,10 +2,10 @@
 editUrl: false
 next: false
 prev: false
-title: "TEAL_SOURCEMAP_EXT"
+title: 'TEAL_SOURCEMAP_EXT'
 ---
 
-> `const` **TEAL\_SOURCEMAP\_EXT**: `".teal.map"` = `'.teal.map'`
+> `const` **TEAL_SOURCEMAP_EXT**: `".teal.map"` = `'.teal.map'`
 
 Defined in: [src/debugging.ts:19](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/debugging.ts#L19)
 

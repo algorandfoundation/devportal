@@ -1,6 +1,6 @@
 ---
-title: "ABI Dynamic Array Type"
-description: "This example demonstrates how to encode and decode variable-length arrays using DynamicArrayType:"
+title: 'ABI Dynamic Array Type'
+description: 'This example demonstrates how to encode and decode variable-length arrays using DynamicArrayType:'
 sidebar:
   order: 6
 ---
@@ -10,15 +10,16 @@ sidebar:
 ## Description
 
 This example demonstrates how to encode and decode variable-length arrays using DynamicArrayType:
+
 - uint64[]: Dynamic array of unsigned 64-bit integers
 - string[]: Dynamic array of strings (nested dynamic types)
 - address[]: Dynamic array of Algorand addresses
- Key characteristics of dynamic arrays:
+  Key characteristics of dynamic arrays:
 - Variable length determined at runtime
 - 2-byte (uint16) length prefix indicating number of elements
 - For static element types: elements encoded consecutively after length
 - For dynamic element types: head/tail encoding pattern is used
- Head/Tail encoding (for arrays containing dynamic elements):
+  Head/Tail encoding (for arrays containing dynamic elements):
 - Length prefix: 2 bytes indicating number of elements
 - Head section: Contains offsets (2 bytes each) pointing to where each element starts in tail
 - Tail section: Contains the actual encoded elements

@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "StaticBytes"
+title: 'StaticBytes'
 ---
 
 Defined in: [arc4/encoded-types.ts:535](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/arc4/encoded-types.ts#L535)
@@ -17,7 +17,7 @@ A fixed length sequence of bytes
 
 ### TLength
 
-`TLength` *extends* [`uint64`](/algorand-typescript/api/index/type-aliases/uint64/) = `0`
+`TLength` _extends_ [`uint64`](/algorand-typescript/api/index/type-aliases/uint64/) = `0`
 
 ## Indexable
 
@@ -136,7 +136,7 @@ Retrieve the encoded bytes for this type
 
 `Arc4ArrayBase.bytes`
 
-***
+---
 
 ### length
 
@@ -156,7 +156,7 @@ Returns the statically declared length of this byte array
 
 `Arc4ArrayBase.length`
 
-***
+---
 
 ### native
 
@@ -190,7 +190,7 @@ Returns an iterator for the items in this array
 
 `Arc4ArrayBase.[iterator]`
 
-***
+---
 
 ### at()
 
@@ -217,7 +217,7 @@ The index of the item to retrieve
 
 `Arc4ArrayBase.at`
 
-***
+---
 
 ### concat()
 
@@ -239,7 +239,7 @@ Another array of bytes to concat with this one
 
 [`DynamicBytes`](/algorand-typescript/api/arc4/classes/dynamicbytes/)
 
-***
+---
 
 ### entries()
 
@@ -257,7 +257,7 @@ Returns an iterator for a tuple of the indexes and items in this array
 
 `Arc4ArrayBase.entries`
 
-***
+---
 
 ### ~~join()~~
 
@@ -286,7 +286,7 @@ Join is not supported in Algorand TypeScript
 
 `Arc4ArrayBase.join`
 
-***
+---
 
 ### keys()
 
@@ -304,7 +304,7 @@ Returns an iterator for the indexes in this array
 
 `Arc4ArrayBase.keys`
 
-***
+---
 
 ### ~~slice()~~
 

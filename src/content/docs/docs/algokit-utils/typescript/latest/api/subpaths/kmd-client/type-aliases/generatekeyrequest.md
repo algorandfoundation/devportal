@@ -2,12 +2,12 @@
 editUrl: false
 next: false
 prev: false
-title: "GenerateKeyRequest"
+title: 'GenerateKeyRequest'
 ---
 
 > **GenerateKeyRequest** = `object`
 
-Defined in: [packages/kmd\_client/src/models/generate-key-request.ts:7](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/kmd_client/src/models/generate-key-request.ts#L7)
+Defined in: [packages/kmd_client/src/models/generate-key-request.ts:7](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/kmd_client/src/models/generate-key-request.ts#L7)
 
 The request for `POST /v1/key`
 
@@ -17,4 +17,4 @@ The request for `POST /v1/key`
 
 > **walletHandleToken**: `string`
 
-Defined in: [packages/kmd\_client/src/models/generate-key-request.ts:8](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/kmd_client/src/models/generate-key-request.ts#L8)
+Defined in: [packages/kmd_client/src/models/generate-key-request.ts:8](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/kmd_client/src/models/generate-key-request.ts#L8)

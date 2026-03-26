@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "AlgoKitLogCaptureFixture"
+title: 'AlgoKitLogCaptureFixture'
 ---
 
 Defined in: [src/testing/types.ts:151](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/testing/types.ts#L151)
@@ -21,7 +21,7 @@ Testing framework agnostic handler method to run after each test to reset the lo
 
 `void`
 
-***
+---
 
 ### beforeEach()
 

@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "ItxnCompose"
+title: 'ItxnCompose'
 ---
 
 > **ItxnCompose** = `object`
@@ -189,7 +189,7 @@ object, or via an explicit generic param. (`itxnCompose.begin({ method: MyContra
 
 ###### TArgs
 
-`TArgs` *extends* `any`[]
+`TArgs` _extends_ `any`[]
 
 ##### Parameters
 
@@ -238,7 +238,7 @@ Specifies any transaction fields which should differ from their defaults
 
 `void`
 
-***
+---
 
 ### next()
 
@@ -418,7 +418,7 @@ object, or via an explicit generic param. (`itxnCompose.next({ method: MyContrac
 
 ###### TArgs
 
-`TArgs` *extends* `any`[]
+`TArgs` _extends_ `any`[]
 
 ##### Parameters
 
@@ -467,7 +467,7 @@ Specifies any transaction fields which should differ from their defaults
 
 `void`
 
-***
+---
 
 ### submit()
 

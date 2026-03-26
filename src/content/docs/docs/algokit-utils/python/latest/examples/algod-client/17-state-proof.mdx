@@ -1,6 +1,6 @@
 ---
-title: "State Proof"
-description: "This example demonstrates how to get state proofs using:"
+title: 'State Proof'
+description: 'This example demonstrates how to get state proofs using:'
 sidebar:
   order: 17
 ---
@@ -10,15 +10,16 @@ sidebar:
 ## Description
 
 This example demonstrates how to get state proofs using:
+
 - state_proof(round) - Get the state proof for a specific round
- State proofs are cryptographic proofs that attest to the state of the Algorand blockchain. They allow external systems (like bridges, light clients, and other blockchains) to verify Algorand's blockchain state without trusting any intermediary.
- Key concepts:
+  State proofs are cryptographic proofs that attest to the state of the Algorand blockchain. They allow external systems (like bridges, light clients, and other blockchains) to verify Algorand's blockchain state without trusting any intermediary.
+  Key concepts:
 - State proofs are generated at regular intervals (every 256 rounds on MainNet)
 - Each state proof covers a range of block headers (the interval)
 - State proofs are signed by a supermajority of online stake
 - The proof uses post-quantum secure cryptographic techniques (Falcon signatures)
- Prerequisites:
- Note: On LocalNet in dev mode, state proofs are NOT generated because: 1. Dev mode doesn't run real consensus 2. There are no real participation keys generating state proofs This example demonstrates the API call and handles the expected errors gracefully.
+  Prerequisites:
+  Note: On LocalNet in dev mode, state proofs are NOT generated because: 1. Dev mode doesn't run real consensus 2. There are no real participation keys generating state proofs This example demonstrates the API call and handles the expected errors gracefully.
 
 ## Prerequisites
 

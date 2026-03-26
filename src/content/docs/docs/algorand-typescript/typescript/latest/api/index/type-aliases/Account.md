@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "Account"
+title: 'Account'
 ---
 
 > **Account** = `object`
@@ -23,7 +23,7 @@ Address the account is rekeyed to
 
 Account must be an available resource
 
-***
+---
 
 ### balance
 
@@ -35,7 +35,7 @@ Account balance in microalgos
 
 Account must be an available resource
 
-***
+---
 
 ### bytes
 
@@ -45,7 +45,7 @@ Defined in: [reference.ts:11](https://github.com/algorandfoundation/puya-ts/blob
 
 Get the accounts address in bytes
 
-***
+---
 
 ### minBalance
 
@@ -57,7 +57,7 @@ Minimum required balance for account, in microalgos
 
 Account must be an available resource
 
-***
+---
 
 ### totalAppsCreated
 
@@ -69,7 +69,7 @@ The number of existing apps created by this account.
 
 Account must be an available resource
 
-***
+---
 
 ### totalAppsOptedIn
 
@@ -81,7 +81,7 @@ The number of apps this account is opted into.
 
 Account must be an available resource
 
-***
+---
 
 ### totalAssets
 
@@ -93,7 +93,7 @@ The numbers of ASAs held by this account (including ASAs this account created).
 
 Account must be an available resource
 
-***
+---
 
 ### totalAssetsCreated
 
@@ -105,7 +105,7 @@ The number of existing ASAs created by this account.
 
 Account must be an available resource
 
-***
+---
 
 ### totalBoxBytes
 
@@ -117,7 +117,7 @@ The total number of bytes used by this account's app's box keys and values.
 
 Account must be an available resource
 
-***
+---
 
 ### totalBoxes
 
@@ -129,7 +129,7 @@ The number of existing boxes created by this account's app.
 
 Account must be an available resource
 
-***
+---
 
 ### totalExtraAppPages
 
@@ -141,7 +141,7 @@ The number of extra app code pages used by this account.
 
 Account must be an available resource
 
-***
+---
 
 ### totalNumByteSlice
 
@@ -153,7 +153,7 @@ The total number of byte array values allocated by this account in Global and Lo
 
 Account must be an available resource
 
-***
+---
 
 ### totalNumUint
 

@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "ValidateEncodingOptions"
+title: 'ValidateEncodingOptions'
 ---
 
 > **ValidateEncodingOptions** = `"unsafe-disabled"` \| `"args"`

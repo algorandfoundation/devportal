@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "assetConfig"
+title: 'assetConfig'
 ---
 
 > **assetConfig**(`fields`): [`AssetConfigItxnParams`](/algorand-typescript/api/itxn/namespaces/itxn/classes/assetconfigitxnparams/)

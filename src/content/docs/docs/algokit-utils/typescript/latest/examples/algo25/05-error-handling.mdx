@@ -1,6 +1,6 @@
 ---
-title: "Error Handling for Mnemonic Functions"
-description: "This example demonstrates how to properly handle errors when working with mnemonic functions, including invalid words, bad checksums, and wrong seed lengths."
+title: 'Error Handling for Mnemonic Functions'
+description: 'This example demonstrates how to properly handle errors when working with mnemonic functions, including invalid words, bad checksums, and wrong seed lengths.'
 sidebar:
   order: 5
 ---
@@ -10,7 +10,8 @@ sidebar:
 ## Description
 
 This example demonstrates how to properly handle errors when working with mnemonic functions, including invalid words, bad checksums, and wrong seed lengths.
- Key concepts:
+Key concepts:
+
 - NOT_IN_WORDS_LIST_ERROR_MSG: Thrown when a mnemonic contains an invalid word
 - FAIL_TO_DECODE_MNEMONIC_ERROR_MSG: Thrown when checksum validation fails
 - RangeError: Thrown when seed length is not 32 bytes
@@ -53,217 +54,216 @@ import {
   mnemonicFromSeed,
   NOT_IN_WORDS_LIST_ERROR_MSG,
   seedFromMnemonic,
-} from '@algorandfoundation/algokit-utils/algo25'
-import { printError, printHeader, printInfo, printStep, printSuccess } from '../shared/utils.js'
+} from '@algorandfoundation/algokit-utils/algo25';
+import { printError, printHeader, printInfo, printStep, printSuccess } from '../shared/utils.js';
 
 function main() {
-  printHeader('Error Handling for Mnemonic Functions')
+  printHeader('Error Handling for Mnemonic Functions');
 
   // Step 1: Display the error constants
-  printStep(1, 'Error Constants and Their Values')
+  printStep(1, 'Error Constants and Their Values');
 
-  printInfo('The algo25 package exports two error message constants:')
-  printInfo('')
-  printInfo('  NOT_IN_WORDS_LIST_ERROR_MSG:')
-  printInfo(`    Value: "${NOT_IN_WORDS_LIST_ERROR_MSG}"`)
-  printInfo('    When: A word in the mnemonic is not in the BIP39 wordlist')
-  printInfo('')
-  printInfo('  FAIL_TO_DECODE_MNEMONIC_ERROR_MSG:')
-  printInfo(`    Value: "${FAIL_TO_DECODE_MNEMONIC_ERROR_MSG}"`)
-  printInfo('    When: Checksum validation fails or mnemonic structure is invalid')
-  printInfo('')
-  printInfo('Additionally, mnemonicFromSeed() throws RangeError for wrong seed length.')
+  printInfo('The algo25 package exports two error message constants:');
+  printInfo('');
+  printInfo('  NOT_IN_WORDS_LIST_ERROR_MSG:');
+  printInfo(`    Value: "${NOT_IN_WORDS_LIST_ERROR_MSG}"`);
+  printInfo('    When: A word in the mnemonic is not in the BIP39 wordlist');
+  printInfo('');
+  printInfo('  FAIL_TO_DECODE_MNEMONIC_ERROR_MSG:');
+  printInfo(`    Value: "${FAIL_TO_DECODE_MNEMONIC_ERROR_MSG}"`);
+  printInfo('    When: Checksum validation fails or mnemonic structure is invalid');
+  printInfo('');
+  printInfo('Additionally, mnemonicFromSeed() throws RangeError for wrong seed length.');
 
   // Step 2: Demonstrate NOT_IN_WORDS_LIST_ERROR_MSG error
-  printStep(2, 'Error: Invalid Word Not in Wordlist')
+  printStep(2, 'Error: Invalid Word Not in Wordlist');
 
   // Create a mnemonic with an invalid word
   const invalidWordMnemonic =
-    'invalidword abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon'
+    'invalidword abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon';
 
-  printInfo('Attempting to decode a mnemonic with an invalid word...')
-  printInfo(`  First word: "invalidword" (not in BIP39 wordlist)`)
-  printInfo('')
+  printInfo('Attempting to decode a mnemonic with an invalid word...');
+  printInfo(`  First word: "invalidword" (not in BIP39 wordlist)`);
+  printInfo('');
 
   try {
-    seedFromMnemonic(invalidWordMnemonic)
-    printError('Unexpectedly succeeded - this should have thrown an error!')
+    seedFromMnemonic(invalidWordMnemonic);
+    printError('Unexpectedly succeeded - this should have thrown an error!');
   } catch (error) {
-    const errorMessage = (error as Error).message
+    const errorMessage = (error as Error).message;
 
-    printInfo(`Caught error: "${errorMessage}"`)
-    printInfo('')
+    printInfo(`Caught error: "${errorMessage}"`);
+    printInfo('');
 
     // Demonstrate programmatic error checking
     if (errorMessage === NOT_IN_WORDS_LIST_ERROR_MSG) {
-      printSuccess('Error message matches NOT_IN_WORDS_LIST_ERROR_MSG constant')
-      printInfo('')
-      printInfo('Programmatic handling pattern:')
-      printInfo('  if (error.message === NOT_IN_WORDS_LIST_ERROR_MSG) {')
-      printInfo('    // Handle invalid word error')
-      printInfo('    // e.g., prompt user to check their mnemonic spelling')
-      printInfo('  }')
+      printSuccess('Error message matches NOT_IN_WORDS_LIST_ERROR_MSG constant');
+      printInfo('');
+      printInfo('Programmatic handling pattern:');
+      printInfo('  if (error.message === NOT_IN_WORDS_LIST_ERROR_MSG) {');
+      printInfo('    // Handle invalid word error');
+      printInfo('    // e.g., prompt user to check their mnemonic spelling');
+      printInfo('  }');
     }
   }
 
   // Step 3: Demonstrate FAIL_TO_DECODE_MNEMONIC_ERROR_MSG error
-  printStep(3, 'Error: Invalid Checksum')
+  printStep(3, 'Error: Invalid Checksum');
 
   // Create a mnemonic with valid words but invalid checksum
   // Using all "abandon" words creates a valid structure but wrong checksum
   const invalidChecksumMnemonic =
-    'abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon wrong'
+    'abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon wrong';
 
-  printInfo('Attempting to decode a mnemonic with valid words but invalid checksum...')
-  printInfo('  All 24 data words: "abandon" (valid BIP39 word)')
-  printInfo('  Checksum word: "wrong" (valid word, but incorrect checksum)')
-  printInfo('')
+  printInfo('Attempting to decode a mnemonic with valid words but invalid checksum...');
+  printInfo('  All 24 data words: "abandon" (valid BIP39 word)');
+  printInfo('  Checksum word: "wrong" (valid word, but incorrect checksum)');
+  printInfo('');
 
   try {
-    seedFromMnemonic(invalidChecksumMnemonic)
-    printError('Unexpectedly succeeded - this should have thrown an error!')
+    seedFromMnemonic(invalidChecksumMnemonic);
+    printError('Unexpectedly succeeded - this should have thrown an error!');
   } catch (error) {
-    const errorMessage = (error as Error).message
+    const errorMessage = (error as Error).message;
 
-    printInfo(`Caught error: "${errorMessage}"`)
-    printInfo('')
+    printInfo(`Caught error: "${errorMessage}"`);
+    printInfo('');
 
     // Demonstrate programmatic error checking
     if (errorMessage === FAIL_TO_DECODE_MNEMONIC_ERROR_MSG) {
-      printSuccess('Error message matches FAIL_TO_DECODE_MNEMONIC_ERROR_MSG constant')
-      printInfo('')
-      printInfo('Programmatic handling pattern:')
-      printInfo('  if (error.message === FAIL_TO_DECODE_MNEMONIC_ERROR_MSG) {')
-      printInfo('    // Handle checksum validation error')
-      printInfo('    // e.g., prompt user to verify their mnemonic phrase')
-      printInfo('  }')
+      printSuccess('Error message matches FAIL_TO_DECODE_MNEMONIC_ERROR_MSG constant');
+      printInfo('');
+      printInfo('Programmatic handling pattern:');
+      printInfo('  if (error.message === FAIL_TO_DECODE_MNEMONIC_ERROR_MSG) {');
+      printInfo('    // Handle checksum validation error');
+      printInfo('    // e.g., prompt user to verify their mnemonic phrase');
+      printInfo('  }');
     }
   }
 
   // Step 4: Demonstrate RangeError for wrong seed length
-  printStep(4, 'Error: Wrong Seed Length')
+  printStep(4, 'Error: Wrong Seed Length');
 
   // Create seeds with wrong lengths
-  const shortSeed = new Uint8Array(16) // Too short (16 bytes instead of 32)
-  const longSeed = new Uint8Array(64) // Too long (64 bytes instead of 32)
+  const shortSeed = new Uint8Array(16); // Too short (16 bytes instead of 32)
+  const longSeed = new Uint8Array(64); // Too long (64 bytes instead of 32)
 
-  printInfo('mnemonicFromSeed() requires exactly 32 bytes.')
-  printInfo('Attempting with incorrect seed lengths...')
-  printInfo('')
+  printInfo('mnemonicFromSeed() requires exactly 32 bytes.');
+  printInfo('Attempting with incorrect seed lengths...');
+  printInfo('');
 
   // Test with short seed
-  printInfo('Test 1: 16-byte seed (too short)')
+  printInfo('Test 1: 16-byte seed (too short)');
   try {
-    mnemonicFromSeed(shortSeed)
-    printError('Unexpectedly succeeded - this should have thrown an error!')
+    mnemonicFromSeed(shortSeed);
+    printError('Unexpectedly succeeded - this should have thrown an error!');
   } catch (error) {
-    const errorMessage = (error as Error).message
-    const isRangeError = error instanceof RangeError
+    const errorMessage = (error as Error).message;
+    const isRangeError = error instanceof RangeError;
 
-    printInfo(`  Caught ${isRangeError ? 'RangeError' : 'Error'}: "${errorMessage}"`)
+    printInfo(`  Caught ${isRangeError ? 'RangeError' : 'Error'}: "${errorMessage}"`);
 
     if (isRangeError) {
-      printSuccess('  Correctly threw RangeError for wrong seed length')
+      printSuccess('  Correctly threw RangeError for wrong seed length');
     }
   }
 
-  printInfo('')
+  printInfo('');
 
   // Test with long seed
-  printInfo('Test 2: 64-byte seed (too long)')
+  printInfo('Test 2: 64-byte seed (too long)');
   try {
-    mnemonicFromSeed(longSeed)
-    printError('Unexpectedly succeeded - this should have thrown an error!')
+    mnemonicFromSeed(longSeed);
+    printError('Unexpectedly succeeded - this should have thrown an error!');
   } catch (error) {
-    const errorMessage = (error as Error).message
-    const isRangeError = error instanceof RangeError
+    const errorMessage = (error as Error).message;
+    const isRangeError = error instanceof RangeError;
 
-    printInfo(`  Caught ${isRangeError ? 'RangeError' : 'Error'}: "${errorMessage}"`)
+    printInfo(`  Caught ${isRangeError ? 'RangeError' : 'Error'}: "${errorMessage}"`);
 
     if (isRangeError) {
-      printSuccess('  Correctly threw RangeError for wrong seed length')
+      printSuccess('  Correctly threw RangeError for wrong seed length');
     }
   }
 
-  printInfo('')
-  printInfo('Programmatic handling pattern:')
-  printInfo('  if (error instanceof RangeError) {')
-  printInfo('    // Handle wrong seed length error')
-  printInfo('    // e.g., validate input data before calling mnemonicFromSeed()')
-  printInfo('  }')
+  printInfo('');
+  printInfo('Programmatic handling pattern:');
+  printInfo('  if (error instanceof RangeError) {');
+  printInfo('    // Handle wrong seed length error');
+  printInfo('    // e.g., validate input data before calling mnemonicFromSeed()');
+  printInfo('  }');
 
   // Step 5: Comprehensive try/catch pattern
-  printStep(5, 'Comprehensive Error Handling Pattern')
+  printStep(5, 'Comprehensive Error Handling Pattern');
 
-  printInfo('Here is a complete try/catch pattern for mnemonic functions:')
-  printInfo('')
-  printInfo('  try {')
-  printInfo('    const seed = seedFromMnemonic(userInput)')
-  printInfo('    // Success - use the seed')
-  printInfo('  } catch (error) {')
-  printInfo('    if (error instanceof Error) {')
-  printInfo('      if (error.message === NOT_IN_WORDS_LIST_ERROR_MSG) {')
-  printInfo('        // One or more words are not in the BIP39 wordlist')
-  printInfo('        // Action: Check spelling, ensure words are lowercase')
-  printInfo('      } else if (error.message === FAIL_TO_DECODE_MNEMONIC_ERROR_MSG) {')
-  printInfo('        // Checksum validation failed')
-  printInfo('        // Action: Verify the complete mnemonic phrase')
-  printInfo('      } else if (error instanceof RangeError) {')
-  printInfo('        // Wrong seed length (for mnemonicFromSeed)')
-  printInfo('        // Action: Ensure seed is exactly 32 bytes')
-  printInfo('      } else {')
-  printInfo('        // Unexpected error')
-  printInfo('        // Action: Log and report')
-  printInfo('      }')
-  printInfo('    }')
-  printInfo('  }')
+  printInfo('Here is a complete try/catch pattern for mnemonic functions:');
+  printInfo('');
+  printInfo('  try {');
+  printInfo('    const seed = seedFromMnemonic(userInput)');
+  printInfo('    // Success - use the seed');
+  printInfo('  } catch (error) {');
+  printInfo('    if (error instanceof Error) {');
+  printInfo('      if (error.message === NOT_IN_WORDS_LIST_ERROR_MSG) {');
+  printInfo('        // One or more words are not in the BIP39 wordlist');
+  printInfo('        // Action: Check spelling, ensure words are lowercase');
+  printInfo('      } else if (error.message === FAIL_TO_DECODE_MNEMONIC_ERROR_MSG) {');
+  printInfo('        // Checksum validation failed');
+  printInfo('        // Action: Verify the complete mnemonic phrase');
+  printInfo('      } else if (error instanceof RangeError) {');
+  printInfo('        // Wrong seed length (for mnemonicFromSeed)');
+  printInfo('        // Action: Ensure seed is exactly 32 bytes');
+  printInfo('      } else {');
+  printInfo('        // Unexpected error');
+  printInfo('        // Action: Log and report');
+  printInfo('      }');
+  printInfo('    }');
+  printInfo('  }');
 
   // Step 6: Demonstrate a successful operation for comparison
-  printStep(6, 'Successful Operation for Comparison')
+  printStep(6, 'Successful Operation for Comparison');
 
-  const validSeed = new Uint8Array(32)
-  crypto.getRandomValues(validSeed)
+  const validSeed = new Uint8Array(32);
+  crypto.getRandomValues(validSeed);
 
-  printInfo('Creating a valid mnemonic from a 32-byte seed...')
+  printInfo('Creating a valid mnemonic from a 32-byte seed...');
 
   try {
-    const validMnemonic = mnemonicFromSeed(validSeed)
-    const words = validMnemonic.split(' ')
-    printSuccess(`Generated valid mnemonic with ${words.length} words`)
-    printInfo(`  First 3 words: "${words.slice(0, 3).join(' ')}..."`)
+    const validMnemonic = mnemonicFromSeed(validSeed);
+    const words = validMnemonic.split(' ');
+    printSuccess(`Generated valid mnemonic with ${words.length} words`);
+    printInfo(`  First 3 words: "${words.slice(0, 3).join(' ')}..."`);
 
     // Round-trip to verify
-    const recoveredSeed = seedFromMnemonic(validMnemonic)
-    printSuccess('Successfully recovered seed from mnemonic (no errors)')
-    printInfo(`  Recovered seed length: ${recoveredSeed.length} bytes`)
+    const recoveredSeed = seedFromMnemonic(validMnemonic);
+    printSuccess('Successfully recovered seed from mnemonic (no errors)');
+    printInfo(`  Recovered seed length: ${recoveredSeed.length} bytes`);
   } catch (error) {
-    printError(`Unexpected error: ${(error as Error).message}`)
+    printError(`Unexpected error: ${(error as Error).message}`);
   }
 
   // Step 7: Summary
-  printStep(7, 'Summary')
+  printStep(7, 'Summary');
 
-  printInfo('Error handling best practices for mnemonic functions:')
-  printInfo('')
-  printInfo('  1. Import error constants for programmatic checking:')
-  printInfo('     import { FAIL_TO_DECODE_MNEMONIC_ERROR_MSG, NOT_IN_WORDS_LIST_ERROR_MSG }')
-  printInfo('')
-  printInfo('  2. Three types of errors to handle:')
-  printInfo('     - NOT_IN_WORDS_LIST_ERROR_MSG: Invalid word in mnemonic')
-  printInfo('     - FAIL_TO_DECODE_MNEMONIC_ERROR_MSG: Checksum validation failed')
-  printInfo('     - RangeError: Seed is not exactly 32 bytes')
-  printInfo('')
-  printInfo('  3. Always use try/catch when processing user-provided mnemonics')
-  printInfo('')
-  printInfo('  4. Compare error.message against constants for specific handling')
-  printInfo('')
-  printInfo('  5. Use instanceof RangeError for seed length errors')
+  printInfo('Error handling best practices for mnemonic functions:');
+  printInfo('');
+  printInfo('  1. Import error constants for programmatic checking:');
+  printInfo('     import { FAIL_TO_DECODE_MNEMONIC_ERROR_MSG, NOT_IN_WORDS_LIST_ERROR_MSG }');
+  printInfo('');
+  printInfo('  2. Three types of errors to handle:');
+  printInfo('     - NOT_IN_WORDS_LIST_ERROR_MSG: Invalid word in mnemonic');
+  printInfo('     - FAIL_TO_DECODE_MNEMONIC_ERROR_MSG: Checksum validation failed');
+  printInfo('     - RangeError: Seed is not exactly 32 bytes');
+  printInfo('');
+  printInfo('  3. Always use try/catch when processing user-provided mnemonics');
+  printInfo('');
+  printInfo('  4. Compare error.message against constants for specific handling');
+  printInfo('');
+  printInfo('  5. Use instanceof RangeError for seed length errors');
 
-  printSuccess('Error Handling example completed successfully!')
+  printSuccess('Error Handling example completed successfully!');
 }
 
-main()
-
+main();
 ```
 
 ---

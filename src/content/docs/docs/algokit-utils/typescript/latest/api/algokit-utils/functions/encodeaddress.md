@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "encodeAddress"
+title: 'encodeAddress'
 ---
 
 > **encodeAddress**(`address`): `string`

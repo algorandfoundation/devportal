@@ -47,50 +47,55 @@ Types that were previously imported from algosdk should now be imported from alg
 
 ```typescript
 /**** Before ****/
-import { TransactionType, OnApplicationComplete } from 'algosdk'
+import { TransactionType, OnApplicationComplete } from 'algosdk';
 
 // Using in filters
 const subscriber = new AlgorandSubscriber(
   {
-    filters: [{
-      name: 'payments',
-      filter: { type: TransactionType.pay }
-    }],
+    filters: [
+      {
+        name: 'payments',
+        filter: { type: TransactionType.pay },
+      },
+    ],
     // ...
   },
   algod,
-  indexer
-)
+  indexer,
+);
 
 /**** After ****/
-import { TransactionType } from '@algorandfoundation/algokit-utils/transact'
-import type { ApplicationOnComplete } from '@algorandfoundation/algokit-utils/indexer'
+import { TransactionType } from '@algorandfoundation/algokit-utils/transact';
+import type { ApplicationOnComplete } from '@algorandfoundation/algokit-utils/indexer';
 
 // Using in filters (same as before)
 const subscriber = new AlgorandSubscriber(
   {
-    filters: [{
-      name: 'payments',
-      filter: { type: TransactionType.pay }
-    }],
+    filters: [
+      {
+        name: 'payments',
+        filter: { type: TransactionType.pay },
+      },
+    ],
     // ...
   },
   algod,
-  indexer
-)
+  indexer,
+);
 ```
 
 ### Common Import Updates
 
-| Before (algosdk) | After (algokit-utils) |
-|------------------|----------------------|
-| `import { TransactionType } from 'algosdk'` | `import { TransactionType } from '@algorandfoundation/algokit-utils/transact'` |
-| `import { OnApplicationComplete } from 'algosdk'` | `import type { ApplicationOnComplete } from '@algorandfoundation/algokit-utils/indexer'` |
+| Before (algosdk)                                                        | After (algokit-utils)                                                                                           |
+| ----------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------- |
+| `import { TransactionType } from 'algosdk'`                             | `import { TransactionType } from '@algorandfoundation/algokit-utils/transact'`                                  |
+| `import { OnApplicationComplete } from 'algosdk'`                       | `import type { ApplicationOnComplete } from '@algorandfoundation/algokit-utils/indexer'`                        |
 | `import algosdk from 'algosdk'; const algod = new algosdk.Algodv2(...)` | `import { AlgorandClient } from '@algorandfoundation/algokit-utils'; const algorand = AlgorandClient.testNet()` |
 
 ### Step 3 - No Other Changes Required
 
 The following remain unchanged:
+
 - Subscriber configuration (`AlgorandSubscriberConfig`)
 - Filter definitions (`TransactionFilter`)
 - Event handling methods (`on`, `onBatch`, `onPoll`, `onError`)
@@ -107,68 +112,76 @@ Here's a complete example showing the migration:
 
 ```typescript
 /**** Before (v3 with utils v9) ****/
-import { AlgorandClient } from '@algorandfoundation/algokit-utils'
-import { AlgorandSubscriber } from '@algorandfoundation/algokit-subscriber'
-import { TransactionType } from 'algosdk'
+import { AlgorandClient } from '@algorandfoundation/algokit-utils';
+import { AlgorandSubscriber } from '@algorandfoundation/algokit-subscriber';
+import { TransactionType } from 'algosdk';
 
-const algorand = AlgorandClient.testNet()
+const algorand = AlgorandClient.testNet();
 
 const subscriber = new AlgorandSubscriber(
   {
-    filters: [{
-      name: 'usdc-transfers',
-      filter: {
-        type: TransactionType.axfer,
-        assetId: 31566704n,
-        minAmount: 1_000_000n,
-      }
-    }],
+    filters: [
+      {
+        name: 'usdc-transfers',
+        filter: {
+          type: TransactionType.axfer,
+          assetId: 31566704n,
+          minAmount: 1_000_000n,
+        },
+      },
+    ],
     watermarkPersistence: {
       get: async () => 0n,
-      set: async (watermark) => { /* save watermark */ }
-    }
+      set: async watermark => {
+        /* save watermark */
+      },
+    },
   },
   algorand.client.algod,
-  algorand.client.indexer
-)
+  algorand.client.indexer,
+);
 
-subscriber.on('usdc-transfers', (transaction) => {
-  console.log('USDC transfer:', transaction.id)
-})
+subscriber.on('usdc-transfers', transaction => {
+  console.log('USDC transfer:', transaction.id);
+});
 
-subscriber.start()
+subscriber.start();
 
 /**** After (v4 with utils v10) ****/
-import { AlgorandClient } from '@algorandfoundation/algokit-utils'
-import { AlgorandSubscriber } from '@algorandfoundation/algokit-subscriber'
-import { TransactionType } from '@algorandfoundation/algokit-utils/transact'  // Changed import
+import { AlgorandClient } from '@algorandfoundation/algokit-utils';
+import { AlgorandSubscriber } from '@algorandfoundation/algokit-subscriber';
+import { TransactionType } from '@algorandfoundation/algokit-utils/transact'; // Changed import
 
-const algorand = AlgorandClient.testNet()
+const algorand = AlgorandClient.testNet();
 
 const subscriber = new AlgorandSubscriber(
   {
-    filters: [{
-      name: 'usdc-transfers',
-      filter: {
-        type: TransactionType.axfer,
-        assetId: 31566704n,
-        minAmount: 1_000_000n,
-      }
-    }],
+    filters: [
+      {
+        name: 'usdc-transfers',
+        filter: {
+          type: TransactionType.axfer,
+          assetId: 31566704n,
+          minAmount: 1_000_000n,
+        },
+      },
+    ],
     watermarkPersistence: {
       get: async () => 0n,
-      set: async (watermark) => { /* save watermark */ }
-    }
+      set: async watermark => {
+        /* save watermark */
+      },
+    },
   },
   algorand.client.algod,
-  algorand.client.indexer
-)
+  algorand.client.indexer,
+);
 
-subscriber.on('usdc-transfers', (transaction) => {
-  console.log('USDC transfer:', transaction.id)
-})
+subscriber.on('usdc-transfers', transaction => {
+  console.log('USDC transfer:', transaction.id);
+});
 
-subscriber.start()
+subscriber.start();
 ```
 
 **Key change**: Only the import statement for `TransactionType` changed. Everything else remains the same.

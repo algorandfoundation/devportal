@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "ApplicationCallItxnParams"
+title: 'ApplicationCallItxnParams'
 ---
 
 Defined in: [itxn.ts:1140](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/itxn.ts#L1140)
@@ -33,7 +33,7 @@ Return a copy of this ApplicationCallItxnParams object
 
 `ApplicationCallItxnParams`
 
-***
+---
 
 ### set()
 
@@ -53,7 +53,7 @@ Update one or more fields in this ApplicationCallItxnParams object
 
 `void`
 
-***
+---
 
 ### submit()
 

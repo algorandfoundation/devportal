@@ -1,6 +1,6 @@
 ---
-title: "AVM Type Encoding"
-description: "This example demonstrates how to work with AVM-specific types:"
+title: 'AVM Type Encoding'
+description: 'This example demonstrates how to work with AVM-specific types:'
 sidebar:
   order: 12
 ---
@@ -10,11 +10,12 @@ sidebar:
 ## Description
 
 This example demonstrates how to work with AVM-specific types:
+
 - AVMBytes: Raw byte arrays (no length prefix, unlike ABI string/bytes)
 - AVMString: UTF-8 strings (no length prefix, unlike ABI string)
 - AVMUint64: 64-bit unsigned integers (8 bytes, big-endian)
- AVM types represent how data is stored natively on the AVM stack, while ABI types follow the ARC-4 encoding specification with length prefixes.
- Key functions:
+  AVM types represent how data is stored natively on the AVM stack, while ABI types follow the ARC-4 encoding specification with length prefixes.
+  Key functions:
 - getABIEncodedValue(avmType, value): Encode a value (works with both AVM and ABI types)
 - decodeAVMValue(avmType, bytes): Decode AVM bytes back to a value
 - isAVMType(type): Check if a type string is an AVM type
@@ -57,9 +58,19 @@ npm run example abi/12-avm-types.ts
  * - No LocalNet required
  */
 
-import type { AVMBytes, AVMString, AVMType, AVMUint64 } from '@algorandfoundation/algokit-utils/abi'
-import { ABIType, decodeAVMValue, getABIEncodedValue, isAVMType } from '@algorandfoundation/algokit-utils/abi'
-import { formatHex, printHeader, printInfo, printStep, printSuccess } from '../shared/utils.js'
+import type {
+  AVMBytes,
+  AVMString,
+  AVMType,
+  AVMUint64,
+} from '@algorandfoundation/algokit-utils/abi';
+import {
+  ABIType,
+  decodeAVMValue,
+  getABIEncodedValue,
+  isAVMType,
+} from '@algorandfoundation/algokit-utils/abi';
+import { formatHex, printHeader, printInfo, printStep, printSuccess } from '../shared/utils.js';
 
 /**
  * Encode a value to raw AVM representation (as conceptualized in ARC-56).
@@ -72,167 +83,176 @@ import { formatHex, printHeader, printInfo, printStep, printSuccess } from '../s
  * Note: The library's getABIEncodedValue() uses ABI-style encoding for AVMString
  * (with length prefix). This helper demonstrates the conceptual raw encoding.
  */
-function encodeAVMValueRaw(avmType: AVMType, value: string | Uint8Array | bigint | number): Uint8Array {
+function encodeAVMValueRaw(
+  avmType: AVMType,
+  value: string | Uint8Array | bigint | number,
+): Uint8Array {
   switch (avmType) {
     case 'AVMString':
       // Raw UTF-8 bytes - no length prefix
-      return new TextEncoder().encode(value as string)
+      return new TextEncoder().encode(value as string);
     case 'AVMBytes':
       // Raw bytes as-is
-      if (typeof value === 'string') return new TextEncoder().encode(value)
-      return value as Uint8Array
+      if (typeof value === 'string') return new TextEncoder().encode(value);
+      return value as Uint8Array;
     case 'AVMUint64':
       // 8-byte big-endian encoding
-      return ABIType.from('uint64').encode(value as bigint | number)
+      return ABIType.from('uint64').encode(value as bigint | number);
   }
 }
 
 function main() {
-  printHeader('AVM Type Encoding Example')
+  printHeader('AVM Type Encoding Example');
 
   // Step 1: Introduction to AVM Types
-  printStep(1, 'Introduction to AVM Types')
+  printStep(1, 'Introduction to AVM Types');
 
-  printInfo('AVM types represent native Algorand Virtual Machine stack values.')
-  printInfo('')
-  printInfo('Three AVM types:')
-  printInfo('  AVMBytes  - Raw byte array (no length prefix)')
-  printInfo('  AVMString - UTF-8 string (no length prefix)')
-  printInfo('  AVMUint64 - 64-bit unsigned integer (8 bytes, big-endian)')
-  printInfo('')
-  printInfo('Key difference from ABI types:')
-  printInfo('  ABI string/bytes: 2-byte length prefix + data')
-  printInfo('  AVM string/bytes: Raw data only (no prefix)')
+  printInfo('AVM types represent native Algorand Virtual Machine stack values.');
+  printInfo('');
+  printInfo('Three AVM types:');
+  printInfo('  AVMBytes  - Raw byte array (no length prefix)');
+  printInfo('  AVMString - UTF-8 string (no length prefix)');
+  printInfo('  AVMUint64 - 64-bit unsigned integer (8 bytes, big-endian)');
+  printInfo('');
+  printInfo('Key difference from ABI types:');
+  printInfo('  ABI string/bytes: 2-byte length prefix + data');
+  printInfo('  AVM string/bytes: Raw data only (no prefix)');
 
   // Step 2: AVMBytes type
-  printStep(2, 'AVMBytes - Raw Byte Arrays')
+  printStep(2, 'AVMBytes - Raw Byte Arrays');
 
-  const avmBytesType: AVMBytes = 'AVMBytes'
-  printInfo(`Type: ${avmBytesType}`)
-  printInfo(`isAVMType("AVMBytes"): ${isAVMType('AVMBytes')}`)
-  printInfo('')
+  const avmBytesType: AVMBytes = 'AVMBytes';
+  printInfo(`Type: ${avmBytesType}`);
+  printInfo(`isAVMType("AVMBytes"): ${isAVMType('AVMBytes')}`);
+  printInfo('');
 
   // Encode raw bytes
-  const rawBytes = new Uint8Array([0x48, 0x65, 0x6c, 0x6c, 0x6f]) // "Hello" in ASCII
-  const avmBytesEncoded = encodeAVMValueRaw('AVMBytes', rawBytes)
+  const rawBytes = new Uint8Array([0x48, 0x65, 0x6c, 0x6c, 0x6f]); // "Hello" in ASCII
+  const avmBytesEncoded = encodeAVMValueRaw('AVMBytes', rawBytes);
 
-  printInfo('Encoding raw bytes [0x48, 0x65, 0x6c, 0x6c, 0x6f] ("Hello"):')
-  printInfo(`  Input bytes: ${formatHex(rawBytes)}`)
-  printInfo(`  Encoded:     ${formatHex(avmBytesEncoded)}`)
-  printInfo(`  Length: ${avmBytesEncoded.length} bytes`)
-  printInfo('')
+  printInfo('Encoding raw bytes [0x48, 0x65, 0x6c, 0x6c, 0x6f] ("Hello"):');
+  printInfo(`  Input bytes: ${formatHex(rawBytes)}`);
+  printInfo(`  Encoded:     ${formatHex(avmBytesEncoded)}`);
+  printInfo(`  Length: ${avmBytesEncoded.length} bytes`);
+  printInfo('');
 
   // Decode back
-  const avmBytesDecoded = decodeAVMValue('AVMBytes', avmBytesEncoded)
-  printInfo('Decoding AVMBytes:')
-  printInfo(`  Result type: ${avmBytesDecoded instanceof Uint8Array ? 'Uint8Array' : typeof avmBytesDecoded}`)
-  printInfo(`  Result: ${formatHex(avmBytesDecoded as Uint8Array)}`)
+  const avmBytesDecoded = decodeAVMValue('AVMBytes', avmBytesEncoded);
+  printInfo('Decoding AVMBytes:');
+  printInfo(
+    `  Result type: ${avmBytesDecoded instanceof Uint8Array ? 'Uint8Array' : typeof avmBytesDecoded}`,
+  );
+  printInfo(`  Result: ${formatHex(avmBytesDecoded as Uint8Array)}`);
 
   // Step 3: AVMString type
-  printStep(3, 'AVMString - UTF-8 Strings (No Length Prefix)')
+  printStep(3, 'AVMString - UTF-8 Strings (No Length Prefix)');
 
-  const avmStringType: AVMString = 'AVMString'
-  printInfo(`Type: ${avmStringType}`)
-  printInfo(`isAVMType("AVMString"): ${isAVMType('AVMString')}`)
-  printInfo('')
+  const avmStringType: AVMString = 'AVMString';
+  printInfo(`Type: ${avmStringType}`);
+  printInfo(`isAVMType("AVMString"): ${isAVMType('AVMString')}`);
+  printInfo('');
 
   // Encode various strings
-  const testStrings = ['Hello', 'World!', 'Algorand']
+  const testStrings = ['Hello', 'World!', 'Algorand'];
 
   for (const str of testStrings) {
-    const encoded = encodeAVMValueRaw('AVMString', str)
-    printInfo(`"${str}":`)
-    printInfo(`  Encoded: ${formatHex(encoded)}`)
-    printInfo(`  Length: ${encoded.length} bytes`)
+    const encoded = encodeAVMValueRaw('AVMString', str);
+    printInfo(`"${str}":`);
+    printInfo(`  Encoded: ${formatHex(encoded)}`);
+    printInfo(`  Length: ${encoded.length} bytes`);
   }
 
-  printInfo('')
+  printInfo('');
 
   // Decode back
-  const encodedHello = encodeAVMValueRaw('AVMString', 'Hello')
-  const decodedHello = decodeAVMValue('AVMString', encodedHello)
-  printInfo('Decoding AVMString:')
-  printInfo(`  Input: ${formatHex(encodedHello)}`)
-  printInfo(`  Result: "${decodedHello}"`)
-  printInfo(`  Result type: ${typeof decodedHello}`)
+  const encodedHello = encodeAVMValueRaw('AVMString', 'Hello');
+  const decodedHello = decodeAVMValue('AVMString', encodedHello);
+  printInfo('Decoding AVMString:');
+  printInfo(`  Input: ${formatHex(encodedHello)}`);
+  printInfo(`  Result: "${decodedHello}"`);
+  printInfo(`  Result type: ${typeof decodedHello}`);
 
   // Step 4: AVMUint64 type
-  printStep(4, 'AVMUint64 - 64-bit Unsigned Integers')
+  printStep(4, 'AVMUint64 - 64-bit Unsigned Integers');
 
-  const avmUint64Type: AVMUint64 = 'AVMUint64'
-  printInfo(`Type: ${avmUint64Type}`)
-  printInfo(`isAVMType("AVMUint64"): ${isAVMType('AVMUint64')}`)
-  printInfo('')
+  const avmUint64Type: AVMUint64 = 'AVMUint64';
+  printInfo(`Type: ${avmUint64Type}`);
+  printInfo(`isAVMType("AVMUint64"): ${isAVMType('AVMUint64')}`);
+  printInfo('');
 
   // Encode various uint64 values
-  const testNumbers: bigint[] = [0n, 1n, 255n, 1000n, 1000000n, 2n ** 32n - 1n, 2n ** 64n - 1n]
+  const testNumbers: bigint[] = [0n, 1n, 255n, 1000n, 1000000n, 2n ** 32n - 1n, 2n ** 64n - 1n];
 
-  printInfo('Encoding uint64 values (8-byte big-endian):')
+  printInfo('Encoding uint64 values (8-byte big-endian):');
   for (const num of testNumbers) {
-    const encoded = encodeAVMValueRaw('AVMUint64', num)
-    printInfo(`  ${num.toString().padStart(20)}: ${formatHex(encoded)}`)
+    const encoded = encodeAVMValueRaw('AVMUint64', num);
+    printInfo(`  ${num.toString().padStart(20)}: ${formatHex(encoded)}`);
   }
 
-  printInfo('')
+  printInfo('');
 
   // Decode back
-  const encoded1000 = encodeAVMValueRaw('AVMUint64', 1000n)
-  const decoded1000 = decodeAVMValue('AVMUint64', encoded1000)
-  printInfo('Decoding AVMUint64:')
-  printInfo(`  Input: ${formatHex(encoded1000)}`)
-  printInfo(`  Result: ${decoded1000}`)
-  printInfo(`  Result type: ${typeof decoded1000}`)
+  const encoded1000 = encodeAVMValueRaw('AVMUint64', 1000n);
+  const decoded1000 = decodeAVMValue('AVMUint64', encoded1000);
+  printInfo('Decoding AVMUint64:');
+  printInfo(`  Input: ${formatHex(encoded1000)}`);
+  printInfo(`  Result: ${decoded1000}`);
+  printInfo(`  Result type: ${typeof decoded1000}`);
 
   // Step 5: Compare AVM encoding vs ABI encoding
-  printStep(5, 'AVM Encoding vs ABI Encoding Comparison')
+  printStep(5, 'AVM Encoding vs ABI Encoding Comparison');
 
-  printInfo('Comparing how the same values encode differently:')
-  printInfo('')
+  printInfo('Comparing how the same values encode differently:');
+  printInfo('');
 
   // String comparison
-  const testString = 'Hello'
-  const avmStringEncoded = encodeAVMValueRaw('AVMString', testString)
-  const abiStringEncoded = ABIType.from('string').encode(testString)
+  const testString = 'Hello';
+  const avmStringEncoded = encodeAVMValueRaw('AVMString', testString);
+  const abiStringEncoded = ABIType.from('string').encode(testString);
 
-  printInfo(`String: "${testString}"`)
-  printInfo(`  AVM encoding: ${formatHex(avmStringEncoded)}`)
-  printInfo(`    Length: ${avmStringEncoded.length} bytes (raw UTF-8 only)`)
-  printInfo(`  ABI encoding: ${formatHex(abiStringEncoded)}`)
-  printInfo(`    Length: ${abiStringEncoded.length} bytes (2-byte prefix + UTF-8)`)
-  printInfo(`    First 2 bytes: ${formatHex(abiStringEncoded.slice(0, 2))} = ${(abiStringEncoded[0] << 8) | abiStringEncoded[1]} (length)`)
-  printInfo('')
+  printInfo(`String: "${testString}"`);
+  printInfo(`  AVM encoding: ${formatHex(avmStringEncoded)}`);
+  printInfo(`    Length: ${avmStringEncoded.length} bytes (raw UTF-8 only)`);
+  printInfo(`  ABI encoding: ${formatHex(abiStringEncoded)}`);
+  printInfo(`    Length: ${abiStringEncoded.length} bytes (2-byte prefix + UTF-8)`);
+  printInfo(
+    `    First 2 bytes: ${formatHex(abiStringEncoded.slice(0, 2))} = ${(abiStringEncoded[0] << 8) | abiStringEncoded[1]} (length)`,
+  );
+  printInfo('');
 
   // Bytes comparison
-  const testBytesArray = new Uint8Array([0xde, 0xad, 0xbe, 0xef])
-  const avmBytesEncodedCmp = encodeAVMValueRaw('AVMBytes', testBytesArray)
+  const testBytesArray = new Uint8Array([0xde, 0xad, 0xbe, 0xef]);
+  const avmBytesEncodedCmp = encodeAVMValueRaw('AVMBytes', testBytesArray);
   // ABI has no "bytes" type - closest is byte[] or string; we'll use static byte[4]
-  const abiByte4Encoded = ABIType.from('byte[4]').encode(Array.from(testBytesArray))
+  const abiByte4Encoded = ABIType.from('byte[4]').encode(Array.from(testBytesArray));
 
-  printInfo(`Bytes: [0xde, 0xad, 0xbe, 0xef]`)
-  printInfo(`  AVMBytes encoding: ${formatHex(avmBytesEncodedCmp)}`)
-  printInfo(`    Length: ${avmBytesEncodedCmp.length} bytes (raw bytes only)`)
-  printInfo(`  ABI byte[4] encoding: ${formatHex(abiByte4Encoded)}`)
-  printInfo(`    Length: ${abiByte4Encoded.length} bytes (static array, no prefix)`)
-  printInfo('')
+  printInfo(`Bytes: [0xde, 0xad, 0xbe, 0xef]`);
+  printInfo(`  AVMBytes encoding: ${formatHex(avmBytesEncodedCmp)}`);
+  printInfo(`    Length: ${avmBytesEncodedCmp.length} bytes (raw bytes only)`);
+  printInfo(`  ABI byte[4] encoding: ${formatHex(abiByte4Encoded)}`);
+  printInfo(`    Length: ${abiByte4Encoded.length} bytes (static array, no prefix)`);
+  printInfo('');
 
   // Uint64 comparison
-  const testUint64 = 1000n
-  const avmUint64Encoded = encodeAVMValueRaw('AVMUint64', testUint64)
-  const abiUint64Encoded = ABIType.from('uint64').encode(testUint64)
+  const testUint64 = 1000n;
+  const avmUint64Encoded = encodeAVMValueRaw('AVMUint64', testUint64);
+  const abiUint64Encoded = ABIType.from('uint64').encode(testUint64);
 
-  printInfo(`Uint64: ${testUint64}`)
-  printInfo(`  AVM encoding: ${formatHex(avmUint64Encoded)}`)
-  printInfo(`    Length: ${avmUint64Encoded.length} bytes`)
-  printInfo(`  ABI encoding: ${formatHex(abiUint64Encoded)}`)
-  printInfo(`    Length: ${abiUint64Encoded.length} bytes`)
-  printInfo(`  Match: ${Buffer.from(avmUint64Encoded).toString('hex') === Buffer.from(abiUint64Encoded).toString('hex')}`)
-  printInfo('  (uint64 encoding is identical - both are 8 bytes big-endian)')
+  printInfo(`Uint64: ${testUint64}`);
+  printInfo(`  AVM encoding: ${formatHex(avmUint64Encoded)}`);
+  printInfo(`    Length: ${avmUint64Encoded.length} bytes`);
+  printInfo(`  ABI encoding: ${formatHex(abiUint64Encoded)}`);
+  printInfo(`    Length: ${abiUint64Encoded.length} bytes`);
+  printInfo(
+    `  Match: ${Buffer.from(avmUint64Encoded).toString('hex') === Buffer.from(abiUint64Encoded).toString('hex')}`,
+  );
+  printInfo('  (uint64 encoding is identical - both are 8 bytes big-endian)');
 
   // Step 6: isAVMType helper function
-  printStep(6, 'isAVMType Helper Function')
+  printStep(6, 'isAVMType Helper Function');
 
-  printInfo('Use isAVMType() to check if a type string is an AVM type:')
-  printInfo('')
+  printInfo('Use isAVMType() to check if a type string is an AVM type:');
+  printInfo('');
 
   const typeChecks = [
     'AVMBytes',
@@ -243,141 +263,141 @@ function main() {
     'address',
     'byte[]',
     '(uint64,bool)',
-  ]
+  ];
 
   for (const type of typeChecks) {
-    const isAvm = isAVMType(type)
-    printInfo(`  isAVMType("${type}"): ${isAvm}`)
+    const isAvm = isAVMType(type);
+    printInfo(`  isAVMType("${type}"): ${isAvm}`);
   }
 
   // Step 6b: getABIEncodedValue - unified encoding function
-  printStep(7, 'getABIEncodedValue - Unified Encoding Function')
+  printStep(7, 'getABIEncodedValue - Unified Encoding Function');
 
-  printInfo('getABIEncodedValue() handles both AVM types and ABI types:')
-  printInfo('')
+  printInfo('getABIEncodedValue() handles both AVM types and ABI types:');
+  printInfo('');
 
   // Demonstrate with AVM types
-  const avmStringBytes = getABIEncodedValue('AVMString', 'Test')
-  printInfo(`getABIEncodedValue('AVMString', 'Test'): ${formatHex(avmStringBytes)}`)
+  const avmStringBytes = getABIEncodedValue('AVMString', 'Test');
+  printInfo(`getABIEncodedValue('AVMString', 'Test'): ${formatHex(avmStringBytes)}`);
 
-  const avmUint64Bytes = getABIEncodedValue('AVMUint64', 100n)
-  printInfo(`getABIEncodedValue('AVMUint64', 100n): ${formatHex(avmUint64Bytes)}`)
+  const avmUint64Bytes = getABIEncodedValue('AVMUint64', 100n);
+  printInfo(`getABIEncodedValue('AVMUint64', 100n): ${formatHex(avmUint64Bytes)}`);
 
   // Demonstrate with ABI types
-  const abiUint64Type = ABIType.from('uint64')
-  const abiUint64Bytes = getABIEncodedValue(abiUint64Type, 100n)
-  printInfo(`getABIEncodedValue(ABIType.from('uint64'), 100n): ${formatHex(abiUint64Bytes)}`)
+  const abiUint64Type = ABIType.from('uint64');
+  const abiUint64Bytes = getABIEncodedValue(abiUint64Type, 100n);
+  printInfo(`getABIEncodedValue(ABIType.from('uint64'), 100n): ${formatHex(abiUint64Bytes)}`);
 
-  printInfo('')
-  printInfo('This function is useful when you have a mixed type that could be either.')
-  printInfo('Internally it uses isAVMType() to determine the encoding strategy.')
+  printInfo('');
+  printInfo('This function is useful when you have a mixed type that could be either.');
+  printInfo('Internally it uses isAVMType() to determine the encoding strategy.');
 
   // Step 8: When to use AVM types vs ABI types
-  printStep(8, 'When to Use AVM Types vs ABI Types')
+  printStep(8, 'When to Use AVM Types vs ABI Types');
 
-  printInfo('Use AVM types when:')
-  printInfo('  - Working with raw AVM stack values (global/local state, box storage)')
-  printInfo('  - Reading/writing app state where values have no length prefix')
-  printInfo('  - The ARC-56 spec specifies AVMBytes, AVMString, or AVMUint64')
-  printInfo('')
-  printInfo('Use ABI types when:')
-  printInfo('  - Encoding method arguments for ARC-4 ABI method calls')
-  printInfo('  - Encoding method return values following ARC-4 specification')
-  printInfo('  - The type is an ARC-4 type like "uint64", "string", "address"')
-  printInfo('')
-  printInfo('Example scenarios:')
-  printInfo('  - App global state value stored as uint64 -> AVMUint64')
-  printInfo('  - App global state key stored as string -> AVMString')
-  printInfo('  - Box content stored as raw bytes -> AVMBytes')
-  printInfo('  - ABI method arg of type "string" -> ABIStringType (with length prefix)')
-  printInfo('  - ABI method return of type "uint64" -> ABIUintType (same encoding)')
+  printInfo('Use AVM types when:');
+  printInfo('  - Working with raw AVM stack values (global/local state, box storage)');
+  printInfo('  - Reading/writing app state where values have no length prefix');
+  printInfo('  - The ARC-56 spec specifies AVMBytes, AVMString, or AVMUint64');
+  printInfo('');
+  printInfo('Use ABI types when:');
+  printInfo('  - Encoding method arguments for ARC-4 ABI method calls');
+  printInfo('  - Encoding method return values following ARC-4 specification');
+  printInfo('  - The type is an ARC-4 type like "uint64", "string", "address"');
+  printInfo('');
+  printInfo('Example scenarios:');
+  printInfo('  - App global state value stored as uint64 -> AVMUint64');
+  printInfo('  - App global state key stored as string -> AVMString');
+  printInfo('  - Box content stored as raw bytes -> AVMBytes');
+  printInfo('  - ABI method arg of type "string" -> ABIStringType (with length prefix)');
+  printInfo('  - ABI method return of type "uint64" -> ABIUintType (same encoding)');
 
   // Step 9: Practical example - Encoding for app state
-  printStep(9, 'Practical Example - Encoding for App State')
+  printStep(9, 'Practical Example - Encoding for App State');
 
-  printInfo('Simulating app state encoding (as seen in ARC-56 contracts):')
-  printInfo('')
+  printInfo('Simulating app state encoding (as seen in ARC-56 contracts):');
+  printInfo('');
 
   // Simulate a key-value pair in global state
-  const stateKey = 'counter'
-  const stateValue = 42n
+  const stateKey = 'counter';
+  const stateValue = 42n;
 
   // Keys are typically AVMString (no length prefix in state key)
-  const encodedKey = encodeAVMValueRaw('AVMString', stateKey)
+  const encodedKey = encodeAVMValueRaw('AVMString', stateKey);
   // Values can be AVMUint64 for integer values
-  const encodedValue = encodeAVMValueRaw('AVMUint64', stateValue)
+  const encodedValue = encodeAVMValueRaw('AVMUint64', stateValue);
 
-  printInfo('Global state entry:')
-  printInfo(`  Key: "${stateKey}"`)
-  printInfo(`  Key encoded (AVMString): ${formatHex(encodedKey)}`)
-  printInfo(`  Value: ${stateValue}`)
-  printInfo(`  Value encoded (AVMUint64): ${formatHex(encodedValue)}`)
-  printInfo('')
+  printInfo('Global state entry:');
+  printInfo(`  Key: "${stateKey}"`);
+  printInfo(`  Key encoded (AVMString): ${formatHex(encodedKey)}`);
+  printInfo(`  Value: ${stateValue}`);
+  printInfo(`  Value encoded (AVMUint64): ${formatHex(encodedValue)}`);
+  printInfo('');
 
   // Decode back
-  const decodedKey = decodeAVMValue('AVMString', encodedKey)
-  const decodedValue = decodeAVMValue('AVMUint64', encodedValue)
+  const decodedKey = decodeAVMValue('AVMString', encodedKey);
+  const decodedValue = decodeAVMValue('AVMUint64', encodedValue);
 
-  printInfo('Decoding back:')
-  printInfo(`  Key: "${decodedKey}"`)
-  printInfo(`  Value: ${decodedValue}`)
+  printInfo('Decoding back:');
+  printInfo(`  Key: "${decodedKey}"`);
+  printInfo(`  Value: ${decodedValue}`);
 
   // Step 10: Round-trip verification
-  printStep(10, 'Round-Trip Verification')
+  printStep(10, 'Round-Trip Verification');
 
-  printInfo('Verifying encode/decode round-trips preserve values:')
-  printInfo('')
+  printInfo('Verifying encode/decode round-trips preserve values:');
+  printInfo('');
 
   // AVMString round-trip
-  const originalString = 'AlgorandFoundation'
-  const encString = encodeAVMValueRaw('AVMString', originalString)
-  const decString = decodeAVMValue('AVMString', encString)
-  const matchString = originalString === decString
-  printInfo(`AVMString "${originalString}": ${matchString ? 'PASS' : 'FAIL'}`)
+  const originalString = 'AlgorandFoundation';
+  const encString = encodeAVMValueRaw('AVMString', originalString);
+  const decString = decodeAVMValue('AVMString', encString);
+  const matchString = originalString === decString;
+  printInfo(`AVMString "${originalString}": ${matchString ? 'PASS' : 'FAIL'}`);
 
   // AVMBytes round-trip
-  const originalBytes = new Uint8Array([1, 2, 3, 4, 5, 6, 7, 8])
-  const encBytes = encodeAVMValueRaw('AVMBytes', originalBytes)
-  const decBytes = decodeAVMValue('AVMBytes', encBytes) as Uint8Array
-  const matchBytes = originalBytes.length === decBytes.length && originalBytes.every((b, i) => b === decBytes[i])
-  printInfo(`AVMBytes [1,2,3,4,5,6,7,8]: ${matchBytes ? 'PASS' : 'FAIL'}`)
+  const originalBytes = new Uint8Array([1, 2, 3, 4, 5, 6, 7, 8]);
+  const encBytes = encodeAVMValueRaw('AVMBytes', originalBytes);
+  const decBytes = decodeAVMValue('AVMBytes', encBytes) as Uint8Array;
+  const matchBytes =
+    originalBytes.length === decBytes.length && originalBytes.every((b, i) => b === decBytes[i]);
+  printInfo(`AVMBytes [1,2,3,4,5,6,7,8]: ${matchBytes ? 'PASS' : 'FAIL'}`);
 
   // AVMUint64 round-trip
-  const originalUint64 = 9007199254740991n // Max safe integer
-  const encUint64 = encodeAVMValueRaw('AVMUint64', originalUint64)
-  const decUint64 = decodeAVMValue('AVMUint64', encUint64) as bigint
-  const matchUint64 = originalUint64 === decUint64
-  printInfo(`AVMUint64 ${originalUint64}: ${matchUint64 ? 'PASS' : 'FAIL'}`)
+  const originalUint64 = 9007199254740991n; // Max safe integer
+  const encUint64 = encodeAVMValueRaw('AVMUint64', originalUint64);
+  const decUint64 = decodeAVMValue('AVMUint64', encUint64) as bigint;
+  const matchUint64 = originalUint64 === decUint64;
+  printInfo(`AVMUint64 ${originalUint64}: ${matchUint64 ? 'PASS' : 'FAIL'}`);
 
   // Step 11: Summary
-  printStep(11, 'Summary')
+  printStep(11, 'Summary');
 
-  printInfo('AVM Type Summary:')
-  printInfo('')
-  printInfo('Types:')
-  printInfo('  AVMBytes  - Raw bytes, no length prefix')
-  printInfo('  AVMString - UTF-8 string, no length prefix')
-  printInfo('  AVMUint64 - 8-byte big-endian unsigned integer')
-  printInfo('')
-  printInfo('Functions:')
-  printInfo('  decodeAVMValue(type, bytes) - Decode AVM bytes to value')
-  printInfo('  getABIEncodedValue(type, value) - Encode (works with AVM and ABI types)')
-  printInfo('  isAVMType(type) - Check if type is an AVM type')
-  printInfo('')
-  printInfo('Key Differences from ABI:')
-  printInfo('  - AVMString has no 2-byte length prefix (ABI string does)')
-  printInfo('  - AVMBytes is raw (ABI uses length-prefixed byte arrays)')
-  printInfo('  - AVMUint64 encoding is identical to ABI uint64')
-  printInfo('')
-  printInfo('Use Cases:')
-  printInfo('  - AVM types: App state, box storage, raw stack values')
-  printInfo('  - ABI types: Method calls, ARC-4 encoded arguments/returns')
+  printInfo('AVM Type Summary:');
+  printInfo('');
+  printInfo('Types:');
+  printInfo('  AVMBytes  - Raw bytes, no length prefix');
+  printInfo('  AVMString - UTF-8 string, no length prefix');
+  printInfo('  AVMUint64 - 8-byte big-endian unsigned integer');
+  printInfo('');
+  printInfo('Functions:');
+  printInfo('  decodeAVMValue(type, bytes) - Decode AVM bytes to value');
+  printInfo('  getABIEncodedValue(type, value) - Encode (works with AVM and ABI types)');
+  printInfo('  isAVMType(type) - Check if type is an AVM type');
+  printInfo('');
+  printInfo('Key Differences from ABI:');
+  printInfo('  - AVMString has no 2-byte length prefix (ABI string does)');
+  printInfo('  - AVMBytes is raw (ABI uses length-prefixed byte arrays)');
+  printInfo('  - AVMUint64 encoding is identical to ABI uint64');
+  printInfo('');
+  printInfo('Use Cases:');
+  printInfo('  - AVM types: App state, box storage, raw stack values');
+  printInfo('  - ABI types: Method calls, ARC-4 encoded arguments/returns');
 
-  printSuccess('AVM Type Encoding example completed successfully!')
+  printSuccess('AVM Type Encoding example completed successfully!');
 }
 
-main()
-
+main();
 ```
 
 ---

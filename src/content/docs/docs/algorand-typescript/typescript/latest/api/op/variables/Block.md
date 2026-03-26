@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "Block"
+title: 'Block'
 ---
 
 > `const` **Block**: `object`

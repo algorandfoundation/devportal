@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "mnemonicToMasterDerivationKey"
+title: 'mnemonicToMasterDerivationKey'
 ---
 
 > **mnemonicToMasterDerivationKey**(`mn`): `Uint8Array`\<`ArrayBufferLike`\>

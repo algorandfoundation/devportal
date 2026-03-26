@@ -1,5 +1,5 @@
 ---
-title: "AlgoKit Tasks"
+title: 'AlgoKit Tasks'
 ---
 
 AlgoKit Tasks are a collection of handy tasks that can be used to perform various operations on Algorand blockchain.

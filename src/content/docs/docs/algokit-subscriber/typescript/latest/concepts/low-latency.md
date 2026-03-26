@@ -19,7 +19,7 @@ If you are using [`getSubscribedTransactions`](/docs/algokit-subscriber/typescri
 If you want to manually run code that waits for a given round to become available you can execute the following code:
 
 ```typescript
-await algod.statusAfterBlock(roundNumberToWaitFor)
+await algod.statusAfterBlock(roundNumberToWaitFor);
 ```
 
 It's worth noting special care has been placed in the subscriber library to properly handle abort signalling. All asynchronous operations including algod polls and polling waits have abort signal handling in place so if you call `subscriber.stop()` at any point in time it should almost immediately, cleanly, exit and if you want to wait for the stop to finish you can `await subscriber.stop()`.
@@ -27,11 +27,11 @@ It's worth noting special care has been placed in the subscriber library to prop
 If you want to hook this up to Node.js process signals you can include code like this in your service entrypoint:
 
 ```typescript
-;['SIGINT', 'SIGTERM', 'SIGQUIT'].forEach((signal) =>
+['SIGINT', 'SIGTERM', 'SIGQUIT'].forEach(signal =>
   process.on(signal, () => {
     // eslint-disable-next-line no-console
-    console.log(`Received ${signal}; stopping subscriber...`)
-    subscriber.stop(signal)
+    console.log(`Received ${signal}; stopping subscriber...`);
+    subscriber.stop(signal);
   }),
-)
+);
 ```

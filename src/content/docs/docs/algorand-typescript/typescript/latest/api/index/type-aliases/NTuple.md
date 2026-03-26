@@ -2,10 +2,10 @@
 editUrl: false
 next: false
 prev: false
-title: "NTuple"
+title: 'NTuple'
 ---
 
-> **NTuple**\<`T`, `N`\> = `N` *extends* `N` ? `number` *extends* `N` ? `T`[] : `_TupleOf`\<`T`, `N`, readonly \[\]\> : `never`
+> **NTuple**\<`T`, `N`\> = `N` _extends_ `N` ? `number` _extends_ `N` ? `T`[] : `_TupleOf`\<`T`, `N`, readonly \[\]\> : `never`
 
 Defined in: [primitives.ts:364](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/primitives.ts#L364)
 
@@ -22,4 +22,4 @@ NTuple<uint64, 3> === [uint64, uint64, uint64]
 
 ### N
 
-`N` *extends* `number`
+`N` _extends_ `number`

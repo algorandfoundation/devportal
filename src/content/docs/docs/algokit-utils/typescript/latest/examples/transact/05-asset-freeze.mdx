@@ -1,5 +1,5 @@
 ---
-title: "Asset Freeze"
+title: 'Asset Freeze'
 description: "This example demonstrates how to freeze and unfreeze asset holdings using the transact package: 1. Create an asset with freeze address set 2. Transfer assets to another account 3. Freeze the account's asset holdings (prevent transfers) 4. Verify frozen account cannot transfer 5. Unfreeze the account's asset holdings 6. Verify account can transfer after unfreeze"
 sidebar:
   order: 5
@@ -10,7 +10,7 @@ sidebar:
 ## Description
 
 This example demonstrates how to freeze and unfreeze asset holdings using the transact package: 1. Create an asset with freeze address set 2. Transfer assets to another account 3. Freeze the account's asset holdings (prevent transfers) 4. Verify frozen account cannot transfer 5. Unfreeze the account's asset holdings 6. Verify account can transfer after unfreeze
- Uses Transaction class with TransactionType.AssetFreeze and AssetFreezeTransactionFields.
+Uses Transaction class with TransactionType.AssetFreeze and AssetFreezeTransactionFields.
 
 ## Prerequisites
 
@@ -48,8 +48,8 @@ npm run example transact/05-asset-freeze.ts
  * - LocalNet running (via `algokit localnet start`)
  */
 
-import { AlgorandClient } from '@algorandfoundation/algokit-utils'
-import type { PendingTransactionResponse } from '@algorandfoundation/algokit-utils/algod-client'
+import { AlgorandClient } from '@algorandfoundation/algokit-utils';
+import type { PendingTransactionResponse } from '@algorandfoundation/algokit-utils/algod-client';
 import {
   Transaction,
   TransactionType,
@@ -58,7 +58,7 @@ import {
   type AssetFreezeTransactionFields,
   type AssetTransferTransactionFields,
   type PaymentTransactionFields,
-} from '@algorandfoundation/algokit-utils/transact'
+} from '@algorandfoundation/algokit-utils/transact';
 import {
   createAlgodClient,
   printHeader,
@@ -67,48 +67,48 @@ import {
   printSuccess,
   shortenAddress,
   waitForConfirmation,
-} from '../shared/utils.js'
+} from '../shared/utils.js';
 
 /**
  * Gets a funded account from LocalNet's KMD wallet
  */
 async function getLocalNetFundedAccount(algorand: AlgorandClient) {
-  return await algorand.account.kmd.getLocalNetDispenserAccount()
+  return await algorand.account.kmd.getLocalNetDispenserAccount();
 }
 
 async function main() {
-  printHeader('Asset Freeze Example')
+  printHeader('Asset Freeze Example');
 
   // Step 1: Initialize clients
-  printStep(1, 'Initialize Algod Client')
-  const algod = createAlgodClient()
-  const algorand = AlgorandClient.defaultLocalNet()
-  printInfo('Connected to LocalNet Algod')
+  printStep(1, 'Initialize Algod Client');
+  const algod = createAlgodClient();
+  const algorand = AlgorandClient.defaultLocalNet();
+  printInfo('Connected to LocalNet Algod');
 
   // Step 2: Get freeze manager account from KMD
-  printStep(2, 'Get Freeze Manager Account from KMD')
-  const freezeManager = await getLocalNetFundedAccount(algorand)
-  printInfo(`Freeze manager address: ${shortenAddress(freezeManager.addr.toString())}`)
+  printStep(2, 'Get Freeze Manager Account from KMD');
+  const freezeManager = await getLocalNetFundedAccount(algorand);
+  printInfo(`Freeze manager address: ${shortenAddress(freezeManager.addr.toString())}`);
 
   // Step 3: Get suggested transaction parameters
-  printStep(3, 'Get Suggested Transaction Parameters')
-  const suggestedParams = await algod.suggestedParams()
-  printInfo(`First valid round: ${suggestedParams.firstValid}`)
-  printInfo(`Last valid round: ${suggestedParams.lastValid}`)
-  printInfo(`Min fee: ${suggestedParams.minFee} microALGO`)
+  printStep(3, 'Get Suggested Transaction Parameters');
+  const suggestedParams = await algod.suggestedParams();
+  printInfo(`First valid round: ${suggestedParams.firstValid}`);
+  printInfo(`Last valid round: ${suggestedParams.lastValid}`);
+  printInfo(`Min fee: ${suggestedParams.minFee} microALGO`);
 
   // Step 4: Generate and fund holder account using AlgorandClient helper
-  printStep(4, 'Generate and Fund Holder Account')
-  const holder = algorand.account.random()
-  printInfo(`Holder address: ${shortenAddress(holder.addr.toString())}`)
+  printStep(4, 'Generate and Fund Holder Account');
+  const holder = algorand.account.random();
+  printInfo(`Holder address: ${shortenAddress(holder.addr.toString())}`);
 
   // Fund the holder with enough ALGO to cover transaction fees
-  const fundingAmount = 1_000_000n // 1 ALGO in microALGO
+  const fundingAmount = 1_000_000n; // 1 ALGO in microALGO
 
   const fundPaymentFields: PaymentTransactionFields = {
     receiver: holder.addr,
     amount: fundingAmount,
-  }
+  };
 
   const fundTx = new Transaction({
     type: TransactionType.Payment,
@@ -118,25 +118,25 @@ async function main() {
     genesisHash: suggestedParams.genesisHash,
     genesisId: suggestedParams.genesisId,
     payment: fundPaymentFields,
-  })
+  });
 
   const fundTxWithFee = assignFee(fundTx, {
     feePerByte: suggestedParams.fee,
     minFee: suggestedParams.minFee,
-  })
+  });
 
-  const signedFundTx = await freezeManager.signer([fundTxWithFee], [0])
-  await algod.sendRawTransaction(signedFundTx)
-  await waitForConfirmation(algod, fundTxWithFee.txId())
-  printInfo('Funded holder with 1 ALGO for transaction fees')
+  const signedFundTx = await freezeManager.signer([fundTxWithFee], [0]);
+  await algod.sendRawTransaction(signedFundTx);
+  await waitForConfirmation(algod, fundTxWithFee.txId());
+  printInfo('Funded holder with 1 ALGO for transaction fees');
 
   // Step 5: Create an asset with freeze address set
-  printStep(5, 'Create Asset with Freeze Address Set')
+  printStep(5, 'Create Asset with Freeze Address Set');
 
-  const assetTotal = 10_000_000_000n // 10,000 units with 6 decimals
-  const assetDecimals = 6
-  const assetName = 'Freezable Token'
-  const assetUnitName = 'FRZ'
+  const assetTotal = 10_000_000_000n; // 10,000 units with 6 decimals
+  const assetDecimals = 6;
+  const assetName = 'Freezable Token';
+  const assetUnitName = 'FRZ';
 
   const assetConfigFields: AssetConfigTransactionFields = {
     assetId: 0n, // 0 indicates asset creation
@@ -150,10 +150,10 @@ async function main() {
     reserve: freezeManager.addr,
     freeze: freezeManager.addr, // IMPORTANT: Set freeze address to enable freezing
     clawback: freezeManager.addr,
-  }
+  };
 
-  printInfo(`Creating asset: ${assetName} (${assetUnitName})`)
-  printInfo(`Freeze address set to: ${shortenAddress(freezeManager.addr.toString())}`)
+  printInfo(`Creating asset: ${assetName} (${assetUnitName})`);
+  printInfo(`Freeze address set to: ${shortenAddress(freezeManager.addr.toString())}`);
 
   const createAssetTx = new Transaction({
     type: TransactionType.AssetConfig,
@@ -163,34 +163,37 @@ async function main() {
     genesisHash: suggestedParams.genesisHash,
     genesisId: suggestedParams.genesisId,
     assetConfig: assetConfigFields,
-  })
+  });
 
   const createAssetTxWithFee = assignFee(createAssetTx, {
     feePerByte: suggestedParams.fee,
     minFee: suggestedParams.minFee,
-  })
+  });
 
-  const signedCreateTx = await freezeManager.signer([createAssetTxWithFee], [0])
-  await algod.sendRawTransaction(signedCreateTx)
+  const signedCreateTx = await freezeManager.signer([createAssetTxWithFee], [0]);
+  await algod.sendRawTransaction(signedCreateTx);
 
-  const createPendingInfo = (await waitForConfirmation(algod, createAssetTxWithFee.txId())) as PendingTransactionResponse
-  const assetId = createPendingInfo.assetId
+  const createPendingInfo = (await waitForConfirmation(
+    algod,
+    createAssetTxWithFee.txId(),
+  )) as PendingTransactionResponse;
+  const assetId = createPendingInfo.assetId;
   if (!assetId) {
-    throw new Error('Asset ID not found in pending transaction response')
+    throw new Error('Asset ID not found in pending transaction response');
   }
-  printInfo(`Asset created with ID: ${assetId}`)
-  printSuccess(`Asset ${assetName} (ID: ${assetId}) created with freeze capability!`)
+  printInfo(`Asset created with ID: ${assetId}`);
+  printSuccess(`Asset ${assetName} (ID: ${assetId}) created with freeze capability!`);
 
   // Step 6: Holder opts into the asset
-  printStep(6, 'Holder Opts Into the Asset')
+  printStep(6, 'Holder Opts Into the Asset');
 
-  const optInSuggestedParams = await algod.suggestedParams()
+  const optInSuggestedParams = await algod.suggestedParams();
 
   const optInFields: AssetTransferTransactionFields = {
     assetId: assetId,
     receiver: holder.addr,
     amount: 0n, // 0 amount for opt-in
-  }
+  };
 
   const optInTx = new Transaction({
     type: TransactionType.AssetTransfer,
@@ -200,32 +203,34 @@ async function main() {
     genesisHash: optInSuggestedParams.genesisHash,
     genesisId: optInSuggestedParams.genesisId,
     assetTransfer: optInFields,
-  })
+  });
 
   const optInTxWithFee = assignFee(optInTx, {
     feePerByte: optInSuggestedParams.fee,
     minFee: optInSuggestedParams.minFee,
-  })
+  });
 
-  const signedOptInTx = await holder.signer([optInTxWithFee], [0])
-  await algod.sendRawTransaction(signedOptInTx)
-  await waitForConfirmation(algod, optInTxWithFee.txId())
-  printInfo('Holder opted into the asset')
-  printSuccess('Holder successfully opted into the asset!')
+  const signedOptInTx = await holder.signer([optInTxWithFee], [0]);
+  await algod.sendRawTransaction(signedOptInTx);
+  await waitForConfirmation(algod, optInTxWithFee.txId());
+  printInfo('Holder opted into the asset');
+  printSuccess('Holder successfully opted into the asset!');
 
   // Step 7: Transfer assets from creator to holder
-  printStep(7, 'Transfer Assets to Holder')
+  printStep(7, 'Transfer Assets to Holder');
 
-  const transferAmount = 1_000_000_000n // 1,000 units
-  printInfo(`Transferring ${Number(transferAmount) / Math.pow(10, assetDecimals)} ${assetUnitName} to holder`)
+  const transferAmount = 1_000_000_000n; // 1,000 units
+  printInfo(
+    `Transferring ${Number(transferAmount) / Math.pow(10, assetDecimals)} ${assetUnitName} to holder`,
+  );
 
-  const transferSuggestedParams = await algod.suggestedParams()
+  const transferSuggestedParams = await algod.suggestedParams();
 
   const transferFields: AssetTransferTransactionFields = {
     assetId: assetId,
     receiver: holder.addr,
     amount: transferAmount,
-  }
+  };
 
   const transferTx = new Transaction({
     type: TransactionType.AssetTransfer,
@@ -235,34 +240,38 @@ async function main() {
     genesisHash: transferSuggestedParams.genesisHash,
     genesisId: transferSuggestedParams.genesisId,
     assetTransfer: transferFields,
-  })
+  });
 
   const transferTxWithFee = assignFee(transferTx, {
     feePerByte: transferSuggestedParams.fee,
     minFee: transferSuggestedParams.minFee,
-  })
+  });
 
-  const signedTransferTx = await freezeManager.signer([transferTxWithFee], [0])
-  await algod.sendRawTransaction(signedTransferTx)
-  await waitForConfirmation(algod, transferTxWithFee.txId())
+  const signedTransferTx = await freezeManager.signer([transferTxWithFee], [0]);
+  await algod.sendRawTransaction(signedTransferTx);
+  await waitForConfirmation(algod, transferTxWithFee.txId());
 
   // Verify holder's balance
-  const holderAssetInfo = await algod.accountAssetInformation(holder.addr.toString(), assetId)
-  printInfo(`Holder balance: ${holderAssetInfo.assetHolding?.amount ?? 0n} (${Number(holderAssetInfo.assetHolding?.amount ?? 0n) / Math.pow(10, assetDecimals)} ${assetUnitName})`)
-  printInfo(`Holder frozen status: ${holderAssetInfo.assetHolding?.isFrozen ?? false}`)
-  printSuccess(`Transferred ${Number(transferAmount) / Math.pow(10, assetDecimals)} ${assetUnitName} to holder!`)
+  const holderAssetInfo = await algod.accountAssetInformation(holder.addr.toString(), assetId);
+  printInfo(
+    `Holder balance: ${holderAssetInfo.assetHolding?.amount ?? 0n} (${Number(holderAssetInfo.assetHolding?.amount ?? 0n) / Math.pow(10, assetDecimals)} ${assetUnitName})`,
+  );
+  printInfo(`Holder frozen status: ${holderAssetInfo.assetHolding?.isFrozen ?? false}`);
+  printSuccess(
+    `Transferred ${Number(transferAmount) / Math.pow(10, assetDecimals)} ${assetUnitName} to holder!`,
+  );
 
   // Step 8: Freeze the holder's account
-  printStep(8, 'Freeze Holder Account (TransactionType.AssetFreeze)')
-  printInfo('Using AssetFreezeTransactionFields with assetId, freezeTarget, and frozen=true')
+  printStep(8, 'Freeze Holder Account (TransactionType.AssetFreeze)');
+  printInfo('Using AssetFreezeTransactionFields with assetId, freezeTarget, and frozen=true');
 
-  const freezeSuggestedParams = await algod.suggestedParams()
+  const freezeSuggestedParams = await algod.suggestedParams();
 
   const freezeFields: AssetFreezeTransactionFields = {
     assetId: assetId,
     freezeTarget: holder.addr,
     frozen: true, // Freeze the account
-  }
+  };
 
   const freezeTx = new Transaction({
     type: TransactionType.AssetFreeze,
@@ -272,37 +281,42 @@ async function main() {
     genesisHash: freezeSuggestedParams.genesisHash,
     genesisId: freezeSuggestedParams.genesisId,
     assetFreeze: freezeFields,
-  })
+  });
 
   const freezeTxWithFee = assignFee(freezeTx, {
     feePerByte: freezeSuggestedParams.fee,
     minFee: freezeSuggestedParams.minFee,
-  })
+  });
 
-  const signedFreezeTx = await freezeManager.signer([freezeTxWithFee], [0])
-  await algod.sendRawTransaction(signedFreezeTx)
-  await waitForConfirmation(algod, freezeTxWithFee.txId())
+  const signedFreezeTx = await freezeManager.signer([freezeTxWithFee], [0]);
+  await algod.sendRawTransaction(signedFreezeTx);
+  await waitForConfirmation(algod, freezeTxWithFee.txId());
 
   // Verify frozen status
-  const holderAssetInfoAfterFreeze = await algod.accountAssetInformation(holder.addr.toString(), assetId)
-  printInfo(`Holder frozen status after freeze: ${holderAssetInfoAfterFreeze.assetHolding?.isFrozen ?? false}`)
+  const holderAssetInfoAfterFreeze = await algod.accountAssetInformation(
+    holder.addr.toString(),
+    assetId,
+  );
+  printInfo(
+    `Holder frozen status after freeze: ${holderAssetInfoAfterFreeze.assetHolding?.isFrozen ?? false}`,
+  );
 
   if (!holderAssetInfoAfterFreeze.assetHolding?.isFrozen) {
-    throw new Error('Account should be frozen but is not')
+    throw new Error('Account should be frozen but is not');
   }
-  printSuccess('Holder account successfully frozen!')
+  printSuccess('Holder account successfully frozen!');
 
   // Step 9: Verify frozen account cannot transfer
-  printStep(9, 'Verify Frozen Account Cannot Transfer')
-  printInfo('Attempting to transfer assets from frozen account (should fail)...')
+  printStep(9, 'Verify Frozen Account Cannot Transfer');
+  printInfo('Attempting to transfer assets from frozen account (should fail)...');
 
-  const failedTransferSuggestedParams = await algod.suggestedParams()
+  const failedTransferSuggestedParams = await algod.suggestedParams();
 
   const failedTransferFields: AssetTransferTransactionFields = {
     assetId: assetId,
     receiver: freezeManager.addr, // Try to send back to creator
     amount: 100_000_000n, // 100 units
-  }
+  };
 
   const failedTransferTx = new Transaction({
     type: TransactionType.AssetTransfer,
@@ -312,43 +326,43 @@ async function main() {
     genesisHash: failedTransferSuggestedParams.genesisHash,
     genesisId: failedTransferSuggestedParams.genesisId,
     assetTransfer: failedTransferFields,
-  })
+  });
 
   const failedTransferTxWithFee = assignFee(failedTransferTx, {
     feePerByte: failedTransferSuggestedParams.fee,
     minFee: failedTransferSuggestedParams.minFee,
-  })
+  });
 
-  const signedFailedTransferTx = await holder.signer([failedTransferTxWithFee], [0])
+  const signedFailedTransferTx = await holder.signer([failedTransferTxWithFee], [0]);
 
   try {
-    await algod.sendRawTransaction(signedFailedTransferTx)
-    await waitForConfirmation(algod, failedTransferTxWithFee.txId())
-    throw new Error('Transfer should have failed for frozen account')
+    await algod.sendRawTransaction(signedFailedTransferTx);
+    await waitForConfirmation(algod, failedTransferTxWithFee.txId());
+    throw new Error('Transfer should have failed for frozen account');
   } catch (error) {
-    const errorMessage = error instanceof Error ? error.message : String(error)
+    const errorMessage = error instanceof Error ? error.message : String(error);
     if (errorMessage.includes('frozen') || errorMessage.includes('rejected')) {
-      printInfo(`Transfer correctly rejected: ${errorMessage.substring(0, 100)}...`)
-      printSuccess('Verified: Frozen account cannot transfer assets!')
+      printInfo(`Transfer correctly rejected: ${errorMessage.substring(0, 100)}...`);
+      printSuccess('Verified: Frozen account cannot transfer assets!');
     } else if (errorMessage.includes('Transfer should have failed')) {
-      throw error
+      throw error;
     } else {
-      printInfo(`Transfer rejected with error: ${errorMessage.substring(0, 100)}...`)
-      printSuccess('Verified: Frozen account cannot transfer assets!')
+      printInfo(`Transfer rejected with error: ${errorMessage.substring(0, 100)}...`);
+      printSuccess('Verified: Frozen account cannot transfer assets!');
     }
   }
 
   // Step 10: Unfreeze the holder's account
-  printStep(10, 'Unfreeze Holder Account')
-  printInfo('Using AssetFreezeTransactionFields with frozen=false')
+  printStep(10, 'Unfreeze Holder Account');
+  printInfo('Using AssetFreezeTransactionFields with frozen=false');
 
-  const unfreezeSuggestedParams = await algod.suggestedParams()
+  const unfreezeSuggestedParams = await algod.suggestedParams();
 
   const unfreezeFields: AssetFreezeTransactionFields = {
     assetId: assetId,
     freezeTarget: holder.addr,
     frozen: false, // Unfreeze the account
-  }
+  };
 
   const unfreezeTx = new Transaction({
     type: TransactionType.AssetFreeze,
@@ -358,39 +372,46 @@ async function main() {
     genesisHash: unfreezeSuggestedParams.genesisHash,
     genesisId: unfreezeSuggestedParams.genesisId,
     assetFreeze: unfreezeFields,
-  })
+  });
 
   const unfreezeTxWithFee = assignFee(unfreezeTx, {
     feePerByte: unfreezeSuggestedParams.fee,
     minFee: unfreezeSuggestedParams.minFee,
-  })
+  });
 
-  const signedUnfreezeTx = await freezeManager.signer([unfreezeTxWithFee], [0])
-  await algod.sendRawTransaction(signedUnfreezeTx)
-  await waitForConfirmation(algod, unfreezeTxWithFee.txId())
+  const signedUnfreezeTx = await freezeManager.signer([unfreezeTxWithFee], [0]);
+  await algod.sendRawTransaction(signedUnfreezeTx);
+  await waitForConfirmation(algod, unfreezeTxWithFee.txId());
 
   // Verify unfrozen status
-  const holderAssetInfoAfterUnfreeze = await algod.accountAssetInformation(holder.addr.toString(), assetId)
-  printInfo(`Holder frozen status after unfreeze: ${holderAssetInfoAfterUnfreeze.assetHolding?.isFrozen ?? false}`)
+  const holderAssetInfoAfterUnfreeze = await algod.accountAssetInformation(
+    holder.addr.toString(),
+    assetId,
+  );
+  printInfo(
+    `Holder frozen status after unfreeze: ${holderAssetInfoAfterUnfreeze.assetHolding?.isFrozen ?? false}`,
+  );
 
   if (holderAssetInfoAfterUnfreeze.assetHolding?.isFrozen) {
-    throw new Error('Account should be unfrozen but is still frozen')
+    throw new Error('Account should be unfrozen but is still frozen');
   }
-  printSuccess('Holder account successfully unfrozen!')
+  printSuccess('Holder account successfully unfrozen!');
 
   // Step 11: Verify account can transfer after unfreeze
-  printStep(11, 'Verify Account Can Transfer After Unfreeze')
+  printStep(11, 'Verify Account Can Transfer After Unfreeze');
 
-  const successTransferAmount = 100_000_000n // 100 units
-  printInfo(`Attempting to transfer ${Number(successTransferAmount) / Math.pow(10, assetDecimals)} ${assetUnitName} from unfrozen account...`)
+  const successTransferAmount = 100_000_000n; // 100 units
+  printInfo(
+    `Attempting to transfer ${Number(successTransferAmount) / Math.pow(10, assetDecimals)} ${assetUnitName} from unfrozen account...`,
+  );
 
-  const successTransferSuggestedParams = await algod.suggestedParams()
+  const successTransferSuggestedParams = await algod.suggestedParams();
 
   const successTransferFields: AssetTransferTransactionFields = {
     assetId: assetId,
     receiver: freezeManager.addr,
     amount: successTransferAmount,
-  }
+  };
 
   const successTransferTx = new Transaction({
     type: TransactionType.AssetTransfer,
@@ -400,35 +421,38 @@ async function main() {
     genesisHash: successTransferSuggestedParams.genesisHash,
     genesisId: successTransferSuggestedParams.genesisId,
     assetTransfer: successTransferFields,
-  })
+  });
 
   const successTransferTxWithFee = assignFee(successTransferTx, {
     feePerByte: successTransferSuggestedParams.fee,
     minFee: successTransferSuggestedParams.minFee,
-  })
+  });
 
-  const signedSuccessTransferTx = await holder.signer([successTransferTxWithFee], [0])
-  await algod.sendRawTransaction(signedSuccessTransferTx)
-  await waitForConfirmation(algod, successTransferTxWithFee.txId())
+  const signedSuccessTransferTx = await holder.signer([successTransferTxWithFee], [0]);
+  await algod.sendRawTransaction(signedSuccessTransferTx);
+  await waitForConfirmation(algod, successTransferTxWithFee.txId());
 
   // Verify balances after transfer
-  const holderFinalAssetInfo = await algod.accountAssetInformation(holder.addr.toString(), assetId)
-  const expectedHolderBalance = transferAmount - successTransferAmount
-  printInfo(`Holder final balance: ${holderFinalAssetInfo.assetHolding?.amount ?? 0n} (${Number(holderFinalAssetInfo.assetHolding?.amount ?? 0n) / Math.pow(10, assetDecimals)} ${assetUnitName})`)
+  const holderFinalAssetInfo = await algod.accountAssetInformation(holder.addr.toString(), assetId);
+  const expectedHolderBalance = transferAmount - successTransferAmount;
+  printInfo(
+    `Holder final balance: ${holderFinalAssetInfo.assetHolding?.amount ?? 0n} (${Number(holderFinalAssetInfo.assetHolding?.amount ?? 0n) / Math.pow(10, assetDecimals)} ${assetUnitName})`,
+  );
 
   if (holderFinalAssetInfo.assetHolding?.amount !== expectedHolderBalance) {
-    throw new Error(`Holder balance mismatch: expected ${expectedHolderBalance}, got ${holderFinalAssetInfo.assetHolding?.amount}`)
+    throw new Error(
+      `Holder balance mismatch: expected ${expectedHolderBalance}, got ${holderFinalAssetInfo.assetHolding?.amount}`,
+    );
   }
 
-  printSuccess(`Transfer successful! Unfrozen account can transfer assets.`)
-  printSuccess('Asset freeze example completed successfully!')
+  printSuccess(`Transfer successful! Unfrozen account can transfer assets.`);
+  printSuccess('Asset freeze example completed successfully!');
 }
 
-main().catch((error) => {
-  console.error('Error:', error)
-  process.exit(1)
-})
-
+main().catch(error => {
+  console.error('Error:', error);
+  process.exit(1);
+});
 ```
 
 ---

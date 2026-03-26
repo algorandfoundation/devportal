@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "BitSize"
+title: 'BitSize'
 ---
 
 > **BitSize** = `UintBitSize` \| `BigUintBitSize`
