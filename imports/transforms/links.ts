@@ -8,9 +8,9 @@ export function generateCommonLinkMappings(): LinkMapping[] {
     // Strip /index.md for Starlight routing (global - applies to all links)
     {
       pattern: /\/index\.md(#.*)?$/,
-      replacement: (match: string, anchor: string) => {
+      replacement: (_match: string, _anchor: string) => {
         // Remove /index.md but preserve anchor
-        return match.replace('/index.md', '');
+        return _match.replace('/index.md', '');
       },
       global: true,
     },
@@ -18,8 +18,8 @@ export function generateCommonLinkMappings(): LinkMapping[] {
     // Handle README.md -> overview (non-global - only unresolved links)
     {
       pattern: /\/README\.md(#.*)?$/,
-      replacement: (match: string, anchor: string) => {
-        return match.replace('/README.md', '/overview');
+      replacement: (_match: string, _anchor: string) => {
+        return _match.replace('/README.md', '/overview');
       },
       global: false,
     },
@@ -101,7 +101,7 @@ export function generateLinkMappings(
 
       return {
         pattern: new RegExp(`^${sourcePattern}(.+)$`),
-        replacement: (match: string, relativePath: string) => {
+        replacement: (_match: string, relativePath: string) => {
           let finalPath: string;
           if (crossSectionPath) {
             // Cross-section reference with absolute path

@@ -99,7 +99,7 @@ export function createTitleTransform(options?: {
  * @returns Transform function
  */
 export function createSourceInfoTransform(
-  includeCommitInfo = false,
+  _includeCommitInfo = false,
 ): TransformFunction {
   return (content: string, context): string => {
     const sourceInfo: Partial<StarlightFrontmatter> = {

@@ -6,14 +6,7 @@
 import type { TransformFunction } from '@larkiny/astro-github-loader';
 import picomatch from 'picomatch';
 
-import {
-  createFrontmatterTransform,
-  createTitleTransform,
-  createSourceInfoTransform,
-  createSidebarTransform,
-  createDraftTransform,
-  composeFrontmatterTransforms,
-} from './frontmatter.js';
+import { createFrontmatterTransform } from './frontmatter.js';
 import {
   parseFrontmatter,
   combineFrontmatterAndContent,
@@ -72,7 +65,7 @@ export const overviewOrderTransform: TransformFunction = (content, context) => {
  * Converts the first H1 heading to frontmatter title and removes it from content
  * This is useful for markdown files that have titles as H1 headings instead of frontmatter
  */
-export const convertH1ToTitle: TransformFunction = (content, context) => {
+export const convertH1ToTitle: TransformFunction = (content, _context) => {
   // Parse existing frontmatter first
   const parsed = parseFrontmatter(content);
 
@@ -111,7 +104,7 @@ export function extractH1Text(content: string): string | null {
  * Removes the first H1 heading from content without extracting it to frontmatter
  * Useful when you want to set the title manually via frontmatter
  */
-export const removeH1: TransformFunction = (content, context) => {
+export const removeH1: TransformFunction = (content, _context) => {
   const parsed = parseFrontmatter(content);
 
   // Remove the first H1 from content
@@ -132,7 +125,7 @@ export function convertH1ToTitleMatch(
   matchIndex: number = 1,
   fallback: boolean = true,
 ): TransformFunction {
-  return (content, context) => {
+  return (content, _context) => {
     // Parse existing frontmatter first
     const parsed = parseFrontmatter(content);
 
@@ -344,7 +337,7 @@ export function createContentBasedFrontmatterTransform(
 export function createRemoveContentUpToHeading(
   headingPattern: RegExp,
 ): TransformFunction {
-  return (content, context) => {
+  return (content, _context) => {
     // Parse existing frontmatter first
     const parsed = parseFrontmatter(content);
 
