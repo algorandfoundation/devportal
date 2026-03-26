@@ -194,12 +194,19 @@ The `starlight-auto-sidebar` plugin enables you to customize the order and appea
 
 The following environment variables can be configured:
 
-| Variable         | Description                                      | Default |
-| ---------------- | ------------------------------------------------ | ------- |
-| `GITHUB_TOKEN`   | GitHub API token (required for importing docs)   | -       |
-| `IMPORT_GITHUB`  | Enable GitHub content import                     | `false` |
-| `IMPORT_DRY_RUN` | Preview imports without writing files            | `false` |
-| `FORCE_IMPORT`   | Force re-import, ignoring cache                  | `false` |
+| Variable                       | Description                                      | Default    |
+| ------------------------------ | ------------------------------------------------ | ---------- |
+| `GITHUB_TOKEN`                 | GitHub API token (required for importing docs)   | -          |
+| `IMPORT_GITHUB`                | Enable GitHub content import                     | `false`    |
+| `IMPORT_DRY_RUN`               | Preview imports without writing files            | `false`    |
+| `FORCE_IMPORT`                 | Force re-import, ignoring cache                  | `false`    |
+| `PUBLIC_KAPA_INTEGRATION_ID`   | [Kapa.ai](https://kapa.ai) integration ID for the AI chat panel | -          |
+| `OPENAI_API_KEY`               | OpenAI API key for the prose checker             | -          |
+| `PROSE_CHECK_ENABLED`          | Enable AI prose quality checking                 | `false`    |
+| `PROSE_CHECK_MODE`             | Prose checker mode (`warn` or `error`)           | `warn`     |
+| `PROSE_CHECK_MODEL`            | OpenAI model for prose checking                  | `gpt-4o-mini` |
+| `PROSE_CHECK_SENSITIVITY`      | Prose checker sensitivity level                  | `medium`   |
+| `PROSE_CHECK_EXCLUDE`          | Glob pattern for paths to exclude from checking  | `src/content/docs/reference/` |
 
 Set these in your shell or use your preferred environment management tool.
 
