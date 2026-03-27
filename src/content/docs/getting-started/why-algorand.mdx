@@ -8,6 +8,7 @@ import YouTube from '/src/components/YouTube.astro';
 In this section, we'll explore key factors to consider when choosing a blockchain and evaluate how Algorand excels in each area. By the end, you'll see why Algorand is a top choice for building your application.
 
 Algorand provides institutional-grade blockchain infrastructure, offering high performance, security, and scalability. Designed for decentralized applications, digital assets, and financial solutions, it leverages a unique Pure Proof-of-Stake (PPoS) consensus mechanism to ensure instant finality, low transaction costs, and robust security. Whether you're developing smart contracts, integrating blockchain into existing systems, or building enterprise solutions, Algorand delivers a seamless and efficient developer experience.
+ and it all stems from our founding principles.
 
 ## Our Founding Principles
 
@@ -19,78 +20,135 @@ The core principles that guide Algorand's development include:
 - **Decentralization** - A truly distributed network with no central authorities
 - **Sustainability** - Environmental responsibility through minimal energy consumption
 
-## The Consensus Protocol
+In the following sections we will dive into how Algorand upholds these principles. 
 
-The problem with many blockchains is they sacrifice at least one of the key properties of **security**, **scalability**, and **decentralization**, known as the blockchain trilemma. Algorand addresses the blockchain trilemma with its unique PPoS mechanism, achieving a strong balance between security, scalability, and decentralization.
+## Security
 
-Algorand's consensus protocol works by selecting a block proposer and a set of voting committees at each block round, to propose a block and validate the proposal, respectively. The proposer and committees are randomly chosen from the pool of all Algo holders, and the likelihood of being chosen is proportional to the account's stake in the network.
+#### The Consensus Protocol
 
-The technical specifics of Algorand's consensus include:
+Many blockchains struggle with balancing **security**, **scalability**, and **decentralization**, known as the the “blockchain trilemma”. Algorand is designed to achieve all three through its Pure Proof-of-Stake (PPoS) consensus mechanism.
 
-1. **Verifiable Random Function (VRF)** - Algorand uses cryptographic sortition based on VRFs to randomly select users to participate in the consensus protocol. The VRF acts as a random number generator that provides a proof that the selection was truly random.
+Instead of relying on a small set of validators, Algorand randomly selects participants from all Algo holders to propose and validate blocks. This makes the network both highly decentralized and resistant to targeted attacks.
 
-2. **Byzantine Agreement Protocol** - Once users are selected, they participate in a Byzantine agreement protocol that ensures consensus even if some participants are malicious.
+This approach enables:
 
-3. **Two-Phase Block Production**:
-   - **Propose Phase**: Selected proposers suggest new blocks
-   - **Soft Vote**: Committee members vote on proposals
-   - **Certify Vote**: A different committee certifies the block
+- **Strong security** through cryptographic randomness and distributed participation  
+- **High scalability** without sacrificing decentralization  
+- **Reliable performance** even under adverse network conditions  
 
-4. **Cryptographic Self-Selection** - Users privately check if they're selected for committees using their private participation keys, without revealing themselves until necessary, preventing targeted attacks.
+Algorand’s consensus also ensures:
 
-5. **Committee Rotation** - New committees are selected for each step of the consensus process, enhancing security.
+- **Fork resistance** - the network avoids chain splits with overwhelming probability  
+- **Strong consistency** - all users share the same view of the blockchain  
+- **Liveness** - the network continues to process transactions without interruption  
 
-Algorand consensus provides the following technical guarantees:
+For a deeper dive into how consensus works under the hood, see the [Consensus Overview](/concepts/protocol/overview) or the [Official Algorand whitepaper](https://algorandcom.cdn.prismic.io/algorandcom%2Fece77f38-75b3-44de-bc7f-805f0e53a8d9_theoretical.pdf).
 
-- **Fork Resistance**: With overwhelming probability (>99.9%), no forks occur
-- **Strong Consistency**: All users have the same view of the confirmed transactions
-- **Liveness**: The system continues to make progress even under severe network conditions
+#### Post-Quantum Readiness
 
-As of release version 4.0, the Algorand consensus protocol has been updated to add staking rewards. For more details, refer to [Staking Rewards](/concepts/protocol/staking-rewards).
+Advances in quantum computing pose a long-term risk to today’s cryptographic standards, particularly those used to secure blockchain accounts and transaction signatures. While this threat is not immediate, it is widely acknowledged that systems built today should be designed with future resilience in mind.
 
-For more information, refer to [Consensus Overview](/concepts/protocol/overview).
+Algorand takes a proactive approach by integrating post-quantum cryptography into its protocol. It uses FALCON signatures, a lattice-based scheme that is part of the shortlist of algorithms selected by NIST for standardization, to help protect the integrity of the network over time.
 
-You can also read the [Official Algorand whitepaper](https://algorandcom.cdn.prismic.io/algorandcom%2Fece77f38-75b3-44de-bc7f-805f0e53a8d9_theoretical.pdf) for more technical details.
+This approach helps safeguard the historical record of the blockchain against future quantum attacks, ensuring that transactions confirmed today remain secure in the future.
 
-## Proof-of-Stake Versus Proof-of-Work
+Algorand continues to monitor developments in post-quantum cryptography and is designed to adapt as new standards and advancements emerge.
 
-Most blockchains these days fall into the general categories of **Proof-of-Stake** or **proof-of-work**.
+For more details, refer to [Leading on post-quantum technology](https://algorand.co/technology/post-quantum).
 
-Simply put, a **Proof-of-Stake** blockchain gives users who hold more of the native currency more influence in proposing and validating new blocks, usually through some sort of voting mechanism.
+#### Transparency
 
-In **Proof-of-Work**, nodes race to solve a challenging cryptographic puzzle and serve up their solution alongside a new block proposal. This is referred to as "mining" and these nodes are called "miners". The winner is rewarded with some of the native currency of the system and their block becomes part of the chain.
+How do you know that anything that we are telling you here is true? You can check for yourself. All of the code for the core protocol is open source. Anyone can review it and contribute to it. The Algorand source code can be found on GitHub in the [go-algorand](https://github.com/algorand/go-algorand) repository.
 
-Since Proof-of-Work success depends on computational power, miners need increasingly powerful hardware to compete. This has sparked significant debates about the high energy consumption and environmental impact.
+## Scalability
 
-Proof-of-Stake blockchains, including Algorand, require significantly less energy than Proof-of-Work chains. Algorand is carbon-negative due to its minimal energy consumption and carbon offset initiatives.
+#### Performance
 
-## The Native Currency
+The speed at which blocks are produced, the number of transactions they can handle, and how quickly those transactions are finalized are critical when choosing a blockchain. While many networks highlight theoretical limits, what matters most is how they perform under real-world conditions.
 
-Each blockchain has its own native currency that plays a critical role in incentivizing good network behavior. Algorand's native currency is called Algo.
+Algorand’s performance has been consistently validated through public mainnet activity and independent stress tests, demonstrating its ability to handle high throughput without compromising reliability.
 
-If you hold Algo, you can register to participate in consensus, enabling you to participate in the process of proposing and voting on new blocks.
+#### Throughput
 
-Algo also acts as a utility token. When you're building an application, you need Algo to pay transaction fees and to serve as minimum balance deposits if you want to store data on the blockchain. The cost of these fees and minimum balances is very low—fractions of a penny in most cases.
+Algorand has demonstrated strong performance under sustained load in real-world conditions:
 
-## Fees
+- **5,000–5,700+ sustained TPS (May 2024)** — Community-led stress tests pushed the network to over 5,000 transactions per second sustained across 100+ blocks  
+- **34,000+ transactions in a single block (Feb 2025)** — Blocks finalized in under 3 seconds while processing significantly higher-than-average transaction volumes  
+- **14,500+ TPS peak (Dec 2023)** — Mainnet analysis showed short bursts of very high throughput depending on transaction composition  
 
-Algorand has a straightforward fee structure: each transaction has a minimum fee of 1000 microAlgo or 0.001 Algo. This minimum fee is all you typically need to pay. During periods of high network activity, users can optionally pay higher fees to prioritize their transactions, with the fee amount influenced by the transaction size. Algorand doesn't use a gas fee system, making transaction costs more predictable.
+Importantly, these results were achieved on **public mainnet infrastructure**, not isolated test environments.
 
-## Openness
+During these periods of high activity, the network maintained:
+
+- **Consistent block times (~2–3 seconds)**  
+- **No delay in finality**  
+- **No noticeable increase in failed transactions or latency**  
+
+This demonstrates that Algorand is not just capable of high throughput in theory, but can sustain it in practice. This ensures it's well-suited for applications that require reliable, high-volume transaction processing.
+
+#### State Proofs
+
+As a blockchain's usage grows, it becomes increasingly difficult for every application or external system to process and verify large amounts of on-chain data. Scalability isn’t just about handling more transactions, it’s also about making that data efficiently accessible and verifiable.
+
+Algorand State Proofs address this by providing compact cryptographic proofs of state changes, allowing external systems to verify transactions without needing to process the full blockchain history or rely on intermediaries.
+
+Generated by participating nodes, these proofs summarize transactions over 256-round intervals using efficient data structures, enabling:
+
+- **Lightweight verification** without running a full node  
+- **Reduced data and compute requirements** for external systems  
+- **Scalable interoperability** with other blockchains and off-chain services  
+
+By minimizing the overhead required to verify on-chain activity, State Proofs extend Algorand’s scalability beyond the base layer, making it easier for applications, bridges, and external networks to interact with Algorand at scale. It also makes it much faster for new nodes to spin up and get caught up with the latest block of the chain. 
+
+For more details, refer to the [State Proofs Overview](/concepts/protocol/state-proofs)
+
+<LinkCard
+  title='State Proofs Overview'
+  href='/concepts/protocol/state-proofs'
+  description='Learn more about State Proofs on Algorand'
+/>
+
+#### Fees
+
+Algorand has a straightforward and predictable fee structure: each transaction has a minimum fee of 1000 microAlgo (0.001 Algo), which is typically all users need to pay.
+
+While the protocol allows users to pay higher fees to prioritize transactions during periods of high demand, Algorand has historically maintained stable, low transaction costs—even under sustained network load.
+
+Unlike fee markets that rely on bidding or auctions, Algorand does not use a gas-based pricing model. This results in **Consistent and predictable costs** for developers and users, and **A better user experience** without pricing volatility  
+
+This approach allows applications to scale without introducing uncertainty around transaction costs.
+
+## Finality
+
+#### Fork Resistance
+
+On many blockchains, temporary forks can occur, meaning transactions may be reversed if they end up on an abandoned chain. This is why users are often required to wait for multiple confirmations before considering a transaction final.
+
+Algorand is designed to prevent forks from occurring in the first place. As a result, transactions do not compete between multiple chain histories, and the network maintains a single, consistent view of the ledger.
+
+#### Instant Finality
+
+Because Algorand avoids forks, transactions are final as soon as they are included in a block.
+
+There is no need to wait for additional confirmations or worry about transactions being reversed. This enables:
+
+- **Immediate transaction certainty** for users  
+- **Simpler application design** without confirmation logic  
+- **Faster real-world throughput** since apps can act on transactions instantly  
+
+## Decentralization
+
+#### Openness
 
 Earlier, we compared a blockchain ledger that is distributed, to a traditional ledger that is owned by a single entity. Technically, a blockchain ledger could be owned and operated by just a few entities, but this wouldn't be a very good blockchain since such a centralized set of nodes could easily manipulate the state of the blockchain. This is why Algorand is designed to be completely open and permissionless—anyone who owns Algo can participate in consensus, regardless of their location.
 
-## Post-Quantum Readiness
-
-Algorand is the leader in blockchain quantum resilience. It safeguards the entire history of the chain against future threats of quantum computers through the implementation of FALCON signatures, a globally recognized post-quantum cryptography standard based on lattices. For more details, refer to [Leading on post-quantum technology](https://algorand.co/technology/post-quantum).
-
-## Decentralization
+#### Decentralization
 
 A node on Algorand is a computer running the Algorand software (algod) that participates in the Algorand network. Nodes play a crucial role in maintaining the blockchain by processing blocks, participating in the consensus protocol, or storing data.
 
 If all the people who are running nodes are the same company or set of companies, then we find ourselves in a situation where we aren't much better off than just having a central database controlled by a select few. On Algorand, since the protocol is open and permissionless, nodes can and do exist all over the world.
 
-### Low Node Hardware Requirements
+#### Low Node Hardware Requirements
 
 Algorand's decentralization is supported by its low hardware requirements, allowing anyone to run a node on commodity hardware and contribute to the network's security and decentralization. Participation nodes require only 8 vCPU, 16 GB RAM, 100GB NVMe SSD, and a low-latency broadband connection.
 
@@ -106,135 +164,26 @@ Algorand's decentralization is supported by its low hardware requirements, allow
   description='Learn more about the types of nodes on Algorand'
 />
 
-### Metrics Portal
+#### Governance
 
-The Metrics Portal provides real-time data on the Algorand blockchain and its expanding ecosystem. It offers insights across various key areas, including transaction performance, decentralization, DeFi, NFTs, ecosystem activity, developer contributions, governance, research, blockchain explorers, and sustainability efforts.
+The Algorand Foundation, the organization that launched the Algorand MainNet, plays a key role in stewarding the network and is committed to progressively decentralizing decision-making.
 
-Additional sources provide deeper analysis and comparisons, such as TPS rankings, node distribution, DeFi statistics, NFT sales, governance participation, and environmental impact. These insights are available through platforms like Nodely, DeFi Llama, Asalytic, Artemis, Messari, Nansen, and Carbon-Ratings.com, ensuring transparency for all stakeholders.
+Meanwhile, the Algorand community, through the xGov program, can directly participate in governance by reviewing and voting on funding proposals. This allows ecosystem participants to influence how resources are allocated and which projects receive support.
 
-For latest data, visit [Algorand Metrics](https://algorand.co/metrics).
+This approach helps shift control from a centralized entity toward a more community-driven model over time.
 
-## Fork Resistance
+## Sustainability
 
-Forking is when a blockchain diverges into two separate paths. Sometimes this forking is intentional, like when a significant part of the community wants to change the fundamentals of the protocol. Other times this forking is accidental and occurs when two miners find a block at almost the same time. Eventually, one of the paths will be abandoned, which means that all transactions that occurred since that fork on the abandoned path (the orphaned chain) will be invalid. This has important implications for transaction finality, which we'll talk about in a bit.
+#### Proof-of-Stake Versus Proof-of-Work
 
-Algorand's design ensures that the probability of forks is negligible under normal network conditions, making transaction finality effectively instant. Algorand's fork resistance comes from its consensus mechanism:
+Algorand uses a Pure Proof-of-Stake (PPoS) consensus mechanism, which avoids the need for energy-intensive mining.
 
-1. **Cryptographic Sortition**: Each user is selected with probability proportional to their stake
-2. **Leader Selection**: Only one leader is selected to propose a block in each round
-3. **Committee Voting**: A supermajority of >2/3 of committee votes is required to certify a block
-4. **Ephemeral Keys**: New participation keys are generated for each round
-5. **Block Certificates**: Each block contains cryptographic proof of committee approval
+Unlike Proof-of-Work systems that rely on continuous computational competition, Algorand’s design does not require specialized hardware or excessive energy consumption to secure the network.
 
-This design makes forking mathematically improbable with a probability < 10^-18 under reasonable assumptions.
+This results in:
 
-## Performance
+- **Minimal energy usage** compared to traditional Proof-of-Work blockchains  
+- **Lower infrastructure requirements** for network participants  
+- **A more sustainable foundation** for long-term network growth  
 
-The speed at which blocks are produced, the amount of transactions that can fit into a block, and when those transactions are considered final are important factors to consider when choosing a blockchain. For Algorand, performance is and will always be a key focus area for the core development team.
-
-### Instant Finality
-
-In Proof-of-Work blockchains, transactions need to wait for several additional blocks to be considered final, since there's always a chance they could be on a chain that gets orphaned. This waiting period effectively reduces the blockchain's real-world throughput, as applications must wait for this confirmation time to safely process transactions.
-
-On Algorand, transactions are final the moment they appear in a block because the protocol prevents forking entirely.
-
-### Throughput
-
-You want to choose a blockchain that can scale and handle high throughput so that your users don't experience long wait times when interacting with your application.
-
-On Algorand, blocks are produced approximately every 2.85 seconds and can hold 25,000 transactions or more, which results in a throughput of over 10,000 transactions per second (TPS).
-
-### State Proofs
-
-Algorand State Proofs provide cryptographic proof of state changes on the Algorand blockchain, enabling trustless verification of recent transactions without relying on intermediaries. Generated by participating nodes, these proofs summarize transactions over 256-round intervals, using Vector Commitment trees for efficiency. The compact proofs are validated through Algorand's consensus and facilitate secure interoperability with other blockchain networks. For more details, refer [State Proofs Overview](/concepts/protocol/state-proofs)
-
-<LinkCard
-  title='State Proofs Overview'
-  href='/concepts/protocol/state-proofs'
-  description='Learn more about State Proofs on Algorand'
-/>
-
-## Core Features
-
-Algorand provides powerful tools for working with digital assets. You can create both fungible and non-fungible tokens with just a single transaction—no smart contract required. For more complex use cases, you can build sophisticated decentralized applications (dApps) using Algorand smart contracts.
-
-### Algorand Standard Assets (ASA)
-
-Algorand's native token standard provides built-in functionality for creating and managing assets:
-
-- **Fungible Tokens**: Create tokens with divisibility up to 19 decimal places
-- **Non-Fungible Tokens (NFTs)**: Create unique digital assets with built-in functionality
-- **Asset Parameters**: Configure freeze, clawback, and manager capabilities
-- **Metadata**: Associate metadata directly with assets
-- **Simple Creation**: Create with a single transaction, no smart contract required
-- **Efficient Transfers**: Optimized for high-throughput transfers
-- **Role-Based Control**: Define manager, reserve, freeze, and clawback addresses
-
-### Smart Contracts
-
-Algorand offers two types of smart contracts:
-
-1. **Smart Contract Applications**: Stateful contracts
-   - Global and local state storage
-   - Unlimited box data storage
-   - Application calls and inner transactions
-   - Complex business logic implementation
-
-2. **Logic Signatures**: Stateless contracts that control an account with predefined transaction approval logic
-   - High throughput, low complexity
-   - Gas-free execution
-   - Ideal for escrow and multisig scenarios
-
-<YouTube id='4JVaRvN7n6I' title='Algorand Fundamentals' />
-
-## AlgoKit
-
-Algorand has a complete suite of developer tools to make it easy to build on the platform. AlgoKit helps build, test, and deploy applications on the Algorand blockchain with tools that integrate into your workflow. AlgoKit provides benefits such as:
-
-1. Instant setup: Start coding in minutes with automated dependency installation and pre-configured project templates, giving you a fully-configured project with AlgoKit.
-2. Complete development tools: Build with ready-made smart contracts, APIs, debugging tools, and testing frameworks. AlgoKit allows you to concentrate on innovation and functionality.
-3. VS Code Language Extensions:
-   The Algorand VS Code Language Extensions provide developers with enhanced capabilities to build Algorand smart contracts efficiently within Visual Studio Code. Designed to work alongside the standard Python and TypeScript language servers, these extensions extend core IDE functionality by adding Algorand-specific diagnostics, validation, and intelligent code actions. The [Python extension](https://marketplace.visualstudio.com/items?itemName=AlgorandFoundation.algorand-python-vscode) integrates seamlessly with the official Python extension and automatically detects the PuyaPy environment to offer real-time contract-aware analysis and quick fixes, helping developers catch errors early and improve code quality. Similarly, the [TypeScript extension](https://marketplace.visualstudio.com/items?itemName=AlgorandFoundation.algorand-typescript-vscode) supports Algorand’s specialized TypeScript and smart contract utilities, providing targeted diagnostics and validation in a familiar developer workflow. Both extensions simplify the development process by offering immediate feedback relevant to Algorand’s unique blockchain environment, accelerating learning and reducing common mistakes. Currently in beta, they require Visual Studio Code 1.80.0 or later and are designed to complement existing language tooling, making them essential tools for any developer working on Algorand smart contracts.
-4. Lora the explorer is a powerful web-based application designed to streamline the Algorand local development experience. It acts as both a network explorer and a tool for building and testing your Algorand applications.
-   You can access Lora by visiting [here](https://lora.algokit.io) in your browser or by running `algokit explore` if you have the AlgoKit CLI installed.
-5. Developer support: Access comprehensive documentation in this developer portal, project templates and examples in the [Examples Gallery](https://examples.dev.algorand.co), an active developer community in our [Discord](https://discord.gg/algorand), and AI code support in the developer portal and Discord.
-
-<LinkCard
-  title='AlgoKit Quick Start Guide'
-  href='/getting-started/algokit-quick-start'
-  description='Start building on Algorand with AlgoKit'
-/>
-
-## Nodekit
-
-NodeKit is a terminal user interface (TUI) for managing Algorand nodes, including node creation, configuration, telemtry setup, and participation key management.
-
-<LinkCard
-  title='NodeKit Quick Start'
-  href='/nodes/nodekit-quick-start'
-  description='Want to run a node? Get started with NodeKit'
-/>
-
-## Pera
-
-Pera is a non-custodial and user-friendly wallet for the Algorand blockchain. It offers several key features:
-
-1. Built-in browser for dApps: This allows users to easily interact with decentralized applications on the Algorand network.
-2. Secure storage: As a non-custodial wallet, users have full control over their private keys and assets.
-3. Easy connectivity: Pera supports PeraConnect, enabling seamless integration with various Algorand dApps.
-
-Refer to the [Pera Docs](https://docs.perawallet.app/) for more details.
-
-## Transparency
-
-How do you know that anything that we are telling you here is true? You can check for yourself. All of the code for the core protocol is open source. Anyone can review it and contribute to it. The Algorand source code can be found on GitHub in the [go-algorand](https://github.com/algorand/go-algorand) repository.
-
-## Governance
-
-The Algorand Foundation, a non-profit organization that launched the Algorand MainNet, governs the Algorand network and is committed to continuing to decentralize it and put more decision-making into the hands of the Algorand community at large.
-
-## The Team & Ecosystem
-
-The Algorand protocol is completely open source, so why can't anyone just go create a copy and create another Algorand-like blockchain? Well they absolutely can, but then they'll have to convince everyone why the new one is better. As we've seen, the technology is a critical component to a blockchain, but so is the ecosystem built around it.
-
-Algorand has some of the best researchers and developers in the world actively developing and improving Algorand's core protocol. The Algorand Foundation invests heavily in strategy around governance and growth of the ecosystem to promote long-term value for all algo holders. This part is not easy to replicate.
+Algorand’s efficient design, combined with carbon offset initiatives, enables the network to operate as carbon-negative.
