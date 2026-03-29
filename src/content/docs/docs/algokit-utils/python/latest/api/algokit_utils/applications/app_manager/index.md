@@ -19,11 +19,11 @@ title: 'algokit_utils.applications.app_manager'
 
 ## Module Contents
 
-### UPDATABLE*TEMPLATE_NAME *= 'TMPL*UPDATABLE'*
+### UPDATABLE_TEMPLATE_NAME _= 'TMPL_UPDATABLE'_
 
 The name of the TEAL template variable for deploy-time immutability control.
 
-### DELETABLE*TEMPLATE_NAME *= 'TMPL*DELETABLE'*
+### DELETABLE_TEMPLATE_NAME _= 'TMPL_DELETABLE'_
 
 The name of the TEAL template variable for deploy-time permanence control.
 

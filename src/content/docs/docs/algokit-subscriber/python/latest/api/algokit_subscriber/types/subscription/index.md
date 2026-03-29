@@ -95,55 +95,55 @@ attributes – see the documentation for details.
 
 ### _class_ BlockRewards
 
-#### fee*sink *: str\_
+#### fee_sink _: str_
 
 FeeSink is an address that accepts transaction fees, it can only spend to
 the incentive pool.
 
-#### rewards*calculation_round *: int\_
+#### rewards_calculation_round _: int_
 
 number of leftover MicroAlgos after the distribution of rewards-rate
 MicroAlgos for every reward unit in the next round.
 
-#### rewards*level *: int\_
+#### rewards_level _: int_
 
 How many rewards, in MicroAlgos, have been distributed to each RewardUnit
 of MicroAlgos since genesis.
 
-#### rewards*pool *: str\_
+#### rewards_pool _: str_
 
 RewardsPool is an address that accepts periodic injections from the
 fee-sink and continually redistributes them as rewards.
 
-#### rewards*rate *: int\_
+#### rewards_rate _: int_
 
 Number of new MicroAlgos added to the participation stake from rewards at
 the next round.
 
-#### rewards*residue *: int\_
+#### rewards_residue _: int_
 
 Number of leftover MicroAlgos after the distribution of
 RewardsRate/rewardUnits MicroAlgos for every reward unit in the next round.
 
 ### _class_ BlockUpgradeState
 
-#### current*protocol *: str\_
+#### current_protocol _: str_
 
 Current protocol version
 
-#### next*protocol *: str | None\_ _= None_
+#### next_protocol _: str | None_ _= None_
 
 The next proposed protocol version.
 
-#### next*protocol_approvals *: int | None\_ _= None_
+#### next_protocol_approvals _: int | None_ _= None_
 
 Number of blocks which approved the protocol upgrade.
 
-#### next*protocol_vote_before *: int | None\_ _= None_
+#### next_protocol_vote_before _: int | None_ _= None_
 
 Deadline round for this protocol upgrade (No votes will be consider after this round).
 
-#### next*protocol_switch_on *: int | None\_ _= None_
+#### next_protocol_switch_on _: int | None_ _= None_
 
 Round on which the protocol upgrade will take effect.
 
@@ -151,11 +151,11 @@ Round on which the protocol upgrade will take effect.
 
 Tracks the status of state proofs.
 
-#### next*round *: int | None\_ _= None_
+#### next_round _: int | None_ _= None_
 
 Next round for which we will accept a state proof transaction.
 
-#### online*total_weight *: int | None\_ _= None_
+#### online_total_weight _: int | None_ _= None_
 
 The total number of microalgos held by the online accounts during the
 StateProof round.
@@ -164,7 +164,7 @@ StateProof round.
 
 State Proof Type. Note the raw object uses map with this as key.
 
-#### voters*commitment *: str | None\_ _= None_
+#### voters_commitment _: str | None_ _= None_
 
 Root of a vector commitment containing online accounts that will help sign the proof.
 
@@ -172,15 +172,15 @@ Root of a vector commitment containing online accounts that will help sign the p
 
 Fields relating to voting for a protocol upgrade.
 
-#### upgrade*approve *: bool | None\_ _= None_
+#### upgrade_approve _: bool | None_ _= None_
 
 Indicates a yes vote for the current proposal.
 
-#### upgrade*delay *: int | None\_ _= None_
+#### upgrade_delay _: int | None_ _= None_
 
 Indicates the time between acceptance and execution.
 
-#### upgrade*propose *: str | None\_ _= None_
+#### upgrade_propose _: str | None_ _= None_
 
 Indicates a proposed upgrade.
 
@@ -188,11 +188,11 @@ Indicates a proposed upgrade.
 
 Participation account data that needs to be checked/acted on by the network.
 
-#### absent*participation_accounts *: list[str] | None\_ _= None_
+#### absent_participation_accounts _: list[str] | None_ _= None_
 
 A list of online accounts that need to be suspended.
 
-#### expired*participation_accounts *: list[str] | None\_ _= None_
+#### expired_participation_accounts _: list[str] | None_ _= None_
 
 A list of online accounts that needs to be converted to offline
 since their participation key expired.
@@ -213,15 +213,15 @@ The round of the block.
 
 Block creation timestamp in seconds since epoch
 
-#### genesis*id *: str\_
+#### genesis_id _: str_
 
 The genesis ID of the chain.
 
-#### genesis*hash *: str\_
+#### genesis_hash _: str_
 
 The base64 genesis hash of the chain.
 
-#### previous*block_hash *: str | None\_ _= None_
+#### previous_block_hash _: str | None_ _= None_
 
 The base64 previous block hash.
 
@@ -233,46 +233,46 @@ The base64 seed of the block.
 
 Fields relating to rewards
 
-#### parent*transaction_count *: int\_
+#### parent_transaction_count _: int_
 
 Count of parent transactions in this block
 
-#### full*transaction_count *: int\_
+#### full_transaction_count _: int_
 
 Full count of transactions and inner transactions (recursively) in this block.
 
-#### txn*counter *: int\_
+#### txn_counter _: int_
 
 Number of the next transaction that will be committed after this block.
 It is 0 when no transactions have ever been committed (since TxnCounter
 started being supported).
 
-#### transactions*root *: str\_
+#### transactions_root _: str_
 
 Root of transaction merkle tree using SHA512_256 hash function (base64 encoded).
 This commitment is computed based on the PaysetCommit type specified in
 the block’s consensus protocol.
 
-#### transactions*root_sha256 *: str\_
+#### transactions_root_sha256 _: str_
 
 TransactionsRootSHA256 is an auxiliary TransactionRoot, built using a
 vector commitment instead of a merkle tree, and SHA256 hash function
 instead of the default SHA512_256 (base64 encoded). This commitment can be used on
 environments where only the SHA256 function exists.
 
-#### upgrade*state *: [BlockUpgradeState](#class-blockupgradestate) | None\_ _= None_
+#### upgrade_state _: [BlockUpgradeState](#class-blockupgradestate) | None_ _= None_
 
 Fields relating to a protocol upgrade.
 
-#### state*proof_tracking *: list[[BlockStateProofTracking](#class-blockstateprooftracking)] | None\_ _= None_
+#### state_proof_tracking _: list[[BlockStateProofTracking](#class-blockstateprooftracking)] | None_ _= None_
 
 Tracks the status of state proofs.
 
-#### upgrade*vote *: [BlockUpgradeVote](#class-blockupgradevote) | None\_ _= None_
+#### upgrade_vote _: [BlockUpgradeVote](#class-blockupgradevote) | None_ _= None_
 
 Fields relating to voting for a protocol upgrade.
 
-#### participation*updates *: [ParticipationUpdates](#class-participationupdates) | None\_ _= None_
+#### participation_updates _: [ParticipationUpdates](#class-participationupdates) | None_ _= None_
 
 Participation account data that needs to be checked/acted on by the network.
 
@@ -288,7 +288,7 @@ Represents a balance change effect for a transaction.
 
 The address that the balance change is for.
 
-#### asset*id *: int\_
+#### asset_id _: int_
 
 The asset ID of the balance change, or 0 for Algos.
 
@@ -319,25 +319,25 @@ some modifications to:
 
 #### id\_ _: str_
 
-#### inner*txns *: list[[SubscribedTransaction](#class-subscribedtransaction)]\_
+#### inner_txns _: list[[SubscribedTransaction](#class-subscribedtransaction)]_
 
-#### parent*transaction_id *: str | None\_ _= None_
+#### parent_transaction_id _: str | None_ _= None_
 
 The transaction ID of the parent of this transaction (if it’s an inner
 transaction).
 
-#### parent*intra_round_offset *: int | None\_ _= None_
+#### parent_intra_round_offset _: int | None_ _= None_
 
-#### arc28*events *: list[[EmittedArc28Event](/docs/algokit-subscriber/python/latest/api/algokit_subscriber/types/arc28/#class-emittedarc28event)]\_ _= []_
+#### arc28_events _: list[[EmittedArc28Event](/docs/algokit-subscriber/python/latest/api/algokit_subscriber/types/arc28/#class-emittedarc28event)]_ _= []_
 
 Any ARC-28 events emitted from an app call.
 
-#### filters*matched *: list[str]\_ _= []_
+#### filters_matched _: list[str]_ _= []_
 
 The names of any filters that matched the given transaction to result in
 it being ‘subscribed’.
 
-#### balance*changes *: list[[BalanceChange](#class-balancechange)]\_ _= []_
+#### balance_changes _: list[[BalanceChange](#class-balancechange)]_ _= []_
 
 The balance changes in the transaction.
 
@@ -345,19 +345,19 @@ The balance changes in the transaction.
 
 The result of a single subscription pull/poll.
 
-#### synced*round_range *: tuple[int, int]\_
+#### synced_round_range _: tuple[int, int]_
 
 The round range that was synced from/to
 
-#### current*round *: int\_
+#### current_round _: int_
 
 The current detected tip of the configured Algorand blockchain.
 
-#### starting*watermark *: int\_
+#### starting_watermark _: int_
 
 The watermark value that was retrieved at the start of the subscription poll.
 
-#### new*watermark *: int\_
+#### new_watermark _: int_
 
 The new watermark value to persist for the next call to
 get_subscribed_transactions to continue the sync.
@@ -365,13 +365,13 @@ Will be equal to synced_round_range[1]. Only persist this
 after processing (or in the same atomic transaction as)
 subscribed transactions to keep it reliable.
 
-#### subscribed*transactions *: list[[SubscribedTransaction](#class-subscribedtransaction)]\_
+#### subscribed_transactions _: list[[SubscribedTransaction](#class-subscribedtransaction)]_
 
 Any transactions that matched the given filter within
 the synced round range. This substantively uses the indexer transaction
 format to represent the data with some additional fields.
 
-#### block*metadata *: list[[BlockMetadata](#class-blockmetadata)] | None\_ _= None_
+#### block_metadata _: list[[BlockMetadata](#class-blockmetadata)] | None_ _= None_
 
 The metadata about any blocks that were retrieved from algod as part
 of the subscription poll.
@@ -384,13 +384,13 @@ Metadata about an impending subscription poll.
 
 The current watermark of the subscriber
 
-#### current*round *: int\_
+#### current_round _: int_
 
 The current round of algod
 
 ### _class_ BalanceChangeFilter
 
-#### asset*id *: int | list[int] | None\_ _= None_
+#### asset_id _: int | list[int] | None_ _= None_
 
 Match transactions with balance changes for one of the given asset ID(s),
 with Algo being 0
@@ -404,22 +404,22 @@ given role(s)
 
 Match transactions with balance changes affecting one of the given account(s)
 
-#### min*absolute_amount *: int | float | None\_ _= None_
+#### min_absolute_amount _: int | float | None_ _= None_
 
 Match transactions with absolute (i.e. using math.abs()) balance changes
 being greater than or equal to the given minimum (microAlgos or decimal units of an ASA
 
-#### max*absolute_amount *: int | float | None\_ _= None_
+#### max_absolute_amount _: int | float | None_ _= None_
 
 Match transactions with absolute (i.e. using math.abs()) balance changes
 being less than or equal to the given maximum (microAlgos or decimal units of an ASA
 
-#### min*amount *: int | float | None\_ _= None_
+#### min_amount _: int | float | None_ _= None_
 
 Match transactions with balance changes
 being greater than or equal to the given minimum (microAlgos or decimal units of an ASA)
 
-#### max*amount *: int | float | None\_ _= None_
+#### max_amount _: int | float | None_ _= None_
 
 Match transactions with balance changes
 being less than or equal to the given maximum (microAlgos or decimal units of an ASA)
@@ -442,61 +442,61 @@ Filter to transactions sent from the specified address(es).
 
 Filter to transactions being received by the specified address(es).
 
-#### note*prefix *: str | bytes | None\_ _= None_
+#### note_prefix _: str | bytes | None_ _= None_
 
 Filter to transactions with a note having the given prefix.
 
-#### app*id *: int | list[int] | None\_ _= None_
+#### app_id _: int | list[int] | None_ _= None_
 
 Filter to transactions against the app with the given ID(s).
 
-#### app*create *: bool | None\_ _= None_
+#### app_create _: bool | None_ _= None_
 
 Filter to transactions that are creating an app.
 
-#### app*on_complete *: str | list[str] | None\_ _= None_
+#### app_on_complete _: str | list[str] | None_ _= None_
 
 Filter to transactions that have given on complete(s).
 
-#### asset*id *: int | list[int] | None\_ _= None_
+#### asset_id _: int | list[int] | None_ _= None_
 
 Filter to transactions against the asset with the given ID(s).
 
-#### asset*create *: bool | None\_ _= None_
+#### asset_create _: bool | None_ _= None_
 
 Filter to transactions that are creating an asset.
 
-#### min*amount *: int | None\_ _= None_
+#### min_amount _: int | None_ _= None_
 
 Filter to transactions where the amount being transferred is greater
 than or equal to the given minimum (microAlgos or decimal units of an ASA if type: axfer).
 
-#### max*amount *: int | None\_ _= None_
+#### max_amount _: int | None_ _= None_
 
 Filter to transactions where the amount being transferred is less than
 or equal to the given maximum (microAlgos or decimal units of an ASA if type: axfer).
 
-#### method*signature *: str | list[str] | None\_ _= None_
+#### method_signature _: str | list[str] | None_ _= None_
 
 Filter to app transactions that have the given ARC-0004 method selector(s) for
 the given method signature as the first app argument.
 
-#### app*call_arguments_match *: Callable[[list[bytes] | None], bool] | None\_ _= None_
+#### app_call_arguments_match _: Callable[[list[bytes] | None], bool] | None_ _= None_
 
 Filter to app transactions that meet the given app arguments predicate.
 
-#### arc28*events *: list[[Arc28EventFilter](/docs/algokit-subscriber/python/latest/api/algokit_subscriber/types/arc28/#class-arc28eventfilter)] | None\_ _= None_
+#### arc28_events _: list[[Arc28EventFilter](/docs/algokit-subscriber/python/latest/api/algokit_subscriber/types/arc28/#class-arc28eventfilter)] | None_ _= None_
 
 Filter to app transactions that emit the given ARC-28 events.
 Note: the definitions for these events must be passed in to the
 subscription config via arc28_events.
 
-#### balance*changes *: list[[BalanceChangeFilter](#class-balancechangefilter)] | None\_ _= None_
+#### balance_changes _: list[[BalanceChangeFilter](#class-balancechangefilter)] | None_ _= None_
 
 Filter to transactions that result in balance changes that match one or
 more of the given set of balance changes.
 
-#### custom*filter *: Callable[[algokit_indexer_client.models.Transaction], bool] | None\_ _= None_
+#### custom_filter _: Callable[[algokit_indexer_client.models.Transaction], bool] | None_ _= None_
 
 Catch-all custom filter to filter for things that the rest of the filters don’t provide.
 
@@ -520,21 +520,21 @@ The filter itself.
 
 The filter(s) to apply to find transactions of interest.
 
-#### arc28*events *: list[[Arc28EventGroup](/docs/algokit-subscriber/python/latest/api/algokit_subscriber/types/arc28/#class-arc28eventgroup)] | None\_ _= None_
+#### arc28_events _: list[[Arc28EventGroup](/docs/algokit-subscriber/python/latest/api/algokit_subscriber/types/arc28/#class-arc28eventgroup)] | None_ _= None_
 
 Any ARC-28 event definitions to process from app call logs.
 
-#### max*rounds_to_sync *: int\_ _= 500_
+#### max_rounds_to_sync _: int_ _= 500_
 
 The maximum number of rounds to sync from algod for each subscription pull/poll.
 Defaults to 500.
 
-#### max*indexer_rounds_to_sync *: int | None\_ _= None_
+#### max_indexer_rounds_to_sync _: int | None_ _= None_
 
 The maximum number of rounds to sync from indexer when using
 sync_behaviour: ‘catchup-with-indexer’.
 
-#### sync*behaviour *: SyncBehaviour\_
+#### sync_behaviour _: SyncBehaviour_
 
 If the current tip of the configured Algorand blockchain is more than
 max_rounds_to_sync past watermark then how should that be handled.
@@ -562,7 +562,7 @@ Bases: [`CoreTransactionSubscriptionParams`](#class-coretransactionsubscriptionp
 
 The current round watermark that transactions have previously been synced to.
 
-#### current*round *: int | None\_ _= None_
+#### current_round _: int | None_ _= None_
 
 The current tip of the configured Algorand blockchain.
 If not provided, it will be resolved on demand.
@@ -598,16 +598,16 @@ Configuration for the subscriber.
 
 The set of filters to subscribe to / emit events for, along with optional data mappers.
 
-#### watermark*persistence *: [WatermarkPersistence](#class-watermarkpersistence)\_
+#### watermark_persistence _: [WatermarkPersistence](#class-watermarkpersistence)_
 
 Methods to retrieve and persist the current watermark so syncing is resilient and maintains
 its position in the chain
 
-#### frequency*in_seconds *: float | None\_ _= None_
+#### frequency_in_seconds _: float | None_ _= None_
 
 The frequency to poll for new blocks in seconds; defaults to 1s
 
-#### wait*for_block_when_at_tip *: bool | None\_ _= None_
+#### wait_for_block_when_at_tip _: bool | None_ _= None_
 
 Whether to wait via algod /status/wait-for-block-after endpoint when at
 the tip of the chain; reduces latency of subscription

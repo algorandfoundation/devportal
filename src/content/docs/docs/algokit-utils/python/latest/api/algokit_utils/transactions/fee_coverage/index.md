@@ -49,9 +49,9 @@ Represents a difference between required and provided fee amounts.
 
 Priority wrapper used when deciding which transactions need additional fees applied first.
 
-#### priority*level *: int\_
+#### priority_level _: int_
 
-#### deficit*amount *: int\_
+#### deficit_amount _: int_
 
 #### Covered _: ClassVar[[FeePriority](#algokit_utils.transactions.fee_coverage.FeePriority)]_
 

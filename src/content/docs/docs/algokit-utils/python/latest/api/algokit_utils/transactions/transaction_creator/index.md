@@ -57,7 +57,7 @@ Create a payment transaction to transfer Algo between accounts.
       ))
   ```
 
-#### _property_ asset*create *: Callable[[AssetCreateParams], Transaction]\_
+#### _property_ asset_create _: Callable[[AssetCreateParams], Transaction]_
 
 Create a create Algorand Standard Asset transaction.
 
@@ -94,7 +94,7 @@ Create a create Algorand Standard Asset transaction.
   ))
   ```
 
-#### _property_ asset*config *: Callable[[AssetConfigParams], Transaction]\_
+#### _property_ asset_config _: Callable[[AssetConfigParams], Transaction]_
 
 Create an asset config transaction to reconfigure an existing Algorand Standard Asset.
 
@@ -126,7 +126,7 @@ Create an asset config transaction to reconfigure an existing Algorand Standard 
   ))
   ```
 
-#### _property_ asset*freeze *: Callable[[AssetFreezeParams], Transaction]\_
+#### _property_ asset_freeze _: Callable[[AssetFreezeParams], Transaction]_
 
 Create an Algorand Standard Asset freeze transaction.
 
@@ -159,7 +159,7 @@ Create an Algorand Standard Asset freeze transaction.
   ))
   ```
 
-#### _property_ asset*destroy *: Callable[[AssetDestroyParams], Transaction]\_
+#### _property_ asset_destroy _: Callable[[AssetDestroyParams], Transaction]_
 
 Create an Algorand Standard Asset destroy transaction.
 
@@ -187,7 +187,7 @@ Create an Algorand Standard Asset destroy transaction.
   ))
   ```
 
-#### _property_ asset*transfer *: Callable[[AssetTransferParams], Transaction]\_
+#### _property_ asset_transfer _: Callable[[AssetTransferParams], Transaction]_
 
 Create an Algorand Standard Asset transfer transaction.
 
@@ -222,7 +222,7 @@ Create an Algorand Standard Asset transfer transaction.
   ))
   ```
 
-#### _property_ asset*opt_in *: Callable[[AssetOptInParams], Transaction]\_
+#### _property_ asset_opt_in _: Callable[[AssetOptInParams], Transaction]_
 
 Create an Algorand Standard Asset opt-in transaction.
 
@@ -250,7 +250,7 @@ Create an Algorand Standard Asset opt-in transaction.
   ))
   ```
 
-#### _property_ asset*opt_out *: Callable[[AssetOptOutParams], Transaction]\_
+#### _property_ asset_opt_out _: Callable[[AssetOptOutParams], Transaction]_
 
 Create an asset opt-out transaction.
 
@@ -279,7 +279,7 @@ Create an asset opt-out transaction.
   ))
   ```
 
-#### _property_ app*create *: Callable[[AppCreateParams], Transaction]\_
+#### _property_ app_create _: Callable[[AppCreateParams], Transaction]_
 
 Create an application create transaction.
 
@@ -326,7 +326,7 @@ Create an application create transaction.
   ))
   ```
 
-#### _property_ app*update *: Callable[[AppUpdateParams], Transaction]\_
+#### _property_ app_update _: Callable[[AppUpdateParams], Transaction]_
 
 Create an application update transaction.
 
@@ -365,7 +365,7 @@ Create an application update transaction.
   ))
   ```
 
-#### _property_ app*delete *: Callable[[AppDeleteParams], Transaction]\_
+#### _property_ app_delete _: Callable[[AppDeleteParams], Transaction]_
 
 Create an application delete transaction.
 
@@ -399,7 +399,7 @@ Create an application delete transaction.
   ))
   ```
 
-#### _property_ app*call *: Callable[[AppCallParams], Transaction]\_
+#### _property_ app_call _: Callable[[AppCallParams], Transaction]_
 
 Create an application call transaction.
 
@@ -455,7 +455,7 @@ Create an application call transaction.
   ))
   ```
 
-#### _property_ app*create_method_call *: Callable[[AppCreateMethodCallParams], [BuiltTransactions](/docs/algokit-utils/python/latest/api/algokit_utils/transactions/transaction_composer/#algokit_utils.transactions.transaction_composer.BuiltTransactions)]\_
+#### _property_ app_create_method_call _: Callable[[AppCreateMethodCallParams], [BuiltTransactions](/docs/algokit-utils/python/latest/api/algokit_utils/transactions/transaction_composer/#algokit_utils.transactions.transaction_composer.BuiltTransactions)]_
 
 Create an application create call with ABI method call transaction.
 
@@ -494,7 +494,7 @@ Create an application create call with ABI method call transaction.
   ))
   ```
 
-#### _property_ app*update_method_call *: Callable[[AppUpdateMethodCallParams], [BuiltTransactions](/docs/algokit-utils/python/latest/api/algokit_utils/transactions/transaction_composer/#algokit_utils.transactions.transaction_composer.BuiltTransactions)]\_
+#### _property_ app_update_method_call _: Callable[[AppUpdateMethodCallParams], [BuiltTransactions](/docs/algokit-utils/python/latest/api/algokit_utils/transactions/transaction_composer/#algokit_utils.transactions.transaction_composer.BuiltTransactions)]_
 
 Create an application update call with ABI method call transaction.
 
@@ -532,7 +532,7 @@ Create an application update call with ABI method call transaction.
   ))
   ```
 
-#### _property_ app*delete_method_call *: Callable[[AppDeleteMethodCallParams], [BuiltTransactions](/docs/algokit-utils/python/latest/api/algokit_utils/transactions/transaction_composer/#algokit_utils.transactions.transaction_composer.BuiltTransactions)]\_
+#### _property_ app_delete_method_call _: Callable[[AppDeleteMethodCallParams], [BuiltTransactions](/docs/algokit-utils/python/latest/api/algokit_utils/transactions/transaction_composer/#algokit_utils.transactions.transaction_composer.BuiltTransactions)]_
 
 Create an application delete call with ABI method call transaction.
 
@@ -566,7 +566,7 @@ Create an application delete call with ABI method call transaction.
   ))
   ```
 
-#### _property_ app*call_method_call *: Callable[[AppCallMethodCallParams], [BuiltTransactions](/docs/algokit-utils/python/latest/api/algokit_utils/transactions/transaction_composer/#algokit_utils.transactions.transaction_composer.BuiltTransactions)]\_
+#### _property_ app_call_method_call _: Callable[[AppCallMethodCallParams], [BuiltTransactions](/docs/algokit-utils/python/latest/api/algokit_utils/transactions/transaction_composer/#algokit_utils.transactions.transaction_composer.BuiltTransactions)]_
 
 Create an application call with ABI method call transaction.
 
@@ -603,7 +603,7 @@ Create an application call with ABI method call transaction.
 
   ))
 
-#### _property_ online*key_registration *: Callable[[OnlineKeyRegistrationParams], Transaction]\_
+#### _property_ online_key_registration _: Callable[[OnlineKeyRegistrationParams], Transaction]_
 
 Create an online key registration transaction.
 
@@ -644,7 +644,7 @@ Create an online key registration transaction.
   ))
   ```
 
-#### _property_ offline*key_registration *: Callable[[OfflineKeyRegistrationParams], Transaction]\_
+#### _property_ offline_key_registration _: Callable[[OfflineKeyRegistrationParams], Transaction]_
 
 Create an offline key registration transaction.
 

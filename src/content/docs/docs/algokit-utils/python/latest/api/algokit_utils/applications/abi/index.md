@@ -52,17 +52,17 @@ and any decode error. Transaction context should live on the send result, not he
 
 #### method _: Arc56Method | None_
 
-#### raw*value *: bytes\_
+#### raw_value _: bytes_
 
 #### value _: ABIValue | None_
 
-#### decode*error *: Exception | None\_
+#### decode_error _: Exception | None_
 
-#### _property_ is*success *: bool\_
+#### _property_ is_success _: bool_
 
 Returns True if the ABI call was decoded successfully.
 
-#### _property_ tx*info *: ConfirmationResponse | None\_
+#### _property_ tx_info _: ConfirmationResponse | None_
 
 Deprecated: transaction info now lives on the send result.
 
@@ -76,7 +76,7 @@ Bases: [`ABIReturn`](#algokit_utils.applications.abi.ABIReturn)
 
 Deprecated wrapper that previously carried tx context plus ABI data.
 
-#### tx*id *: str | None\_ _= None_
+#### tx_id _: str | None_ _= None_
 
 #### _classmethod_ from_abireturn(abi_return: [ABIReturn](#algokit_utils.applications.abi.ABIReturn), tx_id: str | None = None) → [ABIResult](#algokit_utils.applications.abi.ABIResult)
 

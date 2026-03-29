@@ -31,11 +31,11 @@ The name of the box
 The name of the box as a string.
 If the name can’t be decoded from UTF-8, the string representation of the bytes is returned instead.
 
-#### name*raw *: bytes\_
+#### name_raw _: bytes_
 
 The name of the box as raw bytes
 
-#### name*base64 *: str\_
+#### name_base64 _: str_
 
 The name of the box as a base64 encoded string
 

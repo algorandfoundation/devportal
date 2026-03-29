@@ -55,7 +55,7 @@ The signature of the event e.g. EventName(type1,type2)
 
 The prefix for the event
 
-#### _property_ abi*type *: algokit*abi.abi.ABIType*
+#### _property_ abi_type _: algokit_abi.abi.ABIType_
 
 The ABI type of the event
 
@@ -64,7 +64,7 @@ The ABI type of the event
 Specifies a group of ARC-28 event definitions along with instructions for
 when to attempt to process the events.
 
-#### group*name *: str\_
+#### group_name _: str_
 
 The name to designate for this group of events.
 
@@ -72,16 +72,16 @@ The name to designate for this group of events.
 
 The list of ARC-28 event definitions.
 
-#### process*for_app_ids *: list[int] | None\_ _= None_
+#### process_for_app_ids _: list[int] | None_ _= None_
 
 Optional list of app IDs that this group should apply to.
 
-#### process*transaction *: Callable[[algokit_indexer_client.models.Transaction], bool] | None\_ _= None_
+#### process_transaction _: Callable[[algokit_indexer_client.models.Transaction], bool] | None_ _= None_
 
 Optional predicate to indicate if these ARC-28 events should be processed
 for the given transaction.
 
-#### continue*on_error *: bool\_ _= False_
+#### continue_on_error _: bool_ _= False_
 
 Whether or not to silently (with warning log) continue if an error is
 encountered processing the ARC-28 event data; default = False.
@@ -90,11 +90,11 @@ encountered processing the ARC-28 event data; default = False.
 
 A reference to an ARC-28 group and event, used to filter for transactions that emit it
 
-#### group*name *: str\_
+#### group_name _: str_
 
 The name of the ARC-28 event group the event belongs to
 
-#### event*name *: str\_
+#### event_name _: str_
 
 The name of the ARC-28 event that was triggered
 
@@ -102,23 +102,23 @@ The name of the ARC-28 event that was triggered
 
 Represents an ARC-28 event that was emitted.
 
-#### group*name *: str\_
+#### group_name _: str_
 
 The name of the ARC-28 event group the event belongs to
 
-#### event*name *: str\_
+#### event_name _: str_
 
 The name of the ARC-28 event that was triggered
 
-#### event*signature *: str\_
+#### event_signature _: str_
 
 The signature of the event e.g. EventName(type1,type2)
 
-#### event*prefix *: str\_
+#### event_prefix _: str_
 
 The 4-byte hex prefix for the event
 
-#### event*definition *: [Arc28Event](#class-arc28event)\_
+#### event_definition _: [Arc28Event](#class-arc28event)_
 
 The ARC-28 definition of the event
 
@@ -126,7 +126,7 @@ The ARC-28 definition of the event
 
 The ordered arguments extracted from the event that was emitted
 
-#### args*by_name *: dict[str, Any]\_
+#### args_by_name _: dict[str, Any]_
 
 The named arguments extracted from the event that was emitted (where the
 arguments had a name defined)
