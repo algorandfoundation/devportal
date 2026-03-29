@@ -1,0 +1,185 @@
+---
+title: 'Seed from Mnemonic'
+description: 'This example demonstrates how to use seed_from_mnemonic() to convert a 25-word Algorand mnemonic back to its original 32-byte seed. This is the reverse operation of mnemonic_from_seed().'
+sidebar:
+  order: 2
+---
+
+[← Back to Mnemonic Utilities](/docs/algokit-utils/python/latest/examples/algo25/)
+
+## Description
+
+This example demonstrates how to use seed_from_mnemonic() to convert a 25-word Algorand mnemonic back to its original 32-byte seed. This is the reverse operation of mnemonic_from_seed().
+Key concepts:
+
+- seed_from_mnemonic() reverses the mnemonic encoding process
+- The checksum word is verified to ensure mnemonic integrity
+- Round-trip conversion: seed -&gt; mnemonic -&gt; seed produces identical bytes
+
+## Prerequisites
+
+No LocalNet required - pure utility function
+
+## Run This Example
+
+From the repository's `examples` directory:
+
+```bash
+cd examples
+uv run python algo25/02_seed_from_mnemonic.py
+```
+
+## Code
+
+[View source on GitHub](https://github.com/algorandfoundation/algokit-utils-py/blob/main/examples/algo25/02_seed_from_mnemonic.py)
+
+```python title="02_seed_from_mnemonic.py"
+# ruff: noqa: N999, C901, PLR0912, PLR0915
+"""
+Example: Seed from Mnemonic
+
+This example demonstrates how to use seed_from_mnemonic() to convert a 25-word
+Algorand mnemonic back to its original 32-byte seed. This is the reverse
+operation of mnemonic_from_seed().
+
+Key concepts:
+- seed_from_mnemonic() reverses the mnemonic encoding process
+- The checksum word is verified to ensure mnemonic integrity
+- Round-trip conversion: seed -> mnemonic -> seed produces identical bytes
+
+No LocalNet required - pure utility function
+"""
+
+import secrets
+
+from shared import format_hex, print_error, print_header, print_info, print_step, print_success
+
+from algokit_algo25 import mnemonic_from_seed, seed_from_mnemonic
+
+
+def main() -> None:
+    print_header("Seed from Mnemonic Example")
+
+    # Step 1: Generate a random 32-byte seed
+    print_step(1, "Generate a Random 32-byte Seed")
+
+    original_seed = secrets.token_bytes(32)
+
+    print_info(f"Original seed length: {len(original_seed)} bytes (256 bits)")
+    print_info(f"Original seed hex: {format_hex(original_seed)}")
+
+    # Step 2: Convert seed to mnemonic
+    print_step(2, "Convert Seed to 25-Word Mnemonic")
+
+    mnemonic = mnemonic_from_seed(original_seed)
+    words = mnemonic.split(" ")
+
+    print_info(f"Mnemonic has {len(words)} words")
+    print_info("Mnemonic words:")
+    # Display words in rows of 5 for readability
+    for i in range(0, len(words), 5):
+        row = words[i : i + 5]
+        numbered = " ".join(f"{i + j + 1:2}. {w:<10}" for j, w in enumerate(row))
+        print_info(f"  {numbered}")
+
+    # Step 3: Recover seed from mnemonic
+    print_step(3, "Recover Seed from Mnemonic using seed_from_mnemonic()")
+
+    recovered_seed = seed_from_mnemonic(mnemonic)
+
+    print_info(f"Recovered seed length: {len(recovered_seed)} bytes")
+    print_info(f"Recovered seed hex: {format_hex(recovered_seed)}")
+
+    # Step 4: Compare original and recovered seeds
+    print_step(4, "Compare Original and Recovered Seeds")
+
+    print_info("Original seed:")
+    print_info(f"  {format_hex(original_seed)}")
+    print_info("Recovered seed:")
+    print_info(f"  {format_hex(recovered_seed)}")
+
+    seeds_match = original_seed == recovered_seed
+    print_info(f"Seeds are identical: {'Yes' if seeds_match else 'No'}")
+
+    if seeds_match:
+        print_success("Round-trip verification passed: seed_from_mnemonic(mnemonic_from_seed(seed)) == seed")
+    else:
+        print_error("Round-trip verification failed!")
+        return
+
+    # Step 5: Byte-by-byte comparison
+    print_step(5, "Byte-by-Byte Verification")
+
+    print_info("Comparing first 8 bytes:")
+    for i in range(8):
+        orig_byte = f"{original_seed[i]:02x}"
+        rec_byte = f"{recovered_seed[i]:02x}"
+        match = "✓" if original_seed[i] == recovered_seed[i] else "✗"
+        print_info(f"  Byte {i}: original=0x{orig_byte}, recovered=0x{rec_byte} {match}")
+    print_info("  ... (all 32 bytes verified)")
+
+    # Step 6: Explain how seed_from_mnemonic works
+    print_step(6, "How seed_from_mnemonic() Works")
+
+    print_info("The recovery process:")
+    print_info("  1. Split the mnemonic into 25 words")
+    print_info("  2. Separate the first 24 words (data) from the 25th word (checksum)")
+    print_info("  3. Look up each data word in the BIP39 wordlist to get its 11-bit index")
+    print_info("  4. Combine the 24 x 11 = 264 bits back into bytes")
+    print_info("  5. Remove the last byte (8 padding bits) to get the 32-byte seed")
+    print_info("  6. Recompute the checksum from the recovered seed")
+    print_info("  7. Verify the computed checksum matches the 25th word")
+    print_info("  8. Return the 32-byte seed if checksum is valid")
+
+    # Step 7: Demonstrate checksum validation
+    print_step(7, "Checksum Validation Protects Against Errors")
+
+    print_info(f'Checksum word (25th word): "{words[24]}"')
+    print_info("The checksum is computed from SHA-512/256 hash of the seed.")
+    print_info("If any word is changed, the checksum will not match.")
+
+    # Create an invalid mnemonic by changing one word
+    tampered_words = words.copy()
+    tampered_words[0] = "about" if tampered_words[0] == "abandon" else "abandon"
+    tampered_mnemonic = " ".join(tampered_words)
+
+    print_info("")
+    print_info("Attempting to decode a tampered mnemonic...")
+    print_info(f'  Changed word 1 from "{words[0]}" to "{tampered_words[0]}"')
+
+    try:
+        seed_from_mnemonic(tampered_mnemonic)
+        print_error("Unexpectedly succeeded with tampered mnemonic!")
+    except Exception as error:
+        print_success(f'Checksum validation caught the error: "{error}"')
+
+    # Step 8: Summary
+    print_step(8, "Summary")
+
+    print_info("seed_from_mnemonic() converts a 25-word mnemonic back to a 32-byte seed:")
+    print_info("  - Input: Space-separated string of 25 words")
+    print_info("  - Output: 32-byte bytes object (the original seed)")
+    print_info("  - Validates the checksum to ensure integrity")
+    print_info("  - Raises an error if:")
+    print_info("    - Any word is not in the BIP39 wordlist")
+    print_info("    - The checksum word does not match")
+    print_info("  - Enables round-trip: seed -> mnemonic -> seed")
+    print_info("  - Use case: Recover a seed from a backed-up mnemonic phrase")
+
+    print_success("Seed from Mnemonic example completed successfully!")
+
+
+if __name__ == "__main__":
+    main()
+
+```
+
+---
+
+### Other examples in Mnemonic Utilities
+
+- [Mnemonic from Seed](/docs/algokit-utils/python/latest/examples/algo25/01-mnemonic-from-seed/)
+- **Seed from Mnemonic**
+- [Secret Key to Mnemonic](/docs/algokit-utils/python/latest/examples/algo25/03-secret-key-to-mnemonic/)
+- [Master Derivation Key Functions](/docs/algokit-utils/python/latest/examples/algo25/04-master-derivation-key/)
+- [Error Handling for Mnemonic Functions](/docs/algokit-utils/python/latest/examples/algo25/05-error-handling/)

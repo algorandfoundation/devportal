@@ -1,0 +1,253 @@
+---
+title: 'ABI Primitive Types'
+description: 'This example demonstrates how to encode and decode primitive ABI types:'
+sidebar:
+  order: 2
+---
+
+[← Back to ABI Encoding](/docs/algokit-utils/python/latest/examples/abi/)
+
+## Description
+
+This example demonstrates how to encode and decode primitive ABI types:
+
+- UintType: Unsigned integers of various bit sizes (8, 16, 32, 64, 128, 256, 512)
+- BoolType: Boolean values encoded as a single byte
+- ByteType: Single byte values
+  Shows encode() and decode() methods, hex format display, and round-trip verification.
+
+## Prerequisites
+
+No LocalNet required - pure ABI encoding/decoding
+
+## Run This Example
+
+From the repository's `examples` directory:
+
+```bash
+cd examples
+uv run python abi/02_primitive_types.py
+```
+
+## Code
+
+[View source on GitHub](https://github.com/algorandfoundation/algokit-utils-py/blob/main/examples/abi/02_primitive_types.py)
+
+```python title="02_primitive_types.py"
+# ruff: noqa: N999, PLR0915, FBT003
+"""
+Example: ABI Primitive Types
+
+This example demonstrates how to encode and decode primitive ABI types:
+- UintType: Unsigned integers of various bit sizes (8, 16, 32, 64, 128, 256, 512)
+- BoolType: Boolean values encoded as a single byte
+- ByteType: Single byte values
+
+Shows encode() and decode() methods, hex format display, and round-trip verification.
+
+No LocalNet required - pure ABI encoding/decoding
+"""
+
+from shared import format_hex, print_header, print_info, print_step, print_success
+
+from algokit_abi import abi
+
+
+def main() -> None:
+    print_header("ABI Primitive Types Example")
+
+    # Step 1: UintType with various bit sizes
+    print_step(1, "UintType - Various Bit Sizes")
+
+    uint_sizes = [8, 16, 32, 64, 128, 256, 512]
+
+    for bit_size in uint_sizes:
+        uint_type = abi.UintType(bit_size)
+        print_info(f"\n{uint_type}:")
+        print_info(f"  bit_size: {uint_type.bit_size}")
+        print_info(f"  byte_len: {uint_type.byte_len()}")
+        print_info(f"  is_dynamic: {uint_type.is_dynamic()}")
+
+    # Step 2: Encoding and decoding small uint values
+    print_step(2, "Encoding/Decoding Small Uint Values")
+
+    uint8_type = abi.UintType(8)
+    uint8_value = 42
+    uint8_encoded = uint8_type.encode(uint8_value)
+    uint8_decoded = uint8_type.decode(uint8_encoded)
+
+    print_info(f"uint8 value: {uint8_value}")
+    print_info(f"  encoded: {format_hex(uint8_encoded)}")
+    print_info(f"  decoded: {uint8_decoded}")
+    print_info(f"  round-trip verified: {uint8_decoded == uint8_value}")
+
+    uint16_type = abi.UintType(16)
+    uint16_value = 1000
+    uint16_encoded = uint16_type.encode(uint16_value)
+    uint16_decoded = uint16_type.decode(uint16_encoded)
+
+    print_info(f"uint16 value: {uint16_value}")
+    print_info(f"  encoded: {format_hex(uint16_encoded)}")
+    print_info(f"  decoded: {uint16_decoded}")
+    print_info(f"  round-trip verified: {uint16_decoded == uint16_value}")
+
+    uint32_type = abi.UintType(32)
+    uint32_value = 1_000_000
+    uint32_encoded = uint32_type.encode(uint32_value)
+    uint32_decoded = uint32_type.decode(uint32_encoded)
+
+    print_info(f"uint32 value: {uint32_value}")
+    print_info(f"  encoded: {format_hex(uint32_encoded)}")
+    print_info(f"  decoded: {uint32_decoded}")
+    print_info(f"  round-trip verified: {uint32_decoded == uint32_value}")
+
+    uint64_type = abi.UintType(64)
+    uint64_value = 9_007_199_254_740_991  # Max safe integer in JavaScript
+    uint64_encoded = uint64_type.encode(uint64_value)
+    uint64_decoded = uint64_type.decode(uint64_encoded)
+
+    print_info(f"uint64 value: {uint64_value}")
+    print_info(f"  encoded: {format_hex(uint64_encoded)}")
+    print_info(f"  decoded: {uint64_decoded}")
+    print_info(f"  round-trip verified: {uint64_decoded == uint64_value}")
+
+    # Step 3: Encoding large uint values
+    print_step(3, "Encoding Large Uint Values")
+
+    uint128_type = abi.UintType(128)
+    uint128_value = 2**128 - 1  # max uint128
+    uint128_encoded = uint128_type.encode(uint128_value)
+    uint128_decoded = uint128_type.decode(uint128_encoded)
+
+    print_info(f"uint128 max value: {uint128_value}")
+    print_info(f"  encoded: {format_hex(uint128_encoded)}")
+    print_info(f"  decoded: {uint128_decoded}")
+    print_info(f"  round-trip verified: {uint128_decoded == uint128_value}")
+
+    uint256_type = abi.UintType(256)
+    uint256_value = 2**256 - 1  # max uint256
+    uint256_encoded = uint256_type.encode(uint256_value)
+    uint256_decoded = uint256_type.decode(uint256_encoded)
+
+    print_info(f"uint256 max value: {uint256_value}")
+    print_info(f"  encoded: {format_hex(uint256_encoded)}")
+    print_info(f"  decoded: {uint256_decoded}")
+    print_info(f"  round-trip verified: {uint256_decoded == uint256_value}")
+
+    uint512_type = abi.UintType(512)
+    uint512_value = 2**512 - 1  # max uint512
+    uint512_encoded = uint512_type.encode(uint512_value)
+    uint512_decoded = uint512_type.decode(uint512_encoded)
+
+    print_info(f"uint512 max value: {uint512_value}")
+    print_info(f"  encoded: {format_hex(uint512_encoded)}")
+    print_info(f"  decoded: {uint512_decoded}")
+    print_info(f"  round-trip verified: {uint512_decoded == uint512_value}")
+
+    # Step 4: BoolType encoding true/false
+    print_step(4, "BoolType - Encoding Boolean Values")
+
+    bool_type = abi.BoolType()
+
+    print_info(f"bool type: {bool_type}")
+    print_info(f"  byte_len: {bool_type.byte_len()}")
+    print_info(f"  is_dynamic: {bool_type.is_dynamic()}")
+
+    # Encode true
+    true_encoded = bool_type.encode(True)
+    true_decoded = bool_type.decode(true_encoded)
+
+    print_info("\nbool value: True")
+    print_info(f"  encoded: {format_hex(true_encoded)}")
+    print_info(f"  decoded: {true_decoded}")
+    print_info(f"  round-trip verified: {true_decoded is True}")
+
+    # Encode false
+    false_encoded = bool_type.encode(False)
+    false_decoded = bool_type.decode(false_encoded)
+
+    print_info("\nbool value: False")
+    print_info(f"  encoded: {format_hex(false_encoded)}")
+    print_info(f"  decoded: {false_decoded}")
+    print_info(f"  round-trip verified: {false_decoded is False}")
+
+    # Step 5: ByteType encoding single byte values
+    print_step(5, "ByteType - Encoding Single Byte Values")
+
+    byte_type = abi.ByteType()
+
+    print_info(f"byte type: {byte_type}")
+    print_info(f"  byte_len: {byte_type.byte_len()}")
+    print_info(f"  is_dynamic: {byte_type.is_dynamic()}")
+
+    # Encode minimum byte value (0)
+    byte0_value = 0
+    byte0_encoded = byte_type.encode(byte0_value)
+    byte0_decoded = byte_type.decode(byte0_encoded)
+
+    print_info(f"\nbyte value: {byte0_value} (0x00)")
+    print_info(f"  encoded: {format_hex(byte0_encoded)}")
+    print_info(f"  decoded: {format_hex(byte0_decoded)}")
+    print_info(f"  round-trip verified: {byte0_decoded == bytes([byte0_value])}")
+
+    # Encode a middle byte value (127)
+    byte127_value = 127
+    byte127_encoded = byte_type.encode(byte127_value)
+    byte127_decoded = byte_type.decode(byte127_encoded)
+
+    print_info(f"\nbyte value: {byte127_value} (0x7F)")
+    print_info(f"  encoded: {format_hex(byte127_encoded)}")
+    print_info(f"  decoded: {format_hex(byte127_decoded)}")
+    print_info(f"  round-trip verified: {byte127_decoded == bytes([byte127_value])}")
+
+    # Encode maximum byte value (255)
+    byte255_value = 255
+    byte255_encoded = byte_type.encode(byte255_value)
+    byte255_decoded = byte_type.decode(byte255_encoded)
+
+    print_info(f"\nbyte value: {byte255_value} (0xFF)")
+    print_info(f"  encoded: {format_hex(byte255_encoded)}")
+    print_info(f"  decoded: {format_hex(byte255_decoded)}")
+    print_info(f"  round-trip verified: {byte255_decoded == bytes([byte255_value])}")
+
+    # Step 6: Summary of encoded byte lengths
+    print_step(6, "Summary - Encoded Byte Lengths")
+
+    print_info("Primitive type byte lengths:")
+    print_info(f"  uint8:   {abi.UintType(8).byte_len()} byte")
+    print_info(f"  uint16:  {abi.UintType(16).byte_len()} bytes")
+    print_info(f"  uint32:  {abi.UintType(32).byte_len()} bytes")
+    print_info(f"  uint64:  {abi.UintType(64).byte_len()} bytes")
+    print_info(f"  uint128: {abi.UintType(128).byte_len()} bytes")
+    print_info(f"  uint256: {abi.UintType(256).byte_len()} bytes")
+    print_info(f"  uint512: {abi.UintType(512).byte_len()} bytes")
+    print_info(f"  bool:    {abi.BoolType().byte_len()} byte")
+    print_info(f"  byte:    {abi.ByteType().byte_len()} byte")
+
+    print_success("ABI Primitive Types example completed successfully!")
+
+
+if __name__ == "__main__":
+    main()
+
+```
+
+---
+
+### Other examples in ABI Encoding
+
+- [ABI Type Parsing](/docs/algokit-utils/python/latest/examples/abi/01-type-parsing/)
+- **ABI Primitive Types**
+- [ABI Address Type](/docs/algokit-utils/python/latest/examples/abi/03-address-type/)
+- [ABI String Type](/docs/algokit-utils/python/latest/examples/abi/04-string-type/)
+- [ABI Static Array Type](/docs/algokit-utils/python/latest/examples/abi/05-static-array/)
+- [ABI Dynamic Array Type](/docs/algokit-utils/python/latest/examples/abi/06-dynamic-array/)
+- [ABI Tuple Type](/docs/algokit-utils/python/latest/examples/abi/07-tuple-type/)
+- [ABI Struct Type](/docs/algokit-utils/python/latest/examples/abi/08-struct-type/)
+- [ABI Struct and Tuple Conversion](/docs/algokit-utils/python/latest/examples/abi/09-struct-tuple-conversion/)
+- [ABI Bool Array Packing](/docs/algokit-utils/python/latest/examples/abi/10-bool-packing/)
+- [ABI Method](/docs/algokit-utils/python/latest/examples/abi/11-abi-method/)
+- [AVM Type Encoding](/docs/algokit-utils/python/latest/examples/abi/12-avm-types/)
+- [Type Guards](/docs/algokit-utils/python/latest/examples/abi/13-type-guards/)
+- [ABI Complex Nested Types](/docs/algokit-utils/python/latest/examples/abi/14-complex-nested/)
+- [ARC-56 Storage Helpers](/docs/algokit-utils/python/latest/examples/abi/15-arc56-storage/)

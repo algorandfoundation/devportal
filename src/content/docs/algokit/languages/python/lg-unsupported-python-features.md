@@ -38,15 +38,15 @@ supported in the future.
 Module level values are only allowed to be [constants](/algokit/languages/python/lg-modules/#module-constants). No
 rebinding of module constants is allowed. It’s not clear what the meaning here would be, since
 there’s no real arbitrary means of storing state without associating it with a particular contract.
-If you do have need of such a thing, take a look at [gload_bytes](/reference/algorand-python/api/api-algopyop/#algopy.op.gload_bytes)
-or [gload_uint64](/reference/algorand-python/api/api-algopyop/#algopy.op.gload_uint64) if the contracts are within the same transaction,
-otherwise [AppGlobal.get_ex_bytes](/reference/algorand-python/api/api-algopyop/#algopy.op.AppGlobal.get_ex_bytes)
-and [AppGlobal.get_ex_uint64](/reference/algorand-python/api/api-algopyop/#algopy.op.AppGlobal.get_ex_uint64).
+If you do have need of such a thing, take a look at [gload_bytes](/docs/algorand-python/python/latest/api/api-algopy.op#algopy.op.gload_bytes)
+or [gload_uint64](/docs/algorand-python/python/latest/api/api-algopy.op#algopy.op.gload_uint64) if the contracts are within the same transaction,
+otherwise [AppGlobal.get_ex_bytes](/docs/algorand-python/python/latest/api/api-algopy.op#algopy.op.AppGlobal.get_ex_bytes)
+and [AppGlobal.get_ex_uint64](/docs/algorand-python/python/latest/api/api-algopy.op#algopy.op.AppGlobal.get_ex_uint64).
 
 ## Inheritance (outside of contract classes)
 
 Polymorphism is also impossible to support without function pointers, so data classes (such as
-[arc4.Struct](/reference/algorand-python/api/api-algopyarc4/#algopy.arc4.Struct)) don’t currently allow for inheritance. Member functions there
+[arc4.Struct](/docs/algorand-python/python/latest/api/api-algopy.arc4#algopy.arc4.Struct)) don’t currently allow for inheritance. Member functions there
 are not supported because we’re not sure yet whether it’s better to not have inheritance but allow
 functions on data classes, or to allow inheritance and disallow member functions.
 

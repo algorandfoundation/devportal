@@ -171,18 +171,18 @@ PuyaPy compiler for compiling Algorand Python to TEAL
 
 ### Defining template values
 
-[Template Variables](/reference/algorand-python/api/api-algopy/#algopy.TemplateVar), can be replaced with literal values during compilation to bytecode using the `--template-var` option.
-Additionally, Algorand Python functions that create AVM bytecode, such as [compile_contract](/reference/algorand-python/api/api-algopy/#algopy.compile_contract) and [compile_logicsig](/reference/algorand-python/api/api-algopy/#algopy.compile_logicsig), can also provide the specified values.
+[Template Variables](/docs/algorand-python/python/latest/api/api-algopy#algopy.TemplateVar), can be replaced with literal values during compilation to bytecode using the `--template-var` option.
+Additionally, Algorand Python functions that create AVM bytecode, such as [compile_contract](/docs/algorand-python/python/latest/api/api-algopy#algopy.compile_contract) and [compile_logicsig](/docs/algorand-python/python/latest/api/api-algopy#algopy.compile_logicsig), can also provide the specified values.
 
 #### Examples of Variable Definitions
 
 The table below illustrates how different variables and values can be defined:
 
-| Variable Type                                                      | Example Algorand Python                                        | Value definition example |
-| ------------------------------------------------------------------ | -------------------------------------------------------------- | ------------------------ |
-| [UInt64](/reference/algorand-python/api/api-algopy/#algopy.UInt64) | `algopy.TemplateVar[UInt64](docs/_build/markdown/"SOME_INT")`  | `SOME_INT=1234`          |
-| [Bytes](/reference/algorand-python/api/api-algopy/#algopy.Bytes)   | `algopy.TemplateVar[Bytes](docs/_build/markdown/"SOME_BYTES")` | `SOME_BYTES=0x1A2B`      |
-| [String](/reference/algorand-python/api/api-algopy/#algopy.String) | `algopy.TemplateVar[String](docs/_build/markdown/"SOME_STR")`  | `SOME_STR="hello"`       |
+| Variable Type                                                              | Example Algorand Python                                        | Value definition example |
+| -------------------------------------------------------------------------- | -------------------------------------------------------------- | ------------------------ |
+| [UInt64](/docs/algorand-python/python/latest/api/api-algopy#algopy.UInt64) | `algopy.TemplateVar[UInt64](docs/_build/markdown/"SOME_INT")`  | `SOME_INT=1234`          |
+| [Bytes](/docs/algorand-python/python/latest/api/api-algopy#algopy.Bytes)   | `algopy.TemplateVar[Bytes](docs/_build/markdown/"SOME_BYTES")` | `SOME_BYTES=0x1A2B`      |
+| [String](/docs/algorand-python/python/latest/api/api-algopy#algopy.String) | `algopy.TemplateVar[String](docs/_build/markdown/"SOME_STR")`  | `SOME_STR="hello"`       |
 
 All template values specified via the command line are prefixed with “TMPL\_” by default.
 The default prefix can be modified using the `--template-vars-prefix` option.

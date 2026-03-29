@@ -1,0 +1,250 @@
+---
+title: 'Crypto Hash (SHA-512/256)'
+description: 'This example demonstrates the hash() function for computing Algorand-compatible SHA-512/256 hashes. This hash algorithm is used throughout Algorand for:'
+sidebar:
+  order: 5
+---
+
+[← Back to Common Utilities](/docs/algokit-utils/typescript/latest/examples/common/)
+
+## Description
+
+This example demonstrates the hash() function for computing Algorand-compatible SHA-512/256 hashes. This hash algorithm is used throughout Algorand for:
+
+- Transaction IDs
+- Address checksums
+- Application escrow addresses
+- State proof verification
+
+## Prerequisites
+
+- No LocalNet required
+
+## Run This Example
+
+From the repository root:
+
+```bash
+cd examples
+npm run example common/05-crypto-hash.ts
+```
+
+## Code
+
+[View source on GitHub](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/examples/common/05-crypto-hash.ts)
+
+```typescript title="05-crypto-hash.ts"
+/**
+ * Example: Crypto Hash (SHA-512/256)
+ *
+ * This example demonstrates the hash() function for computing Algorand-compatible
+ * SHA-512/256 hashes. This hash algorithm is used throughout Algorand for:
+ * - Transaction IDs
+ * - Address checksums
+ * - Application escrow addresses
+ * - State proof verification
+ *
+ * Prerequisites:
+ * - No LocalNet required
+ */
+
+import {
+  arrayEqual,
+  concatArrays,
+  HASH_BYTES_LENGTH,
+  TRANSACTION_DOMAIN_SEPARATOR,
+} from '@algorandfoundation/algokit-utils/common';
+import { hash } from '@algorandfoundation/algokit-utils/crypto';
+import {
+  formatBytes,
+  formatHex,
+  printHeader,
+  printInfo,
+  printStep,
+  printSuccess,
+} from '../shared/utils.js';
+
+function main() {
+  printHeader('Crypto Hash (SHA-512/256) Example');
+
+  // Step 1: Hash a simple message
+  printStep(1, 'Hash a Simple Message');
+
+  const message = 'Hello, Algorand!';
+  const messageBytes = new TextEncoder().encode(message);
+  const messageHash = hash(messageBytes);
+
+  printInfo(`Input message: "${message}"`);
+  printInfo(`Input bytes: ${formatBytes(messageBytes)}`);
+  printInfo(`Hash output: ${formatBytes(messageHash)}`);
+  printInfo(`Hash as hex: ${formatHex(messageHash)}`);
+
+  // Step 2: Hash empty bytes
+  printStep(2, 'Hash Empty Bytes');
+
+  const emptyBytes = new Uint8Array(0);
+  const emptyHash = hash(emptyBytes);
+
+  printInfo(`Input: empty byte array (0 bytes)`);
+  printInfo(`Hash output: ${formatBytes(emptyHash)}`);
+  printInfo(`Hash as hex: ${formatHex(emptyHash)}`);
+  printInfo(`Note: Even empty input produces a 32-byte hash`);
+
+  // Step 3: Verify hash always returns exactly 32 bytes (HASH_BYTES_LENGTH)
+  printStep(3, 'Verify Hash Always Returns 32 Bytes');
+
+  printInfo(`HASH_BYTES_LENGTH constant: ${HASH_BYTES_LENGTH} bytes`);
+
+  // Test with various input sizes
+  const testInputs = [
+    { name: 'empty', data: new Uint8Array(0) },
+    { name: '1 byte', data: new Uint8Array([0x42]) },
+    { name: '32 bytes', data: new Uint8Array(32).fill(0xaa) },
+    { name: '100 bytes', data: new Uint8Array(100).fill(0xbb) },
+    { name: '1000 bytes', data: new Uint8Array(1000).fill(0xcc) },
+  ];
+
+  for (const input of testInputs) {
+    const inputHash = hash(input.data);
+    const lengthMatch = inputHash.length === HASH_BYTES_LENGTH;
+    printInfo(
+      `Input: ${input.name.padEnd(12)} -> Output: ${inputHash.length} bytes ${lengthMatch ? '✓' : '✗'}`,
+    );
+  }
+
+  printSuccess(`All hash outputs are exactly ${HASH_BYTES_LENGTH} bytes`);
+
+  // Step 4: Hash a transaction-like payload
+  printStep(4, 'Hash a Transaction-Like Payload');
+
+  // Algorand transaction hashing uses a domain separator prefix
+  printInfo(`Transaction domain separator: "${TRANSACTION_DOMAIN_SEPARATOR}"`);
+
+  // Simulate a minimal transaction-like structure
+  const fakeTxPayload = new Uint8Array([
+    0x01, // version
+    0x00,
+    0x00,
+    0x00,
+    0x00,
+    0x00,
+    0x00,
+    0x00,
+    0x01, // first valid round (8 bytes)
+    0x00,
+    0x00,
+    0x00,
+    0x00,
+    0x00,
+    0x00,
+    0x00,
+    0x0a, // last valid round (8 bytes)
+    // ... simplified for demonstration
+  ]);
+
+  // In Algorand, transaction ID = hash(domain_separator + msgpack(transaction))
+  const domainSeparatorBytes = new TextEncoder().encode(TRANSACTION_DOMAIN_SEPARATOR);
+  const prefixedPayload = concatArrays(domainSeparatorBytes, fakeTxPayload);
+
+  const txLikeHash = hash(prefixedPayload);
+
+  printInfo(`Domain separator bytes: ${formatBytes(domainSeparatorBytes)}`);
+  printInfo(`Payload bytes: ${formatBytes(fakeTxPayload)}`);
+  printInfo(`Combined (prefixed) bytes: ${formatBytes(prefixedPayload)}`);
+  printInfo(`Transaction-like hash: ${formatHex(txLikeHash)}`);
+
+  // Step 5: Demonstrate hex representation
+  printStep(5, 'Hex Representation of Hash Output');
+
+  // Hash a known value for demonstration
+  const knownInput = new Uint8Array([0x00, 0x01, 0x02, 0x03]);
+  const knownHash = hash(knownInput);
+
+  printInfo(`Input bytes: ${formatBytes(knownInput, 4)}`);
+  printInfo(`Hash (raw bytes): ${formatBytes(knownHash, 16)}`);
+  printInfo(`Hash (full hex):  ${formatHex(knownHash)}`);
+
+  // Show the hex format breakdown
+  const hexString = Array.from(knownHash as Uint8Array)
+    .map(b => b.toString(16).padStart(2, '0'))
+    .join('');
+  printInfo(`Hash length: ${hexString.length} hex characters (${hexString.length / 2} bytes)`);
+
+  // Step 6: Verify determinism - same input always produces same hash
+  printStep(6, 'Verify Determinism');
+
+  const deterministicInput = new TextEncoder().encode('Algorand is great!');
+
+  // Hash the same input multiple times
+  const hash1 = hash(deterministicInput);
+  const hash2 = hash(deterministicInput);
+  const hash3 = hash(deterministicInput);
+
+  printInfo(`Input: "Algorand is great!"`);
+  printInfo(`Hash #1: ${formatHex(hash1)}`);
+  printInfo(`Hash #2: ${formatHex(hash2)}`);
+  printInfo(`Hash #3: ${formatHex(hash3)}`);
+
+  const allEqual = arrayEqual(hash1, hash2) && arrayEqual(hash2, hash3);
+  printInfo(`All hashes equal: ${allEqual ? 'Yes ✓' : 'No ✗'}`);
+
+  if (allEqual) {
+    printSuccess('Determinism verified: same input always produces same hash');
+  }
+
+  // Step 7: Show that different inputs produce different hashes
+  printStep(7, 'Different Inputs Produce Different Hashes');
+
+  const inputA = new TextEncoder().encode('input A');
+  const inputB = new TextEncoder().encode('input B');
+  const inputC = new TextEncoder().encode('input a'); // lowercase 'a' vs uppercase 'A'
+
+  const hashA = hash(inputA);
+  const hashB = hash(inputB);
+  const hashC = hash(inputC);
+
+  printInfo(`"input A" -> ${formatHex(hashA).slice(0, 22)}...`);
+  printInfo(`"input B" -> ${formatHex(hashB).slice(0, 22)}...`);
+  printInfo(`"input a" -> ${formatHex(hashC).slice(0, 22)}...`);
+
+  const abDifferent = !arrayEqual(hashA, hashB);
+  const acDifferent = !arrayEqual(hashA, hashC);
+
+  printInfo(`"input A" vs "input B": ${abDifferent ? 'Different ✓' : 'Same ✗'}`);
+  printInfo(`"input A" vs "input a": ${acDifferent ? 'Different ✓' : 'Same ✗'}`);
+  printInfo(`Note: Even a single-bit change produces a completely different hash`);
+
+  // Summary
+  printStep(8, 'Summary');
+
+  printInfo('SHA-512/256 in Algorand:');
+  printInfo(`  - Always produces exactly ${HASH_BYTES_LENGTH} bytes (256 bits)`);
+  printInfo('  - Deterministic: same input always yields same output');
+  printInfo('  - Collision-resistant: different inputs produce different outputs');
+  printInfo('  - Used for: transaction IDs, address checksums, app addresses');
+  printInfo(
+    `  - Domain separator "${TRANSACTION_DOMAIN_SEPARATOR}" prevents cross-protocol attacks`,
+  );
+
+  printSuccess('Crypto Hash example completed successfully!');
+}
+
+main();
+```
+
+---
+
+### Other examples in Common Utilities
+
+- [Address Basics](/docs/algokit-utils/typescript/latest/examples/common/01-address-basics/)
+- [Address Encoding](/docs/algokit-utils/typescript/latest/examples/common/02-address-encoding/)
+- [Array Utilities](/docs/algokit-utils/typescript/latest/examples/common/03-array-utilities/)
+- [Constants Reference](/docs/algokit-utils/typescript/latest/examples/common/04-constants/)
+- **Crypto Hash (SHA-512/256)**
+- [Logger Type](/docs/algokit-utils/typescript/latest/examples/common/06-logger/)
+- [JSON BigInt](/docs/algokit-utils/typescript/latest/examples/common/07-json-bigint/)
+- [MessagePack](/docs/algokit-utils/typescript/latest/examples/common/08-msgpack/)
+- [Primitive Codecs](/docs/algokit-utils/typescript/latest/examples/common/09-primitive-codecs/)
+- [Composite Codecs](/docs/algokit-utils/typescript/latest/examples/common/10-composite-codecs/)
+- [Model Codecs](/docs/algokit-utils/typescript/latest/examples/common/11-model-codecs/)
+- [Sourcemap](/docs/algokit-utils/typescript/latest/examples/common/12-sourcemap/)

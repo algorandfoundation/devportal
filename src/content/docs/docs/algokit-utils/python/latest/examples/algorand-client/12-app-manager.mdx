@@ -1,0 +1,549 @@
+---
+title: 'App Manager'
+description: 'This example demonstrates the AppManager functionality for querying application information, state, box storage, and TEAL compilation:'
+sidebar:
+  order: 12
+---
+
+[← Back to Algorand Client](/docs/algokit-utils/python/latest/examples/algorand-client/)
+
+## Description
+
+This example demonstrates the AppManager functionality for querying application information, state, box storage, and TEAL compilation:
+
+- algorand.app.get_by_id() to fetch application information
+- algorand.app.get_global_state() to read global state
+- algorand.app.get_local_state() to read account's local state
+- algorand.app.get_box_names() to list all box names for an app
+- algorand.app.get_box_value() to read a specific box value
+- algorand.app.get_box_values() to read multiple box values
+- algorand.app.get_box_values_from_abi_type() to decode typed box values
+- algorand.app.compile_teal() to compile TEAL source code
+- algorand.app.compile_teal_template() to compile TEAL with template variables
+
+## Prerequisites
+
+LocalNet required for app operations
+
+## Run This Example
+
+From the repository's `examples` directory:
+
+```bash
+cd examples
+uv run python algorand_client/12_app_manager.py
+```
+
+## Code
+
+[View source on GitHub](https://github.com/algorandfoundation/algokit-utils-py/blob/main/examples/algorand_client/12_app_manager.py)
+
+```python title="12_app_manager.py"
+# ruff: noqa: N999, C901, PLR0912, PLR0915, PLR2004
+"""
+Example: App Manager
+
+This example demonstrates the AppManager functionality for querying
+application information, state, box storage, and TEAL compilation:
+- algorand.app.get_by_id() to fetch application information
+- algorand.app.get_global_state() to read global state
+- algorand.app.get_local_state() to read account's local state
+- algorand.app.get_box_names() to list all box names for an app
+- algorand.app.get_box_value() to read a specific box value
+- algorand.app.get_box_values() to read multiple box values
+- algorand.app.get_box_values_from_abi_type() to decode typed box values
+- algorand.app.compile_teal() to compile TEAL source code
+- algorand.app.compile_teal_template() to compile TEAL with template variables
+
+LocalNet required for app operations
+"""
+
+from shared import (
+    load_teal_source,
+    print_error,
+    print_header,
+    print_info,
+    print_step,
+    print_success,
+    shorten_address,
+)
+
+from algokit_abi.abi import ABIType
+from algokit_transact import OnApplicationComplete
+from algokit_utils import AlgoAmount, AlgorandClient
+from algokit_utils.transactions.types import (
+    AppCallParams,
+    AppCreateParams,
+    AppDeleteParams,
+    PaymentParams,
+)
+
+# ============================================================================
+# TEAL Programs - loaded from shared artifacts
+# ============================================================================
+
+# A stateful app that supports global state, local state, and box storage
+APPROVAL_PROGRAM = load_teal_source("approval-box-storage.teal")
+
+# Clear state program (must always approve)
+CLEAR_STATE_PROGRAM = load_teal_source("clear-state-approve.teal")
+
+# A TEAL template with replaceable parameters
+TEAL_TEMPLATE = load_teal_source("teal-template-basic.teal")
+
+# A TEAL template with AlgoKit deploy-time control parameters
+ALGOKIT_TEMPLATE = load_teal_source("teal-template-deploy-control.teal")
+
+
+def main() -> None:
+    print_header("App Manager Example")
+
+    # Initialize client and verify LocalNet is running
+    algorand = AlgorandClient.default_localnet()
+
+    try:
+        algorand.client.algod.status()
+        print_success("Connected to LocalNet")
+    except Exception as e:
+        print_error(f"Failed to connect to LocalNet: {e}")
+        print_info("Make sure LocalNet is running (e.g., algokit localnet start)")
+        return
+
+    # Step 1: Create and fund test accounts
+    print_step(1, "Create and fund test accounts")
+    print_info("Creating accounts for app manager demonstrations")
+
+    creator = algorand.account.random()
+    user = algorand.account.random()
+
+    print_info("")
+    print_info("Created accounts:")
+    print_info(f"  Creator: {shorten_address(str(creator.addr))}")
+    print_info(f"  User: {shorten_address(str(user.addr))}")
+
+    # Fund accounts
+    algorand.account.ensure_funded_from_environment(creator.addr, AlgoAmount.from_algo(20))
+    algorand.account.ensure_funded_from_environment(user.addr, AlgoAmount.from_algo(10))
+
+    print_success("Created and funded test accounts")
+
+    # Step 2: Deploy a test application with state and boxes
+    print_step(2, "Deploy a test application with state and boxes")
+    print_info("Creating an app with global state, local state schema, and box storage")
+
+    create_result = algorand.send.app_create(
+        AppCreateParams(
+            sender=creator.addr,
+            approval_program=APPROVAL_PROGRAM,
+            clear_state_program=CLEAR_STATE_PROGRAM,
+            schema={
+                "global_ints": 1,  # counter
+                "global_byte_slices": 2,  # message, creator
+                "local_ints": 2,  # user_score, opted_in_round
+                "local_byte_slices": 0,
+            },
+        )
+    )
+
+    app_id = create_result.app_id
+    app_address = create_result.app_address
+
+    print_info("")
+    print_info("Application created:")
+    print_info(f"  App ID: {app_id}")
+    print_info(f"  App Address: {shorten_address(str(app_address))}")
+    print_info(f"  Transaction ID: {create_result.tx_ids[0]}")
+
+    print_success("Test application deployed")
+
+    # Step 3: Demonstrate algorand.app.get_by_id()
+    print_step(3, "Demonstrate algorand.app.get_by_id() to fetch application information")
+    print_info("Fetching complete application information by ID")
+
+    app_info = algorand.app.get_by_id(app_id)
+
+    print_info("")
+    print_info("Application information:")
+    print_info(f"  App ID: {app_info.app_id}")
+    print_info(f"  App Address: {shorten_address(str(app_info.app_address))}")
+    print_info(f"  Creator: {shorten_address(str(app_info.creator))}")
+    print_info("  Global State Schema:")
+    print_info(f"    global_ints: {app_info.global_ints}")
+    print_info(f"    global_byte_slices: {app_info.global_byte_slices}")
+    print_info("  Local State Schema:")
+    print_info(f"    local_ints: {app_info.local_ints}")
+    print_info(f"    local_byte_slices: {app_info.local_byte_slices}")
+    extra_pages = app_info.extra_program_pages if app_info.extra_program_pages else 0
+    print_info(f"  Extra Program Pages: {extra_pages}")
+    print_info(f"  Approval Program: {len(app_info.approval_program)} bytes")
+    print_info(f"  Clear State Program: {len(app_info.clear_state_program)} bytes")
+
+    print_success("Application information retrieved")
+
+    # Step 4: Demonstrate algorand.app.get_global_state()
+    print_step(4, "Demonstrate algorand.app.get_global_state() to read global state")
+    print_info("Reading all global state key-value pairs")
+
+    global_state = algorand.app.get_global_state(app_id)
+
+    print_info("")
+    print_info("Global state entries:")
+    for key, state_value in global_state.items():
+        if state_value.value_raw is not None:
+            # Byte slice value
+            print_info(f'  "{key}": "{state_value.value}" (bytes)')
+        else:
+            # Integer value
+            print_info(f'  "{key}": {state_value.value} (uint64)')
+
+    # Increment counter a few times
+    print_info("")
+    print_info("Incrementing counter...")
+    for i in range(3):
+        algorand.send.app_call(
+            AppCallParams(
+                sender=creator.addr,
+                app_id=app_id,
+                args=[b"increment"],
+                note=f"increment-{i}".encode(),
+            )
+        )
+
+    updated_global_state = algorand.app.get_global_state(app_id)
+    counter_entry = updated_global_state.get("counter")
+    counter_value = counter_entry.value if counter_entry else 0
+    print_info(f"  Counter after 3 increments: {counter_value}")
+
+    print_success("Global state read successfully")
+
+    # Step 5: Demonstrate algorand.app.get_local_state()
+    print_step(5, "Demonstrate algorand.app.get_local_state() to read local state")
+    print_info("User must opt in first to have local state")
+
+    # Opt user into the app
+    algorand.send.app_call(
+        AppCallParams(
+            sender=user.addr,
+            app_id=app_id,
+            on_complete=OnApplicationComplete.OptIn,
+        )
+    )
+    print_info("User opted in to the application")
+
+    local_state = algorand.app.get_local_state(app_id, user.addr)
+
+    print_info("")
+    print_info("User's local state:")
+    for key, state_value in local_state.items():
+        if state_value.value_raw is not None:
+            print_info(f'  "{key}": "{state_value.value}" (bytes)')
+        else:
+            print_info(f'  "{key}": {state_value.value} (uint64)')
+
+    print_info("")
+    print_info("Local state was initialized on opt-in with:")
+    user_score_entry = local_state.get("user_score")
+    user_score_value = user_score_entry.value if user_score_entry else 0
+    opted_in_round_entry = local_state.get("opted_in_round")
+    opted_in_round_value = opted_in_round_entry.value if opted_in_round_entry else 0
+    print_info(f"  user_score: {user_score_value} (initial value)")
+    print_info(f"  opted_in_round: {opted_in_round_value} (round when opted in)")
+
+    print_success("Local state read successfully")
+
+    # Step 6: Create boxes and demonstrate box operations
+    print_step(6, "Demonstrate box storage operations")
+    print_info("Creating boxes to store application data")
+
+    # Fund the app account for box storage (boxes require MBR)
+    algorand.send.payment(
+        PaymentParams(
+            sender=creator.addr,
+            receiver=app_address,
+            amount=AlgoAmount.from_algo(1),  # Fund for box storage MBR
+        )
+    )
+
+    # Create multiple boxes with different content
+    box_data = [
+        {"name": "user_data", "value": "Alice:100:premium"},
+        {"name": "config", "value": '{"version":1,"enabled":true}'},
+        {"name": "scores", "value": "high:9999,low:1"},
+    ]
+
+    for box in box_data:
+        algorand.send.app_call(
+            AppCallParams(
+                sender=creator.addr,
+                app_id=app_id,
+                args=[
+                    b"set_box",
+                    box["name"].encode(),
+                    box["value"].encode(),
+                ],
+                box_references=[box["name"]],
+            )
+        )
+        print_info(f'  Created box "{box["name"]}" with {len(box["value"])} bytes')
+
+    print_success("Boxes created")
+
+    # Step 7: Demonstrate algorand.app.get_box_names()
+    print_step(7, "Demonstrate algorand.app.get_box_names() to list all boxes")
+    print_info("Retrieving all box names for the application")
+
+    box_names = algorand.app.get_box_names(app_id)
+
+    print_info("")
+    print_info(f"Application has {len(box_names)} boxes:")
+    for box_name in box_names:
+        print_info(f'  Name: "{box_name.name}"')
+        print_info(f"    Raw bytes: {len(box_name.name_raw)} bytes")
+        print_info(f"    Base64: {box_name.name_base64}")
+
+    print_success("Box names retrieved")
+
+    # Step 8: Demonstrate algorand.app.get_box_value()
+    print_step(8, "Demonstrate algorand.app.get_box_value() to read a single box")
+    print_info("Reading the value of a specific box by name")
+
+    box_value = algorand.app.get_box_value(app_id, "user_data")
+
+    print_info("")
+    print_info('Box "user_data" value:')
+    print_info(f"  Raw bytes: {len(box_value)} bytes")
+    print_info(f'  As string: "{box_value.decode()}"')
+
+    # Read another box
+    config_value = algorand.app.get_box_value(app_id, "config")
+    print_info("")
+    print_info('Box "config" value:')
+    print_info(f'  As string: "{config_value.decode()}"')
+
+    print_success("Box value retrieved")
+
+    # Step 9: Demonstrate algorand.app.get_box_values()
+    print_step(9, "Demonstrate algorand.app.get_box_values() to read multiple boxes at once")
+    print_info("Reading multiple box values in a single call")
+
+    all_box_values = algorand.app.get_box_values(app_id, ["user_data", "config", "scores"])
+
+    print_info("")
+    print_info(f"Retrieved {len(all_box_values)} box values:")
+    box_names_array = ["user_data", "config", "scores"]
+    for i, val in enumerate(all_box_values):
+        print_info(f'  "{box_names_array[i]}": "{val.decode()}"')
+
+    print_success("Multiple box values retrieved")
+
+    # Step 10: Demonstrate algorand.app.get_box_values_from_abi_type()
+    print_step(10, "Demonstrate algorand.app.get_box_values_from_abi_type() for typed box decoding")
+    print_info("Creating boxes with ABI-encoded values and decoding them")
+
+    # Create a box with ABI-encoded uint64 value
+    abi_type = ABIType.from_string("uint64")
+    encoded_value = abi_type.encode(42)
+
+    algorand.send.app_call(
+        AppCallParams(
+            sender=creator.addr,
+            app_id=app_id,
+            args=[
+                b"set_box",
+                b"abi_number",
+                encoded_value,
+            ],
+            box_references=[b"abi_number"],
+        )
+    )
+    print_info('Created box "abi_number" with ABI-encoded uint64 value')
+
+    # Read and decode the ABI value
+    decoded_values = algorand.app.get_box_values_from_abi_type(app_id, ["abi_number"], abi_type)
+
+    print_info("")
+    print_info("Decoded ABI values:")
+    print_info(f'  "abi_number" (uint64): {decoded_values[0]}')
+
+    # Create boxes with ABI-encoded string values
+    string_type = ABIType.from_string("string")
+    encoded_string = string_type.encode("Hello, ABI!")
+
+    algorand.send.app_call(
+        AppCallParams(
+            sender=creator.addr,
+            app_id=app_id,
+            args=[
+                b"set_box",
+                b"abi_string",
+                encoded_string,
+            ],
+            box_references=[b"abi_string"],
+        )
+    )
+
+    decoded_strings = algorand.app.get_box_values_from_abi_type(app_id, ["abi_string"], string_type)
+
+    print_info(f'  "abi_string" (string): "{decoded_strings[0]}"')
+
+    print_success("ABI-typed box values decoded")
+
+    # Step 11: Demonstrate algorand.app.compile_teal()
+    print_step(11, "Demonstrate algorand.app.compile_teal() to compile TEAL source")
+    print_info("Compiling TEAL code and examining the result")
+
+    simple_teal = load_teal_source("simple-approve.teal")
+
+    compiled = algorand.app.compile_teal(simple_teal)
+
+    print_info("")
+    print_info("Compilation result:")
+    print_info(f"  Original TEAL: {len(compiled.teal.splitlines())} lines")
+    print_info(f"  Compiled (base64): {compiled.compiled[:30]}...")
+    print_info(f"  Compiled hash: {compiled.compiled_hash}")
+    print_info(f"  Compiled bytes: {len(compiled.compiled_base64_to_bytes)} bytes")
+    source_map_available = compiled.source_map is not None
+    print_info(f"  Source map available: {source_map_available}")
+
+    # Compile the approval program
+    approval_compiled = algorand.app.compile_teal(APPROVAL_PROGRAM)
+    print_info("")
+    print_info("Approval program compilation:")
+    print_info(f"  Original: {len(APPROVAL_PROGRAM.splitlines())} lines")
+    print_info(f"  Compiled: {len(approval_compiled.compiled_base64_to_bytes)} bytes")
+
+    print_success("TEAL compilation successful")
+
+    # Step 12: Demonstrate algorand.app.compile_teal_template()
+    print_step(12, "Demonstrate algorand.app.compile_teal_template() with template variables")
+    print_info("Compiling TEAL templates with parameter substitution")
+
+    # Compile template with custom parameters
+    compiled_template = algorand.app.compile_teal_template(
+        TEAL_TEMPLATE,
+        template_params={
+            "TMPL_INT_VALUE": 42,
+            "TMPL_BYTES_VALUE": "hello",
+        },
+    )
+
+    print_info("")
+    print_info("Template compilation with custom parameters:")
+    print_info("  TMPL_INT_VALUE: 42")
+    print_info('  TMPL_BYTES_VALUE: "hello"')
+    print_info(f"  Compiled bytes: {len(compiled_template.compiled_base64_to_bytes)} bytes")
+
+    # Compile AlgoKit template with deploy-time control parameters
+    compiled_updatable = algorand.app.compile_teal_template(
+        ALGOKIT_TEMPLATE,
+        template_params=None,
+        deployment_metadata={"updatable": True, "deletable": False},
+    )
+
+    print_info("")
+    print_info("AlgoKit template with deploy-time controls:")
+    print_info("  updatable: True")
+    print_info("  deletable: False")
+    print_info(f"  Compiled bytes: {len(compiled_updatable.compiled_base64_to_bytes)} bytes")
+
+    # Compile with different control values
+    compiled_immutable = algorand.app.compile_teal_template(
+        ALGOKIT_TEMPLATE,
+        template_params=None,
+        deployment_metadata={"updatable": False, "deletable": False},
+    )
+
+    print_info("")
+    print_info("Immutable version (updatable: False, deletable: False):")
+    print_info(f"  Compiled bytes: {len(compiled_immutable.compiled_base64_to_bytes)} bytes")
+    print_info("  Note: Different control values produce different bytecode")
+
+    print_success("TEAL template compilation successful")
+
+    # Step 13: Summary
+    print_step(13, "Summary - App Manager API")
+    print_info("The AppManager provides comprehensive application query and compile capabilities:")
+    print_info("")
+    print_info("algorand.app.get_by_id(app_id):")
+    print_info("  - Fetches complete application information")
+    print_info("  - Returns: AppInformation with app_id, app_address, creator, programs, schemas")
+    print_info("")
+    print_info("algorand.app.get_global_state(app_id):")
+    print_info("  - Reads all global state key-value pairs")
+    print_info("  - Returns: dict[str, AppState] keyed by UTF-8 strings")
+    print_info("  - Values are AppState dataclasses with .value attribute")
+    print_info("")
+    print_info("algorand.app.get_local_state(app_id, address):")
+    print_info("  - Reads an account's local state for an app")
+    print_info("  - Account must be opted in to the application")
+    print_info("  - Returns: dict[str, AppState] with local key-value pairs")
+    print_info("")
+    print_info("algorand.app.get_box_names(app_id):")
+    print_info("  - Lists all box names for an application")
+    print_info("  - Returns: list[BoxName] with name, name_raw, name_base64")
+    print_info("")
+    print_info("algorand.app.get_box_value(app_id, box_name):")
+    print_info("  - Reads a single box value by name")
+    print_info("  - Returns: bytes of raw box contents")
+    print_info("")
+    print_info("algorand.app.get_box_values(app_id, box_names):")
+    print_info("  - Reads multiple box values in one call")
+    print_info("  - Returns: list[bytes] in same order as input names")
+    print_info("")
+    print_info("algorand.app.get_box_values_from_abi_type(app_id, box_names, abi_type):")
+    print_info("  - Reads and decodes box values using ABI types")
+    print_info("  - Supports all ABI types: uint64, string, address, arrays, tuples")
+    print_info("  - Returns: list of decoded values according to specified type")
+    print_info("")
+    print_info("algorand.app.compile_teal(teal_code):")
+    print_info("  - Compiles TEAL source code")
+    print_info("  - Returns: CompiledTeal with compiled bytes, hash, source map")
+    print_info("  - Results are cached to avoid recompilation")
+    print_info("")
+    print_info("algorand.app.compile_teal_template(template, template_params, deployment_metadata):")
+    print_info("  - Compiles TEAL with template parameter substitution")
+    print_info("  - Supports custom TMPL_* parameters")
+    print_info("  - Supports AlgoKit deploy-time controls (TMPL_UPDATABLE, TMPL_DELETABLE)")
+
+    # Clean up - close out user and delete app
+    algorand.send.app_call(
+        AppCallParams(
+            sender=user.addr,
+            app_id=app_id,
+            on_complete=OnApplicationComplete.CloseOut,
+        )
+    )
+    algorand.send.app_delete(
+        AppDeleteParams(
+            sender=creator.addr,
+            app_id=app_id,
+        )
+    )
+
+    print_success("App Manager example completed!")
+
+
+if __name__ == "__main__":
+    main()
+
+```
+
+---
+
+### Other examples in Algorand Client
+
+- [Client Instantiation](/docs/algokit-utils/python/latest/examples/algorand-client/01-client-instantiation/)
+- [AlgoAmount Utility](/docs/algokit-utils/python/latest/examples/algorand-client/02-algo-amount/)
+- [Signer Configuration](/docs/algokit-utils/python/latest/examples/algorand-client/03-signer-config/)
+- [Suggested Params Configuration](/docs/algokit-utils/python/latest/examples/algorand-client/04-params-config/)
+- [Account Manager](/docs/algokit-utils/python/latest/examples/algorand-client/05-account-manager/)
+- [Send Payment](/docs/algokit-utils/python/latest/examples/algorand-client/06-send-payment/)
+- [Send Asset Operations](/docs/algokit-utils/python/latest/examples/algorand-client/07-send-asset-ops/)
+- [Send Application Operations](/docs/algokit-utils/python/latest/examples/algorand-client/08-send-app-ops/)
+- [Create Transaction (Unsigned Transactions)](/docs/algokit-utils/python/latest/examples/algorand-client/09-create-transaction/)
+- [Transaction Composer (Atomic Transaction Groups)](/docs/algokit-utils/python/latest/examples/algorand-client/10-transaction-composer/)
+- [Asset Manager](/docs/algokit-utils/python/latest/examples/algorand-client/11-asset-manager/)
+- **App Manager**
+- [App Deployer](/docs/algokit-utils/python/latest/examples/algorand-client/13-app-deployer/)
+- [Client Manager](/docs/algokit-utils/python/latest/examples/algorand-client/14-client-manager/)
+- [Error Transformers](/docs/algokit-utils/python/latest/examples/algorand-client/15-error-transformers/)

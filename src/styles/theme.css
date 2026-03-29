@@ -1,0 +1,136 @@
+/* ==========================================================================
+   Design Tokens + Starlight Theme Bridge
+
+   Brand colors are defined once in @theme. Starlight's --sl-* variables
+   reference them via var() so there's a single source of truth.
+
+   Convention: dark mode is the Starlight default; light mode overrides.
+   ========================================================================== */
+
+@theme {
+  /* ---- Breakpoints ---- */
+  --breakpoint-home-container: 1354px;
+
+  /* ---- Font families ---- */
+  --font-sans: Inter, sans-serif;
+  --font-mono: Source Code Pro, monospace;
+
+  /* ---- Icon colors ---- */
+  --color-icon-dark: #ffffff;
+  --color-icon-light: #000000;
+
+  /* ---- Code syntax colors (chat panel) ---- */
+  --color-code-light-bg: #f5f5f5;
+  --color-code-light-text: #333333;
+  --color-code-light-keyword: #c678dd;
+  --color-code-light-string: #98c379;
+
+  --color-code-dark-bg: #2d2d2d;
+  --color-code-dark-text: #ffffff;
+  --color-code-dark-keyword: #c678dd;
+  --color-code-dark-string: #98c379;
+
+  /* ---- Brand palette: Algorand Teal ---- */
+  --color-algo-teal-100: #e7faf9;
+  --color-algo-teal-200: #d1f4f4;
+  --color-algo-teal-300: #b9efee;
+  --color-algo-teal-400: #74dfdd;
+  --color-algo-teal-500: #45d5d1;
+  --color-algo-teal-600: #17cac6;
+  --color-algo-teal-700: #5cdad7;
+
+  /* ---- Brand palette: Algorand Lavender ---- */
+  --color-algo-lavender-100: #e9e9fd;
+  --color-algo-lavender-200: #8080f3;
+  --color-algo-lavender-300: #4444ed;
+  --color-algo-lavender-400: #2d2df1;
+
+  /* ---- Brand palette: Algorand Navy ---- */
+  --color-algo-navy: #001324;
+
+  /* ---- Accent colors (runtime-resolved from :root) ---- */
+  --color-algo-accent-green: var(--algo-accent-green);
+  --color-algo-accent-yellow: var(--algo-accent-yellow);
+  --color-algo-accent-orange: var(--algo-accent-orange);
+}
+
+/* ==========================================================================
+   Starlight Overrides — Dark Mode (default)
+   ========================================================================== */
+:root {
+  /* Accent bridge — references @theme brand tokens */
+  --algo-accent-green: #01dc94;
+  --algo-accent-yellow: #ffe248;
+  --algo-accent-orange: #ff7f48;
+  --sl-color-accent-low: #131e4f;
+  --sl-color-accent: #a2eae8;
+  --sl-color-accent-high: var(--color-algo-teal-600);
+  --sl-color-white: #dfe1e5;
+  --sl-color-gray-1: #e5e7e9;
+  --sl-color-gray-2: #ccd0d3;
+  --sl-color-gray-3: #66717c;
+  --sl-color-gray-4: #334250;
+  --sl-color-gray-5: #192a39;
+  --sl-color-gray-6: var(--color-algo-navy);
+  --sl-color-black: var(--color-algo-navy);
+  --sl-color-banner-bg: var(--color-algo-teal-600) !important;
+  --sl-color-text-accent: var(--color-algo-teal-600);
+  --sl-color-accent-medium: var(--color-algo-teal-700);
+}
+
+/* ==========================================================================
+   Starlight Overrides — Light Mode
+   ========================================================================== */
+:root[data-theme='light'] {
+  /* Accent bridge */
+  --algo-accent-green: #01dc94;
+  --algo-accent-yellow: #ffe248;
+  --algo-accent-orange: #ff7f48;
+  --sl-color-accent-low: #c7d6ff;
+  --sl-color-accent: var(--color-algo-lavender-400);
+  --sl-color-accent-high: var(--color-algo-lavender-200);
+  --sl-color-white: #282930;
+  --sl-color-gray-1: #24272f;
+  --sl-color-gray-2: #353841;
+  --sl-color-gray-3: #60646e;
+  --sl-color-gray-4: #888b96;
+  --sl-color-gray-5: #c0c2c7;
+  --sl-color-gray-6: #ccd0d3;
+  --sl-color-gray-7: #f6f6f6;
+  --sl-color-black: #f6f6f6;
+  --sl-color-banner-bg: var(--color-algo-lavender-400) !important;
+  --sl-color-text-accent: var(--color-algo-lavender-400);
+  --sl-color-accent-medium: #c7d6ff;
+}
+
+/* ==========================================================================
+   Starlight Font Overrides
+   ========================================================================== */
+:root {
+  --sl-text-3xs: 0.6rem;
+  --sl-text-2xs: 0.75rem;
+  --sl-text-xs: 0.825rem;
+  --sl-text-sm: 0.85rem;
+  --sl-text-base: 0.875rem;
+  --sl-text-lg: 1.125rem;
+  --sl-text-xl: 1.25rem;
+  --sl-text-2xl: 1.5rem;
+  --sl-text-3xl: 1.8125rem;
+  --sl-text-4xl: 2.1875rem;
+  --sl-text-5xl: 2.625rem;
+  --sl-text-6xl: 4rem;
+  --sl-text-body: var(--sl-text-base);
+  --sl-text-body-sm: var(--sl-text-xs);
+  --sl-text-code: var(--sl-text-sm);
+  --sl-text-code-sm: var(--sl-text-xs);
+  --__sl-font: 'Inter', sans-serif;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: 'Aeonik', sans-serif;
+}

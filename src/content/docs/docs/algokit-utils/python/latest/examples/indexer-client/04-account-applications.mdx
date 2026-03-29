@@ -1,0 +1,412 @@
+---
+title: 'Account Applications'
+description: 'This example demonstrates how to query account application relationships using the IndexerClient lookup_account_created_applications() and lookup_account_app_local_states() methods.'
+sidebar:
+  order: 4
+---
+
+[← Back to Indexer Client](/docs/algokit-utils/python/latest/examples/indexer-client/)
+
+## Description
+
+This example demonstrates how to query account application relationships using the IndexerClient lookup_account_created_applications() and lookup_account_app_local_states() methods.
+Prerequisites:
+
+## Prerequisites
+
+- LocalNet running (via `algokit localnet start`)
+
+## Run This Example
+
+From the repository's `examples` directory:
+
+```bash
+cd examples
+uv run python indexer_client/04_account_applications.py
+```
+
+## Code
+
+[View source on GitHub](https://github.com/algorandfoundation/algokit-utils-py/blob/main/examples/indexer_client/04_account_applications.py)
+
+```python title="04_account_applications.py"
+# ruff: noqa: N999, C901, PLR0912, PLR0915, PLR2004
+"""
+Example: Account Applications
+
+This example demonstrates how to query account application relationships using
+the IndexerClient lookup_account_created_applications() and lookup_account_app_local_states() methods.
+
+Prerequisites:
+- LocalNet running (via `algokit localnet start`)
+"""
+
+from shared import (
+    create_algorand_client,
+    create_indexer_client,
+    load_teal_source,
+    print_error,
+    print_header,
+    print_info,
+    print_step,
+    print_success,
+    shorten_address,
+)
+
+from algokit_transact import OnApplicationComplete
+from algokit_utils.transactions.types import AppCallParams, AppCreateParams
+
+
+def main() -> None:
+    print_header("Account Applications Example")
+
+    # Create clients
+    indexer = create_indexer_client()
+    algorand = create_algorand_client()
+
+    # =========================================================================
+    # Step 1: Get a funded account from LocalNet
+    # =========================================================================
+    print_step(1, "Getting a funded account from LocalNet")
+
+    try:
+        creator = algorand.account.localnet_dispenser()
+        algorand.set_signer_from_account(creator)
+        creator_address = creator.addr
+        print_success(f"Using dispenser account: {shorten_address(creator_address)}")
+    except Exception as e:
+        print_error(f"Failed to get dispenser account: {e}")
+        print_info("")
+        print_info("Make sure LocalNet is running: algokit localnet start")
+        print_info("If issues persist, try: algokit localnet reset")
+        return
+
+    # =========================================================================
+    # Step 2: Deploy test applications using AlgorandClient
+    # =========================================================================
+    print_step(2, "Deploying test applications for demonstration")
+
+    try:
+        # Load TEAL programs from shared artifacts
+        approval_source = load_teal_source("approval-lifecycle-counter.teal")
+        clear_source = load_teal_source("clear-state-approve.teal")
+        print_info("Loaded TEAL source programs")
+        print_info("")
+
+        # Create first application
+        print_info("Creating first test application: DemoApp1...")
+        result1 = algorand.send.app_create(
+            AppCreateParams(
+                sender=creator_address,
+                approval_program=approval_source,
+                clear_state_program=clear_source,
+                schema={
+                    "global_ints": 1,
+                    "global_byte_slices": 0,
+                    "local_ints": 1,
+                    "local_byte_slices": 0,
+                },
+            )
+        )
+        app_id_1 = result1.app_id
+        print_success(f"Created DemoApp1 with Application ID: {app_id_1}")
+
+        # Create second application
+        print_info("Creating second test application: DemoApp2...")
+        result2 = algorand.send.app_create(
+            AppCreateParams(
+                sender=creator_address,
+                approval_program=approval_source,
+                clear_state_program=clear_source,
+                schema={
+                    "global_ints": 2,
+                    "global_byte_slices": 1,
+                    "local_ints": 2,
+                    "local_byte_slices": 1,
+                },
+            )
+        )
+        app_id_2 = result2.app_id
+        print_success(f"Created DemoApp2 with Application ID: {app_id_2}")
+        print_info("")
+    except Exception as e:
+        print_error(f"Failed to create test applications: {e}")
+        print_info("")
+        print_info("If LocalNet errors occur, try: algokit localnet reset")
+        return
+
+    # =========================================================================
+    # Step 3: Opt into an application to create local state
+    # =========================================================================
+    print_step(3, "Opting into an application to create local state")
+
+    try:
+        print_info(f"Opting into app {app_id_1}...")
+
+        # Opt-in using the higher-level AlgorandClient API
+        algorand.send.app_call(
+            AppCallParams(
+                sender=creator_address,
+                app_id=app_id_1,
+                on_complete=OnApplicationComplete.OptIn,
+            )
+        )
+
+        print_success(f"Successfully opted into app {app_id_1}")
+        print_info("")
+    except Exception as e:
+        print_error(f"Failed to opt into application: {e}")
+        # Continue anyway to demonstrate lookups
+
+    # =========================================================================
+    # Step 4: Lookup created applications with lookup_account_created_applications()
+    # =========================================================================
+    print_step(4, "Looking up created applications with lookup_account_created_applications()")
+
+    try:
+        # lookup_account_created_applications() returns applications created by an account
+        created_apps_result = indexer.lookup_account_created_applications(creator_address)
+
+        print_success(f"Found {len(created_apps_result.applications or [])} application(s) created by account")
+        print_info("")
+
+        if len(created_apps_result.applications or []) > 0:
+            print_info("Created applications:")
+            for app in created_apps_result.applications or []:
+                print_info(f"  Application ID: {app.id_}")
+                if app.params:
+                    if app.params.creator:
+                        print_info(f"    - creator: {shorten_address(app.params.creator)}")
+                    if app.params.approval_program:
+                        print_info(f"    - approval_program: {len(app.params.approval_program)} bytes")
+                    if app.params.clear_state_program:
+                        print_info(f"    - clear_state_program: {len(app.params.clear_state_program)} bytes")
+                    if app.params.global_state_schema:
+                        num_uints = app.params.global_state_schema.num_uints
+                        num_bytes = app.params.global_state_schema.num_byte_slices
+                        print_info(f"    - global_state_schema: {num_uints} uints, {num_bytes} byte slices")
+                    if app.params.local_state_schema:
+                        num_uints = app.params.local_state_schema.num_uints
+                        num_bytes = app.params.local_state_schema.num_byte_slices
+                        print_info(f"    - local_state_schema: {num_uints} uints, {num_bytes} byte slices")
+                if app.created_at_round is not None:
+                    print_info(f"    - created_at_round: {app.created_at_round}")
+                if app.params and app.params.global_state and len(app.params.global_state) > 0:
+                    print_info(f"    - global_state: {len(app.params.global_state)} key-value pair(s)")
+                print_info("")
+
+        print_info(f"Query performed at round: {created_apps_result.current_round}")
+    except Exception as e:
+        print_error(f"lookup_account_created_applications failed: {e}")
+
+    # =========================================================================
+    # Step 5: Lookup account app local states with lookup_account_app_local_states()
+    # =========================================================================
+    print_step(5, "Looking up app local states with lookup_account_app_local_states()")
+
+    try:
+        # lookup_account_app_local_states() returns local state for applications the account has opted into
+        local_states_result = indexer.lookup_account_app_local_states(creator_address)
+        all_local_states = local_states_result.apps_local_states or []
+
+        print_success(f"Found {len(all_local_states)} app local state(s) for account")
+        print_info("")
+
+        if len(all_local_states) > 0:
+            print_info("App local states:")
+            for local_state in all_local_states:
+                print_info(f"  Application ID: {local_state.id_}")
+                if local_state.schema:
+                    num_uints = local_state.schema.num_uints
+                    num_bytes = local_state.schema.num_byte_slices
+                    print_info(f"    - schema: {num_uints} uints, {num_bytes} byte slices")
+                if local_state.opted_in_at_round is not None:
+                    print_info(f"    - opted_in_at_round: {local_state.opted_in_at_round}")
+                if local_state.key_value and len(local_state.key_value) > 0:
+                    print_info(f"    - key_value pairs: {len(local_state.key_value)}")
+                    for kv in local_state.key_value:
+                        # key is already bytes from deserialization
+                        try:
+                            key_str = kv.key.decode("utf-8")
+                        except Exception:
+                            key_str = str(kv.key)
+                        # Value type_: 1 = bytes, 2 = uint
+                        if kv.value.type_ == 2:
+                            print_info(f'      - "{key_str}": {kv.value.uint} (uint)')
+                        else:
+                            try:
+                                value_str = kv.value.bytes_.decode("utf-8")
+                            except Exception:
+                                value_str = str(kv.value.bytes_)
+                            print_info(f'      - "{key_str}": "{value_str}" (bytes)')
+                else:
+                    print_info("    - key_value: (empty)")
+                print_info("")
+
+        print_info(f"Query performed at round: {local_states_result.current_round}")
+    except Exception as e:
+        print_error(f"lookup_account_app_local_states failed: {e}")
+
+    # =========================================================================
+    # Step 6: Demonstrate pagination with limit parameter
+    # =========================================================================
+    print_step(6, "Demonstrating pagination with limit parameter")
+
+    try:
+        # First query: get only 1 created application
+        print_info("Querying created applications with limit=1...")
+        page1 = indexer.lookup_account_created_applications(creator_address, limit=1)
+
+        print_info(f"Page 1: Retrieved {len(page1.applications or [])} application(s)")
+        if len(page1.applications or []) > 0:
+            print_info(f"  - Application ID: {page1.applications[0].id_}")
+
+        # Check if there are more results
+        if page1.next_token:
+            next_token_preview = str(page1.next_token)[:20]
+            print_info(f"  - Next token available: {next_token_preview}...")
+            print_info("")
+
+            # Second query: use the next token to get more results
+            print_info("Querying next page with next parameter...")
+            page2 = indexer.lookup_account_created_applications(
+                creator_address,
+                limit=1,
+                next_=page1.next_token,
+            )
+
+            print_info(f"Page 2: Retrieved {len(page2.applications or [])} application(s)")
+            if len(page2.applications or []) > 0:
+                print_info(f"  - Application ID: {page2.applications[0].id_}")
+
+            if page2.next_token:
+                print_info("  - More results available (next_token present)")
+            else:
+                print_info("  - No more results (no next_token)")
+        else:
+            print_info("  - No pagination needed (all results fit in one page)")
+    except Exception as e:
+        print_error(f"Pagination demo failed: {e}")
+
+    # =========================================================================
+    # Step 7: Query specific application with application_id filter
+    # =========================================================================
+    print_step(7, "Querying specific application with application_id filter")
+
+    try:
+        # You can filter lookup_account_created_applications by a specific application_id
+        print_info(f"Querying created application with ID {app_id_1} only...")
+        specific_result = indexer.lookup_account_created_applications(
+            creator_address,
+            application_id=app_id_1,
+        )
+
+        if len(specific_result.applications or []) > 0:
+            app = specific_result.applications[0]
+            print_success(f"Found created application with ID {app_id_1}")
+            if app.params:
+                if app.params.global_state_schema:
+                    num_uints = app.params.global_state_schema.num_uints
+                    num_bytes = app.params.global_state_schema.num_byte_slices
+                    print_info(f"  - global_state_schema: {num_uints} uints, {num_bytes} byte slices")
+                if app.params.local_state_schema:
+                    num_uints = app.params.local_state_schema.num_uints
+                    num_bytes = app.params.local_state_schema.num_byte_slices
+                    print_info(f"  - local_state_schema: {num_uints} uints, {num_bytes} byte slices")
+        else:
+            print_info(f"No created application found with ID {app_id_1}")
+    except Exception as e:
+        print_error(f"Specific application query failed: {e}")
+
+    # =========================================================================
+    # Step 8: Query specific local state with application_id filter
+    # =========================================================================
+    print_step(8, "Querying specific local state with application_id filter")
+
+    try:
+        # You can also filter lookup_account_app_local_states by a specific application_id
+        print_info(f"Querying local state for application ID {app_id_1} only...")
+        specific_local_state = indexer.lookup_account_app_local_states(
+            creator_address,
+            application_id=app_id_1,
+        )
+
+        local_states = specific_local_state.apps_local_states or []
+        if len(local_states) > 0:
+            local_state = local_states[0]
+            print_success(f"Found local state for application ID {app_id_1}")
+            if local_state.schema:
+                num_uints = local_state.schema.num_uints
+                num_bytes = local_state.schema.num_byte_slices
+                print_info(f"  - schema: {num_uints} uints, {num_bytes} byte slices")
+            if local_state.key_value and len(local_state.key_value) > 0:
+                print_info(f"  - key_value pairs: {len(local_state.key_value)}")
+        else:
+            print_info(f"No local state found for application ID {app_id_1}")
+    except Exception as e:
+        print_error(f"Specific local state query failed: {e}")
+
+    # =========================================================================
+    # Summary
+    # =========================================================================
+    print_header("Summary")
+    print_info("This example demonstrated:")
+    print_info("  1. Deploying test applications using TEAL compilation and AlgorandClient")
+    print_info("  2. Opting into an application to create local state")
+    print_info("  3. lookup_account_created_applications(address) - Get applications created by an account")
+    print_info("  4. lookup_account_app_local_states(address) - Get application local states for an account")
+    print_info("  5. Pagination using limit and next parameters")
+    print_info("  6. Filtering by specific application_id")
+    print_info("")
+    print_info("Key Application fields (from lookup_account_created_applications):")
+    print_info("  - id: The application identifier (int)")
+    print_info("  - params.creator: Address that created the application")
+    print_info("  - params.approval_program: TEAL bytecode for approval logic (bytes)")
+    print_info("  - params.clear_state_program: TEAL bytecode for clear state logic (bytes)")
+    print_info("  - params.global_state_schema: {num_uint, num_byte_slice} for global storage")
+    print_info("  - params.local_state_schema: {num_uint, num_byte_slice} for per-user storage")
+    print_info("  - params.global_state: Array of TealKeyValue for current global state")
+    print_info("  - created_at_round: Round when application was created (optional int)")
+    print_info("")
+    print_info("Key ApplicationLocalState fields (from lookup_account_app_local_states):")
+    print_info("  - id: The application identifier (int)")
+    print_info("  - schema: {num_uint, num_byte_slice} for allocated local storage")
+    print_info("  - opted_in_at_round: Round when account opted in (optional int)")
+    print_info("  - key_value: Array of TealKeyValue for current local state")
+    print_info("")
+    print_info("TealKeyValue structure:")
+    print_info("  - key: The key as base64-encoded string")
+    print_info("  - value.type: 1 for bytes, 2 for uint")
+    print_info("  - value.bytes: Byte value as base64-encoded string")
+    print_info("  - value.uint: Integer value as int")
+    print_info("")
+    print_info("Pagination parameters:")
+    print_info("  - limit: Maximum number of results per page")
+    print_info("  - next: Token from previous response to get next page")
+
+
+if __name__ == "__main__":
+    main()
+
+```
+
+---
+
+### Other examples in Indexer Client
+
+- [Indexer Health Check](/docs/algokit-utils/python/latest/examples/indexer-client/01-health-check/)
+- [Account Lookup](/docs/algokit-utils/python/latest/examples/indexer-client/02-account-lookup/)
+- [Account Assets](/docs/algokit-utils/python/latest/examples/indexer-client/03-account-assets/)
+- **Account Applications**
+- [Account Transactions](/docs/algokit-utils/python/latest/examples/indexer-client/05-account-transactions/)
+- [Transaction Lookup](/docs/algokit-utils/python/latest/examples/indexer-client/06-transaction-lookup/)
+- [Transaction Search](/docs/algokit-utils/python/latest/examples/indexer-client/07-transaction-search/)
+- [Asset Lookup](/docs/algokit-utils/python/latest/examples/indexer-client/08-asset-lookup/)
+- [Asset Balances](/docs/algokit-utils/python/latest/examples/indexer-client/09-asset-balances/)
+- [Asset Transactions](/docs/algokit-utils/python/latest/examples/indexer-client/10-asset-transactions/)
+- [Application Lookup](/docs/algokit-utils/python/latest/examples/indexer-client/11-application-lookup/)
+- [Application Logs Lookup](/docs/algokit-utils/python/latest/examples/indexer-client/12-application-logs/)
+- [Application Boxes Lookup](/docs/algokit-utils/python/latest/examples/indexer-client/13-application-boxes/)
+- [Block Lookup](/docs/algokit-utils/python/latest/examples/indexer-client/14-block-lookup/)
+- [Block Headers Search](/docs/algokit-utils/python/latest/examples/indexer-client/15-block-headers/)
+- [Pagination](/docs/algokit-utils/python/latest/examples/indexer-client/16-pagination/)

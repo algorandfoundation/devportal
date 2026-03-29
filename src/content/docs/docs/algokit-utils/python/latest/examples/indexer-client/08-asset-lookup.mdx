@@ -1,0 +1,386 @@
+---
+title: 'Asset Lookup'
+description: 'This example demonstrates how to lookup and search for assets using the IndexerClient lookup_asset_by_id() and search_for_assets() methods.'
+sidebar:
+  order: 8
+---
+
+[← Back to Indexer Client](/docs/algokit-utils/python/latest/examples/indexer-client/)
+
+## Description
+
+This example demonstrates how to lookup and search for assets using the IndexerClient lookup_asset_by_id() and search_for_assets() methods.
+Prerequisites:
+
+## Prerequisites
+
+- LocalNet running (via `algokit localnet start`)
+
+## Run This Example
+
+From the repository's `examples` directory:
+
+```bash
+cd examples
+uv run python indexer_client/08_asset_lookup.py
+```
+
+## Code
+
+[View source on GitHub](https://github.com/algorandfoundation/algokit-utils-py/blob/main/examples/indexer_client/08_asset_lookup.py)
+
+```python title="08_asset_lookup.py"
+# ruff: noqa: N999, C901, PLR0912, PLR0915, PLR2004
+"""
+Example: Asset Lookup
+
+This example demonstrates how to lookup and search for assets using
+the IndexerClient lookup_asset_by_id() and search_for_assets() methods.
+
+Prerequisites:
+- LocalNet running (via `algokit localnet start`)
+"""
+
+from shared import (
+    create_algorand_client,
+    create_indexer_client,
+    print_error,
+    print_header,
+    print_info,
+    print_step,
+    print_success,
+    shorten_address,
+)
+
+from algokit_utils import AssetCreateParams
+
+
+def main() -> None:
+    print_header("Asset Lookup Example")
+
+    # Create clients
+    indexer = create_indexer_client()
+    algorand = create_algorand_client()
+
+    # =========================================================================
+    # Step 1: Get a funded account from LocalNet
+    # =========================================================================
+    print_step(1, "Getting a funded account from LocalNet")
+
+    try:
+        dispenser = algorand.account.localnet_dispenser()
+        algorand.set_signer_from_account(dispenser)
+        creator_address = dispenser.addr
+        print_success(f"Using dispenser account: {shorten_address(creator_address)}")
+    except Exception as e:
+        print_error(f"Failed to get dispenser account: {e}")
+        print_info("")
+        print_info("Make sure LocalNet is running: algokit localnet start")
+        print_info("If issues persist, try: algokit localnet reset")
+        return
+
+    # =========================================================================
+    # Step 2: Create test assets using AlgorandClient
+    # =========================================================================
+    print_step(2, "Creating test assets for demonstration")
+
+    try:
+        # Create first test asset with full configuration
+        print_info("Creating first test asset: AlphaToken (ALPHA)...")
+        result_1 = algorand.send.asset_create(
+            AssetCreateParams(
+                sender=creator_address,
+                total=1_000_000_000_000,  # 1,000,000 units with 6 decimals
+                decimals=6,
+                asset_name="AlphaToken",
+                unit_name="ALPHA",
+                url="https://example.com/alpha",
+                default_frozen=False,
+                manager=creator_address,
+                reserve=creator_address,
+                freeze=creator_address,
+                clawback=creator_address,
+            )
+        )
+        asset_id_1 = result_1.asset_id
+        print_success(f"Created AlphaToken with Asset ID: {asset_id_1}")
+
+        # Create second test asset with different unit name
+        print_info("Creating second test asset: BetaCoin (BETA)...")
+        result_2 = algorand.send.asset_create(
+            AssetCreateParams(
+                sender=creator_address,
+                total=500_000_000,  # 500,000 units with 3 decimals
+                decimals=3,
+                asset_name="BetaCoin",
+                unit_name="BETA",
+                url="https://example.com/beta",
+                default_frozen=False,
+            )
+        )
+        asset_id_2 = result_2.asset_id
+        print_success(f"Created BetaCoin with Asset ID: {asset_id_2}")
+        print_info("")
+    except Exception as e:
+        print_error(f"Failed to create test assets: {e}")
+        print_info("")
+        print_info("If LocalNet errors occur, try: algokit localnet reset")
+        return
+
+    # =========================================================================
+    # Step 3: Lookup asset by ID with lookup_asset_by_id()
+    # =========================================================================
+    print_step(3, "Looking up asset by ID with lookup_asset_by_id()")
+
+    try:
+        # lookup_asset_by_id() returns detailed asset information
+        asset_result = indexer.lookup_asset_by_id(asset_id_1)
+
+        print_success(f"Found asset with ID: {asset_result.asset.id_}")
+        print_info("")
+
+        # Display asset params
+        params = asset_result.asset.params
+        print_info("Asset Parameters:")
+        print_info(f"  - index: {asset_result.asset.id_}")
+        print_info(f"  - creator: {shorten_address(params.creator)}")
+        print_info(f"  - total: {params.total:,}")
+        print_info(f"  - decimals: {params.decimals}")
+        print_info(f"  - name: {params.name or '(not set)'}")
+        print_info(f"  - unit_name: {params.unit_name or '(not set)'}")
+        print_info(f"  - url: {params.url or '(not set)'}")
+        metadata_display = params.metadata_hash.hex() if params.metadata_hash else "(not set)"
+        print_info(f"  - metadata_hash: {metadata_display}")
+        print_info(f"  - default_frozen: {params.default_frozen or False}")
+        print_info("")
+
+        # Display manager addresses
+        print_info("Manager Addresses:")
+        print_info(f"  - manager: {shorten_address(params.manager) if params.manager else '(not set)'}")
+        print_info(f"  - reserve: {shorten_address(params.reserve) if params.reserve else '(not set)'}")
+        print_info(f"  - freeze: {shorten_address(params.freeze) if params.freeze else '(not set)'}")
+        print_info(f"  - clawback: {shorten_address(params.clawback) if params.clawback else '(not set)'}")
+        print_info("")
+
+        # Display creation/destruction info
+        if asset_result.asset.created_at_round is not None:
+            print_info(f"Created at round: {asset_result.asset.created_at_round}")
+        if asset_result.asset.destroyed_at_round is not None:
+            print_info(f"Destroyed at round: {asset_result.asset.destroyed_at_round}")
+        if asset_result.asset.deleted is not None:
+            print_info(f"Deleted: {asset_result.asset.deleted}")
+
+        print_info(f"Query performed at round: {asset_result.current_round}")
+    except Exception as e:
+        print_error(f"lookup_asset_by_id failed: {e}")
+
+    # =========================================================================
+    # Step 4: Search for assets with search_for_assets()
+    # =========================================================================
+    print_step(4, "Searching for assets with search_for_assets()")
+
+    try:
+        # search_for_assets() returns a list of assets matching the criteria
+        search_result = indexer.search_for_assets(limit=10)
+
+        print_success(f"Found {len(search_result.assets or [])} asset(s)")
+        print_info("")
+
+        if search_result.assets:
+            print_info("Assets found:")
+            for asset in (search_result.assets or [])[:5]:
+                print_info(f"  Asset ID: {asset.id_}")
+                print_info(f"    - name: {asset.params.name or '(not set)'}")
+                print_info(f"    - unit_name: {asset.params.unit_name or '(not set)'}")
+                print_info(f"    - creator: {shorten_address(asset.params.creator)}")
+                print_info("")
+            if len(search_result.assets or []) > 5:
+                print_info(f"  ... and {len(search_result.assets or []) - 5} more")
+
+        print_info(f"Query performed at round: {search_result.current_round}")
+    except Exception as e:
+        print_error(f"search_for_assets failed: {e}")
+
+    # =========================================================================
+    # Step 5: Filter by name
+    # =========================================================================
+    print_step(5, "Filtering assets by name")
+
+    try:
+        # Search for assets with a specific name
+        print_info('Searching for assets with name "Alpha"...')
+        name_result = indexer.search_for_assets(name="Alpha")
+
+        print_success(f'Found {len(name_result.assets or [])} asset(s) matching name "Alpha"')
+        if name_result.assets:
+            for asset in name_result.assets or []:
+                print_info(f"  - Asset ID {asset.id_}: {asset.params.name} ({asset.params.unit_name})")
+    except Exception as e:
+        print_error(f"Filter by name failed: {e}")
+
+    # =========================================================================
+    # Step 6: Filter by unit name
+    # =========================================================================
+    print_step(6, "Filtering assets by unit name")
+
+    try:
+        # Search for assets with a specific unit name
+        print_info('Searching for assets with unit "BETA"...')
+        unit_result = indexer.search_for_assets(unit="BETA")
+
+        print_success(f'Found {len(unit_result.assets or [])} asset(s) matching unit "BETA"')
+        if unit_result.assets:
+            for asset in unit_result.assets or []:
+                print_info(f"  - Asset ID {asset.id_}: {asset.params.name} ({asset.params.unit_name})")
+    except Exception as e:
+        print_error(f"Filter by unit failed: {e}")
+
+    # =========================================================================
+    # Step 7: Filter by creator
+    # =========================================================================
+    print_step(7, "Filtering assets by creator")
+
+    try:
+        # Search for assets created by a specific account
+        print_info(f"Searching for assets created by {shorten_address(creator_address)}...")
+        creator_result = indexer.search_for_assets(creator=creator_address)
+
+        print_success(f"Found {len(creator_result.assets or [])} asset(s) created by this account")
+        if creator_result.assets:
+            for asset in creator_result.assets or []:
+                name_display = asset.params.name or "(unnamed)"
+                unit_display = asset.params.unit_name or "N/A"
+                print_info(f"  - Asset ID {asset.id_}: {name_display} ({unit_display})")
+    except Exception as e:
+        print_error(f"Filter by creator failed: {e}")
+
+    # =========================================================================
+    # Step 8: Filter by asset ID for exact match
+    # =========================================================================
+    print_step(8, "Filtering by asset_id for exact match")
+
+    try:
+        # Use asset_id parameter for exact matching
+        print_info(f"Searching for exact asset ID {asset_id_2}...")
+        exact_result = indexer.search_for_assets(asset_id=asset_id_2)
+
+        if exact_result.assets:
+            asset = exact_result.assets[0]
+            print_success(f"Found exact match for Asset ID {asset_id_2}")
+            print_info(f"  - name: {asset.params.name or '(not set)'}")
+            print_info(f"  - unit_name: {asset.params.unit_name or '(not set)'}")
+            print_info(f"  - total: {asset.params.total:,}")
+        else:
+            print_info(f"No asset found with ID {asset_id_2}")
+    except Exception as e:
+        print_error(f"Exact match search failed: {e}")
+
+    # =========================================================================
+    # Step 9: Handle asset not found
+    # =========================================================================
+    print_step(9, "Handling asset not found")
+
+    try:
+        # Try to look up a non-existent asset ID
+        non_existent_id = 999999999
+        print_info(f"Looking up non-existent asset ID {non_existent_id}...")
+
+        indexer.lookup_asset_by_id(non_existent_id)
+        print_info("Asset found (unexpected)")
+    except Exception as e:
+        message = str(e)
+        if "no asset found" in message.lower() or "not found" in message.lower() or "404" in message:
+            print_success("Asset not found error handled correctly")
+            print_info(f"  Error message: {message}")
+        else:
+            print_error(f"Unexpected error: {message}")
+
+    # =========================================================================
+    # Step 10: Include deleted assets with include_all
+    # =========================================================================
+    print_step(10, "Including deleted/destroyed assets with include_all")
+
+    try:
+        # The include_all parameter includes assets that have been deleted/destroyed
+        print_info("Searching with include_all=True to include deleted assets...")
+        all_assets_result = indexer.search_for_assets(
+            creator=creator_address,
+            include_all=True,
+        )
+
+        print_success(f"Found {len(all_assets_result.assets or [])} asset(s) (including any deleted)")
+        for asset in all_assets_result.assets or []:
+            status = " [DELETED]" if asset.deleted else ""
+            name_display = asset.params.name or "(unnamed)"
+            print_info(f"  - Asset ID {asset.id_}: {name_display}{status}")
+    except Exception as e:
+        print_error(f"Include all search failed: {e}")
+
+    # =========================================================================
+    # Summary
+    # =========================================================================
+    print_header("Summary")
+    print_info("This example demonstrated:")
+    print_info("  1. Creating test assets using algorand.send.asset_create()")
+    print_info("  2. lookup_asset_by_id(asset_id) - Get detailed asset information")
+    print_info("  3. search_for_assets() - Search for assets with various filters")
+    print_info("  4. Filtering by name, unit, and creator")
+    print_info("  5. Filtering by asset_id for exact match")
+    print_info("  6. Handling asset not found errors")
+    print_info("  7. Including deleted assets with include_all parameter")
+    print_info("")
+    print_info("Key Asset fields:")
+    print_info("  - index: Unique asset identifier (int)")
+    print_info("  - deleted: Whether asset is deleted (optional bool)")
+    print_info("  - created_at_round: Round when created (optional int)")
+    print_info("  - destroyed_at_round: Round when destroyed (optional int)")
+    print_info("")
+    print_info("Key AssetParams fields:")
+    print_info("  - creator: Address that created the asset")
+    print_info("  - total: Total supply in base units (int)")
+    print_info("  - decimals: Number of decimal places (0-19)")
+    print_info("  - name: Full asset name (optional)")
+    print_info("  - unit_name: Short unit name like 'ALGO' (optional)")
+    print_info("  - url: URL for more info (optional)")
+    print_info("  - metadata_hash: 32-byte metadata hash (optional)")
+    print_info("")
+    print_info("Manager address fields:")
+    print_info("  - manager: Can reconfigure or destroy the asset")
+    print_info("  - reserve: Holds non-minted units")
+    print_info("  - freeze: Can freeze/unfreeze holdings")
+    print_info("  - clawback: Can revoke holdings")
+    print_info("")
+    print_info("Search filter parameters:")
+    print_info("  - name: Filter by asset name (prefix match)")
+    print_info("  - unit: Filter by unit name (prefix match)")
+    print_info("  - creator: Filter by creator address")
+    print_info("  - asset_id: Filter by exact asset ID")
+    print_info("  - include_all: Include deleted/destroyed assets")
+    print_info("  - limit/next: Pagination parameters")
+
+
+if __name__ == "__main__":
+    main()
+
+```
+
+---
+
+### Other examples in Indexer Client
+
+- [Indexer Health Check](/docs/algokit-utils/python/latest/examples/indexer-client/01-health-check/)
+- [Account Lookup](/docs/algokit-utils/python/latest/examples/indexer-client/02-account-lookup/)
+- [Account Assets](/docs/algokit-utils/python/latest/examples/indexer-client/03-account-assets/)
+- [Account Applications](/docs/algokit-utils/python/latest/examples/indexer-client/04-account-applications/)
+- [Account Transactions](/docs/algokit-utils/python/latest/examples/indexer-client/05-account-transactions/)
+- [Transaction Lookup](/docs/algokit-utils/python/latest/examples/indexer-client/06-transaction-lookup/)
+- [Transaction Search](/docs/algokit-utils/python/latest/examples/indexer-client/07-transaction-search/)
+- **Asset Lookup**
+- [Asset Balances](/docs/algokit-utils/python/latest/examples/indexer-client/09-asset-balances/)
+- [Asset Transactions](/docs/algokit-utils/python/latest/examples/indexer-client/10-asset-transactions/)
+- [Application Lookup](/docs/algokit-utils/python/latest/examples/indexer-client/11-application-lookup/)
+- [Application Logs Lookup](/docs/algokit-utils/python/latest/examples/indexer-client/12-application-logs/)
+- [Application Boxes Lookup](/docs/algokit-utils/python/latest/examples/indexer-client/13-application-boxes/)
+- [Block Lookup](/docs/algokit-utils/python/latest/examples/indexer-client/14-block-lookup/)
+- [Block Headers Search](/docs/algokit-utils/python/latest/examples/indexer-client/15-block-headers/)
+- [Pagination](/docs/algokit-utils/python/latest/examples/indexer-client/16-pagination/)

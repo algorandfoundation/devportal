@@ -1,0 +1,205 @@
+---
+title: 'Asset Transfer'
+description: 'Demonstrates ASA lifecycle subscription:'
+sidebar:
+  order: 4
+---
+
+[← Back to Examples](/docs/algokit-subscriber/python/latest/examples/)
+
+## Description
+
+Demonstrates ASA lifecycle subscription:
+
+- Subscribe to asset creation with assetCreate filter
+- Subscribe to asset transfers with type and assetId filters
+- Track opt-in and transfer transactions
+
+## Prerequisites
+
+- LocalNet running (via `algokit localnet start`)
+
+## Run This Example
+
+From the repository's `examples/subscriber` directory:
+
+```bash
+cd examples/subscriber
+uv run python 04_asset_transfer.py
+```
+
+## Code
+
+[View source on GitHub](https://github.com/algorandfoundation/algokit-subscriber-py/blob/main/examples/subscriber/04_asset_transfer.py)
+
+```python title="04_asset_transfer.py"
+"""Example 04: Asset Transfer
+
+Demonstrates ASA lifecycle subscription:
+- Subscribe to asset creation with assetCreate filter
+- Subscribe to asset transfers with type and assetId filters
+- Track opt-in and transfer transactions
+
+Prerequisites:
+- LocalNet running (via `algokit localnet start`)
+"""
+
+from algokit_utils import (
+    AlgoAmount,
+    AlgorandClient,
+    AssetCreateParams,
+    AssetOptInParams,
+    AssetTransferParams,
+    PaymentParams,
+)
+from shared import (
+    ALGOD_CONFIG,
+    KMD_CONFIG,
+    create_filter_tester,
+    print_header,
+    print_info,
+    print_step,
+    print_success,
+    shorten_address,
+)
+
+from algokit_subscriber import SubscribedTransaction
+
+
+def main() -> None:
+    print_header("04 — Asset Transfer Subscription")
+
+    # Step 1: Connect to LocalNet
+    print_step(1, "Connect to LocalNet")
+    algorand = AlgorandClient.from_config(algod_config=ALGOD_CONFIG, kmd_config=KMD_CONFIG)
+    status = algorand.client.algod.status()
+    print_info(f"Current round: {status.last_round}")
+    print_success("Connected to LocalNet")
+
+    # Step 2: Create and fund 2 accounts (creator, receiver)
+    print_step(2, "Create and fund 2 accounts (creator, receiver)")
+    dispenser = algorand.account.localnet_dispenser().addr
+
+    creator = algorand.account.random().addr
+    receiver = algorand.account.random().addr
+
+    for acct in (creator, receiver):
+        algorand.send.payment(
+            PaymentParams(sender=dispenser, receiver=acct, amount=AlgoAmount(algo=100))
+        )
+    print_info(f"Creator: {shorten_address(creator)}")
+    print_info(f"Receiver: {shorten_address(receiver)}")
+    print_success("2 accounts created and funded")
+
+    # Step 3: Create ASA from creator account
+    print_step(3, "Create ASA from creator account")
+    create_result = algorand.send.asset_create(
+        AssetCreateParams(
+            sender=creator,
+            total=1_000_000,
+            decimals=0,
+            asset_name="TestToken",
+            unit_name="TT",
+        )
+    )
+    asset_id = create_result.asset_id
+    assert asset_id is not None
+    create_round = create_result.confirmation.confirmed_round
+    assert create_round is not None
+    print_info(f"Created asset ID: {asset_id}")
+    print_info(f"Confirmed round: {create_round}")
+    print_success("ASA created")
+
+    # Step 4: Receiver opts in to asset
+    print_step(4, "Receiver opts in to asset")
+    opt_in_result = algorand.send.asset_opt_in(
+        AssetOptInParams(sender=receiver, asset_id=asset_id)
+    )
+    print_info(f"Opt-in txn ID: {opt_in_result.tx_ids[0]}")
+    print_success("Receiver opted in")
+
+    # Step 5: Transfer 500 tokens from creator to receiver
+    print_step(5, "Transfer 500 tokens from creator to receiver")
+    transfer_result = algorand.send.asset_transfer(
+        AssetTransferParams(
+            sender=creator,
+            receiver=receiver,
+            asset_id=asset_id,
+            amount=500,
+        )
+    )
+    print_info(f"Transfer txn ID: {transfer_result.tx_ids[0]}")
+    print_success("Transferred 500 tokens")
+
+    # Watermark: just before the asset creation round
+    watermark_before = create_round - 1
+
+    test_filter = create_filter_tester(algorand.client.algod, watermark_before)
+
+    # Step 6: Filter: assetCreate = true
+    print_step(6, "Filter: assetCreate = true")
+
+    def format_create(txn: SubscribedTransaction) -> None:
+        print_info(f"  Created asset: {txn.created_asset_id} | txn: {txn.id_}")
+
+    create_txns = test_filter(
+        "asset-create",
+        {"asset_create": True},
+        1,
+        "assetCreate filter matched 1 creation transaction",
+        format_create,
+    )
+
+    # Step 7: Filter: type = axfer, assetId = created asset
+    print_step(7, "Filter: type = axfer, assetId = created asset")
+
+    def format_axfer(txn: SubscribedTransaction) -> None:
+        axfer = txn.asset_transfer_transaction
+        assert axfer is not None
+        print_info(
+            f"  Transfer: {shorten_address(txn.sender)}"
+            f" -> {shorten_address(axfer.receiver)}"
+            f" | amount: {axfer.amount} | txn: {txn.id_}"
+        )
+
+    axfer_txns = test_filter(
+        "asset-transfers",
+        {"type": "axfer", "asset_id": asset_id},
+        2,
+        "axfer filter matched 2 transactions (opt-in + transfer)",
+        format_axfer,
+    )
+
+    # Step 8: Summary
+    print_step(8, "Summary")
+    print_info(f"Asset ID: {asset_id}")
+    print_info(f"assetCreate filter: {len(create_txns)} matched (creation)")
+    print_info(f"axfer + assetId filter: {len(axfer_txns)} matched (opt-in + transfer)")
+
+    print_header("Example complete")
+
+
+if __name__ == "__main__":
+    main()
+
+```
+
+---
+
+### Other examples
+
+- [Basic Poll Once](/docs/algokit-subscriber/python/latest/examples/01-basic-poll-once/)
+- [Continuous Subscriber](/docs/algokit-subscriber/python/latest/examples/02-continuous-subscriber/)
+- [Payment Filters](/docs/algokit-subscriber/python/latest/examples/03-payment-filters/)
+- **Asset Transfer**
+- [App Call Subscription](/docs/algokit-subscriber/python/latest/examples/05-app-call/)
+- [Multiple Named Filters](/docs/algokit-subscriber/python/latest/examples/06-multiple-filters/)
+- [Balance Change Tracking](/docs/algokit-subscriber/python/latest/examples/07-balance-changes/)
+- [ARC-28 Event Subscription](/docs/algokit-subscriber/python/latest/examples/08-arc28-events/)
+- [Inner Transaction Subscription](/docs/algokit-subscriber/python/latest/examples/09-inner-transactions/)
+- [Batch Handling & Data Mappers](/docs/algokit-subscriber/python/latest/examples/10-batch-and-mappers/)
+- [Watermark Persistence](/docs/algokit-subscriber/python/latest/examples/11-watermark-persistence/)
+- [Sync Behaviours](/docs/algokit-subscriber/python/latest/examples/12-sync-behaviours/)
+- [Custom Filters](/docs/algokit-subscriber/python/latest/examples/13-custom-filters/)
+- [Stateless Subscriptions](/docs/algokit-subscriber/python/latest/examples/14-stateless-subscriptions/)
+- [Lifecycle Hooks & Error Handling](/docs/algokit-subscriber/python/latest/examples/15-lifecycle-hooks/)

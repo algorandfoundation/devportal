@@ -1,0 +1,50 @@
+---
+/**
+ * Custom Sidebar override that implements TanStack-style navigation:
+ *
+ * 1. On main site pages: Shows a library switcher list at the top,
+ *    followed by the normal Starlight sidebar navigation below.
+ *
+ * 2. On library pages (/docs/<library>/): Replaces the entire sidebar with:
+ *    - A hamburger toggle showing current library name
+ *    - Clicking it reveals: "Learn Algorand" link, "Library Docs" link,
+ *      and full library list for quick switching
+ *    - Language + version selectors
+ *    - The library-specific sidebar navigation
+ */
+import MobileMenuFooter from '@astrojs/starlight/components/MobileMenuFooter.astro';
+import SidebarPersister from '@astrojs/starlight/components/SidebarPersister.astro';
+import SidebarSublist from '@astrojs/starlight/components/SidebarSublist.astro';
+import LibraryDocsSidebar from './LibraryDocsSidebar.astro';
+import LibraryPicker from './LibraryPicker.astro';
+import { getLibraryFromPath } from '../config/libraries';
+import { isLibrarySidebarLabel } from '../../imports/sidebar';
+
+const { sidebar } = Astro.locals.starlightRoute;
+const currentPath = Astro.url.pathname;
+const activeLibrary = getLibraryFromPath(currentPath);
+
+// Filter out library autogenerate entries from the main sidebar
+const mainSidebar = sidebar.filter(
+  entry => entry.type !== 'group' || !isLibrarySidebarLabel(entry.label),
+);
+---
+
+{
+  activeLibrary ? (
+    /* Library virtual collection view */
+    <LibraryDocsSidebar library={activeLibrary} currentPath={currentPath} />
+  ) : (
+    /* Main site view: library switcher at top + normal sidebar */
+    <>
+      <LibraryPicker currentPath={currentPath} />
+      <SidebarPersister>
+        <SidebarSublist sublist={mainSidebar} />
+      </SidebarPersister>
+    </>
+  )
+}
+
+<div class='md:sl-hidden'>
+  <MobileMenuFooter />
+</div>

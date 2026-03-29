@@ -11,7 +11,7 @@ interface Props {
 const { heading, description, icon, url } = Astro.props;
 ---
 
-<a target='_blank' href={url} class='no-underline'>
+<a target='_blank' rel='noopener noreferrer' href={url} class='no-underline'>
   <div
     class:list={[
       'icon-card bg-algo-lavender-300 dark:bg-algo-teal-100 text-white dark:text-algo-navy',

@@ -1,0 +1,434 @@
+---
+title: 'Asset Balances'
+description: 'This example demonstrates how to lookup all holders of an asset using the IndexerClient lookupAssetBalances() method.'
+sidebar:
+  order: 9
+---
+
+[← Back to Indexer Client](/docs/algokit-utils/typescript/latest/examples/indexer-client/)
+
+## Description
+
+This example demonstrates how to lookup all holders of an asset using the IndexerClient lookupAssetBalances() method.
+
+## Prerequisites
+
+- LocalNet running (via `algokit localnet start`)
+
+## Run This Example
+
+From the repository root:
+
+```bash
+cd examples
+npm run example indexer_client/09-asset-balances.ts
+```
+
+## Code
+
+[View source on GitHub](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/examples/indexer_client/09-asset-balances.ts)
+
+```typescript title="09-asset-balances.ts"
+/**
+ * Example: Asset Balances
+ *
+ * This example demonstrates how to lookup all holders of an asset using
+ * the IndexerClient lookupAssetBalances() method.
+ *
+ * Prerequisites:
+ * - LocalNet running (via `algokit localnet start`)
+ */
+
+import {
+  createAlgorandClient,
+  createIndexerClient,
+  createRandomAccount,
+  printError,
+  printHeader,
+  printInfo,
+  printStep,
+  printSuccess,
+  shortenAddress,
+} from '../shared/utils.js';
+
+async function main() {
+  printHeader('Asset Balances Example');
+
+  // Create clients
+  const indexer = createIndexerClient();
+  const algorand = createAlgorandClient();
+
+  // =========================================================================
+  // Step 1: Get a funded account and create additional accounts
+  // =========================================================================
+  printStep(1, 'Setting up accounts for demonstration');
+
+  let creatorAddress: string;
+  let holder1Address: string;
+  let holder2Address: string;
+  let holder3Address: string;
+
+  try {
+    // Get the dispenser account as the creator
+    const dispenser = await algorand.account.dispenserFromEnvironment();
+    creatorAddress = dispenser.addr.toString();
+    printSuccess(`Creator account (dispenser): ${shortenAddress(creatorAddress)}`);
+
+    // Create additional accounts to hold the asset
+    const holder1 = await createRandomAccount(algorand);
+    holder1Address = holder1.addr.toString();
+    printSuccess(`Holder 1: ${shortenAddress(holder1Address)}`);
+
+    const holder2 = await createRandomAccount(algorand);
+    holder2Address = holder2.addr.toString();
+    printSuccess(`Holder 2: ${shortenAddress(holder2Address)}`);
+
+    const holder3 = await createRandomAccount(algorand);
+    holder3Address = holder3.addr.toString();
+    printSuccess(`Holder 3: ${shortenAddress(holder3Address)}`);
+  } catch (error) {
+    printError(
+      `Failed to set up accounts: ${error instanceof Error ? error.message : String(error)}`,
+    );
+    printInfo('');
+    printInfo('Make sure LocalNet is running: algokit localnet start');
+    printInfo('If issues persist, try: algokit localnet reset');
+    return;
+  }
+
+  // =========================================================================
+  // Step 2: Create a test asset
+  // =========================================================================
+  printStep(2, 'Creating a test asset');
+
+  let assetId: bigint;
+
+  try {
+    printInfo('Creating test asset: BalanceToken (BAL)...');
+    const result = await algorand.send.assetCreate({
+      sender: creatorAddress,
+      total: 10_000_000n, // 10,000 units with 3 decimals
+      decimals: 3,
+      assetName: 'BalanceToken',
+      unitName: 'BAL',
+      url: 'https://example.com/balancetoken',
+      defaultFrozen: false,
+    });
+    assetId = result.assetId;
+    printSuccess(`Created BalanceToken with Asset ID: ${assetId}`);
+  } catch (error) {
+    printError(
+      `Failed to create test asset: ${error instanceof Error ? error.message : String(error)}`,
+    );
+    printInfo('');
+    printInfo('If LocalNet errors occur, try: algokit localnet reset');
+    return;
+  }
+
+  // =========================================================================
+  // Step 3: Distribute asset to multiple accounts
+  // =========================================================================
+  printStep(3, 'Distributing asset to multiple accounts');
+
+  try {
+    // Holder 1: Opt-in and receive 1000 BAL
+    printInfo(`Opting in Holder 1 and sending 1000 BAL...`);
+    await algorand.send.assetOptIn({
+      sender: holder1Address,
+      assetId,
+    });
+    await algorand.send.assetTransfer({
+      sender: creatorAddress,
+      receiver: holder1Address,
+      assetId,
+      amount: 1_000_000n, // 1000 BAL (with 3 decimals)
+    });
+    printSuccess(`Holder 1 received 1000 BAL`);
+
+    // Holder 2: Opt-in and receive 500 BAL
+    printInfo(`Opting in Holder 2 and sending 500 BAL...`);
+    await algorand.send.assetOptIn({
+      sender: holder2Address,
+      assetId,
+    });
+    await algorand.send.assetTransfer({
+      sender: creatorAddress,
+      receiver: holder2Address,
+      assetId,
+      amount: 500_000n, // 500 BAL (with 3 decimals)
+    });
+    printSuccess(`Holder 2 received 500 BAL`);
+
+    // Holder 3: Opt-in only (0 balance but still a holder)
+    printInfo(`Opting in Holder 3 (no transfer, will have 0 balance)...`);
+    await algorand.send.assetOptIn({
+      sender: holder3Address,
+      assetId,
+    });
+    printSuccess(`Holder 3 opted in with 0 balance`);
+
+    printInfo('');
+    printInfo('Distribution summary:');
+    printInfo(`  - Creator: ~8500 BAL (remainder)`);
+    printInfo(`  - Holder 1: 1000 BAL`);
+    printInfo(`  - Holder 2: 500 BAL`);
+    printInfo(`  - Holder 3: 0 BAL (opted-in only)`);
+  } catch (error) {
+    printError(
+      `Failed to distribute asset: ${error instanceof Error ? error.message : String(error)}`,
+    );
+    printInfo('');
+    printInfo('If LocalNet errors occur, try: algokit localnet reset');
+    return;
+  }
+
+  // =========================================================================
+  // Step 4: Basic lookupAssetBalances() - Get all holders
+  // =========================================================================
+  printStep(4, 'Looking up all asset holders with lookupAssetBalances()');
+
+  try {
+    // lookupAssetBalances() returns all accounts that hold (or have opted into) an asset
+    const balancesResult = await indexer.lookupAssetBalances(assetId);
+
+    printSuccess(`Found ${balancesResult.balances.length} holder(s) for Asset ID ${assetId}`);
+    printInfo('');
+
+    if (balancesResult.balances.length > 0) {
+      printInfo('Asset balances:');
+      for (const balance of balancesResult.balances) {
+        printInfo(`  Address: ${shortenAddress(balance.address)}`);
+        printInfo(`    - amount: ${balance.amount.toLocaleString('en-US')}`);
+        printInfo(`    - isFrozen: ${balance.isFrozen}`);
+        if (balance.optedInAtRound !== undefined) {
+          printInfo(`    - optedInAtRound: ${balance.optedInAtRound}`);
+        }
+        printInfo('');
+      }
+    }
+
+    printInfo(`Query performed at round: ${balancesResult.currentRound}`);
+  } catch (error) {
+    printError(
+      `lookupAssetBalances failed: ${error instanceof Error ? error.message : String(error)}`,
+    );
+  }
+
+  // =========================================================================
+  // Step 5: Filter by currencyGreaterThan
+  // =========================================================================
+  printStep(5, 'Filtering holders by currencyGreaterThan');
+
+  try {
+    // Filter to only show accounts with more than 500 BAL (500,000 base units)
+    printInfo('Querying holders with amount > 500,000 base units (> 500 BAL)...');
+    const highBalanceResult = await indexer.lookupAssetBalances(assetId, {
+      currencyGreaterThan: 500_000n,
+    });
+
+    printSuccess(`Found ${highBalanceResult.balances.length} holder(s) with balance > 500 BAL`);
+    for (const balance of highBalanceResult.balances) {
+      printInfo(
+        `  ${shortenAddress(balance.address)}: ${balance.amount.toLocaleString('en-US')} base units`,
+      );
+    }
+  } catch (error) {
+    printError(
+      `currencyGreaterThan query failed: ${error instanceof Error ? error.message : String(error)}`,
+    );
+  }
+
+  // =========================================================================
+  // Step 6: Filter by currencyLessThan
+  // =========================================================================
+  printStep(6, 'Filtering holders by currencyLessThan');
+
+  try {
+    // Filter to only show accounts with less than 1,000,000 base units (< 1000 BAL)
+    printInfo('Querying holders with amount < 1,000,000 base units (< 1000 BAL)...');
+    const lowBalanceResult = await indexer.lookupAssetBalances(assetId, {
+      currencyLessThan: 1_000_000n,
+    });
+
+    printSuccess(`Found ${lowBalanceResult.balances.length} holder(s) with balance < 1000 BAL`);
+    for (const balance of lowBalanceResult.balances) {
+      printInfo(
+        `  ${shortenAddress(balance.address)}: ${balance.amount.toLocaleString('en-US')} base units`,
+      );
+    }
+  } catch (error) {
+    printError(
+      `currencyLessThan query failed: ${error instanceof Error ? error.message : String(error)}`,
+    );
+  }
+
+  // =========================================================================
+  // Step 7: Combine currencyGreaterThan and currencyLessThan (range filter)
+  // =========================================================================
+  printStep(7, 'Filtering holders by balance range (combining currency filters)');
+
+  try {
+    // Filter to show accounts with balance between 100 BAL and 2000 BAL
+    printInfo('Querying holders with 100,000 < amount < 2,000,000 base units (100-2000 BAL)...');
+    const rangeResult = await indexer.lookupAssetBalances(assetId, {
+      currencyGreaterThan: 100_000n,
+      currencyLessThan: 2_000_000n,
+    });
+
+    printSuccess(
+      `Found ${rangeResult.balances.length} holder(s) with balance between 100 and 2000 BAL`,
+    );
+    for (const balance of rangeResult.balances) {
+      printInfo(
+        `  ${shortenAddress(balance.address)}: ${balance.amount.toLocaleString('en-US')} base units`,
+      );
+    }
+  } catch (error) {
+    printError(
+      `Range filter query failed: ${error instanceof Error ? error.message : String(error)}`,
+    );
+  }
+
+  // =========================================================================
+  // Step 8: Using includeAll to include 0 balance accounts
+  // =========================================================================
+  printStep(8, 'Using includeAll to include accounts with 0 balance');
+
+  try {
+    // By default, lookupAssetBalances may exclude accounts with 0 balance
+    // Use includeAll=true to include opted-in accounts with no holdings
+    printInfo('Querying with includeAll=true to include all opted-in accounts...');
+    const allHoldersResult = await indexer.lookupAssetBalances(assetId, {
+      includeAll: true,
+    });
+
+    printSuccess(`Found ${allHoldersResult.balances.length} holder(s) (including 0 balance)`);
+    printInfo('');
+
+    const zeroBalanceCount = allHoldersResult.balances.filter(b => b.amount === 0n).length;
+    const nonZeroCount = allHoldersResult.balances.filter(b => b.amount > 0n).length;
+
+    printInfo(`  - Accounts with balance > 0: ${nonZeroCount}`);
+    printInfo(`  - Accounts with balance = 0: ${zeroBalanceCount}`);
+    printInfo('');
+
+    printInfo('All holders:');
+    for (const balance of allHoldersResult.balances) {
+      const balanceStr =
+        balance.amount === 0n ? '0 (opted-in only)' : balance.amount.toLocaleString('en-US');
+      printInfo(`  ${shortenAddress(balance.address)}: ${balanceStr}`);
+    }
+  } catch (error) {
+    printError(
+      `includeAll query failed: ${error instanceof Error ? error.message : String(error)}`,
+    );
+  }
+
+  // =========================================================================
+  // Step 9: Demonstrate pagination
+  // =========================================================================
+  printStep(9, 'Demonstrating pagination for assets with many holders');
+
+  try {
+    // First query: get only 2 holders
+    printInfo('Querying with limit=2...');
+    const page1 = await indexer.lookupAssetBalances(assetId, {
+      limit: 2,
+      includeAll: true,
+    });
+
+    printInfo(`Page 1: Retrieved ${page1.balances.length} holder(s)`);
+    for (const balance of page1.balances) {
+      printInfo(
+        `  - ${shortenAddress(balance.address)}: ${balance.amount.toLocaleString('en-US')}`,
+      );
+    }
+
+    // Check if there are more results
+    if (page1.nextToken) {
+      printInfo(`  Next token available: ${page1.nextToken.substring(0, 20)}...`);
+      printInfo('');
+
+      // Second query: use the next token to get more results
+      printInfo('Querying next page with next parameter...');
+      const page2 = await indexer.lookupAssetBalances(assetId, {
+        limit: 2,
+        includeAll: true,
+        next: page1.nextToken,
+      });
+
+      printInfo(`Page 2: Retrieved ${page2.balances.length} holder(s)`);
+      for (const balance of page2.balances) {
+        printInfo(
+          `  - ${shortenAddress(balance.address)}: ${balance.amount.toLocaleString('en-US')}`,
+        );
+      }
+
+      if (page2.nextToken) {
+        printInfo(`  More results available (nextToken present)`);
+      } else {
+        printInfo(`  No more results (no nextToken)`);
+      }
+    } else {
+      printInfo('  No pagination needed (all results fit in one page)');
+    }
+  } catch (error) {
+    printError(`Pagination demo failed: ${error instanceof Error ? error.message : String(error)}`);
+  }
+
+  // =========================================================================
+  // Summary
+  // =========================================================================
+  printHeader('Summary');
+  printInfo('This example demonstrated:');
+  printInfo('  1. Creating a test asset and distributing to multiple accounts');
+  printInfo('  2. lookupAssetBalances(assetId) - Get all holders of an asset');
+  printInfo('  3. Balance fields: address, amount, isFrozen, optedInAtRound');
+  printInfo('  4. Filtering with currencyGreaterThan (minimum balance)');
+  printInfo('  5. Filtering with currencyLessThan (maximum balance)');
+  printInfo('  6. Combining currency filters for range queries');
+  printInfo('  7. Using includeAll=true to include accounts with 0 balance');
+  printInfo('  8. Pagination using limit and next parameters');
+  printInfo('');
+  printInfo('Key MiniAssetHolding fields (from lookupAssetBalances):');
+  printInfo('  - address: The account address holding the asset (string)');
+  printInfo('  - amount: Number of base units held (bigint)');
+  printInfo('  - isFrozen: Whether the holding is frozen (boolean)');
+  printInfo('  - optedInAtRound: Round when account opted into asset (optional bigint)');
+  printInfo('');
+  printInfo('Filter parameters:');
+  printInfo('  - currencyGreaterThan: Only return balances > this value (bigint)');
+  printInfo('  - currencyLessThan: Only return balances < this value (bigint)');
+  printInfo('  - includeAll: Include accounts with 0 balance (boolean)');
+  printInfo('');
+  printInfo('Pagination parameters:');
+  printInfo('  - limit: Maximum number of results per page');
+  printInfo('  - next: Token from previous response to get next page');
+}
+
+main().catch(error => {
+  console.error('Fatal error:', error);
+  process.exit(1);
+});
+```
+
+---
+
+### Other examples in Indexer Client
+
+- [Indexer Health Check](/docs/algokit-utils/typescript/latest/examples/indexer-client/01-health-check/)
+- [Account Lookup](/docs/algokit-utils/typescript/latest/examples/indexer-client/02-account-lookup/)
+- [Account Assets](/docs/algokit-utils/typescript/latest/examples/indexer-client/03-account-assets/)
+- [Account Applications](/docs/algokit-utils/typescript/latest/examples/indexer-client/04-account-applications/)
+- [Account Transactions](/docs/algokit-utils/typescript/latest/examples/indexer-client/05-account-transactions/)
+- [Transaction Lookup](/docs/algokit-utils/typescript/latest/examples/indexer-client/06-transaction-lookup/)
+- [Transaction Search](/docs/algokit-utils/typescript/latest/examples/indexer-client/07-transaction-search/)
+- [Asset Lookup](/docs/algokit-utils/typescript/latest/examples/indexer-client/08-asset-lookup/)
+- **Asset Balances**
+- [Asset Transactions](/docs/algokit-utils/typescript/latest/examples/indexer-client/10-asset-transactions/)
+- [Application Lookup](/docs/algokit-utils/typescript/latest/examples/indexer-client/11-application-lookup/)
+- [Application Logs Lookup](/docs/algokit-utils/typescript/latest/examples/indexer-client/12-application-logs/)
+- [Application Boxes Lookup](/docs/algokit-utils/typescript/latest/examples/indexer-client/13-application-boxes/)
+- [Block Lookup](/docs/algokit-utils/typescript/latest/examples/indexer-client/14-block-lookup/)
+- [Block Headers Search](/docs/algokit-utils/typescript/latest/examples/indexer-client/15-block-headers/)
+- [Pagination](/docs/algokit-utils/typescript/latest/examples/indexer-client/16-pagination/)

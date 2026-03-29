@@ -1,0 +1,421 @@
+---
+title: 'State Proof'
+description: 'This example demonstrates how to get state proofs using:'
+sidebar:
+  order: 17
+---
+
+[← Back to Algod Client](/docs/algokit-utils/python/latest/examples/algod-client/)
+
+## Description
+
+This example demonstrates how to get state proofs using:
+
+- state_proof(round) - Get the state proof for a specific round
+  State proofs are cryptographic proofs that attest to the state of the Algorand blockchain. They allow external systems (like bridges, light clients, and other blockchains) to verify Algorand's blockchain state without trusting any intermediary.
+  Key concepts:
+- State proofs are generated at regular intervals (every 256 rounds on MainNet)
+- Each state proof covers a range of block headers (the interval)
+- State proofs are signed by a supermajority of online stake
+- The proof uses post-quantum secure cryptographic techniques (Falcon signatures)
+  Prerequisites:
+  Note: On LocalNet in dev mode, state proofs are NOT generated because: 1. Dev mode doesn't run real consensus 2. There are no real participation keys generating state proofs This example demonstrates the API call and handles the expected errors gracefully.
+
+## Prerequisites
+
+- LocalNet running (via `algokit localnet start`)
+
+## Run This Example
+
+From the repository's `examples` directory:
+
+```bash
+cd examples
+uv run python algod_client/17_state_proof.py
+```
+
+## Code
+
+[View source on GitHub](https://github.com/algorandfoundation/algokit-utils-py/blob/main/examples/algod_client/17_state_proof.py)
+
+```python title="17_state_proof.py"
+# ruff: noqa: N999, C901, PLR0912, PLR0915, PLR2004
+"""
+Example: State Proof
+
+This example demonstrates how to get state proofs using:
+- state_proof(round) - Get the state proof for a specific round
+
+State proofs are cryptographic proofs that attest to the state of the Algorand blockchain.
+They allow external systems (like bridges, light clients, and other blockchains) to verify
+Algorand's blockchain state without trusting any intermediary.
+
+Key concepts:
+- State proofs are generated at regular intervals (every 256 rounds on MainNet)
+- Each state proof covers a range of block headers (the interval)
+- State proofs are signed by a supermajority of online stake
+- The proof uses post-quantum secure cryptographic techniques (Falcon signatures)
+
+Prerequisites:
+- LocalNet running (via `algokit localnet start`)
+
+Note: On LocalNet in dev mode, state proofs are NOT generated because:
+1. Dev mode doesn't run real consensus
+2. There are no real participation keys generating state proofs
+This example demonstrates the API call and handles the expected errors gracefully.
+"""
+
+from shared import (
+    create_algod_client,
+    print_error,
+    print_header,
+    print_info,
+    print_step,
+    print_success,
+)
+
+from algokit_algod_client.models import StateProof
+
+
+def display_state_proof(proof: StateProof) -> None:
+    """Display details from a StateProof."""
+    print_info("  StateProof fields:")
+    print_info("")
+    print_info("  message (StateProofMessage):")
+
+    message = proof.message
+    first_attested = message.first_attested_round
+    print_info(f"    first_attested_round: {first_attested:,}")
+    print_info("                          First round covered by this state proof")
+    print_info("")
+
+    last_attested = message.last_attested_round
+    print_info(f"    last_attested_round: {last_attested:,}")
+    print_info("                         Last round covered by this state proof")
+    print_info("")
+
+    # Calculate interval size
+    interval_size = last_attested - first_attested + 1
+    print_info(f"    Interval size: {interval_size:,} rounds")
+    print_info("")
+
+    block_headers_commitment = message.block_headers_commitment
+    if block_headers_commitment:
+        hex_str = block_headers_commitment.hex()[:64]
+        length = len(block_headers_commitment)
+        print_info(f"    block_headers_commitment: {hex_str}...")
+        print_info(f"                              ({length} bytes)")
+        print_info("                              Vector commitment root for all block headers in interval")
+        print_info("")
+
+    voters_commitment = message.voters_commitment
+    if voters_commitment:
+        hex_str = voters_commitment.hex()[:64]
+        length = len(voters_commitment)
+        print_info(f"    voters_commitment: {hex_str}...")
+        print_info(f"                       ({length} bytes)")
+        print_info("                       Commitment to voters for the next state proof interval")
+        print_info("")
+
+    ln_proven_weight = message.ln_proven_weight
+    print_info(f"    ln_proven_weight: {ln_proven_weight:,}")
+    print_info("                      Natural log of proven weight with 16-bit precision")
+    print_info("                      Used to verify that supermajority of stake signed")
+    print_info("")
+
+    state_proof_data = proof.state_proof
+    print_info("  state_proof (encoded proof):")
+    if state_proof_data and len(state_proof_data) > 0:
+        hex_str = state_proof_data.hex()[:64]
+        length = len(state_proof_data)
+        print_info(f"    {hex_str}...")
+        print_info(f"    ({length:,} bytes total)")
+        print_info("    Contains Falcon signatures and Merkle proofs")
+    else:
+        print_info("    (empty)")
+    print_info("")
+
+    # Show which rounds this proof covers
+    print_info("  Coverage:")
+    print_info(f"    This state proof attests to rounds {first_attested:,} to {last_attested:,}")
+    print_info("    Any block header in this range can be verified against block_headers_commitment")
+    print_info("")
+
+
+def main() -> None:
+    print_header("State Proof Example")
+
+    # Create clients
+    algod = create_algod_client()
+
+    # =========================================================================
+    # Step 1: Understand State Proofs
+    # =========================================================================
+    print_step(1, "Understanding state proofs")
+
+    print_info("What are State Proofs?")
+    print_info("  - Cryptographic proofs that attest to the state of the Algorand blockchain")
+    print_info("  - Allow external systems to verify Algorand state without trusting intermediaries")
+    print_info("  - Signed by a supermajority of online stake (using Falcon signatures)")
+    print_info("  - Use post-quantum secure cryptographic techniques")
+    print_info("")
+    print_info("How State Proofs Work:")
+    print_info("  1. State proofs are generated at regular intervals (StateProofInterval)")
+    print_info("  2. Each proof attests to a range of block headers")
+    print_info("  3. The proof includes a vector commitment to all block headers in the interval")
+    print_info("  4. A supermajority of stake signs the commitment")
+    print_info("  5. The resulting proof can be verified without syncing the full blockchain")
+    print_info("")
+
+    # =========================================================================
+    # Step 2: Get current round and understand intervals
+    # =========================================================================
+    print_step(2, "Getting current round and understanding state proof intervals")
+
+    status = algod.status()
+    last_round = status.last_round
+    print_info(f"Current round: {last_round:,}")
+    print_info("")
+
+    # State proof interval (256 rounds on MainNet)
+    state_proof_interval = 256
+    print_info(f"State Proof Interval: {state_proof_interval:,} rounds")
+    print_info("")
+
+    print_info("State Proof Interval Boundaries:")
+    print_info("  - State proofs are NOT generated for every round")
+    print_info("  - Only rounds that are multiples of the StateProofInterval have proofs")
+    print_info("  - The proof at round N attests to rounds [(N-1)*interval + 1, N*interval]")
+    print_info("")
+
+    # Calculate which intervals we might find state proofs for
+    current_interval = last_round // state_proof_interval
+    print_info(f"Current interval number: ~{current_interval:,}")
+    print_info("")
+
+    # Show example interval boundaries
+    example_proof_round = current_interval * state_proof_interval
+    interval_start = (current_interval - 1) * state_proof_interval + 1
+    interval_end = current_interval * state_proof_interval
+    print_info(f"Example: If state proof exists for round {example_proof_round:,}:")
+    print_info(f"  It would attest to rounds {interval_start:,} to {interval_end:,}")
+    print_info("")
+
+    # =========================================================================
+    # Step 3: Try to get state proof for current interval
+    # =========================================================================
+    print_step(3, "Attempting to get state proof")
+
+    # State proofs are available at interval boundaries
+    # Try the most recent complete interval
+    proof_round = current_interval * state_proof_interval
+
+    print_info(f"Trying state_proof({proof_round:,})...")
+    print_info("")
+
+    try:
+        proof: StateProof = algod.state_proof(proof_round)
+        print_success("Successfully retrieved state proof!")
+        print_info("")
+        display_state_proof(proof)
+    except Exception as e:
+        error_message = str(e)
+
+        # Handle expected cases where state proof is not available
+        if "state proof" in error_message or "not found" in error_message or "404" in error_message:
+            print_info("State proof is not available for this round.")
+            print_info("This is expected behavior on LocalNet dev mode.")
+            print_info("")
+            print_info("Possible reasons:")
+            print_info("  1. State proofs are not enabled on this network (LocalNet dev mode)")
+            print_info("  2. The requested round is not a state proof interval boundary")
+            print_info("  3. The state proof for this interval has not been generated yet")
+            print_info("  4. The state proof has been pruned (old data)")
+        elif "501" in error_message or "not supported" in error_message or "Not Implemented" in error_message:
+            print_info("State proofs are not supported on this node.")
+            print_info("This feature requires a node with state proof support enabled.")
+        else:
+            print_error(f"Error: {error_message}")
+        print_info("")
+
+    # =========================================================================
+    # Step 4: Try multiple interval rounds to find available proofs
+    # =========================================================================
+    print_step(4, "Scanning interval boundaries for available state proofs")
+
+    print_info("Checking several interval boundaries to find available proofs...")
+    print_info("")
+
+    # Try a range of interval boundaries
+    intervals_to_try = [
+        state_proof_interval,  # First possible interval (round 256)
+        state_proof_interval * 2,  # Second interval (round 512)
+        state_proof_interval * 4,  # Fourth interval (round 1024)
+        (current_interval - 2) * state_proof_interval,  # 2 intervals ago
+        (current_interval - 1) * state_proof_interval,  # 1 interval ago
+        current_interval * state_proof_interval,  # Current interval
+    ]
+    # Filter to valid rounds
+    intervals_to_try = [r for r in intervals_to_try if r > 0 and r <= last_round]
+
+    found_proof = False
+    for block_round in intervals_to_try:
+        try:
+            proof = algod.state_proof(block_round)
+            print_success(f"Found state proof for round {block_round:,}!")
+            display_state_proof(proof)
+            found_proof = True
+            break
+        except Exception:
+            print_info(f"Round {block_round:,}: No state proof available")
+
+    if not found_proof:
+        print_info("")
+        print_info("No state proofs found for any tested round.")
+        print_info("This is expected on LocalNet in dev mode where state proofs are not generated.")
+    print_info("")
+
+    # =========================================================================
+    # Step 5: Demonstrate which rounds have state proofs
+    # =========================================================================
+    print_step(5, "Understanding which rounds have state proofs")
+
+    print_info("State proofs are only generated at specific rounds:")
+    print_info("")
+    print_info("  Round 256    -> First state proof (attests to rounds 1-256)")
+    print_info("  Round 512    -> Second state proof (attests to rounds 257-512)")
+    print_info("  Round 768    -> Third state proof (attests to rounds 513-768)")
+    print_info("  ...")
+    print_info("  Round N*256  -> Attests to rounds [(N-1)*256 + 1, N*256]")
+    print_info("")
+
+    print_info("Rounds that do NOT have state proofs (examples):")
+    print_info("  Round 1, 2, 3, ... 255  -> Part of first interval, no individual proofs")
+    print_info("  Round 257, 300, 400     -> Part of second interval, no individual proofs")
+    print_info("  Round 100, 500, 1000    -> Not interval boundaries")
+    print_info("")
+
+    # =========================================================================
+    # Step 6: Error handling for invalid rounds
+    # =========================================================================
+    print_step(6, "Demonstrating error handling for invalid rounds")
+
+    print_info("Testing error handling for various round scenarios:")
+    print_info("")
+
+    # Try a non-interval round (should fail)
+    non_interval_round = state_proof_interval + 1
+    print_info(f"  Non-interval round ({non_interval_round:,}):")
+    try:
+        algod.state_proof(non_interval_round)
+        print_info("    Unexpectedly succeeded")
+    except Exception as e:
+        error_message = str(e)
+        truncated = error_message[:80]
+        suffix = "..." if len(error_message) > 80 else ""
+        print_info(f"    Error (expected): {truncated}{suffix}")
+    print_info("")
+
+    # Try a future round
+    future_round = (last_round // state_proof_interval + 10) * state_proof_interval
+    print_info(f"  Future round ({future_round:,}):")
+    try:
+        algod.state_proof(future_round)
+        print_info("    Unexpectedly succeeded")
+    except Exception as e:
+        error_message = str(e)
+        truncated = error_message[:80]
+        suffix = "..." if len(error_message) > 80 else ""
+        print_info(f"    Error (expected): {truncated}{suffix}")
+    print_info("")
+
+    # Try round 0 (invalid - no state proof for genesis)
+    print_info("  Round 0 (invalid):")
+    try:
+        algod.state_proof(0)
+        print_info("    Unexpectedly succeeded")
+    except Exception as e:
+        error_message = str(e)
+        truncated = error_message[:80]
+        suffix = "..." if len(error_message) > 80 else ""
+        print_info(f"    Error (expected): {truncated}{suffix}")
+    print_info("")
+
+    # =========================================================================
+    # Summary
+    # =========================================================================
+    print_header("Summary")
+
+    print_info("State Proofs - Key Points:")
+    print_info("")
+    print_info("1. What They Are:")
+    print_info("   - Cryptographic proofs of Algorand blockchain state")
+    print_info("   - Allow trustless verification by external systems")
+    print_info("   - Signed by supermajority of online stake (~3+ billion ALGO)")
+    print_info("   - Use post-quantum secure Falcon signatures")
+    print_info("")
+    print_info("2. When They're Generated:")
+    print_info("   - Every StateProofInterval rounds (256 on MainNet)")
+    print_info("   - NOT generated for every round")
+    print_info("   - Only at interval boundary rounds (256, 512, 768, ...)")
+    print_info("")
+    print_info("3. StateProof Type Structure:")
+    print_info("   message: StateProofMessage")
+    print_info("     - block_headers_commitment: bytes  - Vector commitment to block headers")
+    print_info("     - voters_commitment: bytes         - Commitment to voters for next proof")
+    print_info("     - ln_proven_weight: int            - Log of proven weight (16-bit precision)")
+    print_info("     - first_attested_round: int        - First round in the interval")
+    print_info("     - last_attested_round: int         - Last round in the interval")
+    print_info("   state_proof: bytes                   - The encoded cryptographic proof")
+    print_info("")
+    print_info("4. API Method:")
+    print_info("   state_proof(round_: int) -> StateProof")
+    print_info("   - round_ must be a state proof interval boundary")
+    print_info("")
+    print_info("5. Use Cases:")
+    print_info("   - Cross-chain bridges: Verify Algorand state on other chains")
+    print_info("   - Light clients: Verify state without full node sync")
+    print_info("   - Trustless verification: No intermediary needed")
+    print_info("   - Interoperability: Connect Algorand to other ecosystems")
+    print_info("")
+    print_info("6. Availability:")
+    print_info("   - MainNet/TestNet: Available at interval boundaries")
+    print_info("   - LocalNet dev mode: NOT available (no real consensus)")
+    print_info("   - Archive nodes: Historical state proofs may be available")
+    print_info("")
+    print_info("7. Verification Process:")
+    print_info("   1. Get the state proof for an interval boundary")
+    print_info("   2. Verify the Falcon signatures against known voters")
+    print_info("   3. Check that proven weight represents supermajority")
+    print_info("   4. Use block_headers_commitment to verify individual block headers")
+    print_info("   5. Chain state proofs together for long-range verification")
+
+
+if __name__ == "__main__":
+    main()
+
+```
+
+---
+
+### Other examples in Algod Client
+
+- [Node Health and Status](/docs/algokit-utils/python/latest/examples/algod-client/01-node-health-status/)
+- [Version and Genesis Information](/docs/algokit-utils/python/latest/examples/algod-client/02-version-genesis/)
+- [Ledger Supply Information](/docs/algokit-utils/python/latest/examples/algod-client/03-ledger-supply/)
+- [Account Information](/docs/algokit-utils/python/latest/examples/algod-client/04-account-info/)
+- [Transaction Parameters](/docs/algokit-utils/python/latest/examples/algod-client/05-transaction-params/)
+- [Send and Confirm Transaction](/docs/algokit-utils/python/latest/examples/algod-client/06-send-transaction/)
+- [Pending Transactions](/docs/algokit-utils/python/latest/examples/algod-client/07-pending-transactions/)
+- [Block Data](/docs/algokit-utils/python/latest/examples/algod-client/08-block-data/)
+- [Asset Information](/docs/algokit-utils/python/latest/examples/algod-client/09-asset-info/)
+- [Application Information](/docs/algokit-utils/python/latest/examples/algod-client/10-application-info/)
+- [Application Boxes](/docs/algokit-utils/python/latest/examples/algod-client/11-application-boxes/)
+- [TEAL Compile and Disassemble](/docs/algokit-utils/python/latest/examples/algod-client/12-teal-compile/)
+- [Transaction Simulation](/docs/algokit-utils/python/latest/examples/algod-client/13-simulation/)
+- [Ledger State Deltas](/docs/algokit-utils/python/latest/examples/algod-client/14-state-deltas/)
+- [Transaction Proof](/docs/algokit-utils/python/latest/examples/algod-client/15-transaction-proof/)
+- [Light Block Header Proof](/docs/algokit-utils/python/latest/examples/algod-client/16-lightblock-proof/)
+- **State Proof**
+- [DevMode Timestamp Offset](/docs/algokit-utils/python/latest/examples/algod-client/18-devmode-timestamp/)
+- [Sync Round Management](/docs/algokit-utils/python/latest/examples/algod-client/19-sync-round/)

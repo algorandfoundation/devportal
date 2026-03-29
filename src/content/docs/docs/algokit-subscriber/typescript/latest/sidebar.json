@@ -1,0 +1,39 @@
+[
+  { "label": "Home", "link": "/" },
+  {
+    "label": "Getting Started",
+    "items": [{ "label": "Quick Start", "slug": "tutorials/quick-start" }]
+  },
+  {
+    "label": "Guides",
+    "items": [{ "slug": "guide/subscriber" }, { "slug": "guide/subscriptions" }]
+  },
+  {
+    "label": "Concepts",
+    "items": [
+      { "slug": "concepts/sync-behaviour" },
+      { "slug": "concepts/low-latency" },
+      { "slug": "concepts/watermarking" },
+      { "slug": "concepts/filtering" },
+      { "slug": "concepts/arc28-events" },
+      { "slug": "concepts/emit-arc28-events" },
+      { "slug": "concepts/inner-transactions" },
+      { "slug": "concepts/state-proofs" },
+      { "slug": "concepts/fast-catchup" }
+    ]
+  },
+  {
+    "label": "Examples",
+    "autogenerate": { "directory": "examples" }
+  },
+  {
+    "label": "Migration Guides",
+    "collapsed": true,
+    "autogenerate": { "directory": "migration" }
+  },
+  {
+    "label": "API Reference",
+    "collapsed": true,
+    "autogenerate": { "directory": "api" }
+  }
+]

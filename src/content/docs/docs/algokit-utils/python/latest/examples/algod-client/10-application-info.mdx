@@ -1,0 +1,377 @@
+---
+title: 'Application Information'
+description: 'This example demonstrates how to retrieve application information using the AlgodClient method: application_by_id()'
+sidebar:
+  order: 10
+---
+
+[← Back to Algod Client](/docs/algokit-utils/python/latest/examples/algod-client/)
+
+## Description
+
+This example demonstrates how to retrieve application information using the AlgodClient method: application_by_id()
+Prerequisites:
+
+## Prerequisites
+
+- LocalNet running (via `algokit localnet start`)
+
+## Run This Example
+
+From the repository's `examples` directory:
+
+```bash
+cd examples
+uv run python algod_client/10_application_info.py
+```
+
+## Code
+
+[View source on GitHub](https://github.com/algorandfoundation/algokit-utils-py/blob/main/examples/algod_client/10_application_info.py)
+
+```python title="10_application_info.py"
+# ruff: noqa: N999, C901, PLR0912, PLR0915, PLR2004
+"""
+Example: Application Information
+
+This example demonstrates how to retrieve application information using
+the AlgodClient method: application_by_id()
+
+Prerequisites:
+- LocalNet running (via `algokit localnet start`)
+"""
+
+import base64
+
+from shared import (
+    create_algod_client,
+    create_algorand_client,
+    get_funded_account,
+    load_teal_source,
+    print_error,
+    print_header,
+    print_info,
+    print_step,
+    print_success,
+    shorten_address,
+)
+
+from algokit_algod_client.models import TealValue
+from algokit_utils import AppCallParams, AppCreateParams
+
+
+def decode_teal_value(value: TealValue) -> str:
+    """Decode a TEAL value for display."""
+    if value.type_ == 2:
+        # uint
+        return f"{value.uint} (uint)"
+    elif value.type_ == 1:
+        # bytes
+        if value.bytes_:
+            try:
+                # Check if it's a printable string
+                text = value.bytes_.decode("utf-8")
+                if all(32 <= ord(c) <= 126 for c in text) and len(text) > 0:
+                    return f'"{text}" (bytes)'
+            except (ValueError, UnicodeDecodeError):
+                pass
+            # Fall back to hex
+            return f"0x{value.bytes_.hex()} (bytes)"
+        return "(empty bytes)"
+    return "(unknown type)"
+
+
+def main() -> None:
+    print_header("Application Information Example")
+
+    # Create an Algod client connected to LocalNet
+    algod = create_algod_client()
+
+    # Create an AlgorandClient for application deployment
+    algorand = create_algorand_client()
+
+    # =========================================================================
+    # Step 1: Get a Funded Account from LocalNet
+    # =========================================================================
+    print_step(1, "Getting a funded account from LocalNet")
+
+    try:
+        creator = get_funded_account(algorand)
+        print_success(f"Got funded account: {shorten_address(str(creator.addr))}")
+    except Exception as e:
+        print_error(f"Failed to get funded account: {e}")
+        print_info("Make sure LocalNet is running with `algokit localnet start`")
+        print_info("If issues persist, try `algokit localnet reset`")
+        raise SystemExit(1) from e
+
+    # =========================================================================
+    # Step 2: Deploy a Test Application using AlgorandClient
+    # =========================================================================
+    print_step(2, "Deploying a test application")
+
+    # Load approval program from shared artifacts
+    # - Accepts all ApplicationCall transactions
+    # - Stores a counter in global state on each call
+    # - Has one global uint and one global bytes slot
+    approval_source = load_teal_source("approval-counter-message.teal")
+
+    # Load clear state program from shared artifacts
+    clear_source = load_teal_source("clear-state-approve.teal")
+
+    try:
+        print_info("Compiling TEAL programs...")
+        approval_compiled = algod.teal_compile(approval_source.encode())
+        clear_compiled = algod.teal_compile(clear_source.encode())
+        print_success(f"Approval program hash: {approval_compiled.hash_}")
+        print_success(f"Clear program hash: {clear_compiled.hash_}")
+
+        print_info("Deploying application...")
+        result = algorand.send.app_create(
+            AppCreateParams(
+                sender=str(creator.addr),
+                approval_program=base64.b64decode(approval_compiled.result),
+                clear_state_program=base64.b64decode(clear_compiled.result),
+                schema={
+                    "global_ints": 1,
+                    "global_byte_slices": 1,
+                    "local_ints": 0,
+                    "local_byte_slices": 0,
+                },
+            )
+        )
+
+        app_id = result.app_id
+        print_success(f"Application deployed with ID: {app_id}")
+        print_info("")
+
+        # =========================================================================
+        # Step 3: Get Application Information using application_by_id()
+        # =========================================================================
+        print_step(3, "Getting application information with application_by_id()")
+
+        app = algod.application_by_id(app_id)
+
+        print_success("Application information retrieved successfully!")
+        print_info("")
+
+        # =========================================================================
+        # Step 4: Display Application Params
+        # =========================================================================
+        print_step(4, "Displaying application parameters")
+
+        print_info("Application Identification:")
+        print_info(f"  Application ID: {app.id_}")
+        print_info("")
+
+        params = app.params
+        print_info("Application Parameters:")
+        print_info(f"  Creator:        {params.creator}")
+        print_info(f"                  {shorten_address(params.creator)} (shortened)")
+        print_info("")
+
+        # Display approval program info
+        print_info("Approval Program:")
+        if params.approval_program:
+            print_info(f"  Size:           {len(params.approval_program)} bytes")
+            approval_preview = params.approval_program[:20].hex()
+            print_info(f"  Preview:        {approval_preview}... (first 20 bytes, hex)")
+        print_info("The approval program runs when the app is called")
+        print_info("")
+
+        # Display clear state program info
+        print_info("Clear State Program:")
+        if params.clear_state_program:
+            print_info(f"  Size:           {len(params.clear_state_program)} bytes")
+            clear_preview = params.clear_state_program[:20].hex()
+            print_info(f"  Preview:        {clear_preview}... (first 20 bytes, hex)")
+        print_info("The clear state program runs when an account clears its local state")
+        print_info("")
+
+        # Display extra program pages if any
+        if params.extra_program_pages and params.extra_program_pages > 0:
+            print_info(f"  Extra Pages:    {params.extra_program_pages}")
+            print_info("Extra program pages allow for larger smart contracts")
+
+        # Display version if available
+        if params.version is not None:
+            print_info(f"  Version:        {params.version}")
+            print_info("Version tracks number of program updates")
+
+        print_info("")
+
+        # =========================================================================
+        # Step 5: Display State Schema
+        # =========================================================================
+        print_step(5, "Displaying state schema")
+
+        print_info("Global State Schema:")
+        global_state_schema = params.global_state_schema
+        if global_state_schema:
+            print_info(f"  Uint Slots:       {global_state_schema.num_uints}")
+            print_info(f"  Byte Slice Slots: {global_state_schema.num_byte_slices}")
+            print_info("Global state is shared across all accounts")
+        else:
+            print_info("  (no global state schema)")
+        print_info("")
+
+        print_info("Local State Schema:")
+        local_state_schema = params.local_state_schema
+        if local_state_schema:
+            print_info(f"  Uint Slots:       {local_state_schema.num_uints}")
+            print_info(f"  Byte Slice Slots: {local_state_schema.num_byte_slices}")
+            print_info("Local state is per-account and requires opt-in")
+        else:
+            print_info("  (no local state schema)")
+        print_info("")
+
+        # =========================================================================
+        # Step 6: Display Global State
+        # =========================================================================
+        print_step(6, "Displaying global state")
+
+        global_state = params.global_state or []
+        if global_state:
+            print_info("Global State Values:")
+            for kv in global_state:
+                # Decode the key (it's bytes)
+                try:
+                    key_str = kv.key.decode("utf-8")
+                except Exception:
+                    key_str = kv.key.hex()
+                value_str = decode_teal_value(kv.value)
+                print_info(f'  "{key_str}": {value_str}')
+            print_info("")
+            print_info("Global state is stored on-chain and costs MBR")
+        else:
+            print_info("  (no global state values)")
+            print_info("This application has no global state set")
+        print_info("")
+
+        # =========================================================================
+        # Step 7: Call the Application to Update Global State
+        # =========================================================================
+        print_step(7, "Calling application to update global state")
+
+        print_info("Calling the application to increment the counter...")
+        algorand.send.app_call(
+            AppCallParams(
+                sender=str(creator.addr),
+                app_id=app_id,
+            )
+        )
+
+        # Fetch updated application info
+        updated_app = algod.application_by_id(app_id)
+
+        print_info("Updated Global State:")
+        updated_global_state = updated_app.params.global_state or []
+        if updated_global_state:
+            for kv in updated_global_state:
+                try:
+                    key_str = kv.key.decode("utf-8")
+                except Exception:
+                    key_str = kv.key.hex()
+                value_str = decode_teal_value(kv.value)
+                print_info(f'  "{key_str}": {value_str}')
+        print_success("Counter was incremented from 0 to 1")
+        print_info("")
+
+        # =========================================================================
+        # Step 8: Handle Application Not Found
+        # =========================================================================
+        print_step(8, "Demonstrating error handling for non-existent application")
+
+        non_existent_app_id = 999999999
+        try:
+            print_info(f"Querying non-existent application ID: {non_existent_app_id}")
+            algod.application_by_id(non_existent_app_id)
+            print_error("Expected an error but none was thrown")
+        except Exception as e:
+            print_success("Correctly caught error for non-existent application")
+            print_info(f"  Error message: {e}")
+            print_info("Always handle the case where an application may not exist or has been deleted")
+        print_info("")
+
+        # =========================================================================
+        # Step 9: Note about Round Information
+        # =========================================================================
+        print_step(9, "Note about data validity")
+
+        print_info("The application_by_id() method returns the current application state.")
+        print_info("Unlike some other endpoints, it does not include a round field.")
+        print_info("To get the current round, use status() or other round-aware methods.")
+
+        # Get current round for reference
+        status = algod.status()
+        print_info(f"  Current network round: {status.last_round:,}")
+        print_info("")
+    except Exception as e:
+        print_error(f"Failed to deploy or query application: {e}")
+        print_info("If LocalNet errors occur, try `algokit localnet reset`")
+        raise SystemExit(1) from e
+
+    # =========================================================================
+    # Summary
+    # =========================================================================
+    print_header("Summary")
+    print_info("This example demonstrated:")
+    print_info("  1. Deploying a test application using AlgorandClient.send.app_create()")
+    print_info("  2. application_by_id(app_id) - Get complete application information")
+    print_info("  3. Application params: creator, approval_program, clear_state_program")
+    print_info("  4. State schema: global_state_schema, local_state_schema")
+    print_info("  5. Displaying global state values with TEAL key-value decoding")
+    print_info("  6. Calling the application and observing state changes")
+    print_info("  7. Error handling for non-existent applications")
+    print_info("")
+    print_info("Key Application fields:")
+    print_info("  - id_: Unique application identifier (int)")
+    print_info("  - params.creator: Address that deployed the application")
+    print_info("  - params.approval_program: Bytecode for app calls (bytes)")
+    print_info("  - params.clear_state_program: Bytecode for clear state (bytes)")
+    print_info("  - params.global_state_schema: { num_uints, num_byte_slices }")
+    print_info("  - params.local_state_schema: { num_uints, num_byte_slices }")
+    print_info("  - params.global_state: list[TealKeyValue] (current global state)")
+    print_info("  - params.extra_program_pages: Additional program space (optional)")
+    print_info("  - params.version: Number of updates to the program (optional)")
+    print_info("")
+    print_info("Global State (TealKeyValue) structure:")
+    print_info("  - key: bytes (state key, often UTF-8 string)")
+    print_info("  - value.type_: 1 = bytes, 2 = uint")
+    print_info("  - value.bytes_: bytes (for bytes type)")
+    print_info("  - value.uint: int (for uint type)")
+    print_info("")
+    print_info("Use cases:")
+    print_info("  - Verify application creator and code before interaction")
+    print_info("  - Read current global state values")
+    print_info("  - Check state schema to understand storage limits")
+    print_info("  - Display application information in explorers/wallets")
+
+
+if __name__ == "__main__":
+    main()
+
+```
+
+---
+
+### Other examples in Algod Client
+
+- [Node Health and Status](/docs/algokit-utils/python/latest/examples/algod-client/01-node-health-status/)
+- [Version and Genesis Information](/docs/algokit-utils/python/latest/examples/algod-client/02-version-genesis/)
+- [Ledger Supply Information](/docs/algokit-utils/python/latest/examples/algod-client/03-ledger-supply/)
+- [Account Information](/docs/algokit-utils/python/latest/examples/algod-client/04-account-info/)
+- [Transaction Parameters](/docs/algokit-utils/python/latest/examples/algod-client/05-transaction-params/)
+- [Send and Confirm Transaction](/docs/algokit-utils/python/latest/examples/algod-client/06-send-transaction/)
+- [Pending Transactions](/docs/algokit-utils/python/latest/examples/algod-client/07-pending-transactions/)
+- [Block Data](/docs/algokit-utils/python/latest/examples/algod-client/08-block-data/)
+- [Asset Information](/docs/algokit-utils/python/latest/examples/algod-client/09-asset-info/)
+- **Application Information**
+- [Application Boxes](/docs/algokit-utils/python/latest/examples/algod-client/11-application-boxes/)
+- [TEAL Compile and Disassemble](/docs/algokit-utils/python/latest/examples/algod-client/12-teal-compile/)
+- [Transaction Simulation](/docs/algokit-utils/python/latest/examples/algod-client/13-simulation/)
+- [Ledger State Deltas](/docs/algokit-utils/python/latest/examples/algod-client/14-state-deltas/)
+- [Transaction Proof](/docs/algokit-utils/python/latest/examples/algod-client/15-transaction-proof/)
+- [Light Block Header Proof](/docs/algokit-utils/python/latest/examples/algod-client/16-lightblock-proof/)
+- [State Proof](/docs/algokit-utils/python/latest/examples/algod-client/17-state-proof/)
+- [DevMode Timestamp Offset](/docs/algokit-utils/python/latest/examples/algod-client/18-devmode-timestamp/)
+- [Sync Round Management](/docs/algokit-utils/python/latest/examples/algod-client/19-sync-round/)

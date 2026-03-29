@@ -6,14 +6,7 @@
 import type { TransformFunction } from '@larkiny/astro-github-loader';
 import picomatch from 'picomatch';
 
-import {
-  createFrontmatterTransform,
-  createTitleTransform,
-  createSourceInfoTransform,
-  createSidebarTransform,
-  createDraftTransform,
-  composeFrontmatterTransforms,
-} from './frontmatter.js';
+import { createFrontmatterTransform } from './frontmatter.js';
 import {
   parseFrontmatter,
   combineFrontmatterAndContent,
@@ -29,9 +22,10 @@ export function conditionalTransform(
   condition: string | ((path: string) => boolean),
   ...transforms: TransformFunction[]
 ): TransformFunction {
-  const conditionFn = typeof condition === 'string'
-    ? (path: string) => matchesPath(condition, path)
-    : condition;
+  const conditionFn =
+    typeof condition === 'string'
+      ? (path: string) => matchesPath(condition, path)
+      : condition;
 
   return (content: string, context) => {
     if (conditionFn(context.path)) {
@@ -49,10 +43,29 @@ export function matchesPath(pattern: string, path: string): boolean {
 }
 
 /**
+ * Matches overview/readme/index files (case-insensitive) to set sidebar.order: 0
+ */
+const OVERVIEW_FILES = /\/(overview|readme|index)\.md$/i;
+
+/**
+ * Global transform that sets sidebar.order: 0 on overview, readme, and index files.
+ * Add to a config's top-level `transforms` array so it applies to all included files.
+ * Include-specific transforms that also set sidebar properties will override via deep merge.
+ */
+export const overviewOrderTransform: TransformFunction = (content, context) => {
+  if (!OVERVIEW_FILES.test('/' + context.path)) return content;
+  return createFrontmatterTransform({
+    frontmatter: { sidebar: { order: 0 } },
+    mode: 'merge',
+    preserveExisting: false,
+  })(content, context);
+};
+
+/**
  * Converts the first H1 heading to frontmatter title and removes it from content
  * This is useful for markdown files that have titles as H1 headings instead of frontmatter
  */
-export const convertH1ToTitle: TransformFunction = (content, context) => {
+export const convertH1ToTitle: TransformFunction = (content, _context) => {
   // Parse existing frontmatter first
   const parsed = parseFrontmatter(content);
 
@@ -91,7 +104,7 @@ export function extractH1Text(content: string): string | null {
  * Removes the first H1 heading from content without extracting it to frontmatter
  * Useful when you want to set the title manually via frontmatter
  */
-export const removeH1: TransformFunction = (content, context) => {
+export const removeH1: TransformFunction = (content, _context) => {
   const parsed = parseFrontmatter(content);
 
   // Remove the first H1 from content
@@ -112,7 +125,7 @@ export function convertH1ToTitleMatch(
   matchIndex: number = 1,
   fallback: boolean = true,
 ): TransformFunction {
-  return (content, context) => {
+  return (content, _context) => {
     // Parse existing frontmatter first
     const parsed = parseFrontmatter(content);
 
@@ -290,7 +303,9 @@ export function createContentBasedFrontmatterTransform(
 
     if (match) {
       // Normalize matchIndices to always be an array
-      const indices = Array.isArray(matchIndices) ? matchIndices : [matchIndices];
+      const indices = Array.isArray(matchIndices)
+        ? matchIndices
+        : [matchIndices];
 
       // Extract values from the specified capture groups
       extractedValues = indices.map(index => {
@@ -322,7 +337,7 @@ export function createContentBasedFrontmatterTransform(
 export function createRemoveContentUpToHeading(
   headingPattern: RegExp,
 ): TransformFunction {
-  return (content, context) => {
+  return (content, _context) => {
     // Parse existing frontmatter first
     const parsed = parseFrontmatter(content);
 

@@ -1,0 +1,635 @@
+---
+title: 'Transaction Search'
+description: 'This example demonstrates how to search for transactions with various filters using the IndexerClient search_for_transactions() method.'
+sidebar:
+  order: 7
+---
+
+[← Back to Indexer Client](/docs/algokit-utils/python/latest/examples/indexer-client/)
+
+## Description
+
+This example demonstrates how to search for transactions with various filters using the IndexerClient search_for_transactions() method.
+Prerequisites:
+
+## Prerequisites
+
+- LocalNet running (via `algokit localnet start`)
+
+## Run This Example
+
+From the repository's `examples` directory:
+
+```bash
+cd examples
+uv run python indexer_client/07_transaction_search.py
+```
+
+## Code
+
+[View source on GitHub](https://github.com/algorandfoundation/algokit-utils-py/blob/main/examples/indexer_client/07_transaction_search.py)
+
+```python title="07_transaction_search.py"
+# ruff: noqa: N999, C901, PLR0912, PLR0915, PLR2004
+"""
+Example: Transaction Search
+
+This example demonstrates how to search for transactions with various filters using
+the IndexerClient search_for_transactions() method.
+
+Prerequisites:
+- LocalNet running (via `algokit localnet start`)
+"""
+
+import base64
+import time
+from datetime import datetime, timezone
+
+from shared import (
+    create_algod_client,
+    create_algorand_client,
+    create_indexer_client,
+    format_micro_algo,
+    load_teal_source,
+    print_error,
+    print_header,
+    print_info,
+    print_step,
+    print_success,
+    shorten_address,
+    wait_for_confirmation,
+)
+
+from algokit_utils import AlgoAmount, AssetCreateParams, AssetOptInParams, AssetTransferParams, PaymentParams
+from algokit_utils.transactions.types import AppCreateParams
+
+
+def main() -> None:
+    print_header("Transaction Search Example")
+
+    # Create clients
+    indexer = create_indexer_client()
+    algorand = create_algorand_client()
+    algod = create_algod_client()
+
+    # =========================================================================
+    # Step 1: Get a funded account from LocalNet
+    # =========================================================================
+    print_step(1, "Getting a funded account from LocalNet")
+
+    try:
+        sender_account = algorand.account.localnet_dispenser()
+        algorand.set_signer_from_account(sender_account)
+        sender_address = sender_account.addr
+        print_success(f"Using dispenser account: {shorten_address(sender_address)}")
+    except Exception as e:
+        print_error(f"Failed to get dispenser account: {e}")
+        print_info("")
+        print_info("Make sure LocalNet is running: algokit localnet start")
+        print_info("If issues persist, try: algokit localnet reset")
+        return
+
+    # =========================================================================
+    # Step 2: Create several different transaction types for setup
+    # =========================================================================
+    print_step(2, "Creating several different transaction types for setup")
+
+    try:
+        # Get the current round before creating transactions
+        status = algod.status()
+        start_round = status.last_round
+
+        # Create a random receiver account
+        receiver_account = algorand.account.random()
+        receiver_address = receiver_account.addr
+        algorand.set_signer_from_account(receiver_account)
+        print_info(f"Created receiver account: {shorten_address(receiver_address)}")
+
+        # 1. Payment transaction
+        print_info("Creating payment transaction...")
+        algorand.send.payment(
+            PaymentParams(
+                sender=sender_address,
+                receiver=receiver_address,
+                amount=AlgoAmount.from_algo(10),
+            )
+        )
+        print_success("Payment sent: 10 ALGO")
+
+        # 2. Another payment with different amount
+        print_info("Creating another payment transaction...")
+        algorand.send.payment(
+            PaymentParams(
+                sender=sender_address,
+                receiver=receiver_address,
+                amount=AlgoAmount.from_algo(5),
+            )
+        )
+        print_success("Payment sent: 5 ALGO")
+
+        # 3. Asset creation (acfg transaction)
+        print_info("Creating asset config transaction (asset creation)...")
+        asset_create_result = algorand.send.asset_create(
+            AssetCreateParams(
+                sender=sender_address,
+                total=1_000_000,
+                decimals=6,
+                asset_name="SearchTestToken",
+                unit_name="SRCH",
+            )
+        )
+        asset_id = asset_create_result.asset_id
+        print_success(f"Created asset: SearchTestToken (ID: {asset_id})")
+
+        # 4. Asset opt-in (axfer to self with 0 amount)
+        print_info("Creating asset opt-in transaction...")
+        algorand.send.asset_opt_in(
+            AssetOptInParams(
+                sender=receiver_address,
+                asset_id=asset_id,
+            )
+        )
+        print_success("Receiver opted into asset")
+
+        # 5. Asset transfer (axfer)
+        print_info("Creating asset transfer transaction...")
+        algorand.send.asset_transfer(
+            AssetTransferParams(
+                sender=sender_address,
+                receiver=receiver_address,
+                asset_id=asset_id,
+                amount=50_000,
+            )
+        )
+        print_success("Asset transfer sent: 50,000 units")
+
+        # 6. Application creation (appl transaction)
+        print_info("Creating application transaction...")
+        # Load simple approval/clear programs from shared artifacts
+        approval_source = load_teal_source("clear-state-approve.teal")
+        clear_source = load_teal_source("clear-state-approve.teal")
+
+        approval_result = algod.teal_compile(approval_source.encode())
+        approval_program = base64.b64decode(approval_result.result)
+
+        clear_result = algod.teal_compile(clear_source.encode())
+        clear_program = base64.b64decode(clear_result.result)
+
+        # Create the app transaction
+        txn = algorand.create_transaction.app_create(
+            AppCreateParams(
+                sender=sender_address,
+                approval_program=approval_program,
+                clear_state_program=clear_program,
+                schema={
+                    "global_ints": 0,
+                    "global_byte_slices": 0,
+                    "local_ints": 0,
+                    "local_byte_slices": 0,
+                },
+            )
+        )
+
+        # Sign and send
+        signed_txn = sender_account.signer([txn], [0])
+        result = algod.send_raw_transaction(signed_txn)
+        tx_id = result.tx_id
+        pending = wait_for_confirmation(algod, tx_id)
+        app_id = pending.app_id
+        print_success(f"Created application: ID {app_id}")
+
+        # Small delay to allow indexer to catch up
+        print_info("Waiting for indexer to index transactions...")
+        time.sleep(3)
+        print_info("")
+    except Exception as e:
+        print_error(f"Failed to create test transactions: {e}")
+        print_info("")
+        print_info("If LocalNet errors occur, try: algokit localnet reset")
+        return
+
+    # =========================================================================
+    # Step 3: Search for transactions with default parameters
+    # =========================================================================
+    print_step(3, "Searching for transactions with default parameters")
+
+    try:
+        # Note: Results are returned oldest to newest (unless address filter is used)
+        txns_result = indexer.search_for_transactions(limit=10)
+
+        print_success(f"Found {len(txns_result.transactions or [])} transaction(s)")
+        print_info("Note: Results are returned oldest to newest (except when using address filter)")
+        print_info("")
+
+        if txns_result.transactions:
+            print_info("Recent transactions:")
+            for tx in (txns_result.transactions or [])[:5]:
+                tx_id_display = shorten_address(tx.id_, 8, 6) if tx.id_ else "N/A"
+                print_info(f"  Transaction ID: {tx_id_display}")
+                print_info(f"    - tx_type: {tx.tx_type}")
+                print_info(f"    - sender: {shorten_address(tx.sender)}")
+                if tx.confirmed_round is not None:
+                    print_info(f"    - confirmed_round: {tx.confirmed_round}")
+                print_info("")
+
+        print_info(f"Query performed at round: {txns_result.current_round}")
+    except Exception as e:
+        print_error(f"search_for_transactions failed: {e}")
+
+    # =========================================================================
+    # Step 4: Filter by tx_type to find specific transaction types
+    # =========================================================================
+    print_step(4, "Filtering by tx_type to find specific transaction types")
+
+    try:
+        # Transaction types: pay, keyreg, acfg, axfer, afrz, appl, stpf, hb
+        print_info("Available tx_type values: pay, keyreg, acfg, axfer, afrz, appl, stpf, hb")
+        print_info("")
+
+        # Search for payment transactions
+        print_info("Searching for payment transactions (tx_type=pay)...")
+        pay_txns = indexer.search_for_transactions(tx_type="pay", limit=5)
+        print_success(f"Found {len(pay_txns.transactions or [])} payment transaction(s)")
+        if pay_txns.transactions:
+            for tx in (pay_txns.transactions or [])[:2]:
+                tx_id_display = shorten_address(tx.id_, 8, 6) if tx.id_ else "N/A"
+                amount = tx.payment_transaction.amount if tx.payment_transaction else 0
+                print_info(f"  - {tx_id_display}: {format_micro_algo(amount)}")
+        print_info("")
+
+        # Search for asset transfer transactions
+        print_info("Searching for asset transfer transactions (tx_type=axfer)...")
+        axfer_txns = indexer.search_for_transactions(tx_type="axfer", limit=5)
+        print_success(f"Found {len(axfer_txns.transactions or [])} asset transfer transaction(s)")
+        if axfer_txns.transactions:
+            for tx in (axfer_txns.transactions or [])[:2]:
+                tx_id_display = shorten_address(tx.id_, 8, 6) if tx.id_ else "N/A"
+                axfer_asset_id = tx.asset_transfer_transaction.asset_id if tx.asset_transfer_transaction else "N/A"
+                print_info(f"  - {tx_id_display}: asset_id={axfer_asset_id}")
+        print_info("")
+
+        # Search for asset config transactions
+        print_info("Searching for asset config transactions (tx_type=acfg)...")
+        acfg_txns = indexer.search_for_transactions(tx_type="acfg", limit=5)
+        print_success(f"Found {len(acfg_txns.transactions or [])} asset config transaction(s)")
+        if acfg_txns.transactions:
+            for tx in (acfg_txns.transactions or [])[:2]:
+                tx_id_display = shorten_address(tx.id_, 8, 6) if tx.id_ else "N/A"
+                asset_id_display = tx.created_asset_id
+                if asset_id_display is None and tx.asset_config_transaction:
+                    asset_id_display = tx.asset_config_transaction.asset_id
+                print_info(f"  - {tx_id_display}: asset_id={asset_id_display}")
+        print_info("")
+
+        # Search for application call transactions
+        print_info("Searching for application call transactions (tx_type=appl)...")
+        appl_txns = indexer.search_for_transactions(tx_type="appl", limit=5)
+        print_success(f"Found {len(appl_txns.transactions or [])} application call transaction(s)")
+        if appl_txns.transactions:
+            for tx in (appl_txns.transactions or [])[:2]:
+                tx_id_display = shorten_address(tx.id_, 8, 6) if tx.id_ else "N/A"
+                app_id_display = tx.created_app_id
+                if app_id_display is None and tx.application_transaction:
+                    app_id_display = tx.application_transaction.application_id
+                print_info(f"  - {tx_id_display}: app_id={app_id_display}")
+    except Exception as e:
+        print_error(f"tx_type filter failed: {e}")
+
+    # =========================================================================
+    # Step 5: Filter by sig_type (sig, msig, lsig)
+    # =========================================================================
+    print_step(5, "Filtering by sig_type (sig, msig, lsig)")
+
+    try:
+        # Signature types:
+        # - sig: Standard single signature
+        # - msig: Multisignature
+        # - lsig: Logic signature (smart signature)
+        print_info("Available sig_type values: sig, msig, lsig")
+        print_info("")
+
+        # Search for standard signature transactions
+        print_info("Searching for standard signature transactions (sig_type=sig)...")
+        sig_txns = indexer.search_for_transactions(sig_type="sig", limit=5)
+        print_success(f"Found {len(sig_txns.transactions or [])} transaction(s) with standard signature")
+        if sig_txns.transactions:
+            for tx in (sig_txns.transactions or [])[:2]:
+                tx_id_display = shorten_address(tx.id_, 8, 6) if tx.id_ else "N/A"
+                print_info(f"  - {tx_id_display}: {tx.tx_type}")
+        print_info("")
+
+        # Note: msig and lsig transactions may not exist on LocalNet unless specifically created
+        print_info("Searching for multisig transactions (sig_type=msig)...")
+        msig_txns = indexer.search_for_transactions(sig_type="msig", limit=5)
+        print_success(f"Found {len(msig_txns.transactions or [])} multisig transaction(s)")
+        print_info("(Note: Multisig transactions require special setup and may not exist on LocalNet)")
+        print_info("")
+
+        print_info("Searching for logic signature transactions (sig_type=lsig)...")
+        lsig_txns = indexer.search_for_transactions(sig_type="lsig", limit=5)
+        print_success(f"Found {len(lsig_txns.transactions or [])} logic signature transaction(s)")
+        print_info("(Note: Logic signature transactions require smart signatures and may not exist on LocalNet)")
+    except Exception as e:
+        print_error(f"sig_type filter failed: {e}")
+
+    # =========================================================================
+    # Step 6: Filter by address with address_role (sender, receiver)
+    # =========================================================================
+    print_step(6, "Filtering by address with address_role (sender, receiver)")
+
+    try:
+        # address_role can be: sender, receiver, freeze-target
+        # When using address filter, results are returned newest to oldest
+        print_info("Available address_role values: sender, receiver, freeze-target")
+        print_info("Note: When using address filter, results are returned newest to oldest")
+        print_info("")
+
+        # Search for transactions where sender is the address
+        print_info(f"Searching for transactions where {shorten_address(sender_address)} is sender...")
+        sender_txns = indexer.search_for_transactions(
+            address=sender_address,
+            address_role="sender",
+            limit=5,
+        )
+        print_success(f"Found {len(sender_txns.transactions or [])} transaction(s) as sender")
+        if sender_txns.transactions:
+            for tx in (sender_txns.transactions or [])[:3]:
+                tx_id_display = shorten_address(tx.id_, 8, 6) if tx.id_ else "N/A"
+                print_info(f"  - {tx_id_display}: {tx.tx_type}")
+        print_info("")
+
+        # Search for transactions where receiver is the address
+        print_info(f"Searching for transactions where {shorten_address(receiver_address)} is receiver...")
+        receiver_txns = indexer.search_for_transactions(
+            address=receiver_address,
+            address_role="receiver",
+            limit=5,
+        )
+        print_success(f"Found {len(receiver_txns.transactions or [])} transaction(s) as receiver")
+        if receiver_txns.transactions:
+            for tx in (receiver_txns.transactions or [])[:3]:
+                tx_id_display = shorten_address(tx.id_, 8, 6) if tx.id_ else "N/A"
+                print_info(f"  - {tx_id_display}: {tx.tx_type}")
+        print_info("")
+
+        # Search for transactions involving an address in any role
+        print_info(f"Searching for all transactions involving {shorten_address(sender_address)} (no role filter)...")
+        any_role_txns = indexer.search_for_transactions(
+            address=sender_address,
+            limit=5,
+        )
+        print_success(f"Found {len(any_role_txns.transactions or [])} transaction(s) involving address")
+        if any_role_txns.transactions:
+            for tx in (any_role_txns.transactions or [])[:3]:
+                tx_id_display = shorten_address(tx.id_, 8, 6) if tx.id_ else "N/A"
+                role = "sender" if tx.sender == sender_address else "other"
+                print_info(f"  - {tx_id_display}: {tx.tx_type} (role: {role})")
+    except Exception as e:
+        print_error(f"address/address_role filter failed: {e}")
+
+    # =========================================================================
+    # Step 7: Filter by round range (min_round, max_round)
+    # =========================================================================
+    print_step(7, "Filtering by round range (min_round, max_round)")
+
+    try:
+        # Get current round
+        latest_txns = indexer.search_for_transactions(limit=1)
+        current_round = latest_txns.current_round
+
+        print_info(f"Current round: {current_round}")
+        print_info(f"Transactions created starting from round: {start_round}")
+        print_info("")
+
+        # Filter to recent rounds only
+        print_info(f"Searching for transactions from round {start_round} to {current_round}...")
+        round_filtered_txns = indexer.search_for_transactions(
+            min_round=start_round,
+            max_round=current_round,
+            limit=10,
+        )
+
+        print_success(f"Found {len(round_filtered_txns.transactions or [])} transaction(s) in round range")
+        if round_filtered_txns.transactions:
+            rounds = [
+                tx.confirmed_round for tx in (round_filtered_txns.transactions or []) if tx.confirmed_round is not None
+            ]
+            if rounds:
+                min_found_round = min(rounds)
+                max_found_round = max(rounds)
+                print_info(f"  Rounds of found transactions: {min_found_round} to {max_found_round}")
+        print_info("")
+
+        # Single round query
+        print_info(f"Searching for transactions in round {current_round} only...")
+        single_round_txns = indexer.search_for_transactions(
+            round_=current_round,
+            limit=10,
+        )
+        print_success(f"Found {len(single_round_txns.transactions or [])} transaction(s) in round {current_round}")
+    except Exception as e:
+        print_error(f"round filter failed: {e}")
+
+    # =========================================================================
+    # Step 8: Filter by time range (before_time, after_time)
+    # =========================================================================
+    print_step(8, "Filtering by time range (before_time, after_time)")
+
+    try:
+        # Time filters use RFC 3339 format (ISO 8601, e.g., "2026-01-26T10:00:00.000Z")
+        now = datetime.now(tz=timezone.utc)
+        one_hour_ago = datetime.fromtimestamp(now.timestamp() - 60 * 60, tz=timezone.utc)
+
+        after_time_str = one_hour_ago.isoformat()
+        before_time_str = now.isoformat()
+
+        print_info("Time filters use RFC 3339 format (ISO 8601)")
+        print_info(f"  after_time: {after_time_str}")
+        print_info(f"  before_time: {before_time_str}")
+        print_info("")
+
+        print_info("Searching for transactions in the last hour...")
+        time_filtered_txns = indexer.search_for_transactions(
+            after_time=after_time_str,
+            before_time=before_time_str,
+            limit=10,
+        )
+
+        print_success(f"Found {len(time_filtered_txns.transactions or [])} transaction(s) in time range")
+        if time_filtered_txns.transactions:
+            times = [tx.round_time for tx in (time_filtered_txns.transactions or []) if tx.round_time is not None]
+            if times:
+                min_time = min(times)
+                max_time = max(times)
+                earliest = datetime.fromtimestamp(min_time, tz=timezone.utc).isoformat()
+                latest = datetime.fromtimestamp(max_time, tz=timezone.utc).isoformat()
+                print_info("  Time range of found transactions:")
+                print_info(f"    - Earliest: {earliest}")
+                print_info(f"    - Latest: {latest}")
+    except Exception as e:
+        print_error(f"time filter failed: {e}")
+
+    # =========================================================================
+    # Step 9: Filter by application_id to find app calls
+    # =========================================================================
+    print_step(9, "Filtering by application_id to find app calls")
+
+    try:
+        print_info(f"Searching for transactions involving application ID {app_id}...")
+        app_txns = indexer.search_for_transactions(
+            application_id=app_id,
+            limit=10,
+        )
+
+        print_success(f"Found {len(app_txns.transactions or [])} transaction(s) for app {app_id}")
+        if app_txns.transactions:
+            for tx in app_txns.transactions or []:
+                tx_id_display = shorten_address(tx.id_, 8, 6) if tx.id_ else "N/A"
+                print_info(f"  - {tx_id_display}:")
+                print_info(f"      tx_type: {tx.tx_type}")
+                if tx.created_app_id:
+                    print_info(f"      created_app_id: {tx.created_app_id}")
+                if tx.application_transaction and tx.application_transaction.on_completion is not None:
+                    print_info(f"      on_completion: {tx.application_transaction.on_completion}")
+        print_info("")
+
+        # Note: You can combine application_id with other filters
+        print_info("Combining application_id filter with tx_type=appl...")
+        combined_app_txns = indexer.search_for_transactions(
+            application_id=app_id,
+            tx_type="appl",
+            limit=10,
+        )
+        print_success(f"Found {len(combined_app_txns.transactions or [])} app call transaction(s) for app {app_id}")
+    except Exception as e:
+        print_error(f"application_id filter failed: {e}")
+
+    # =========================================================================
+    # Step 10: Combining multiple filters
+    # =========================================================================
+    print_step(10, "Combining multiple filters")
+
+    try:
+        print_info("You can combine multiple filters to narrow down results.")
+        print_info("")
+
+        # Combine tx_type and address
+        print_info(f"Searching for payment transactions from {shorten_address(sender_address)}...")
+        combined_txns_1 = indexer.search_for_transactions(
+            tx_type="pay",
+            address=sender_address,
+            address_role="sender",
+            limit=5,
+        )
+        print_success(f"Found {len(combined_txns_1.transactions or [])} payment transaction(s) from sender")
+        print_info("")
+
+        # Combine round range and tx_type
+        print_info("Searching for asset transfers in recent rounds...")
+        latest_result = indexer.search_for_transactions(limit=1)
+        combined_txns_2 = indexer.search_for_transactions(
+            tx_type="axfer",
+            min_round=start_round,
+            max_round=latest_result.current_round,
+            limit=5,
+        )
+        print_success(f"Found {len(combined_txns_2.transactions or [])} asset transfer(s) in recent rounds")
+    except Exception as e:
+        print_error(f"combined filters failed: {e}")
+
+    # =========================================================================
+    # Step 11: Pagination with limit and next
+    # =========================================================================
+    print_step(11, "Demonstrating pagination with limit and next")
+
+    try:
+        print_info("Using limit=2 to demonstrate pagination...")
+        page_1 = indexer.search_for_transactions(limit=2)
+
+        print_info(f"Page 1: Retrieved {len(page_1.transactions or [])} transaction(s)")
+        for tx in page_1.transactions or []:
+            tx_id_display = shorten_address(tx.id_, 8, 6) if tx.id_ else "N/A"
+            print_info(f"  - {tx_id_display}: {tx.tx_type}")
+
+        if page_1.next_token:
+            token_preview = str(page_1.next_token)[:20]
+            print_info(f"  - Next token available: {token_preview}...")
+            print_info("")
+
+            print_info("Fetching next page...")
+            page_2 = indexer.search_for_transactions(
+                limit=2,
+                next_=page_1.next_token,
+            )
+
+            print_info(f"Page 2: Retrieved {len(page_2.transactions or [])} transaction(s)")
+            for tx in page_2.transactions or []:
+                tx_id_display = shorten_address(tx.id_, 8, 6) if tx.id_ else "N/A"
+                print_info(f"  - {tx_id_display}: {tx.tx_type}")
+
+            if page_2.next_token:
+                print_info("  - More pages available (next_token present)")
+            else:
+                print_info("  - No more pages (no next_token)")
+        else:
+            print_info("  - No pagination needed (all results fit in one page)")
+    except Exception as e:
+        print_error(f"pagination failed: {e}")
+
+    # =========================================================================
+    # Summary
+    # =========================================================================
+    print_header("Summary")
+    print_info("This example demonstrated search_for_transactions() with various filters:")
+    print_info("")
+    print_info("Key filter parameters:")
+    print_info("  - tx_type: Filter by transaction type (pay, keyreg, acfg, axfer, afrz, appl, stpf, hb)")
+    print_info("  - sig_type: Filter by signature type (sig, msig, lsig)")
+    print_info("  - address: Filter by address involvement")
+    print_info("  - address_role: Specify role (sender, receiver, freeze-target)")
+    print_info("  - min_round/max_round: Filter by round range")
+    print_info("  - round: Filter by specific round")
+    print_info("  - before_time/after_time: Filter by time (RFC 3339 format)")
+    print_info("  - application_id: Filter by application ID")
+    print_info("  - asset_id: Filter by asset ID")
+    print_info("  - currency_greater_than/currency_less_than: Filter by amount")
+    print_info("  - note_prefix: Filter by note prefix")
+    print_info("  - tx_id: Find specific transaction by ID")
+    print_info("  - group_id: Filter by group ID")
+    print_info("  - rekey_to: Filter for rekey transactions")
+    print_info("  - exclude_close_to: Exclude close-to transactions from results")
+    print_info("")
+    print_info("Result ordering:")
+    print_info("  - Default: Results are returned oldest to newest")
+    print_info("  - With address filter: Results are returned newest to oldest")
+    print_info("")
+    print_info("Pagination:")
+    print_info("  - limit: Maximum number of results per page")
+    print_info("  - next: Token from previous response to get next page")
+
+
+if __name__ == "__main__":
+    main()
+
+```
+
+---
+
+### Other examples in Indexer Client
+
+- [Indexer Health Check](/docs/algokit-utils/python/latest/examples/indexer-client/01-health-check/)
+- [Account Lookup](/docs/algokit-utils/python/latest/examples/indexer-client/02-account-lookup/)
+- [Account Assets](/docs/algokit-utils/python/latest/examples/indexer-client/03-account-assets/)
+- [Account Applications](/docs/algokit-utils/python/latest/examples/indexer-client/04-account-applications/)
+- [Account Transactions](/docs/algokit-utils/python/latest/examples/indexer-client/05-account-transactions/)
+- [Transaction Lookup](/docs/algokit-utils/python/latest/examples/indexer-client/06-transaction-lookup/)
+- **Transaction Search**
+- [Asset Lookup](/docs/algokit-utils/python/latest/examples/indexer-client/08-asset-lookup/)
+- [Asset Balances](/docs/algokit-utils/python/latest/examples/indexer-client/09-asset-balances/)
+- [Asset Transactions](/docs/algokit-utils/python/latest/examples/indexer-client/10-asset-transactions/)
+- [Application Lookup](/docs/algokit-utils/python/latest/examples/indexer-client/11-application-lookup/)
+- [Application Logs Lookup](/docs/algokit-utils/python/latest/examples/indexer-client/12-application-logs/)
+- [Application Boxes Lookup](/docs/algokit-utils/python/latest/examples/indexer-client/13-application-boxes/)
+- [Block Lookup](/docs/algokit-utils/python/latest/examples/indexer-client/14-block-lookup/)
+- [Block Headers Search](/docs/algokit-utils/python/latest/examples/indexer-client/15-block-headers/)
+- [Pagination](/docs/algokit-utils/python/latest/examples/indexer-client/16-pagination/)

@@ -27,8 +27,9 @@
 </div>
 
 <script is:inline>
-  // Run after the DOM is ready
-  document.addEventListener('DOMContentLoaded', () => {
+  // Use astro:page-load instead of DOMContentLoaded so filters
+  // re-initialize on client-side navigations (View Transitions).
+  document.addEventListener('astro:page-load', () => {
     const $ = (s, el = document) => el.querySelector(s);
     const $$ = (s, el = document) => Array.from(el.querySelectorAll(s));
 
@@ -37,8 +38,17 @@
     const grpSel = $('#f-group');
     const resetBtn = $('#f-reset');
 
+    // Guard: this script runs on every page, but only the opcode page
+    // has these elements. Exit early on all other pages.
+    if (!nameInput || !verSel || !grpSel || !resetBtn) return;
+
     // Each opcode is wrapped in a container with data attributes
     const sections = $$('.opcode-section');
+
+    // Clear dynamic options (keep first "All" option) to prevent
+    // duplicates when navigating back to this page.
+    while (verSel.options.length > 1) verSel.remove(1);
+    while (grpSel.options.length > 1) grpSel.remove(1);
 
     // Build option lists from the DOM
     const versions = new Set();

@@ -1,0 +1,179 @@
+---
+title: 'Mock Server Connection'
+description: 'This example demonstrates how to use getMockServer() to connect to a mock server and understand the MockServer interface. It shows:'
+sidebar:
+  order: 4
+---
+
+[← Back to Testing](/docs/algokit-utils/typescript/latest/examples/testing/)
+
+## Description
+
+This example demonstrates how to use getMockServer() to connect to a mock server and understand the MockServer interface. It shows:
+
+- The MockServer interface properties (baseUrl and clientType)
+- How getMockServer reads from environment variables
+- Proper error handling for missing env vars and unreachable servers
+  This example requires MOCK_ALGOD_URL environment variable and a running mock server for a successful connection - otherwise it shows helpful error messages.
+
+## Prerequisites
+
+- No LocalNet required
+- `MOCK_ALGOD_URL` env var and running mock server for successful connection
+
+## Run This Example
+
+From the repository root:
+
+```bash
+cd examples
+npm run example testing/04-mock-server-connection.ts
+```
+
+## Code
+
+[View source on GitHub](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/examples/testing/04-mock-server-connection.ts)
+
+```typescript title="04-mock-server-connection.ts"
+/**
+ * Example: Mock Server Connection
+ *
+ * This example demonstrates how to use getMockServer() to connect to a mock
+ * server and understand the MockServer interface. It shows:
+ * - The MockServer interface properties (baseUrl and clientType)
+ * - How getMockServer reads from environment variables
+ * - Proper error handling for missing env vars and unreachable servers
+ *
+ * This example requires MOCK_ALGOD_URL environment variable and a running
+ * mock server for a successful connection - otherwise it shows helpful error messages.
+ *
+ * Prerequisites:
+ * - No LocalNet required
+ * - `MOCK_ALGOD_URL` env var and running mock server for successful connection
+ */
+
+import {
+  checkServerHealth,
+  EXTERNAL_URL_ENV_VARS,
+  getMockServer,
+  MOCK_PORTS,
+  type MockServer,
+} from '@algorandfoundation/algokit-utils/testing';
+import { printError, printHeader, printInfo, printStep, printSuccess } from '../shared/utils.js';
+
+async function main() {
+  printHeader('Mock Server Connection Example');
+
+  // Step 1: Document the MockServer interface
+  printStep(1, 'MockServer Interface');
+  printInfo('The MockServer interface has two properties:');
+  printInfo('  interface MockServer {');
+  printInfo('    baseUrl: string     // Base URL of the mock server');
+  printInfo('    clientType: ClientType  // Type of client: "algod" | "indexer" | "kmd"');
+  printInfo('  }');
+  printInfo('');
+  printInfo('Use this interface to connect to mock servers for testing.');
+
+  // Step 2: Explain how getMockServer reads environment variables
+  printStep(2, 'Environment Variable Configuration');
+  printInfo('getMockServer() reads URLs from environment variables:');
+  printInfo(`  - algod:   ${EXTERNAL_URL_ENV_VARS.algod}`);
+  printInfo(`  - indexer: ${EXTERNAL_URL_ENV_VARS.indexer}`);
+  printInfo(`  - kmd:     ${EXTERNAL_URL_ENV_VARS.kmd}`);
+  printInfo('');
+  printInfo('Default ports when running locally:');
+  printInfo(`  - algod:   localhost:${MOCK_PORTS.algod.host}`);
+  printInfo(`  - indexer: localhost:${MOCK_PORTS.indexer.host}`);
+  printInfo(`  - kmd:     localhost:${MOCK_PORTS.kmd.host}`);
+
+  // Step 3: Check server health before attempting connection
+  printStep(3, 'Pre-connection Health Check');
+  const envVar = EXTERNAL_URL_ENV_VARS.algod;
+  const envValue = process.env[envVar];
+
+  if (envValue) {
+    printInfo(`Environment variable ${envVar} is set to: ${envValue}`);
+    printInfo('Checking server health before connecting...');
+    const isHealthy = await checkServerHealth(envValue);
+    printInfo(`Server health: ${isHealthy ? 'REACHABLE' : 'NOT REACHABLE'}`);
+  } else {
+    printInfo(`Environment variable ${envVar} is NOT set`);
+    printInfo('Will demonstrate error handling below.');
+  }
+
+  // Step 4: Demonstrate getMockServer() with proper error handling
+  printStep(4, 'Connecting to Algod Mock Server');
+  printInfo("Attempting to connect using getMockServer('algod')...");
+
+  try {
+    const server: MockServer = await getMockServer('algod');
+
+    // Success case - display MockServer properties
+    printSuccess('Successfully connected to mock server!');
+    printInfo('');
+    printInfo('MockServer instance properties:');
+    printInfo(`  baseUrl:    ${server.baseUrl}`);
+    printInfo(`  clientType: ${server.clientType}`);
+    printInfo('');
+    printInfo('You can now use this server to create an AlgodClient:');
+    printInfo(
+      '  const client = new AlgodClient({ baseUrl: server.baseUrl, token: DEFAULT_TOKEN })',
+    );
+  } catch (error) {
+    // Handle connection failures gracefully
+    const errorMessage = error instanceof Error ? error.message : String(error);
+
+    if (errorMessage.includes('is not set')) {
+      // Case: Environment variable not set
+      printError('Connection failed: Environment variable not set');
+      printInfo('');
+      printInfo('Error message:');
+      printInfo(`  ${errorMessage}`);
+      printInfo('');
+      printInfo('To fix this, set the environment variable:');
+      printInfo(`  export ${envVar}=http://localhost:${MOCK_PORTS.algod.host}`);
+    } else if (errorMessage.includes('not reachable')) {
+      // Case: Server not reachable
+      printError('Connection failed: Server not reachable');
+      printInfo('');
+      printInfo('Error message:');
+      printInfo(`  ${errorMessage}`);
+      printInfo('');
+      printInfo('To fix this:');
+      printInfo('  1. Start the mock server using algokit-polytest CLI');
+      printInfo('  2. Or ensure the server at the configured URL is running');
+    } else {
+      // Case: Unexpected error
+      printError('Connection failed: Unexpected error');
+      printInfo('');
+      printInfo('Error message:');
+      printInfo(`  ${errorMessage}`);
+    }
+  }
+
+  // Step 5: Summary
+  printStep(5, 'Summary');
+  printInfo('Key takeaways for using getMockServer():');
+  printInfo('  1. Set the appropriate environment variable (MOCK_ALGOD_URL, etc.)');
+  printInfo('  2. Ensure the mock server is running and reachable');
+  printInfo('  3. Use try/catch to handle connection failures gracefully');
+  printInfo('  4. The returned MockServer provides baseUrl and clientType');
+  printInfo('  5. Use checkServerHealth() for pre-connection validation');
+
+  printSuccess('Mock server connection example completed!');
+}
+
+main().catch(console.error);
+```
+
+---
+
+### Other examples in Testing
+
+- [Configuration Constants](/docs/algokit-utils/typescript/latest/examples/testing/01-configuration-constants/)
+- [Test Data Constants](/docs/algokit-utils/typescript/latest/examples/testing/02-test-data-constants/)
+- [Health Check Utility](/docs/algokit-utils/typescript/latest/examples/testing/03-health-check/)
+- **Mock Server Connection**
+- [Vitest Global Setup Factory](/docs/algokit-utils/typescript/latest/examples/testing/05-global-setup-factory/)
+- [Pre-built Global Setups](/docs/algokit-utils/typescript/latest/examples/testing/06-prebuilt-global-setups/)
+- [Integration Example - Complete Test Setup](/docs/algokit-utils/typescript/latest/examples/testing/07-integration-example/)

@@ -1,0 +1,465 @@
+---
+title: 'Transaction Lookup'
+description: 'This example demonstrates how to lookup a single transaction by ID using the IndexerClient lookupTransactionById() method.'
+sidebar:
+  order: 6
+---
+
+[← Back to Indexer Client](/docs/algokit-utils/typescript/latest/examples/indexer-client/)
+
+## Description
+
+This example demonstrates how to lookup a single transaction by ID using the IndexerClient lookupTransactionById() method.
+
+## Prerequisites
+
+- LocalNet running (via `algokit localnet start`)
+
+## Run This Example
+
+From the repository root:
+
+```bash
+cd examples
+npm run example indexer_client/06-transaction-lookup.ts
+```
+
+## Code
+
+[View source on GitHub](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/examples/indexer_client/06-transaction-lookup.ts)
+
+```typescript title="06-transaction-lookup.ts"
+/**
+ * Example: Transaction Lookup
+ *
+ * This example demonstrates how to lookup a single transaction by ID using
+ * the IndexerClient lookupTransactionById() method.
+ *
+ * Prerequisites:
+ * - LocalNet running (via `algokit localnet start`)
+ */
+
+import { algo } from '@algorandfoundation/algokit-utils';
+import {
+  createAlgorandClient,
+  createIndexerClient,
+  formatMicroAlgo,
+  printError,
+  printHeader,
+  printInfo,
+  printStep,
+  printSuccess,
+  shortenAddress,
+} from '../shared/utils.js';
+
+async function main() {
+  printHeader('Transaction Lookup Example');
+
+  // Create clients
+  const indexer = createIndexerClient();
+  const algorand = createAlgorandClient();
+
+  // =========================================================================
+  // Step 1: Get a funded account from LocalNet
+  // =========================================================================
+  printStep(1, 'Getting a funded account from LocalNet');
+
+  let senderAccount: Awaited<ReturnType<typeof algorand.account.kmd.getLocalNetDispenserAccount>>;
+
+  try {
+    senderAccount = await algorand.account.kmd.getLocalNetDispenserAccount();
+    algorand.setSignerFromAccount(senderAccount);
+    const senderAddress = senderAccount.addr.toString();
+    printSuccess(`Using dispenser account: ${shortenAddress(senderAddress)}`);
+  } catch (error) {
+    printError(
+      `Failed to get dispenser account: ${error instanceof Error ? error.message : String(error)}`,
+    );
+    printInfo('');
+    printInfo('Make sure LocalNet is running: algokit localnet start');
+    printInfo('If issues persist, try: algokit localnet reset');
+    return;
+  }
+
+  // =========================================================================
+  // Step 2: Create a test transaction and capture its txId
+  // =========================================================================
+  printStep(2, 'Creating a test transaction and capturing its txId');
+
+  let paymentTxId: string;
+  let assetTransferTxId: string;
+  let assetId: bigint;
+  let receiverAddress: string;
+
+  try {
+    // Create a random receiver account
+    const receiverAccount = algorand.account.random();
+    receiverAddress = receiverAccount.addr.toString();
+    algorand.setSignerFromAccount(receiverAccount);
+    printInfo(`Created receiver account: ${shortenAddress(receiverAddress)}`);
+
+    // Send a payment transaction
+    printInfo('Sending payment transaction...');
+    const paymentResult = await algorand.send.payment({
+      sender: senderAccount.addr,
+      receiver: receiverAccount.addr,
+      amount: algo(5),
+    });
+    paymentTxId = paymentResult.txIds[0];
+    printSuccess(`Payment transaction sent: ${shortenAddress(paymentTxId, 8, 6)}`);
+    printInfo(`  Full txId: ${paymentTxId}`);
+
+    // Create an asset for asset transfer demonstration
+    printInfo('Creating a test asset...');
+    const assetCreateResult = await algorand.send.assetCreate({
+      sender: senderAccount.addr,
+      total: 1_000_000n,
+      decimals: 6,
+      assetName: 'LookupToken',
+      unitName: 'LOOK',
+    });
+    assetId = assetCreateResult.assetId;
+    printSuccess(`Created asset: LookupToken (ID: ${assetId})`);
+
+    // Opt-in receiver to the asset
+    printInfo('Opting receiver into asset...');
+    await algorand.send.assetOptIn({
+      sender: receiverAccount.addr,
+      assetId: assetId,
+    });
+    printSuccess('Receiver opted into asset');
+
+    // Send an asset transfer transaction
+    printInfo('Sending asset transfer transaction...');
+    const assetTransferResult = await algorand.send.assetTransfer({
+      sender: senderAccount.addr,
+      receiver: receiverAccount.addr,
+      assetId: assetId,
+      amount: 50_000n,
+    });
+    assetTransferTxId = assetTransferResult.txIds[0];
+    printSuccess(`Asset transfer transaction sent: ${shortenAddress(assetTransferTxId, 8, 6)}`);
+    printInfo(`  Full txId: ${assetTransferTxId}`);
+
+    // Wait for indexer to catch up
+    printInfo('Waiting for indexer to index transactions...');
+    await new Promise(resolve => setTimeout(resolve, 3000));
+    printInfo('');
+  } catch (error) {
+    printError(
+      `Failed to create test transactions: ${error instanceof Error ? error.message : String(error)}`,
+    );
+    printInfo('');
+    printInfo('If LocalNet errors occur, try: algokit localnet reset');
+    return;
+  }
+
+  // =========================================================================
+  // Step 3: Lookup payment transaction by ID
+  // =========================================================================
+  printStep(3, 'Looking up payment transaction by ID');
+
+  try {
+    const txnResult = await indexer.lookupTransactionById(paymentTxId);
+    const tx = txnResult.transaction;
+
+    printSuccess(`Transaction found!`);
+    printInfo('');
+    printInfo('Common transaction fields:');
+    printInfo(`  - id: ${tx.id}`);
+    printInfo(`  - txType: ${tx.txType}`);
+    printInfo(`  - sender: ${shortenAddress(tx.sender)}`);
+    printInfo(`  - fee: ${formatMicroAlgo(tx.fee)}`);
+    printInfo(`  - firstValid: ${tx.firstValid}`);
+    printInfo(`  - lastValid: ${tx.lastValid}`);
+    printInfo('');
+
+    printInfo('Confirmation info:');
+    if (tx.confirmedRound !== undefined) {
+      printInfo(`  - confirmedRound: ${tx.confirmedRound}`);
+    }
+    if (tx.roundTime !== undefined) {
+      const date = new Date(tx.roundTime * 1000);
+      printInfo(`  - roundTime: ${date.toISOString()} (Unix: ${tx.roundTime})`);
+    }
+    if (tx.intraRoundOffset !== undefined) {
+      printInfo(`  - intraRoundOffset: ${tx.intraRoundOffset}`);
+    }
+    printInfo('');
+
+    // Display payment-specific fields
+    if (tx.paymentTransaction) {
+      printInfo('Payment transaction details:');
+      printInfo(`  - receiver: ${shortenAddress(tx.paymentTransaction.receiver)}`);
+      printInfo(`  - amount: ${formatMicroAlgo(tx.paymentTransaction.amount)}`);
+      if (tx.paymentTransaction.closeRemainderTo) {
+        printInfo(
+          `  - closeRemainderTo: ${shortenAddress(tx.paymentTransaction.closeRemainderTo)}`,
+        );
+      }
+      if (tx.paymentTransaction.closeAmount !== undefined) {
+        printInfo(`  - closeAmount: ${formatMicroAlgo(tx.paymentTransaction.closeAmount)}`);
+      }
+    }
+
+    printInfo('');
+    printInfo(`Query performed at round: ${txnResult.currentRound}`);
+  } catch (error) {
+    printError(
+      `lookupTransactionById failed: ${error instanceof Error ? error.message : String(error)}`,
+    );
+  }
+
+  // =========================================================================
+  // Step 4: Lookup asset transfer transaction by ID
+  // =========================================================================
+  printStep(4, 'Looking up asset transfer transaction by ID');
+
+  try {
+    const txnResult = await indexer.lookupTransactionById(assetTransferTxId);
+    const tx = txnResult.transaction;
+
+    printSuccess(`Transaction found!`);
+    printInfo('');
+    printInfo('Common transaction fields:');
+    printInfo(`  - id: ${tx.id}`);
+    printInfo(`  - txType: ${tx.txType}`);
+    printInfo(`  - sender: ${shortenAddress(tx.sender)}`);
+    printInfo(`  - fee: ${formatMicroAlgo(tx.fee)}`);
+    printInfo(`  - firstValid: ${tx.firstValid}`);
+    printInfo(`  - lastValid: ${tx.lastValid}`);
+    printInfo('');
+
+    printInfo('Confirmation info:');
+    if (tx.confirmedRound !== undefined) {
+      printInfo(`  - confirmedRound: ${tx.confirmedRound}`);
+    }
+    if (tx.roundTime !== undefined) {
+      const date = new Date(tx.roundTime * 1000);
+      printInfo(`  - roundTime: ${date.toISOString()} (Unix: ${tx.roundTime})`);
+    }
+    if (tx.intraRoundOffset !== undefined) {
+      printInfo(`  - intraRoundOffset: ${tx.intraRoundOffset}`);
+    }
+    printInfo('');
+
+    // Display asset transfer-specific fields
+    if (tx.assetTransferTransaction) {
+      printInfo('Asset transfer transaction details:');
+      printInfo(`  - assetId: ${tx.assetTransferTransaction.assetId}`);
+      printInfo(`  - amount: ${tx.assetTransferTransaction.amount}`);
+      printInfo(`  - receiver: ${shortenAddress(tx.assetTransferTransaction.receiver)}`);
+      if (tx.assetTransferTransaction.sender) {
+        printInfo(`  - sender (clawback): ${shortenAddress(tx.assetTransferTransaction.sender)}`);
+      }
+      if (tx.assetTransferTransaction.closeTo) {
+        printInfo(`  - closeTo: ${shortenAddress(tx.assetTransferTransaction.closeTo)}`);
+      }
+      if (tx.assetTransferTransaction.closeAmount !== undefined) {
+        printInfo(`  - closeAmount: ${tx.assetTransferTransaction.closeAmount}`);
+      }
+    }
+
+    printInfo('');
+    printInfo(`Query performed at round: ${txnResult.currentRound}`);
+  } catch (error) {
+    printError(
+      `lookupTransactionById failed: ${error instanceof Error ? error.message : String(error)}`,
+    );
+  }
+
+  // =========================================================================
+  // Step 5: Handle transaction not found case
+  // =========================================================================
+  printStep(5, 'Handling transaction not found case');
+
+  try {
+    // Use a fake transaction ID that doesn't exist
+    const fakeTxId = 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA1234';
+    printInfo(`Attempting to lookup non-existent transaction: ${shortenAddress(fakeTxId, 8, 6)}`);
+
+    await indexer.lookupTransactionById(fakeTxId);
+
+    // If we get here, the transaction was somehow found (shouldn't happen)
+    printInfo('Transaction was unexpectedly found');
+  } catch (error) {
+    const errorMessage = error instanceof Error ? error.message : String(error);
+    if (
+      errorMessage.toLowerCase().includes('not found') ||
+      errorMessage.toLowerCase().includes('no transactions')
+    ) {
+      printSuccess('Transaction not found - error handled correctly');
+      printInfo(`  Error message: ${errorMessage}`);
+    } else {
+      printError(`Unexpected error: ${errorMessage}`);
+    }
+  }
+
+  // =========================================================================
+  // Step 6: Display additional transaction fields (if available)
+  // =========================================================================
+  printStep(6, 'Displaying additional transaction fields');
+
+  try {
+    const txnResult = await indexer.lookupTransactionById(paymentTxId);
+    const tx = txnResult.transaction;
+
+    printInfo('Additional fields (if present):');
+
+    if (tx.genesisId) {
+      printInfo(`  - genesisId: ${tx.genesisId}`);
+    }
+
+    if (tx.genesisHash) {
+      const hashHex = Buffer.from(tx.genesisHash).toString('base64');
+      printInfo(`  - genesisHash: ${hashHex.substring(0, 20)}...`);
+    }
+
+    if (tx.group) {
+      const groupHex = Buffer.from(tx.group).toString('base64');
+      printInfo(`  - group: ${groupHex}`);
+    }
+
+    if (tx.note) {
+      const noteText = new TextDecoder().decode(tx.note);
+      printInfo(`  - note: ${noteText || '(empty)'}`);
+    }
+
+    if (tx.lease) {
+      const leaseHex = Buffer.from(tx.lease).toString('base64');
+      printInfo(`  - lease: ${leaseHex}`);
+    }
+
+    if (tx.rekeyTo) {
+      printInfo(`  - rekeyTo: ${tx.rekeyTo}`);
+    }
+
+    if (tx.senderRewards !== undefined) {
+      printInfo(`  - senderRewards: ${formatMicroAlgo(tx.senderRewards)}`);
+    }
+
+    if (tx.receiverRewards !== undefined) {
+      printInfo(`  - receiverRewards: ${formatMicroAlgo(tx.receiverRewards)}`);
+    }
+
+    if (tx.closeRewards !== undefined) {
+      printInfo(`  - closeRewards: ${formatMicroAlgo(tx.closeRewards)}`);
+    }
+
+    if (tx.closingAmount !== undefined) {
+      printInfo(`  - closingAmount: ${formatMicroAlgo(tx.closingAmount)}`);
+    }
+
+    if (tx.authAddr) {
+      printInfo(`  - authAddr: ${tx.authAddr}`);
+    }
+
+    if (tx.signature) {
+      printInfo(`  - signature: (present)`);
+      if (tx.signature.sig) {
+        printInfo(`    - type: single signature`);
+      }
+      if (tx.signature.multisig) {
+        printInfo(`    - type: multisig`);
+      }
+      if (tx.signature.logicsig) {
+        printInfo(`    - type: logic signature`);
+      }
+    }
+
+    // Check for created assets or applications
+    if (tx.createdAssetId !== undefined) {
+      printInfo(`  - createdAssetId: ${tx.createdAssetId}`);
+    }
+    if (tx.createdAppId !== undefined) {
+      printInfo(`  - createdAppId: ${tx.createdAppId}`);
+    }
+
+    // Inner transactions (for app calls)
+    if (tx.innerTxns && tx.innerTxns.length > 0) {
+      printInfo(`  - innerTxns: ${tx.innerTxns.length} inner transaction(s)`);
+    }
+
+    // Logs (for app calls)
+    if (tx.logs && tx.logs.length > 0) {
+      printInfo(`  - logs: ${tx.logs.length} log entry(ies)`);
+    }
+
+    // State deltas (for app calls)
+    if (tx.globalStateDelta) {
+      printInfo(`  - globalStateDelta: (present)`);
+    }
+    if (tx.localStateDelta && tx.localStateDelta.length > 0) {
+      printInfo(`  - localStateDelta: ${tx.localStateDelta.length} account(s) affected`);
+    }
+  } catch (error) {
+    printError(
+      `Failed to display additional fields: ${error instanceof Error ? error.message : String(error)}`,
+    );
+  }
+
+  // =========================================================================
+  // Summary
+  // =========================================================================
+  printHeader('Summary');
+  printInfo('This example demonstrated:');
+  printInfo('  1. lookupTransactionById(txId) - Get full transaction details by ID');
+  printInfo(
+    '  2. Displaying common transaction fields: id, txType, sender, fee, firstValid, lastValid',
+  );
+  printInfo('  3. Displaying confirmation info: confirmedRound, roundTime, intraRoundOffset');
+  printInfo('  4. Displaying payment-specific fields: receiver, amount, closeRemainderTo');
+  printInfo('  5. Displaying asset transfer-specific fields: assetId, amount, receiver');
+  printInfo('  6. Handling transaction not found errors');
+  printInfo('  7. Displaying additional fields: genesisId, note, signature, etc.');
+  printInfo('');
+  printInfo('TransactionResponse structure:');
+  printInfo('  - transaction: The full Transaction object');
+  printInfo('  - currentRound: Round at which the results were computed');
+  printInfo('');
+  printInfo('Key Transaction fields:');
+  printInfo('  - id: Transaction ID (string)');
+  printInfo('  - txType: Transaction type (pay, keyreg, acfg, axfer, afrz, appl, stpf, hb)');
+  printInfo('  - sender: Sender address (string)');
+  printInfo('  - fee: Transaction fee in microAlgos (bigint)');
+  printInfo('  - firstValid: First valid round (bigint)');
+  printInfo('  - lastValid: Last valid round (bigint)');
+  printInfo('  - confirmedRound: Round when confirmed (bigint, optional)');
+  printInfo('  - roundTime: Unix timestamp when confirmed (number, optional)');
+  printInfo('  - intraRoundOffset: Position within the round (number, optional)');
+  printInfo('');
+  printInfo('Type-specific fields:');
+  printInfo('  - paymentTransaction: { receiver, amount, closeRemainderTo, closeAmount }');
+  printInfo(
+    '  - assetTransferTransaction: { assetId, amount, receiver, sender, closeTo, closeAmount }',
+  );
+  printInfo('  - assetConfigTransaction: { assetId, params }');
+  printInfo('  - applicationTransaction: { applicationId, onComplete, accounts, etc. }');
+}
+
+main().catch(error => {
+  console.error('Fatal error:', error);
+  process.exit(1);
+});
+```
+
+---
+
+### Other examples in Indexer Client
+
+- [Indexer Health Check](/docs/algokit-utils/typescript/latest/examples/indexer-client/01-health-check/)
+- [Account Lookup](/docs/algokit-utils/typescript/latest/examples/indexer-client/02-account-lookup/)
+- [Account Assets](/docs/algokit-utils/typescript/latest/examples/indexer-client/03-account-assets/)
+- [Account Applications](/docs/algokit-utils/typescript/latest/examples/indexer-client/04-account-applications/)
+- [Account Transactions](/docs/algokit-utils/typescript/latest/examples/indexer-client/05-account-transactions/)
+- **Transaction Lookup**
+- [Transaction Search](/docs/algokit-utils/typescript/latest/examples/indexer-client/07-transaction-search/)
+- [Asset Lookup](/docs/algokit-utils/typescript/latest/examples/indexer-client/08-asset-lookup/)
+- [Asset Balances](/docs/algokit-utils/typescript/latest/examples/indexer-client/09-asset-balances/)
+- [Asset Transactions](/docs/algokit-utils/typescript/latest/examples/indexer-client/10-asset-transactions/)
+- [Application Lookup](/docs/algokit-utils/typescript/latest/examples/indexer-client/11-application-lookup/)
+- [Application Logs Lookup](/docs/algokit-utils/typescript/latest/examples/indexer-client/12-application-logs/)
+- [Application Boxes Lookup](/docs/algokit-utils/typescript/latest/examples/indexer-client/13-application-boxes/)
+- [Block Lookup](/docs/algokit-utils/typescript/latest/examples/indexer-client/14-block-lookup/)
+- [Block Headers Search](/docs/algokit-utils/typescript/latest/examples/indexer-client/15-block-headers/)
+- [Pagination](/docs/algokit-utils/typescript/latest/examples/indexer-client/16-pagination/)

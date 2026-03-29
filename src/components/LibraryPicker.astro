@@ -1,0 +1,349 @@
+---
+/**
+ * LibraryPicker - Compact dropdown for selecting a library in the main sidebar.
+ *
+ * Renders as a button that expands to show the full library list with:
+ * - Colored dot per library
+ * - Library name (plain text label)
+ * - Clickable language icons that link directly to each variant
+ */
+import {
+  libraries,
+  buildLibraryUrl,
+  type LibraryConfig,
+} from '../config/libraries';
+import { langIcons } from '../config/lang-icons';
+import LinkChip from './LinkChip.astro';
+
+interface Props {
+  currentPath: string;
+  /** When true, hides the toggle button and renders the library list directly (used inside HeaderMenu). */
+  compact?: boolean;
+}
+
+const { currentPath, compact = false } = Astro.props;
+
+const categoryOrder = ['sdk', 'cli', 'language', 'tool', 'api'];
+const categories: Record<string, LibraryConfig[]> = {};
+for (const lib of libraries) {
+  if (!categories[lib.category]) categories[lib.category] = [];
+  categories[lib.category].push(lib);
+}
+---
+
+{
+  compact ? (
+    <div class='library-picker compact'>
+      <ul class='picker-list' role='list'>
+        {categoryOrder.map(cat =>
+          categories[cat]?.map(lib => {
+            const rootHref = `/docs/${lib.slug}/`;
+            const isActive = currentPath.startsWith(rootHref);
+            const defaultVersion = lib.versions[0]?.slug ?? 'latest';
+            return (
+              <li class:list={['picker-item', { active: isActive }]}>
+                <span class='picker-dot' style={`--dot-color: ${lib.color}`} />
+                <span class='picker-item-label'>{lib.label}</span>
+                {lib.languages.length > 0 && (
+                  <span class='picker-variants'>
+                    {lib.languages.map(lang => {
+                      const icon = langIcons[lang];
+                      if (!icon) return null;
+                      const variantHref = buildLibraryUrl(
+                        lib,
+                        lang,
+                        defaultVersion,
+                      );
+                      return (
+                        <LinkChip
+                          href={variantHref}
+                          label={lang}
+                          icon={icon.svg}
+                          accentColor={icon.color}
+                        />
+                      );
+                    })}
+                  </span>
+                )}
+              </li>
+            );
+          }),
+        )}
+      </ul>
+    </div>
+  ) : (
+    <library-picker class='library-picker'>
+      <button
+        class='picker-btn'
+        aria-expanded='false'
+        aria-controls='library-picker-panel'
+      >
+        <svg
+          class='picker-icon'
+          width='16'
+          height='16'
+          viewBox='0 0 16 16'
+          fill='none'
+          stroke='currentColor'
+          stroke-width='1.5'
+          stroke-linecap='round'
+          stroke-linejoin='round'
+          aria-hidden='true'
+        >
+          <path d='M2 3H14' />
+          <path d='M2 8H14' />
+          <path d='M2 13H14' />
+          <circle cx='5' cy='3' r='1.5' fill='currentColor' stroke='none' />
+          <circle cx='10' cy='8' r='1.5' fill='currentColor' stroke='none' />
+          <circle cx='7' cy='13' r='1.5' fill='currentColor' stroke='none' />
+        </svg>
+        <span class='picker-label'>APIs & Tools</span>
+        <svg
+          class='picker-chevron'
+          width='12'
+          height='12'
+          viewBox='0 0 12 12'
+          fill='none'
+          aria-hidden='true'
+        >
+          <path
+            d='M3 5L6 8L9 5'
+            stroke='currentColor'
+            stroke-width='1.5'
+            stroke-linecap='round'
+            stroke-linejoin='round'
+          />
+        </svg>
+      </button>
+
+      <div class='picker-panel' id='library-picker-panel' aria-hidden='true'>
+        <ul class='picker-list' role='list'>
+          {categoryOrder.map(cat =>
+            categories[cat]?.map(lib => {
+              const rootHref = `/docs/${lib.slug}/`;
+              const isActive = currentPath.startsWith(rootHref);
+              const defaultVersion = lib.versions[0]?.slug ?? 'latest';
+              return (
+                <li class:list={['picker-item', { active: isActive }]}>
+                  <span
+                    class='picker-dot'
+                    style={`--dot-color: ${lib.color}`}
+                  />
+                  <span class='picker-item-label'>{lib.label}</span>
+                  {lib.languages.length > 0 && (
+                    <span class='picker-variants'>
+                      {lib.languages.map(lang => {
+                        const icon = langIcons[lang];
+                        if (!icon) return null;
+                        const variantHref = buildLibraryUrl(
+                          lib,
+                          lang,
+                          defaultVersion,
+                        );
+                        return (
+                          <LinkChip
+                            href={variantHref}
+                            label={lang}
+                            icon={icon.svg}
+                            accentColor={icon.color}
+                          />
+                        );
+                      })}
+                    </span>
+                  )}
+                </li>
+              );
+            }),
+          )}
+        </ul>
+      </div>
+    </library-picker>
+  )
+}
+
+<script>
+  class LibraryPicker extends HTMLElement {
+    private btn!: HTMLButtonElement;
+    private panel!: HTMLElement;
+
+    connectedCallback() {
+      this.btn = this.querySelector('.picker-btn')!;
+      this.panel = this.querySelector('.picker-panel')!;
+      if (!this.btn || !this.panel) return;
+
+      this.btn.addEventListener('click', () => this.toggle());
+      document.addEventListener('keydown', e => {
+        if (e.key === 'Escape' && this.isOpen()) this.close();
+      });
+      document.addEventListener('click', e => {
+        if (this.isOpen() && !this.contains(e.target as Node)) this.close();
+      });
+    }
+
+    isOpen() {
+      return this.btn.getAttribute('aria-expanded') === 'true';
+    }
+
+    toggle() {
+      if (this.isOpen()) this.close();
+      else this.open();
+    }
+
+    open() {
+      this.btn.setAttribute('aria-expanded', 'true');
+      this.panel.setAttribute('aria-hidden', 'false');
+    }
+
+    close() {
+      this.btn.setAttribute('aria-expanded', 'false');
+      this.panel.setAttribute('aria-hidden', 'true');
+    }
+  }
+
+  customElements.define('library-picker', LibraryPicker);
+</script>
+
+<style>
+  .library-picker {
+    display: block;
+    padding: 0 0 0.5rem;
+  }
+
+  .library-picker.compact {
+    padding: 0;
+  }
+
+  /* Trigger button */
+  .picker-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    width: 100%;
+    padding: 0.5rem 0.6rem;
+    background: none;
+    border: 1px solid var(--sl-color-gray-5);
+    border-radius: 0.5rem;
+    color: var(--sl-color-white);
+    cursor: pointer;
+    font-size: var(--sl-text-base);
+    font-weight: 600;
+    text-align: left;
+    transition:
+      background-color 0.15s,
+      border-color 0.15s;
+  }
+
+  @media (min-width: 50rem) {
+    .picker-btn {
+      font-size: var(--sl-text-sm);
+    }
+  }
+
+  .picker-btn:hover {
+    background-color: var(--sl-color-gray-6);
+    border-color: var(--sl-color-gray-4);
+  }
+
+  .picker-btn[aria-expanded='true'] {
+    background-color: var(--sl-color-gray-6);
+    border-color: var(--sl-color-gray-4);
+  }
+
+  .picker-icon {
+    flex-shrink: 0;
+    opacity: 0.6;
+  }
+
+  .picker-label {
+    flex: 1;
+  }
+
+  .picker-chevron {
+    flex-shrink: 0;
+    opacity: 0.5;
+    transition: transform 0.2s;
+  }
+
+  [aria-expanded='true'] .picker-chevron {
+    transform: rotate(180deg);
+  }
+
+  /* Dropdown panel */
+  .picker-panel {
+    overflow: hidden;
+    max-height: 0;
+    opacity: 0;
+    transition:
+      max-height 0.25s ease,
+      opacity 0.2s ease,
+      margin 0.25s ease;
+    margin-top: 0;
+  }
+
+  .picker-panel[aria-hidden='false'] {
+    max-height: 60vh;
+    opacity: 1;
+    margin-top: 0.4rem;
+    overflow-y: auto;
+  }
+
+  .picker-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  /* Individual library item */
+  .picker-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.35rem 0.5rem;
+    border-radius: 0.25rem;
+    color: var(--sl-color-gray-2);
+    font-size: var(--sl-text-base);
+    line-height: 1.4;
+  }
+
+  @media (min-width: 50rem) {
+    .picker-item {
+      font-size: var(--sl-text-sm);
+    }
+  }
+
+  .picker-item:has(:hover) {
+    background-color: var(--sl-color-gray-6);
+  }
+
+  .picker-item.active {
+    color: var(--sl-color-white);
+    background-color: var(--sl-color-gray-5);
+  }
+
+  .picker-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: var(--dot-color);
+    flex-shrink: 0;
+  }
+
+  /* Library name label */
+  .picker-item-label {
+    white-space: nowrap;
+    color: inherit;
+  }
+
+  .picker-item.active .picker-item-label {
+    font-weight: 600;
+  }
+
+  /* Language variant links */
+  .picker-variants {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: 0.3rem;
+    margin-inline-start: auto;
+  }
+</style>

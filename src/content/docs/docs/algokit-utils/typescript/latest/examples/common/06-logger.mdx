@@ -1,0 +1,351 @@
+---
+title: 'Logger Type'
+description: 'This example demonstrates the Logger interface for consistent logging across the AlgoKit Utils SDK.'
+sidebar:
+  order: 6
+---
+
+[← Back to Common Utilities](/docs/algokit-utils/typescript/latest/examples/common/)
+
+## Description
+
+This example demonstrates the Logger interface for consistent logging across the AlgoKit Utils SDK.
+Topics covered:
+
+- Logger type definition with all log levels
+- Console-based Logger implementation
+- No-op (silent) logger for production
+- Custom formatting logger
+- Compatibility with common logging patterns
+
+## Prerequisites
+
+- No LocalNet required
+
+## Run This Example
+
+From the repository root:
+
+```bash
+cd examples
+npm run example common/06-logger.ts
+```
+
+## Code
+
+[View source on GitHub](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/examples/common/06-logger.ts)
+
+```typescript title="06-logger.ts"
+/**
+ * Example: Logger Type
+ *
+ * This example demonstrates the Logger interface for consistent logging
+ * across the AlgoKit Utils SDK.
+ *
+ * Topics covered:
+ * - Logger type definition with all log levels
+ * - Console-based Logger implementation
+ * - No-op (silent) logger for production
+ * - Custom formatting logger
+ * - Compatibility with common logging patterns
+ *
+ * Prerequisites:
+ * - No LocalNet required
+ */
+
+import type { Logger } from '@algorandfoundation/algokit-utils/common';
+import { printHeader, printInfo, printStep, printSuccess } from '../shared/utils.js';
+
+// ============================================================================
+// Main Example
+// ============================================================================
+
+printHeader('Logger Type Example');
+
+// ============================================================================
+// Step 1: Logger Type Definition
+// ============================================================================
+printStep(1, 'Logger Type Definition');
+
+printInfo('The Logger type defines a standard logging interface:');
+printInfo('');
+printInfo('  type Logger = {');
+printInfo('    error(message: string, ...optionalParams: unknown[]): void');
+printInfo('    warn(message: string, ...optionalParams: unknown[]): void');
+printInfo('    info(message: string, ...optionalParams: unknown[]): void');
+printInfo('    verbose(message: string, ...optionalParams: unknown[]): void');
+printInfo('    debug(message: string, ...optionalParams: unknown[]): void');
+printInfo('  }');
+printInfo('');
+printInfo('Log levels (from most to least severe):');
+printInfo('  1. error   - Critical errors that need immediate attention');
+printInfo('  2. warn    - Warning conditions that should be reviewed');
+printInfo('  3. info    - Informational messages for normal operations');
+printInfo('  4. verbose - Detailed tracing for troubleshooting');
+printInfo('  5. debug   - Developer debugging information');
+printSuccess('Logger interface provides 5 standard log levels');
+
+// ============================================================================
+// Step 2: Console-based Logger Implementation
+// ============================================================================
+printStep(2, 'Console-based Logger Implementation');
+
+const consoleLogger: Logger = {
+  error: (message: string, ...optionalParams: unknown[]) => {
+    console.error(`[ERROR] ${message}`, ...optionalParams);
+  },
+  warn: (message: string, ...optionalParams: unknown[]) => {
+    console.warn(`[WARN]  ${message}`, ...optionalParams);
+  },
+  info: (message: string, ...optionalParams: unknown[]) => {
+    console.info(`[INFO]  ${message}`, ...optionalParams);
+  },
+  verbose: (message: string, ...optionalParams: unknown[]) => {
+    console.log(`[VERB]  ${message}`, ...optionalParams);
+  },
+  debug: (message: string, ...optionalParams: unknown[]) => {
+    console.debug(`[DEBUG] ${message}`, ...optionalParams);
+  },
+};
+
+printInfo('Created a console-based Logger implementation');
+printInfo('Demonstrating each log level:');
+console.log(''); // blank line for readability
+
+consoleLogger.error('Database connection failed', { code: 'ECONNREFUSED', port: 5432 });
+consoleLogger.warn('API rate limit approaching', { current: 95, limit: 100 });
+consoleLogger.info('Transaction submitted', { txId: 'ABC123...' });
+consoleLogger.verbose('Processing block', { round: 12345, txCount: 7 });
+consoleLogger.debug('Raw response payload', { bytes: 1024 });
+
+console.log(''); // blank line for readability
+printSuccess('All 5 log levels demonstrated');
+
+// ============================================================================
+// Step 3: No-op (Silent) Logger
+// ============================================================================
+printStep(3, 'No-op (Silent) Logger');
+
+const nullLogger: Logger = {
+  error: () => {},
+  warn: () => {},
+  info: () => {},
+  verbose: () => {},
+  debug: () => {},
+};
+
+printInfo('Created a no-op (silent) logger');
+printInfo('Silent loggers are useful for:');
+printInfo('  - Production environments where logging is disabled');
+printInfo('  - Unit tests where log output is not wanted');
+printInfo('  - Default parameter values when no logger is provided');
+printInfo('');
+printInfo('Calling silent logger (no output expected):');
+nullLogger.error('This error will not be logged');
+nullLogger.warn('This warning will not be logged');
+nullLogger.info('This info will not be logged');
+nullLogger.verbose('This verbose message will not be logged');
+nullLogger.debug('This debug message will not be logged');
+printSuccess('No-op logger created - produces no output');
+
+// ============================================================================
+// Step 4: Custom Formatting Logger
+// ============================================================================
+printStep(4, 'Custom Formatting Logger');
+
+function createTimestampLogger(prefix: string): Logger {
+  const formatMessage = (level: string, message: string): string => {
+    const timestamp = new Date().toISOString();
+    return `${timestamp} [${prefix}] ${level.padEnd(7)} ${message}`;
+  };
+
+  return {
+    error: (message: string, ...optionalParams: unknown[]) => {
+      console.error(formatMessage('ERROR', message), ...optionalParams);
+    },
+    warn: (message: string, ...optionalParams: unknown[]) => {
+      console.warn(formatMessage('WARN', message), ...optionalParams);
+    },
+    info: (message: string, ...optionalParams: unknown[]) => {
+      console.info(formatMessage('INFO', message), ...optionalParams);
+    },
+    verbose: (message: string, ...optionalParams: unknown[]) => {
+      console.log(formatMessage('VERBOSE', message), ...optionalParams);
+    },
+    debug: (message: string, ...optionalParams: unknown[]) => {
+      console.debug(formatMessage('DEBUG', message), ...optionalParams);
+    },
+  };
+}
+
+const appLogger = createTimestampLogger('MyApp');
+
+printInfo('Created a logger with custom formatting:');
+printInfo('  - ISO timestamp prefix');
+printInfo('  - Application name prefix');
+printInfo('  - Padded log level for alignment');
+printInfo('');
+printInfo('Demonstrating custom formatted output:');
+console.log(''); // blank line for readability
+
+appLogger.info('Application started');
+appLogger.debug('Configuration loaded', { env: 'development' });
+appLogger.warn('Deprecated API endpoint called');
+
+console.log(''); // blank line for readability
+printSuccess('Custom formatting logger created and demonstrated');
+
+// ============================================================================
+// Step 5: Level-filtered Logger
+// ============================================================================
+printStep(5, 'Level-filtered Logger');
+
+type LogLevel = 'error' | 'warn' | 'info' | 'verbose' | 'debug';
+
+const LOG_LEVEL_PRIORITY: Record<LogLevel, number> = {
+  error: 0,
+  warn: 1,
+  info: 2,
+  verbose: 3,
+  debug: 4,
+};
+
+function createFilteredLogger(minLevel: LogLevel): Logger {
+  const minPriority = LOG_LEVEL_PRIORITY[minLevel];
+
+  const shouldLog = (level: LogLevel): boolean => {
+    return LOG_LEVEL_PRIORITY[level] <= minPriority;
+  };
+
+  return {
+    error: (message: string, ...optionalParams: unknown[]) => {
+      if (shouldLog('error')) console.error(`[ERROR] ${message}`, ...optionalParams);
+    },
+    warn: (message: string, ...optionalParams: unknown[]) => {
+      if (shouldLog('warn')) console.warn(`[WARN]  ${message}`, ...optionalParams);
+    },
+    info: (message: string, ...optionalParams: unknown[]) => {
+      if (shouldLog('info')) console.info(`[INFO]  ${message}`, ...optionalParams);
+    },
+    verbose: (message: string, ...optionalParams: unknown[]) => {
+      if (shouldLog('verbose')) console.log(`[VERB]  ${message}`, ...optionalParams);
+    },
+    debug: (message: string, ...optionalParams: unknown[]) => {
+      if (shouldLog('debug')) console.debug(`[DEBUG] ${message}`, ...optionalParams);
+    },
+  };
+}
+
+printInfo('Created a level-filtered logger factory');
+printInfo('Filter levels control which messages are logged:');
+printInfo('  - "error"   -> only errors');
+printInfo('  - "warn"    -> errors + warnings');
+printInfo('  - "info"    -> errors + warnings + info');
+printInfo('  - "verbose" -> all except debug');
+printInfo('  - "debug"   -> all messages');
+printInfo('');
+
+printInfo('Testing with minLevel="warn" (only error and warn):');
+const warnLogger = createFilteredLogger('warn');
+console.log(''); // blank line for readability
+warnLogger.error('This error IS logged');
+warnLogger.warn('This warning IS logged');
+warnLogger.info('This info is NOT logged');
+warnLogger.debug('This debug is NOT logged');
+
+console.log(''); // blank line for readability
+printSuccess('Level-filtered logger demonstrated');
+
+// ============================================================================
+// Step 6: Logger Interface Compatibility
+// ============================================================================
+printStep(6, 'Logger Interface Compatibility');
+
+printInfo('The Logger interface is compatible with common logging libraries:');
+printInfo('');
+printInfo('  1. Console API - native JavaScript console methods');
+printInfo('     const logger: Logger = { ...console, verbose: console.log }');
+printInfo('');
+printInfo('  2. Winston - popular Node.js logging library');
+printInfo('     const winston = require("winston")');
+printInfo('     const logger: Logger = winston.createLogger(...)');
+printInfo('');
+printInfo('  3. Pino - fast JSON logger for Node.js');
+printInfo('     const pino = require("pino")');
+printInfo('     const logger: Logger = pino()');
+printInfo('');
+printInfo('  4. Custom implementations - as shown in this example');
+printInfo('');
+
+// Demonstrate that native console can be adapted as a Logger
+printInfo('Demonstrating console adapted as Logger:');
+const nativeConsoleLogger: Logger = {
+  ...console,
+  verbose: console.log.bind(console), // Console doesn't have verbose, so use log
+};
+console.log(''); // blank line for readability
+nativeConsoleLogger.info('Native console.info works as Logger.info');
+nativeConsoleLogger.debug('Native console.debug works as Logger.debug');
+
+console.log(''); // blank line for readability
+printSuccess('Console can be adapted to Logger interface (needs verbose wrapper)');
+
+// ============================================================================
+// Step 7: Using Logger in Functions
+// ============================================================================
+printStep(7, 'Using Logger in Functions');
+
+function simulateTransaction(txId: string, logger: Logger = nullLogger): void {
+  logger.info(`Starting transaction: ${txId}`);
+  logger.debug('Validating transaction parameters');
+  logger.verbose('Serializing transaction data');
+  logger.info(`Transaction ${txId} completed successfully`);
+}
+
+printInfo('Created a function that accepts Logger as optional parameter');
+printInfo('When no logger is provided, it defaults to nullLogger (silent)');
+printInfo('');
+
+printInfo('Calling with no logger (silent):');
+simulateTransaction('TX-001');
+printInfo('  (no output produced)');
+printInfo('');
+
+printInfo('Calling with consoleLogger:');
+console.log(''); // blank line for readability
+simulateTransaction('TX-002', consoleLogger);
+
+console.log(''); // blank line for readability
+printSuccess('Logger can be used as optional dependency injection');
+
+// ============================================================================
+// Summary
+// ============================================================================
+printStep(8, 'Summary');
+
+printInfo('Logger interface provides:');
+printInfo('  - 5 standard log levels (error, warn, info, verbose, debug)');
+printInfo('  - Support for additional parameters (objects, arrays, etc.)');
+printInfo('  - Compatibility with console, Winston, Pino, and others');
+printInfo('  - Easy to implement custom formatters and filters');
+printInfo('  - No-op logger for disabling output');
+printInfo('');
+printSuccess('Logger Type Example completed!');
+```
+
+---
+
+### Other examples in Common Utilities
+
+- [Address Basics](/docs/algokit-utils/typescript/latest/examples/common/01-address-basics/)
+- [Address Encoding](/docs/algokit-utils/typescript/latest/examples/common/02-address-encoding/)
+- [Array Utilities](/docs/algokit-utils/typescript/latest/examples/common/03-array-utilities/)
+- [Constants Reference](/docs/algokit-utils/typescript/latest/examples/common/04-constants/)
+- [Crypto Hash (SHA-512/256)](/docs/algokit-utils/typescript/latest/examples/common/05-crypto-hash/)
+- **Logger Type**
+- [JSON BigInt](/docs/algokit-utils/typescript/latest/examples/common/07-json-bigint/)
+- [MessagePack](/docs/algokit-utils/typescript/latest/examples/common/08-msgpack/)
+- [Primitive Codecs](/docs/algokit-utils/typescript/latest/examples/common/09-primitive-codecs/)
+- [Composite Codecs](/docs/algokit-utils/typescript/latest/examples/common/10-composite-codecs/)
+- [Model Codecs](/docs/algokit-utils/typescript/latest/examples/common/11-model-codecs/)
+- [Sourcemap](/docs/algokit-utils/typescript/latest/examples/common/12-sourcemap/)
