@@ -34,6 +34,8 @@ export interface LibraryConfig {
   languages: string[];
   /** Category grouping */
   category: 'sdk' | 'cli' | 'language' | 'tool' | 'api';
+  /** Default landing page path when no index page exists at the library root */
+  defaultPage?: string;
   /** Raw SVG markup resolved by convention from imports/configs/<slug>/logo.svg */
   logo?: string;
   /** Sidebar tree for this library's docs (populated by sidebar configs) */
@@ -106,6 +108,7 @@ function buildRegistry(configs: LibraryImportConfig[]): LibraryConfig[] {
       versions,
       languages,
       category: config.metadata.category,
+      defaultPage: config.metadata.defaultPage,
       sidebar: [], // Populated by optional sidebar configs (PR 2.5)
     };
   });
@@ -198,7 +201,8 @@ export function buildLibraryUrl(
 ): string {
   const langSlug = language.toLowerCase();
   const base = `/docs/${library.slug}/${langSlug}/${version}/`;
-  return pagePath ? `${base}${pagePath}/`.replace(/\/+$/, '/') : base;
+  const page = pagePath || library.defaultPage;
+  return page ? `${base}${page}/`.replace(/\/+$/, '/') : base;
 }
 
 // ---------------------------------------------------------------------------

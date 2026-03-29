@@ -16,6 +16,7 @@ export const config: LibraryImportConfig = {
     description: 'Build smart contracts on Algorand using Python',
     color: '#8B5CF6',
     category: 'language',
+    defaultPage: 'guides/overview',
   },
   variants: [
     {

@@ -25,6 +25,8 @@ export interface LibraryMetadata {
   color: string;
   /** Category grouping */
   category: 'sdk' | 'cli' | 'language' | 'tool' | 'api';
+  /** Default landing page path (e.g. "commands") when no index page exists */
+  defaultPage?: string;
 }
 
 /**

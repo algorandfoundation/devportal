@@ -10,6 +10,7 @@ export const config: LibraryImportConfig = {
     description: 'Tools for running Algorand nodes',
     color: '#EF4444',
     category: 'tool',
+    defaultPage: 'commands',
   },
   variants: [
     {
@@ -27,7 +28,7 @@ export const config: LibraryImportConfig = {
               frontmatter: {
                 title: 'NodeKit Command Reference',
                 sidebar: { label: 'NodeKit Reference' },
-                slug: 'docs/nodekit/go/latest',
+                slug: 'docs/nodekit/go/latest/commands',
               },
               mode: 'merge',
               preserveExisting: true,
