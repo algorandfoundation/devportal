@@ -19,19 +19,19 @@ title: 'algokit_utils.models.application'
 
 ### _class_ AppState
 
-#### key_raw _: bytes_
+#### key*raw *: bytes\_
 
 The key of the state as raw bytes
 
-#### key_base64 _: str_
+#### key*base64 *: str\_
 
 The key of the state
 
-#### value_raw _: bytes | None_
+#### value*raw *: bytes | None\_
 
 The value of the state as raw bytes
 
-#### value_base64 _: str | None_
+#### value*base64 *: str | None\_
 
 The value of the state as base64 encoded string
 
@@ -41,19 +41,19 @@ The value of the state as a string or integer
 
 ### _class_ AppInformation
 
-#### app_id _: int_
+#### app*id *: int\_
 
 The ID of the application
 
-#### app_address _: str_
+#### app*address *: str\_
 
 The address of the application
 
-#### approval_program _: bytes_
+#### approval*program *: bytes\_
 
 The approval program
 
-#### clear_state_program _: bytes_
+#### clear*state_program *: bytes\_
 
 The clear state program
 
@@ -61,27 +61,27 @@ The clear state program
 
 The creator of the application
 
-#### global_state _: dict[str, [AppState](#algokit_utils.models.application.AppState)]_
+#### global*state *: dict[str, [AppState](#algokit_utils.models.application.AppState)]\_
 
 The global state of the application
 
-#### local_ints _: int_
+#### local*ints *: int\_
 
 The number of local ints
 
-#### local_byte_slices _: int_
+#### local*byte_slices *: int\_
 
 The number of local byte slices
 
-#### global_ints _: int_
+#### global*ints *: int\_
 
 The number of global ints
 
-#### global_byte_slices _: int_
+#### global*byte_slices *: int\_
 
 The number of global byte slices
 
-#### extra_program_pages _: int | None_
+#### extra*program_pages *: int | None\_
 
 The number of extra program pages
 
@@ -97,25 +97,25 @@ The teal code
 
 The compiled teal code
 
-#### compiled_hash _: str_
+#### compiled*hash *: str\_
 
 The compiled hash
 
-#### compiled_base64_to_bytes _: bytes_
+#### compiled*base64_to_bytes *: bytes\_
 
 The compiled base64 to bytes
 
-#### source_map _: ProgramSourceMap | None_
+#### source*map *: ProgramSourceMap | None\_
 
 ### _class_ AppCompilationResult
 
 The compiled teal code
 
-#### compiled_approval _: [CompiledTeal](#algokit_utils.models.application.CompiledTeal)_
+#### compiled*approval *: [CompiledTeal](#algokit_utils.models.application.CompiledTeal)\_
 
 The compiled approval program
 
-#### compiled_clear _: [CompiledTeal](#algokit_utils.models.application.CompiledTeal)_
+#### compiled*clear *: [CompiledTeal](#algokit_utils.models.application.CompiledTeal)\_
 
 The compiled clear state program
 
@@ -123,11 +123,11 @@ The compiled clear state program
 
 The source maps for the application
 
-#### approval_source_map _: ProgramSourceMap | None_ _= None_
+#### approval*source_map *: ProgramSourceMap | None\_ _= None_
 
 The source map for the approval program
 
-#### clear_source_map _: ProgramSourceMap | None_ _= None_
+#### clear*source_map *: ProgramSourceMap | None\_ _= None_
 
 The source map for the clear state program
 

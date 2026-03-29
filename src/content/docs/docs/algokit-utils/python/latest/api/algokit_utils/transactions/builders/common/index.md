@@ -35,33 +35,33 @@ title: 'algokit_utils.transactions.builders.common'
 
 #### sender _: str_
 
-#### first_valid _: int_
+#### first*valid *: int\_
 
-#### last_valid _: int_
+#### last*valid *: int\_
 
-#### genesis_hash _: bytes_
+#### genesis*hash *: bytes\_
 
-#### genesis_id _: str | None_
+#### genesis*id *: str | None\_
 
 #### note _: bytes | None_
 
 #### lease _: bytes | None_
 
-#### rekey_to _: str | None_
+#### rekey*to *: str | None\_
 
 ### _class_ FeeConfig
 
-#### fee_per_byte _: int_
+#### fee*per_byte *: int\_
 
-#### min_fee _: int_
+#### min*fee *: int\_
 
-#### flat_fee _: bool_
+#### flat*fee *: bool\_
 
 ### _class_ BuiltTransaction
 
 #### txn _: Transaction_
 
-#### logical_max_fee _: [AlgoAmount](/docs/algokit-utils/python/latest/api/algokit_utils/models/amount/#algokit_utils.models.amount.AlgoAmount) | None_
+#### logical*max_fee *: [AlgoAmount](/docs/algokit-utils/python/latest/api/algokit_utils/models/amount/#algokit_utils.models.amount.AlgoAmount) | None\_
 
 ### build_transaction_header(params: [CommonTxnParams](/docs/algokit-utils/python/latest/api/algokit_utils/transactions/types/#algokit_utils.transactions.types.CommonTxnParams), suggested_params: SuggestedParamsLike, \*, default_validity_window: int, default_validity_window_is_explicit: bool, is_localnet: bool) → tuple[[TransactionHeader](#algokit_utils.transactions.builders.common.TransactionHeader), [FeeConfig](#algokit_utils.transactions.builders.common.FeeConfig)]
 

@@ -13,6 +13,6 @@ title: 'algokit_utils.models.account'
 
 ## Module Contents
 
-### DISPENSER_ACCOUNT_NAME _= 'DISPENSER'_
+### DISPENSER*ACCOUNT_NAME *= 'DISPENSER'\_
 
 </div>

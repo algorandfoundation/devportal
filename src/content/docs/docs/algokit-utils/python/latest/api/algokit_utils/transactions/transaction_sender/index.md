@@ -32,15 +32,15 @@ The last transaction
 
 The last confirmation
 
-#### group_id _: str_
+#### group*id *: str\_
 
 The group ID
 
-#### tx_id _: str | None_ _= None_
+#### tx*id *: str | None\_ _= None_
 
 The transaction ID
 
-#### tx_ids _: list[str]_
+#### tx*ids *: list[str]\_
 
 The full array of transaction IDs
 
@@ -66,7 +66,7 @@ Result of creating a new ASA (Algorand Standard Asset).
 
 Contains the asset ID of the newly created asset.
 
-#### asset_id _: int_
+#### asset*id *: int\_
 
 The ID of the newly created asset
 
@@ -78,7 +78,7 @@ Result of an application transaction.
 
 Contains the ABI return value if applicable.
 
-#### abi_return _: ABIReturnT | None_ _= None_
+#### abi*return *: ABIReturnT | None\_ _= None_
 
 The ABI return value if applicable
 
@@ -90,11 +90,11 @@ Result of updating an application.
 
 Contains the compiled approval and clear programs.
 
-#### compiled_approval _: [CompiledTeal](/docs/algokit-utils/python/latest/api/algokit_utils/models/application/#algokit_utils.models.application.CompiledTeal) | bytes | None_ _= None_
+#### compiled*approval *: [CompiledTeal](/docs/algokit-utils/python/latest/api/algokit_utils/models/application/#algokit_utils.models.application.CompiledTeal) | bytes | None\_ _= None_
 
 The compiled approval program
 
-#### compiled_clear _: [CompiledTeal](/docs/algokit-utils/python/latest/api/algokit_utils/models/application/#algokit_utils.models.application.CompiledTeal) | bytes | None_ _= None_
+#### compiled*clear *: [CompiledTeal](/docs/algokit-utils/python/latest/api/algokit_utils/models/application/#algokit_utils.models.application.CompiledTeal) | bytes | None\_ _= None_
 
 The compiled clear state program
 
@@ -106,11 +106,11 @@ Result of creating a new application.
 
 Contains the app ID and address of the newly created application.
 
-#### app_id _: int_
+#### app*id *: int\_
 
 The ID of the newly created application
 
-#### app_address _: str_
+#### app*address *: str\_
 
 The address of the newly created application
 

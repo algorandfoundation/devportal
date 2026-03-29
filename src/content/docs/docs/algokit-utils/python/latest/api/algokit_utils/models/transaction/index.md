@@ -29,7 +29,7 @@ Bases: `TypedDict`
 
 Base ARC-0002 transaction note structure
 
-#### dapp_name _: str_
+#### dapp*name *: str\_
 
 ### _class_ StringFormatArc2Note
 
@@ -63,12 +63,12 @@ Bases: `TypedDict`
 
 Parameters for sending a transaction
 
-#### max_rounds_to_wait _: int_
+#### max*rounds_to_wait *: int\_
 
-#### suppress_log _: bool_
+#### suppress*log *: bool\_
 
-#### populate_app_call_resources _: bool_
+#### populate*app_call_resources *: bool\_
 
-#### cover_app_call_inner_transaction_fees _: bool_
+#### cover*app_call_inner_transaction_fees *: bool\_
 
 </div>

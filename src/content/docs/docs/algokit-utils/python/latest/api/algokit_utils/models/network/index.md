@@ -35,10 +35,10 @@ Returns the full URL for the service
 
 ### _class_ AlgoClientConfigs
 
-#### algod_config _: [AlgoClientNetworkConfig](#algokit_utils.models.network.AlgoClientNetworkConfig)_
+#### algod*config *: [AlgoClientNetworkConfig](#algokit_utils.models.network.AlgoClientNetworkConfig)\_
 
-#### indexer_config _: [AlgoClientNetworkConfig](#algokit_utils.models.network.AlgoClientNetworkConfig) | None_
+#### indexer*config *: [AlgoClientNetworkConfig](#algokit_utils.models.network.AlgoClientNetworkConfig) | None\_
 
-#### kmd_config _: [AlgoClientNetworkConfig](#algokit_utils.models.network.AlgoClientNetworkConfig) | None_
+#### kmd*config *: [AlgoClientNetworkConfig](#algokit_utils.models.network.AlgoClientNetworkConfig) | None\_
 
 </div>

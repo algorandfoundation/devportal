@@ -57,31 +57,31 @@ Contains detailed debugging information including simulation traces and sent tra
 
 #### traces _= None_
 
-#### sent_transactions _= None_
+#### sent*transactions *= None\_
 
-#### simulate_response _= None_
+#### simulate*response *= None\_
 
 ### _class_ TransactionComposerConfig
 
-#### cover_app_call_inner_transaction_fees _: bool_ _= False_
+#### cover*app_call_inner_transaction_fees *: bool\_ _= False_
 
-#### populate_app_call_resources _: bool_ _= True_
+#### populate*app_call_resources *: bool\_ _= True_
 
 ### _class_ TransactionComposerParams
 
 #### algod _: AlgodClient_
 
-#### get_signer _: Callable[[str], TransactionSigner]_
+#### get*signer *: Callable[[str], TransactionSigner]\_
 
-#### get_suggested_params _: Callable[[], SuggestedParams] | None_ _= None_
+#### get*suggested_params *: Callable[[], SuggestedParams] | None\_ _= None_
 
-#### default_validity_window _: int | None_ _= None_
+#### default*validity_window *: int | None\_ _= None_
 
-#### app_manager _: [AppManager](/docs/algokit-utils/python/latest/api/algokit_utils/applications/app_manager/#algokit_utils.applications.app_manager.AppManager) | None_ _= None_
+#### app*manager *: [AppManager](/docs/algokit-utils/python/latest/api/algokit_utils/applications/app_manager/#algokit_utils.applications.app_manager.AppManager) | None\_ _= None_
 
-#### error_transformers _: list[ErrorTransformer] | None_ _= None_
+#### error*transformers *: list[ErrorTransformer] | None\_ _= None_
 
-#### composer_config _: [TransactionComposerConfig](#algokit_utils.transactions.transaction_composer.TransactionComposerConfig) | None_ _= None_
+#### composer*config *: [TransactionComposerConfig](#algokit_utils.transactions.transaction_composer.TransactionComposerConfig) | None\_ _= None_
 
 ### _class_ TransactionWithSigner
 
@@ -95,13 +95,13 @@ Contains detailed debugging information including simulation traces and sent tra
 
 #### transactions _: list[Transaction]_
 
-#### method_calls _: dict[int, ABIMethod]_
+#### method*calls *: dict[int, ABIMethod]\_
 
 #### signers _: dict[int, TransactionSigner]_
 
 ### _class_ SendTransactionComposerResults
 
-#### tx_ids _: list[str]_
+#### tx*ids *: list[str]\_
 
 #### transactions _: list[Transaction]_
 
@@ -109,9 +109,9 @@ Contains detailed debugging information including simulation traces and sent tra
 
 #### returns _: list[[ABIReturn](/docs/algokit-utils/python/latest/api/algokit_utils/applications/abi/#algokit_utils.applications.abi.ABIReturn)]_
 
-#### group_id _: str | None_ _= None_
+#### group*id *: str | None\_ _= None_
 
-#### simulate_response _: SimulateResponse | None_ _= None_
+#### simulate*response *: SimulateResponse | None\_ _= None_
 
 ### _class_ TransactionComposer(params: [TransactionComposerParams](#algokit_utils.transactions.transaction_composer.TransactionComposerParams))
 
