@@ -1,5 +1,26 @@
 {
   "imports": {
+    "algorandfoundation/arcs@devportal": {
+      "name": "ARC Standards",
+      "repoId": "algorandfoundation/arcs@devportal",
+      "lastCommitSha": "7eea3b1e342b8a7ce9506f6fb5e56bf79a4f31cf",
+      "lastImported": "2026-02-15T09:21:16.909Z",
+      "ref": "devportal"
+    },
+    "algorandfoundation/nodekit@main": {
+      "name": "NodeKit Command Reference",
+      "repoId": "algorandfoundation/nodekit@main",
+      "lastCommitSha": "42b0c2248c5c05979002360a109898a29ececf65",
+      "lastImported": "2025-12-30T12:54:46.175Z",
+      "ref": "main"
+    },
+    "algorandfoundation/algokit-cli@chore/content-fix": {
+      "name": "AlgoKit CLI Docs",
+      "repoId": "algorandfoundation/algokit-cli@chore/content-fix",
+      "lastCommitSha": "40762f855a87326e16ce94e94673c7fefac5c025",
+      "lastImported": "2025-12-30T12:54:55.029Z",
+      "ref": "chore/content-fix"
+    },
     "algorandfoundation/algokit-utils-ts@chore/fix-docs": {
       "name": "AlgoKit Utils TS Docs",
       "repoId": "algorandfoundation/algokit-utils-ts@chore/fix-docs",
@@ -13,13 +34,6 @@
       "lastCommitSha": "6971b957fbe298facdda00dca158c0a7eb9690df",
       "lastImported": "2026-02-17T16:31:22.452Z",
       "ref": "main"
-    },
-    "algorandfoundation/algokit-cli@chore/content-fix": {
-      "name": "AlgoKit CLI Docs",
-      "repoId": "algorandfoundation/algokit-cli@chore/content-fix",
-      "lastCommitSha": "40762f855a87326e16ce94e94673c7fefac5c025",
-      "lastImported": "2026-02-17T16:31:30.608Z",
-      "ref": "chore/content-fix"
     },
     "algorandfoundation/puya@devportal": {
       "name": "Algorand Python",
@@ -41,20 +55,6 @@
       "lastCommitSha": "c1babecd1a695a320814efec0d6cb08771c77b4c",
       "lastImported": "2026-02-17T16:32:32.001Z",
       "ref": "docs-dist"
-    },
-    "algorandfoundation/nodekit@main": {
-      "name": "NodeKit Command Reference",
-      "repoId": "algorandfoundation/nodekit@main",
-      "lastCommitSha": "42b0c2248c5c05979002360a109898a29ececf65",
-      "lastImported": "2026-02-17T16:32:34.596Z",
-      "ref": "main"
-    },
-    "algorandfoundation/arcs@devportal": {
-      "name": "ARC Standards",
-      "repoId": "algorandfoundation/arcs@devportal",
-      "lastCommitSha": "7eea3b1e342b8a7ce9506f6fb5e56bf79a4f31cf",
-      "lastImported": "2026-02-17T16:32:47.126Z",
-      "ref": "devportal"
     },
     "algokit-cli-legacy-guides": {
       "name": "AlgoKit CLI Legacy Guides",
