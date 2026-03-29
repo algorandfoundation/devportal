@@ -1,4 +1,4 @@
-import { useEffect, useCallback, useRef } from 'react';
+import { useEffect, useCallback } from 'react';
 import { useStore } from '@nanostores/react';
 import { KapaProvider } from '@kapaai/react-sdk';
 import { isChatOpen } from '../stores/chatStore';
@@ -8,10 +8,6 @@ const INTEGRATION_ID = import.meta.env.PUBLIC_KAPA_INTEGRATION_ID ?? '';
 
 export default function AIChatPanel() {
   const isOpen = useStore(isChatOpen);
-  // Enable CSS transitions only after first user interaction to prevent
-  // flash during View Transition DOM swaps (transition:persist).
-  const hasInteracted = useRef(false);
-  if (isOpen) hasInteracted.current = true;
 
   const close = useCallback(() => isChatOpen.set(false), []);
 
@@ -42,7 +38,6 @@ export default function AIChatPanel() {
       <div
         onClick={close}
         className={`fixed inset-0 z-[300] bg-black/50 backdrop-blur-sm
-          ${hasInteracted.current ? 'transition-opacity duration-200' : ''}
           ${isOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}
         aria-hidden='true'
       />
@@ -53,8 +48,7 @@ export default function AIChatPanel() {
         aria-label='AI Chat Assistant'
         aria-hidden={!isOpen}
         className={`fixed top-0 right-0 bottom-0 z-[301] w-[500px] max-w-[100vw]
-          flex flex-col ${hasInteracted.current ? 'transition-transform duration-[250ms] ease-out' : ''}
-          bg-[var(--sl-color-bg-nav)] border-l border-[var(--sl-color-gray-5)]
+          flex flex-col bg-[var(--sl-color-bg-nav)] border-l border-[var(--sl-color-gray-5)]
           ${isOpen ? 'translate-x-0 shadow-[-8px_0_24px_rgba(0,0,0,0.3)]' : 'translate-x-full'}`}
       >
         {/* Close button */}
