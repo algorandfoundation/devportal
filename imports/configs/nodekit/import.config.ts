@@ -27,7 +27,7 @@ export const config: LibraryImportConfig = {
               frontmatter: {
                 title: 'NodeKit Command Reference',
                 sidebar: { label: 'NodeKit Reference' },
-                slug: 'docs/nodekit/go/latest/commands',
+                slug: 'docs/nodekit/go/latest',
               },
               mode: 'merge',
               preserveExisting: true,

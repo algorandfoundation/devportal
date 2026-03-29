@@ -526,7 +526,7 @@ export default defineConfig({
                 { slug: 'nodes/reference/telemetry-config' },
               ],
             },
-            { slug: 'docs/nodekit/go/latest/commands' },
+            { slug: 'docs/nodekit/go/latest' },
           ],
         },
         {
