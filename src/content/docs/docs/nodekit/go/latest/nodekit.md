@@ -2,7 +2,7 @@
 title: nodekit
 sidebar:
   label: NodeKit Reference
-slug: docs/nodekit/go/latest
+slug: docs/nodekit/go/latest/commands
 ---
 
 ## Synopsis
