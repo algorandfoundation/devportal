@@ -13,7 +13,10 @@ This tutorial uses TypeScript on Algorand TestNet to build a paying client, a Ho
 
 **You will:** (1) build a **client** that pays via x402-aware `fetch`, (2) build a **resource server** that charges for **`/weather`**, and (3) run both locally end-to-end. The **resource server** operator sets the **price** and **`payTo`** address. The **facilitator** verifies and settles on Algorand.
 
-<Image src={x402Flow} alt="Sequence diagram: client, resource server, and facilitator in an x402 payment flow" />
+<Image
+  src={x402Flow}
+  alt='Sequence diagram: client, resource server, and facilitator in an x402 payment flow'
+/>
 
 ## Build a pay-per-API service with x402
 
@@ -54,6 +57,10 @@ npm install -D typescript @types/node tsx
 npm install @x402-avm/fetch@^2.6.1 @x402-avm/avm@^2.6.1 @algorandfoundation/algokit-utils@10.0.0-alpha.42 dotenv
 ```
 
+:::note
+This tutorial currently uses an **alpha** release of **`@algorandfoundation/algokit-utils`**. We will update the guide to the corresponding **beta** release when it is available in the coming weeks.
+:::
+
 #### Client config
 
 Set **`"type": "module"`** in **`package.json`**.
@@ -92,15 +99,15 @@ AVM_MNEMONIC="your 25-word mnemonic here"
 Create **`index.ts`** at the **project root** and start with plain **`fetch`**. You should see **HTTP 402** before adding x402 libraries.
 
 ```typescript
-const url = "https://x402.goplausible.xyz/examples/weather";
+const url = 'https://x402.goplausible.xyz/examples/weather';
 
 async function main(): Promise<void> {
-    const response = await fetch(url, { method: "GET" });
-    console.log("status:", response.status, response.statusText);
-    const paymentHeader = response.headers.get("payment-required");
-    if (paymentHeader) {
-        console.log("payment-required (first 80 chars):", paymentHeader.slice(0, 80) + "...");
-    }
+  const response = await fetch(url, { method: 'GET' });
+  console.log('status:', response.status, response.statusText);
+  const paymentHeader = response.headers.get('payment-required');
+  if (paymentHeader) {
+    console.log('payment-required (first 80 chars):', paymentHeader.slice(0, 80) + '...');
+  }
 }
 
 main().catch(console.error);
@@ -119,63 +126,64 @@ Expect **HTTP `402 Payment Required`** and a **`payment-required`** header (base
 Replace **`index.ts`** with the version below. Wrapped **`fetch`** handles **HTTP 402**, signs the Algorand payment from **`AVM_MNEMONIC`**, and retries the request. This requires the [Setup](#setup) above: funded accounts, asset opt-in, and TestNet USDC.
 
 ```typescript
-import { config } from "dotenv";
-import { x402Client, wrapFetchWithPayment, x402HTTPClient } from "@x402-avm/fetch";
-import { toClientAvmSigner } from "@x402-avm/avm";
-import { registerExactAvmScheme } from "@x402-avm/avm/exact/client";
-import { ed25519SigningKeyFromWrappedSecret, type WrappedEd25519Seed } from "@algorandfoundation/algokit-utils/crypto";
-import { seedFromMnemonic } from "@algorandfoundation/algokit-utils/algo25";
+import { config } from 'dotenv';
+import { x402Client, wrapFetchWithPayment, x402HTTPClient } from '@x402-avm/fetch';
+import { toClientAvmSigner } from '@x402-avm/avm';
+import { registerExactAvmScheme } from '@x402-avm/avm/exact/client';
+import {
+  ed25519SigningKeyFromWrappedSecret,
+  type WrappedEd25519Seed,
+} from '@algorandfoundation/algokit-utils/crypto';
+import { seedFromMnemonic } from '@algorandfoundation/algokit-utils/algo25';
 
 config();
 
 const avmMnemonic = process.env.AVM_MNEMONIC as string;
-const url = "https://x402.goplausible.xyz/examples/weather";
+const url = 'https://x402.goplausible.xyz/examples/weather';
 
 async function main(): Promise<void> {
-    const secretKey = await getSecretKeyFromMnemonic(avmMnemonic);
-    // Create the Algorand signer used to authorize payments.
-    const avmSigner = toClientAvmSigner(secretKey);
+  const secretKey = await getSecretKeyFromMnemonic(avmMnemonic);
+  // Create the Algorand signer used to authorize payments.
+  const avmSigner = toClientAvmSigner(secretKey);
 
-    // Initialize the x402 client.
-    const client = new x402Client();
-    // Register the exact AVM scheme so the client knows how to satisfy Algorand "exact" requirements.
-    registerExactAvmScheme(client, { signer: avmSigner });
-    console.info(`AVM signer: ${avmSigner.address}`);
+  // Initialize the x402 client.
+  const client = new x402Client();
+  // Register the exact AVM scheme so the client knows how to satisfy Algorand "exact" requirements.
+  registerExactAvmScheme(client, { signer: avmSigner });
+  console.info(`AVM signer: ${avmSigner.address}`);
 
-    // Wrap fetch so 402 responses trigger payment handling automatically.
-    const fetchWithPayment = wrapFetchWithPayment(fetch, client);
+  // Wrap fetch so 402 responses trigger payment handling automatically.
+  const fetchWithPayment = wrapFetchWithPayment(fetch, client);
 
-    const response = await fetchWithPayment(url, { method: "GET" });
+  const response = await fetchWithPayment(url, { method: 'GET' });
 
-    if (response.ok) {
-        const paymentResponse = new x402HTTPClient(client).getPaymentSettleResponse(name =>
-            response.headers.get(name),
-        );
-        console.log("\nPayment response:", JSON.stringify(paymentResponse, null, 2));
-    } else {
-        console.log(`\nNo payment settled (response status: ${response.status})`);
-    }
+  if (response.ok) {
+    const paymentResponse = new x402HTTPClient(client).getPaymentSettleResponse(name =>
+      response.headers.get(name),
+    );
+    console.log('\nPayment response:', JSON.stringify(paymentResponse, null, 2));
+  } else {
+    console.log(`\nNo payment settled (response status: ${response.status})`);
+  }
 }
 
 async function getSecretKeyFromMnemonic(avmMnemonic: string): Promise<string> {
-    const seed = seedFromMnemonic(avmMnemonic);
-    const seedCopy = new Uint8Array(seed);
-    const wrappedSeed: WrappedEd25519Seed = {
-        unwrapEd25519Seed: async () => seed,
-        wrapEd25519Seed: async () => { },
-    }
-    const wrappedSecret = await ed25519SigningKeyFromWrappedSecret(wrappedSeed)
-    return Buffer.concat([
-        Buffer.from(seedCopy),
-        Buffer.from(wrappedSecret.ed25519Pubkey),
-    ]).toString('base64');
+  const seed = seedFromMnemonic(avmMnemonic);
+  const seedCopy = new Uint8Array(seed);
+  const wrappedSeed: WrappedEd25519Seed = {
+    unwrapEd25519Seed: async () => seed,
+    wrapEd25519Seed: async () => {},
+  };
+  const wrappedSecret = await ed25519SigningKeyFromWrappedSecret(wrappedSeed);
+  return Buffer.concat([Buffer.from(seedCopy), Buffer.from(wrappedSecret.ed25519Pubkey)]).toString(
+    'base64',
+  );
 }
 
 main().catch(error => {
-    console.error(error?.response?.data?.error ?? error);
-    process.exit(1);
+  console.error(error?.response?.data?.error ?? error);
+  process.exit(1);
 });
-
 ```
 
 Run the paying client from the **project root**:
@@ -232,66 +240,68 @@ Use the **resource server** account’s **public** address for **`AVM_ADDRESS`**
 Create **`index.ts`** at the **project root**. **`paymentMiddleware`** requires payment before the handler, and **`accepts`** sets **`price`**, **`network`**, and **`payTo`**. Your **`price`** here does not need to match the hosted example from Part 1.
 
 ```typescript
-import { config } from "dotenv";
-import { paymentMiddleware, x402ResourceServer } from "@x402-avm/hono";
-import { ExactAvmScheme } from "@x402-avm/avm/exact/server";
-import { HTTPFacilitatorClient } from "@x402-avm/core/server";
-import { Hono } from "hono";
-import { serve } from "@hono/node-server";
+import { config } from 'dotenv';
+import { paymentMiddleware, x402ResourceServer } from '@x402-avm/hono';
+import { ExactAvmScheme } from '@x402-avm/avm/exact/server';
+import { HTTPFacilitatorClient } from '@x402-avm/core/server';
+import { Hono } from 'hono';
+import { serve } from '@hono/node-server';
 config();
 
 const avmAddress = process.env.AVM_ADDRESS;
 if (!avmAddress) {
-    console.error("Missing AVM_ADDRESS environment variable");
-    process.exit(1);
+  console.error('Missing AVM_ADDRESS environment variable');
+  process.exit(1);
 }
 
 const facilitatorUrl = process.env.FACILITATOR_URL;
 if (!facilitatorUrl) {
-    console.error("Missing FACILITATOR_URL environment variable");
-    process.exit(1);
+  console.error('Missing FACILITATOR_URL environment variable');
+  process.exit(1);
 }
 const facilitatorClient = new HTTPFacilitatorClient({ url: facilitatorUrl });
 
 const accepts = [
-    {
-        scheme: "exact",
-        price: "$0.001",
-        network: "algorand:SGO1GKSzyE7IEPItTxCByw9x8FmnrCDexi9/cOUJOiI=" as const,
-        payTo: avmAddress,
-    },
+  {
+    scheme: 'exact',
+    price: '$0.001',
+    network: 'algorand:SGO1GKSzyE7IEPItTxCByw9x8FmnrCDexi9/cOUJOiI=' as const,
+    payTo: avmAddress,
+  },
 ];
 
-const server = new x402ResourceServer(facilitatorClient)
-    .register("algorand:SGO1GKSzyE7IEPItTxCByw9x8FmnrCDexi9/cOUJOiI=", new ExactAvmScheme());
+const server = new x402ResourceServer(facilitatorClient).register(
+  'algorand:SGO1GKSzyE7IEPItTxCByw9x8FmnrCDexi9/cOUJOiI=',
+  new ExactAvmScheme(),
+);
 
 const app = new Hono();
 
 app.use(
-    paymentMiddleware(
-        {
-            "GET /weather": {
-                accepts,
-                description: "Weather data",
-                mimeType: "application/json",
-            },
-        },
-        server,
-    ),
+  paymentMiddleware(
+    {
+      'GET /weather': {
+        accepts,
+        description: 'Weather data',
+        mimeType: 'application/json',
+      },
+    },
+    server,
+  ),
 );
 
-app.get("/weather", c => {
-    return c.json({
-        report: {
-            weather: "sunny",
-            temperature: 70,
-        },
-    });
+app.get('/weather', c => {
+  return c.json({
+    report: {
+      weather: 'sunny',
+      temperature: 70,
+    },
+  });
 });
 
 serve({
-    fetch: app.fetch,
-    port: 4021,
+  fetch: app.fetch,
+  port: 4021,
 });
 
 console.log(`Server listening at http://localhost:4021`);
@@ -314,7 +324,7 @@ Leave it running on **`http://localhost:4021`**.
 In the **client** **`index.ts`**, set:
 
 ```typescript
-const url = "http://localhost:4021/weather";
+const url = 'http://localhost:4021/weather';
 ```
 
 #### Run the client
