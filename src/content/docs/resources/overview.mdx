@@ -2,14 +2,51 @@
 title: Overview
 ---
 
-The Additional Resources section curates a variety of ancillary and third-party resources that may be relevant to Algorand development. These resources are not created, maintained, or officially endorsed by Algorand Foundation, but they are included here because we are aware of them and believe Algorand developers may find them useful.
+import { LinkCard, CardGrid } from '@astrojs/starlight/components';
 
-## Algorand Foundation GitHub Repositories
+The Additional Resources section curates ancillary and third-party resources relevant to Algorand development. These resources are not officially endorsed by Algorand Foundation but are included because we believe developers may find them useful.
 
-The Algorand Foundation organization on GitHub houses all of the code repositories created and maintained by the Foundation. While this developer portal is intended to provide developers with the necessary materials to learn and succeed in using Algorand technologies, sometimes it may be helpful to directly explore our repos. The codebases often contain additional examples, unit and/or integration tests that exercise the code, and additional context.
+## What You'll Find Here
 
-View all Algorand Foundation repositories on GitHub [here](https://github.com/orgs/algorandfoundation/repositories).
+<CardGrid>
+  <LinkCard
+    title='Liquid Auth'
+    href='/resources/liquid-auth'
+    description='Open standard for passwordless Web3 login and decentralized identity.'
+  />
+  <LinkCard
+    title='Bridging'
+    href='/resources/bridging'
+    description='Wormhole Native Token Transfers between Algorand and EVM-compatible chains.'
+  />
+  <LinkCard
+    title='Configuring P2P on FUNC'
+    href='/resources/p2p-func'
+    description='Configure P2P networking mode for Algorand nodes using FUNC.'
+  />
+  <LinkCard
+    title='Algorand Specifications'
+    href='https://specs.algorand.co'
+    description='Formal specifications and standards for the Algorand protocol.'
+  />
+</CardGrid>
+
+## Algorand Foundation on GitHub
+
+The Algorand Foundation organization on GitHub houses all code repositories created and maintained by the Foundation. Explore our repos for additional examples, tests, and context beyond what this portal covers.
+
+<LinkCard
+  title='Algorand Foundation Repositories'
+  href='https://github.com/orgs/algorandfoundation/repositories'
+  description='Browse all open source repositories maintained by Algorand Foundation.'
+/>
 
 ## Contributing
 
-If you know of a high-quality educational resource or open source code repositories not included here that would highly relevant to Algorand Developers, you may submit them using the GitHub issue template [here](https://github.com/algorandfoundation/devportal/issues/new/choose). Advertisements for products or services will not be accepted. Submissions will be reviewed strictly for appropriateness to include in a technical documentation site.
+Know of a high-quality educational resource or open source repository relevant to Algorand developers? We welcome submissions for review.
+
+<LinkCard
+  title='Submit a Resource'
+  href='https://github.com/algorandfoundation/devportal/issues/new/choose'
+  description='Suggest a resource to include via our GitHub issue template.'
+/>
