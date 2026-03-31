@@ -1309,6 +1309,10 @@ export default defineConfig({
               label: 'Configuring P2P on FUNC',
               link: 'resources/p2p-func',
             },
+            {
+              label: 'x402 on Algorand',
+              link: 'resources/x402-on-algorand',
+            },
           ],
         },
       ],
