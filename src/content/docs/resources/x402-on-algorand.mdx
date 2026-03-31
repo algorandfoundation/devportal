@@ -4,39 +4,58 @@ description: Build a pay-per-API endpoint on Algorand using the HTTP 402 protoco
 ---
 
 import { Image } from 'astro:assets';
+import { Steps, LinkCard } from '@astrojs/starlight/components';
 import x402Flow from '@images/x402-flow.png';
 
-This tutorial uses TypeScript on Algorand TestNet to build a paying client, a Hono resource server, and a hosted facilitator.
+x402 is an open payment protocol that lets services charge for API access directly over HTTP. Clients pay per request using the `402 Payment Required` status code — no sessions, API keys, or credential management required.
 
-## Introduction
-
-**x402** builds on **HTTP `402 Payment Required`**: the **resource server** returns payment requirements, and the **client** pays and retries. This tutorial adds a **pay-per-API** **`/weather`** route using **`@x402-avm`**: unpaid requests return **HTTP 402**, and paid requests return **JSON**.
-
-**You will:** (1) build a **client** that pays via x402-aware `fetch`, (2) build a **resource server** that charges for **`/weather`**, and (3) run both locally end-to-end. The **resource server** operator sets the **price** and **`payTo`** address. The **facilitator** verifies and settles on Algorand.
+The protocol has three participants: a **client** sends a request, a **resource server** returns payment requirements (or the response if already paid), and a **facilitator** verifies and settles payments on-chain.
 
 <Image
   src={x402Flow}
   alt='Sequence diagram: client, resource server, and facilitator in an x402 payment flow'
 />
 
+:::note
+You don't need to run the facilitator — this tutorial uses a hosted one.
+:::
+
+This tutorial walks through the protocol by building a working example on Algorand TestNet. You will build a pay-per-API `/weather` endpoint. Unpaid requests get `402 Payment Required`; paid requests get JSON back. You will:
+
+1. Build a **client** that automatically pays when it receives a 402 response
+2. Build a **resource server** that charges for `GET /weather`
+3. Run both locally end-to-end
+
 ## Build a pay-per-API service with x402
 
 ### Prerequisites
 
-- **[Node.js](https://nodejs.org/)** (LTS or newer) with **npm**
-- **`npx tsx`** to run **TypeScript** (installed below)
+- [Node.js](https://nodejs.org/) (LTS or newer) with npm
 
 ### Setup
 
-Do these **in order** before running code:
+Complete these steps in order before running code:
 
-1. **Two TestNet accounts** — **client** (pays) and **resource server** (receives). [Create an account](/concepts/accounts/create/) if needed.
-2. **Fund both with TestNet ALGO** — [Lora fund](https://lora.algokit.io/testnet/fund); [fees and minimum balance](/concepts/accounts/funding/).
-3. **Opt both into TestNet USDC** — [Lora](https://lora.algokit.io/testnet/) or your wallet. [Opt in to assets](/concepts/assets/asset-operations/#opting-in-and-out-of-assets).
-4. **USDC on both addresses** — [Circle testnet faucet](https://faucet.circle.com/) (**Algorand Testnet**, each address).
-5. **Save values for env vars** — **client:** payer mnemonic → **`AVM_MNEMONIC`**. **Resource server:** recipient **public** address → **`AVM_ADDRESS`**.
+<Steps>
+1. [Create two TestNet accounts](/concepts/accounts/create/): one for the client (the payer) and one for the resource server (the receiver).
+
+2. Fund both accounts with TestNet ALGO using the [Lora faucet](https://lora.algokit.io/testnet/fund). See [fees and minimum balance](/concepts/accounts/funding/).
+
+3. Opt both accounts into TestNet USDC through [Lora](https://lora.algokit.io/testnet/) or your wallet. See [opt in to assets](/concepts/assets/asset-operations/#opting-in-and-out-of-assets).
+
+4. Get USDC on both accounts from the [Circle testnet faucet](https://faucet.circle.com/). Select Algorand Testnet and fund each address.
+
+5. Save these values for later: the client's payer mnemonic (used as `AVM_MNEMONIC`) and the resource server's public address (used as `AVM_ADDRESS`).
+
+</Steps>
+
+:::caution
+Never commit mnemonics or private keys. The `.env` files in this tutorial are for local development only. In production, use wallet integration, KMS, or another secure signing path.
+:::
 
 ### Part 1: Build the client
+
+In this part you'll build a client that sends a request, handles the 402 response, signs and submits payment, then retries with proof of payment. You'll test it against a hosted resource server before building your own in Part 2.
 
 #### Create the project
 
@@ -59,14 +78,23 @@ npm install @x402-avm/fetch@^2.6.1 @x402-avm/avm@^2.6.1 @algorandfoundation/algo
 ```
 
 :::note
-This tutorial currently uses an **alpha** release of **`@algorandfoundation/algokit-utils`**. We will update the guide to the corresponding **beta** release when it is available in the coming weeks.
+This tutorial currently uses an alpha release of `@algorandfoundation/algokit-utils`. We will update the guide to the corresponding beta release when it is available in the coming weeks.
 :::
 
 #### Client config
 
-Set **`"type": "module"`** in **`package.json`**.
+The x402 packages use ESM imports, so `package.json` needs `"type": "module"`. Open the generated `package.json` and add it:
 
-Create **`tsconfig.json`** in the **project root**:
+```json
+{
+  "name": "x402-demo-client",
+  "type": "module"
+}
+```
+
+Only `"type": "module"` matters — leave the rest of the generated fields as-is.
+
+Create `tsconfig.json` in the project root:
 
 ```json
 {
@@ -85,19 +113,17 @@ Create **`tsconfig.json`** in the **project root**:
 
 #### Environment variables
 
-Add **`.env`** to **`.gitignore`**, then create **`.env`**:
+Add `.env` to `.gitignore`, then create `.env`:
 
 ```
 AVM_MNEMONIC="your 25-word mnemonic here"
 ```
 
-:::note
-**Never commit `.env`.** It holds your **mnemonic / private key**. **`.env`** is for **local development** only. In **production**, use wallet integration, KMS, or another secure signing path—not raw env files for keys.
-:::
-
 #### Plain `fetch` first (expect `402`)
 
-Create **`index.ts`** at the **project root** and start with plain **`fetch`**. You should see **HTTP 402** before adding x402 libraries.
+Before adding the x402 libraries, confirm the endpoint requires payment. A plain `fetch` should return HTTP 402.
+
+Create `index.ts` at the project root:
 
 ```typescript
 const url = 'https://x402.goplausible.xyz/examples/weather';
@@ -120,11 +146,16 @@ Run:
 npx tsx index.ts
 ```
 
-Expect **HTTP `402 Payment Required`** and a **`payment-required`** header (base64 payload; your values will differ).
+Expected output (your `payment-required` value will differ):
+
+```
+status: 402 Payment Required
+payment-required (first 80 chars): eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzY2hlbWUiOiJleGFjd...
+```
 
 #### Add x402 payment support
 
-Replace **`index.ts`** with the version below. Wrapped **`fetch`** handles **HTTP 402**, signs the Algorand payment from **`AVM_MNEMONIC`**, and retries the request. This requires the [Setup](#setup) above: funded accounts, asset opt-in, and TestNet USDC.
+Now replace `index.ts` with the paying version. Instead of a plain `fetch`, `wrapFetchWithPayment` intercepts 402 responses, signs an Algorand payment using the mnemonic from `AVM_MNEMONIC`, and retries the request with the payment proof attached. This requires the [Setup](#setup) above: funded accounts, asset opt-in, and TestNet USDC.
 
 ```typescript
 import { config } from 'dotenv';
@@ -168,6 +199,8 @@ async function main(): Promise<void> {
   }
 }
 
+// Build the base64-encoded signing key that x402-avm expects.
+// The format is the 32-byte Ed25519 seed concatenated with the 32-byte public key.
 async function getSecretKeyFromMnemonic(avmMnemonic: string): Promise<string> {
   const seed = seedFromMnemonic(avmMnemonic);
   const seedCopy = new Uint8Array(seed);
@@ -187,13 +220,25 @@ main().catch(error => {
 });
 ```
 
-Run the paying client from the **project root**:
+Run the paying client from the project root:
 
 ```bash
 npx tsx index.ts
 ```
 
+Expected output (addresses and transaction IDs will differ):
+
+```
+AVM signer: ABC123...
+Payment response: {
+  "transactionId": "TXID...",
+  "status": "settled"
+}
+```
+
 ### Part 2: Build the resource server
+
+In this part you'll build a resource server that hosts a `/weather` endpoint. It returns a 402 response when a request lacks valid payment and delegates verification to the facilitator, only serving data once payment is confirmed.
 
 #### Create the server project
 
@@ -217,28 +262,33 @@ npm install @x402-avm/hono@^2.6.1 @x402-avm/avm@^2.6.1 @x402-avm/core@^2.6.1 hon
 
 #### Server config
 
-Set **`"type": "module"`** in **`package.json`**, then copy **`tsconfig.json`** from [Client config](#client-config).
+As with the client, set `"type": "module"` in `package.json`:
+
+```json
+{
+  "name": "x402-demo-server",
+  "type": "module"
+}
+```
+
+Then copy `tsconfig.json` from [Client config](#client-config).
 
 #### Environment variables
 
-**`.gitignore`** must list **`.env`**.
-
-:::note
-**Never commit `.env`.** Local dev only; use secure patterns in production.
-:::
-
-Create **`.env`**:
+Add `.env` to `.gitignore`, then create `.env`:
 
 ```
 AVM_ADDRESS=
 FACILITATOR_URL=https://facilitator.goplausible.xyz
 ```
 
-Use the **resource server** account’s **public** address for **`AVM_ADDRESS`** ([Setup](#setup)). **`FACILITATOR_URL`** points to the **hosted** facilitator, so you do not need to run facilitator code for this tutorial.
+Use the resource server account's public address for `AVM_ADDRESS` ([Setup](#setup)). `FACILITATOR_URL` points to the hosted facilitator, so you do not need to run facilitator code for this tutorial.
 
 #### Implement `GET /weather`
 
-Create **`index.ts`** at the **project root**. **`paymentMiddleware`** requires payment before the handler, and **`accepts`** sets **`price`**, **`network`**, and **`payTo`**. Your **`price`** here does not need to match the hosted example from Part 1.
+Create `index.ts` at the project root. The `paymentMiddleware` function intercepts incoming requests and checks for a valid payment proof before forwarding to your route handler — unpaid requests get a 402 response with payment instructions.
+
+The `accepts` array defines what the server will accept as payment. Each entry specifies the scheme, price, network, and recipient. The `network` value `algorand:SGO1GKSzyE7IEPItTxCByw9x8FmnrCDexi9/cOUJOiI=` is the [CAIP-2](https://github.com/ChainAgnostic/CAIPs/blob/main/CAIPs/caip-2.md) identifier for Algorand TestNet — this tells clients which chain to submit payment on.
 
 ```typescript
 import { config } from 'dotenv';
@@ -308,21 +358,31 @@ serve({
 console.log(`Server listening at http://localhost:4021`);
 ```
 
-Unpaid **`GET /weather`** returns **HTTP 402**; paid requests return the JSON body.
+Unpaid `GET /weather` returns HTTP 402; paid requests return the JSON body.
 
 ### Part 3: Run locally
 
+In Part 1 you hit a hosted resource server. Now you'll point the client at your own local server so you can see the full flow end-to-end.
+
 #### Start the resource server
+
+From the `x402-demo-server` directory:
 
 ```bash
 npx tsx index.ts
 ```
 
-Leave it running on **`http://localhost:4021`**.
+Leave it running on `http://localhost:4021`.
+
+Expected output:
+
+```
+Server listening at http://localhost:4021
+```
 
 #### Point the client at your server
 
-In the **client** **`index.ts`**, set:
+In the client `index.ts`, change the URL to your local server:
 
 ```typescript
 const url = 'http://localhost:4021/weather';
@@ -330,27 +390,39 @@ const url = 'http://localhost:4021/weather';
 
 #### Run the client
 
+From the `x402-demo-client` directory:
+
 ```bash
 npx tsx index.ts
 ```
 
-You should get the weather **JSON** after payment settles.
+You should get the weather JSON after payment settles. The output will look similar to the [Part 1 output](#add-x402-payment-support), with your local server's transaction details.
 
 :::note
 Optional: To run your own facilitator later, see [self-hosted facilitator (Express)](https://github.com/algorand-devrel/x402-demo/tree/main/facilitator/basic) and [`index.ts`](https://github.com/algorand-devrel/x402-demo/blob/main/facilitator/basic/index.ts).
 :::
 
-More facilitators: [ecosystem list](https://www.x402.org/ecosystem?filter=facilitators).
+### Next steps
 
-### Wrap up
+You now have a working x402 payment flow on Algorand TestNet. From here you can add more paid routes, adjust pricing, or deploy your own facilitator for full control over payment settlement.
 
-- **x402-enabled client** and **resource server** for **`/weather`**
-- **Hosted** facilitator via **`FACILITATOR_URL`**
-- **Pay-per-API** flow on **Algorand TestNet**
-
-#### Learn more
-
-- [x402-demo (examples)](https://github.com/algorand-devrel/x402-demo)
-- [x402 on Algorand](https://algorand.co/agentic-commerce/x402)
-- [Developer resources](https://algorand.co/agentic-commerce/x402/developers)
-- [x402.org](https://x402.org)
+<LinkCard
+  title='x402-demo (examples)'
+  href='https://github.com/algorand-devrel/x402-demo'
+  description='Full example code for client, server, and facilitator'
+/>
+<LinkCard
+  title='x402 on Algorand'
+  href='https://algorand.co/agentic-commerce/x402'
+  description='Product overview and ecosystem information'
+/>
+<LinkCard
+  title='Developer resources'
+  href='https://algorand.co/agentic-commerce/x402/developers'
+  description='SDKs, APIs, and integration guides'
+/>
+<LinkCard
+  title='x402.org'
+  href='https://x402.org'
+  description='Protocol specification and ecosystem directory'
+/>
