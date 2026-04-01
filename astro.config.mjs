@@ -1313,6 +1313,10 @@ export default defineConfig({
               label: 'x402 on Algorand',
               link: 'resources/x402-on-algorand',
             },
+            {
+              label: 'Algorand x EVM',
+              link: 'resources/algo-x-evm',
+            },
           ],
         },
       ],
