@@ -201,7 +201,7 @@ The following environment variables can be configured:
 | `IMPORT_DRY_RUN` | Preview imports without writing files            | `false` |
 | `FORCE_IMPORT`   | Force re-import, ignoring cache                  | `false` |
 
-Set these in your shell or use your preferred environment management tool.
+Set these in a `.env` file in the project root. Run `source .env` before running import commands.
 
 ### Astro Configuration
 
@@ -243,7 +243,7 @@ Your content here...
 
 ### Importing External Documentation
 
-The project uses `@algorandfoundation/astro-github-loader` to import documentation from external repositories. Configure imports in `imports/configs/`. See the package [documentation](https://github.com/larkiny/starlight-github-loader/blob/main/packages/astro-github-loader/README.md) for details on how to configure external documentation imports.
+The project uses `@algorandfoundation/astro-github-loader` to import documentation from external repositories. Configure imports in `imports/configs/`. See the [documentation](https://github.com/algorandfoundation/astro-github-loader/blob/main/packages/astro-github-loader/README.md) for details on how to configure external documentation imports.
 
 ## Contributing
 
