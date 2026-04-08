@@ -35,16 +35,16 @@ These eight parameters can _only_ be specified when an asset is created.
 
 When creating an Algorand Standard Asset, the following parameters define its fundamental characteristics. Once set, these values cannot be modified for the lifetime of the asset:
 
-| **Parameter**                                                    | Required              | Description                                                            |
-| ---------------------------------------------------------------- | --------------------- | ---------------------------------------------------------------------- |
-| [Sender](/concepts/transactions/reference#sender)                | _Yes_                 | Account that sends the creation transaction and becomes the creator.    |
-| [AssetName](/concepts/transactions/reference#assetname)          | _No, but recommended_ | Full name of the asset, max 32 bytes. Example: `USD Coin`.             |
-| [UnitName](/concepts/transactions/reference#unitname)            | _No, but recommended_ | Short ticker name, max 8 bytes. Example: `USDC`.                       |
-| [Total](/concepts/transactions/reference#total)                  | _Yes_                 | Total number of base units to create. Cannot be changed after creation. |
-| [Decimals](/concepts/transactions/reference#decimals)            | _Yes_                 | Digits after the decimal point when displaying the asset (0–19).       |
-| [DefaultFrozen](/concepts/transactions/reference#defaultfrozen)  | _Yes_                 | If `true`, asset holdings are frozen by default in every account.      |
-| [URL](/concepts/transactions/reference#url)                      | _No_                  | URL with more information about the asset, max 96 bytes.               |
-| [MetaDataHash](/concepts/transactions/reference#metadatahash)    | _No_                  | Optional 32-byte hash of asset-related metadata.                       |
+| **Parameter**                                                   | Required              | Description                                                             |
+| --------------------------------------------------------------- | --------------------- | ----------------------------------------------------------------------- |
+| [Sender](/concepts/transactions/reference#sender)               | _Yes_                 | Account that sends the creation transaction and becomes the creator.    |
+| [AssetName](/concepts/transactions/reference#assetname)         | _No, but recommended_ | Full name of the asset, max 32 bytes. Example: `USD Coin`.              |
+| [UnitName](/concepts/transactions/reference#unitname)           | _No, but recommended_ | Short ticker name, max 8 bytes. Example: `USDC`.                        |
+| [Total](/concepts/transactions/reference#total)                 | _Yes_                 | Total number of base units to create. Cannot be changed after creation. |
+| [Decimals](/concepts/transactions/reference#decimals)           | _Yes_                 | Digits after the decimal point when displaying the asset (0–19).        |
+| [DefaultFrozen](/concepts/transactions/reference#defaultfrozen) | _Yes_                 | If `true`, asset holdings are frozen by default in every account.       |
+| [URL](/concepts/transactions/reference#url)                     | _No_                  | URL with more information about the asset, max 96 bytes.                |
+| [MetaDataHash](/concepts/transactions/reference#metadatahash)   | _No_                  | Optional 32-byte hash of asset-related metadata.                        |
 
 ### Mutable Asset Parameters
 
