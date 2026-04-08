@@ -3,7 +3,7 @@
  * These can be imported and used directly in repository configurations
  */
 
-import type { TransformFunction } from '@larkiny/astro-github-loader';
+import type { TransformFunction } from '@algorandfoundation/astro-github-loader';
 import picomatch from 'picomatch';
 
 import {

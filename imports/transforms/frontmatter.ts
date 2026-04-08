@@ -1,4 +1,4 @@
-import type { TransformFunction } from '@larkiny/astro-github-loader';
+import type { TransformFunction } from '@algorandfoundation/astro-github-loader';
 import type {
   FrontmatterTransformOptions,
   StarlightFrontmatter,
