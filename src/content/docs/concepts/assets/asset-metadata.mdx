@@ -2,10 +2,98 @@
 title: Asset Metadata
 ---
 
-import { Tabs, TabItem } from '@astrojs/starlight/components';
-import { Code } from '@astrojs/starlight/components';
-import RemoteCode from '/src/components/RemoteCode.astro';
+import { LinkCard } from '@astrojs/starlight/components';
 
-- [ ] Working with IPFS for asset data?
-- [ ] Standards - cover main ARCs that people should know about for ASAs
-  - https://algorand.co/learn/arc-token-standards-explained-for-nft-creators
+Asset metadata provides additional information about an Algorand Standard Asset (ASA), such as what the asset represents, where related content is stored, and how applications can retrieve richer information about it.
+
+While the Algorand protocol defines the core parameters of an asset, many applications use metadata conventions and external storage to describe assets in more detail. This page introduces the metadata-related fields in ASAs and surveys common approaches used across the ecosystem.
+
+## Metadata fields in ASAs
+
+Algorand Standard Assets include several parameters that can be used to describe an asset or reference additional metadata.
+
+| Parameter | Description |
+|---|---|
+| `AssetName` | Human-readable name for the asset |
+| `UnitName` | Short ticker or symbol |
+| `URL` | Optional link to additional information or metadata |
+| `MetaDataHash` | Optional 32-byte hash used to verify metadata |
+
+These fields can provide enough context for simple assets such as loyalty points or internal tokens. However, many applications rely on richer metadata stored outside the blockchain.
+
+## Off-chain metadata
+
+In many cases, the ASA `URL` field is used as an entry point for metadata stored off-chain. This metadata is typically a JSON document that describes the asset in more detail.
+
+Examples of information stored in metadata include:
+
+- Media files (images, video, audio)
+- Attributes or traits
+- Collection information
+- Links to related resources
+- Application-specific properties
+
+Wallets, explorers, and marketplaces may read this metadata to display additional information about an asset.
+
+## Working with IPFS
+
+IPFS is a common storage solution for ASA metadata and associated media files.
+
+Because IPFS uses content-addressed storage, it allows metadata to be referenced using immutable content identifiers (CIDs). This makes it possible to verify that metadata has not been modified.
+
+When using IPFS for asset metadata, it is common to:
+
+- store the metadata JSON file on IPFS
+- store media files referenced by that metadata
+- include an IPFS link or gateway URL in the ASA `URL` field
+
+Projects should also consider how metadata will be pinned and made reliably available over time.
+
+## Metadata standards for Algorand assets
+
+Several ARC standards define common patterns for working with ASA metadata. These standards help improve interoperability between wallets, marketplaces, and applications.
+
+Some commonly referenced standards include:
+
+- **ARC-3** – Metadata conventions commonly used for NFTs
+- **ARC-19** – Template URLs for resolving metadata, often used with IPFS
+- **ARC-69** – Metadata updates stored in transaction notes
+- **ARC-89** – Standardized ASA metadata registry
+
+Rather than implementing their own metadata format, many projects adopt one of these conventions so that existing tools can interpret the asset correctly.
+
+<LinkCard
+  title='ARC-89: ASA Metadata Registry'
+  href='/arc-standards/arc-0089/'
+  description='Learn about the ARC-89 standard for structured ASA metadata.'
+/>
+
+<LinkCard
+  title='ARC Standards'
+  href='/arc-standards/'
+  description='Explore the full list of Algorand ARC standards and conventions.'
+/>
+
+## Choosing a metadata approach
+
+The right metadata approach depends on the needs of your application.
+
+- Use **ASA fields alone** for simple assets that do not require additional metadata.
+- Use **off-chain metadata** when assets need richer descriptions or media.
+- Use **ARC standards** when interoperability with wallets and marketplaces is important.
+
+Following established conventions makes it easier for other applications in the Algorand ecosystem to understand and display your assets.
+
+## Learn more
+
+<LinkCard
+  title='Asset Parameters Reference'
+  href='/concepts/transactions/reference#asset-parameters'
+  description='View the full list of parameters used when creating and configuring ASAs.'
+/>
+
+<LinkCard
+  title='Algorand Standard Assets Overview'
+  href='/concepts/assets/overview/'
+  description='Learn how ASAs work and how they are configured.'
+/>
