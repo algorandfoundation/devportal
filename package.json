@@ -48,7 +48,7 @@
     "astro-rehype-relative-markdown-links": "^0.18.1",
     "astro-remote": "^0.3.4",
     "js-yaml": "^4.1.1",
-    "marked": "^17.0.1",
+    "marked": "^18.0.0",
     "octokit": "^5.0.5",
     "picomatch": "^4.0.3",
     "prismjs": "^1.30.0",
