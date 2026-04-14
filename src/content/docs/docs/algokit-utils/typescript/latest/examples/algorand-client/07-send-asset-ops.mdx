@@ -1,0 +1,499 @@
+---
+title: 'Send Asset Operations'
+description: 'This example demonstrates how to perform ASA (Algorand Standard Asset) operations:'
+sidebar:
+  order: 7
+---
+
+[← Back to Algorand Client](/docs/algokit-utils/typescript/latest/examples/algorand-client/)
+
+## Description
+
+This example demonstrates how to perform ASA (Algorand Standard Asset) operations:
+
+- algorand.send.assetCreate() to create a new ASA with all parameters
+- algorand.send.assetConfig() to reconfigure an asset
+- algorand.send.assetOptIn() for receiver to opt into the asset
+- algorand.send.assetTransfer() to transfer assets between accounts
+- algorand.send.assetFreeze() to freeze/unfreeze an account's asset holding
+- algorand.send.assetTransfer() with clawbackTarget for clawback operations
+- algorand.send.assetOptOut() to opt out and close asset holding
+- algorand.send.assetDestroy() to destroy an asset
+
+## Prerequisites
+
+- LocalNet running (via `algokit localnet start`)
+
+## Run This Example
+
+From the repository root:
+
+```bash
+cd examples
+npm run example algorand_client/07-send-asset-ops.ts
+```
+
+## Code
+
+[View source on GitHub](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/examples/algorand_client/07-send-asset-ops.ts)
+
+```typescript title="07-send-asset-ops.ts"
+/**
+ * Example: Send Asset Operations
+ *
+ * This example demonstrates how to perform ASA (Algorand Standard Asset) operations:
+ * - algorand.send.assetCreate() to create a new ASA with all parameters
+ * - algorand.send.assetConfig() to reconfigure an asset
+ * - algorand.send.assetOptIn() for receiver to opt into the asset
+ * - algorand.send.assetTransfer() to transfer assets between accounts
+ * - algorand.send.assetFreeze() to freeze/unfreeze an account's asset holding
+ * - algorand.send.assetTransfer() with clawbackTarget for clawback operations
+ * - algorand.send.assetOptOut() to opt out and close asset holding
+ * - algorand.send.assetDestroy() to destroy an asset
+ *
+ * Prerequisites:
+ * - LocalNet running (via `algokit localnet start`)
+ */
+
+import { AlgorandClient, algo } from '@algorandfoundation/algokit-utils';
+import {
+  printError,
+  printHeader,
+  printInfo,
+  printStep,
+  printSuccess,
+  shortenAddress,
+} from '../shared/utils.js';
+
+async function main() {
+  printHeader('Send Asset Operations Example');
+
+  // Initialize client and verify LocalNet is running
+  const algorand = AlgorandClient.defaultLocalNet();
+
+  try {
+    await algorand.client.algod.status();
+    printSuccess('Connected to LocalNet');
+  } catch (error) {
+    printError(
+      `Failed to connect to LocalNet: ${error instanceof Error ? error.message : String(error)}`,
+    );
+    printInfo('Make sure LocalNet is running (e.g., algokit localnet start)');
+    return;
+  }
+
+  // Step 1: Create and fund test accounts
+  printStep(1, 'Create and fund test accounts');
+  printInfo('Creating creator, receiver, and frozenAccount for asset operations');
+
+  const creator = algorand.account.random();
+  const receiver = algorand.account.random();
+  const frozenAccount = algorand.account.random();
+
+  printInfo(`\nCreated accounts:`);
+  printInfo(`  Creator: ${shortenAddress(creator.addr.toString())}`);
+  printInfo(`  Receiver: ${shortenAddress(receiver.addr.toString())}`);
+  printInfo(`  FrozenAccount: ${shortenAddress(frozenAccount.addr.toString())}`);
+
+  // Fund all accounts
+  await algorand.account.ensureFundedFromEnvironment(creator.addr, algo(10));
+  await algorand.account.ensureFundedFromEnvironment(receiver.addr, algo(5));
+  await algorand.account.ensureFundedFromEnvironment(frozenAccount.addr, algo(5));
+
+  printSuccess('Created and funded test accounts');
+
+  // Step 2: Create a new ASA with all parameters
+  printStep(2, 'Create a new ASA with algorand.send.assetCreate()');
+  printInfo('Creating an asset with all configurable parameters');
+
+  // Create a metadata hash (32 bytes)
+  const metadataHash = new Uint8Array(32);
+  for (let i = 0; i < 32; i++) {
+    metadataHash[i] = i;
+  }
+
+  const createResult = await algorand.send.assetCreate({
+    sender: creator.addr,
+    total: 1_000_000n, // 1 million units (10,000 whole tokens with 2 decimals)
+    decimals: 2,
+    assetName: 'AlgoKit Example Token',
+    unitName: 'AKEX',
+    url: 'https://example.com/asset',
+    metadataHash: metadataHash,
+    defaultFrozen: false,
+    manager: creator.addr, // Can reconfigure the asset
+    reserve: creator.addr, // Holds uncirculated supply
+    freeze: creator.addr, // Can freeze/unfreeze accounts
+    clawback: creator.addr, // Can clawback assets
+  });
+
+  const assetId = createResult.assetId;
+  printInfo(`\nAsset created:`);
+  printInfo(`  Asset ID: ${assetId}`);
+  printInfo(`  Transaction ID: ${createResult.txIds[0]}`);
+  printInfo(`  Confirmed round: ${createResult.confirmation.confirmedRound}`);
+
+  // Retrieve and display asset details
+  const assetInfo = await algorand.asset.getById(assetId);
+  printInfo(`\nAsset details from chain:`);
+  printInfo(`  Name: ${assetInfo.assetName}`);
+  printInfo(`  Unit: ${assetInfo.unitName}`);
+  printInfo(`  Total: ${assetInfo.total} (smallest units)`);
+  printInfo(`  Decimals: ${assetInfo.decimals}`);
+  printInfo(`  Creator: ${shortenAddress(assetInfo.creator.toString())}`);
+  printInfo(`  Manager: ${shortenAddress(assetInfo.manager?.toString() ?? 'none')}`);
+  printInfo(`  Reserve: ${shortenAddress(assetInfo.reserve?.toString() ?? 'none')}`);
+  printInfo(`  Freeze: ${shortenAddress(assetInfo.freeze?.toString() ?? 'none')}`);
+  printInfo(`  Clawback: ${shortenAddress(assetInfo.clawback?.toString() ?? 'none')}`);
+  printInfo(`  Default Frozen: ${assetInfo.defaultFrozen}`);
+  printInfo(`  URL: ${assetInfo.url}`);
+
+  printSuccess('Asset created successfully');
+
+  // Step 3: Reconfigure the asset
+  printStep(3, 'Reconfigure the asset with algorand.send.assetConfig()');
+  printInfo('Changing the reserve address to a different account');
+
+  // Create a new reserve account
+  const newReserve = algorand.account.random();
+  await algorand.account.ensureFundedFromEnvironment(newReserve.addr, algo(1));
+
+  const configResult = await algorand.send.assetConfig({
+    sender: creator.addr, // Must be the manager
+    assetId: assetId,
+    manager: creator.addr, // Keep manager the same
+    reserve: newReserve.addr, // Change reserve
+    freeze: creator.addr, // Keep freeze the same
+    clawback: creator.addr, // Keep clawback the same
+  });
+
+  printInfo(`\nAsset reconfigured:`);
+  printInfo(`  Transaction ID: ${configResult.txIds[0]}`);
+  printInfo(`  Confirmed round: ${configResult.confirmation.confirmedRound}`);
+
+  // Verify the change
+  const updatedAssetInfo = await algorand.asset.getById(assetId);
+  printInfo(`  New Reserve: ${shortenAddress(updatedAssetInfo.reserve?.toString() ?? 'none')}`);
+
+  printSuccess('Asset reconfigured successfully');
+
+  // Step 4: Opt-in receiver to the asset
+  printStep(4, 'Opt-in receiver with algorand.send.assetOptIn()');
+  printInfo('Before receiving assets, an account must opt-in to the asset');
+
+  const optInResult = await algorand.send.assetOptIn({
+    sender: receiver.addr,
+    assetId: assetId,
+  });
+
+  printInfo(`\nReceiver opted in:`);
+  printInfo(`  Transaction ID: ${optInResult.txIds[0]}`);
+  printInfo(`  Confirmed round: ${optInResult.confirmation.confirmedRound}`);
+
+  // Verify opt-in
+  const receiverAssetInfo = await algorand.asset.getAccountInformation(receiver.addr, assetId);
+  printInfo(`  Receiver balance after opt-in: ${receiverAssetInfo.balance}`);
+  printInfo(`  Receiver frozen status: ${receiverAssetInfo.frozen}`);
+
+  printSuccess('Receiver opted in successfully');
+
+  // Step 5: Transfer assets to receiver
+  printStep(5, 'Transfer assets with algorand.send.assetTransfer()');
+  printInfo('Transferring 100 whole tokens (10000 smallest units) to receiver');
+
+  const transferResult = await algorand.send.assetTransfer({
+    sender: creator.addr,
+    receiver: receiver.addr,
+    assetId: assetId,
+    amount: 10_000n, // 100 whole tokens (100 * 10^2)
+    note: 'Initial token distribution',
+  });
+
+  printInfo(`\nTransfer completed:`);
+  printInfo(`  Transaction ID: ${transferResult.txIds[0]}`);
+  printInfo(`  Confirmed round: ${transferResult.confirmation.confirmedRound}`);
+
+  // Check balances
+  const creatorAssetInfo = await algorand.asset.getAccountInformation(creator.addr, assetId);
+  const receiverAfterTransfer = await algorand.asset.getAccountInformation(receiver.addr, assetId);
+  printInfo(
+    `  Creator balance: ${creatorAssetInfo.balance} (${Number(creatorAssetInfo.balance) / 100} tokens)`,
+  );
+  printInfo(
+    `  Receiver balance: ${receiverAfterTransfer.balance} (${Number(receiverAfterTransfer.balance) / 100} tokens)`,
+  );
+
+  printSuccess('Asset transfer completed successfully');
+
+  // Step 6: Freeze an account's asset holding
+  printStep(6, 'Freeze account with algorand.send.assetFreeze()');
+  printInfo('First opt-in frozenAccount, then freeze its asset holding');
+
+  // Opt-in frozenAccount
+  await algorand.send.assetOptIn({
+    sender: frozenAccount.addr,
+    assetId: assetId,
+  });
+
+  // Transfer some tokens to frozenAccount
+  await algorand.send.assetTransfer({
+    sender: creator.addr,
+    receiver: frozenAccount.addr,
+    assetId: assetId,
+    amount: 5_000n, // 50 whole tokens
+  });
+
+  // Now freeze the account
+  const freezeResult = await algorand.send.assetFreeze({
+    sender: creator.addr, // Must be the freeze address
+    assetId: assetId,
+    freezeTarget: frozenAccount.addr,
+    frozen: true,
+  });
+
+  printInfo(`\nAccount frozen:`);
+  printInfo(`  Transaction ID: ${freezeResult.txIds[0]}`);
+  printInfo(`  Confirmed round: ${freezeResult.confirmation.confirmedRound}`);
+
+  // Verify frozen status
+  const frozenAccountInfo = await algorand.asset.getAccountInformation(frozenAccount.addr, assetId);
+  printInfo(`  Frozen account balance: ${frozenAccountInfo.balance}`);
+  printInfo(`  Frozen status: ${frozenAccountInfo.frozen}`);
+
+  // Try to transfer from frozen account (should fail)
+  printInfo(`\nAttempting transfer from frozen account (should fail)...`);
+  try {
+    await algorand.send.assetTransfer({
+      sender: frozenAccount.addr,
+      receiver: receiver.addr,
+      assetId: assetId,
+      amount: 1_000n,
+    });
+    printError('Transfer should have failed!');
+  } catch {
+    printInfo(`  Transfer failed as expected: account is frozen`);
+  }
+
+  printSuccess('Freeze operation completed successfully');
+
+  // Step 7: Unfreeze and demonstrate clawback
+  printStep(7, 'Unfreeze and demonstrate clawback operation');
+  printInfo('Unfreezing the account, then using clawback to reclaim assets');
+
+  // Unfreeze the account
+  const unfreezeResult = await algorand.send.assetFreeze({
+    sender: creator.addr,
+    assetId: assetId,
+    freezeTarget: frozenAccount.addr,
+    frozen: false,
+  });
+
+  printInfo(`\nAccount unfrozen:`);
+  printInfo(`  Transaction ID: ${unfreezeResult.txIds[0]}`);
+
+  const unfrozenAccountInfo = await algorand.asset.getAccountInformation(
+    frozenAccount.addr,
+    assetId,
+  );
+  printInfo(`  Frozen status after unfreeze: ${unfrozenAccountInfo.frozen}`);
+
+  // Demonstrate clawback - reclaim assets from frozenAccount
+  printInfo(`\nClawback operation: reclaiming assets from frozenAccount to creator`);
+
+  const clawbackResult = await algorand.send.assetTransfer({
+    sender: creator.addr, // Clawback address sends the transaction
+    receiver: creator.addr, // Assets go back to creator
+    assetId: assetId,
+    amount: 2_500n, // Clawback 25 tokens
+    clawbackTarget: frozenAccount.addr, // Account to clawback from
+    note: 'Clawback operation',
+  });
+
+  printInfo(`\nClawback completed:`);
+  printInfo(`  Transaction ID: ${clawbackResult.txIds[0]}`);
+  printInfo(`  Confirmed round: ${clawbackResult.confirmation.confirmedRound}`);
+
+  // Check balances after clawback
+  const creatorAfterClawback = await algorand.asset.getAccountInformation(creator.addr, assetId);
+  const frozenAfterClawback = await algorand.asset.getAccountInformation(
+    frozenAccount.addr,
+    assetId,
+  );
+  printInfo(`  Creator balance after clawback: ${creatorAfterClawback.balance}`);
+  printInfo(`  FrozenAccount balance after clawback: ${frozenAfterClawback.balance}`);
+
+  printSuccess('Clawback operation completed successfully');
+
+  // Step 8: Opt-out of the asset
+  printStep(8, 'Opt-out with algorand.send.assetOptOut()');
+  printInfo('Receiver will opt-out of the asset, returning remaining balance to creator');
+
+  // First transfer all assets back to creator so receiver has zero balance
+  const receiverCurrentBalance = await algorand.asset.getAccountInformation(receiver.addr, assetId);
+  if (receiverCurrentBalance.balance > 0n) {
+    await algorand.send.assetTransfer({
+      sender: receiver.addr,
+      receiver: creator.addr,
+      assetId: assetId,
+      amount: receiverCurrentBalance.balance,
+    });
+    printInfo(`  Transferred ${receiverCurrentBalance.balance} units back to creator`);
+  }
+
+  // Now opt-out
+  const optOutResult = await algorand.send.assetOptOut({
+    sender: receiver.addr,
+    assetId: assetId,
+    creator: creator.addr,
+    ensureZeroBalance: true, // Safety check to ensure zero balance before opt-out
+  });
+
+  printInfo(`\nReceiver opted out:`);
+  printInfo(`  Transaction ID: ${optOutResult.txIds[0]}`);
+  printInfo(`  Confirmed round: ${optOutResult.confirmation.confirmedRound}`);
+
+  // Verify opt-out (getAccountInformation will throw if not opted in)
+  try {
+    await algorand.asset.getAccountInformation(receiver.addr, assetId);
+    printError('Receiver should not be opted in!');
+  } catch {
+    printInfo(`  Receiver successfully opted out of asset`);
+  }
+
+  printSuccess('Opt-out completed successfully');
+
+  // Step 9: Destroy the asset
+  printStep(9, 'Destroy the asset with algorand.send.assetDestroy()');
+  printInfo('All assets must be returned to creator before destruction');
+
+  // Return assets from frozenAccount
+  const frozenCurrentBalance = await algorand.asset.getAccountInformation(
+    frozenAccount.addr,
+    assetId,
+  );
+  if (frozenCurrentBalance.balance > 0n) {
+    await algorand.send.assetTransfer({
+      sender: frozenAccount.addr,
+      receiver: creator.addr,
+      assetId: assetId,
+      amount: frozenCurrentBalance.balance,
+    });
+    printInfo(`  Transferred ${frozenCurrentBalance.balance} units from frozenAccount to creator`);
+  }
+
+  // Opt-out frozenAccount
+  await algorand.send.assetOptOut({
+    sender: frozenAccount.addr,
+    assetId: assetId,
+    creator: creator.addr,
+    ensureZeroBalance: true,
+  });
+  printInfo(`  FrozenAccount opted out`);
+
+  // Verify creator has all assets
+  const creatorFinalBalance = await algorand.asset.getAccountInformation(creator.addr, assetId);
+  printInfo(
+    `  Creator final balance: ${creatorFinalBalance.balance} (should be ${assetInfo.total})`,
+  );
+
+  // Destroy the asset
+  const destroyResult = await algorand.send.assetDestroy({
+    sender: creator.addr, // Must be the manager
+    assetId: assetId,
+  });
+
+  printInfo(`\nAsset destroyed:`);
+  printInfo(`  Transaction ID: ${destroyResult.txIds[0]}`);
+  printInfo(`  Confirmed round: ${destroyResult.confirmation.confirmedRound}`);
+
+  // Verify destruction
+  try {
+    await algorand.asset.getById(assetId);
+    printError('Asset should not exist!');
+  } catch {
+    printInfo(`  Asset ${assetId} no longer exists`);
+  }
+
+  printSuccess('Asset destroyed successfully');
+
+  // Step 10: Summary of asset operations
+  printStep(10, 'Summary - Asset Operations API');
+  printInfo('Asset operations available through algorand.send:');
+  printInfo('');
+  printInfo('assetCreate(params):');
+  printInfo('  sender: Address - Creator of the asset');
+  printInfo('  total: bigint - Total units in smallest divisible unit');
+  printInfo('  decimals?: number - Decimal places (0-19)');
+  printInfo('  assetName?: string - Asset name (max 32 bytes)');
+  printInfo('  unitName?: string - Unit name/ticker (max 8 bytes)');
+  printInfo('  url?: string - URL for asset info (max 96 bytes)');
+  printInfo('  metadataHash?: Uint8Array - 32-byte metadata hash');
+  printInfo('  defaultFrozen?: boolean - Default freeze status');
+  printInfo('  manager?: Address - Can reconfigure/destroy asset');
+  printInfo('  reserve?: Address - Holds uncirculated supply (informational)');
+  printInfo('  freeze?: Address - Can freeze/unfreeze holdings');
+  printInfo('  clawback?: Address - Can clawback from any account');
+  printInfo('');
+  printInfo('assetConfig(params):');
+  printInfo('  sender: Address - Must be current manager');
+  printInfo('  assetId: bigint - Asset to reconfigure');
+  printInfo('  manager, reserve, freeze, clawback: Addresses to update');
+  printInfo('');
+  printInfo('assetOptIn(params):');
+  printInfo('  sender: Address - Account opting in');
+  printInfo('  assetId: bigint - Asset to opt into');
+  printInfo('');
+  printInfo('assetTransfer(params):');
+  printInfo('  sender: Address - Sender (or clawback address)');
+  printInfo('  receiver: Address - Recipient');
+  printInfo('  assetId: bigint - Asset to transfer');
+  printInfo('  amount: bigint - Amount in smallest units');
+  printInfo('  clawbackTarget?: Address - Account to clawback from');
+  printInfo('  closeAssetTo?: Address - Close holding to this address');
+  printInfo('');
+  printInfo('assetFreeze(params):');
+  printInfo('  sender: Address - Must be freeze address');
+  printInfo('  assetId: bigint - Asset ID');
+  printInfo('  freezeTarget: Address - Account to freeze/unfreeze');
+  printInfo('  frozen: boolean - Freeze (true) or unfreeze (false)');
+  printInfo('');
+  printInfo('assetOptOut(params):');
+  printInfo('  sender: Address - Account opting out');
+  printInfo('  assetId: bigint - Asset to opt out of');
+  printInfo('  creator: Address - Asset creator (receives remaining units)');
+  printInfo('  ensureZeroBalance: boolean - Safety check');
+  printInfo('');
+  printInfo('assetDestroy(params):');
+  printInfo('  sender: Address - Must be manager');
+  printInfo('  assetId: bigint - Asset to destroy');
+  printInfo('  Note: All units must be in creator account');
+
+  printSuccess('Send Asset Operations example completed!');
+}
+
+main().catch(error => {
+  printError(`Unhandled error: ${error instanceof Error ? error.message : String(error)}`);
+  process.exit(1);
+});
+```
+
+---
+
+### Other examples in Algorand Client
+
+- [Client Instantiation](/docs/algokit-utils/typescript/latest/examples/algorand-client/01-client-instantiation/)
+- [AlgoAmount Utility](/docs/algokit-utils/typescript/latest/examples/algorand-client/02-algo-amount/)
+- [Signer Configuration](/docs/algokit-utils/typescript/latest/examples/algorand-client/03-signer-config/)
+- [Suggested Params Configuration](/docs/algokit-utils/typescript/latest/examples/algorand-client/04-params-config/)
+- [Account Manager](/docs/algokit-utils/typescript/latest/examples/algorand-client/05-account-manager/)
+- [Send Payment](/docs/algokit-utils/typescript/latest/examples/algorand-client/06-send-payment/)
+- **Send Asset Operations**
+- [Send Application Operations](/docs/algokit-utils/typescript/latest/examples/algorand-client/08-send-app-ops/)
+- [Create Transaction (Unsigned Transactions)](/docs/algokit-utils/typescript/latest/examples/algorand-client/09-create-transaction/)
+- [Transaction Composer (Atomic Transaction Groups)](/docs/algokit-utils/typescript/latest/examples/algorand-client/10-transaction-composer/)
+- [Asset Manager](/docs/algokit-utils/typescript/latest/examples/algorand-client/11-asset-manager/)
+- [App Manager](/docs/algokit-utils/typescript/latest/examples/algorand-client/12-app-manager/)
+- [App Deployer](/docs/algokit-utils/typescript/latest/examples/algorand-client/13-app-deployer/)
+- [Client Manager](/docs/algokit-utils/typescript/latest/examples/algorand-client/14-client-manager/)
+- [Error Transformers](/docs/algokit-utils/typescript/latest/examples/algorand-client/15-error-transformers/)
+- [Transaction Leases](/docs/algokit-utils/typescript/latest/examples/algorand-client/16-leases/)

@@ -1,0 +1,389 @@
+---
+title: 'Sourcemap for TEAL Debugging'
+description: 'This example demonstrates how to use ProgramSourceMap for mapping TEAL program counters (PC) to source locations for debugging purposes.'
+sidebar:
+  order: 12
+---
+
+[← Back to Common Utilities](/docs/algokit-utils/python/latest/examples/common/)
+
+## Description
+
+This example demonstrates how to use ProgramSourceMap for mapping TEAL program counters (PC) to source locations for debugging purposes.
+Topics covered:
+
+- ProgramSourceMap class construction from sourcemap data
+- Sourcemap format: version, sources, mappings
+- get_line_for_pc() to get source line for a specific PC
+- get_pcs_for_line() to find PCs for a source line
+- pc_to_line and line_to_pc dictionaries
+- How sourcemaps enable TEAL debugging by mapping PC to source
+
+## Prerequisites
+
+No LocalNet required - pure sourcemap parsing
+
+## Run This Example
+
+From the repository's `examples` directory:
+
+```bash
+cd examples
+uv run python common/12_sourcemap.py
+```
+
+## Code
+
+[View source on GitHub](https://github.com/algorandfoundation/algokit-utils-py/blob/main/examples/common/12_sourcemap.py)
+
+```python title="12_sourcemap.py"
+# ruff: noqa: N999, C901, PLR0912, PLR0915
+"""
+Example: Sourcemap for TEAL Debugging
+
+This example demonstrates how to use ProgramSourceMap for mapping TEAL
+program counters (PC) to source locations for debugging purposes.
+
+Topics covered:
+- ProgramSourceMap class construction from sourcemap data
+- Sourcemap format: version, sources, mappings
+- get_line_for_pc() to get source line for a specific PC
+- get_pcs_for_line() to find PCs for a source line
+- pc_to_line and line_to_pc dictionaries
+- How sourcemaps enable TEAL debugging by mapping PC to source
+
+No LocalNet required - pure sourcemap parsing
+"""
+
+from shared import (
+    print_header,
+    print_info,
+    print_step,
+    print_success,
+)
+
+from algokit_common import (
+    ProgramSourceMap,
+    SourceMapVersionError,
+)
+
+
+def main() -> None:
+    print_header("Sourcemap Example")
+
+    # Step 1: Introduction to Sourcemaps
+    print_step(1, "Introduction to Sourcemaps")
+
+    print_info("Sourcemaps enable debugging by mapping compiled code to source code.")
+    print_info("")
+    print_info("In Algorand development:")
+    print_info("  - TEAL programs are compiled from higher-level languages (PyTeal, etc.)")
+    print_info("  - Program counter (PC) values identify positions in the compiled TEAL")
+    print_info("  - Sourcemaps map each PC back to the original source file location")
+    print_info("  - When errors occur, you can trace back to your original source code")
+    print_info("")
+    print_info("The ProgramSourceMap class parses standard source map v3 format.")
+    print_success("Sourcemaps bridge the gap between compiled TEAL and source code")
+
+    # Step 2: Sourcemap Format
+    print_step(2, "Sourcemap Format")
+
+    print_info("A sourcemap follows the standard v3 format with these fields:")
+    print_info("")
+    print_info("  version:  int       - Sourcemap version (must be 3)")
+    print_info("  sources:  list[str] - List of source file names/paths")
+    print_info("  mappings: str       - VLQ-encoded mapping data (semicolon-separated)")
+    print_info("")
+    print_info("The mappings string uses Base64 VLQ encoding:")
+    print_info("  - Each semicolon (;) represents one TEAL instruction (one PC value)")
+    print_info("  - Segments encode source location deltas")
+    print_info("  - Python SDK extracts line number from segment[2]")
+    print_info("")
+    print_success("Standard v3 sourcemap format enables interoperability with tools")
+
+    # Step 3: Creating a Mock Sourcemap
+    print_step(3, "Creating a Mock Sourcemap")
+
+    print_info("Let us create a mock sourcemap representing a simple TEAL program.")
+    print_info("")
+    print_info("Imagine this PyTeal source (pysource.py):")
+    print_info("  Line 0: from pyteal import *")
+    print_info("  Line 1: ")
+    print_info("  Line 2: def approval():")
+    print_info("  Line 3:     return Approve()")
+    print_info("  Line 4: ")
+    print_info("  Line 5: print(compileTeal(approval()))")
+    print_info("")
+    print_info("Compiled to TEAL:")
+    print_info("  PC 0: #pragma version 10")
+    print_info("  PC 1: int 1")
+    print_info("  PC 2: return")
+    print_info("")
+
+    # Create a mock sourcemap that maps:
+    # PC 0 -> Line 0 (version pragma from import)
+    # PC 1 -> Line 3 (the Approve() call)
+    # PC 2 -> Line 3 (the return statement)
+    # Note: VLQ encoding - each semicolon separates PC values
+    # AAAA encodes [0, 0, 0, 0] - source 0, line 0, col 0
+    # AAGA encodes [0, 0, 3, 0] - delta of 3 lines
+
+    mock_sourcemap = {
+        "version": 3,
+        "sources": ["pysource.py"],
+        "mappings": "AAAA;AAGA;AAAA",  # PC0->line0, PC1->line3, PC2->line3
+    }
+
+    print_info(f"version:  {mock_sourcemap['version']}")
+    print_info(f"sources:  {mock_sourcemap['sources']}")
+    print_info(f'mappings: "{mock_sourcemap["mappings"]}"')
+    print_info("")
+    print_success("Mock sourcemap created representing a simple PyTeal program")
+
+    # Step 4: Constructing ProgramSourceMap
+    print_step(4, "Constructing ProgramSourceMap")
+
+    source_map = ProgramSourceMap(mock_sourcemap)
+
+    print_info("ProgramSourceMap constructor takes a dict with:")
+    print_info("  { 'version': 3, 'sources': [...], 'mappings': '...' }")
+    print_info("")
+    print_info("After construction, the sourcemap properties are accessible:")
+    print_info(f"  source_map.version:  {source_map.version}")
+    print_info(f"  source_map.sources:  {source_map.sources}")
+    print_info(f'  source_map.mappings: "{source_map.mappings}"')
+    print_info("")
+    print_info("The constructor parses the VLQ-encoded mappings and builds internal indexes.")
+    print_success("ProgramSourceMap constructed and mappings parsed")
+
+    # Step 5: Accessing pc_to_line and line_to_pc Dictionaries
+    print_step(5, "pc_to_line and line_to_pc Dictionaries")
+
+    print_info("ProgramSourceMap builds two useful dictionaries:")
+    print_info("")
+
+    print_info("pc_to_line: Maps PC -> source line number")
+    for pc, line in sorted(source_map.pc_to_line.items()):
+        print_info(f"  PC {pc} -> line {line}")
+    print_info("")
+
+    print_info("line_to_pc: Maps source line -> list of PCs")
+    for line, pcs in sorted(source_map.line_to_pc.items()):
+        print_info(f"  line {line} -> PCs {pcs}")
+    print_info("")
+
+    print_success("Bidirectional PC <-> line mappings available")
+
+    # Step 6: get_line_for_pc() - Get Source Line for a PC
+    print_step(6, "get_line_for_pc() - Get Source Line for a PC")
+
+    print_info("get_line_for_pc(pc) returns the source line number for a given PC.")
+    print_info("")
+
+    # Get line for each PC
+    for pc in range(4):  # Check PCs 0-3
+        line = source_map.get_line_for_pc(pc)
+        if line is not None:
+            print_info(f"  PC {pc} -> line {line} ({source_map.sources[0]}:{line})")
+        else:
+            print_info(f"  PC {pc} -> None (no mapping)")
+    print_info("")
+
+    # Try a PC that doesn't exist
+    non_existent_pc = 999
+    no_line = source_map.get_line_for_pc(non_existent_pc)
+    print_info(f"  PC {non_existent_pc} (non-existent) -> {no_line}")
+    print_info("")
+
+    print_success("get_line_for_pc() maps PC values to source lines")
+
+    # Step 7: get_pcs_for_line() - Find PCs for a Source Line
+    print_step(7, "get_pcs_for_line() - Find PCs for a Source Line")
+
+    print_info("get_pcs_for_line(line) returns all PCs for a source line.")
+    print_info("This is useful for setting breakpoints at a specific source line.")
+    print_info("")
+
+    # Check each line
+    for line in range(6):
+        pcs = source_map.get_pcs_for_line(line)
+        if pcs:
+            print_info(f"  Line {line}: PCs {pcs}")
+        else:
+            print_info(f"  Line {line}: (no PCs mapped)")
+    print_info("")
+
+    print_success("get_pcs_for_line() enables breakpoint setting and line-based debugging")
+
+    # Step 8: Practical Debugging Example
+    print_step(8, "Practical Debugging Example")
+
+    print_info("When a TEAL program fails, the error includes the PC where it failed.")
+    print_info("Sourcemaps let you trace back to your original source code.")
+    print_info("")
+
+    # Simulate a runtime error scenario
+    failed_pc = 1
+    error_line = source_map.get_line_for_pc(failed_pc)
+
+    print_info("Simulated Runtime Error")
+    print_info(f"  Error: Logic eval error at PC {failed_pc}: int 1 expected bytes")
+    print_info("")
+
+    if error_line is not None:
+        source_file = source_map.sources[0]
+
+        print_info("Mapped to Source")
+        print_info(f"  File: {source_file}")
+        print_info(f"  Line: {error_line}")
+        print_info("")
+        print_info("  This allows you to immediately find the source code location")
+        print_info("  that caused the error, rather than debugging raw TEAL opcodes.")
+
+    print_success("Sourcemaps enable efficient debugging of compiled TEAL programs")
+
+    # Step 9: Sourcemap with Multiple Sources
+    print_step(9, "Sourcemap with Multiple Sources")
+
+    print_info("Sourcemaps can reference multiple source files.")
+    print_info("This is common when TEAL is generated from multiple modules.")
+    print_info("")
+
+    # Create a multi-source sourcemap
+    # AAAA = source 0, line 0
+    # ACAA = source delta +1 (source 1), line 0
+    # ACAA = source delta +1 (source 2), line 0
+    # AFAA = source delta -2 (source 0), line 0
+    multi_source_map = ProgramSourceMap(
+        {
+            "version": 3,
+            "sources": ["main.py", "utils.py", "constants.py"],
+            "mappings": "AAAA;ACAA;ACAA;AFAA",
+        }
+    )
+
+    print_info(f"sources: {multi_source_map.sources}")
+    print_info("")
+
+    print_info("PC to line mappings:")
+    for pc, line in sorted(multi_source_map.pc_to_line.items()):
+        # Note: Python SDK doesn't track source index per PC
+        # All PCs map to line numbers only
+        print_info(f"  PC {pc} -> line {line}")
+    print_info("")
+
+    print_info("Multiple source support allows tracing code back to the correct")
+    print_info("module in multi-file projects.")
+    print_success("Sourcemaps support multi-file projects")
+
+    # Step 10: Version Validation
+    print_step(10, "Version Validation")
+
+    print_info("ProgramSourceMap only supports version 3 sourcemaps.")
+    print_info("")
+
+    try:
+        ProgramSourceMap(
+            {
+                "version": 2,  # Invalid version
+                "sources": ["test.py"],
+                "mappings": "AAAA",
+            }
+        )
+        print_info("  ERROR: Version 2 should have been rejected")
+    except SourceMapVersionError as e:
+        print_info(f'  Creating version 2 sourcemap throws: "{e}"')
+    print_info("")
+
+    print_success("Version validation ensures sourcemap compatibility")
+
+    # Step 11: Real-World Sourcemap Example
+    print_step(11, "Real-World Sourcemap Example")
+
+    print_info("Here's what a more realistic sourcemap might look like:")
+    print_info("")
+
+    # A more complex example with multiple lines
+    real_world_map = ProgramSourceMap(
+        {
+            "version": 3,
+            "sources": ["approval.py"],
+            "mappings": "AAAA;AACA;AACA;AAGA;AACA;AACA;AAEA;AACA",
+            # This encodes a progression through source lines:
+            # PC 0 -> line 0, PC 1 -> line 1, PC 2 -> line 2
+            # PC 3 -> line 5 (jump), PC 4 -> line 6, PC 5 -> line 7
+            # PC 6 -> line 9 (jump), PC 7 -> line 10
+        }
+    )
+
+    print_info("Realistic sourcemap for a PyTeal program:")
+    print_info(f"  sources: {real_world_map.sources}")
+    print_info("")
+    print_info("PC -> Line mappings:")
+    for pc, line in sorted(real_world_map.pc_to_line.items()):
+        print_info(f"  PC {pc:2d} -> line {line:2d}")
+    print_info("")
+
+    print_info("This shows how the TEAL program counter progresses through")
+    print_info("the source code, sometimes jumping over blank/comment lines.")
+
+    print_success("Real-world sourcemaps enable precise debugging")
+
+    # Step 12: Summary - Debugging Workflow with Sourcemaps
+    print_step(12, "Summary - Debugging Workflow with Sourcemaps")
+
+    print_info("Typical debugging workflow with sourcemaps:")
+    print_info("")
+    print_info("  1. Compile your high-level code (PyTeal, etc.) to TEAL")
+    print_info("  2. The compiler generates a sourcemap alongside the TEAL")
+    print_info("  3. Load the sourcemap: ProgramSourceMap(sourcemap_data)")
+    print_info("  4. When an error occurs, get the PC from the error message")
+    print_info("  5. Map PC to line: source_map.get_line_for_pc(pc)")
+    print_info("  6. Navigate to the source location to fix the issue")
+    print_info("")
+    print_info("For setting breakpoints:")
+    print_info("  1. Identify the source file and line")
+    print_info("  2. Get PCs: source_map.get_pcs_for_line(line)")
+    print_info("  3. Set breakpoints at the returned PC values")
+    print_info("")
+
+    print_info("Key Properties and Methods:")
+    print_info("  .version              Sourcemap version (must be 3)")
+    print_info("  .sources              List of source file names")
+    print_info("  .mappings             Raw VLQ-encoded string")
+    print_info("  .pc_to_line           Dict[int, int] - PC -> line")
+    print_info("  .line_to_pc           Dict[int, list[int]] - line -> PCs")
+    print_info("  .get_line_for_pc(pc)  Get line for a PC")
+    print_info("  .get_pcs_for_line(ln) Get PCs for a line")
+    print_info("")
+
+    print_info("Related Classes:")
+    print_info("  SourceLocation         (line, column) for source code position")
+    print_info("  PcLineLocation         (pc, line) for PC-line mapping")
+    print_info("  SourceMapVersionError  Exception for invalid version")
+    print_info("")
+
+    print_success("ProgramSourceMap enables effective TEAL debugging!")
+
+
+if __name__ == "__main__":
+    main()
+
+```
+
+---
+
+### Other examples in Common Utilities
+
+- [Address Basics](/docs/algokit-utils/python/latest/examples/common/01-address-basics/)
+- [Address Encoding](/docs/algokit-utils/python/latest/examples/common/02-address-encoding/)
+- [Array Utilities](/docs/algokit-utils/python/latest/examples/common/03-array-utilities/)
+- [Constants Reference](/docs/algokit-utils/python/latest/examples/common/04-constants/)
+- [Crypto Hash (SHA-512/256)](/docs/algokit-utils/python/latest/examples/common/05-crypto-hash/)
+- [Example](/docs/algokit-utils/python/latest/examples/common/06-logger/)
+- [JSON BigInt Support](/docs/algokit-utils/python/latest/examples/common/07-json-bigint/)
+- [MessagePack Encoding](/docs/algokit-utils/python/latest/examples/common/08-msgpack/)
+- [Primitive Serde (Serialization/Deserialization)](/docs/algokit-utils/python/latest/examples/common/09-primitive-codecs/)
+- [Composite Serde (Serialization/Deserialization)](/docs/algokit-utils/python/latest/examples/common/10-composite-codecs/)
+- [Model Serde (Object Model Serialization)](/docs/algokit-utils/python/latest/examples/common/11-model-codecs/)
+- **Sourcemap for TEAL Debugging**

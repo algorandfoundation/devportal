@@ -1,0 +1,268 @@
+---
+title: 'Address Encoding'
+description: 'This example demonstrates how to encode and decode addresses between different formats and compute application addresses:'
+sidebar:
+  order: 2
+---
+
+[← Back to Common Utilities](/docs/algokit-utils/typescript/latest/examples/common/)
+
+## Description
+
+This example demonstrates how to encode and decode addresses between different formats and compute application addresses:
+
+- encodeAddress() to convert 32-byte public key to base32 string
+- decodeAddress() to convert base32 string to Address object
+- getApplicationAddress() to compute an app's escrow address from app ID
+- getAddress() helper that accepts string, Address, or Addressable
+- Round-trip verification: encode(decode(address)) equals original
+- Understanding the relationship between public key bytes and checksum
+
+## Prerequisites
+
+- No LocalNet required
+
+## Run This Example
+
+From the repository root:
+
+```bash
+cd examples
+npm run example common/02-address-encoding.ts
+```
+
+## Code
+
+[View source on GitHub](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/examples/common/02-address-encoding.ts)
+
+```typescript title="02-address-encoding.ts"
+/**
+ * Example: Address Encoding
+ *
+ * This example demonstrates how to encode and decode addresses between different formats
+ * and compute application addresses:
+ * - encodeAddress() to convert 32-byte public key to base32 string
+ * - decodeAddress() to convert base32 string to Address object
+ * - getApplicationAddress() to compute an app's escrow address from app ID
+ * - getAddress() helper that accepts string, Address, or Addressable
+ * - Round-trip verification: encode(decode(address)) equals original
+ * - Understanding the relationship between public key bytes and checksum
+ *
+ * Prerequisites:
+ * - No LocalNet required
+ */
+
+import {
+  Address,
+  decodeAddress,
+  encodeAddress,
+  getAddress,
+  getApplicationAddress,
+} from '@algorandfoundation/algokit-utils/common';
+import {
+  formatBytes,
+  formatHex,
+  printHeader,
+  printInfo,
+  printStep,
+  printSuccess,
+} from '../shared/utils.js';
+
+function main() {
+  printHeader('Address Encoding Example');
+
+  // Step 1: encodeAddress() - Convert 32-byte public key to base32 string
+  printStep(1, 'encodeAddress() - Public Key to Base32 String');
+
+  // Create a 32-byte public key (bytes 0-31)
+  const publicKey = new Uint8Array(32);
+  for (let i = 0; i < 32; i++) {
+    publicKey[i] = i;
+  }
+
+  printInfo(`Input: 32-byte public key`);
+  printInfo(`Public key bytes: ${formatBytes(publicKey, 8)}`);
+  printInfo(`Public key (hex): ${formatHex(publicKey)}`);
+
+  const encodedAddress = encodeAddress(publicKey);
+  printInfo(`\nOutput: Base32 encoded address`);
+  printInfo(`Encoded address: ${encodedAddress}`);
+  printInfo(`Address length: ${encodedAddress.length} characters`);
+
+  // Step 2: decodeAddress() - Convert base32 string to Address object
+  printStep(2, 'decodeAddress() - Base32 String to Address Object');
+
+  printInfo(`Input: "${encodedAddress}"`);
+
+  const decodedAddress = decodeAddress(encodedAddress);
+  printInfo(`\nOutput: Address object`);
+  printInfo(`Type: ${decodedAddress.constructor.name}`);
+  printInfo(`Public key length: ${decodedAddress.publicKey.length} bytes`);
+  printInfo(`Public key bytes: ${formatBytes(decodedAddress.publicKey, 8)}`);
+
+  // Step 3: Round-trip verification
+  printStep(3, 'Round-Trip Verification');
+
+  // encode(decode(address)) === address
+  const originalAddress = 'AAAQEAYEAUDAOCAJBIFQYDIOB4IBCEQTCQKRMFYYDENBWHA5DYP7MUPJQE';
+  printInfo(`Original address: ${originalAddress}`);
+
+  const decoded = decodeAddress(originalAddress);
+  const reEncoded = encodeAddress(decoded.publicKey);
+
+  printInfo(`After decode → encode: ${reEncoded}`);
+  printInfo(`Round-trip matches: ${originalAddress === reEncoded}`);
+
+  // decode(encode(publicKey)).publicKey === publicKey
+  printInfo(`\nVerifying bytes round-trip:`);
+  const encoded = encodeAddress(publicKey);
+  const decodedBack = decodeAddress(encoded);
+  const bytesMatch = publicKey.every(
+    (byte: number, i: number) => byte === decodedBack.publicKey[i],
+  );
+  printInfo(`Original public key matches decoded: ${bytesMatch}`);
+
+  // Step 4: Public Key Bytes and Checksum Relationship
+  printStep(4, 'Public Key Bytes and Checksum Relationship');
+
+  printInfo('An Algorand address consists of:');
+  printInfo('  - 32 bytes: public key');
+  printInfo('  - 4 bytes: checksum (last 4 bytes of SHA512/256 hash of public key)');
+  printInfo('  - Encoded together as 58 character base32 string');
+
+  printInfo(`\nFor our sample address:`);
+  printInfo(`  Public key (32 bytes): ${formatHex(decodedAddress.publicKey)}`);
+
+  const checksum = decodedAddress.checksum();
+  printInfo(`  Checksum (4 bytes): ${formatHex(checksum)}`);
+
+  // Show how the checksum appears at the end of the address
+  printInfo(`\nThe checksum is computed by:`);
+  printInfo(`  1. Taking SHA512/256 hash of the public key`);
+  printInfo(`  2. Using the last 4 bytes of that hash`);
+
+  // Demonstrate with zero address
+  const zeroAddress = Address.zeroAddress();
+  const zeroChecksum = zeroAddress.checksum();
+  printInfo(`\nZero address example:`);
+  printInfo(`  Public key: ${formatHex(zeroAddress.publicKey.slice(0, 8))}... (all zeros)`);
+  printInfo(`  Checksum: ${formatHex(zeroChecksum)}`);
+  printInfo(`  Full address: ${zeroAddress.toString()}`);
+
+  // Step 5: getApplicationAddress() - Compute App Escrow Address
+  printStep(5, 'getApplicationAddress() - Application Escrow Address');
+
+  printInfo('Every application has an escrow address derived from its app ID.');
+  printInfo('This address can hold Algos and ASAs for the application.');
+
+  // Compute addresses for some app IDs
+  const appIds = [1n, 123n, 1234567890n];
+
+  for (const appId of appIds) {
+    const appAddress = getApplicationAddress(appId);
+    printInfo(`\nApp ID ${appId}:`);
+    printInfo(`  Escrow address: ${appAddress.toString()}`);
+    printInfo(`  Public key (first 8 bytes): ${formatHex(appAddress.publicKey.slice(0, 8))}...`);
+  }
+
+  printInfo(`\nThe address is computed by:`);
+  printInfo(`  1. Concatenating "appID" prefix with 8-byte big-endian app ID`);
+  printInfo(`  2. Taking SHA512/256 hash of the result`);
+  printInfo(`  3. Using the 32-byte hash as the public key`);
+
+  // Step 6: getAddress() - Flexible Address Helper
+  printStep(6, 'getAddress() - Flexible Address Helper');
+
+  printInfo('getAddress() accepts multiple input types and returns an Address object:');
+  printInfo('  - string: parses as base32 address');
+  printInfo('  - Address: returns as-is');
+  printInfo('  - Addressable: extracts the .addr property');
+
+  // From string
+  const fromString = getAddress('AAAQEAYEAUDAOCAJBIFQYDIOB4IBCEQTCQKRMFYYDENBWHA5DYP7MUPJQE');
+  printInfo(`\nFrom string: ${fromString.toString()}`);
+
+  // From Address object
+  const addressObj = Address.fromString(
+    'AAAQEAYEAUDAOCAJBIFQYDIOB4IBCEQTCQKRMFYYDENBWHA5DYP7MUPJQE',
+  );
+  const fromAddress = getAddress(addressObj);
+  printInfo(`From Address object: ${fromAddress.toString()}`);
+  printInfo(`Same object returned: ${fromAddress === addressObj}`);
+
+  // From Addressable (object with .addr property)
+  const addressable = { addr: addressObj };
+  const fromAddressable = getAddress(addressable);
+  printInfo(`From Addressable: ${fromAddressable.toString()}`);
+  printInfo(`Extracted .addr property: ${fromAddressable === addressObj}`);
+
+  // All three produce equal addresses
+  printInfo(
+    `\nAll inputs produce equal addresses: ${fromString.equals(fromAddress) && fromAddress.equals(fromAddressable)}`,
+  );
+
+  // Step 7: Practical Use Cases
+  printStep(7, 'Practical Use Cases');
+
+  printInfo('Common scenarios for address encoding/decoding:');
+
+  printInfo('\n1. Converting wallet public keys to displayable addresses:');
+  const walletPubKey = new Uint8Array(32).fill(42); // Simulated wallet public key
+  const walletAddress = encodeAddress(walletPubKey);
+  printInfo(`   Public key → Address: ${walletAddress.substring(0, 30)}...`);
+
+  printInfo('\n2. Extracting public key from address for cryptographic operations:');
+  const someAddress = 'AAAQEAYEAUDAOCAJBIFQYDIOB4IBCEQTCQKRMFYYDENBWHA5DYP7MUPJQE';
+  const extracted = decodeAddress(someAddress);
+  printInfo(`   Address → Public key: ${formatHex(extracted.publicKey.slice(0, 8))}...`);
+
+  printInfo('\n3. Computing application escrow for sending funds:');
+  const myAppId = 12345n;
+  const escrow = getApplicationAddress(myAppId);
+  printInfo(`   App ${myAppId} escrow: ${escrow.toString().substring(0, 30)}...`);
+
+  printInfo('\n4. Normalizing address inputs in functions:');
+  printInfo('   function sendPayment(to: ReadableAddress) {');
+  printInfo('     const toAddress = getAddress(to) // Works with string, Address, or Addressable');
+  printInfo('     // ... rest of implementation');
+  printInfo('   }');
+
+  // Step 8: Summary
+  printStep(8, 'Summary');
+
+  printInfo('Encoding/Decoding Functions:');
+  printInfo('  - encodeAddress(publicKey) - 32-byte Uint8Array → 58-char base32 string');
+  printInfo('  - decodeAddress(address) - 58-char base32 string → Address object');
+
+  printInfo('\nApplication Address:');
+  printInfo('  - getApplicationAddress(appId) - App ID → Escrow Address');
+
+  printInfo('\nFlexible Helper:');
+  printInfo('  - getAddress(addr) - string | Address | Addressable → Address');
+
+  printInfo('\nAddress Structure:');
+  printInfo('  - 32 bytes public key + 4 bytes checksum = 36 bytes');
+  printInfo('  - Base32 encoded to 58 character string');
+
+  printSuccess('Address Encoding example completed successfully!');
+}
+
+main();
+```
+
+---
+
+### Other examples in Common Utilities
+
+- [Address Basics](/docs/algokit-utils/typescript/latest/examples/common/01-address-basics/)
+- **Address Encoding**
+- [Array Utilities](/docs/algokit-utils/typescript/latest/examples/common/03-array-utilities/)
+- [Constants Reference](/docs/algokit-utils/typescript/latest/examples/common/04-constants/)
+- [Crypto Hash (SHA-512/256)](/docs/algokit-utils/typescript/latest/examples/common/05-crypto-hash/)
+- [Logger Type](/docs/algokit-utils/typescript/latest/examples/common/06-logger/)
+- [JSON BigInt](/docs/algokit-utils/typescript/latest/examples/common/07-json-bigint/)
+- [MessagePack](/docs/algokit-utils/typescript/latest/examples/common/08-msgpack/)
+- [Primitive Codecs](/docs/algokit-utils/typescript/latest/examples/common/09-primitive-codecs/)
+- [Composite Codecs](/docs/algokit-utils/typescript/latest/examples/common/10-composite-codecs/)
+- [Model Codecs](/docs/algokit-utils/typescript/latest/examples/common/11-model-codecs/)
+- [Sourcemap](/docs/algokit-utils/typescript/latest/examples/common/12-sourcemap/)

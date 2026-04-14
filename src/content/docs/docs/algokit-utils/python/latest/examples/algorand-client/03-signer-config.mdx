@@ -1,0 +1,389 @@
+---
+title: 'Signer Configuration'
+description: 'This example demonstrates how to configure transaction signers on AlgorandClient:'
+sidebar:
+  order: 3
+---
+
+[← Back to Algorand Client](/docs/algokit-utils/python/latest/examples/algorand-client/)
+
+## Description
+
+This example demonstrates how to configure transaction signers on AlgorandClient:
+
+- set_default_signer() to set a fallback signer for all transactions
+- set_signer_from_account() to register a signer from an Account object
+- set_signer() to register a signer for a specific address
+- How signers are automatically used when sending transactions
+- Registering multiple signers for different accounts
+- How the default signer is used when no specific signer is registered
+
+## Prerequisites
+
+LocalNet required for transaction signing
+
+## Run This Example
+
+From the repository's `examples` directory:
+
+```bash
+cd examples
+uv run python algorand_client/03_signer_config.py
+```
+
+## Code
+
+[View source on GitHub](https://github.com/algorandfoundation/algokit-utils-py/blob/main/examples/algorand_client/03_signer_config.py)
+
+```python title="03_signer_config.py"
+# ruff: noqa: N999, C901, PLR0912, PLR0915, PLR2004
+"""
+Example: Signer Configuration
+
+This example demonstrates how to configure transaction signers on AlgorandClient:
+- set_default_signer() to set a fallback signer for all transactions
+- set_signer_from_account() to register a signer from an Account object
+- set_signer() to register a signer for a specific address
+- How signers are automatically used when sending transactions
+- Registering multiple signers for different accounts
+- How the default signer is used when no specific signer is registered
+
+LocalNet required for transaction signing
+"""
+
+from shared import (
+    print_error,
+    print_header,
+    print_info,
+    print_step,
+    print_success,
+    shorten_address,
+)
+
+from algokit_utils import AlgoAmount, AlgorandClient, PaymentParams
+
+
+def main() -> None:
+    print_header("Signer Configuration Example")
+
+    # Initialize client and verify LocalNet is running
+    algorand = AlgorandClient.default_localnet()
+
+    try:
+        algorand.client.algod.status()
+        print_success("Connected to LocalNet")
+    except Exception as e:
+        print_error(f"Failed to connect to LocalNet: {e}")
+        print_info("Make sure LocalNet is running (e.g., algokit localnet start)")
+        return
+
+    # Step 1: Create random test accounts
+    print_step(1, "Create random test accounts using algorand.account.random()")
+    print_info("algorand.account.random() creates a new account with a randomly generated keypair")
+    print_info("The account is automatically registered with its signer in the AccountManager")
+
+    account1 = algorand.account.random()
+    account2 = algorand.account.random()
+    account3 = algorand.account.random()
+
+    print_info("")
+    print_info("Created accounts:")
+    print_info(f"  Account 1: {shorten_address(str(account1.addr))}")
+    print_info(f"  Account 2: {shorten_address(str(account2.addr))}")
+    print_info(f"  Account 3: {shorten_address(str(account3.addr))}")
+
+    print_success("Created 3 random test accounts")
+
+    # Step 2: Fund the accounts from the dispenser
+    print_step(2, "Fund accounts from the LocalNet dispenser")
+    print_info("Using the dispenser account to fund our test accounts")
+
+    dispenser = algorand.account.localnet_dispenser()
+    print_info(f"Dispenser address: {shorten_address(str(dispenser.addr))}")
+
+    # Fund all three accounts
+    fund_amount = AlgoAmount.from_algo(10)
+    print_info("")
+    print_info(f"Funding each account with {fund_amount.algo} ALGO...")
+
+    for account in [account1, account2, account3]:
+        algorand.send.payment(
+            PaymentParams(
+                sender=dispenser.addr,
+                receiver=account.addr,
+                amount=fund_amount,
+            )
+        )
+
+    print_success("Funded all accounts with 10 ALGO each")
+
+    # Step 3: Demonstrate set_signer_from_account()
+    print_step(3, "Demonstrate set_signer_from_account() - Register signer from an account object")
+    print_info("set_signer_from_account() registers the signer from an account that can sign transactions")
+    print_info("This is useful when you have an account object and want to register it for signing")
+
+    # Create a new AlgorandClient to demonstrate registering signers explicitly
+    algorand2 = AlgorandClient.default_localnet()
+
+    # Register account1's signer
+    print_info("")
+    print_info(f"Registering signer for Account 1: {shorten_address(str(account1.addr))}")
+    algorand2.account.set_signer_from_account(account1)
+
+    print_info("Now Account 1 can be used as a sender in transactions")
+
+    # Send a payment from account1 to account2
+    payment1_result = algorand2.send.payment(
+        PaymentParams(
+            sender=account1.addr,
+            receiver=account2.addr,
+            amount=AlgoAmount.from_algo(1),
+        )
+    )
+
+    print_info("")
+    print_info("Payment transaction sent:")
+    print_info(f"  From: {shorten_address(str(account1.addr))}")
+    print_info(f"  To: {shorten_address(str(account2.addr))}")
+    print_info("  Amount: 1 ALGO")
+    print_info(f"  Transaction ID: {payment1_result.tx_ids[0]}")
+    print_info(f"  Confirmed in round: {payment1_result.confirmation.confirmed_round}")
+
+    print_success("Successfully sent payment using registered signer")
+
+    # Step 4: Demonstrate set_signer() - Register signer for a specific address
+    print_step(4, "Demonstrate set_signer() - Register signer for a specific address")
+    print_info("set_signer(address, signer) registers a TransactionSigner for a specific address")
+    print_info("This gives you fine-grained control over which signer to use for each address")
+
+    # Create another AlgorandClient to demonstrate set_signer
+    algorand3 = AlgorandClient.default_localnet()
+
+    # Register account2's signer using set_signer
+    print_info("")
+    print_info("Registering signer for Account 2 using set_signer():")
+    print_info(f"  Address: {shorten_address(str(account2.addr))}")
+    algorand3.set_signer(sender=account2.addr, signer=account2.signer)
+
+    # Send a payment from account2 to account3
+    payment2_result = algorand3.send.payment(
+        PaymentParams(
+            sender=account2.addr,
+            receiver=account3.addr,
+            amount=AlgoAmount.from_algo(0.5),
+        )
+    )
+
+    print_info("")
+    print_info("Payment transaction sent:")
+    print_info(f"  From: {shorten_address(str(account2.addr))}")
+    print_info(f"  To: {shorten_address(str(account3.addr))}")
+    print_info("  Amount: 0.5 ALGO")
+    print_info(f"  Transaction ID: {payment2_result.tx_ids[0]}")
+    print_info(f"  Confirmed in round: {payment2_result.confirmation.confirmed_round}")
+
+    print_success("Successfully sent payment using set_signer()")
+
+    # Step 5: Demonstrate set_default_signer()
+    print_step(5, "Demonstrate set_default_signer() - Set a fallback signer for all transactions")
+    print_info("set_default_signer() sets a signer that will be used when no specific signer is registered")
+    print_info("This is useful when you have a primary account that signs most transactions")
+
+    # Create a new AlgorandClient and set account3 as the default signer
+    algorand4 = AlgorandClient.default_localnet()
+
+    print_info("")
+    print_info(f"Setting Account 3 as the default signer: {shorten_address(str(account3.addr))}")
+    algorand4.set_default_signer(account3.signer)
+
+    # Now we can send a transaction from account3 without explicitly registering it
+    # The default signer will be used
+    payment3_result = algorand4.send.payment(
+        PaymentParams(
+            sender=account3.addr,
+            receiver=account1.addr,
+            amount=AlgoAmount.from_algo(0.25),
+        )
+    )
+
+    print_info("")
+    print_info("Payment transaction sent using default signer:")
+    print_info(f"  From: {shorten_address(str(account3.addr))}")
+    print_info(f"  To: {shorten_address(str(account1.addr))}")
+    print_info("  Amount: 0.25 ALGO")
+    print_info(f"  Transaction ID: {payment3_result.tx_ids[0]}")
+    print_info(f"  Confirmed in round: {payment3_result.confirmation.confirmed_round}")
+
+    print_success("Successfully sent payment using default signer")
+
+    # Step 6: Demonstrate multiple signers with default fallback
+    print_step(6, "Demonstrate multiple signers with default fallback")
+    print_info("You can register multiple signers and have a default as fallback")
+    print_info("Specific signers take precedence over the default signer")
+
+    # Create a new AlgorandClient with multiple signers
+    algorand5 = AlgorandClient.default_localnet()
+
+    # Set account1 as the default signer
+    print_info("")
+    print_info("Setting up signers:")
+    print_info(f"  Default signer: Account 1 ({shorten_address(str(account1.addr))})")
+    algorand5.set_default_signer(account1.signer)
+
+    # Also register account2's signer explicitly
+    print_info(f"  Registered signer: Account 2 ({shorten_address(str(account2.addr))})")
+    algorand5.account.set_signer_from_account(account2)
+
+    # Send from account2 (uses registered signer)
+    print_info("")
+    print_info("Sending from Account 2 (uses registered signer):")
+    payment4_result = algorand5.send.payment(
+        PaymentParams(
+            sender=account2.addr,
+            receiver=account3.addr,
+            amount=AlgoAmount.from_algo(0.1),
+        )
+    )
+    print_info(f"  Transaction ID: {payment4_result.tx_ids[0]}")
+    print_info(f"  Confirmed in round: {payment4_result.confirmation.confirmed_round}")
+
+    # Send from account1 (uses default signer)
+    print_info("")
+    print_info("Sending from Account 1 (uses default signer):")
+    payment5_result = algorand5.send.payment(
+        PaymentParams(
+            sender=account1.addr,
+            receiver=account3.addr,
+            amount=AlgoAmount.from_algo(0.1),
+        )
+    )
+    print_info(f"  Transaction ID: {payment5_result.tx_ids[0]}")
+    print_info(f"  Confirmed in round: {payment5_result.confirmation.confirmed_round}")
+
+    print_success("Successfully demonstrated signer priority (specific > default)")
+
+    # Step 7: Error handling - No signer registered
+    print_step(7, "Error handling - Attempting to send without a registered signer")
+    print_info("When no signer is registered for an address and no default signer is set,")
+    print_info("an error will be thrown when trying to send a transaction")
+
+    # Create a new AlgorandClient without any signers
+    algorand6 = AlgorandClient.default_localnet()
+    unregistered_account = algorand6.account.random()
+
+    print_info("")
+    print_info(f"Attempting to send from unregistered account: {shorten_address(str(unregistered_account.addr))}")
+    print_info("(Note: algorand.account.random() automatically registers the signer,")
+    print_info(" but if we create a fresh client and only have the address, it will fail)")
+
+    # Create yet another client that doesn't have the signer registered
+    algorand7 = AlgorandClient.default_localnet()
+
+    try:
+        # Try to send from the address without registering a signer
+        algorand7.send.payment(
+            PaymentParams(
+                sender=unregistered_account.addr,  # This address has no signer in algorand7
+                receiver=account1.addr,
+                amount=AlgoAmount.from_algo(0.01),
+            )
+        )
+        print_info("Unexpectedly succeeded")
+    except Exception as e:
+        print_success("Caught expected error when no signer is registered")
+        error_msg = str(e)
+        if len(error_msg) > 100:
+            error_msg = error_msg[:100] + "..."
+        print_info(f"Error message: {error_msg}")
+
+    # Step 8: Method chaining
+    print_step(8, "Method chaining - Configure signers fluently")
+    print_info("All signer methods return the AlgorandClient, allowing method chaining")
+
+    algorand8 = (
+        AlgorandClient.default_localnet()
+        .set_default_signer(account1.signer)
+        .set_signer(sender=account3.addr, signer=account3.signer)
+    )
+    algorand8.account.set_signer_from_account(account2)
+
+    print_info("")
+    print_info("Configured AlgorandClient with chained calls:")
+    print_info("  .set_default_signer(account1.signer)")
+    print_info("  .set_signer(sender=account3.addr, signer=account3.signer)")
+    print_info("  .account.set_signer_from_account(account2)")
+
+    # Verify all signers work
+    balances: dict[str, int] = {}
+    for name, account in [
+        ("Account 1", account1),
+        ("Account 2", account2),
+        ("Account 3", account3),
+    ]:
+        info = algorand8.account.get_information(account.addr)
+        balances[name] = info.amount.micro_algo
+
+    print_info("")
+    print_info("Current balances:")
+    for name, balance in balances.items():
+        algo_value = balance / 1_000_000
+        print_info(f"  {name}: {algo_value:.6f} ALGO")
+
+    print_success("Successfully configured AlgorandClient with method chaining")
+
+    # Step 9: Summary
+    print_step(9, "Summary")
+    print_info("Signer configuration methods:")
+    print_info("")
+    print_info("set_default_signer(signer):")
+    print_info("  - Sets a fallback signer for all transactions")
+    print_info("  - Used when no specific signer is registered for an address")
+    print_info("  - Accepts TransactionSigner")
+    print_info("")
+    print_info("set_signer_from_account(account):")
+    print_info("  - Registers a signer from an account object")
+    print_info("  - Account must have addr and signer properties")
+    print_info("  - Supports AddressWithTransactionSigner types")
+    print_info("")
+    print_info("set_signer(sender, signer):")
+    print_info("  - Registers a TransactionSigner for a specific address")
+    print_info("  - Gives fine-grained control over signing")
+    print_info("")
+    print_info("Signer resolution order:")
+    print_info("  1. Specific signer registered for the address")
+    print_info("  2. Default signer (if set)")
+    print_info("  3. Error thrown if no signer found")
+    print_info("")
+    print_info("Best practices:")
+    print_info("  - Use algorand.account.random() for test accounts (auto-registers signer)")
+    print_info("  - Set a default signer for your primary signing account")
+    print_info("  - Register additional signers as needed for multi-account workflows")
+    print_info("  - Method chaining makes configuration concise and readable")
+
+    print_success("Signer Configuration example completed!")
+
+
+if __name__ == "__main__":
+    main()
+
+```
+
+---
+
+### Other examples in Algorand Client
+
+- [Client Instantiation](/docs/algokit-utils/python/latest/examples/algorand-client/01-client-instantiation/)
+- [AlgoAmount Utility](/docs/algokit-utils/python/latest/examples/algorand-client/02-algo-amount/)
+- **Signer Configuration**
+- [Suggested Params Configuration](/docs/algokit-utils/python/latest/examples/algorand-client/04-params-config/)
+- [Account Manager](/docs/algokit-utils/python/latest/examples/algorand-client/05-account-manager/)
+- [Send Payment](/docs/algokit-utils/python/latest/examples/algorand-client/06-send-payment/)
+- [Send Asset Operations](/docs/algokit-utils/python/latest/examples/algorand-client/07-send-asset-ops/)
+- [Send Application Operations](/docs/algokit-utils/python/latest/examples/algorand-client/08-send-app-ops/)
+- [Create Transaction (Unsigned Transactions)](/docs/algokit-utils/python/latest/examples/algorand-client/09-create-transaction/)
+- [Transaction Composer (Atomic Transaction Groups)](/docs/algokit-utils/python/latest/examples/algorand-client/10-transaction-composer/)
+- [Asset Manager](/docs/algokit-utils/python/latest/examples/algorand-client/11-asset-manager/)
+- [App Manager](/docs/algokit-utils/python/latest/examples/algorand-client/12-app-manager/)
+- [App Deployer](/docs/algokit-utils/python/latest/examples/algorand-client/13-app-deployer/)
+- [Client Manager](/docs/algokit-utils/python/latest/examples/algorand-client/14-client-manager/)
+- [Error Transformers](/docs/algokit-utils/python/latest/examples/algorand-client/15-error-transformers/)

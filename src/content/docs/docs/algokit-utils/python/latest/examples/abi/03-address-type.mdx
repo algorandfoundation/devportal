@@ -1,0 +1,259 @@
+---
+title: 'ABI Address Type'
+description: 'This example demonstrates how to encode and decode Algorand addresses using AddressType:'
+sidebar:
+  order: 3
+---
+
+[← Back to ABI Encoding](/docs/algokit-utils/python/latest/examples/abi/)
+
+## Description
+
+This example demonstrates how to encode and decode Algorand addresses using AddressType:
+
+- Encoding address strings (base32 format) to 32 bytes
+- Encoding raw 32-byte public key (bytes)
+- Decoding bytes back to address string
+- Verifying address encoding is exactly 32 bytes (no length prefix)
+- Understanding relationship between Algorand address and public key bytes
+  Algorand addresses are 58 characters in base32 encoding, which includes:
+- 32 bytes of public key
+- 4 bytes of checksum (computed from public key)
+  The ABI encoding is just the raw 32-byte public key without checksum.
+
+## Prerequisites
+
+No LocalNet required - pure ABI encoding/decoding
+
+## Run This Example
+
+From the repository's `examples` directory:
+
+```bash
+cd examples
+uv run python abi/03_address_type.py
+```
+
+## Code
+
+[View source on GitHub](https://github.com/algorandfoundation/algokit-utils-py/blob/main/examples/abi/03_address_type.py)
+
+```python title="03_address_type.py"
+# ruff: noqa: N999, PLR0915
+"""
+Example: ABI Address Type
+
+This example demonstrates how to encode and decode Algorand addresses using AddressType:
+- Encoding address strings (base32 format) to 32 bytes
+- Encoding raw 32-byte public key (bytes)
+- Decoding bytes back to address string
+- Verifying address encoding is exactly 32 bytes (no length prefix)
+- Understanding relationship between Algorand address and public key bytes
+
+Algorand addresses are 58 characters in base32 encoding, which includes:
+- 32 bytes of public key
+- 4 bytes of checksum (computed from public key)
+
+The ABI encoding is just the raw 32-byte public key without checksum.
+
+No LocalNet required - pure ABI encoding/decoding
+"""
+
+from shared import format_bytes, format_hex, print_header, print_info, print_step, print_success
+
+from algokit_abi import abi
+from algokit_common import address_from_public_key, public_key_from_address
+from algokit_common.constants import ZERO_ADDRESS
+
+
+def main() -> None:
+    print_header("ABI Address Type Example")
+
+    # Step 1: Create AddressType and inspect properties
+    print_step(1, "AddressType Properties")
+
+    address_type = abi.AddressType()
+
+    print_info(f"Type name: {address_type}")
+    print_info(f"Byte length: {address_type.byte_len()} bytes")
+    print_info(f"Is dynamic: {address_type.is_dynamic()}")
+
+    # Step 2: Encode a base32 address string to bytes
+    print_step(2, "Encode Address String (Base32) to Bytes")
+
+    # Example address - the zero address
+    zero_address_string = ZERO_ADDRESS
+    print_info(f"Zero address string: {zero_address_string}")
+    print_info(f"Address string length: {len(zero_address_string)} characters")
+
+    zero_encoded = address_type.encode(zero_address_string)
+    print_info(f"Encoded bytes: {format_hex(zero_encoded)}")
+    print_info(f"Encoded length: {len(zero_encoded)} bytes (exactly 32, no length prefix)")
+
+    # Verify the zero address encodes to all zeros
+    all_zeros = all(byte == 0 for byte in zero_encoded)
+    print_info(f"All bytes are zero: {all_zeros}")
+
+    # Step 3: Encode another address string
+    print_step(3, "Encode a Real Address String")
+
+    # Create a sample address from a known public key (32 bytes of incrementing values)
+    sample_public_key = bytes(range(32))
+
+    # Create Address string from public key
+    sample_address_string = address_from_public_key(sample_public_key)
+
+    print_info(f"Sample address string: {sample_address_string}")
+    print_info(f"Address string length: {len(sample_address_string)} characters")
+
+    sample_encoded = address_type.encode(sample_address_string)
+    print_info(f"Encoded bytes: {format_bytes(sample_encoded, 16)}")
+    print_info(f"Encoded as hex: {format_hex(sample_encoded)}")
+    print_info(f"Encoded length: {len(sample_encoded)} bytes")
+
+    # Step 4: Encode from raw 32-byte public key (bytes)
+    print_step(4, "Encode from Raw 32-Byte Public Key")
+
+    # AddressType can also encode directly from bytes
+    raw_public_key = bytes(
+        [
+            0xAB,
+            0xCD,
+            0xEF,
+            0x01,
+            0x23,
+            0x45,
+            0x67,
+            0x89,
+            0xAB,
+            0xCD,
+            0xEF,
+            0x01,
+            0x23,
+            0x45,
+            0x67,
+            0x89,
+            0xAB,
+            0xCD,
+            0xEF,
+            0x01,
+            0x23,
+            0x45,
+            0x67,
+            0x89,
+            0xAB,
+            0xCD,
+            0xEF,
+            0x01,
+            0x23,
+            0x45,
+            0x67,
+            0x89,
+        ]
+    )
+
+    print_info(f"Raw public key: {format_hex(raw_public_key)}")
+
+    encoded_from_raw = address_type.encode(raw_public_key)
+    print_info(f"Encoded from raw: {format_hex(encoded_from_raw)}")
+
+    # Verify encoding from raw bytes returns the same bytes
+    raw_bytes_match = encoded_from_raw == raw_public_key
+    print_info(f"Raw bytes match encoded: {raw_bytes_match}")
+
+    # Step 5: Decode bytes back to address string
+    print_step(5, "Decode Bytes Back to Address String")
+
+    # Decode the sample encoded bytes back to address string
+    decoded_sample_address = address_type.decode(sample_encoded)
+    print_info(f"Original address: {sample_address_string}")
+    print_info(f"Decoded address:  {decoded_sample_address}")
+    print_info(f"Round-trip verified: {decoded_sample_address == sample_address_string}")
+
+    # Decode zero address
+    decoded_zero_address = address_type.decode(zero_encoded)
+    print_info(f"\nOriginal zero address: {zero_address_string}")
+    print_info(f"Decoded zero address:  {decoded_zero_address}")
+    print_info(f"Round-trip verified: {decoded_zero_address == zero_address_string}")
+
+    # Decode the raw public key
+    decoded_from_raw_address = address_type.decode(encoded_from_raw)
+    print_info(f"\nRaw public key as address: {decoded_from_raw_address}")
+
+    # Step 6: Relationship between Algorand address and public key bytes
+    print_step(6, "Address vs Public Key Relationship")
+
+    print_info("Algorand address format:")
+    print_info("  - Base32 encoded string")
+    print_info("  - 58 characters long")
+    print_info("  - Contains: 32-byte public key + 4-byte checksum")
+
+    print_info("\nABI address encoding:")
+    print_info("  - Just the raw 32-byte public key")
+    print_info("  - No checksum included")
+    print_info("  - No length prefix (unlike ABI string type)")
+    print_info("  - Fixed size, not dynamic")
+
+    # Demonstrate using public_key_from_address directly
+    print_info("\nUsing public_key_from_address:")
+    public_key = public_key_from_address(sample_address_string)
+    print_info(f"  public_key_from_address('{sample_address_string[:20]}...')")
+    print_info(f"  public_key: {format_bytes(public_key, 8)}")
+    print_info(f"  address_from_public_key(): {address_from_public_key(public_key)}")
+
+    # Show that AddressType encoding equals public_key_from_address
+    public_key_matches = public_key == sample_encoded
+    print_info(f"\nABI encoding equals public_key_from_address: {public_key_matches}")
+
+    # Step 7: Encoding bytes directly
+    print_step(7, "Encode Raw Bytes Directly")
+
+    # AddressType can accept raw bytes (32 bytes)
+    address_from_bytes = address_type.encode(raw_public_key)
+
+    print_info(f"Raw public key: {format_hex(raw_public_key)}")
+    print_info(f"Encoded from bytes: {format_hex(address_from_bytes)}")
+
+    bytes_match = address_from_bytes == raw_public_key
+    print_info(f"Encoding matches raw public key: {bytes_match}")
+
+    # Step 8: Summary - all encoding methods produce 32 bytes
+    print_step(8, "Summary - All Encoding Methods")
+
+    print_info("AddressType accepts:")
+    print_info("  1. Address string (base32 format, 58 chars) -> extracts public key")
+    print_info("  2. bytes (32 bytes) -> uses directly")
+
+    print_info("\nAll methods produce exactly 32 bytes (no length prefix):")
+    print_info(f"  From string:  {len(address_type.encode(sample_address_string))} bytes")
+    print_info(f"  From bytes: {len(address_type.encode(raw_public_key))} bytes")
+
+    print_info("\nDecode always returns base32 address string (58 chars)")
+
+    print_success("ABI Address Type example completed successfully!")
+
+
+if __name__ == "__main__":
+    main()
+
+```
+
+---
+
+### Other examples in ABI Encoding
+
+- [ABI Type Parsing](/docs/algokit-utils/python/latest/examples/abi/01-type-parsing/)
+- [ABI Primitive Types](/docs/algokit-utils/python/latest/examples/abi/02-primitive-types/)
+- **ABI Address Type**
+- [ABI String Type](/docs/algokit-utils/python/latest/examples/abi/04-string-type/)
+- [ABI Static Array Type](/docs/algokit-utils/python/latest/examples/abi/05-static-array/)
+- [ABI Dynamic Array Type](/docs/algokit-utils/python/latest/examples/abi/06-dynamic-array/)
+- [ABI Tuple Type](/docs/algokit-utils/python/latest/examples/abi/07-tuple-type/)
+- [ABI Struct Type](/docs/algokit-utils/python/latest/examples/abi/08-struct-type/)
+- [ABI Struct and Tuple Conversion](/docs/algokit-utils/python/latest/examples/abi/09-struct-tuple-conversion/)
+- [ABI Bool Array Packing](/docs/algokit-utils/python/latest/examples/abi/10-bool-packing/)
+- [ABI Method](/docs/algokit-utils/python/latest/examples/abi/11-abi-method/)
+- [AVM Type Encoding](/docs/algokit-utils/python/latest/examples/abi/12-avm-types/)
+- [Type Guards](/docs/algokit-utils/python/latest/examples/abi/13-type-guards/)
+- [ABI Complex Nested Types](/docs/algokit-utils/python/latest/examples/abi/14-complex-nested/)
+- [ARC-56 Storage Helpers](/docs/algokit-utils/python/latest/examples/abi/15-arc56-storage/)

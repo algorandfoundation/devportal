@@ -1,0 +1,332 @@
+---
+title: 'Account Assets'
+description: 'This example demonstrates how to query account asset holdings using the IndexerClient lookup_account_assets() and lookup_account_created_assets() methods.'
+sidebar:
+  order: 3
+---
+
+[← Back to Indexer Client](/docs/algokit-utils/python/latest/examples/indexer-client/)
+
+## Description
+
+This example demonstrates how to query account asset holdings using the IndexerClient lookup_account_assets() and lookup_account_created_assets() methods.
+Prerequisites:
+
+## Prerequisites
+
+- LocalNet running (via `algokit localnet start`)
+
+## Run This Example
+
+From the repository's `examples` directory:
+
+```bash
+cd examples
+uv run python indexer_client/03_account_assets.py
+```
+
+## Code
+
+[View source on GitHub](https://github.com/algorandfoundation/algokit-utils-py/blob/main/examples/indexer_client/03_account_assets.py)
+
+```python title="03_account_assets.py"
+# ruff: noqa: N999, C901, PLR0912, PLR0915, PLR2004
+"""
+Example: Account Assets
+
+This example demonstrates how to query account asset holdings using
+the IndexerClient lookup_account_assets() and lookup_account_created_assets() methods.
+
+Prerequisites:
+- LocalNet running (via `algokit localnet start`)
+"""
+
+from shared import (
+    create_algorand_client,
+    create_indexer_client,
+    print_error,
+    print_header,
+    print_info,
+    print_step,
+    print_success,
+    shorten_address,
+)
+
+from algokit_utils import AssetCreateParams
+
+
+def main() -> None:
+    print_header("Account Assets Example")
+
+    # Create clients
+    indexer = create_indexer_client()
+    algorand = create_algorand_client()
+
+    # =========================================================================
+    # Step 1: Get a funded account from LocalNet
+    # =========================================================================
+    print_step(1, "Getting a funded account from LocalNet")
+
+    try:
+        dispenser = algorand.account.localnet_dispenser()
+        creator_address = dispenser.addr
+        print_success(f"Using dispenser account: {shorten_address(creator_address)}")
+    except Exception as e:
+        print_error(f"Failed to get dispenser account: {e}")
+        print_info("")
+        print_info("Make sure LocalNet is running: algokit localnet start")
+        print_info("If issues persist, try: algokit localnet reset")
+        return
+
+    # =========================================================================
+    # Step 2: Create test assets using AlgorandClient
+    # =========================================================================
+    print_step(2, "Creating test assets for demonstration")
+
+    try:
+        # Create first test asset
+        print_info("Creating first test asset: TestCoin (TC)...")
+        result1 = algorand.send.asset_create(
+            AssetCreateParams(
+                sender=creator_address,
+                total=1_000_000_000,
+                decimals=6,
+                asset_name="TestCoin",
+                unit_name="TC",
+                url="https://example.com/testcoin",
+                default_frozen=False,
+            )
+        )
+        asset_id_1 = result1.asset_id
+        print_success(f"Created TestCoin with Asset ID: {asset_id_1}")
+
+        # Create second test asset
+        print_info("Creating second test asset: DemoCoin (DEMO)...")
+        result2 = algorand.send.asset_create(
+            AssetCreateParams(
+                sender=creator_address,
+                total=500_000,
+                decimals=3,
+                asset_name="DemoCoin",
+                unit_name="DEMO",
+                url="https://example.com/democoin",
+                default_frozen=False,
+            )
+        )
+        asset_id_2 = result2.asset_id
+        print_success(f"Created DemoCoin with Asset ID: {asset_id_2}")
+        print_info("")
+    except Exception as e:
+        print_error(f"Failed to create test assets: {e}")
+        print_info("")
+        print_info("If LocalNet errors occur, try: algokit localnet reset")
+        return
+
+    # =========================================================================
+    # Step 3: Lookup account assets with lookup_account_assets()
+    # =========================================================================
+    print_step(3, "Looking up account asset holdings with lookup_account_assets()")
+
+    try:
+        # lookup_account_assets() returns all assets held by an account
+        assets_result = indexer.lookup_account_assets(creator_address)
+
+        print_success(f"Found {len(assets_result.assets or [])} asset holding(s) for account")
+        print_info("")
+
+        if len(assets_result.assets or []) > 0:
+            print_info("Asset holdings:")
+            for holding in assets_result.assets or []:
+                print_info(f"  Asset ID: {holding.asset_id}")
+                amount_formatted = f"{holding.amount:,}"
+                print_info(f"    - amount: {amount_formatted}")
+                print_info(f"    - is_frozen: {holding.is_frozen}")
+                if holding.opted_in_at_round is not None:
+                    print_info(f"    - opted_in_at_round: {holding.opted_in_at_round}")
+                print_info("")
+
+        print_info(f"Query performed at round: {assets_result.current_round}")
+    except Exception as e:
+        print_error(f"lookup_account_assets failed: {e}")
+
+    # =========================================================================
+    # Step 4: Lookup account created assets with lookup_account_created_assets()
+    # =========================================================================
+    print_step(4, "Looking up created assets with lookup_account_created_assets()")
+
+    try:
+        # lookup_account_created_assets() returns assets created by an account
+        created_result = indexer.lookup_account_created_assets(creator_address)
+
+        print_success(f"Found {len(created_result.assets or [])} asset(s) created by account")
+        print_info("")
+
+        if len(created_result.assets or []) > 0:
+            print_info("Created assets:")
+            for asset in created_result.assets or []:
+                print_info(f"  Asset ID: {asset.id_}")
+                if asset.params:
+                    print_info(f"    - creator: {shorten_address(asset.params.creator)}")
+                    total_formatted = f"{asset.params.total:,}"
+                    print_info(f"    - total: {total_formatted}")
+                    print_info(f"    - decimals: {asset.params.decimals}")
+                    asset_name = asset.params.name if asset.params.name else "(not set)"
+                    print_info(f"    - name: {asset_name}")
+                    unit_name = asset.params.unit_name if asset.params.unit_name else "(not set)"
+                    print_info(f"    - unit_name: {unit_name}")
+                if asset.created_at_round is not None:
+                    print_info(f"    - created_at_round: {asset.created_at_round}")
+                print_info("")
+
+        print_info(f"Query performed at round: {created_result.current_round}")
+    except Exception as e:
+        print_error(f"lookup_account_created_assets failed: {e}")
+
+    # =========================================================================
+    # Step 5: Demonstrate pagination with limit parameter
+    # =========================================================================
+    print_step(5, "Demonstrating pagination with limit parameter")
+
+    try:
+        # First query: get only 1 asset holding
+        print_info("Querying with limit=1...")
+        page1 = indexer.lookup_account_assets(creator_address, limit=1)
+
+        print_info(f"Page 1: Retrieved {len(page1.assets or [])} asset(s)")
+        if len(page1.assets or []) > 0:
+            print_info(f"  - Asset ID: {page1.assets[0].asset_id}")
+
+        # Check if there are more results
+        if page1.next_token:
+            next_token_preview = str(page1.next_token)[:20]
+            print_info(f"  - Next token available: {next_token_preview}...")
+            print_info("")
+
+            # Second query: use the next token to get more results
+            print_info("Querying next page with next parameter...")
+            page2 = indexer.lookup_account_assets(
+                creator_address,
+                limit=1,
+                next_=page1.next_token,
+            )
+
+            print_info(f"Page 2: Retrieved {len(page2.assets or [])} asset(s)")
+            if len(page2.assets or []) > 0:
+                print_info(f"  - Asset ID: {page2.assets[0].asset_id}")
+
+            if page2.next_token:
+                print_info("  - More results available (next_token present)")
+            else:
+                print_info("  - No more results (no next_token)")
+        else:
+            print_info("  - No pagination needed (all results fit in one page)")
+    except Exception as e:
+        print_error(f"Pagination demo failed: {e}")
+
+    # =========================================================================
+    # Step 6: Query specific asset holding with asset_id filter
+    # =========================================================================
+    print_step(6, "Querying specific asset holding with asset_id filter")
+
+    try:
+        # You can filter lookup_account_assets by a specific asset_id
+        print_info(f"Querying holdings for Asset ID {asset_id_1} only...")
+        specific_result = indexer.lookup_account_assets(
+            creator_address,
+            asset_id=asset_id_1,
+        )
+
+        if len(specific_result.assets or []) > 0:
+            holding = specific_result.assets[0]
+            print_success(f"Found holding for Asset ID {asset_id_1}")
+            amount_formatted = f"{holding.amount:,}"
+            print_info(f"  - amount: {amount_formatted}")
+            print_info(f"  - is_frozen: {holding.is_frozen}")
+        else:
+            print_info(f"No holding found for Asset ID {asset_id_1}")
+    except Exception as e:
+        print_error(f"Specific asset query failed: {e}")
+
+    # =========================================================================
+    # Step 7: Query specific created asset with asset_id filter
+    # =========================================================================
+    print_step(7, "Querying specific created asset with asset_id filter")
+
+    try:
+        # You can also filter lookup_account_created_assets by a specific asset_id
+        print_info(f"Querying created asset with ID {asset_id_2} only...")
+        specific_created = indexer.lookup_account_created_assets(
+            creator_address,
+            asset_id=asset_id_2,
+        )
+
+        if len(specific_created.assets or []) > 0:
+            asset = specific_created.assets[0]
+            print_success(f"Found created asset with ID {asset_id_2}")
+            if asset.params:
+                asset_name = asset.params.name if asset.params.name else "(not set)"
+                print_info(f"  - name: {asset_name}")
+                unit_name = asset.params.unit_name if asset.params.unit_name else "(not set)"
+                print_info(f"  - unit_name: {unit_name}")
+                total_formatted = f"{asset.params.total:,}"
+                print_info(f"  - total: {total_formatted}")
+                print_info(f"  - decimals: {asset.params.decimals}")
+        else:
+            print_info(f"No created asset found with ID {asset_id_2}")
+    except Exception as e:
+        print_error(f"Specific created asset query failed: {e}")
+
+    # =========================================================================
+    # Summary
+    # =========================================================================
+    print_header("Summary")
+    print_info("This example demonstrated:")
+    print_info("  1. Creating test assets using AlgorandClient.send.asset_create()")
+    print_info("  2. lookup_account_assets(address) - Get all assets held by an account")
+    print_info("  3. lookup_account_created_assets(address) - Get assets created by an account")
+    print_info("  4. Pagination using limit and next parameters")
+    print_info("  5. Filtering by specific asset_id")
+    print_info("")
+    print_info("Key AssetHolding fields (from lookup_account_assets):")
+    print_info("  - asset_id: The asset identifier (int)")
+    print_info("  - amount: Number of units held (int)")
+    print_info("  - is_frozen: Whether the holding is frozen (bool)")
+    print_info("  - opted_in_at_round: Round when account opted into asset (optional int)")
+    print_info("")
+    print_info("Key Asset params fields (from lookup_account_created_assets):")
+    print_info("  - creator: Address that created the asset")
+    print_info("  - total: Total supply in base units (int)")
+    print_info("  - decimals: Number of decimal places (0-19)")
+    print_info("  - name: Full asset name (optional)")
+    print_info("  - unit_name: Short unit name like 'ALGO' (optional)")
+    print_info("")
+    print_info("Pagination parameters:")
+    print_info("  - limit: Maximum number of results per page")
+    print_info("  - next: Token from previous response to get next page")
+
+
+if __name__ == "__main__":
+    main()
+
+```
+
+---
+
+### Other examples in Indexer Client
+
+- [Indexer Health Check](/docs/algokit-utils/python/latest/examples/indexer-client/01-health-check/)
+- [Account Lookup](/docs/algokit-utils/python/latest/examples/indexer-client/02-account-lookup/)
+- **Account Assets**
+- [Account Applications](/docs/algokit-utils/python/latest/examples/indexer-client/04-account-applications/)
+- [Account Transactions](/docs/algokit-utils/python/latest/examples/indexer-client/05-account-transactions/)
+- [Transaction Lookup](/docs/algokit-utils/python/latest/examples/indexer-client/06-transaction-lookup/)
+- [Transaction Search](/docs/algokit-utils/python/latest/examples/indexer-client/07-transaction-search/)
+- [Asset Lookup](/docs/algokit-utils/python/latest/examples/indexer-client/08-asset-lookup/)
+- [Asset Balances](/docs/algokit-utils/python/latest/examples/indexer-client/09-asset-balances/)
+- [Asset Transactions](/docs/algokit-utils/python/latest/examples/indexer-client/10-asset-transactions/)
+- [Application Lookup](/docs/algokit-utils/python/latest/examples/indexer-client/11-application-lookup/)
+- [Application Logs Lookup](/docs/algokit-utils/python/latest/examples/indexer-client/12-application-logs/)
+- [Application Boxes Lookup](/docs/algokit-utils/python/latest/examples/indexer-client/13-application-boxes/)
+- [Block Lookup](/docs/algokit-utils/python/latest/examples/indexer-client/14-block-lookup/)
+- [Block Headers Search](/docs/algokit-utils/python/latest/examples/indexer-client/15-block-headers/)
+- [Pagination](/docs/algokit-utils/python/latest/examples/indexer-client/16-pagination/)

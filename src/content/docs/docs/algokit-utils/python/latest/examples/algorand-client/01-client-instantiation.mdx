@@ -1,0 +1,358 @@
+---
+title: 'Client Instantiation'
+description: 'This example demonstrates the different ways to create an AlgorandClient instance:'
+sidebar:
+  order: 1
+---
+
+[← Back to Algorand Client](/docs/algokit-utils/python/latest/examples/algorand-client/)
+
+## Description
+
+This example demonstrates the different ways to create an AlgorandClient instance:
+
+- AlgorandClient.default_localnet() for local development
+- AlgorandClient.testnet() for TestNet connection
+- AlgorandClient.mainnet() for MainNet connection
+- AlgorandClient.from_environment() reading from environment variables
+- AlgorandClient.from_config() with explicit AlgoConfig object
+- AlgorandClient.from_clients() with pre-configured algod/indexer/kmd clients
+- Verifying connection by calling algod.status()
+
+## Prerequisites
+
+LocalNet required to verify connection works
+
+## Run This Example
+
+From the repository's `examples` directory:
+
+```bash
+cd examples
+uv run python algorand_client/01_client_instantiation.py
+```
+
+## Code
+
+[View source on GitHub](https://github.com/algorandfoundation/algokit-utils-py/blob/main/examples/algorand_client/01_client_instantiation.py)
+
+```python title="01_client_instantiation.py"
+# ruff: noqa: N999, C901, PLR0912, PLR0915, PLR2004
+"""
+Example: Client Instantiation
+
+This example demonstrates the different ways to create an AlgorandClient instance:
+- AlgorandClient.default_localnet() for local development
+- AlgorandClient.testnet() for TestNet connection
+- AlgorandClient.mainnet() for MainNet connection
+- AlgorandClient.from_environment() reading from environment variables
+- AlgorandClient.from_config() with explicit AlgoConfig object
+- AlgorandClient.from_clients() with pre-configured algod/indexer/kmd clients
+- Verifying connection by calling algod.status()
+
+LocalNet required to verify connection works
+"""
+
+import os
+
+from shared import (
+    print_error,
+    print_header,
+    print_info,
+    print_step,
+    print_success,
+)
+from shared.constants import (
+    ALGOD_PORT,
+    ALGOD_SERVER,
+    ALGOD_TOKEN,
+    INDEXER_PORT,
+    INDEXER_SERVER,
+    INDEXER_TOKEN,
+    KMD_PORT,
+    KMD_SERVER,
+    KMD_TOKEN,
+)
+
+from algokit_algod_client import AlgodClient
+from algokit_algod_client.config import ClientConfig as AlgodConfig
+from algokit_indexer_client import IndexerClient
+from algokit_indexer_client.config import ClientConfig as IndexerConfig
+from algokit_kmd_client import KmdClient
+from algokit_kmd_client.config import ClientConfig as KmdConfig
+from algokit_utils import AlgorandClient
+from algokit_utils.models.network import AlgoClientNetworkConfig
+
+
+def main() -> None:
+    print_header("AlgorandClient Instantiation Example")
+
+    # Step 1: AlgorandClient.default_localnet()
+    print_step(1, "Create client using default_localnet()")
+    print_info("AlgorandClient.default_localnet() creates a client pointing at default LocalNet ports")
+    print_info("  - Algod: http://localhost:4001")
+    print_info("  - Indexer: http://localhost:8980")
+    print_info("  - KMD: http://localhost:4002")
+
+    localnet_client = AlgorandClient.default_localnet()
+    print_success("Created AlgorandClient for LocalNet")
+
+    # Verify connection works
+    try:
+        status = localnet_client.client.algod.status()
+        last_round = status.last_round
+        print_success(f"Connected to LocalNet - Last round: {last_round}")
+    except Exception as e:
+        print_error(f"Failed to connect to LocalNet: {e}")
+        print_info("Make sure LocalNet is running (e.g., algokit localnet start)")
+        return
+
+    # Step 2: AlgorandClient.testnet()
+    print_step(2, "Create client using testnet()")
+    print_info("AlgorandClient.testnet() creates a client pointing at TestNet using AlgoNode")
+    print_info("  - Algod: https://testnet-api.algonode.cloud")
+    print_info("  - Indexer: https://testnet-idx.algonode.cloud")
+    print_info("  - KMD: not available on public networks")
+
+    testnet_client = AlgorandClient.testnet()
+    print_success("Created AlgorandClient for TestNet")
+
+    # Verify TestNet connection
+    try:
+        testnet_status = testnet_client.client.algod.status()
+        testnet_last_round = testnet_status.last_round
+        print_success(f"Connected to TestNet - Last round: {testnet_last_round}")
+    except Exception as e:
+        print_error(f"Failed to connect to TestNet: {e}")
+
+    # Step 3: AlgorandClient.mainnet()
+    print_step(3, "Create client using mainnet()")
+    print_info("AlgorandClient.mainnet() creates a client pointing at MainNet using AlgoNode")
+    print_info("  - Algod: https://mainnet-api.algonode.cloud")
+    print_info("  - Indexer: https://mainnet-idx.algonode.cloud")
+    print_info("  - KMD: not available on public networks")
+
+    mainnet_client = AlgorandClient.mainnet()
+    print_success("Created AlgorandClient for MainNet")
+
+    # Verify MainNet connection
+    try:
+        mainnet_status = mainnet_client.client.algod.status()
+        mainnet_last_round = mainnet_status.last_round
+        print_success(f"Connected to MainNet - Last round: {mainnet_last_round}")
+    except Exception as e:
+        print_error(f"Failed to connect to MainNet: {e}")
+
+    # Step 4: AlgorandClient.from_environment()
+    print_step(4, "Create client using from_environment()")
+    print_info("AlgorandClient.from_environment() reads configuration from environment variables:")
+    print_info("  - ALGOD_SERVER, ALGOD_PORT, ALGOD_TOKEN (for Algod)")
+    print_info("  - INDEXER_SERVER, INDEXER_PORT, INDEXER_TOKEN (for Indexer)")
+    print_info("  - KMD_PORT (for KMD, uses ALGOD_SERVER as base)")
+    print_info("If environment variables are not set, defaults to LocalNet configuration")
+
+    # Display current environment variable status
+    print_info("")
+    print_info("Current environment variable status:")
+    algod_server_env = os.environ.get("ALGOD_SERVER", "(not set - will use LocalNet default)")
+    print_info(f"  ALGOD_SERVER: {algod_server_env}")
+    algod_port_env = os.environ.get("ALGOD_PORT", "(not set - will use default)")
+    print_info(f"  ALGOD_PORT: {algod_port_env}")
+    algod_token_set = "(set)" if os.environ.get("ALGOD_TOKEN") else "(not set - will use default)"
+    print_info(f"  ALGOD_TOKEN: {algod_token_set}")
+    indexer_server_env = os.environ.get("INDEXER_SERVER", "(not set - will use LocalNet default)")
+    print_info(f"  INDEXER_SERVER: {indexer_server_env}")
+    indexer_port_env = os.environ.get("INDEXER_PORT", "(not set - will use default)")
+    print_info(f"  INDEXER_PORT: {indexer_port_env}")
+    indexer_token_set = "(set)" if os.environ.get("INDEXER_TOKEN") else "(not set - will use default)"
+    print_info(f"  INDEXER_TOKEN: {indexer_token_set}")
+
+    env_client = AlgorandClient.from_environment()
+    print_success("Created AlgorandClient from environment")
+
+    # Verify connection (should work since it falls back to LocalNet)
+    try:
+        env_status = env_client.client.algod.status()
+        env_last_round = env_status.last_round
+        print_success(f"Connected via from_environment() - Last round: {env_last_round}")
+    except Exception as e:
+        print_error(f"Failed to connect: {e}")
+
+    # Step 5: AlgorandClient.from_config()
+    print_step(5, "Create client using from_config()")
+    print_info("AlgorandClient.from_config() accepts an explicit AlgoConfig object")
+    print_info("This gives you full control over the client configuration")
+
+    algod_config = AlgoClientNetworkConfig(
+        server=ALGOD_SERVER,
+        port=ALGOD_PORT,
+        token=ALGOD_TOKEN,
+    )
+    indexer_config = AlgoClientNetworkConfig(
+        server=INDEXER_SERVER,
+        port=INDEXER_PORT,
+        token=INDEXER_TOKEN,
+    )
+    kmd_config = AlgoClientNetworkConfig(
+        server=KMD_SERVER,
+        port=KMD_PORT,
+        token=KMD_TOKEN,
+    )
+
+    print_info("")
+    print_info("Using custom configuration:")
+    print_info(f"  algodConfig: {{ server: '{algod_config.server}', port: {algod_config.port} }}")
+    print_info(f"  indexerConfig: {{ server: '{indexer_config.server}', port: {indexer_config.port} }}")
+    print_info(f"  kmdConfig: {{ server: '{kmd_config.server}', port: {kmd_config.port} }}")
+
+    config_client = AlgorandClient.from_config(
+        algod_config=algod_config,
+        indexer_config=indexer_config,
+        kmd_config=kmd_config,
+    )
+    print_success("Created AlgorandClient from config")
+
+    # Verify connection
+    try:
+        config_status = config_client.client.algod.status()
+        config_last_round = config_status.last_round
+        print_success(f"Connected via from_config() - Last round: {config_last_round}")
+    except Exception as e:
+        print_error(f"Failed to connect: {e}")
+
+    # Step 6: AlgorandClient.from_clients()
+    print_step(6, "Create client using from_clients()")
+    print_info("AlgorandClient.from_clients() accepts pre-configured client instances")
+    print_info("Useful when you need custom client configuration or already have clients")
+
+    # Create individual clients
+    algod_client = AlgodClient(
+        AlgodConfig(
+            base_url=f"{ALGOD_SERVER}:{ALGOD_PORT}",
+            token=ALGOD_TOKEN,
+        )
+    )
+
+    indexer_client = IndexerClient(
+        IndexerConfig(
+            base_url=f"{INDEXER_SERVER}:{INDEXER_PORT}",
+            token=INDEXER_TOKEN,
+        )
+    )
+
+    kmd_client = KmdClient(
+        KmdConfig(
+            base_url=f"{KMD_SERVER}:{KMD_PORT}",
+            token=KMD_TOKEN,
+        )
+    )
+
+    print_info("")
+    print_info("Created individual clients:")
+    print_info("  - AlgodClient")
+    print_info("  - IndexerClient")
+    print_info("  - KmdClient")
+
+    clients_client = AlgorandClient.from_clients(
+        algod=algod_client,
+        indexer=indexer_client,
+        kmd=kmd_client,
+    )
+    print_success("Created AlgorandClient from pre-configured clients")
+
+    # Verify connection
+    try:
+        clients_status = clients_client.client.algod.status()
+        clients_last_round = clients_status.last_round
+        print_success(f"Connected via from_clients() - Last round: {clients_last_round}")
+    except Exception as e:
+        print_error(f"Failed to connect: {e}")
+
+    # Step 7: Verify connection with detailed status
+    print_step(7, "Verify Connection - Detailed Status")
+    print_info("Using algod.status() to verify the connection and get network details")
+
+    try:
+        detailed_status = localnet_client.client.algod.status()
+        print_info("")
+        print_info("Network Status:")
+        print_info(f"  Last round: {detailed_status.last_round}")
+        print_info(f"  Last version: {detailed_status.last_version}")
+        print_info(f"  Next version: {detailed_status.next_version}")
+        print_info(f"  Next version round: {detailed_status.next_version_round}")
+        print_info(f"  Next version supported: {detailed_status.next_version_supported}")
+        print_info(f"  Time since last round (ns): {detailed_status.time_since_last_round}")
+        print_info(f"  Catchup time (ns): {detailed_status.catchup_time}")
+        print_info(f"  Stopped at unsupported round: {detailed_status.stopped_at_unsupported_round}")
+        print_success("Connection verified successfully!")
+    except Exception as e:
+        print_error(f"Failed to get detailed status: {e}")
+
+    # Step 8: Error handling example
+    print_step(8, "Error Handling Example")
+    print_info("Demonstrating graceful error handling with an invalid configuration")
+
+    invalid_config = AlgoClientNetworkConfig(
+        server="http://invalid-server",
+        port=9999,
+        token="invalid-token",
+    )
+
+    invalid_client = AlgorandClient.from_config(algod_config=invalid_config)
+
+    try:
+        invalid_client.client.algod.status()
+        print_info("Unexpectedly connected to invalid server")
+    except Exception as e:
+        print_success("Caught expected error when connecting to invalid server")
+        error_type = type(e).__name__
+        error_msg = str(e)
+        print_info(f"Error type: {error_type}")
+        # Shorten error message if too long
+        if len(error_msg) > 100:
+            error_msg = error_msg[:100] + "..."
+        print_info(f"Error message: {error_msg}")
+
+    # Summary
+    print_step(9, "Summary")
+    print_info("AlgorandClient factory methods:")
+    print_info("  1. default_localnet() - Quick setup for local development")
+    print_info("  2. testnet() - Connect to TestNet via AlgoNode")
+    print_info("  3. mainnet() - Connect to MainNet via AlgoNode")
+    print_info("  4. from_environment() - Read config from environment variables")
+    print_info("  5. from_config() - Use explicit AlgoConfig object")
+    print_info("  6. from_clients() - Use pre-configured client instances")
+    print_info("")
+    print_info("Best practices:")
+    print_info("  - Use default_localnet() for development and testing")
+    print_info("  - Use from_environment() for deployment flexibility")
+    print_info("  - Always handle connection errors gracefully")
+    print_info("  - Verify connection with algod.status() before proceeding")
+
+    print_success("AlgorandClient Instantiation example completed!")
+
+
+if __name__ == "__main__":
+    main()
+
+```
+
+---
+
+### Other examples in Algorand Client
+
+- **Client Instantiation**
+- [AlgoAmount Utility](/docs/algokit-utils/python/latest/examples/algorand-client/02-algo-amount/)
+- [Signer Configuration](/docs/algokit-utils/python/latest/examples/algorand-client/03-signer-config/)
+- [Suggested Params Configuration](/docs/algokit-utils/python/latest/examples/algorand-client/04-params-config/)
+- [Account Manager](/docs/algokit-utils/python/latest/examples/algorand-client/05-account-manager/)
+- [Send Payment](/docs/algokit-utils/python/latest/examples/algorand-client/06-send-payment/)
+- [Send Asset Operations](/docs/algokit-utils/python/latest/examples/algorand-client/07-send-asset-ops/)
+- [Send Application Operations](/docs/algokit-utils/python/latest/examples/algorand-client/08-send-app-ops/)
+- [Create Transaction (Unsigned Transactions)](/docs/algokit-utils/python/latest/examples/algorand-client/09-create-transaction/)
+- [Transaction Composer (Atomic Transaction Groups)](/docs/algokit-utils/python/latest/examples/algorand-client/10-transaction-composer/)
+- [Asset Manager](/docs/algokit-utils/python/latest/examples/algorand-client/11-asset-manager/)
+- [App Manager](/docs/algokit-utils/python/latest/examples/algorand-client/12-app-manager/)
+- [App Deployer](/docs/algokit-utils/python/latest/examples/algorand-client/13-app-deployer/)
+- [Client Manager](/docs/algokit-utils/python/latest/examples/algorand-client/14-client-manager/)
+- [Error Transformers](/docs/algokit-utils/python/latest/examples/algorand-client/15-error-transformers/)

@@ -1,0 +1,244 @@
+---
+title: 'Payment with Close'
+description: 'This example demonstrates how to close an account by transferring all remaining ALGO to another account using the close_remainder_to field in PaymentTransactionFields.'
+sidebar:
+  order: 2
+---
+
+[← Back to Transactions](/docs/algokit-utils/python/latest/examples/transact/)
+
+## Description
+
+This example demonstrates how to close an account by transferring all remaining ALGO to another account using the close_remainder_to field in PaymentTransactionFields.
+Key concepts:
+
+- close_remainder_to: Specifies an account to receive all remaining ALGO after the transaction
+- When an account is closed, its balance becomes 0
+- The close-to account receives: (original balance - sent amount - fee)
+  Prerequisites:
+
+## Prerequisites
+
+- LocalNet running (via `algokit localnet start`)
+
+## Run This Example
+
+From the repository's `examples` directory:
+
+```bash
+cd examples
+uv run python transact/02_payment_close.py
+```
+
+## Code
+
+[View source on GitHub](https://github.com/algorandfoundation/algokit-utils-py/blob/main/examples/transact/02_payment_close.py)
+
+```python title="02_payment_close.py"
+# ruff: noqa: N999, C901, PLR0912, PLR0915, PLR2004
+"""
+Example: Payment with Close
+
+This example demonstrates how to close an account by transferring all remaining
+ALGO to another account using the close_remainder_to field in PaymentTransactionFields.
+
+Key concepts:
+- close_remainder_to: Specifies an account to receive all remaining ALGO after the transaction
+- When an account is closed, its balance becomes 0
+- The close-to account receives: (original balance - sent amount - fee)
+
+Prerequisites:
+- LocalNet running (via `algokit localnet start`)
+"""
+
+from shared import (
+    create_algod_client,
+    format_algo,
+    print_error,
+    print_header,
+    print_info,
+    print_step,
+    print_success,
+    shorten_address,
+    wait_for_confirmation,
+)
+
+from algokit_transact import PaymentTransactionFields, Transaction, TransactionType, assign_fee
+from algokit_utils import AlgorandClient
+
+
+def main() -> None:
+    print_header("Payment with Close Example")
+
+    # Step 1: Initialize clients
+    print_step(1, "Initialize Algod Client")
+    algod = create_algod_client()
+    algorand = AlgorandClient.default_localnet()
+
+    try:
+        algod.status()
+        print_info("Connected to LocalNet Algod")
+    except Exception as e:
+        print_error(f"Failed to connect to LocalNet: {e}")
+        print_info("Make sure LocalNet is running (e.g., algokit localnet start)")
+        return
+
+    # Step 2: Get a funded account from KMD (funding source)
+    print_step(2, "Get Funded Account from KMD")
+    funding_account = algorand.account.localnet_dispenser()
+    print_info(f"Funding account: {shorten_address(funding_account.addr)}")
+
+    # Step 3: Generate temporary account to be closed
+    print_step(3, "Generate Temporary Account (will be closed)")
+    temp_account = algorand.account.random()
+    print_info(f"Temporary account: {shorten_address(temp_account.addr)}")
+
+    # Step 4: Generate close-to account (receives remaining balance)
+    print_step(4, "Generate Close-To Account (receives remainder)")
+    close_to_account = algorand.account.random()
+    print_info(f"Close-to account: {shorten_address(close_to_account.addr)}")
+
+    # Step 5: Fund the temporary account
+    print_step(5, "Fund Temporary Account")
+    fund_amount = 2_000_000  # 2 ALGO in microALGO (enough to cover min balance + tx amount + fee)
+
+    sp = algod.suggested_params()
+
+    fund_tx_without_fee = Transaction(
+        transaction_type=TransactionType.Payment,
+        sender=funding_account.addr,
+        first_valid=sp.first_valid,
+        last_valid=sp.last_valid,
+        genesis_hash=sp.genesis_hash,
+        genesis_id=sp.genesis_id,
+        payment=PaymentTransactionFields(
+            receiver=temp_account.addr,
+            amount=fund_amount,
+        ),
+    )
+
+    fund_tx = assign_fee(
+        fund_tx_without_fee,
+        fee_per_byte=sp.fee,
+        min_fee=sp.min_fee,
+    )
+
+    signed_fund_txns = funding_account.signer([fund_tx], [0])
+    algod.send_raw_transaction(signed_fund_txns[0])
+    wait_for_confirmation(algod, fund_tx.tx_id())
+
+    temp_balance_after_fund_info = algorand.account.get_information(temp_account.addr)
+    temp_balance_after_fund = temp_balance_after_fund_info.amount.micro_algo
+    print_info(f"Funded temporary account with: {format_algo(fund_amount)}")
+    print_info(f"Temporary account balance: {format_algo(temp_balance_after_fund)}")
+
+    # Step 6: Record initial close-to account balance
+    print_step(6, "Check Initial Close-To Account Balance")
+    close_to_balance_before_info = algorand.account.get_information(close_to_account.addr)
+    close_to_balance_before = close_to_balance_before_info.amount.micro_algo
+    print_info(f"Close-to account initial balance: {format_algo(close_to_balance_before)}")
+
+    # Step 7: Create payment transaction with close_remainder_to
+    print_step(7, "Create Payment Transaction with close_remainder_to")
+    sp = algod.suggested_params()
+    payment_amount = 100_000  # 0.1 ALGO sent to funding account (can be 0)
+
+    # The key field: close_remainder_to specifies where remaining balance goes
+    close_tx_without_fee = Transaction(
+        transaction_type=TransactionType.Payment,
+        sender=temp_account.addr,
+        first_valid=sp.first_valid,
+        last_valid=sp.last_valid,
+        genesis_hash=sp.genesis_hash,
+        genesis_id=sp.genesis_id,
+        payment=PaymentTransactionFields(
+            receiver=funding_account.addr,  # Send a small amount to funding account
+            amount=payment_amount,
+            close_remainder_to=close_to_account.addr,  # All remaining balance goes here
+        ),
+    )
+
+    print_info(f"Payment amount: {format_algo(payment_amount)}")
+    print_info(f"close_remainder_to: {shorten_address(close_to_account.addr)}")
+
+    # Step 8: Assign fee and sign the transaction
+    print_step(8, "Assign Fee and Sign Transaction")
+    close_tx = assign_fee(
+        close_tx_without_fee,
+        fee_per_byte=sp.fee,
+        min_fee=sp.min_fee,
+    )
+    tx_fee = close_tx.fee or 0
+    print_info(f"Transaction fee: {tx_fee} microALGO")
+
+    # Calculate expected remainder before signing
+    expected_remainder = temp_balance_after_fund - payment_amount - tx_fee
+    print_info(f"Expected remainder to close-to account: {format_algo(expected_remainder)}")
+
+    # Sign using the temp account's signer
+    signed_close_txns = temp_account.signer([close_tx], [0])
+    tx_id = close_tx.tx_id()
+    print_info(f"Transaction ID: {tx_id}")
+
+    # Step 9: Submit and confirm the close transaction
+    print_step(9, "Submit Close Transaction")
+    algod.send_raw_transaction(signed_close_txns[0])
+    print_info("Transaction submitted to network")
+
+    pending_info = wait_for_confirmation(algod, tx_id)
+    confirmed_round = pending_info.confirmed_round
+    print_info(f"Transaction confirmed in round: {confirmed_round}")
+
+    # Step 10: Verify closed account has 0 balance
+    print_step(10, "Verify Closed Account Balance")
+    temp_balance_after_close_info = algorand.account.get_information(temp_account.addr)
+    temp_balance_after_close = temp_balance_after_close_info.amount.micro_algo
+    print_info(f"Temporary account balance after close: {format_algo(temp_balance_after_close)}")
+
+    if temp_balance_after_close == 0:
+        print_success("Temporary account successfully closed (balance is 0)")
+    else:
+        raise ValueError(f"Expected closed account to have 0 balance, but got {temp_balance_after_close}")
+
+    # Step 11: Verify close-to account received the remainder
+    print_step(11, "Verify Close-To Account Received Remainder")
+    close_to_balance_after_info = algorand.account.get_information(close_to_account.addr)
+    close_to_balance_after = close_to_balance_after_info.amount.micro_algo
+    print_info(f"Close-to account balance after: {format_algo(close_to_balance_after)}")
+
+    actual_remainder = close_to_balance_after - close_to_balance_before
+    print_info(f"Actual remainder received: {format_algo(actual_remainder)}")
+    print_info(f"Expected remainder: {format_algo(expected_remainder)}")
+
+    # Verify the close-to account received the expected remainder
+    if actual_remainder == expected_remainder:
+        print_success(f"Close-to account received correct remainder of {format_algo(expected_remainder)}")
+    else:
+        raise ValueError(f"Expected remainder {expected_remainder}, but got {actual_remainder}")
+
+    print_success("Payment with close example completed successfully!")
+
+
+if __name__ == "__main__":
+    main()
+
+```
+
+---
+
+### Other examples in Transactions
+
+- [Payment Transaction](/docs/algokit-utils/python/latest/examples/transact/01-payment-transaction/)
+- **Payment with Close**
+- [Asset Create](/docs/algokit-utils/python/latest/examples/transact/03-asset-create/)
+- [Asset Transfer](/docs/algokit-utils/python/latest/examples/transact/04-asset-transfer/)
+- [Asset Freeze](/docs/algokit-utils/python/latest/examples/transact/05-asset-freeze/)
+- [Asset Clawback](/docs/algokit-utils/python/latest/examples/transact/06-asset-clawback/)
+- [Atomic Transaction Group](/docs/algokit-utils/python/latest/examples/transact/07-atomic-group/)
+- [Atomic Swap](/docs/algokit-utils/python/latest/examples/transact/08-atomic-swap/)
+- [Single Signature](/docs/algokit-utils/python/latest/examples/transact/09-single-sig/)
+- [Multisig](/docs/algokit-utils/python/latest/examples/transact/10-multisig/)
+- [Logic Signature](/docs/algokit-utils/python/latest/examples/transact/11-logic-sig/)
+- [Fee Calculation](/docs/algokit-utils/python/latest/examples/transact/12-fee-calculation/)
+- [Encoding/Decoding](/docs/algokit-utils/python/latest/examples/transact/13-encoding-decoding/)
+- [Application Call](/docs/algokit-utils/python/latest/examples/transact/14-app-call/)

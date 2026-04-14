@@ -1,0 +1,375 @@
+---
+title: 'ABI Encoding'
+description: 'ABI type parsing, encoding, and decoding following the ARC-4 specification.'
+sidebar:
+  label: 'ABI Encoding'
+  order: 0
+---
+
+[← Back to Examples Overview](/docs/algokit-utils/python/latest/examples/)
+
+ABI type parsing, encoding, and decoding following the ARC-4 specification.
+
+## Examples (15)
+
+<table>
+  <thead>
+    <tr>
+      <th>Example</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <a href='01-type-parsing/'>ABI Type Parsing</a>
+      </td>
+      <td>
+        <p>
+          This example demonstrates how to parse ABI type strings into type objects using
+          ABIType.from_string(). It shows parsing of:
+        </p>
+        <ul>
+          <li>Primitive types: uint8, uint64, uint256, bool, byte, address, string</li>
+          <li>Array types: uint64[], byte[32], address[5]</li>
+          <li>Tuple types: (uint64,address), (bool,string,uint256)</li>
+        </ul>
+        <p>And demonstrates type properties and isinstance checks for type category detection.</p>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <a href='02-primitive-types/'>ABI Primitive Types</a>
+      </td>
+      <td>
+        <p>This example demonstrates how to encode and decode primitive ABI types:</p>
+        <ul>
+          <li>UintType: Unsigned integers of various bit sizes (8, 16, 32, 64, 128, 256, 512)</li>
+          <li>BoolType: Boolean values encoded as a single byte</li>
+          <li>ByteType: Single byte values</li>
+        </ul>
+        <p>Shows encode() and decode() methods, hex format display, and round-trip verification.</p>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <a href='03-address-type/'>ABI Address Type</a>
+      </td>
+      <td>
+        <p>
+          This example demonstrates how to encode and decode Algorand addresses using AddressType:
+        </p>
+        <ul>
+          <li>Encoding address strings (base32 format) to 32 bytes</li>
+          <li>Encoding raw 32-byte public key (bytes)</li>
+          <li>Decoding bytes back to address string</li>
+          <li>Verifying address encoding is exactly 32 bytes (no length prefix)</li>
+          <li>Understanding relationship between Algorand address and public key bytes</li>
+        </ul>
+        <p>Algorand addresses are 58 characters in base32 encoding, which includes:</p>
+        <ul>
+          <li>32 bytes of public key</li>
+          <li>4 bytes of checksum (computed from public key)</li>
+        </ul>
+        <p>The ABI encoding is just the raw 32-byte public key without checksum.</p>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <a href='04-string-type/'>ABI String Type</a>
+      </td>
+      <td>
+        <p>This example demonstrates how to encode and decode dynamic strings using StringType:</p>
+        <ul>
+          <li>StringType encodes strings with a 2-byte length prefix followed by UTF-8 content</li>
+          <li>Shows encoding of empty strings, ASCII text, and Unicode characters</li>
+          <li>Demonstrates that strings are dynamic types (variable length)</li>
+          <li>Displays byte breakdown: length prefix vs content bytes</li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <a href='05-static-array/'>ABI Static Array Type</a>
+      </td>
+      <td>
+        <p>
+          This example demonstrates how to encode and decode fixed-length arrays using
+          StaticArrayType:
+        </p>
+        <ul>
+          <li>byte[32]: Fixed 32 bytes, common for hashes and cryptographic data</li>
+          <li>uint64[3]: Fixed array of 3 unsigned 64-bit integers</li>
+          <li>address[2]: Fixed array of 2 Algorand addresses</li>
+        </ul>
+        <p>Key characteristics of static arrays:</p>
+        <ul>
+          <li>Fixed length known at compile time</li>
+          <li>No length prefix in encoding (unlike dynamic arrays)</li>
+          <li>Elements are encoded consecutively</li>
+          <li>Encoded length = elementSize * arrayLength</li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <a href='06-dynamic-array/'>ABI Dynamic Array Type</a>
+      </td>
+      <td>
+        <p>
+          This example demonstrates how to encode and decode variable-length arrays using
+          DynamicArrayType:
+        </p>
+        <ul>
+          <li>uint64[]: Dynamic array of unsigned 64-bit integers</li>
+          <li>string[]: Dynamic array of strings (nested dynamic types)</li>
+          <li>address[]: Dynamic array of Algorand addresses</li>
+        </ul>
+        <p>Key characteristics of dynamic arrays:</p>
+        <ul>
+          <li>Variable length determined at runtime</li>
+          <li>2-byte (uint16) length prefix indicating number of elements</li>
+          <li>For static element types: elements encoded consecutively after length</li>
+          <li>For dynamic element types: head/tail encoding pattern is used</li>
+        </ul>
+        <p>Head/Tail encoding (for arrays containing dynamic elements):</p>
+        <ul>
+          <li>Length prefix: 2 bytes indicating number of elements</li>
+          <li>
+            Head section: Contains offsets (2 bytes each) pointing to where each element starts in
+            tail
+          </li>
+          <li>Tail section: Contains the actual encoded elements</li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <a href='07-tuple-type/'>ABI Tuple Type</a>
+      </td>
+      <td>
+        <p>This example demonstrates how to encode and decode tuples using TupleType:</p>
+        <ul>
+          <li>Tuples with mixed static types: (uint64,bool,address)</li>
+          <li>Tuples with dynamic types: (uint64,string,bool)</li>
+          <li>Nested tuples: ((uint64,bool),string)</li>
+        </ul>
+        <p>Key characteristics of tuple encoding:</p>
+        <ul>
+          <li>Static-only tuples: all elements encoded consecutively, fixed size</li>
+          <li>Tuples with dynamic elements: head/tail encoding pattern</li>
+          <li>Head: static values inline + offsets for dynamic values</li>
+          <li>Tail: actual data for dynamic elements</li>
+          <li>Nested tuples: inner tuples are encoded first, then treated as their component</li>
+        </ul>
+        <p>ARC-4 specification: Tuples are sequences of types enclosed in parentheses.</p>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <a href='08-struct-type/'>ABI Struct Type</a>
+      </td>
+      <td>
+        <p>This example demonstrates how to encode and decode named structs using StructType:</p>
+        <ul>
+          <li>Creating StructType with named fields</li>
+          <li>Encoding struct values as objects with named keys</li>
+          <li>Comparing struct encoding to equivalent tuple encoding</li>
+          <li>Accessing struct field names and types</li>
+          <li>Decoding back to struct values with named fields</li>
+        </ul>
+        <p>Key characteristics of struct encoding:</p>
+        <ul>
+          <li>Structs are named tuples - the encoding is identical to the equivalent tuple</li>
+          <li>Field names provide semantic meaning but don't affect the binary encoding</li>
+          <li>Decoded values are objects with named properties (not arrays like tuples)</li>
+        </ul>
+        <p>ARC-4 specification: Structs are tuples with named fields for improved readability.</p>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <a href='09-struct-tuple-conversion/'>ABI Struct and Tuple Conversion</a>
+      </td>
+      <td>
+        <p>
+          This example demonstrates how to convert between struct values (named) and tuple values
+          (positional):
+        </p>
+        <ul>
+          <li>get_tuple_from_struct(): Convert struct dict to tuple</li>
+          <li>get_struct_from_tuple(): Convert tuple back to struct dict</li>
+          <li>Simple struct &#123; name: 'Alice', age: 30n &#125; &lt;-&gt; tuple ('Alice', 30)</li>
+          <li>Nested structs with complex types</li>
+          <li>Verify that struct and tuple encodings produce identical bytes</li>
+        </ul>
+        <p>
+          Key concept: Structs and tuples have identical binary encoding in ARC-4. The conversion
+          functions allow you to work with the same data in either format:
+        </p>
+        <ul>
+          <li>Struct format: dict with named properties (more readable)</li>
+          <li>Tuple format: tuple with positional elements (matches ABI encoding)</li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <a href='10-bool-packing/'>ABI Bool Array Packing</a>
+      </td>
+      <td>
+        <p>This example demonstrates how bool arrays are packed efficiently in ARC-4:</p>
+        <ul>
+          <li>8 booleans fit in 1 byte (1 bit per boolean)</li>
+          <li>bool[8] encodes to exactly 1 byte</li>
+          <li>bool[16] encodes to 2 bytes</li>
+          <li>Partial byte arrays (e.g., bool[5]) still use full bytes</li>
+        </ul>
+        <p>Key characteristics of bool array packing:</p>
+        <ul>
+          <li>Each bool is stored as a single bit, not a full byte</li>
+          <li>Bools are packed left-to-right starting from the MSB (most significant bit)</li>
+          <li>Array length is rounded up to the next full byte</li>
+          <li>This is much more space-efficient than storing each bool as uint8</li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <a href='11-abi-method/'>ABI Method</a>
+      </td>
+      <td>
+        <p>This example demonstrates how to work with ABI methods:</p>
+        <ul>
+          <li>Parsing method signatures with Method.from_signature()</li>
+          <li>Accessing method name, args, and return type</li>
+          <li>Generating 4-byte method selectors with get_selector()</li>
+          <li>
+            Understanding the relationship: selector = first 4 bytes of SHA-512/256(signature)
+          </li>
+        </ul>
+        <p>
+          ABI method signatures follow the pattern: name(arg1Type,arg2Type,...)returnType Examples:
+          'transfer(address,uint64)uint64', 'hello(string)string'
+        </p>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <a href='12-avm-types/'>AVM Type Encoding</a>
+      </td>
+      <td>
+        <p>This example demonstrates how to work with AVM-specific types:</p>
+        <ul>
+          <li>AVMBytes: Raw byte arrays (no length prefix, unlike ABI string/bytes)</li>
+          <li>AVMString: UTF-8 strings (no length prefix, unlike ABI string)</li>
+          <li>AVMUint64: 64-bit unsigned integers (8 bytes, big-endian)</li>
+        </ul>
+        <p>
+          AVM types represent how data is stored natively on the AVM stack, while ABI types follow
+          the ARC-4 encoding specification with length prefixes.
+        </p>
+        <p>
+          The Python SDK provides the AVMType enum in algokit_abi.arc56 with values: AVMType.BYTES,
+          AVMType.STRING, AVMType.UINT64
+        </p>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <a href='13-type-guards/'>Type Guards</a>
+      </td>
+      <td>
+        <p>
+          This example demonstrates how to check argument and type categories in the ABI system:
+        </p>
+        <ul>
+          <li>
+            TransactionType: Check if type is a transaction type (txn, pay, keyreg, acfg, axfer,
+            afrz, appl)
+          </li>
+          <li>ReferenceType: Check if type is a reference type (account, asset, application)</li>
+          <li>ABIType: Standard ABI types (not transaction or reference)</li>
+          <li>AVMType: AVM-specific types (AVMBytes, AVMString, AVMUint64)</li>
+        </ul>
+        <p>
+          In Python, use isinstance() checks with TransactionType and ReferenceType enums, and the
+          abi.ABIType base class to determine type categories.
+        </p>
+        <p>These checks are essential for:</p>
+        <ul>
+          <li>Method argument handling and routing</li>
+          <li>Type narrowing for safer code</li>
+          <li>Determining how to encode/decode values based on type category</li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <a href='14-complex-nested/'>ABI Complex Nested Types</a>
+      </td>
+      <td>
+        <p>
+          This example demonstrates how to work with deeply nested ABI types combining arrays,
+          tuples, and structs:
+        </p>
+        <ul>
+          <li>Array of tuples: (uint64,string)[]</li>
+          <li>Tuple containing arrays: (uint64[],string[])</li>
+          <li>Nested structs with arrays</li>
+          <li>Deeply nested type: ((uint64,bool)[],string,(address,uint256))[]</li>
+        </ul>
+        <p>Key concepts:</p>
+        <ul>
+          <li>Dynamic types (strings, dynamic arrays) always use head/tail encoding</li>
+          <li>Offsets in head section point to data positions in tail section</li>
+          <li>Nesting depth affects encoding complexity but follows consistent rules</li>
+          <li>Round-trip encoding/decoding preserves all nested values</li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <a href='15-arc56-storage/'>ARC-56 Storage Helpers</a>
+      </td>
+      <td>
+        <p>
+          This example demonstrates how to use ARC-56 storage helpers to inspect contract state key
+          definitions and maps from an ARC-56 contract specification:
+        </p>
+        <p>Storage Key Properties (StorageKey):</p>
+        <ul>
+          <li>key: Base64-encoded key bytes</li>
+          <li>key_type: The type of the key (ABIType or AVMType)</li>
+          <li>value_type: The type of the value (ABIType or AVMType)</li>
+          <li>desc: Optional description</li>
+        </ul>
+        <p>Storage Map Properties (StorageMap):</p>
+        <ul>
+          <li>key_type: The type of keys in the map</li>
+          <li>value_type: The type of values in the map</li>
+          <li>desc: Optional description</li>
+          <li>prefix: Base64-encoded prefix for map keys</li>
+        </ul>
+        <p>In the Python SDK, access storage definitions via:</p>
+        <ul>
+          <li>contract.state.keys.global_state - Global state keys</li>
+          <li>contract.state.keys.local_state - Local state keys</li>
+          <li>contract.state.keys.box - Box storage keys</li>
+          <li>contract.state.maps.global_state - Global state maps</li>
+          <li>contract.state.maps.local_state - Local state maps</li>
+          <li>contract.state.maps.box - Box storage maps</li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+## Quick Start
+
+Run any example from the repository's `examples` directory:
+
+```bash
+cd examples
+uv run python abi/01_type_parsing.py
+```

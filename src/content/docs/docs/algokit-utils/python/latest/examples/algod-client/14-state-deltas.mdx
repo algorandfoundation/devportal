@@ -1,0 +1,468 @@
+---
+title: 'Ledger State Deltas'
+description: 'This example demonstrates how to retrieve ledger state deltas using:'
+sidebar:
+  order: 14
+---
+
+[← Back to Algod Client](/docs/algokit-utils/python/latest/examples/algod-client/)
+
+## Description
+
+This example demonstrates how to retrieve ledger state deltas using:
+
+- ledger_state_delta(round) - Get state changes for a specific round
+- ledger_state_delta_for_transaction_group(tx_id) - Get deltas for a specific transaction group
+- transaction_group_ledger_state_deltas_for_round(round) - Get all transaction group deltas in a round
+  State deltas show what changed in the ledger (accounts, balances, apps, assets) between rounds.
+  Note: These endpoints may require node configuration to enable (EnableDeveloperAPI=true).
+  Prerequisites:
+
+## Prerequisites
+
+- LocalNet running (via `algokit localnet start`)
+
+## Run This Example
+
+From the repository's `examples` directory:
+
+```bash
+cd examples
+uv run python algod_client/14_state_deltas.py
+```
+
+## Code
+
+[View source on GitHub](https://github.com/algorandfoundation/algokit-utils-py/blob/main/examples/algod_client/14_state_deltas.py)
+
+```python title="14_state_deltas.py"
+# ruff: noqa: N999, C901, PLR0912, PLR0915, PLR2004
+"""
+Example: Ledger State Deltas
+
+This example demonstrates how to retrieve ledger state deltas using:
+- ledger_state_delta(round) - Get state changes for a specific round
+- ledger_state_delta_for_transaction_group(tx_id) - Get deltas for a specific transaction group
+- transaction_group_ledger_state_deltas_for_round(round) - Get all transaction group deltas in a round
+
+State deltas show what changed in the ledger (accounts, balances, apps, assets) between rounds.
+
+Note: These endpoints may require node configuration to enable (EnableDeveloperAPI=true).
+
+Prerequisites:
+- LocalNet running (via `algokit localnet start`)
+"""
+
+from shared import (
+    create_algod_client,
+    create_algorand_client,
+    format_micro_algo,
+    print_error,
+    print_header,
+    print_info,
+    print_step,
+    print_success,
+    shorten_address,
+)
+
+from algokit_algod_client.models import (
+    LedgerStateDelta,
+    TransactionGroupLedgerStateDeltasForRound,
+)
+from algokit_utils import AlgoAmount, PaymentParams
+
+
+def get_account_status(status: int) -> str:
+    """Convert an account status number to a string."""
+    if status == 0:
+        return "Offline"
+    if status == 1:
+        return "Online"
+    if status == 2:
+        return "NotParticipating"
+    return f"Unknown ({status})"
+
+
+def display_state_delta(delta: LedgerStateDelta, source: str) -> None:
+    """Display details from a LedgerStateDelta.
+
+    LedgerStateDelta uses attribute access with snake_case names:
+    - delta.block.header.round (block header information)
+    - delta.prev_timestamp (previous round timestamp)
+    - delta.accounts.accounts (list of LedgerBalanceRecord)
+    - delta.totals (LedgerAccountTotals)
+    - delta.kv_mods (dict[bytes, LedgerKvValueDelta] | None)
+    - delta.tx_ids (dict[bytes, LedgerIncludedTransactions] | None)
+    - delta.creatables (dict[int, LedgerModifiedCreatable] | None)
+    """
+    print_info(f"State Delta from {source}:")
+    print_info("")
+
+    # Block information (LedgerStateDelta.block is a Block object)
+    print_info("  Block Information:")
+    print_info(f"    Round: {delta.block.header.round:,}")
+    print_info(f"    Timestamp: {delta.block.header.timestamp}")
+    print_info(f"    Previous timestamp: {delta.prev_timestamp:,}")
+    if delta.block.header.proposer:
+        print_info(f"    Proposer: {shorten_address(str(delta.block.header.proposer))}")
+    print_info("")
+
+    # Account changes (LedgerStateDelta.accounts is LedgerAccountDeltas)
+    print_info("  Account Changes (LedgerAccountDeltas):")
+    accounts = delta.accounts
+
+    accounts_list = accounts.accounts or []
+    if accounts_list:
+        print_info(f"    Modified accounts: {len(accounts_list)}")
+        for record in accounts_list[:5]:  # Show first 5
+            # LedgerBalanceRecord has address, account_data (LedgerAccountData)
+            # LedgerAccountData has account_base_data (LedgerAccountBaseData)
+            base_data = record.account_data.account_base_data
+            print_info(f"      - {shorten_address(str(record.address))}")
+            print_info(f"        Balance: {format_micro_algo(base_data.micro_algos)}")
+            print_info(f"        Status: {get_account_status(base_data.status)}")
+        if len(accounts_list) > 5:
+            print_info(f"      ... and {len(accounts_list) - 5} more")
+    else:
+        print_info("    No account balance changes")
+
+    app_resources = accounts.app_resources or []
+    if app_resources:
+        print_info(f"    App resources modified: {len(app_resources)}")
+        for app in app_resources[:3]:
+            # LedgerAppResourceRecord has app_id, params (LedgerAppParamsDelta)
+            is_deleted = app.params.deleted
+            print_info(f"      - App {app.app_id}: {'DELETED' if is_deleted else 'MODIFIED'}")
+
+    asset_resources = accounts.asset_resources or []
+    if asset_resources:
+        print_info(f"    Asset resources modified: {len(asset_resources)}")
+        for asset in asset_resources[:3]:
+            # LedgerAssetResourceRecord has asset_id, params (LedgerAssetParamsDelta)
+            is_deleted = asset.params.deleted
+            print_info(f"      - Asset {asset.asset_id}: {'DELETED' if is_deleted else 'MODIFIED'}")
+    print_info("")
+
+    # Totals (LedgerStateDelta.totals is LedgerAccountTotals)
+    print_info("  Account Totals (LedgerAccountTotals):")
+    # LedgerAccountTotals has online, offline, not_participating (LedgerAlgoCount)
+    print_info(f"    Online money: {format_micro_algo(delta.totals.online.money)}")
+    print_info(f"    Offline money: {format_micro_algo(delta.totals.offline.money)}")
+    print_info(f"    Not participating: {format_micro_algo(delta.totals.not_participating.money)}")
+    print_info(f"    Rewards level: {delta.totals.rewards_level:,}")
+    print_info("")
+
+    # KV mods (dict[bytes, LedgerKvValueDelta] | None)
+    if delta.kv_mods:
+        print_info(f"  KV Store Modifications: {len(delta.kv_mods)} keys changed")
+
+    # Transaction IDs (dict[bytes, LedgerIncludedTransactions] | None)
+    if delta.tx_ids:
+        print_info(f"  Transactions included: {len(delta.tx_ids)}")
+
+    # Creatables (dict[int, LedgerModifiedCreatable] | None)
+    if delta.creatables:
+        print_info(f"  Creatables modified: {len(delta.creatables)}")
+        for creatable_id, creatable in list(delta.creatables.items())[:5]:
+            # LedgerModifiedCreatable has creatable_type, created, creator
+            creatable_type = "Asset" if creatable.creatable_type == 0 else "Application"
+            action = "CREATED" if creatable.created else "DELETED"
+            print_info(f"    - {creatable_type} {creatable_id}: {action} by {shorten_address(str(creatable.creator))}")
+    print_info("")
+
+
+def display_round_deltas(response: TransactionGroupLedgerStateDeltasForRound) -> None:
+    """Display details from a TransactionGroupLedgerStateDeltasForRound.
+
+    TransactionGroupLedgerStateDeltasForRound uses attribute access:
+    - response.deltas (list of LedgerStateDeltaForTransactionGroup)
+    - Each group has: delta (LedgerStateDelta), ids (list[str])
+    """
+    print_info("Transaction Group Deltas for Round:")
+    print_info(f"  Total transaction groups: {len(response.deltas)}")
+    print_info("")
+
+    for i, group_delta in enumerate(response.deltas):
+        print_info(f"  Group {i + 1}:")
+        # LedgerStateDeltaForTransactionGroup has ids (list[str]) and delta (LedgerStateDelta)
+        print_info(f"    Transaction IDs in group: {len(group_delta.ids)}")
+
+        for tx_id in group_delta.ids:
+            print_info(f"      - {tx_id}")
+
+        # Summary of delta (LedgerStateDelta)
+        accounts = group_delta.delta.accounts
+        accounts_list = accounts.accounts or []
+        app_resources = accounts.app_resources or []
+        asset_resources = accounts.asset_resources or []
+
+        modified_count = len(accounts_list)
+        app_count = len(app_resources)
+        asset_count = len(asset_resources)
+
+        print_info("    State changes:")
+        print_info(f"      - Accounts modified: {modified_count}")
+        if app_count > 0:
+            print_info(f"      - App resources: {app_count}")
+        if asset_count > 0:
+            print_info(f"      - Asset resources: {asset_count}")
+        print_info("")
+
+
+def main() -> None:
+    print_header("Ledger State Deltas Example")
+
+    # Create clients
+    algod = create_algod_client()
+    algorand = create_algorand_client()
+
+    # =========================================================================
+    # Step 1: Set up accounts and submit a transaction to create state changes
+    # =========================================================================
+    print_step(1, "Setting up accounts and submitting a payment transaction")
+
+    # Get a funded account from LocalNet (the dispenser)
+    # AddressWithSigners uses .addr attribute (not .address)
+    sender = algorand.account.localnet_dispenser()
+    print_info(f"Sender address: {shorten_address(str(sender.addr))}")
+
+    # Get sender initial balance
+    # account_information() returns Account object with attribute access
+    sender_info_before = algod.account_information(str(sender.addr))
+    print_info(f"Sender initial balance: {format_micro_algo(sender_info_before.amount)}")
+
+    # Create a new random account as receiver
+    receiver = algorand.account.random()
+    print_info(f"Receiver address: {shorten_address(str(receiver.addr))}")
+
+    # Submit a payment transaction - this will create state changes (balance changes)
+    payment_amount = AlgoAmount.from_algo(5)
+    print_info(f"Sending {payment_amount.algo} ALGO to receiver...")
+
+    # algorand.send.payment() requires PaymentParams wrapper (Python SDK)
+    result = algorand.send.payment(
+        PaymentParams(
+            sender=sender.addr,
+            receiver=receiver.addr,
+            amount=payment_amount,
+        )
+    )
+
+    tx_id = result.tx_ids[0]
+    # confirmed_round can be None if not confirmed, but we know it's confirmed
+    confirmed_round = result.confirmation.confirmed_round or 0
+
+    print_success("Transaction confirmed!")
+    print_info(f"Transaction ID: {tx_id}")
+    print_info(f"Confirmed in round: {confirmed_round:,}")
+    print_info("")
+
+    # Get balances after transaction
+    # Account object uses attribute access (not dict)
+    sender_info_after = algod.account_information(str(sender.addr))
+    receiver_info = algod.account_information(str(receiver.addr))
+
+    print_info(f"Sender balance after: {format_micro_algo(sender_info_after.amount)}")
+    print_info(f"Receiver balance after: {format_micro_algo(receiver_info.amount)}")
+    print_info("")
+
+    # =========================================================================
+    # Step 2: Demonstrate ledger_state_delta(round)
+    # =========================================================================
+    print_step(2, "Getting ledger state delta for a round using ledger_state_delta(round)")
+
+    print_info("ledger_state_delta(round) returns all state changes that occurred in a specific round.")
+    print_info("This includes account balance changes, app state changes, and more.")
+    print_info("")
+
+    try:
+        # ledger_state_delta() returns LedgerStateDelta object
+        state_delta = algod.ledger_state_delta(confirmed_round)
+        print_success("Successfully retrieved state delta for the round!")
+        print_info("")
+
+        display_state_delta(state_delta, "ledger_state_delta")
+    except Exception as e:
+        error_message = str(e)
+        if "not supported" in error_message or "not enabled" in error_message or "404" in error_message:
+            print_error("ledger_state_delta endpoint may not be enabled on this node.")
+            print_info("Node configuration may need EnableDeveloperAPI=true or specific delta tracking settings.")
+        else:
+            print_error(f"Error getting state delta: {error_message}")
+        print_info("")
+
+    # =========================================================================
+    # Step 3: Demonstrate ledger_state_delta_for_transaction_group(tx_id)
+    # =========================================================================
+    print_step(3, "Getting state delta for a specific transaction group")
+
+    print_info("ledger_state_delta_for_transaction_group(tx_id) returns the state changes")
+    print_info("caused by a specific transaction group, identified by any transaction ID in the group.")
+    print_info("")
+
+    try:
+        # ledger_state_delta_for_transaction_group() returns LedgerStateDelta object
+        tx_group_delta = algod.ledger_state_delta_for_transaction_group(tx_id)
+        print_success("Successfully retrieved state delta for the transaction group!")
+        print_info("")
+
+        display_state_delta(tx_group_delta, "ledger_state_delta_for_transaction_group")
+    except Exception as e:
+        error_message = str(e)
+        if "tracer" in error_message or "501" in error_message:
+            print_error("ledger_state_delta_for_transaction_group requires delta tracking to be enabled.")
+            print_info("This endpoint needs EnableDeveloperAPI=true AND EnableTxnEvalTracer=true in node config.")
+            print_info("On LocalNet, this may require custom configuration.")
+        elif "not supported" in error_message or "not enabled" in error_message or "404" in error_message:
+            print_error("ledger_state_delta_for_transaction_group endpoint may not be enabled on this node.")
+        else:
+            print_error(f"Error getting transaction group delta: {error_message}")
+        print_info("")
+
+    # =========================================================================
+    # Step 4: Demonstrate transaction_group_ledger_state_deltas_for_round(round)
+    # =========================================================================
+    print_step(4, "Getting all transaction group deltas for a round")
+
+    print_info("transaction_group_ledger_state_deltas_for_round(round) returns deltas for ALL")
+    print_info("transaction groups that were included in a specific round.")
+    print_info("Each entry includes the delta and the transaction IDs in that group.")
+    print_info("")
+
+    try:
+        # transaction_group_ledger_state_deltas_for_round() returns TransactionGroupLedgerStateDeltasForRound
+        round_deltas = algod.transaction_group_ledger_state_deltas_for_round(confirmed_round)
+        print_success("Successfully retrieved all transaction group deltas for the round!")
+        print_info("")
+
+        display_round_deltas(round_deltas)
+    except Exception as e:
+        error_message = str(e)
+        if "tracer" in error_message or "501" in error_message:
+            print_error("transaction_group_ledger_state_deltas_for_round requires delta tracking to be enabled.")
+            print_info("This endpoint needs EnableDeveloperAPI=true AND EnableTxnEvalTracer=true in node config.")
+            print_info("On LocalNet, this may require custom configuration.")
+        elif "not supported" in error_message or "not enabled" in error_message or "404" in error_message:
+            print_error("transaction_group_ledger_state_deltas_for_round endpoint may not be enabled on this node.")
+        else:
+            print_error(f"Error getting round deltas: {error_message}")
+        print_info("")
+
+    # =========================================================================
+    # Step 5: Submit more transactions to see different state changes
+    # =========================================================================
+    print_step(5, "Submitting additional transactions to demonstrate more state changes")
+
+    # Create another account and do a multi-transaction round
+    receiver2 = algorand.account.random()
+    print_info(f"Created second receiver: {shorten_address(str(receiver2.addr))}")
+
+    # Send payments to create more activity
+    result2 = algorand.send.payment(
+        PaymentParams(
+            sender=sender.addr,
+            receiver=receiver2.addr,
+            amount=AlgoAmount.from_algo(3),
+        )
+    )
+
+    confirmed_round2 = result2.confirmation.confirmed_round or 0
+    print_success(f"Second transaction confirmed in round {confirmed_round2:,}")
+    print_info("")
+
+    # Try to get deltas for this new round
+    try:
+        # TransactionGroupLedgerStateDeltasForRound uses attribute access
+        round_deltas2 = algod.transaction_group_ledger_state_deltas_for_round(confirmed_round2)
+        print_success(f"Found {len(round_deltas2.deltas)} transaction group(s) in round {confirmed_round2:,}")
+
+        for i, group_delta in enumerate(round_deltas2.deltas):
+            # LedgerStateDeltaForTransactionGroup has ids (list[str]) and delta (LedgerStateDelta)
+            print_info(f"\n  Transaction Group {i + 1}:")
+            print_info(f"    Transaction IDs: {len(group_delta.ids)}")
+            for txid in group_delta.ids:
+                print_info(f"      - {txid}")
+
+            # Show account changes summary
+            accounts = group_delta.delta.accounts
+            accounts_list = accounts.accounts or []
+            if accounts_list:
+                print_info(f"    Accounts modified: {len(accounts_list)}")
+    except Exception as e:
+        error_message = str(e)
+        if "tracer" in error_message or "501" in error_message:
+            print_info("(Skipped - requires EnableTxnEvalTracer node configuration)")
+        else:
+            print_error(f"Could not get deltas: {error_message}")
+    print_info("")
+
+    # =========================================================================
+    # Summary
+    # =========================================================================
+    print_header("Summary")
+
+    print_info("This example demonstrated three ways to get ledger state deltas:")
+    print_info("")
+    print_info("1. ledger_state_delta(round):")
+    print_info("   - Returns ALL state changes for a specific round")
+    print_info("   - Includes: account balances, app state, asset holdings")
+    print_info("   - LedgerStateDelta contains: accounts, block, totals, kvMods, txIds, creatables")
+    print_info("")
+    print_info("2. ledger_state_delta_for_transaction_group(tx_id):")
+    print_info("   - Returns state changes for a SPECIFIC transaction group")
+    print_info("   - Accepts any transaction ID from the group")
+    print_info("   - Useful for tracking changes from your transactions")
+    print_info("")
+    print_info("3. transaction_group_ledger_state_deltas_for_round(round):")
+    print_info("   - Returns deltas for ALL transaction groups in a round")
+    print_info("   - Response has deltas array")
+    print_info("   - Each LedgerStateDeltaForTransactionGroup has: delta, ids (transaction IDs)")
+    print_info("")
+    print_info("State Delta Structure (LedgerStateDelta) - Python SDK uses snake_case:")
+    print_info("  accounts: LedgerAccountDeltas")
+    print_info("    - accounts: list[LedgerBalanceRecord] | None (address + micro_algos)")
+    print_info("    - app_resources: list[LedgerAppResourceRecord] | None")
+    print_info("    - asset_resources: list[LedgerAssetResourceRecord] | None")
+    print_info("  block: Block (block.header contains round, timestamp, etc.)")
+    print_info("  totals: LedgerAccountTotals (online, offline, not_participating)")
+    print_info("  state_proof_next: int")
+    print_info("  prev_timestamp: int")
+    print_info("  kv_mods: dict[bytes, LedgerKvValueDelta] | None")
+    print_info("  tx_ids: dict[bytes, LedgerIncludedTransactions] | None")
+    print_info("  creatables: dict[int, LedgerModifiedCreatable] | None")
+    print_info("")
+    print_info("Note: Node configuration requirements:")
+    print_info("  - ledger_state_delta(round) - Works with default LocalNet configuration")
+    print_info("  - ledger_state_delta_for_transaction_group(tx_id) - Requires EnableTxnEvalTracer=true")
+    print_info("  - transaction_group_ledger_state_deltas_for_round(round) - Requires EnableTxnEvalTracer=true")
+    print_info("  - All endpoints need EnableDeveloperAPI=true (enabled by default on LocalNet)")
+
+
+if __name__ == "__main__":
+    main()
+
+```
+
+---
+
+### Other examples in Algod Client
+
+- [Node Health and Status](/docs/algokit-utils/python/latest/examples/algod-client/01-node-health-status/)
+- [Version and Genesis Information](/docs/algokit-utils/python/latest/examples/algod-client/02-version-genesis/)
+- [Ledger Supply Information](/docs/algokit-utils/python/latest/examples/algod-client/03-ledger-supply/)
+- [Account Information](/docs/algokit-utils/python/latest/examples/algod-client/04-account-info/)
+- [Transaction Parameters](/docs/algokit-utils/python/latest/examples/algod-client/05-transaction-params/)
+- [Send and Confirm Transaction](/docs/algokit-utils/python/latest/examples/algod-client/06-send-transaction/)
+- [Pending Transactions](/docs/algokit-utils/python/latest/examples/algod-client/07-pending-transactions/)
+- [Block Data](/docs/algokit-utils/python/latest/examples/algod-client/08-block-data/)
+- [Asset Information](/docs/algokit-utils/python/latest/examples/algod-client/09-asset-info/)
+- [Application Information](/docs/algokit-utils/python/latest/examples/algod-client/10-application-info/)
+- [Application Boxes](/docs/algokit-utils/python/latest/examples/algod-client/11-application-boxes/)
+- [TEAL Compile and Disassemble](/docs/algokit-utils/python/latest/examples/algod-client/12-teal-compile/)
+- [Transaction Simulation](/docs/algokit-utils/python/latest/examples/algod-client/13-simulation/)
+- **Ledger State Deltas**
+- [Transaction Proof](/docs/algokit-utils/python/latest/examples/algod-client/15-transaction-proof/)
+- [Light Block Header Proof](/docs/algokit-utils/python/latest/examples/algod-client/16-lightblock-proof/)
+- [State Proof](/docs/algokit-utils/python/latest/examples/algod-client/17-state-proof/)
+- [DevMode Timestamp Offset](/docs/algokit-utils/python/latest/examples/algod-client/18-devmode-timestamp/)
+- [Sync Round Management](/docs/algokit-utils/python/latest/examples/algod-client/19-sync-round/)

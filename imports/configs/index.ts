@@ -1,13 +1,72 @@
 /**
- * Import configurations for all repositories
+ * Barrel file for all import configurations.
  *
- * Add new repository configurations here to make them available
- * to the main content config.
+ * Exports two arrays:
+ * - REMOTE_CONTENT: Flat list of ImportOptions for the content loader
+ * - LIBRARY_CONFIGS: Full LibraryImportConfig objects for the UI registry
  */
 
-export { arcStandardsConfig } from './arc-standards.js';
-export { nodekitConfig } from './nodekit.js';
-export { algokitCLIConfig } from './algokit-cli.js';
-export { utilsTypescriptConfig, utilsPythonConfig } from './algokit-utils.js';
-export { puyaTsConfig, puyaPyConfig } from './puya.js';
-export { algokitSubscriberConfig } from './subscriber.js';
+import type { ImportOptions } from '@larkiny/astro-github-loader';
+import type { LibraryImportConfig, SidebarMetadata } from '../types';
+import { isArtifactVariant } from '../types.js';
+
+// Per-library configs
+import {
+  config as algokitUtils,
+  legacyTsGuideConfig as algokitUtilsTsLegacy,
+  legacyPyGuideConfig as algokitUtilsPyLegacy,
+} from './algokit-utils/import.config.js';
+import { config as algokitCli } from './algokit-cli/import.config.js';
+import {
+  config as algorandPython,
+  legacyGuideConfig as algorandPythonLegacy,
+} from './algorand-python/import.config.js';
+import { config as algorandTypescript } from './algorand-typescript/import.config.js';
+import { config as algokitSubscriber } from './algokit-subscriber/import.config.js';
+import { config as nodekit } from './nodekit/import.config.js';
+
+// Sidebar metadata (for _meta.yml generation)
+import { sidebarMetadata as algokitUtilsMeta } from './algokit-utils/sidebar.config.js';
+import { sidebarMetadata as algokitCliMeta } from './algokit-cli/sidebar.config.js';
+import { sidebarMetadata as algorandPythonMeta } from './algorand-python/sidebar.config.js';
+import { sidebarMetadata as algorandTypescriptMeta } from './algorand-typescript/sidebar.config.js';
+import { sidebarMetadata as algokitSubscriberMeta } from './algokit-subscriber/sidebar.config.js';
+import { sidebarMetadata as nodekitMeta } from './nodekit/sidebar.config.js';
+
+// Standalone imports (not libraries)
+import { arcStandardsConfig } from './arc-standards/import.config.js';
+
+/** Full library configs for the UI registry (navigation, pickers, cards). */
+export const LIBRARY_CONFIGS: LibraryImportConfig[] = [
+  algokitUtils,
+  algokitCli,
+  algorandPython,
+  algorandTypescript,
+  algokitSubscriber,
+  nodekit,
+];
+
+/** Flat list of all import configs for the content loader. */
+export const REMOTE_CONTENT: ImportOptions[] = [
+  ...algokitUtils.variants.filter(v => !isArtifactVariant(v)),
+  ...algokitCli.variants.filter(v => !isArtifactVariant(v)),
+  ...algorandPython.variants.filter(v => !isArtifactVariant(v)),
+  ...algorandTypescript.variants.filter(v => !isArtifactVariant(v)),
+  ...algokitSubscriber.variants.filter(v => !isArtifactVariant(v)),
+  ...nodekit.variants.filter(v => !isArtifactVariant(v)),
+  arcStandardsConfig,
+  // Legacy guide targets — keep old algokit/* paths in sync via stateKey
+  algorandPythonLegacy,
+  algokitUtilsTsLegacy,
+  algokitUtilsPyLegacy,
+];
+
+/** All sidebar metadata rules for _meta.yml generation. */
+export const SIDEBAR_METADATA: SidebarMetadata[] = [
+  algokitUtilsMeta,
+  algokitCliMeta,
+  algorandPythonMeta,
+  algorandTypescriptMeta,
+  algokitSubscriberMeta,
+  nodekitMeta,
+];

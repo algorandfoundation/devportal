@@ -27,14 +27,14 @@ Both the box key and data are stored as byte arrays, requiring any uint64 variab
 Boxes are helpful in many scenarios:
 
 - Applications that need more extensive or unbound contract storage.
-- Applications that want to store data per user but do not wish to require users to [opt in](concepts/transactions/types#application-opt-in-transaction) to the contract or need the account data to persist even after the user closes or clears out of the application.
+- Applications that want to store data per user but do not wish to require users to [opt in](/concepts/transactions/types#application-opt-in-transaction) to the contract or need the account data to persist even after the user closes or clears out of the application.
 - Applications that have dynamic storage requirements.
 - Applications requiring larger storage blocks that can not fit the existing global state key-value pairs.
 - Applications that require storing arbitrary maps or hash tables.
 
 ## Box Array
 
-When interacting with apps via [app call transactions](/concepts/transactions/overview), developers need a way to specify which boxes an application will access during execution. The box array is part of the [smart contract reference arrays](concepts/smart-contracts/resource-usage#what-are-reference-arrays) alongside the apps, accounts, and assets arrays. These arrays define the objects the app call will interact with (read, write, or send transactions to).
+When interacting with apps via [app call transactions](/concepts/transactions/overview), developers need a way to specify which boxes an application will access during execution. The box array is part of the [smart contract reference arrays](/concepts/smart-contracts/resource-usage#what-are-reference-arrays) alongside the apps, accounts, and assets arrays. These arrays define the objects the app call will interact with (read, write, or send transactions to).
 
 The box array is an array of pairs: the first element of each pair is an integer specifying the index into the foreign application array, and the second element is the key name of the box to be accessed.
 

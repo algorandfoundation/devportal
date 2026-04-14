@@ -1,4 +1,9 @@
 ---
+interface Props {
+  id: string;
+  title?: string;
+}
+
 const { id, title = 'YouTube video' } = Astro.props;
 ---
 

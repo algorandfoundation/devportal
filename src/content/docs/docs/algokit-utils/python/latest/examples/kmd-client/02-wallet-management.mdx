@@ -1,0 +1,240 @@
+---
+title: 'Wallet Creation and Listing'
+description: 'This example demonstrates how to create, list, rename, and get info about wallets using the KMD (Key Management Daemon) client.'
+sidebar:
+  order: 2
+---
+
+[← Back to KMD Client](/docs/algokit-utils/python/latest/examples/kmd-client/)
+
+## Description
+
+This example demonstrates how to create, list, rename, and get info about wallets using the KMD (Key Management Daemon) client.
+Prerequisites:
+Covered operations:
+
+- create_wallet() - Create a new wallet
+- list_wallets() - List all available wallets
+- wallet_info() - Get detailed wallet information (requires wallet handle)
+- rename_wallet() - Rename an existing wallet
+
+## Prerequisites
+
+- LocalNet running (via `algokit localnet start`)
+
+## Run This Example
+
+From the repository's `examples` directory:
+
+```bash
+cd examples
+uv run python kmd_client/02_wallet_management.py
+```
+
+## Code
+
+[View source on GitHub](https://github.com/algorandfoundation/algokit-utils-py/blob/main/examples/kmd_client/02_wallet_management.py)
+
+```python title="02_wallet_management.py"
+# ruff: noqa: N999, C901, PLR0912, PLR0915
+"""
+Example: Wallet Creation and Listing
+
+This example demonstrates how to create, list, rename, and get info about wallets
+using the KMD (Key Management Daemon) client.
+
+Prerequisites:
+- LocalNet running (via `algokit localnet start`)
+
+Covered operations:
+- create_wallet() - Create a new wallet
+- list_wallets() - List all available wallets
+- wallet_info() - Get detailed wallet information (requires wallet handle)
+- rename_wallet() - Rename an existing wallet
+"""
+
+import sys
+import time
+
+from shared import (
+    cleanup_test_wallet,
+    create_kmd_client,
+    print_error,
+    print_header,
+    print_info,
+    print_step,
+    print_success,
+)
+
+from algokit_kmd_client.models import (
+    CreateWalletRequest,
+    InitWalletHandleTokenRequest,
+    RenameWalletRequest,
+    WalletInfoRequest,
+)
+
+
+def main() -> None:
+    print_header("KMD Wallet Management Example")
+
+    kmd = create_kmd_client()
+    test_wallet_name = f"test-wallet-{int(time.time() * 1000)}"
+    test_wallet_password = "test-password-123"
+    wallet_id = ""
+    wallet_handle_token = ""
+
+    try:
+        # =========================================================================
+        # Step 1: Create a New Wallet
+        # =========================================================================
+        print_step(1, "Creating a new wallet with create_wallet()")
+
+        create_result = kmd.create_wallet(
+            CreateWalletRequest(
+                wallet_name=test_wallet_name,
+                wallet_password=test_wallet_password,
+                wallet_driver_name="sqlite",
+            )
+        )
+
+        wallet = create_result.wallet
+        wallet_id = wallet.id_
+
+        print_success("Wallet created successfully!")
+        print_info("")
+        print_info("Wallet fields from create_wallet response:")
+        print_info(f"  - id:           {wallet.id_}")
+        print_info(f"  - name:         {wallet.name}")
+        print_info(f"  - driver_name:  {wallet.driver_name}")
+        print_info(f"  - supported_txs: [{', '.join(str(t) for t in wallet.supported_txs)}]")
+        print_info(f"  - mnemonic_ux:  {wallet.mnemonic_ux}")
+
+        # =========================================================================
+        # Step 2: List All Wallets
+        # =========================================================================
+        print_step(2, "Listing all wallets with list_wallets()")
+
+        list_result = kmd.list_wallets()
+        wallets = list_result.wallets
+
+        print_success(f"Found {len(wallets)} wallet(s)")
+        print_info("")
+        print_info("Available wallets:")
+
+        for index, w in enumerate(wallets):
+            print_info(f"  {index + 1}. id: {w.id_}")
+            print_info(f"     name: {w.name}")
+
+        # =========================================================================
+        # Step 3: Get Wallet Info (requires wallet handle)
+        # =========================================================================
+        print_step(3, "Getting wallet info with wallet_info() (requires handle)")
+
+        # First, we need to init a wallet handle to get detailed info
+        init_result = kmd.init_wallet_handle(
+            InitWalletHandleTokenRequest(wallet_id=wallet_id, wallet_password=test_wallet_password)
+        )
+        wallet_handle_token = init_result.wallet_handle_token
+        print_info(f"Wallet handle token obtained: {wallet_handle_token[:16]}...")
+
+        info_result = kmd.wallet_info(WalletInfoRequest(wallet_handle_token=wallet_handle_token))
+
+        print_success("Wallet info retrieved successfully!")
+        print_info("")
+        print_info("wallet_info() response fields:")
+        print_info(f"  expires_seconds: {info_result.wallet_handle.expires_seconds}")
+        print_info(f"  wallet.id:       {info_result.wallet_handle.wallet.id_}")
+        print_info(f"  wallet.name:     {info_result.wallet_handle.wallet.name}")
+
+        # =========================================================================
+        # Step 4: Rename the Wallet
+        # =========================================================================
+        print_step(4, "Renaming the wallet with rename_wallet()")
+
+        new_wallet_name = f"{test_wallet_name}-renamed"
+
+        rename_result = kmd.rename_wallet(
+            RenameWalletRequest(
+                wallet_id=wallet_id,
+                wallet_password=test_wallet_password,
+                wallet_name=new_wallet_name,
+            )
+        )
+
+        print_success("Wallet renamed successfully!")
+        print_info("")
+        print_info("rename_wallet() response fields:")
+        print_info(f"  - id:   {rename_result.wallet.id_}")
+        print_info(f"  - name: {rename_result.wallet.name} (was: {test_wallet_name})")
+
+        # Verify the rename by checking wallet info again
+        verify_info = kmd.wallet_info(WalletInfoRequest(wallet_handle_token=wallet_handle_token))
+
+        print_info("")
+        print_info(f'Verified: wallet name is now "{verify_info.wallet_handle.wallet.name}"')
+
+        # =========================================================================
+        # Step 5: Clean Up (release wallet handle)
+        # =========================================================================
+        print_step(5, "Cleaning up: releasing wallet handle")
+
+        cleanup_test_wallet(kmd, wallet_handle_token)
+        wallet_handle_token = ""  # Mark as cleaned up
+
+        print_success("Wallet handle released")
+        print_info("")
+        print_info("Note: KMD does not support deleting wallets via API.")
+        print_info("The test wallet will remain in KMD storage.")
+
+        # =========================================================================
+        # Summary
+        # =========================================================================
+        print_header("Summary")
+        print_info("This example demonstrated:")
+        print_info("  1. create_wallet() - Create a new wallet with name and password")
+        print_info("  2. list_wallets()  - List all available wallets")
+        print_info("  3. wallet_info()   - Get detailed wallet info (requires handle)")
+        print_info("  4. rename_wallet() - Rename an existing wallet")
+        print_info("")
+        print_info("Key concepts:")
+        print_info("  - Wallets are collections of keys managed by KMD")
+        print_info("  - A wallet handle token is required for most operations")
+        print_info("  - Wallet handles expire and should be released when done")
+        print_info("  - The 'sqlite' driver is the standard driver for wallet storage")
+    except Exception as e:
+        print_error(f"Error: {e}")
+        print_info("")
+        print_info("Troubleshooting:")
+        print_info("  - Ensure LocalNet is running: algokit localnet start")
+        print_info("  - If LocalNet issues occur: algokit localnet reset")
+        print_info("  - Check that KMD is accessible on port 4002")
+
+        # Cleanup on error
+        if wallet_handle_token:
+            cleanup_test_wallet(kmd, wallet_handle_token)
+
+        sys.exit(1)
+
+
+if __name__ == "__main__":
+    main()
+
+```
+
+---
+
+### Other examples in KMD Client
+
+- [KMD Version Information](/docs/algokit-utils/python/latest/examples/kmd-client/01-version/)
+- **Wallet Creation and Listing**
+- [Wallet Session Management](/docs/algokit-utils/python/latest/examples/kmd-client/03-wallet-sessions/)
+- [Key Generation](/docs/algokit-utils/python/latest/examples/kmd-client/04-key-generation/)
+- [Key Import and Export](/docs/algokit-utils/python/latest/examples/kmd-client/05-key-import-export/)
+- [Key Listing and Deletion](/docs/algokit-utils/python/latest/examples/kmd-client/06-key-listing-deletion/)
+- [Master Key Export](/docs/algokit-utils/python/latest/examples/kmd-client/07-master-key-export/)
+- [Multisig Account Setup](/docs/algokit-utils/python/latest/examples/kmd-client/08-multisig-setup/)
+- [Multisig Account Management](/docs/algokit-utils/python/latest/examples/kmd-client/09-multisig-management/)
+- [Transaction Signing with KMD](/docs/algokit-utils/python/latest/examples/kmd-client/10-transaction-signing/)
+- [Multisig Transaction Signing with KMD](/docs/algokit-utils/python/latest/examples/kmd-client/11-multisig-signing/)
+- [Program Signing (Delegated Logic Signatures) with KMD](/docs/algokit-utils/python/latest/examples/kmd-client/12-program-signing/)
+- [Multisig Program Signing (Delegated Multisig Logic Signatures) with KMD](/docs/algokit-utils/python/latest/examples/kmd-client/13-multisig-program-signing/)

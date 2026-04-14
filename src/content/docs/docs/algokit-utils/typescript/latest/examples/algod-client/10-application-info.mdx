@@ -1,0 +1,371 @@
+---
+title: 'Application Information'
+description: 'This example demonstrates how to retrieve application information using the AlgodClient method: applicationById()'
+sidebar:
+  order: 10
+---
+
+[← Back to Algod Client](/docs/algokit-utils/typescript/latest/examples/algod-client/)
+
+## Description
+
+This example demonstrates how to retrieve application information using the AlgodClient method: applicationById()
+
+## Prerequisites
+
+- LocalNet running (via `algokit localnet start`)
+
+## Run This Example
+
+From the repository root:
+
+```bash
+cd examples
+npm run example algod_client/10-application-info.ts
+```
+
+## Code
+
+[View source on GitHub](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/examples/algod_client/10-application-info.ts)
+
+```typescript title="10-application-info.ts"
+/**
+ * Example: Application Information
+ *
+ * This example demonstrates how to retrieve application information using
+ * the AlgodClient method: applicationById()
+ *
+ * Prerequisites:
+ * - LocalNet running (via `algokit localnet start`)
+ */
+
+import {
+  createAlgodClient,
+  createAlgorandClient,
+  getFundedAccount,
+  loadTealSource,
+  printError,
+  printHeader,
+  printInfo,
+  printStep,
+  printSuccess,
+  shortenAddress,
+} from '../shared/utils.js';
+
+/** Decode a TEAL value for display */
+function decodeTealValue(value: { type: number; bytes: Uint8Array; uint: bigint }): string {
+  if (value.type === 2) {
+    // uint
+    return `${value.uint} (uint)`;
+  } else if (value.type === 1) {
+    // bytes
+    // Try to decode as UTF-8 string, fall back to hex
+    try {
+      const str = new TextDecoder().decode(value.bytes);
+      // Check if it's a printable string
+      if (/^[\x20-\x7E]*$/.test(str) && str.length > 0) {
+        return `"${str}" (bytes)`;
+      }
+    } catch {
+      // Ignore decode errors
+    }
+    return `0x${Buffer.from(value.bytes).toString('hex')} (bytes)`;
+  }
+  return '(unknown type)';
+}
+
+async function main() {
+  printHeader('Application Information Example');
+
+  // Create an Algod client connected to LocalNet
+  const algod = createAlgodClient();
+
+  // Create an AlgorandClient for application deployment
+  const algorand = createAlgorandClient();
+
+  // =========================================================================
+  // Step 1: Get a Funded Account from LocalNet
+  // =========================================================================
+  printStep(1, 'Getting a funded account from LocalNet');
+
+  let creator: Awaited<ReturnType<typeof getFundedAccount>>;
+  try {
+    creator = await getFundedAccount(algorand);
+    printSuccess(`Got funded account: ${shortenAddress(creator.addr.toString())}`);
+  } catch (error) {
+    printError(
+      `Failed to get funded account: ${error instanceof Error ? error.message : String(error)}`,
+    );
+    printInfo('Make sure LocalNet is running with `algokit localnet start`');
+    printInfo('If issues persist, try `algokit localnet reset`');
+    process.exit(1);
+  }
+
+  // =========================================================================
+  // Step 2: Deploy a Test Application using AlgorandClient
+  // =========================================================================
+  printStep(2, 'Deploying a test application');
+
+  // Load approval program from shared artifacts
+  // - Accepts all ApplicationCall transactions
+  // - Stores a counter in global state on each call
+  // - Has one global uint and one global bytes slot
+  const approvalSource = loadTealSource('approval-counter-message.teal');
+
+  // Load clear state program from shared artifacts
+  const clearSource = loadTealSource('clear-state-approve.teal');
+
+  try {
+    printInfo('Compiling TEAL programs...');
+    const approvalCompiled = await algod.tealCompile(approvalSource);
+    const clearCompiled = await algod.tealCompile(clearSource);
+    printSuccess(`Approval program hash: ${approvalCompiled.hash}`);
+    printSuccess(`Clear program hash: ${clearCompiled.hash}`);
+
+    printInfo('Deploying application...');
+    const result = await algorand.send.appCreate({
+      sender: creator.addr,
+      approvalProgram: Buffer.from(approvalCompiled.result, 'base64'),
+      clearStateProgram: Buffer.from(clearCompiled.result, 'base64'),
+      schema: {
+        globalInts: 1,
+        globalByteSlices: 1,
+        localInts: 0,
+        localByteSlices: 0,
+      },
+    });
+
+    const appId = result.appId;
+    printSuccess(`Application deployed with ID: ${appId}`);
+    printInfo('');
+
+    // =========================================================================
+    // Step 3: Get Application Information using applicationById()
+    // =========================================================================
+    printStep(3, 'Getting application information with applicationById()');
+
+    const app = await algod.applicationById(appId);
+
+    printSuccess('Application information retrieved successfully!');
+    printInfo('');
+
+    // =========================================================================
+    // Step 4: Display Application Params
+    // =========================================================================
+    printStep(4, 'Displaying application parameters');
+
+    printInfo('Application Identification:');
+    printInfo(`  Application ID: ${app.id}`);
+    printInfo('');
+
+    printInfo('Application Parameters:');
+    printInfo(`  Creator:        ${app.params.creator}`);
+    printInfo(`                  ${shortenAddress(app.params.creator.toString())} (shortened)`);
+    printInfo('');
+
+    // Display approval program info
+    printInfo('Approval Program:');
+    printInfo(`  Size:           ${app.params.approvalProgram.length} bytes`);
+    const approvalPreview = Buffer.from(app.params.approvalProgram.slice(0, 20)).toString('hex');
+    printInfo(`  Preview:        ${approvalPreview}... (first 20 bytes, hex)`);
+    printInfo('The approval program runs when the app is called');
+    printInfo('');
+
+    // Display clear state program info
+    printInfo('Clear State Program:');
+    printInfo(`  Size:           ${app.params.clearStateProgram.length} bytes`);
+    const clearPreview = Buffer.from(app.params.clearStateProgram.slice(0, 20)).toString('hex');
+    printInfo(`  Preview:        ${clearPreview}... (first 20 bytes, hex)`);
+    printInfo('The clear state program runs when an account clears its local state');
+    printInfo('');
+
+    // Display extra program pages if any
+    if (app.params.extraProgramPages !== undefined && app.params.extraProgramPages > 0) {
+      printInfo(`  Extra Pages:    ${app.params.extraProgramPages}`);
+      printInfo('Extra program pages allow for larger smart contracts');
+    }
+
+    // Display version if available
+    if (app.params.version !== undefined) {
+      printInfo(`  Version:        ${app.params.version}`);
+      printInfo('Version tracks number of program updates');
+    }
+    printInfo('');
+
+    // =========================================================================
+    // Step 5: Display State Schema
+    // =========================================================================
+    printStep(5, 'Displaying state schema');
+
+    printInfo('Global State Schema:');
+    if (app.params.globalStateSchema) {
+      printInfo(`  Uint Slots:       ${app.params.globalStateSchema.numUints}`);
+      printInfo(`  Byte Slice Slots: ${app.params.globalStateSchema.numByteSlices}`);
+      printInfo('Global state is shared across all accounts');
+    } else {
+      printInfo(`  (no global state schema)`);
+    }
+    printInfo('');
+
+    printInfo('Local State Schema:');
+    if (app.params.localStateSchema) {
+      printInfo(`  Uint Slots:       ${app.params.localStateSchema.numUints}`);
+      printInfo(`  Byte Slice Slots: ${app.params.localStateSchema.numByteSlices}`);
+      printInfo('Local state is per-account and requires opt-in');
+    } else {
+      printInfo(`  (no local state schema)`);
+    }
+    printInfo('');
+
+    // =========================================================================
+    // Step 6: Display Global State
+    // =========================================================================
+    printStep(6, 'Displaying global state');
+
+    if (app.params.globalState && app.params.globalState.length > 0) {
+      printInfo('Global State Values:');
+      for (const kv of app.params.globalState) {
+        // Decode the key (it's a Uint8Array)
+        const keyStr = new TextDecoder().decode(kv.key);
+        const valueStr = decodeTealValue(kv.value);
+        printInfo(`  "${keyStr}": ${valueStr}`);
+      }
+      printInfo('');
+      printInfo('Global state is stored on-chain and costs MBR');
+    } else {
+      printInfo('  (no global state values)');
+      printInfo('This application has no global state set');
+    }
+    printInfo('');
+
+    // =========================================================================
+    // Step 7: Call the Application to Update Global State
+    // =========================================================================
+    printStep(7, 'Calling application to update global state');
+
+    printInfo('Calling the application to increment the counter...');
+    await algorand.send.appCall({
+      sender: creator.addr,
+      appId: appId,
+    });
+
+    // Fetch updated application info
+    const updatedApp = await algod.applicationById(appId);
+
+    printInfo('Updated Global State:');
+    if (updatedApp.params.globalState && updatedApp.params.globalState.length > 0) {
+      for (const kv of updatedApp.params.globalState) {
+        const keyStr = new TextDecoder().decode(kv.key);
+        const valueStr = decodeTealValue(kv.value);
+        printInfo(`  "${keyStr}": ${valueStr}`);
+      }
+    }
+    printSuccess('Counter was incremented from 0 to 1');
+    printInfo('');
+
+    // =========================================================================
+    // Step 8: Handle Application Not Found
+    // =========================================================================
+    printStep(8, 'Demonstrating error handling for non-existent application');
+
+    const nonExistentAppId = BigInt(999999999);
+    try {
+      printInfo(`Querying non-existent application ID: ${nonExistentAppId}`);
+      await algod.applicationById(nonExistentAppId);
+      printError('Expected an error but none was thrown');
+    } catch (error) {
+      printSuccess('Correctly caught error for non-existent application');
+      if (error instanceof Error) {
+        printInfo(`  Error message: ${error.message}`);
+      }
+      printInfo('Always handle the case where an application may not exist or has been deleted');
+    }
+    printInfo('');
+
+    // =========================================================================
+    // Step 9: Note about Round Information
+    // =========================================================================
+    printStep(9, 'Note about data validity');
+
+    printInfo('The applicationById() method returns the current application state.');
+    printInfo('Unlike some other endpoints, it does not include a round field.');
+    printInfo('To get the current round, use status() or other round-aware methods.');
+
+    // Get current round for reference
+    const status = await algod.status();
+    printInfo(`  Current network round: ${status.lastRound.toLocaleString('en-US')}`);
+    printInfo('');
+  } catch (error) {
+    printError(
+      `Failed to deploy or query application: ${error instanceof Error ? error.message : String(error)}`,
+    );
+    printInfo('If LocalNet errors occur, try `algokit localnet reset`');
+    process.exit(1);
+  }
+
+  // =========================================================================
+  // Summary
+  // =========================================================================
+  printHeader('Summary');
+  printInfo('This example demonstrated:');
+  printInfo('  1. Deploying a test application using AlgorandClient.send.appCreate()');
+  printInfo('  2. applicationById(appId) - Get complete application information');
+  printInfo('  3. Application params: creator, approvalProgram, clearStateProgram');
+  printInfo('  4. State schema: globalStateSchema, localStateSchema');
+  printInfo('  5. Displaying global state values with TEAL key-value decoding');
+  printInfo('  6. Calling the application and observing state changes');
+  printInfo('  7. Error handling for non-existent applications');
+  printInfo('');
+  printInfo('Key Application fields:');
+  printInfo('  - id: Unique application identifier (bigint)');
+  printInfo('  - params.creator: Address that deployed the application');
+  printInfo('  - params.approvalProgram: Bytecode for app calls (Uint8Array)');
+  printInfo('  - params.clearStateProgram: Bytecode for clear state (Uint8Array)');
+  printInfo('  - params.globalStateSchema: { numUints, numByteSlices }');
+  printInfo('  - params.localStateSchema: { numUints, numByteSlices }');
+  printInfo('  - params.globalState: TealKeyValue[] (current global state)');
+  printInfo('  - params.extraProgramPages: Additional program space (optional)');
+  printInfo('  - params.version: Number of updates to the program (optional)');
+  printInfo('');
+  printInfo('Global State (TealKeyValue) structure:');
+  printInfo('  - key: Uint8Array (state key, often UTF-8 string)');
+  printInfo('  - value.type: 1 = bytes, 2 = uint');
+  printInfo('  - value.bytes: Uint8Array (for bytes type)');
+  printInfo('  - value.uint: bigint (for uint type)');
+  printInfo('');
+  printInfo('Use cases:');
+  printInfo('  - Verify application creator and code before interaction');
+  printInfo('  - Read current global state values');
+  printInfo('  - Check state schema to understand storage limits');
+  printInfo('  - Display application information in explorers/wallets');
+}
+
+main().catch(error => {
+  console.error('Fatal error:', error);
+  process.exit(1);
+});
+```
+
+---
+
+### Other examples in Algod Client
+
+- [Node Health and Status](/docs/algokit-utils/typescript/latest/examples/algod-client/01-node-health-status/)
+- [Version and Genesis Information](/docs/algokit-utils/typescript/latest/examples/algod-client/02-version-genesis/)
+- [Ledger Supply Information](/docs/algokit-utils/typescript/latest/examples/algod-client/03-ledger-supply/)
+- [Account Information](/docs/algokit-utils/typescript/latest/examples/algod-client/04-account-info/)
+- [Transaction Parameters](/docs/algokit-utils/typescript/latest/examples/algod-client/05-transaction-params/)
+- [Send and Confirm Transaction](/docs/algokit-utils/typescript/latest/examples/algod-client/06-send-transaction/)
+- [Pending Transactions](/docs/algokit-utils/typescript/latest/examples/algod-client/07-pending-transactions/)
+- [Block Data](/docs/algokit-utils/typescript/latest/examples/algod-client/08-block-data/)
+- [Asset Information](/docs/algokit-utils/typescript/latest/examples/algod-client/09-asset-info/)
+- **Application Information**
+- [Application Boxes](/docs/algokit-utils/typescript/latest/examples/algod-client/11-application-boxes/)
+- [TEAL Compile and Disassemble](/docs/algokit-utils/typescript/latest/examples/algod-client/12-teal-compile/)
+- [Transaction Simulation](/docs/algokit-utils/typescript/latest/examples/algod-client/13-simulation/)
+- [Ledger State Deltas](/docs/algokit-utils/typescript/latest/examples/algod-client/14-state-deltas/)
+- [Transaction Proof](/docs/algokit-utils/typescript/latest/examples/algod-client/15-transaction-proof/)
+- [Light Block Header Proof](/docs/algokit-utils/typescript/latest/examples/algod-client/16-lightblock-proof/)
+- [State Proof](/docs/algokit-utils/typescript/latest/examples/algod-client/17-state-proof/)
+- [DevMode Timestamp Offset](/docs/algokit-utils/typescript/latest/examples/algod-client/18-devmode-timestamp/)
+- [Sync Round Management](/docs/algokit-utils/typescript/latest/examples/algod-client/19-sync-round/)
