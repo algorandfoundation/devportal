@@ -183,6 +183,14 @@ export default defineConfig({
               link: 'getting-started/algokit-quick-start',
             },
             {
+              label: 'Tutorial: Your First Transaction',
+              link: 'getting-started/your-first-transaction',
+            },
+            {
+              label: 'Tutorial: Your First Asset',
+              link: 'getting-started/your-first-asset',
+            },
+            {
               label: 'AlgoKit Examples Gallery',
               link: 'https://examples.dev.algorand.co',
               attrs: { target: '_blank', rel: 'noopener' },

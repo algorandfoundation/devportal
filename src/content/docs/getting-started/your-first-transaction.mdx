@@ -1,0 +1,201 @@
+---
+title: Your First Transaction
+---
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+import { Steps } from '@astrojs/starlight/components';
+import { LinkCard } from '@astrojs/starlight/components';
+
+**Hello, Developer! Welcome to your first transaction on Algorand!**
+
+This guide will walk you through sending your first ALGO transaction using AlgoKit Utils and TypeScript.
+
+By the end of this guide, you'll be able to:
+
+- Connect to a local Algorand network
+- Create and fund accounts
+- Send a payment transaction
+- Build an atomic transaction group
+
+---
+
+## Prerequisites
+
+Before you begin, make sure you have:
+
+- [AlgoKit installed](/algokit/get-started)
+- [Docker](https://docker.com/download/)
+- [Node.js](https://nodejs.org/)
+- A TypeScript environment
+
+---
+
+## Start a LocalNet
+
+When building on Algorand, it's recommended to use a local blockchain for testing.
+
+Start LocalNet by running:
+
+```shell showLineNumbers=false frame=none
+algokit localnet start
+```
+
+---
+
+## Install Dependencies
+
+<Tabs>
+<TabItem label="macOS" icon="apple">
+
+Install AlgoKit Utils:
+
+```shell showLineNumbers=false frame=none
+npm install @algorandfoundation/algokit-utils
+```
+
+</TabItem>
+</Tabs>
+
+---
+
+## Create Your Script
+
+Create a new file:
+
+```shell showLineNumbers=false frame=none
+first-transaction.ts
+```
+
+---
+
+## Write the Code
+
+<Tabs>
+<TabItem label="TypeScript" icon="seti:typescript">
+
+<Steps>
+
+1. Initialize the Algorand client
+
+```ts showLineNumbers=false frame=none
+import { AlgorandClient, algo } from "@algorandfoundation/algokit-utils";
+
+async function main(): Promise<void> {
+  console.log("👋 Starting your first transaction...");
+
+  const algorand = AlgorandClient.defaultLocalNet();
+```
+
+---
+
+2. Create test accounts
+
+```ts showLineNumbers=false frame=none
+const alice = await algorand.account.fromEnvironment('ALICE', algo(100));
+const bob = await algorand.account.fromEnvironment('BOB', algo(100));
+
+console.log(`Alice's address: ${alice.addr}`);
+console.log(`Bob's address: ${bob.addr}`);
+```
+
+---
+
+3. Send a payment transaction
+
+```ts showLineNumbers=false frame=none
+const payResult = await algorand.send.payment({
+  sender: alice.addr,
+  receiver: bob.addr,
+  amount: algo(2),
+  note: 'Hi, Bob!',
+});
+
+console.log(`Payment confirmed with TxnID: ${payResult.txIds[0]}`);
+```
+
+---
+
+4. Fetch account information
+
+```ts showLineNumbers=false frame=none
+const bobAccountInfo = await algorand.account.getInformation(bob.addr);
+
+console.log("Bob's account info:", bobAccountInfo);
+```
+
+---
+
+5. Create an atomic transaction group
+
+```ts showLineNumbers=false frame=none
+const groupResult = await algorand.send
+  .newGroup()
+  .addPayment({
+    sender: bob.addr,
+    receiver: alice.addr,
+    amount: algo(1),
+    note: 'Thanks, Alice!',
+  })
+  .addPayment({
+    sender: bob.addr,
+    receiver: alice.addr,
+    amount: algo(0.5),
+  })
+  .send();
+
+console.log(`Atomic group confirmed with TxnID: ${groupResult.txIds[0]}`);
+```
+
+---
+
+6. Run the script
+
+```ts showLineNumbers=false frame=none
+}
+
+main().catch(console.error);
+```
+
+</Steps>
+
+</TabItem>
+</Tabs>
+
+---
+
+## Run the Script
+
+```shell showLineNumbers=false frame=none
+npx tsx first-transaction.ts
+```
+
+---
+
+## View in Lora
+
+<LinkCard
+  href='https://lora.algokit.io/localnet'
+  title='Open Lora'
+  description='Visualize accounts and transactions on LocalNet.'
+/>
+
+---
+
+## What You Learned
+
+You successfully:
+
+- Created accounts
+- Sent ALGO
+- Queried blockchain state
+- Built an atomic transaction group
+
+---
+
+## Next Steps
+
+<LinkCard
+  title='Your First Asset'
+  href='/algokit/tutorials/your-first-asset'
+  description='Create and transfer your first Algorand Standard Asset.'
+/>
