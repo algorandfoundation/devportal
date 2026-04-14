@@ -4,14 +4,14 @@ title: From Ethereum to Algorand
 
 import { LinkCard } from '@astrojs/starlight/components';
 
-If you’re coming from Ethereum, this guide maps your existing knowledge to Algorand as quickly as possible. The goal is to draw correlations between terms and concepts and point out key paradigm differences. 
+If you’re coming from Ethereum, this guide maps your existing knowledge to Algorand as quickly as possible. The goal is to draw correlations between terms and concepts and point out key paradigm differences.
 
 ---
 
 ## Quick Mapping
 
 | Ethereum                    | Algorand                          | Key Difference               |
-|---------------------------- |-----------------------------------|------------------------------| 
+| --------------------------- | --------------------------------- | ---------------------------- |
 | EOA (20 bytes Address)      | Account (32 byte Address)         | Same concept                 |
 | Contract Account            | Application + Application Account | Separate from accounts       |
 | Smart Contract              | Application                       | Has its own account          |
@@ -59,17 +59,13 @@ Applications can also initiate transactions. These are called inner transactions
 
 On Ethereum, tokens are defined by smart contracts, typically based on accepted standards. Each standard adds its own rules and interacting with tokens requires calling those contracts.
 
-On Algorand, tokens are called Algorand Standard Assets (ASAs). You do not deploy a contract to create one because they are a part of the base protocol. Every ASA has the same security guarantees as the Algo token itself. 
+On Algorand, tokens are called Algorand Standard Assets (ASAs). You do not deploy a contract to create one because they are a part of the base protocol. Every ASA has the same security guarantees as the Algo token itself.
 
 Transfers are as simple as submitting an asset transfer transaction to the network and referencing the desired ASA. The only extra step is opting in; an account's owner must opt in before receiving an asset. This prevents spam and controls storage usage.
 
 Another key difference is that ASAs are identified by an integer ID, not a contract address.
 
-<LinkCard
-  title='Assets'
-  description='Learn more about ASAs'
-  href='/concepts/assets/overview'
-/>
+<LinkCard title='Assets' description='Learn more about ASAs' href='/concepts/assets/overview' />
 
 #### Costs: Fees vs Storage
 
@@ -77,7 +73,7 @@ Ethereum charges for computation. Every operation consumes gas, and costs can va
 
 Algorand separates costs into two concepts: transaction fees, which are flat and predictable, and storage, which has a variable cost based on the size of the data being stored.
 
-The base transaction fee is small and predictable and is only paid when a transaction is successfully included in a block. 
+The base transaction fee is small and predictable and is only paid when a transaction is successfully included in a block.
 
 Storage is managed through the minimum balance requirement. As you store more data or opt into assets, your required balance increases.
 
@@ -92,8 +88,9 @@ This means you pay for how much state you use, not how complex your code is.
 #### State & Execution Model
 
 There are three types of storage on Algorand:
+
 - **Global storage** is shared across all users.
-- **Local storage** is tied to individual accounts. 
+- **Local storage** is tied to individual accounts.
 - **Box storage** allows for flexible key-value data storage.
 
 The important part of these types is how they are accessed; you must declare which data your application will read or write before execution. Nodes can then prepare everything in advance.
@@ -112,7 +109,7 @@ On Algorand, applications cannot call other applications in the same way. Instea
 
 This shifts how you design systems. Instead of thinking in terms of nested calls, you think in terms of coordinated actions that are declared up front. It removes hidden execution paths and makes outcomes easier to reason about.
 
-An added benefit to this is that if one of the grouped transactions were to fail, all other transactions in the group also fail, but no transaction fee is charged for any of the transactions within the group. 
+An added benefit to this is that if one of the grouped transactions were to fail, all other transactions in the group also fail, but no transaction fee is charged for any of the transactions within the group.
 
 #### No implicit execution on token transfer
 
@@ -170,7 +167,7 @@ With [ARC-55](/arc-standards/arc-0055/#abstract), coordination can also happen o
 
 Algorand allows multiple transactions to be grouped together. The group will either succeed entirely or fail.
 
-This replaces many patterns that would require complex contract logic on Ethereum. It is commonly used when interacting with applications. For example, sending a token and calling a contract can be done in one atomic group. 
+This replaces many patterns that would require complex contract logic on Ethereum. It is commonly used when interacting with applications. For example, sending a token and calling a contract can be done in one atomic group.
 
 This is the foundation for how most multi-step interactions are built on Algorand.
 
@@ -186,11 +183,7 @@ Rekeying allows an account to change its signing authority without changing its 
 
 This enables flexible security models. It can also simulate patterns similar to account abstraction, but without needing additional infrastructure.
 
-<LinkCard
-  title='Rekeying'
-  description='Learn more'
-  href='/concepts/accounts/rekeying'
-/>
+<LinkCard title='Rekeying' description='Learn more' href='/concepts/accounts/rekeying' />
 
 #### Re-Entrancy Resistance
 
@@ -228,21 +221,21 @@ In most cases, a single application can handle many users. You only need factori
 
 ## Tools & Services
 
-| Category                 | Ethereum             | Algorand                                                                                                                                |
-|--------------------------|----------------------|-----------------------------------------------------------------------------------------------------------------------------------------|
-| Block Explorer           | Etherscan            | [List of block explorers](https://algorand.co/ecosystem/directory?tags=Explorer )                                                       |
-| API / Node Access        | Infura               | [nodely](https://nodely.io/), [BlockDaemon](https://www.blockdaemon.com/protocols/algorand), [GetBlock](https://getblock.io/nodes/algo/)|
-| Wallet                   | Metamask             | [Pera](https://perawallet.app/), [Defly](https://defly.app/) (WalletConnect)                                                            |
-| Dev Framework            | Hardhat, Truffle     | [AlgoKit](/algokit/algokit-intro/)                                                                                                      |
-| Local Network            | Ganache              | [Sandbox](https://github.com/algorand/sandbox)                                                                                          |
+| Category          | Ethereum         | Algorand                                                                                                                                 |
+| ----------------- | ---------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
+| Block Explorer    | Etherscan        | [List of block explorers](https://algorand.co/ecosystem/directory?tags=Explorer)                                                         |
+| API / Node Access | Infura           | [nodely](https://nodely.io/), [BlockDaemon](https://www.blockdaemon.com/protocols/algorand), [GetBlock](https://getblock.io/nodes/algo/) |
+| Wallet            | Metamask         | [Pera](https://perawallet.app/), [Defly](https://defly.app/) (WalletConnect)                                                             |
+| Dev Framework     | Hardhat, Truffle | [AlgoKit](/algokit/algokit-intro/)                                                                                                       |
+| Local Network     | Ganache          | [Sandbox](https://github.com/algorand/sandbox)                                                                                           |
 
 ## Standards (ERC vs ARC)
 
-| Ethereum         | Algorand                         |
-|------------------|----------------------------------|
-| ERC-20           | ASA / ARC-20                     |
-| ERC-721          | ASA / ARC-3 / ARC-69             |
-| ERC-1155         | ASA variants                     |
+| Ethereum | Algorand             |
+| -------- | -------------------- |
+| ERC-20   | ASA / ARC-20         |
+| ERC-721  | ASA / ARC-3 / ARC-69 |
+| ERC-1155 | ASA variants         |
 
 [ARC standards](/arc-standards/) define conventions on top of native assets.
 
@@ -250,4 +243,4 @@ In most cases, a single application can handle many users. You only need factori
 
 This was just a high-level overview to give you a clearer mental model of Algorand by drawing correlations to Ethereum. We've covered how Algorand separates logic from accounts. Tokens are native. Transactions are composed instead of being chained. Fees are predictable, and storage is explicit.
 
-When you're ready to go deeper, carry on to the next sections. 
+When you're ready to go deeper, carry on to the next sections.
