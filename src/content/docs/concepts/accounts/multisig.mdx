@@ -1,31 +1,31 @@
 ---
-title: Multisignature Accounts
+title: Multi-Signature Accounts
 ---
 
 import { Code } from '@astrojs/starlight/components';
 import { Tabs, TabItem } from '@astrojs/starlight/components';
 import RemoteCode from '/src/components/RemoteCode.astro';
 
-Multisignature accounts are a powerful, natively-supported security and governance feature on Algorand that require multiple parties to approve transactions. Think of a multisignature account as a secure vault with multiple keyholes, where a predetermined number of keys must be used together to open it.
+Multi-signature accounts are a powerful, natively-supported security and governance feature on Algorand that require multiple parties to approve transactions. Think of a multi-signature account as a secure vault with multiple keyholes, where a predetermined number of keys must be used together to open it.
 
-For example, a multisignature account might be configured so that any 2 out of 3 designated signers must approve before funds can be transferred. This creates a balance between security and operational flexibility that's valuable in many scenarios:
+For example, a multi-signature account might be configured so that any 2 out of 3 designated signers must approve before funds can be transferred. This creates a balance between security and operational flexibility that's valuable in many scenarios:
 
 - **Treasury management** for organizations where multiple board members must approve expenditures
 - **Shared accounts** between business partners who want mutual consent for transactions
 - **Enhanced security** for high-value accounts by distributing signing authority across different devices or locations
 - **Recovery options** where backup signers can help regain access if a primary key is lost
 
-## What is a Multisignature Account?
+## What is a Multi-Signature Account?
 
-Technically, a multisignature account on Algorand is a logical representation of an ordered set of addresses with a _threshold_ and _version_. The threshold determines how many signatures are required to authorize any transaction from this account (such as 2-of-3 or 3-of-5), while the version specifies the multisignature protocol being used.
-Multisignature accounts can perform the same operations as standard accounts, including sending transactions and participating in consensus. The address for a multisignature account is derived from the ordered list of participant accounts, the threshold, and version values.
+Technically, a multi-signature account on Algorand is a logical representation of an ordered set of addresses with a _threshold_ and _version_. The threshold determines how many signatures are required to authorize any transaction from this account (such as 2-of-3 or 3-of-5), while the version specifies the multi-signature protocol being used.
+Multi-signature accounts can perform the same operations as standard accounts, including sending transactions and participating in consensus. The address for a multi-signature account is derived from the ordered list of participant accounts, the threshold, and version values.
 
 Some important characteristics to understand:
 
-- The order of addresses matters when creating the multisignature account. Using addresses `[A, B, C]` creates a different multisignature address than `[B, A, C]`.
+- The order of addresses matters when creating the multi-signature account. Using addresses `[A, B, C]` creates a different multi-signature address than `[B, A, C]`.
 - However, the order of signatures does not matter when signing a transaction.
-- Multisignature accounts cannot nest other multisignature accounts. In other words, a multisignature account cannot include another multisignature account as one of its participant addresses.
-- You must [send Algos](/concepts/accounts/funding) to the multisignature address to initialize its state on the ledger, just like with any other account.
+- Multi-signature accounts cannot nest other multi-signature accounts. In other words, a multi-signature account cannot include another multi-signature account as one of its participant addresses.
+- You must [send Algos](/concepts/accounts/funding) to the multi-signature address to initialize its state on the ledger, just like with any other account.
 
 ## Benefits & Implications of Using Multisig Accounts
 
@@ -37,9 +37,9 @@ Some important characteristics to understand:
 | **Governance Mechanisms:** Enables cryptographically secure governance structures where a subset of authorized users must approve actions                                | **Not Always Necessary:** For simple use cases where security and governance are not critical concerns, a single-signature account may be more practical |
 | **Integration with Smart Contracts:** Can be paired with Algorand Smart Contracts for complex governance models requiring specific signature subsets                     | **Cryptographic Best Practices** Keys used as signers in critical multisig accounts should be used exclusively for this purpose.                         |
 
-## How to Generate a Multisignature Account
+## How to Generate a Multi-Signature Account
 
-There are different ways to generate a multisignature account. The examples below demonstrate how to create a multisignature account that requires 2 signatures from 3 possible signers to authorize transaction:
+There are different ways to generate a multi-signature account. The examples below demonstrate how to create a multi-signature account that requires 2 signatures from 3 possible signers to authorize transaction:
 
 <Tabs syncKey='lang'>
   <TabItem label='Utils (TypeScript)' icon='seti:typescript'>
@@ -47,7 +47,7 @@ There are different ways to generate a multisignature account. The examples belo
       src='https://raw.githubusercontent.com/algorandfoundation/devportal-code-examples/refs/heads/main/projects/typescript-examples/algokit-utils-ts/accounts/multisignature-accounts.ts'
       snippet='MULTISIG_ACCOUNT'
       lang='ts'
-      title='Multisignature Account'
+      title='Multi-Signature Account'
       frame='none'
     />
   </TabItem>
@@ -56,7 +56,7 @@ There are different ways to generate a multisignature account. The examples belo
       src='https://raw.githubusercontent.com/algorandfoundation/devportal-code-examples/refs/heads/main/projects/python-examples/algokit_utils_py_examples/accounts/multisignature_accounts.py'
       snippet='MULTISIG_ACCOUNT'
       lang='py'
-      title='Multisignature Account'
+      title='Multi-Signature Account'
       frame='none'
     />
   </TabItem>

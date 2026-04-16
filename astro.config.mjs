@@ -236,7 +236,7 @@ export default defineConfig({
                   link: 'concepts/accounts/rekeying',
                 },
                 {
-                  label: 'Multisignature Accounts',
+                  label: 'Multi-Signature Accounts',
                   link: 'concepts/accounts/multisig',
                 },
               ],
