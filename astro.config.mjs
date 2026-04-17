@@ -1048,10 +1048,6 @@ export default defineConfig({
                       label: 'Subscriptions',
                       link: 'algokit/subscriber/typescript/subscriptions',
                     },
-                    {
-                      label: 'v3 Migration Guide',
-                      link: 'algokit/subscriber/typescript/v3-migration',
-                    },
                   ],
                 },
                 {
