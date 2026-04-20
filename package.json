@@ -76,16 +76,16 @@
     "dotenv-cli": "^11.0.0",
     "eslint": "^9.39.2",
     "eslint-config-prettier": "^10.1.8",
-    "eslint-plugin-astro": "^1.5.0",
+    "eslint-plugin-astro": "^1.7.0",
     "handlebars": "^4.7.8",
     "husky": "^9.1.7",
     "openai": "^6.21.0",
     "pnpm": "^10.29.3",
-    "prettier": "^3.8.1",
+    "prettier": "^3.8.3",
     "prettier-plugin-astro": "^0.14.1",
     "tsx": "^4.21.0",
     "typescript": "^5.9.3",
-    "typescript-eslint": "^8.55.0"
+    "typescript-eslint": "^8.59.0"
   },
   "engines": {
     "node": ">=18",
