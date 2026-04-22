@@ -1,0 +1,236 @@
+---
+title: Your First Asset
+---
+
+import { Image } from 'astro:assets';
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+import { Steps } from '@astrojs/starlight/components';
+import { LinkCard } from '@astrojs/starlight/components';
+import Figure from '/src/components/Figure.astro';
+
+import LORAConnectWallet from '@images/LORAConnectWallet.png';
+import LORAConnectAlice from '@images/LORAConnectAlice.png'; 
+import lora3 from '@images/lora3.png';
+import lora4 from '@images/lora4.png';
+import lora5 from '@images/lora5.png';
+import lora6 from '@images/lora6.png';
+import lora7 from '@images/lora7.png';
+import lora8 from '@images/lora8.png';
+
+**Hello, Developer! Welcome to your first asset on Algorand!**
+
+This guide will walk you through creating your first **Algorand Standard Asset (ASA)** on LocalNet, viewing it in Lora, and sending it to another account.
+
+By the end of this guide, you will:
+
+- Create an ASA using AlgoKit Utils
+- View your asset in Lora
+- Opt into the asset
+- Send the asset to another account
+
+---
+
+## Prerequisites
+
+Before you begin, make sure you have:
+
+- [AlgoKit installed](/getting-started/algokit-quick-start/#install-algokit)
+- [Docker](https://docker.com/download/)
+- [Node.js](https://nodejs.org/)
+- A TypeScript environment (VSCode with language specific extenstions installed)
+
+---
+
+## Start a LocalNet
+
+We suggest starting out by deploying your first asset on a local version of the Algorand blockchain. Ensure that Docker is running already on your machine, then run the following command to start the local chain:
+
+```shell showLineNumbers=false frame=none
+algokit localnet start
+```
+
+---
+
+## Install Dependencies
+
+Back in your IDE create a new directory for this tutorial and install [algokit-utils](/algokit/utils/algokit-clients).
+
+<Tabs>
+<TabItem label="macOS" icon="apple">
+
+```shell showLineNumbers=false frame=none
+npm install @algorandfoundation/algokit-utils
+```
+
+</TabItem>
+</Tabs>
+
+---
+
+## Create Your Script
+
+Create a new file where you will write the script that will create your first asset.
+
+```shell showLineNumbers=false frame=none
+first-asset.ts
+```
+
+---
+
+## Create Your Asset
+
+Each step of this section of the tutorial will add code to the file you just created
+
+<Tabs>
+  <TabItem label="TypeScript" icon="seti:typescript">
+
+<Steps>
+1. Initialize the client and the test account that will create the asset
+
+    ```ts showLineNumbers=false frame=none
+    import { AlgorandClient, algo } from "@algorandfoundation/algokit-utils";
+
+    async function main(): Promise<void> {
+      console.log("🚀 Creating your first asset...");
+
+      const algorand = AlgorandClient.defaultLocalNet();
+
+      const alice = await algorand.account.fromEnvironment("ALICE", algo(100));
+
+      console.log(`Alice: ${alice.addr}`);
+    ```
+
+2. Pass in the parameters of the [assetCreate()](/algokit/utils/typescript/asset/#creation) method
+
+    ```ts showLineNumbers=false frame=none
+    const result = await algorand.send.assetCreate({
+      //Mandatory fields
+      sender: alice.addr,
+      decimals: 6, //Number decimal places a whole unit can be broken up into
+      total: 1_000_000_000n, //Number whole units + decimal places, ie. 1,000 
+      defaultFrozen: false,
+
+      //Optional asset config fields
+      assetName: 'My First ASA',
+      unitName: 'MFA',
+      manager: alice.addr,
+      reserve: alice.addr,
+      freeze: alice.addr,
+      clawback: alice.addr,
+      url: 'https://algorand.co',
+    });
+
+    //Capture the unique asset ID of the asset after it's created
+    const assetId = result.assetId;
+
+    console.log(`Asset created with ID: ${assetId}`);
+    }
+    ```
+
+3. Call main the function
+    ```ts showLineNumbers=false frame=none
+    main().catch(console.error);
+    ```
+</Steps>
+
+</TabItem>
+</Tabs>
+
+---
+
+## Run the Script
+Now run your script and take a look at the logs. In your terminal navigate to your project directory and run:
+
+```shell showLineNumbers=false frame=none
+npx tsx first-asset.ts
+```
+
+---
+
+## Open Lora
+
+Launch [LORA](/algokit/lora/overview) through your terminal with the command:
+
+```shell showLineNumbers=false frame=none
+algokit explore
+```
+
+---
+
+## View Your Asset in Lora
+
+<Steps>
+1. Open Lora and connect your wallet
+
+    <Figure src={LORAConnectWallet} alt='Lora home screen' />
+
+2. Click on **Accounts** and select Alice
+
+    <Figure src={LORAConnectAlice} alt='Lora connect wallet modal' />
+
+3. Scroll to the **Assets** section
+
+    You should see your newly created asset listed.
+
+    <Figure src={lora3} alt='Lora asset list' />
+
+4. Click the Asset ID to view details
+
+    <Figure src={lora4} alt='Lora asset details' />
+
+5. Switch to Bob's account
+
+    You should now see the transferred asset in Bob's holdings.
+
+    <Figure src={lora5} alt='Bob asset view' />
+</Steps>
+
+---
+
+## Send an Asset Using Lora
+
+<Steps>
+1. Navigate to Bob's account and select the asset
+
+    <Figure src={lora6} alt='Select asset' />
+
+2. Click **Send**
+
+    <Figure src={lora7} alt='Send asset UI' />
+
+3. Enter Alice's address and an amount
+
+4. Submit and sign the transaction
+
+    <Figure src={lora8} alt='Transaction confirmation' />
+</Steps>
+
+---
+
+## What You Learned
+
+You successfully:
+
+- Created an Algorand Standard Asset
+- Opted into the asset
+- Transferred it between accounts
+- Viewed it in Lora
+- Sent it using a UI
+
+This is the full lifecycle of an asset on Algorand.
+
+---
+
+## Next Steps
+
+<LinkCard
+  title='Assets Overview'
+  href='/concepts/assets/overview'
+  description='Learn more about how Algorand Standard Assets work.'
+/>
+
+<LinkCard
+  title='Transactions'
+  href='/concepts/transactions/overview'
+  description='Understand transaction types and grouping.'
+/>

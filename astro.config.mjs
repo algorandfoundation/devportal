@@ -179,16 +179,26 @@ export default defineConfig({
           items: [
             { label: 'Portal Guide', link: '/getting-started/portal-guide' },
             {
-              label: 'Tutorial: Your First Smart Contract',
-              link: 'getting-started/algokit-quick-start',
-            },
-            {
-              label: 'Tutorial: Your First Transaction',
-              link: 'getting-started/your-first-transaction',
-            },
-            {
-              label: 'Tutorial: Your First Asset',
-              link: 'getting-started/your-first-asset',
+              label: 'Tutorials',
+              collapsed: false,
+              items: [
+                {
+                  label: 'Getting ready to build',
+                  link: 'getting-started/tutorials/get-ready-to-build',
+                },
+                {
+                  label: 'Your First Asset',
+                  link: 'getting-started/tutorials/your-first-asset',
+                },
+                {
+                  label: 'Your First Transaction',
+                  link: 'getting-started/tutorials/your-first-transaction',
+                },
+                {
+                  label: 'Your First Smart Contract',
+                  link: 'getting-started/tutorials/first-smart-contract',
+                },
+              ],
             },
             {
               label: 'AlgoKit Examples Gallery',

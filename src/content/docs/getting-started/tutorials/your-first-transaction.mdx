@@ -23,7 +23,7 @@ By the end of this guide, you'll be able to:
 
 Before you begin, make sure you have:
 
-- [AlgoKit installed](/algokit/get-started)
+- [AlgoKit installed](/getting-started/algokit-quick-start/#install-algokit)
 - [Docker](https://docker.com/download/)
 - [Node.js](https://nodejs.org/)
 - A TypeScript environment
@@ -71,91 +71,79 @@ first-transaction.ts
 ## Write the Code
 
 <Tabs>
-<TabItem label="TypeScript" icon="seti:typescript">
+  <TabItem label="TypeScript" icon="seti:typescript">
 
 <Steps>
-
 1. Initialize the Algorand client
 
-```ts showLineNumbers=false frame=none
-import { AlgorandClient, algo } from "@algorandfoundation/algokit-utils";
+   ```ts showLineNumbers=false frame=none
+   import { AlgorandClient, algo } from "@algorandfoundation/algokit-utils";
 
-async function main(): Promise<void> {
-  console.log("👋 Starting your first transaction...");
+   async function main(): Promise<void> {
+     console.log("👋 Starting your first transaction...");
 
-  const algorand = AlgorandClient.defaultLocalNet();
-```
-
----
+     const algorand = AlgorandClient.defaultLocalNet();
+   ```
 
 2. Create test accounts
 
-```ts showLineNumbers=false frame=none
-const alice = await algorand.account.fromEnvironment('ALICE', algo(100));
-const bob = await algorand.account.fromEnvironment('BOB', algo(100));
+   ```ts showLineNumbers=false frame=none
+   const alice = await algorand.account.fromEnvironment('ALICE', algo(100));
+   const bob = await algorand.account.fromEnvironment('BOB', algo(100));
 
-console.log(`Alice's address: ${alice.addr}`);
-console.log(`Bob's address: ${bob.addr}`);
-```
-
----
+   console.log(`Alice's address: ${alice.addr}`);
+   console.log(`Bob's address: ${bob.addr}`);
+   ```
 
 3. Send a payment transaction
 
-```ts showLineNumbers=false frame=none
-const payResult = await algorand.send.payment({
-  sender: alice.addr,
-  receiver: bob.addr,
-  amount: algo(2),
-  note: 'Hi, Bob!',
-});
+   ```ts showLineNumbers=false frame=none
+   const payResult = await algorand.send.payment({
+     sender: alice.addr,
+     receiver: bob.addr,
+     amount: algo(2),
+     note: 'Hi, Bob!',
+   });
 
-console.log(`Payment confirmed with TxnID: ${payResult.txIds[0]}`);
-```
-
----
+   console.log(`Payment confirmed with TxnID: ${payResult.txIds[0]}`);
+   ```
 
 4. Fetch account information
 
-```ts showLineNumbers=false frame=none
-const bobAccountInfo = await algorand.account.getInformation(bob.addr);
+   ```ts showLineNumbers=false frame=none
+   const bobAccountInfo = await algorand.account.getInformation(bob.addr);
 
-console.log("Bob's account info:", bobAccountInfo);
-```
-
----
+   console.log("Bob's account info:", bobAccountInfo);
+   ```
 
 5. Create an atomic transaction group
 
-```ts showLineNumbers=false frame=none
-const groupResult = await algorand.send
-  .newGroup()
-  .addPayment({
-    sender: bob.addr,
-    receiver: alice.addr,
-    amount: algo(1),
-    note: 'Thanks, Alice!',
-  })
-  .addPayment({
-    sender: bob.addr,
-    receiver: alice.addr,
-    amount: algo(0.5),
-  })
-  .send();
+   ```ts showLineNumbers=false frame=none
+   const groupResult = await algorand.send
+     .newGroup()
+     .addPayment({
+       sender: bob.addr,
+       receiver: alice.addr,
+       amount: algo(1),
+       note: 'Thanks, Alice!',
+     })
+     .addPayment({
+       sender: bob.addr,
+       receiver: alice.addr,
+       amount: algo(0.5),
+     })
+     .send();
 
-console.log(`Atomic group confirmed with TxnID: ${groupResult.txIds[0]}`);
-```
-
----
+   console.log(`Atomic group confirmed with TxnID: ${groupResult.txIds[0]}`);
+   ```
 
 6. Run the script
 
-```ts showLineNumbers=false frame=none
-}
+   ```ts showLineNumbers=false frame=none
+   }
 
-main().catch(console.error);
-```
-
+   main().catch(console.error);
+   ```
 </Steps>
 
 </TabItem>
