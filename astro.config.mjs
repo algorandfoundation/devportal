@@ -187,6 +187,10 @@ export default defineConfig({
                   link: 'getting-started/tutorials/get-ready-to-build',
                 },
                 {
+                  label: 'Using LORA',
+                  link: 'getting-started/tutorials/using-lora',
+                },
+                {
                   label: 'Your First Asset',
                   link: 'getting-started/tutorials/your-first-asset',
                 },
