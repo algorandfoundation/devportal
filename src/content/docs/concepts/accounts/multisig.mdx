@@ -11,10 +11,10 @@ Multisignature accounts are a powerful, natively-supported security and governan
 
 For example, a multisignature account might be configured so that any 2 out of 3 designated signers must approve before funds can be transferred. This creates a balance between security and operational flexibility that's valuable in many scenarios:
 
-- **Treasury management** for organizations where multiple board members must approve expenditures  
-- **Shared accounts** between business partners who want mutual consent for transactions  
-- **Enhanced security** for high-value accounts by distributing signing authority across different devices or locations  
-- **Recovery options** where backup signers can help regain access if a primary key is lost  
+- **Treasury management** for organizations where multiple board members must approve expenditures
+- **Shared accounts** between business partners who want mutual consent for transactions
+- **Enhanced security** for high-value accounts by distributing signing authority across different devices or locations
+- **Recovery options** where backup signers can help regain access if a primary key is lost
 
 ---
 
@@ -26,29 +26,29 @@ Multisignature accounts are **native to the protocol**, not smart contracts. The
 
 This has important implications:
 
-- **No deployment required:** Multisig accounts exist as soon as they are computed  
-- **No contract risk surface:** No contract logic to audit, upgrade, or trust  
-- **Protocol-level enforcement:** Signature rules are enforced by consensus  
-- **Lower operational overhead:** No dependency on third-party contract implementations  
+- **No deployment required:** Multisig accounts exist as soon as they are computed
+- **No contract risk surface:** No contract logic to audit, upgrade, or trust
+- **Protocol-level enforcement:** Signature rules are enforced by consensus
+- **Lower operational overhead:** No dependency on third-party contract implementations
 
 Some important characteristics to understand:
 
-- The order of addresses matters when creating the multisignature account. Using `[A, B, C]` creates a different address than `[B, A, C]`.  
-- The order of signatures does not matter when signing a transaction.  
-- Multisignature accounts cannot include other multisignature accounts as participants.  
-- You must [send Algos](/concepts/accounts/funding) to the multisignature address to initialize its state on the ledger.  
+- The order of addresses matters when creating the multisignature account. Using `[A, B, C]` creates a different address than `[B, A, C]`.
+- The order of signatures does not matter when signing a transaction.
+- Multisignature accounts cannot include other multisignature accounts as participants.
+- You must [send Algos](/concepts/accounts/funding) to the multisignature address to initialize its state on the ledger.
 
 ---
 
 ## Benefits & Implications
 
-| **Benefits**                                                                                                                                                             | **Implications**                                                                                                                                         |
-| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Enhanced Security:** Requires multiple signatures for transactions, reducing single key risk                                                                            | **Coordination Required:** Signers must collaborate for every transaction                                                                                |
-| **Customizable Authorization:** Flexible threshold models (e.g., 2-of-3, 3-of-5)                                                                                          | **Key Management:** Each signer must securely manage their keys                                                                                          |
-| **Distributed Key Storage:** Keys can be stored across devices, locations, or systems                                                                                    | **Larger Transactions:** Multisig transactions are larger than single-sig                                                                                |
-| **Governance Enablement:** Enables shared control and approval flows                                                                                                     | **Not Always Necessary:** Simpler use cases may not require multisig                                                                                      |
-| **Composable with Smart Contracts:** Can be combined with application logic (e.g., ARC-55)                                                                               | **Best Practices Required:** Signer keys should be isolated and purpose-specific                                                                         |
+| **Benefits**                                                                                   | **Implications**                                                                 |
+| ---------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- |
+| **Enhanced Security:** Requires multiple signatures for transactions, reducing single key risk | **Coordination Required:** Signers must collaborate for every transaction        |
+| **Customizable Authorization:** Flexible threshold models (e.g., 2-of-3, 3-of-5)               | **Key Management:** Each signer must securely manage their keys                  |
+| **Distributed Key Storage:** Keys can be stored across devices, locations, or systems          | **Larger Transactions:** Multisig transactions are larger than single-sig        |
+| **Governance Enablement:** Enables shared control and approval flows                           | **Not Always Necessary:** Simpler use cases may not require multisig             |
+| **Composable with Smart Contracts:** Can be combined with application logic (e.g., ARC-55)     | **Best Practices Required:** Signer keys should be isolated and purpose-specific |
 
 ---
 
@@ -70,9 +70,9 @@ In this configuration:
 
 This leads to the following behavior:
 
-- `A` alone can satisfy the threshold (by providing signatures for both of its slots)  
-- `B` or `C` cannot execute a transaction alone  
-- `A + B`, `A + C` and `B + C` can execute a transaction  
+- `A` alone can satisfy the threshold (by providing signatures for both of its slots)
+- `B` or `C` cannot execute a transaction alone
+- `A + B`, `A + C` and `B + C` can execute a transaction
 
 ### Single-Signer Execution in a Multisig
 
@@ -114,6 +114,7 @@ The examples below demonstrate how to create a multisignature account that requi
     $ goal account multisig new $ADDRESS1 $ADDRESS2 $ADDRESS3 -T 2
     Created new account with address [MULTISIG_ADDRESS]
     ```
+
   </TabItem>
 </Tabs>
 
@@ -123,11 +124,11 @@ The protocol defines **who must sign**, but not **how signatures are coordinated
 
 To execute a multisig transaction:
 
-1. A transaction (or group) is constructed  
-2. It is shared with other signers  
-3. Each signer provides their signature  
-4. Signatures are assembled to meet the threshold  
-5. The final transaction is broadcast  
+1. A transaction (or group) is constructed
+2. It is shared with other signers
+3. Each signer provides their signature
+4. Signatures are assembled to meet the threshold
+5. The final transaction is broadcast
 
 This coordination is traditionally handled **off-chain**, requiring signers to exchange partially signed transactions via messaging, email, wallet tooling, or backend services.
 
@@ -135,9 +136,9 @@ This is the real friction point of multisig systems—not the cryptography, but 
 
 There are three common approaches:
 
-- **Manual coordination:** Passing unsigned and partially signed transactions between participants  
-- **Backend-assisted coordination:** A centralized service aggregates and distributes signatures  
-- **On-chain coordination (ARC-55):** A standardized contract-based coordination layer  
+- **Manual coordination:** Passing unsigned and partially signed transactions between participants
+- **Backend-assisted coordination:** A centralized service aggregates and distributes signatures
+- **On-chain coordination (ARC-55):** A standardized contract-based coordination layer
 
 ---
 
@@ -155,21 +156,21 @@ You can find full ARC-55 details here:
 
 An ARC-55-compliant smart contract is deployed once per multisig group. The admin sets up the contract with the threshold and signer addresses. From there, the workflow is fully on-chain:
 
-- A signer generates a new transaction group nonce using `arc55_newTransactionGroup()`  
-- Any authorized signer adds the transaction(s) to sign using `arc55_addTransaction()`  
-- Each signer submits their signature using `arc55_setSignatures()`  
-- Once the threshold of signatures is met, anyone can assemble and broadcast the final multisig transaction  
-- Signers clean up by calling `arc55_clearSignatures()` and `arc55_removeTransaction()`, reclaiming their minimum balance requirements  
+- A signer generates a new transaction group nonce using `arc55_newTransactionGroup()`
+- Any authorized signer adds the transaction(s) to sign using `arc55_addTransaction()`
+- Each signer submits their signature using `arc55_setSignatures()`
+- Once the threshold of signatures is met, anyone can assemble and broadcast the final multisig transaction
+- Signers clean up by calling `arc55_clearSignatures()` and `arc55_removeTransaction()`, reclaiming their minimum balance requirements
 
 ### Typical Lifecycle
 
-- Creator deploys an ARC-55 compliant smart contract  
-- Admin sets threshold and signer addresses  
-- A signer creates a transaction group nonce  
-- Transactions are added to the group (MBR paid)  
-- Signers submit signatures  
-- Anyone submits the finalized transaction  
-- State is cleared and MBR is reclaimed  
+- Creator deploys an ARC-55 compliant smart contract
+- Admin sets threshold and signer addresses
+- A signer creates a transaction group nonce
+- Transactions are added to the group (MBR paid)
+- Signers submit signatures
+- Anyone submits the finalized transaction
+- State is cleared and MBR is reclaimed
 
 ### Positioning
 
