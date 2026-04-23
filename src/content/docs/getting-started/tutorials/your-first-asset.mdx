@@ -9,7 +9,7 @@ import { LinkCard } from '@astrojs/starlight/components';
 import Figure from '/src/components/Figure.astro';
 
 import LORAConnectWallet from '@images/LORAConnectWallet.png';
-import LORAConnectAlice from '@images/LORAConnectAlice.png'; 
+import LORAConnectAlice from '@images/LORAConnectAlice.png';
 import lora3 from '@images/lora3.png';
 import lora4 from '@images/lora4.png';
 import lora5 from '@images/lora5.png';
@@ -102,36 +102,36 @@ Each step of this section of the tutorial will add code to the file you just cre
 
 2. Pass in the parameters of the [assetCreate()](/algokit/utils/typescript/asset/#creation) method
 
-    ```ts showLineNumbers=false frame=none
-    const result = await algorand.send.assetCreate({
-      //Mandatory fields
-      sender: alice.addr,
-      decimals: 6, //Number decimal places a whole unit can be broken up into
-      total: 1_000_000_000n, //Number whole units + decimal places, ie. 1,000 
-      defaultFrozen: false,
+   ```ts showLineNumbers=false frame=none
+   const result = await algorand.send.assetCreate({
+     //Mandatory fields
+     sender: alice.addr,
+     decimals: 6, //Number decimal places a whole unit can be broken up into
+     total: 1_000_000_000n, //Number whole units + decimal places, ie. 1,000
+     defaultFrozen: false,
 
-      //Optional asset config fields
-      assetName: 'My First ASA',
-      unitName: 'MFA',
-      manager: alice.addr,
-      reserve: alice.addr,
-      freeze: alice.addr,
-      clawback: alice.addr,
-      url: 'https://algorand.co',
-    });
+     //Optional asset config fields
+     assetName: 'My First ASA',
+     unitName: 'MFA',
+     manager: alice.addr,
+     reserve: alice.addr,
+     freeze: alice.addr,
+     clawback: alice.addr,
+     url: 'https://algorand.co',
+   });
 
-    //Capture the unique asset ID of the asset after it's created
-    const assetId = result.assetId;
+   //Capture the unique asset ID of the asset after it's created
+   const assetId = result.assetId;
 
-    console.log(`Asset created with ID: ${assetId}`);
-    }
-    ```
+   console.log(`Asset created with ID: ${assetId}`);
+   }
+   ```
 
 3. Call main the function
-    ```ts showLineNumbers=false frame=none
+   `ts showLineNumbers=false frame=none
     main().catch(console.error);
-    ```
-</Steps>
+    `
+   </Steps>
 
 </TabItem>
 </Tabs>
@@ -139,6 +139,7 @@ Each step of this section of the tutorial will add code to the file you just cre
 ---
 
 ## Run the Script
+
 Now run your script and take a look at the logs. In your terminal navigate to your project directory and run:
 
 ```shell showLineNumbers=false frame=none
@@ -164,26 +165,27 @@ algokit explore
 
     <Figure src={LORAConnectWallet} alt='Lora home screen' />
 
-2. Click on **Accounts** and select Alice
+2.  Click on **Accounts** and select Alice
 
     <Figure src={LORAConnectAlice} alt='Lora connect wallet modal' />
 
-3. Scroll to the **Assets** section
+3.  Scroll to the **Assets** section
 
     You should see your newly created asset listed.
 
     <Figure src={lora3} alt='Lora asset list' />
 
-4. Click the Asset ID to view details
+4.  Click the Asset ID to view details
 
     <Figure src={lora4} alt='Lora asset details' />
 
-5. Switch to Bob's account
+5.  Switch to Bob's account
 
-    You should now see the transferred asset in Bob's holdings.
+        You should now see the transferred asset in Bob's holdings.
 
-    <Figure src={lora5} alt='Bob asset view' />
-</Steps>
+        <Figure src={lora5} alt='Bob asset view' />
+
+    </Steps>
 
 ---
 
@@ -194,16 +196,17 @@ algokit explore
 
     <Figure src={lora6} alt='Select asset' />
 
-2. Click **Send**
+2.  Click **Send**
 
     <Figure src={lora7} alt='Send asset UI' />
 
-3. Enter Alice's address and an amount
+3.  Enter Alice's address and an amount
 
-4. Submit and sign the transaction
+4.  Submit and sign the transaction
 
-    <Figure src={lora8} alt='Transaction confirmation' />
-</Steps>
+        <Figure src={lora8} alt='Transaction confirmation' />
+
+    </Steps>
 
 ---
 

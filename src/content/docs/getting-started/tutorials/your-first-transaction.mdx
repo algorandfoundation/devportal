@@ -76,14 +76,14 @@ first-transaction.ts
 <Steps>
 1. Initialize the Algorand client
 
-   ```ts showLineNumbers=false frame=none
-   import { AlgorandClient, algo } from "@algorandfoundation/algokit-utils";
+```ts showLineNumbers=false frame=none
+import { AlgorandClient, algo } from "@algorandfoundation/algokit-utils";
 
-   async function main(): Promise<void> {
-     console.log("👋 Starting your first transaction...");
+async function main(): Promise<void> {
+  console.log("👋 Starting your first transaction...");
 
-     const algorand = AlgorandClient.defaultLocalNet();
-   ```
+  const algorand = AlgorandClient.defaultLocalNet();
+```
 
 2. Create test accounts
 
@@ -144,7 +144,8 @@ first-transaction.ts
 
    main().catch(console.error);
    ```
-</Steps>
+
+   </Steps>
 
 </TabItem>
 </Tabs>
