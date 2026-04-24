@@ -295,14 +295,10 @@ export default defineConfig({
                   label: 'Asset Operations',
                   link: 'concepts/assets/asset-operations',
                 },
-                // {
-                //   label: 'Assets Metadata',
-                //   link: 'concepts/assets/asset-metadata',
-                // },
-                // {
-                //   label: 'Known Assets',
-                //   link: 'concepts/assets/known-assets',
-                // },
+                {
+                  label: 'Assets Metadata',
+                  link: 'concepts/assets/asset-metadata',
+                },
               ],
             },
             {
