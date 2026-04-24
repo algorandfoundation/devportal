@@ -299,10 +299,6 @@ export default defineConfig({
                   label: 'Assets Metadata',
                   link: 'concepts/assets/asset-metadata',
                 },
-                // {
-                //   label: 'Known Assets',
-                //   link: 'concepts/assets/known-assets',
-                // },
               ],
             },
             {

@@ -6,9 +6,9 @@ import { Tabs, TabItem } from '@astrojs/starlight/components';
 import { Code } from '@astrojs/starlight/components';
 import { LinkCard } from '@astrojs/starlight/components';
 
-The Algorand protocol supports the creation of on-chain assets that benefit from the same security, compatibility, speed, and ease of use as the native ALGO asset. The official name for assets on Algorand is **Algorand Standard Assets (ASAs)**.
+The Algorand protocol supports the creation of on-chain assets that benefit from the same security, compatibility, speed, and ease of use as the native Algo asset. The official name for assets on Algorand is **Algorand Standard Assets (ASAs)**.
 
-With Algorand Standard Assets you can represent stablecoins, loyalty points, system credits, and in-game points, among many other digital assets. You can also represent single, unique assets like a deed for a house, collectable items, and unique parts on a supply chain.
+With Algorand Standard Assets you can represent stablecoins, loyalty points, system credits, and in-game points, among many other digital assets. You can also represent single, unique assets like a deed for a house, collectible items, and unique parts on a supply chain.
 
 # Assets Overview
 
@@ -16,12 +16,12 @@ There are several things to be aware of before getting started with assets:
 
 - For every asset an account creates or owns, its minimum balance is increased by 0.1 Algo or 100,000 microAlgo.
 - This minimum balance requirement will be placed on the original creator as long as the asset has not been destroyed. Transferring the asset does not alleviate the creator's minimum balance requirement.
-- Before a new asset can be transferred to a specific account the receiver must opt-in to receive the asset. This process is described in [Transferring Assets](/concepts/assets/asset-operations#transferring-assets).
+- Before a new asset can be transferred to a specific account, the receiver must opt-in to receive the asset. This process is described in [Transferring Assets](/concepts/assets/asset-operations#transferring-assets).
 - If any transaction is issued that would violate the minimum balance requirements, the transaction will fail.
 
 ## Asset Parameters
 
-The type of asset that is created will depend on the parameters that are passed during asset creation and sometimes during asset re-configuration.
+The type of asset created depends on the parameters specified during asset creation and, in some cases, during reconfiguration.
 
 <LinkCard
   title='Asset Parameters Reference'
@@ -48,55 +48,56 @@ When creating an Algorand Standard Asset, the following parameters define its fu
 
 ### Mutable Asset Parameters
 
-Four address parameters control specific capabilities of an asset. These addresses are set during asset creation and determine who can perform actions such as updating configuration, freezing accounts, or clawing back tokens.
+There are four configuration parameters in an ASA, each storing an address that controls specific capabilities:
 
-The four address types are:
+- **Manager Address**  
+  The manager account authorizes transactions that reconfigure or destroy an asset.  
+  If a manager address is specified, it can later update the control addresses shown in this section.
+
+- **Reserve Address**  
+  The reserve account holds **non-circulating units** of the asset instead of the creator account. Assets transferred from the reserve account are considered units entering circulation.
+
+  If the reserve address is changed, the new account must first **opt in** to the asset before transferring the remaining supply.
+
+  The reserve address is an informational designation and is not a protocol-enforced supply control mechanism.
+
+- **Freeze Address**  
+  The freeze account can freeze or unfreeze asset holdings for specific accounts. Frozen accounts cannot send or receive the asset.
+
+  If `DefaultFrozen` is set to `true`, accounts must be explicitly unfrozen before they can transfer the asset. This can be useful for workflows such as **KYC/AML approval** before allowing trading.
+
+- **Clawback Address**  
+   The clawback account can transfer assets from one account to another, provided both accounts have opted in to the asset.
+
+  This capability is often used to enforce compliance rules or recover assets when contractual conditions are violated.
+  :::note
+  Setting any of the four control addresses to an empty string `""` permanently removes that capability.
+
+For example, clearing the freeze address permanently disables the ability to freeze asset holdings.
+:::
+
+### Learn more
 
 <LinkCard
   title='Manager Address'
   href='/concepts/transactions/reference#manageraddr'
-  description='Account that can update control addresses and destroy the asset'
+  description='Account that can update control addresses and destroy the asset.'
 />
-
-The **manager account** authorizes transactions that reconfigure or destroy an asset.
-
-If a manager address is specified, it can later update the control addresses shown in this section.
 
 <LinkCard
   title='Reserve Address'
   href='/concepts/transactions/reference#reserveaddr'
-  description='Account that can hold non-minted asset units'
+  description='Account that holds non-circulating units of the asset.'
 />
-
-The reserve account holds **non-minted units** of the asset instead of the creator account.  
-Assets transferred from the reserve account are considered newly minted units.
-
-If you change the reserve address, the new account must first **opt in** to the asset before transferring the remaining supply.
 
 <LinkCard
   title='Freeze Address'
   href='/concepts/transactions/reference#freezeaddr'
-  description='Account that can freeze or unfreeze specific holdings'
+  description='Account that can freeze or unfreeze asset holdings.'
 />
-
-The freeze account can freeze or unfreeze asset holdings for specific accounts.  
-Frozen accounts cannot send or receive the asset.
-
-If `DefaultFrozen` is set to `true`, accounts must be explicitly unfrozen before they can transfer the asset.  
-This can be useful for workflows such as **KYC/AML approval** before allowing trading.
 
 <LinkCard
   title='Clawback Address'
   href='/concepts/transactions/reference#clawbackaddr'
-  description='Account that can revoke and reassign holdings'
+  description='Account that can revoke or reassign asset holdings.'
 />
-
-The clawback address can transfer assets from one account to another, provided both accounts have opted in to the asset.
-
-This capability is often used to enforce compliance rules or recover assets when contractual conditions are violated.
-
-:::note
-Setting any of the four control addresses to an empty string `""` permanently removes that capability.
-
-For example, clearing the freeze address permanently disables the ability to freeze asset holdings.
-:::
