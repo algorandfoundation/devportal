@@ -1,4 +1,4 @@
-import type { LinkMapping } from '@larkiny/astro-github-loader';
+import type { LinkMapping } from '@algorandfoundation/astro-github-loader';
 
 /**
  * Helper function to create common link mappings for this project
