@@ -85,53 +85,53 @@ Each step of this section of the tutorial will add code to the file you just cre
   <TabItem label="TypeScript" icon="seti:typescript">
 
 <Steps>
-1. Initialize the client and the test account that will create the asset
+    1. Initialize the client and the test account that will create the asset
 
-    ```ts showLineNumbers=false frame=none
-    import { AlgorandClient, algo } from "@algorandfoundation/algokit-utils";
+        ```ts showLineNumbers=false frame=none
+        import { AlgorandClient, algo } from "@algorandfoundation/algokit-utils";
 
-    async function main(): Promise<void> {
-      console.log("🚀 Creating your first asset...");
+        async function main(): Promise<void> {
+        console.log("🚀 Creating your first asset...");
 
-      const algorand = AlgorandClient.defaultLocalNet();
+        const algorand = AlgorandClient.defaultLocalNet();
 
-      const alice = await algorand.account.fromEnvironment("ALICE", algo(100));
+        const alice = await algorand.account.fromEnvironment("ALICE", algo(100));
 
-      console.log(`Alice: ${alice.addr}`);
-    ```
+        console.log(`Alice: ${alice.addr}`);
+        ```
 
-2. Pass in the parameters of the [assetCreate()](/algokit/utils/typescript/asset/#creation) method
+    2. Pass in the parameters of the [assetCreate()](/algokit/utils/typescript/asset/#creation) method
 
-   ```ts showLineNumbers=false frame=none
-   const result = await algorand.send.assetCreate({
-     //Mandatory fields
-     sender: alice.addr,
-     decimals: 6, //Number decimal places a whole unit can be broken up into
-     total: 1_000_000_000n, //Number whole units + decimal places, ie. 1,000
-     defaultFrozen: false,
+        ```ts showLineNumbers=false frame=none
+            const result = await algorand.send.assetCreate({
+                //Mandatory fields
+                sender: alice.addr,
+                decimals: 6, //Number decimal places a whole unit can be broken up into
+                total: 1_000_000_000n, //Number whole units + decimal places, ie. 1,000
+                defaultFrozen: false,
 
-     //Optional asset config fields
-     assetName: 'My First ASA',
-     unitName: 'MFA',
-     manager: alice.addr,
-     reserve: alice.addr,
-     freeze: alice.addr,
-     clawback: alice.addr,
-     url: 'https://algorand.co',
-   });
+                //Optional asset config fields
+                assetName: 'My First ASA',
+                unitName: 'MFA',
+                manager: alice.addr,
+                reserve: alice.addr,
+                freeze: alice.addr,
+                clawback: alice.addr,
+                url: 'https://algorand.co',
+            });
 
-   //Capture the unique asset ID of the asset after it's created
-   const assetId = result.assetId;
+            //Capture the unique asset ID of the asset after it's created
+            const assetId = result.assetId;
 
-   console.log(`Asset created with ID: ${assetId}`);
-   }
-   ```
+            console.log(`Asset created with ID: ${assetId}`);
+            }
+        ```
 
-3. Call main the function
-   `ts showLineNumbers=false frame=none
-    main().catch(console.error);
-    `
-   </Steps>
+    3. Call the main function
+        ```ts showLineNumbers=false frame=none
+        main().catch(console.error);
+        ```
+</Steps>
 
 </TabItem>
 </Tabs>
@@ -161,52 +161,50 @@ algokit explore
 ## View Your Asset in Lora
 
 <Steps>
-1. Open Lora and connect your wallet
+    1. Open Lora and connect your wallet
 
-    <Figure src={LORAConnectWallet} alt='Lora home screen' />
+        <Figure src={LORAConnectWallet} alt='Lora home screen' />
 
-2.  Click on **Accounts** and select Alice
+    2.  Click on **Accounts** and select Alice
 
-    <Figure src={LORAConnectAlice} alt='Lora connect wallet modal' />
+        <Figure src={LORAConnectAlice} alt='Lora connect wallet modal' />
 
-3.  Scroll to the **Assets** section
+    3.  Scroll to the **Assets** section
 
-    You should see your newly created asset listed.
+        You should see your newly created asset listed.
 
-    <Figure src={lora3} alt='Lora asset list' />
+        <Figure src={lora3} alt='Lora asset list' />
 
-4.  Click the Asset ID to view details
+    4.  Click the Asset ID to view details
 
-    <Figure src={lora4} alt='Lora asset details' />
+        <Figure src={lora4} alt='Lora asset details' />
 
-5.  Switch to Bob's account
+    5.  Switch to Bob's account
 
         You should now see the transferred asset in Bob's holdings.
 
         <Figure src={lora5} alt='Bob asset view' />
-
-    </Steps>
+</Steps>
 
 ---
 
 ## Send an Asset Using Lora
 
 <Steps>
-1. Navigate to Bob's account and select the asset
+    1. Navigate to Bob's account and select the asset
 
-    <Figure src={lora6} alt='Select asset' />
+        <Figure src={lora6} alt='Select asset' />
 
-2.  Click **Send**
+    2.  Click **Send**
 
-    <Figure src={lora7} alt='Send asset UI' />
+        <Figure src={lora7} alt='Send asset UI' />
 
-3.  Enter Alice's address and an amount
+    3.  Enter Alice's address and an amount
 
-4.  Submit and sign the transaction
+    4.  Submit and sign the transaction
 
         <Figure src={lora8} alt='Transaction confirmation' />
-
-    </Steps>
+</Steps>
 
 ---
 
