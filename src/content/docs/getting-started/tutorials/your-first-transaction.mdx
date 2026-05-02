@@ -3,185 +3,250 @@ title: Your First Transaction
 ---
 
 import { LinkCard, Steps, TabItem, Tabs } from '@astrojs/starlight/components';
+import Figure from '/src/components/Figure.astro';
+
+import TSfirstTransactionFile from '@images/TSfirst-transaction-file-structure.png';
+import TSfirstTransactionConsole from '@images/TSfirst-transaction-console.png';
+
+import LORAaddTransaction from '@images/lora-add-transaction.png';
+import LORAaliceFundsBob from '@images/LORAfirst-transaction-alice-funds-bob.png';
+import LORAbobOptin from '@images/LORAfirst-transaction-bob-optin.png';
+import LORAfirstTansactionSendMfa from '@images/LORAfirst-transaction-send-mfa.png';
+import LORAfirstTansactionCompleteGroup from '@images/LORAfirst-transaction-complete-group.png';
+import LORAfirstTansactionVisualization from '@images/LORAfirst-transaction-visualization.png';
+import LORAfirstTansactionExplore from '@images/LORAfirst-transaction-explore.png';
+
 
 **Hello, Developer! Welcome to your first transaction on Algorand!**
 
-This guide will walk you through sending your first ALGO transaction using AlgoKit Utils and TypeScript.
+This guide will walk you through sending your first ALGO and ASA transactions using AlgoKit.
 
 By the end of this guide, you'll be able to:
 
-- Connect to a local Algorand network
-- Create and fund accounts
 - Send a payment transaction
+- "Opt-in" to ASAs
+- Transfer ASAs
 - Build an atomic transaction group
 
----
+If you want to know more about what Opt-ins or Atomic Transaction Groups are check out the documentation here:
 
-## Prerequisites
+<LinkCard title='Opt-in' href='/concepts/assets/asset-operations/#opting-in-and-out-of-assets' description='What is an Opt-in?' />
 
-Before you begin, make sure you have:
+<LinkCard title='Atomic Groups' href='/concepts/transactions/atomic-txn-groups/#_top' description='What are Atomic Transactions?' />
 
-- [AlgoKit installed](/getting-started/algokit-quick-start/#install-algokit)
-- [Docker](https://docker.com/download/)
-- [Node.js](https://nodejs.org/)
-- A TypeScript environment
+When you're ready, let's dive in!
 
 ---
 
-## Start a LocalNet
+## Choose LORA or a Programming Language
 
-When building on Algorand, it's recommended to use a local blockchain for testing.
+<Tabs syncKey="lang">
+<TabItem label="LORA" icon="laptop">
+  <Steps>
+    1. Follow the steps in [Getting ready to build](/getting-started/tutorials/get-ready-to-build) to start LocalNet
 
-Start LocalNet by running:
+    2. Follow the steps in [Using LORA](/getting-started/tutorials/using-lora) to connect a test wallet funded with Algo.
+      
+        When selecting the `unencrypted-default-wallet` option, LORA will actually give you 3 funded test wallets to easily switch between. This will come in handy for this tutorial.
 
-```shell showLineNumbers=false frame=none
-algokit localnet start
-```
+    3. Follow the steps in [Your First Asset](/getting-started/tutorials/your-first-asset) to create the asset that we'll transfer. 
 
----
+    4. Navigate to the Txn Wizard and click `Add Transaction` and we will begin building the Atomic Transaction Group.
 
-## Install Dependencies
+        <Figure src={LORAaddTransaction} alt='Add Transaction' /> 
 
-<Tabs>
-<TabItem label="macOS" icon="apple">
+        **a.  Fund the recieving account with 1 Algo.**
 
-Install AlgoKit Utils:
+        :::note
+          LORA has actually already done this for you, but for the sake of this tutorial we are going to pretend it hasn't to show how you would do it manually.
+        :::
 
-```shell showLineNumbers=false frame=none
-npm install @algorandfoundation/algokit-utils
-```
+        In the next step, the receiving account (Bob) will need to opt-in to MFA (My First ASA) in order for the creator account (Alice) to send him some. In order to submit that transaction though, Bob will need some Algo to pay the transaction fee. So the first transaction in the group will be a [Payment](/concepts/transactions/types/#payment-transaction) sending 1 Algo from Alice to Bob.
 
+        Here's what that looks like:
+        
+        <Figure src={LORAaliceFundsBob} alt='Alice Funds Bob's Account />
+
+        *To get Bob's address, select it from the accout dropdown and click the copy symbol beside it. You can then paste it into the transaction builder under `Receiver`. Remember to sswitch back to Alice's account because she will be the main `sender` of the transactions in this group.*
+
+        Click `Add` and it will be added to the group. 
+
+        **b. Add Bob's Opt-in Transaction.**
+
+        Now that Bob has the Algo to pay for transactions he can opt in to recieve MFA. Here's what that looks like:
+
+        <Figure src={LORAbobOptin} alt='Bob Opts in' />
+
+        *Make sure you are inputing the correct ID for the asset you created in the previous steps and inputting Bob's address as the receiver.*
+
+        **c. Add MFA transfer Transaction.**
+
+        Now that Bob has opted in to receiving MFA, we can add a transaction that sends MFA from Alice to bob. Here's what that looks like:
+        
+        <Figure src={LORAfirstTansactionSendMfa} alt='Send MFA' />
+
+        **d. Review Transaction Group.**
+        
+        Look over the transaction group to make sure all the parameters are correct. Here's what it should look like:
+
+        <Figure src={LORAfirstTansactionCompleteGroup} alt='Complete Transaction Group' />
+
+        *You'll notice that the opt-in transaction and the transfer from Alice to Bob look similar. That is because an Opt-in transaction is simply a user sending an asset transfer with an amount of zero to themselves.*
+
+        **e. Submit the Group Transaction.**
+
+        Click the `Submit` button to execute the Transaction Group. You should see a visualization of the sequence of events that looks something like this:
+
+        <Figure src={LORAfirstTansactionVisualization} alt='Transaction Visualizatoin' />
+
+        :::note
+        It's important to note that each of these transactions are valid on their own, and could be submitted individually, However, utilizing Algorand's Atomic Transaction capability ensures that all of them succeed or fail together. 
+        
+        It's also worth mentioning that LORA is handling the signing of each transaction in the group for you behind the scenes. Since both Alice and Bob's credentials are stored in the KMD, LORA can intelligently sign the Opt-in transaction with Bob's key and the rest of the transactions with Alice's key.  
+        :::
+
+  </Steps>
 </TabItem>
-</Tabs>
 
----
-
-## Create Your Script
-
-Create a new file:
-
-```shell showLineNumbers=false frame=none
-touch first-transaction.ts
-```
-
----
-
-## Write the Code
-
-<Tabs>
 <TabItem label="TypeScript" icon="seti:typescript">
 
 <Steps>
-1. Initialize the Algorand client
 
-    ```ts showLineNumbers=false frame=none
-    import { AlgorandClient, algo } from "@algorandfoundation/algokit-utils";
+  1. Follow the steps in [Getting ready to build](/getting-started/tutorials/get-ready-to-build) to start LocalNet
 
-    async function main(): Promise<void> {
-      console.log("👋 Starting your first transaction...");
+  2. Create a new file where you will write the script that will create the transaction group. You can create it where ever you'd like, but in this example we've created it in the root directory and called it `first-transaction.ts`
 
-      const algorand = AlgorandClient.defaultLocalNet();
-    ```
+      <Figure src={TSfirstTransactionFile} alt='File Structure' />
 
-2. Create test accounts
+  3.  Write the script that will build and send your transaction group.  
 
-    ```ts showLineNumbers=false frame=none
-    const alice = await algorand.account.fromEnvironment('ALICE', algo(100));
-    const bob = await algorand.account.fromEnvironment('BOB', algo(100));
+      Each of the following sub-sections will add code to the file you just created:
+ 
+      **a. Initialize the Algorand client**
 
-    console.log(`Alice's address: ${alice.addr}`);
-    console.log(`Bob's address: ${bob.addr}`);
-    ```
+        ```ts showLineNumbers=false frame=none
+        import { AlgorandClient, algo } from "@algorandfoundation/algokit-utils";
 
-3. Send a payment transaction
+        const assetId = 1002n; // Input your Asset ID from the previous Tutorial
 
-    ```ts showLineNumbers=false frame=none
-    const payResult = await algorand.send.payment({
-      sender: alice.addr,
-      receiver: bob.addr,
-      amount: algo(2),
-      note: 'Hi, Bob!',
-    });
+        async function main(): Promise<void> {
+          console.log("👋 Starting your first transaction...");
 
-    console.log(`Payment confirmed with TxnID: ${payResult.txIds[0]}`);
-    ```
+          const algorand = AlgorandClient.defaultLocalNet(); //create client to interact with your LocalNet
+        ```
 
-4. Fetch account information
+      **b. Create test accounts**
 
-    ```ts showLineNumbers=false frame=none
-    const bobAccountInfo = await algorand.account.getInformation(bob.addr);
+        ```ts showLineNumbers=false frame=none
+        const alice = await algorand.account.fromEnvironment('ALICE'); // Should already be funded from the previous tutorial
+        const bob = await algorand.account.fromEnvironment('BOB', algo(0)); // Creating BOB account but not funding it to demonstrate sending some from ALICE
 
-    console.log("Bob's account info:", bobAccountInfo);
-    ```
+        console.log(`Alice's address: ${alice.addr}`);
+        console.log(`Bob's address: ${bob.addr}`);
+        ```
 
-5. Create an atomic transaction group
+      **c. Create an atomic transaction group**
 
-    ```ts showLineNumbers=false frame=none
-    const groupResult = await algorand.send
-      .newGroup()
-      .addPayment({
-        sender: bob.addr,
-        receiver: alice.addr,
-        amount: algo(1),
-        note: 'Thanks, Alice!',
-      })
-      .addPayment({
-        sender: bob.addr,
-        receiver: alice.addr,
-        amount: algo(0.5),
-      })
-      .send();
+        ```ts showLineNumbers=false frame=none
+        //Build Atomic Transaction Group    
+        const groupResult = await algorand.send
+            .newGroup()
+            .addPayment({ // Alice sends 1 ALGO to Bob. Try removing this transaction and that the entire group will fail.
+                sender: alice.addr,
+                receiver: bob.addr,
+                amount: algo(1),
+            })
+            .addAssetOptIn({ // Bob opts into the asset
+                sender: bob.addr,
+                assetId: assetId,
+            })
+            .addAssetTransfer({ // Alice transfers 100 MFA to Bob
+                sender: alice.addr,
+                receiver: bob.addr,
+                assetId: assetId,
+                amount: 100_000_000n,
+            })
+        .send()
 
-    console.log(`Atomic group confirmed with TxnID: ${groupResult.txIds[0]}`);
-    ```
+        console.log(`Atomic group confirmed with TxnID: ${groupResult.txIds[0]}`);
+        }
 
-6. Call `main()`
+        ```
 
-    ```ts showLineNumbers=false frame=none
-    }
+      **c. Call the main function**
+        ```ts showLineNumbers=false frame=none
+        main().catch(console.error);
+        ```
 
-    main().catch(console.error);
-    ```
+      **d. The final script should look like this:**
+      ```ts showLineNumbers=false frame=none
+
+      import { AlgorandClient, algo } from "@algorandfoundation/algokit-utils"
+
+      async function main(): Promise<void> {
+          const assetId = 1002n;
+          console.log("👋 Starting your first transaction...")
+
+          const algorand = AlgorandClient.defaultLocalNet()
+
+          const alice = await algorand.account.fromEnvironment("ALICE") 
+          const bob = await algorand.account.fromEnvironment("BOB", algo(0))
+
+          console.log(`Alice's address: ${alice.addr}`)
+          console.log(`Bob's address: ${bob.addr}`)
+
+          //Build Atomic Transaction Group
+          const groupResult = await algorand.send
+              .newGroup()
+              .addPayment({ // Alice sends 1 ALGO to Bob. Try removing this transaction and that the entire group will fail.
+                  sender: alice.addr,
+                  receiver: bob.addr,
+                  amount: algo(1),
+              })
+              .addAssetOptIn({ // Bob opts into the asset
+                  sender: bob.addr,
+                  assetId: assetId,
+              })
+              .addAssetTransfer({ // Alice transfers 100 MFAto Bob
+                  sender: alice.addr,
+                  receiver: bob.addr,
+                  assetId: assetId,
+                  amount: 100_000_000n,
+              })
+          .send()
+
+          console.log(`Atomic group confirmed with TxnID: ${groupResult.txIds[0]}`)
+      }
+
+      main().catch(console.error)
+      ```
+
+    4. Now run your script and take a look at the logs. In your terminal navigate to your project directory and run:
+        ```shell showLineNumbers=false frame=none
+        npx tsx first-transaction.ts
+        ```
+
+    5. Your console log should look something like this:
+        <Figure src={TSfirstTransactionConsole} alt='Create Asset Logs' />
+
+    6. You've successfully created and submitted an Atomic Transaction Group programmatically! To view it on the blockchain you can use [LORA](/algokit/lora/overview). In your terminal type the following command to open it in the browser:
+
+        ```shell showLineNumbers=false frame=none
+        algokit explore
+        ```
 </Steps>
 
 </TabItem>
 </Tabs>
 
----
+## Inspect the transactions on chain
 
-## Run the Script
+   Go to the `Explore` tab to see all the blocks and transactions produced by your script. Depending on the method you use, it should look more or less like this:
 
-```shell showLineNumbers=false frame=none
-npx tsx first-transaction.ts
-```
-
----
-
-## View in Lora
-
-<LinkCard
-  href="https://lora.algokit.io/localnet"
-  title="Open Lora"
-  description="Visualize accounts and transactions on LocalNet."
-/>
-
----
-
-## What You Learned
-
-You successfully:
-
-- Created accounts
-- Sent ALGO
-- Queried blockchain state
-- Built an atomic transaction group
-
----
+    <Figure src={LORAfirstTansactionExplore} alt='Transaction Group added to a block' />
+    
+  We suggest that you click thorugh the transactions to get a better understanding of what you've accomplished. 
 
 ## Next Steps
 
-<LinkCard
-  title="Your First Asset"
-  href="/getting-started/tutorials/your-first-asset"
-  description="Create and transfer your first Algorand Standard Asset."
-/>
+You now know multiple ways to create and send assets. Next we are going to start learning about custom smart contract developpment by going back to the Hello World template you selected in [Getting ready to build](/getting-started/tutorials/get-ready-to-build).

@@ -33,7 +33,7 @@ If you want to know more about what ASAs are check out the documentation here:
 
 <LinkCard title='Opt-in' href='/concepts/assets/overview' description='What are ASAs?' />
 
-Let's begin!
+When you're ready, let's dive in!
 
 ---
 
@@ -90,7 +90,7 @@ Let's begin!
 
         Each of the following sub-sections will add code to the file you just created:
 
-        a. Initialize the client and create the test account that will create the asset
+        **a. Initialize the client and create the test account that will create the asset**
 
         ```ts showLineNumbers=false frame=none
         import { AlgorandClient, algo } from "@algorandfoundation/algokit-utils";
@@ -105,7 +105,7 @@ Let's begin!
         console.log(`Alice: ${alice.addr}`);
         ```
 
-        b. Pass in the parameters of the [assetCreate()](/algokit/utils/typescript/asset/#creation) method
+        **b. Pass in the parameters of the [assetCreate()](/algokit/utils/typescript/asset/#creation) method**
 
         ```ts showLineNumbers=false frame=none
         const result = await algorand.send.assetCreate({
@@ -132,12 +132,12 @@ Let's begin!
         }
         ```
 
-        c. Call the main function
+        **c. Call the main function**
         ```ts showLineNumbers=false frame=none
         main().catch(console.error); //Calls the function when you run the script
         ```
 
-        d. The final script should look ike this:
+        **d. The final script should look like this:**
             ```ts showLineNumbers=false frame=none
             import { AlgorandClient, algo } from "@algorandfoundation/algokit-utils";
 
@@ -197,8 +197,6 @@ Let's begin!
 You can now check the Explore tab, and you will see that a new block was created containing your Create Asset transaction. Click on that to view information about the transaction.
 
         <Figure src={LORAassteCreateExplore} alt='New Asset Creation Explore' />
-
-        Then you can also click the sender account to see that the address you used now holds the entire balance for the Asset you created. 
         
 ---
 
@@ -206,16 +204,14 @@ You can now check the Explore tab, and you will see that a new block was created
 </Tabs>
 
 
-#### View Your Asset in LORA
-
-You can now view your asset onchain using LORA. 
+## View Your Asset onchain with LORA
 
 <Steps>
-    1. If you haven't already, open Lora and connect your wallet
+    1. If you haven't already, open LORA and connect your wallet
 
         <Figure src={LORAConnectWallet} alt='Lora home screen' />
 
-    2.  Click on **Accounts** and select Alice
+    2.  Click on **Accounts** and select the account you used to create the asset.
 
         <Figure src={LORAConnectAlice} alt='Lora connect wallet modal' />
 
@@ -223,7 +219,7 @@ You can now view your asset onchain using LORA.
 
         <Figure src={LORAassetCreatViewAlice} alt='View Alice' />
 
-    4. YOu will see a history of all the transactions from this account, and if you scroll to the **Assets** section, you should see your newly created asset listed.
+    4. You will see a history of all the transactions from this account, and if you scroll to the **Assets** section, you should see your newly created asset listed.
 
         <Figure src={LORAassetCreatorBalance} alt="Creator's Balance"/>
 
