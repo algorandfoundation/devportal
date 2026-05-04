@@ -1,5 +1,5 @@
 ---
-title: Your first Smart Contract
+title: Your First Smart Contract
 ---
 
 import { Image } from 'astro:assets';
@@ -32,19 +32,24 @@ import lora15 from '@images/lora15.png';
 import lora16 from '@images/lora16.png';
 import lora17 from '@images/lora17.png';
 
-In the [Getting Ready To Build]() section you initialized a new AlgoKit project and chose the Hello World smart contract template. This guide returns to that contract and shows you how to deploy and interact with it.
+In [Getting Ready to Build](/getting-started/tutorials/get-ready-to-build), you initialized a new AlgoKit project and selected the Hello World smart contract template.
+
+This guide returns to that project and shows two ways to work with the contract:
+
+- Use the generated deployment script to compile, deploy, and call the contract
+- Use LORA to deploy the compiled contract and call its `hello` method visually
 
 By the end, you will:
-
 - Compile a smart contract
-- Deploy a smart contract 
-- Interact with a smart contract with LORA
+- Deploy a smart contract to LocalNet
+- Call a smart contract method
+- Inspect the deployed application in LORA
 
-## Run the Demo Application
+## Deploy the Contract with the Generated Script
 
 <Tabs syncKey="lang">
     <TabItem label="TypeScript" icon="seti:typescript">
-        You will notice in the `smart_contracts/hello_world` folder a file named `deploy_config.ts` which is a simple example of using AlgoKit to deploy the `HelloWorld` smart contract in `contract.algo.ts` on the Local Algorand blockchain started earlier and then call the `hello` method.
+        You will notice in the `smart_contracts/hello_world` folder a file named `deploy-config.ts` which is a simple example of using AlgoKit to deploy the `HelloWorld` smart contract in `contract.algo.ts` on the LocalNet started earlier and then call the `hello` method.
         <Image src={algokit_v3_deploy} alt='AlgoKit Starter config' />
 
         Now there are two ways to run the `deploy-config.ts` file to deploy and call the smart contract:
@@ -71,31 +76,31 @@ By the end, you will:
         Called hello on HelloWorld (2225) with name = world, received: Hello, world
         ```
 
-        The App ID of of the deployed contract and its Algorand address is displayed, followed by the message returned from the smart contract call.
+        The deployed application’s App ID and application address are displayed, followed by the message returned from the smart contract call.
 
-        Additionally, by building the smart contract, AlgoKit generates various artifacts in the `artifacts` folder. These artifacts include:
+        When AlgoKit builds the smart contract, it generates artifacts in the `artifacts` folder. These artifacts include:
         - [Native TEAL smart contract code](/concepts/smart-contracts/languages/teal): `HelloWorld.approval.teal`, `HelloWorld.clear.teal`
         - [Contract ABI](/concepts/smart-contracts/abi): `HelloWorld.arc56.json`
         - [Auto-generated typed application client](/algokit/utils/algokit-clients): `HelloWorldClient.ts`
 
         <Figure src={algokit_v3_artifacts} alt='AlgoKit Starter Artifacts' width='400' />
 
-        These artifacts can be used by tools like [Lora](https://lora.algokit.io/localnet) and [goal](/algokit/cli/goal) to deploy your smart contract to various Algorand networks.
+        Tools like [LORA](https://lora.algokit.io/localnet) and [goal](/algokit/cli/goal) can use these artifacts to deploy and interact with your smart contract across Algorand networks. 
     </TabItem>
     <TabItem label="Python" icon="seti:python">
         Once the starter project is created, you will notice in the `smart_contracts/hello_world` folder a file named `deploy_config.py` which is a simple example of using AlgoKit to deploy the `HelloWorld` smart contract in `contract.py` on the Local Algorand blockchain started earlier and then call the `hello` method.
 
         <Figure src={algokit_v2_deploy} alt='AlgoKit Starter config' />
 
-        Now there are two ways to run the `deploy-config.py` file to deploy and call the smart contract:
+        Now there are two ways to run the `deploy_config.py` file to deploy and call the smart contract:
         <Steps>
-        1. By hitting `F5` it will start LocalNet, build the smart contract, deploy and call the smart contract `contract.py` by running the `deploy-config.py` file.
+        1. By hitting `F5` it will start LocalNet, build the smart contract, deploy and call the smart contract `contract.py` by running the `deploy_config.py` file.
 
-        2. Alternatively, you can run the following commands from the terminal to build the contract and run the `deploy-config.py` file:
+        2. Alternatively, you can run the following commands from the terminal to build the contract and run the `deploy_config.py` file:
 
             ```shell showLineNumbers=false frame=none title="Build and Deploy"
             algokit project run build
-            algokit project deploy
+            algokit project deploy localnet
             ```
         </Steps>
 
@@ -108,19 +113,23 @@ By the end, you will:
 
         The App ID of of the deployed contract is displayed, followed by the message returned from the smart contract call.
 
-        Additionally, by building the smart contract, AlgoKit generates various artifacts in the `artifacts` folder. These artifacts include:
+        When AlgoKit builds the smart contract, it generates artifacts in the `artifacts` folder. These artifacts include:
         - [Native TEAL smart contract code](/concepts/smart-contracts/languages/teal): `HelloWorld.approval.teal`, `HelloWorld.clear.teal`
         - [Contract ABI](/concepts/smart-contracts/abi): `HelloWorld.arc56.json`
         - [Auto-generated typed application client](/algokit/utils/algokit-clients): `hello_world_client.py`
 
         <Figure src={algokit_v2_artifacts} alt='AlgoKit Starter Artifacts' width='400' />
 
-        These artifacts can be used by tools like [Lora](https://lora.algokit.io/localnet) and [goal](/algokit/cli/goal) to deploy your smart contract to various Algorand networks.
+        Tools like [LORA](https://lora.algokit.io/localnet) and [goal](/algokit/cli/goal) can use these artifacts to deploy and interact with your smart contract across Algorand networks. 
     </TabItem>
 
 </Tabs>
 
-### Deploy Hello World application
+## Deploy Hello World application
+
+The generated deployment script is the fastest way to deploy and test your contract from code. Next, you’ll use LORA to see the same contract workflow through a visual interface.
+
+This is useful when you want to inspect app specs, build calls manually, or understand what the deployment process is doing under the hood.
 
 Launch LORA:
 
@@ -129,92 +138,73 @@ algokit explore
 ```
 
 <Steps>
-    1. To deploy your smart contract application, select the `App Lab` menu and click on the `Create` button. <Figure src={lora2} alt='Lora: App Lab' />
 
-    2. Click `Deploy new` and `Select an ARC-32 JSON app spec file` to browse to the artifacts created in the previous section of this guide. Select the `HelloWorld.arc32.json` manifest file.
+    1. To deploy your smart contract application, select the `App Lab` and click on the `Create` button. <Figure src={lora2} alt='LORA: App Lab' />
 
-        <Figure src={lora3} alt='Lora: Deploying your app' />
-        <Figure src={lora4} alt='Lora: ARC-32/ARC-56 App Spec' />
-        <Figure src={lora5} alt='Lora: Uploading generated app spec' />
+    2. Click `Deploy new` and click `Select an ARC-32 JSON app spec file`. This opens a window for you to browse to the artifacts created in the previous section of this guide. Select the `HelloWorld.arc32.json` manifest file.
+
+        <Figure src={lora3} alt='LORA: Deploying your app' />
+        <Figure src={lora4} alt='LORA: ARC-32/ARC-56 App Spec' />
+        <Figure src={lora5} alt='LORA: Uploading generated app spec' />
 
     3. This will load the specific manifest file for the Hello World sample application. Click `Next`.
 
-        <Figure src={lora6} alt='Lora: App spec uploaded successfully' />
+        <Figure src={lora6} alt='LORA: App spec uploaded successfully' />
 
-    4. You can change the `Name` and the `Version` of your app. We will keep it as it is. Click `Next`.
+    4. You can change the `Name` and the `Version` of your app. For this guide we'll keep the default values. Click `Next`.
 
-        <Figure src={lora7} alt='Lora: Specify app name and version' />
+        <Figure src={lora7} alt='LORA: Specify app name and version' />
 
     5. Click the `() Call` button. Then build and add the create transaction by clicking `Add`.
 
-        <Figure src={lora8} alt='Lora: Transaction builder' />
-        <Figure src={lora9} alt='Lora: Create new transaction' />
+        <Figure src={lora8} alt='LORA: Transaction builder' />
+        <Figure src={lora9} alt='LORA: Create new transaction' />
 
-    6. Click `Deploy` and sign the transaction by clicking `OK` in the KMD pop up to deploy the smart contract to the local Algorand network.
+    6. Click `Deploy` and sign the transaction by clicking `OK` in the KMD popup to deploy the smart contract to LocalNet.
 
-        <Figure src={lora10} alt='Lora: Transaction created' />
+        <Figure src={lora10} alt='LORA: Transaction created' />
 
     7. You should now see the deployed `HelloWorld` contract on the `App Lab` page.
 
-        <Figure src={lora11} alt='Lora: Your app is now deployed' />
-
-    8. Now click on the `App ID` inside of the `HelloWorld` card to go to the `Application` page.
-
-        <Figure src={lora12} alt='Lora: Inspecting your on-chain app' />
-
-    9. Inside the `ABI Methods` section, you should see the `hello` method. Click on the drop down and the `Call` button. You will be prompted with a popup allowing you to enter the parameter for the `hello` method and call it.
-
-        <Figure src={lora13} alt='Lora: ABI methods' />
-
-    10. Enter a string in the `value` input and click on `Add`.
-
-        <Figure src={lora14} alt='Lora: Method arguments' />
-
-    11. You should now see the transaction you just built on the `Application` page. Click `Send` and sign the transaction with your KMD wallet to execute the transaction.
-
-        <Figure src={lora15} alt='Lora: Sending the transaction' />
-
-    12. You should now see the `Send Result` showing you the details about the transaction you just executed!
-
-        <Figure src={lora16} alt='Lora: Transaction results' />
-
-    13. You can also click on `Transaction ID` to go to the `Transaction` page and see the full detail of the transaction.
-        <Figure src={lora17} alt='Lora: Inspect transaction details' />
+        <Figure src={lora11} alt='LORA: Your app is now deployed' />
 
 </Steps>
 
-You have now successfully deployed and executed a smart contract method call using Lora!
+## Call the `hello` Method
 
-**Congratulations and great job completing this guide!**
+With the application deployed, you can now begin interacting with it. 
 
-If you have followed this guide, you now have deployed a simple contract to an Algorand network and called it successfully!
-You are now ready to start building your own decentralized applications on the Algorand blockchain.
+<Steps>
+
+    1. Click on the `App ID` inside the `HelloWorld` card to go to the `Application` page.
+
+        <Figure src={lora12} alt='LORA: Inspecting your on-chain app' />
+
+    2. Inside the `ABI Methods` section, you should see the `hello` method. Click on the dropdown and the `Call` button. You will be prompted with a popup allowing you to enter the parameter for the `hello` method and call it.
+
+        <Figure src={lora13} alt='LORA: ABI methods' />
+
+    3. Enter a string in the `value` input and click on `Add`.
+
+        <Figure src={lora14} alt='LORA: Method arguments' />
+
+    4. You should now see the transaction you just built on the `Application` page. Click `Send` and sign the transaction with your KMD wallet to execute the transaction.
+
+        <Figure src={lora15} alt='LORA: Sending the transaction' />
+
+    5. You should now see the `Send Result` showing you the details about the transaction you just executed!
+
+        <Figure src={lora16} alt='LORA: Transaction results' />
+
+    6. You can also click on `Transaction ID` to go to the `Transaction` page and see the full transaction details.
+        <Figure src={lora17} alt='LORA: Inspect transaction details' />
+
+</Steps>
 
 ## Next steps
 
-**Learn about general Algorand concepts:**
+You have now deployed a smart contract, called one of its methods, and inspected the result in LORA.
 
-<LinkCard
-  title='Smart Contracts'
-  href='/concepts/smart-contracts/overview'
-  description='Dive into Algorand smart contracts, their capabilities and development.'
-/>
-<LinkCard
-  title='Transactions'
-  href='/concepts/transactions/overview'
-  description='Explore the different types of transactions on Algorand and how they work.'
-/>
+You are ready to move beyond the Hello World template and start building your own Algorand applications.
 
-**Learn more about AlgoKit:**
 
-<LinkCard
-  title='Intro to AlgoKit'
-  href='/algokit/algokit-intro'
-  description='Learn more about AlgoKit and what you can do with it'
-/>
-
-<LinkCard
-  title='Intro to Algokit 3.0 Course'
-  href='https://www.youtube.com/playlist?list=PLwRyHoehE4356E8tPKxC2XJtFEyLOHHEB'
-  description='Watch our complete, hands-on introduction to building on the Algorand blockchain with AlgoKit'
-/>
