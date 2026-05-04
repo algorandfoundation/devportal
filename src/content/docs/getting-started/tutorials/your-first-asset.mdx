@@ -28,20 +28,25 @@ import PYcreateAssetLog from '@images/PYassetcreate-log.png';
 This guide shows two ways to create your first **Algorand Standard Asset (ASA)** on LocalNet.
 
 By the end, you will:
+
 - Create an ASA using LORA
-- Create an ASA programmatically with TypeScript
+- Create an ASA programmatically with TypeScript or Python
 - View your asset onchain using LORA
 
 If you want to know more about what ASAs are, check out the documentation here:
 
-<LinkCard title='Algorand Standard Assets (ASA)' href='/concepts/assets/overview' description='Learn what ASAs are and how they work' />
+<LinkCard
+  title='Algorand Standard Assets (ASA)'
+  href='/concepts/assets/overview'
+  description='Learn what ASAs are and how they work'
+/>
 
 When you're ready, let's dive in!
 
 ---
 
-## Create an Asset with LORA or Programmatically
- 
+## Create an Asset
+
 <Tabs syncKey="lang">
 <TabItem label="LORA" icon="laptop">
  
@@ -57,27 +62,26 @@ When you're ready, let's dive in!
     4. Click `Add Transaction`.
 
         <Figure src={LORAaddTransaction} alt='Add Transaction' />
- 
+
 
     5. Choose `Asset create` from the dropdown and fill out the asset configuration fields.
-        
+
         For this example, we'll use the following basic config:
-        
+
         <Figure src={LORAassetConfig} alt='Asset Configuration' />
 
         *The creator field is auto-populated with your connected wallet address.*
-        
-        For more information on the optional fields like Manager, Reserve, Freeze, and Clawback, check out the [ASA documentation](/concepts/assets/overview). 
 
-    6. Click `Add` and the Asset Config transaction will be added to the transaction group. Click `Send` to submit the transaction. 
+        For more information on the optional fields like Manager, Reserve, Freeze, and Clawback, check out the [ASA documentation](/concepts/assets/overview).
+
+    6. Click `Add` and the Asset Config transaction will be added to the transaction group. Click `Send` to submit the transaction.
 
         <Figure src={LORAsubmitCreateAssetTransaction} alt='Submit Transaction' />
-    
-    7. You've now successfully created an asset using LORA! Next, try creating the asset using [TypeScript](/getting-started/tutorials/your-first-asset#choose-lora-or-a-programming-language).
+
+    7. You've now successfully created an asset using LORA! Next, try creating the asset using [TypeScript or Python](/getting-started/tutorials/your-first-asset#choose-lora-or-a-programming-language).
 
 </Steps>
 </TabItem>
-
 
 <TabItem label="TypeScript" icon="seti:typescript">
 
@@ -89,7 +93,7 @@ When you're ready, let's dive in!
 
         <Figure src={TScreateAssetFile} alt='File Structure' />
 
-    3. Write the script that will create the asset. 
+    3. Write the script that will create the asset.
 
         Each of the following sub-sections will add code to the file you just created:
 
@@ -156,10 +160,10 @@ When you're ready, let's dive in!
             const result = await algorand.send.assetCreate({
                 //Mandatory fields
                 sender: alice.addr,
-                total: 1_000_000_000n, 
-                decimals: 6, 
+                total: 1_000_000_000n,
+                decimals: 6,
                 defaultFrozen: false,
-            
+
                 //Optional asset config fields
                 assetName: 'My First ASA',
                 unitName: 'MFA',
@@ -169,16 +173,16 @@ When you're ready, let's dive in!
                 clawback: alice.addr,
                 url: 'https://algorand.co',
             });
-            
+
             //Capture the unique asset ID of the asset after it's created
             const assetId = result.assetId;
-            
+
             console.log(`Asset created with ID: ${assetId}`);
             }
 
             main().catch(console.error);
             ```
-    
+
     4. Run the script:
 
         ```shell showLineNumbers=false frame=none
@@ -193,12 +197,14 @@ When you're ready, let's dive in!
         ```shell showLineNumbers=false frame=none
         algokit explore
         ```
+
 </Steps>
 
 You can now check the Explore tab, and you will see that a new block was created containing your Create Asset transaction. Click on that to view information about the transaction.
 
         <Figure src={LORAassteCreateExplore} alt='New Asset Creation Explore' />
-        
+
+
 ---
 
 </TabItem>
@@ -211,7 +217,7 @@ You can now check the Explore tab, and you will see that a new block was created
 
     2. Create a new file where we will write the script that will create your new asset. You can create it wherever you'd like, but in this example, we've created it in the root directory and called it `first_asset.py`
 
-        <Figure src={TScreateAssetFile} alt='File Structure' />
+        <Figure src={PYcreateAssetFile} alt='File Structure' />
 
     3. Write the script that will create the asset.
 
@@ -322,6 +328,7 @@ You can now check the Explore tab, and you will see that a new block was created
         ```shell showLineNumbers=false frame=none
         algokit explore
         ```
+
 </Steps>
 
 You can now check the Explore tab, and you will see that a new block was created containing your Create Asset transaction. Click on that to view information about the transaction.
@@ -332,7 +339,6 @@ You can now check the Explore tab, and you will see that a new block was created
 
 </TabItem>
 </Tabs>
-
 
 ## View Your Asset onchain with LORA
 
@@ -353,9 +359,10 @@ You can now check the Explore tab, and you will see that a new block was created
 
         <Figure src={LORAassetCreatorBalance} alt="Creator's Balance"/>
 
-    5.  Click the Asset ID to view the asset. You will see the configuration details used to create the asset, as well as a history of all the transactions for that asset. 
+    5.  Click the Asset ID to view the asset. You will see the configuration details used to create the asset, as well as a history of all the transactions for that asset.
 
         <Figure src={LORAassetCreateAssetinfo} alt='Asset details' />
+
 </Steps>
 
 ## Next Steps

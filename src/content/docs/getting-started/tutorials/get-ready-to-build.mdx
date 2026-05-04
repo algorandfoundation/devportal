@@ -37,9 +37,7 @@ But first, what is AlgoKit?
 
 **AlgoKit is a developer toolbox for building on Algorand.**
 
-AlgoKit is a developer toolbox for building on Algorand.
-
-It provides a curated set of tools that work well together while still letting you stay in control. Use only what you need—whether you're writing a script, experimenting locally, or building a full application.
+It provides a curated set of tools that work well together while still letting you stay in control. Use only what you need! Whether you're writing a script, experimenting locally, or building a full application.
 
 With support for TypeScript and Python, you can build smart contracts and interact with the chain using familiar languages, without losing access to lower-level primitives when needed.
 
@@ -82,11 +80,15 @@ The Algorand TypeScript language extension brings language server-powered capabi
 #### Quick Start
 
 <Steps>
+
   1. Install this Algorand TypeScript language extension 
+  
   2. Install the puya-ts package. We recommend adding it as a project dev dependency. 
-  3. Enable the Algorand TypeScript
-  language server (`algorandTypeScript.languageServer.enable`) for your workspace (not required if using a new AlgoKit project) 
+  
+  3. Enable the Algorand TypeScript language server (`algorandTypeScript.languageServer.enable`) for your workspace (not required if using a new AlgoKit project) 
+  
   4. Open an Algorand TypeScript smart contract file (.algo.ts)
+
 </Steps>
 
 #### Configuration
@@ -94,11 +96,11 @@ The Algorand TypeScript language extension brings language server-powered capabi
 Configure the language server with the following features:
 
 <Steps>
-  1. `algorandTypeScript.languageServer.enable`: Enables the Algorand TypeScript language server. By
-  default, the language server is disabled. 
-  2. `algorandTypeScript.languageServer.logLevel`:
-  Configures the verbosity of the messages Algorand TypeScript language server displays in the
-  output window.
+
+  1. `algorandTypeScript.languageServer.enable`: Enables the Algorand TypeScript language server. By default, the language server is disabled. 
+
+  2. `algorandTypeScript.languageServer.logLevel`: Configures the verbosity of the messages Algorand TypeScript language server displays in the output window.
+
 </Steps>
 
 For more details, refer to [Typescript - Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=AlgorandFoundation.algorand-typescript-vscode)
@@ -123,11 +125,17 @@ The Algorand Python language extension brings language server-powered capabiliti
 #### Quick Start
 
 <Steps>
+
   1. Install the Python extension for Visual Studio Code 
+  
   2. Install the Algorand Python language extension 
+  
   3. Install the PuyaPy package on your system. We recommend installing as a project dev dependency in your project venv. 
+  
   4. Enable the Algorand Python language server (`algorandPython.languageServer.enable`) for your workspace (not required if using a new AlgoKit project) 
+  
   5. Open a Python smart contract file (.py)
+
 </Steps>
 
 #### Configuration
@@ -135,12 +143,14 @@ The Algorand Python language extension brings language server-powered capabiliti
 Configure the language server with the following features:
 
 <Steps>
-  1. `algorandPython.languageServer.enable`: Enables the Algorand Python language server. By default,
-  the language server is disabled. 
-  2. `algorandPython.languageServer.logLevel`: Configures the
-  verbosity of the messages Algorand Python language server displays in the output window. 
-  3. `algorandPython.languageServer.debounceInterval`: Configures the delay between receiving a code
-  change and refreshing related diagnostics.
+
+  1. `algorandPython.languageServer.enable`: Enables the Algorand Python language server. By
+  default, the language server is disabled. 
+  
+  2. `algorandPython.languageServer.logLevel`: Configures the verbosity of the messages Algorand Python language server displays in the output window. 
+  
+  3. `algorandPython.languageServer.debounceInterval`: Configures the delay between receiving a code change and refreshing related diagnostics.
+
 </Steps>
 
 For more details, refer to [Python - Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=AlgorandFoundation.algorand-python-vscode)
@@ -278,7 +288,7 @@ algokit, version 2.6.0
 
 ## Start a LocalNet
 
-When building smart contracts, it is recommended to build and test on a local Algorand blockchain running on your computer first. Deploying and calling smart contracts on MainNet (the live public blockchain for production) costs real money. Deploying on TestNet (a replica of MainNet for testing) can slow down the iteration cycle of early projects. Therefore, it is recommended to first test on the local blockchain. Once everything works, move to TestNet for final testing, and then deploy to MainNet to launch your application.
+When building smart contracts, it is recommended to build and test on a local Algorand blockchain running on your computer first. Deploying and calling smart contracts on MainNet (the live public blockchain for production) costs real money. Deploying on TestNet (a replica of MainNet for testing) can slow down the iteration cycle of early projects. Therefore, it is recommended to first test on a local blockchain. Once everything works, move to TestNet for final testing, and then deploy to MainNet to launch your application.
 
 AlgoKit supports using a [local version of the Algorand blockchain](/algokit/cli/localnet). To start an instance of this LocalNet, first open **Docker Desktop** on your computer and then run the following command from the terminal:
 
@@ -312,8 +322,8 @@ This guide will walk you through using either the **TypeScript** or **Python** s
 
                     <Figure src={algokitInitPy1} alt='AlgoKit Init: Select project template' />
 
-                2. Next, AlgoKit will ask you what programming language you want to use for the smart contract. With AlgoKit 3.0, you can now write
-                Algorand smart contracts with native TypeScript. Let's select **TypeScript** as our smart contract language by pressing Enter. <Figure src={algokitInitTs1} alt="AlgoKit Init: Select smart contract language" />
+                2. Next, AlgoKit will ask you what programming language you want to use for the smart contract. Let's select **TypeScript** as our smart contract language by pressing Enter. 
+                     <Figure src={algokitInitTs1} alt="AlgoKit Init: Select smart contract language" />
 
                 3. Then AlgoKit will ask you for the name of the project. Let's name it **hello-algorand**, but if you want to name it differently, feel free to do so!
                 After entering the name, press Enter to continue.<Figure src={algokitInitTs2} alt="AlgoKit Init: Specifying folder name" />
@@ -350,8 +360,8 @@ This guide will walk you through using either the **TypeScript** or **Python** s
 
                 <Figure src={algokitInitPy1} alt='AlgoKit Init: Select project template' />
 
-            2. Next, AlgoKit will ask you what programming language you want to use for the smart contract. With AlgoKit 2.0, you can now write
-            Algorand smart contracts with native Python. Let's select **Python** as our smart contract language by pressing Enter. <Figure src={algokitInitPy2} alt="AlgoKit Init: Select smart contract language" />
+            2. Next, AlgoKit will ask you what programming language you want to use for the smart contract. Let's select **Python** as our smart contract language by pressing Enter. 
+               <Figure src={algokitInitPy2} alt="AlgoKit Init: Select smart contract language" />
 
             3. Then AlgoKit will ask you for the name of the project. Let's name it **hello-algorand**, but if you want to name it differently, feel free to do so!
             After writing the name, press Enter to continue.<Figure src={algokitInitPy3} alt="AlgoKit Init: Specifying folder name" />
@@ -383,7 +393,7 @@ This guide will walk you through using either the **TypeScript** or **Python** s
       - A generated project
       - Dependencies installed
 
-   If not, something went sideways—fix it now before continuing.
+If not, go back and double check the above steps before continuing.
 
 ## Next Steps
 

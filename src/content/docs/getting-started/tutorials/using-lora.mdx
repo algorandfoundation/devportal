@@ -14,7 +14,6 @@ import applab from '@images/lora-applab.png';
 import txnwizard from '@images/lora-txnwizard.png';
 import fund from '@images/lora-fund.png';
 
-
 LORA is a web-based interface for exploring Algorand networks. It lets you inspect accounts, transactions, assets, and applications, and it also provides tools for deploying and calling smart contracts.
 
 LORA supports LocalNet, TestNet, and MainNet. While AlgoKit gives you programming and command-line tools for working with Algorand, LORA gives you a visual way to see what is happening on-chain.
@@ -29,7 +28,7 @@ To use LORA directly, you can use the hosted version at https://lora.algokit.io/
 algokit explore
 ```
 
-By default, this opens LORA connected to LocalNet (It will be displayed as `LocalNet` in the upper right-hand corner), but you can pass in parameters to point it to TestNet or MainNet, or change it manually through the interface. 
+By default, this opens LORA connected to LocalNet (It will be displayed as `LocalNet` in the upper right-hand corner), but you can pass in parameters to point it to TestNet or MainNet, or change it manually through the interface.
 
 :::note
 LocalNet is not supported in Safari. Use another browser when connecting LORA to LocalNet.
@@ -62,23 +61,23 @@ In the left-hand navigation, you will find 4 tabs:
 
 ### Explore
 
-If you are connected to TestNet or MainNet, you will see new blocks and transactions appear as they are added to the blockchain. You can click on any of them to drill down deeper. 
+If you are connected to TestNet or MainNet, you will see new blocks and transactions appear as they are added to the blockchain. You can click on any of them to drill down deeper.
 
-On the default LocalNet, new blocks are only produced when transactions are submitted. If the network is idle, the explorer may appear quiet.
+On the default LocalNet, new blocks are only produced when transactions are submitted. If the network is idle, it is normal to not see any activity here.
 
 <Figure src={lora1} alt='Explorer' />
 
 ### App Lab
 
-In the App Lab, you can connect to an application you've already deployed by inputting the application ID. 
+In the App Lab, you can connect to an application you've already deployed by inputting the application ID.
 
-You can also deploy a new application that you've already compiled to the blockchain through the web interface. We will walk you through this process in a later tutorial. 
+You can also deploy a new application that you've already compiled to the blockchain through the web interface. We will walk you through this process in a later tutorial.
 
 <Image src={applab} alt='App Lab' />
 
 ### Txn Wizard
 
-The Txn Wizard allows you to prepare transactions and submit them to the blockchain in a visual and interactive way. You can submit one transaction at a time, or you can prepare a series of transactions and take advantage of Algorand’s native atomic transaction groups. 
+The Txn Wizard allows you to prepare transactions and submit them to the blockchain in a visual and interactive way. You can submit one transaction at a time, or you can prepare a series of transactions and take advantage of Algorand’s native atomic transaction groups.
 
 You can also run transactions in simulate mode to check whether they would succeed without submitting them to the chain.
 
@@ -86,14 +85,14 @@ You can also run transactions in simulate mode to check whether they would succe
 
 ### Fund
 
-If you are connected to LocalNet, you have access to infinite test Algos and can use the Fund tab to send or mint them into any accounts you want. 
+If you are connected to LocalNet, you have access to infinite test Algos and can use the Fund tab to send or mint them into any accounts you want.
 
-However, this tab is disabled if you are connected to MainNet, and if you are on TestNet, you will need to go through an additional step of verifying your email in order to get a drip of TestNet Algos. 
+However, this tab is disabled if you are connected to MainNet, and if you are on TestNet, you will need to go through an additional step of verifying your email in order to get a drip of TestNet Algos.
 
 <Image src={fund} alt='Fund' />
 
 ## Next Steps
 
-Now that you know how to open LORA, connect a LocalNet account, and navigate the main tools, you are ready to start building.
+Now that you know how to open LORA, connect a LocalNet account, and navigate the interface, you are ready to start building.
 
 In the next tutorials, you will begin writing code and use LORA to inspect, simulate, and interact with what you build.
