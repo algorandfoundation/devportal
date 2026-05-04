@@ -20,25 +20,25 @@ import LORAassetCreateAssetinfo from '@images/lora-createasset-asset-info.png';
 import TScreateAssetFile from '@images/TScreateasset-file-location.png';
 import TScreateAssetLog from '@images/TSassetcreate-log.png';
 
-**Hello, Developer! Welcome to your first asset on Algorand!**
+**Hello, Developer! Let’s create your first asset on Algorand.**
 
-This guide will walk you through two ways of creating your first **Algorand Standard Asset (ASA)** on LocalNet.
+This guide shows two ways to create your first **Algorand Standard Asset (ASA)** on LocalNet.
 
-By the end of this guide, you will:
+By the end, you will:
+- Create an ASA using LORA
+- Create an ASA programmatically with TypeScript
+- View your asset onchain using LORA
 
-- Configure an ASA using AlgoKit
-- View your asset on chain using LORA
+If you want to know more about what ASAs are, check out the documentation here:
 
-If you want to know more about what ASAs are check out the documentation here:
-
-<LinkCard title='Opt-in' href='/concepts/assets/overview' description='What are ASAs?' />
+<LinkCard title='Algorand Standard Assets (ASA)' href='/concepts/assets/overview' description='Learn what ASAs are and how they work' />
 
 When you're ready, let's dive in!
 
 ---
 
-## Choose LORA or a Programming Language
-
+## Create an Asset with LORA or Programmatically
+ 
 <Tabs syncKey="lang">
 <TabItem label="LORA" icon="laptop">
  
@@ -56,21 +56,21 @@ When you're ready, let's dive in!
         <Figure src={LORAaddTransaction} alt='Add Transaction' />
  
 
-    5. Choose `Asset create` from the dropdown and fill out all your desired fields.
+    5. Choose `Asset create` from the dropdown and fill out the asset configuration fields.
         
-        For this example we'll use the following basic config:
+        For this example, we'll use the following basic config:
         
         <Figure src={LORAassetConfig} alt='Asset Configuration' />
 
-        *Note that the creator field will be auto-populated for you with the wallet address you've connected to the site.*
+        *The creator field is auto-populated with your connected wallet address.*
         
-        For more information on the optional fields like Manager, Reserve, Freeze, and Clawback check out the [ASA documentation](/concepts/assets/overview). 
+        For more information on the optional fields like Manager, Reserve, Freeze, and Clawback, check out the [ASA documentation](/concepts/assets/overview). 
 
-    6. Click `Add` and you will then see the Asset Config transaction added to the Transaction Group. Click `Send` to submit the transaction. 
+    6. Click `Add` and the Asset Config transaction will be added to the transaction group. Click `Send` to submit the transaction. 
 
         <Figure src={LORAsubmitCreateAssetTransaction} alt='Submit Transaction' />
     
-    7. You've now successfully created an asset using LORA! Now we encourage you to go back and learn how to create an asset in [TypeScript](/getting-started/tutorials/your-first-asset#choose-lora-or-a-programming-language).
+    7. You've now successfully created an asset using LORA! Next, try creating the asset using [TypeScript](/getting-started/tutorials/your-first-asset#choose-lora-or-a-programming-language).
 
 </Steps>
 </TabItem>
@@ -82,7 +82,7 @@ When you're ready, let's dive in!
 
     1. Follow the steps in [Getting ready to build](/getting-started/tutorials/get-ready-to-build) to initialize a new AlgoKit project and start LocalNet
 
-    2. Create a new file where we will write the script that will create your new asset. You can create it where ever you'd like, but in this example we've created it in the root directory and called it `first-asset.ts`
+    2. Create a new file where we will write the script that will create your new asset. You can create it wherever you'd like, but in this example, we've created it in the root directory and called it `first-asset.ts`
 
         <Figure src={TScreateAssetFile} alt='File Structure' />
 
@@ -98,21 +98,21 @@ When you're ready, let's dive in!
         async function main(): Promise<void> {
         console.log("🚀 Creating your first asset...");
 
-        const algorand = AlgorandClient.defaultLocalNet(); //create client to interact with your LocalNet
+        const algorand = AlgorandClient.defaultLocalNet(); // Create a client connected to LocalNet
 
-        const alice = await algorand.account.fromEnvironment("ALICE", algo(100)); //ALICE is a standard default test account
+        const alice = await algorand.account.fromEnvironment("ALICE", algo(100)); // ALICE is a pre-funded LocalNet test account
 
         console.log(`Alice: ${alice.addr}`);
         ```
 
-        **b. Pass in the parameters of the [assetCreate()](/algokit/utils/typescript/asset/#creation) method**
+        **b. Define the parameters for the [assetCreate()](/algokit/utils/typescript/asset/#creation) method**
 
         ```ts showLineNumbers=false frame=none
         const result = await algorand.send.assetCreate({
             //Mandatory fields
             sender: alice.addr,
             decimals: 6, //Number decimal places a whole unit can be broken up into
-            total: 1_000_000_000n, //Number whole units + decimal places, ie. 1,000
+            total: 1_000_000_000n, // Total supply in base units (includes decimals)
             defaultFrozen: false,
 
             //Optional asset config fields
@@ -137,7 +137,7 @@ When you're ready, let's dive in!
         main().catch(console.error); //Calls the function when you run the script
         ```
 
-        **d. The final script should look like this:**
+        **d. Final script:**
             ```ts showLineNumbers=false frame=none
             import { AlgorandClient, algo } from "@algorandfoundation/algokit-utils";
 
@@ -176,7 +176,7 @@ When you're ready, let's dive in!
             main().catch(console.error);
             ```
     
-    4. Now run your script and take a look at the logs. In your terminal navigate to your project directory and run:
+    4. Run the script::
 
         ```shell showLineNumbers=false frame=none
         npx tsx first-asset.ts
@@ -185,15 +185,13 @@ When you're ready, let's dive in!
     5. Your console log should look something like this:
         <Figure src={TScreateAssetLog} alt='Create Asset Logs' />
 
-    6. You've successfully created a new asset programmatically! To view it on the blockchain you can use [LORA](/algokit/lora/overview). In your terminal type the following command to open it in the browser:
+    6. You've successfully created a new asset programmatically! To view it onchain, you can use [LORA](/algokit/lora/overview). In your terminal, type the following command to open it in the browser:
 
         ```shell showLineNumbers=false frame=none
         algokit explore
         ```
 </Steps>
 
-
-#### 
 You can now check the Explore tab, and you will see that a new block was created containing your Create Asset transaction. Click on that to view information about the transaction.
 
         <Figure src={LORAassteCreateExplore} alt='New Asset Creation Explore' />
@@ -209,13 +207,13 @@ You can now check the Explore tab, and you will see that a new block was created
 <Steps>
     1. If you haven't already, open LORA and connect your wallet
 
-        <Figure src={LORAConnectWallet} alt='Lora home screen' />
+        <Figure src={LORAConnectWallet} alt='LORA home screen' />
 
     2.  Click on **Accounts** and select the account you used to create the asset.
 
-        <Figure src={LORAConnectAlice} alt='Lora connect wallet modal' />
+        <Figure src={LORAConnectAlice} alt='LORA connect wallet modal' />
 
-    3.  With Alice connected you cna now click `view` to see the account's information
+    3.  With Alice selected, click `view` to open the account details.
 
         <Figure src={LORAassetCreatViewAlice} alt='View Alice' />
 
@@ -223,11 +221,11 @@ You can now check the Explore tab, and you will see that a new block was created
 
         <Figure src={LORAassetCreatorBalance} alt="Creator's Balance"/>
 
-    4.  Click the Asset ID to view the asset. You will see the configuration details you created that asset with, as well as a history of all the transactions for that asset. 
+    5.  Click the Asset ID to view the asset. You will see the configuration details used to create the asset, as well as a history of all the transactions for that asset. 
 
         <Figure src={LORAassetCreateAssetinfo} alt='Asset details' />
 </Steps>
 
 ## Next Steps
 
-Now that you've learned multiple ways to create and asset, we will show you how to transfer the asset programmatically or using LORA.
+Now that you've learned multiple ways to create an asset, we will show you how to transfer the asset programmatically or using LORA.

@@ -37,11 +37,11 @@ But first, what is AlgoKit?
 
 **AlgoKit is a developer toolbox for building on Algorand.**
 
-It gives you a curated set of tools that work well together, so you can stay in control of how you build.
+AlgoKit is a developer toolbox for building on Algorand.
 
-You can use as much or as little of it as you want. Whether you’re writing a simple script, experimenting locally, or building a full application, AlgoKit meets you where you are.
+It provides a curated set of tools that work well together while still letting you stay in control. Use only what you need—whether you're writing a script, experimenting locally, or building a full application.
 
-With support for **TypeScript and Python**, you can write smart contracts and interact with the chain using familiar languages, while still having access to lower-level primitives when you need them.
+With support for TypeScript and Python, you can build smart contracts and interact with the chain using familiar languages, without losing access to lower-level primitives when needed.
 
 Out of the box, AlgoKit provides:
 
@@ -50,13 +50,13 @@ Out of the box, AlgoKit provides:
 - Language tooling for TypeScript and Python development
 - Helpers and utilities for working with accounts, transactions, and assets
 
-If you want to learn more about AlgoKit before diving in, check out the documentation linked below, and when you're ready head to the next section.
+If you want to learn more about AlgoKit before diving in, check out the documentation linked below, and when you're ready, head to the next section.
 
 <LinkCard title='AlgoKit' href='/algokit/algokit-intro' description='Intro to AlgoKit' />
 
 ## Prerequisites
 
-Before you install AlgoKit, you need to install the following prerequisites:
+Before installing AlgoKit, make sure you have the following:
 
 - [Python 3.12](https://www.python.org/downloads/) or higher
 - [PipX](https://pypa.github.io/pipx/#on-linux-install-via-pip-requires-pip-190-or-later)
@@ -72,7 +72,7 @@ To maximize your Algorand smart contract development experience, install dedicat
 
 <TabItem label="TypeScript" icon="seti:typescript">
 
-The Algorand TypeScript language extension brings language server powered capabilities to your smart contract authoring experience in Visual Studio Code. It extends the results from your installed TypeScript language server to provide Algorand TypeScript specific diagnostics and code actions.
+The Algorand TypeScript language extension brings language server-powered capabilities to your smart contract authoring experience in Visual Studio Code. It extends the results from your installed TypeScript language server to provide Algorand TypeScript-specific diagnostics and code actions.
 
 #### Requirements:
 
@@ -82,10 +82,11 @@ The Algorand TypeScript language extension brings language server powered capabi
 #### Quick Start
 
 <Steps>
-  1. Install this Algorand TypeScript language extension 2. Install the puya-ts package on your
-  system. We recommend installing as a project dev dependency. 3. Enable the Algorand TypeScript
-  language server (`algorandTypeScript.languageServer.enable`) for your workspace (not required if
-  using a new AlgoKit project) 4. Open an Algorand TypeScript smart contract file (.algo.ts)
+  1. Install this Algorand TypeScript language extension 
+  2. Install the puya-ts package. We recommend adding it as a project dev dependency. 
+  3. Enable the Algorand TypeScript
+  language server (`algorandTypeScript.languageServer.enable`) for your workspace (not required if using a new AlgoKit project) 
+  4. Open an Algorand TypeScript smart contract file (.algo.ts)
 </Steps>
 
 #### Configuration
@@ -94,12 +95,13 @@ Configure the language server with the following features:
 
 <Steps>
   1. `algorandTypeScript.languageServer.enable`: Enables the Algorand TypeScript language server. By
-  default the language server is disabled. 2. `algorandTypeScript.languageServer.logLevel`:
+  default, the language server is disabled. 
+  2. `algorandTypeScript.languageServer.logLevel`:
   Configures the verbosity of the messages Algorand TypeScript language server displays in the
   output window.
 </Steps>
 
-For more details refer to [Typescript - Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=AlgorandFoundation.algorand-typescript-vscode)
+For more details, refer to [Typescript - Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=AlgorandFoundation.algorand-typescript-vscode)
 
 :::note
 The Algorand TypeScript VS Code extension is currently in **beta**
@@ -109,7 +111,7 @@ The Algorand TypeScript VS Code extension is currently in **beta**
 
 <TabItem label="Python" icon="seti:python">
 
-The Algorand Python language extension brings language server powered capabilities to your smart contract authoring experience in Visual Studio Code. It extends the results from your installed Python language server to provide Algorand Python specific diagnostics and code actions.
+The Algorand Python language extension brings language server-powered capabilities to your smart contract authoring experience in Visual Studio Code. It extends the results from your installed Python language server to provide Algorand Python-specific diagnostics and code actions.
 
 #### Requirements:
 
@@ -121,11 +123,11 @@ The Algorand Python language extension brings language server powered capabiliti
 #### Quick Start
 
 <Steps>
-  1. Install the Python extension for Visual Studio Code 2. Install the Algorand Python language
-  extension 3. Install the PuyaPy package on your system. We recommend installing as a project dev
-  dependency in your project venv. 4. Enable the Algorand Python language server
-  (`algorandPython.languageServer.enable`) for your workspace (not required if using a new AlgoKit
-  project) 5. Open a Python smart contract file (.py)
+  1. Install the Python extension for Visual Studio Code 
+  2. Install the Algorand Python language extension 
+  3. Install the PuyaPy package on your system. We recommend installing as a project dev dependency in your project venv. 
+  4. Enable the Algorand Python language server (`algorandPython.languageServer.enable`) for your workspace (not required if using a new AlgoKit project) 
+  5. Open a Python smart contract file (.py)
 </Steps>
 
 #### Configuration
@@ -133,14 +135,15 @@ The Algorand Python language extension brings language server powered capabiliti
 Configure the language server with the following features:
 
 <Steps>
-  1. `algorandPython.languageServer.enable`: Enables the Algorand Python language server. By default
-  the language server is disabled. 2. `algorandPython.languageServer.logLevel`: Configures the
-  verbosity of the messages Algorand Python language server displays in the output window. 3.
-  `algorandPython.languageServer.debounceInterval`: Configures the delay between receiving a code
+  1. `algorandPython.languageServer.enable`: Enables the Algorand Python language server. By default,
+  the language server is disabled. 
+  2. `algorandPython.languageServer.logLevel`: Configures the
+  verbosity of the messages Algorand Python language server displays in the output window. 
+  3. `algorandPython.languageServer.debounceInterval`: Configures the delay between receiving a code
   change and refreshing related diagnostics.
 </Steps>
 
-For more details refer to [Python - Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=AlgorandFoundation.algorand-python-vscode)
+For more details, refer to [Python - Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=AlgorandFoundation.algorand-python-vscode)
 
 :::note
 The Algorand Python VS Code extension is currently in **beta**.
@@ -172,8 +175,7 @@ The Algorand Python VS Code extension is currently in **beta**.
  <TabItem label="Windows" icon="seti:windows">
 :::note
 This method will install the most recent python3 version [via winget](https://learn.microsoft.com/en-us/windows/package-manager/winget/).
-If you already have Python 3.12+ installed, you may prefer to use `pipx install algokit` as explained within the pipx on any OS section
-so you can control the Python version used.
+If you already have Python 3.12+ installed, you may prefer to use `pipx install algokit` as explained within the pipx on any OS section, so you can control the Python version used.
 :::
 
    <Steps>
@@ -212,7 +214,7 @@ so you can control the Python version used.
  </TabItem>
  <TabItem label="macOS" icon="apple">
    :::note
-   This method will install the latest Python3 release as a dependency via Homebrew. If you already have Python 3.10+ installed, you may prefer to use `pipx install algokit` as explained within the OS agnostic tab so you can control the Python version used.
+   This method will install the latest Python3 release as a dependency via Homebrew. If you already have Python 3.10+ installed, you may prefer to use `pipx install algokit` as explained within the OS agnostic tab, so you can control the Python version used.
    :::
 
    <Steps>
@@ -223,7 +225,7 @@ so you can control the Python version used.
          - [Docker](https://docs.docker.com/desktop/install/mac-install/), (or `brew install --cask docker`)
 
          :::tip
-         Docker requires MacOS 11+
+         Docker requires macOS 11+
          :::
 
       2. Install using Homebrew
@@ -242,7 +244,7 @@ so you can control the Python version used.
             - [Git](https://github.com/git-guides/install-git#install-git-on-linux)
             - [Docker](https://docs.docker.com/desktop/install/linux-install/)
 
-      2. Install AlgoKit, with `pipx` by running the following command from a terminal.
+      2. Install AlgoKit with `pipx` by running the following command from a terminal.
 
          ```shell showLineNumbers=false frame=none
          pipx install algokit
@@ -262,7 +264,7 @@ so you can control the Python version used.
 
 ## Verify the Installation
 
-To verify AlgoKit Installed correctly run the following command:
+To verify AlgoKit is installed correctly, run the following command:
 
 ```shell showLineNumbers=false frame=none
 algokit --version
@@ -276,15 +278,15 @@ algokit, version 2.6.0
 
 ## Start a LocalNet
 
-When building smart contracts, it is recommended to build and test on a local Algorand blockchain running on your computer first. Deploying and calling smart contracts on mainnet (the live public blockchain for production) costs real money. Deploying on testnet (a replica of mainnet for testing) can slow down the iteration cylce of early projects. Therefore, it is recommended to first test on the local blockchain. Once everything works, move to testnet for final testing, and then deploy to mainnet to launch your application.
+When building smart contracts, it is recommended to build and test on a local Algorand blockchain running on your computer first. Deploying and calling smart contracts on MainNet (the live public blockchain for production) costs real money. Deploying on TestNet (a replica of MainNet for testing) can slow down the iteration cycle of early projects. Therefore, it is recommended to first test on the local blockchain. Once everything works, move to TestNet for final testing, and then deploy to MainNet to launch your application.
 
-AlgoKit supports using a [local version of the Algorand blockchain](/algokit/cli/localnet). To start an instance of this LocalNet first open **Docker Desktop** on your computer and then run the following command from the terminal:
+AlgoKit supports using a [local version of the Algorand blockchain](/algokit/cli/localnet). To start an instance of this LocalNet, first open **Docker Desktop** on your computer and then run the following command from the terminal:
 
 ```shell showLineNumbers=false frame=none
 algokit localnet start
 ```
 
-This should start an instance of the LocalNet within docker. If you open the Docker Desktop application you should something similar to the following:
+This should start an instance of the LocalNet within Docker. If you open the Docker Desktop application, you should see something similar to the following:
 
 <Image src={localnet} alt='Docker Desktop LocalNet Instance' />
 
@@ -300,34 +302,31 @@ This guide will walk you through using either the **TypeScript** or **Python** s
 
             <Steps>
 
-                1. To create a new AlgoKit project you can easily do so by running:
+                1. To create a new AlgoKit project, you can easily do so by running:
 
                     ```shell showLineNumbers=false frame=none
                     algokit init
                     ```
 
-                    This will launch a guided menu system to create a specific project tailored to your needs. You will first
-                    be prompted to select the type of project you want to create. For this quick start guide, we will use the TypeScript
-                    smart contract template, so select the **Smart Contracts** option.
+                    This launches an interactive setup. You will first be prompted to select the type of project you want to create. For this quick start guide, we will use the TypeScript smart contract template, so select the **Smart Contracts** option.
 
                     <Figure src={algokitInitPy1} alt='AlgoKit Init: Select project template' />
 
                 2. Next, AlgoKit will ask you what programming language you want to use for the smart contract. With AlgoKit 3.0, you can now write
-                Algorand smart contracts with native TypeScript. Let's select **TypeScript** as our smart contract language by pressing enter. <Figure src={algokitInitTs1} alt="AlgoKit Init: Select smart contract language" />
+                Algorand smart contracts with native TypeScript. Let's select **TypeScript** as our smart contract language by pressing Enter. <Figure src={algokitInitTs1} alt="AlgoKit Init: Select smart contract language" />
 
                 3. Then AlgoKit will ask you for the name of the project. Let's name it **hello-algorand**, but if you want to name it differently, feel free to do so!
-                After writing the name, press enter to continue.<Figure src={algokitInitTs2} alt="AlgoKit Init: Specifying folder name" />
+                After entering the name, press Enter to continue.<Figure src={algokitInitTs2} alt="AlgoKit Init: Specifying folder name" />
 
-                4. Next you can set the name of the smart contract. We will keep it as it is for now.<Figure src={algokitInitTs3} alt="AlgoKit Init : Naming the smart contract app" />
+                4. Next, you can set the name of the smart contract. We will keep it as it is for now.<Figure src={algokitInitTs3} alt="AlgoKit Init : Naming the smart contract app" />
 
-                5. Next, you can select the template preset. The **Starter** preset is for quickly implementing and testing certain features
-                whereas the **Production** preset is for production-ready applications. For this guide, let's select **Starter**.<Figure src={algokitInitTs4} alt="AlgoKit Init: Select template preset" />
+                5. Next, you can select the template preset. The **Starter** preset is for quickly implementing and testing certain features, whereas the **Production** preset is for production-ready applications. For this guide, let's select **Starter**.<Figure src={algokitInitTs4} alt="AlgoKit Init: Select template preset" />
 
-                6. Next, AlgoKit will ask you if you want to run the `algokit project bootstrap` command to install the necessary dependencies.
-                Say yes by pressing "y" This process can take a few minutes.<Figure src={algokitInitTs5} alt="AlgoKit Init: Running the bootstrap command" />
+                6. Then choose whether you want to run the `algokit project bootstrap` command to install the necessary dependencies.
+                Say yes by pressing "y". This process can take a few minutes.<Figure src={algokitInitTs5} alt="AlgoKit Init: Running the bootstrap command" />
 
-                7. Finally, AlgoKit will ask you if you want to initialize a git repository. Let's say yes by pressing "y" so that we can easily
-                push our AlgoKit project to Github.<Figure src={algokitInitTs6} alt="AlgoKit Init: Initialize git repository" />
+                7. Finally, AlgoKit will ask you if you want to initialize a Git repository. Let's say yes by pressing "y" so that we can easily
+                push our AlgoKit project to GitHub.<Figure src={algokitInitTs6} alt="AlgoKit Init: Initialize Git repository" />
 
                 8. Once finished, VS Code should automatically be opened with the initialized project if VS Code is set as your default editor. If not, `cd` into the project directory and open the project in your IDE of choice.
 
@@ -339,7 +338,7 @@ This guide will walk you through using either the **TypeScript** or **Python** s
 
         <Steps>
 
-            1. To create a new AlgoKit project you can easily do so by running:
+            1. To create a new AlgoKit project, you can easily do so by running:
 
                 ```shell showLineNumbers=false frame=none
                 algokit init
@@ -352,25 +351,24 @@ This guide will walk you through using either the **TypeScript** or **Python** s
                 <Figure src={algokitInitPy1} alt='AlgoKit Init: Select project template' />
 
             2. Next, AlgoKit will ask you what programming language you want to use for the smart contract. With AlgoKit 2.0, you can now write
-            Algorand smart contracts with native Python. Let's select **Python** as our smart contract language by pressing enter. <Figure src={algokitInitPy2} alt="AlgoKit Init: Select smart contract language" />
+            Algorand smart contracts with native Python. Let's select **Python** as our smart contract language by pressing Enter. <Figure src={algokitInitPy2} alt="AlgoKit Init: Select smart contract language" />
 
             3. Then AlgoKit will ask you for the name of the project. Let's name it **hello-algorand**, but if you want to name it differently, feel free to do so!
-            After writing the name, press enter to continue.<Figure src={algokitInitPy3} alt="AlgoKit Init: Specifying folder name" />
+            After writing the name, press Enter to continue.<Figure src={algokitInitPy3} alt="AlgoKit Init: Specifying folder name" />
 
-            4. Next you can set the name of the smart contract. We will keep it as it is for now.<Figure src={algokitInitPy4} alt="AlgoKit Init : Naming the smart contract app" />
+            4. Next, you can set the name of the smart contract. We will keep it as it is for now.<Figure src={algokitInitPy4} alt="AlgoKit Init : Naming the smart contract app" />
 
-            5. Next, you can select the template preset. The **Starter** preset is for quickly implementing and testing certain features
-            whereas the **Production** preset is for production-ready applications. For this guide, let's select **Starter**.<Figure src={algokitInitPy5} alt="AlgoKit Init: Select template preset" />
+            5. Next, you can select the template preset. The **Starter** preset is for quickly implementing and testing certain features, whereas the **Production** preset is for production-ready applications. For this guide, let's select **Starter**.<Figure src={algokitInitPy5} alt="AlgoKit Init: Select template preset" />
 
-            6. Next, AlgoKit will ask you what language you want to use for contract deployment. After writing your smart contract
-            you need to deploy and call the contract either from your frontend or backend. Since most frontend frameworks
-            are in Python, let's select Python for this guide.<Figure src={algokitInitPy6} alt="AlgoKit Init: Selecting language for contract deployment script" />
+            6. You'll be prompted to choose what language you want to use for contract deployment. After writing your smart contract, you need to deploy and call the contract either from your frontend or backend. Since your deployment and interaction scripts are written in Python, select Python for this guide.
+               <Figure src={algokitInitPy6} alt="AlgoKit Init: Selecting language for contract deployment script" />
 
-            7. Next, AlgoKit will ask you if you want to run the `algokit project bootstrap` command to install the necessary dependencies.
-            Say yes by pressing "y" This process can take a few minutes.<Figure src={algokitInitPy7} alt="AlgoKit Init: Running the bootstrap command" />
+            7. Then choose whether you want to run the `algokit project bootstrap` command to install the necessary dependencies.
+            Say yes by pressing "y". This process can take a few minutes.
+               <Figure src={algokitInitPy7} alt="AlgoKit Init: Running the bootstrap command" />
 
-            8. Finally, AlgoKit will ask you if you want to initialize a git repository. Let's say yes by pressing "y" so that we can easily
-            push our AlgoKit project to Github.<Figure src={algokitInitPy8} alt="AlgoKit Init: Initialize git repository" />
+            8. Finally, AlgoKit will ask you if you want to initialize a Git repository. Let's say yes by pressing "y" so that we can easily push our AlgoKit project to GitHub.
+               <Figure src={algokitInitPy8} alt="AlgoKit Init: Initialize Git repository" />
 
             9. Once finished, VS Code should automatically be opened with the initialized project if VS Code is set as your default editor. If not, `cd` into the project directory and open the project in your IDE of choice.
 
@@ -379,9 +377,16 @@ This guide will walk you through using either the **TypeScript** or **Python** s
     </TabItem>
 
 </Tabs>
+## Before Moving On
+   At this point, you should have:
+      - A running LocalNet
+      - A generated project
+      - Dependencies installed
+
+   If not, something went sideways—fix it now before continuing.
 
 ## Next Steps
 
 Great work! Now your machine should be set up with everything you need to build using AlgoKit.
 
-We will return to this Smart contract template later on in this tutorial series, but first we are going to take a look at one more tool that will help you throughout your development journey; LORA. When you're ready head to the next section.
+We will return to this Smart contract template later on in this tutorial series, but first, we are going to take a look at one more tool that will help you throughout your development journey: LORA. When you're ready, head to the next section.
