@@ -8,6 +8,9 @@ import Figure from '/src/components/Figure.astro';
 import TSfirstTransactionFile from '@images/TSfirst-transaction-file-structure.png';
 import TSfirstTransactionConsole from '@images/TSfirst-transaction-console.png';
 
+import PYfirstTransactionFile from '@images/PYfirst-transaction-file-structure.png';
+import PYfirstTransactionConsole from '@images/PYfirst-transaction-console.png';
+
 import LORAaddTransaction from '@images/lora-add-transaction.png';
 import LORAaliceFundsBob from '@images/LORAfirst-transaction-alice-funds-bob.png';
 import LORAbobOptin from '@images/LORAfirst-transaction-bob-optin.png';
@@ -42,7 +45,7 @@ When you're ready, let's dive in!
 <Tabs syncKey="lang">
 <TabItem label="LORA" icon="laptop">
   <Steps>
-    1. Follow the steps in [Getting ready to build](/getting-started/tutorials/get-ready-to-build) to start LocalNet
+    1. Follow the steps in [Getting Ready To Build](/getting-started/tutorials/get-ready-to-build) to start LocalNet
 
     2. Follow the steps in [Using LORA](/getting-started/tutorials/using-lora) to connect a test wallet funded with Algo.
       
@@ -114,7 +117,7 @@ When you're ready, let's dive in!
 
 <Steps>
 
-  1. Follow the steps in [Getting ready to build](/getting-started/tutorials/get-ready-to-build) to start LocalNet
+  1. Follow the steps in [Getting Ready To Build](/getting-started/tutorials/get-ready-to-build) to start LocalNet
 
   2. Create a new file where you will write the script that will create the transaction group. You can create it wherever you'd like, but in this example, we've created it in the root directory and called it `first-transaction.ts`
 
@@ -239,9 +242,132 @@ When you're ready, let's dive in!
 </Steps>
 
 </TabItem>
+<TabItem label="Python" icon="seti:python">
+
+<Steps>
+
+  1. Follow the steps in [Getting Ready To Build](/getting-started/tutorials/get-ready-to-build) to start LocalNet
+
+  2. Create a new file where you will write the script that will create the transaction group. You can create it wherever you'd like, but in this example, we've created it in the root directory and called it `first_transaction.py`
+
+      <Figure src={PYfirstTransactionFile} alt='File Structure' />
+
+  3. Write the script that will build and send your transaction group.
+
+      Each of the following sub-sections will add code to the file you just created:
+
+      **a. Initialize the client and create the test account that will create the asset**
+
+        ```python showLineNumbers=false frame=none
+        from algokit_utils import AlgorandClient, AlgoAmount, AssetCreateParams
+
+        def main():
+            print("🚀 Creating your first asset...")
+
+            algorand = AlgorandClient.default_localnet()
+
+            alice = algorand.account.from_environment("ALICE", AlgoAmount(algo=100))
+
+            print(f"Alice: {alice.address}")
+        ```
+
+      **b. Define the parameters for the [asset_create()](/algokit/utils/python/asset/#creation) method**
+
+        ```python showLineNumbers=false frame=none
+            result = algorand.send.asset_create(
+                AssetCreateParams(
+                    # Mandatory fields
+                    sender=alice.address,
+                    total=1_000_000_000,       # Amount of whole units of the asset
+                    decimals=6,                # Amount of fractional units of the asset
+                    default_frozen=False,
+
+                    # Optional asset config fields
+                    asset_name="My First ASA",
+                    unit_name="MFA",
+                    manager=alice.address,
+                    reserve=alice.address,
+                    freeze=alice.address,
+                    clawback=alice.address,
+                    url="https://algorand.co",
+                )
+            )
+
+            # Capture the unique asset ID of the asset after it's created
+            asset_id = result.asset_id
+
+            print(f"Asset created with ID: {asset_id}")
+        ```
+
+      **c. Call the main function**
+
+        ```python showLineNumbers=false frame=none
+        if __name__ == "__main__":
+            main()
+        ```
+
+      **d. Final script:**
+
+        ```python showLineNumbers=false frame=none
+        from algokit_utils import AlgorandClient, AlgoAmount, AssetCreateParams
+
+        def main():
+            print("🚀 Creating your first asset...")
+
+            algorand = AlgorandClient.default_localnet()
+
+            alice = algorand.account.from_environment("ALICE", AlgoAmount(algo=100))
+
+            print(f"Alice: {alice.address}")
+
+            result = algorand.send.asset_create(
+                AssetCreateParams(
+                    # Mandatory fields
+                    sender=alice.address,
+                    total=1_000_000_000,       # Amount of whole units of the asset
+                    decimals=6,                # Amount of fractional units of the asset
+                    default_frozen=False,
+
+                    # Optional asset config fields
+                    asset_name="My First ASA",
+                    unit_name="MFA",
+                    manager=alice.address,
+                    reserve=alice.address,
+                    freeze=alice.address,
+                    clawback=alice.address,
+                    url="https://algorand.co",
+                )
+            )
+
+            # Capture the unique asset ID of the asset after it's created
+            asset_id = result.asset_id
+
+            print(f"Asset created with ID: {asset_id}")
+
+        if __name__ == "__main__":
+            main()
+        ```
+
+    4. Run the script:
+        ```shell showLineNumbers=false frame=none
+        python first_transaction.py
+        ```
+
+    5. Your console log should look something like this:
+
+        <Figure src={PYfirstTransactionConsole} alt='Transaction logs' />
+
+    6. You've successfully created and sent an Atomic Transaction Group programmatically! To view it on the blockchain, you can use [LORA](/algokit/lora/overview). In your terminal, type the following command to open it in the browser:
+
+        ```shell showLineNumbers=false frame=none
+        algokit explore
+        ```
+</Steps>
+
+</TabItem>
 </Tabs>
 
-## Inspect the transactions onchain
+## Inspect Transactions Onchain
 
    Go to the `Explore` tab to see all the blocks and transactions produced by your script. You should see a block containing your atomic transaction group:
 
@@ -251,4 +377,4 @@ Click through the transactions to see how each step was executed and grouped tog
 
 ## Next Steps
 
-You now know multiple ways to create and send assets. Next, we are going to start learning about custom smart contract development by going back to the Hello World template you selected in [Getting ready to build](/getting-started/tutorials/get-ready-to-build).
+You now know multiple ways to create and send assets. Next, we are going to start learning about custom smart contract development by going back to the Hello World template you selected in [Getting Ready To Build](/getting-started/tutorials/get-ready-to-build).
