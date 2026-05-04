@@ -183,7 +183,7 @@ export default defineConfig({
               collapsed: false,
               items: [
                 {
-                  label: 'Getting ready to build',
+                  label: 'Getting Ready To Build',
                   link: 'getting-started/tutorials/get-ready-to-build',
                 },
                 {

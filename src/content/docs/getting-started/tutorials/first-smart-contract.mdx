@@ -32,11 +32,19 @@ import lora15 from '@images/lora15.png';
 import lora16 from '@images/lora16.png';
 import lora17 from '@images/lora17.png';
 
+In the [Getting Ready To Build]() section you initialized a new AlgoKit project and chose the Hello World smart contract template. This guide returns to that contract and shows you how to deploy and interact with it.
+
+By the end, you will:
+
+- Compile a smart contract
+- Deploy a smart contract 
+- Interact with a smart contract with LORA
+
 ## Run the Demo Application
 
 <Tabs syncKey="lang">
     <TabItem label="TypeScript" icon="seti:typescript">
-        Once the starter project is created, you will notice in the `smart_contracts/hello_world` folder a file named `deploy_config.ts` which is a simple example of using AlgoKit to deploy the `HelloWorld` smart contract in `contract.algo.ts` on the Local Algorand blockchain started earlier and then call the `hello` method.
+        You will notice in the `smart_contracts/hello_world` folder a file named `deploy_config.ts` which is a simple example of using AlgoKit to deploy the `HelloWorld` smart contract in `contract.algo.ts` on the Local Algorand blockchain started earlier and then call the `hello` method.
         <Image src={algokit_v3_deploy} alt='AlgoKit Starter config' />
 
         Now there are two ways to run the `deploy-config.ts` file to deploy and call the smart contract:
@@ -112,49 +120,13 @@ import lora17 from '@images/lora17.png';
 
 </Tabs>
 
-## Using Lora
+### Deploy Hello World application
 
-<LinkCard
-  href='https://lora.algokit.io/localnet'
-  title='Try Lora Here!'
-  description='Web-based user interface for visualizing accounts, transactions, assets and applications on an Algorand network and also provides ability to deploy and call smart contracts.'
-/>
-
-Lora is a web-based user interface that let's you visualize accounts, transactions, assets and applications on an Algorand network and also provides ability to deploy and call smart contracts. This works for TestNet, MainNet and also LocalNet. While AlgoKit surfaces both a programming interface and a command line interface for interacting with Algorand, it also allows you to quickly open Lora so you can see what's happening visually.
-
-Lora can be launched from AlgoKit by running the following command from the terminal.
+Launch LORA:
 
 ```shell showLineNumbers=false frame=none
 algokit explore
 ```
-
-By default it will open Lora and point to LocalNet (It will be displayed as `LocalNet` in the upper right hand corner), but you can pass in parameters to point it to TestNet and MainNet too.
-
-This command will launch your default web browser and load the Lora web application.
-
-:::note
-If you are using Safari, then it won't work against LocalNet and you will need to open it in a different browser.
-:::
-
-<Figure src={lora1} alt='Lora the Explorer' />
-
-### Create / Connect local account for testing
-
-To issue commands against the LocalNet network you need an account with ALGO in it. Lora gives you three options for connecting to a local wallet: `Connect KMD`, `Connect MNEMONIC`, and `Connect Lute`
-
-- `Connect KMD`: Lora will automatically import KMD wallet.
-
-- `Connect MNEMONIC`: You can manually input a MNEMONIC for an account you own.
-
-- `Connect Lute`: You can create local accounts from [Lute](https://lute.app/) and connect to them.
-
-In this guide, we will use the KMD wallet.
-
-Select `Connect wallet` located at top right hand side of the webpage and you will be prompted with the three wallet choices. Choose the `Connect KMD` option. This will prompt you to enter the KMD password. If this is your first time building on Algorand, you do not have a KMD password so leave it blank and click `OK`. This will connect the KMD account to Lora so you can use that account for signing transactions from the Lora user interface.
-
-<Image src={lora_wallet} alt='Lora Wallet' />
-
-### Deploy the Hello World application
 
 <Steps>
     1. To deploy your smart contract application, select the `App Lab` menu and click on the `Create` button. <Figure src={lora2} alt='Lora: App Lab' />
