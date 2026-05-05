@@ -21,7 +21,7 @@ import LORAfirstTansactionExplore from '@images/LORAfirst-transaction-explore.pn
 
 **Hello, Developer! Welcome to your first transaction on Algorand!**
 
-This guide shows how to send your first ALGO and ASA transactions using AlgoKit.
+This guide shows how to send your first ALGO and ASA (Algorand Standard Asset) transactions using AlgoKit.
 
 By the end, you will:
 
@@ -55,7 +55,7 @@ When you're ready, let's dive in!
   <Steps>
     1. Follow the steps in [Getting Ready To Build](/getting-started/tutorials/get-ready-to-build) to start LocalNet
 
-    2. Follow the steps in [Using LORA](/getting-started/tutorials/using-lora) to connect a test wallet funded with Algo.
+    2. Follow the steps in [Using LORA](/getting-started/tutorials/using-lora) (Live Onchain Resource Analyzer) to connect a test wallet funded with Algo.
 
         When selecting the `unencrypted-default-wallet` option, LORA will actually give you 3 funded test wallets to easily switch between. This will come in handy for this tutorial.
 
@@ -115,7 +115,7 @@ When you're ready, let's dive in!
         - Bob opts in before receiving the asset
         - The asset transfer only happens if everything else succeeds
 
-        It's also worth mentioning that LORA is handling the signing of each transaction in the group for you behind the scenes. Since both Alice's and Bob's credentials are stored in the KMD, LORA can intelligently sign the Opt-in transaction with Bob's key and the rest of the transactions with Alice's key.
+        It's also worth mentioning that LORA is handling the signing of each transaction in the group for you behind the scenes. Since both Alice's and Bob's credentials are stored in the  (Key Management Daemon), LORA can intelligently sign the Opt-in transaction with Bob's key and the rest of the transactions with Alice's key.
         :::
 
   </Steps>
@@ -248,7 +248,7 @@ When you're ready, let's dive in!
 
         <Figure src={TSfirstTransactionConsole} alt='Transaction logs' />
 
-    6.  You've successfully created and sent an Atomic Transaction Group programmatically! To view it on the blockchain, you can use [LORA](/algokit/lora/overview). In your terminal, type the following command to open it in the browser:
+    6.  You've successfully created and sent an Atomic Transaction Group programmatically! To view it on the blockchain, you can use [LORA](/algokit/lora/overview) (Live Onchain Resource Analyzer). In your terminal, type the following command to open it in the browser:
 
         ```shell showLineNumbers=false frame=none
         algokit explore
@@ -373,7 +373,7 @@ When you're ready, let's dive in!
 
         <Figure src={PYfirstTransactionConsole} alt='Transaction logs' />
 
-    6.  You've successfully created and sent an Atomic Transaction Group programmatically! To view it on the blockchain, you can use [LORA](/algokit/lora/overview). In your terminal, type the following command to open it in the browser:
+    6.  You've successfully created and sent an Atomic Transaction Group programmatically! To view it on the blockchain, you can use [LORA](/algokit/lora/overview) (Live Onchain Resource Analyzer). In your terminal, type the following command to open it in the browser:
 
         ```shell showLineNumbers=false frame=none
         algokit explore

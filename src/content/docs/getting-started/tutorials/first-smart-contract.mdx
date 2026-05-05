@@ -37,14 +37,14 @@ In [Getting Ready To Build](/getting-started/tutorials/get-ready-to-build), you 
 This guide returns to that project and shows two ways to work with the contract:
 
 - Use the generated deployment script to compile, deploy, and call the contract
-- Use LORA to deploy the compiled contract and call its `hello` method visually
+- Use LORA (Live Onchain Resource Analyzer) to deploy the compiled contract and call its `hello` method visually
 
 By the end, you will:
 
 - Compile a smart contract
 - Deploy a smart contract to LocalNet
 - Call a smart contract method
-- Inspect the deployed application in LORA
+- Inspect the deployed application in LORA 
 
 ## Deploy the Contract with the Generated Script
 
@@ -69,7 +69,7 @@ By the end, you will:
 
         ```shell showLineNumbers=false frame=none
         === Deploying HelloWorld ===
-        Idempotently deploying app "HelloWorld" from creator RQGFSWXL2RKDBO53MN3ZRWCO3CP2HCZ6T4D5DMNJSIXRV76XAEBUJNHOMY using 86 bytes of AVM bytecode and 4 bytes of AVM bytecode
+        Idempotently deploying app "HelloWorld" from creator RQGFSWXL2RKDBO53MN3ZRWCO3CP2HCZ6T4D5DMNJSIXRV76XAEBUJNHOMY using 86 bytes of AVM (Algorand Virtual Machine) bytecode and 4 bytes of AVM bytecode
         App HelloWorld not found in apps created by RQGFSWXL2RKDBO53MN3ZRWCO3CP2HCZ6T4D5DMNJSIXRV76XAEBUJNHOMY; deploying app with version 1.0.
         App created by RQGFSWXL2RKDBO53MN3ZRWCO3CP2HCZ6T4D5DMNJSIXRV76XAEBUJNHOMY with ID 2225 via transaction PSO2XD77YINZRSNH5X76EN6QZYC2I3P6NITJQCCSDS7IC2PJ4RYA
         Sending 1000000 µALGO from RQGFSWXL2RKDBO53MN3ZRWCO3CP2HCZ6T4D5DMNJSIXRV76XAEBUJNHOMY to JM7DKIZGR3M4EGZYYR7LXUDX3R7X6QLRV4S2YVLTSDZP73XLX5A6ZDAQLE via transaction T66O4VNOD5CV6RZ75J53PHFMIIX2DCGT2Q3VM7W3W4CJ7DJQK6MA
@@ -80,8 +80,8 @@ By the end, you will:
         The deployed application’s App ID and application address are displayed, followed by the message returned from the smart contract call.
 
         When AlgoKit builds the smart contract, it generates artifacts in the `artifacts` folder. These artifacts include:
-        - [Native TEAL smart contract code](/concepts/smart-contracts/languages/teal): `HelloWorld.approval.teal`, `HelloWorld.clear.teal`
-        - [Contract ABI](/concepts/smart-contracts/abi): `HelloWorld.arc56.json`
+        - [Native TEAL (Transaction Execution Approval Language) smart contract code](/concepts/smart-contracts/languages/teal): `HelloWorld.approval.teal`, `HelloWorld.clear.teal`
+        - [Contract ABI](/concepts/smart-contracts/abi) (Application Binary Interface): `HelloWorld.arc56.json`
         - [Auto-generated typed application client](/algokit/utils/algokit-clients): `HelloWorldClient.ts`
 
         <Figure src={algokit_v3_artifacts} alt='AlgoKit Starter Artifacts' width='400' />
@@ -115,7 +115,7 @@ By the end, you will:
         The App ID of of the deployed contract is displayed, followed by the message returned from the smart contract call.
 
         When AlgoKit builds the smart contract, it generates artifacts in the `artifacts` folder. These artifacts include:
-        - [Native TEAL smart contract code](/concepts/smart-contracts/languages/teal): `HelloWorld.approval.teal`, `HelloWorld.clear.teal`
+        - [Native TEAL (Transaction Execution Approval Language) smart contract code](/concepts/smart-contracts/languages/teal): `HelloWorld.approval.teal`, `HelloWorld.clear.teal`
         - [Contract ABI](/concepts/smart-contracts/abi): `HelloWorld.arc56.json`
         - [Auto-generated typed application client](/algokit/utils/algokit-clients): `hello_world_client.py`
 
@@ -161,7 +161,7 @@ algokit explore
         <Figure src={lora8} alt='LORA: Transaction builder' />
         <Figure src={lora9} alt='LORA: Create new transaction' />
 
-    6. Click `Deploy` and sign the transaction by clicking `OK` in the KMD popup to deploy the smart contract to LocalNet.
+    6. Click `Deploy` and sign the transaction by clicking `OK` in the KMD (Key Management Daemon) popup to deploy the smart contract to LocalNet.
 
         <Figure src={lora10} alt='LORA: Transaction created' />
 
