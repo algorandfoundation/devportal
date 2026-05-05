@@ -295,14 +295,10 @@ export default defineConfig({
                   label: 'Asset Operations',
                   link: 'concepts/assets/asset-operations',
                 },
-                // {
-                //   label: 'Assets Metadata',
-                //   link: 'concepts/assets/asset-metadata',
-                // },
-                // {
-                //   label: 'Known Assets',
-                //   link: 'concepts/assets/known-assets',
-                // },
+                {
+                  label: 'Assets Metadata',
+                  link: 'concepts/assets/asset-metadata',
+                },
               ],
             },
             {
@@ -1048,10 +1044,6 @@ export default defineConfig({
                       label: 'Subscriptions',
                       link: 'algokit/subscriber/typescript/subscriptions',
                     },
-                    {
-                      label: 'v3 Migration Guide',
-                      link: 'algokit/subscriber/typescript/v3-migration',
-                    },
                   ],
                 },
                 {
@@ -1312,6 +1304,10 @@ export default defineConfig({
             {
               label: 'x402 on Algorand',
               link: 'resources/x402-on-algorand',
+            },
+            {
+              label: 'Algorand x EVM',
+              link: 'resources/algo-x-evm',
             },
           ],
         },

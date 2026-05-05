@@ -1,5 +1,5 @@
 ---
-title: '`getSubscribedTransactions`'
+title: 'getSubscribedTransactions'
 ---
 
 `getSubscribedTransactions` is the core building block at the centre of this library. It's a simple, but flexible mechanism that allows you to enact a single subscription "poll" of the Algorand blockchain.
