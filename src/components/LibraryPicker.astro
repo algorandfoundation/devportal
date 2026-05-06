@@ -94,12 +94,11 @@ function buildCompactEntries(lib: LibraryConfig, currentPath: string): CompactEn
     <div class='library-picker compact'>
       {isLibraryPage && (
         <a class='picker-heading picker-heading-link' href={areaEntry.href}>
-          <span aria-hidden='true'>←</span>
-          <span>Back to Concepts</span>
+          <span>Home</span>
         </a>
       )}
 
-      <details class='picker-group' open>
+      <details class='picker-group' open={!isLibraryPage}>
         <summary class='picker-heading picker-heading-toggle'>
           <span>Library Docs</span>
           <svg
@@ -440,10 +439,9 @@ function buildCompactEntries(lib: LibraryConfig, currentPath: string): CompactEn
   .picker-heading-link {
     display: inline-flex;
     align-items: center;
-    gap: 0.45rem;
     margin-bottom: 0.45rem;
     padding: 0;
-    color: var(--sl-color-gray-2);
+    color: var(--sl-color-gray-3);
     text-decoration: none;
     transition:
       color 0.15s,
