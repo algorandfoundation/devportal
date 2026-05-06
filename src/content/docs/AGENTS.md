@@ -1,4 +1,8 @@
-# Documentation Standards (AGENTS.md)
+---
+title: Documentation Standards for Agents
+sidebar:
+  hidden: true
+---
 
 This file defines content standards and authoring conventions for the Algorand developer portal documentation site (Astro/Starlight). It applies to all files in this directory tree — tutorials, how-to guides, API/CLI/library reference pages, conceptual explanations, quickstarts, changelogs, and any `.mdx` or `.md` page.
 
