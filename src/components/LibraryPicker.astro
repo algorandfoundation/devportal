@@ -99,7 +99,7 @@ function buildCompactEntries(lib: LibraryConfig, currentPath: string): CompactEn
         </a>
       )}
 
-      <details class='picker-group' open={!isLibraryPage}>
+      <details class='picker-group' open>
         <summary class='picker-heading picker-heading-toggle'>
           <span>Library Docs</span>
           <svg
@@ -303,10 +303,18 @@ function buildCompactEntries(lib: LibraryConfig, currentPath: string): CompactEn
   .library-picker.compact {
     padding: 0.55rem;
     margin-bottom: 0.25rem;
-    background: color-mix(
+    background-color: color-mix(
       in oklab,
       var(--sl-color-bg-nav) 88%,
       var(--sl-color-gray-6)
+    );
+  }
+
+  :root[data-theme='dark'] .library-picker.compact {
+    background-color: color-mix(
+      in oklab,
+      var(--sl-color-bg-nav) 94%,
+      white 6%
     );
   }
 
@@ -488,6 +496,23 @@ function buildCompactEntries(lib: LibraryConfig, currentPath: string): CompactEn
   .picker-item.active {
     color: var(--sl-color-white);
     background-color: var(--sl-color-gray-5);
+  }
+
+  :root[data-theme='dark'] .picker-item.active {
+    background-color: color-mix(
+      in oklab,
+      var(--sl-color-accent) 18%,
+      var(--sl-color-bg-nav)
+    );
+    color: var(--sl-color-white);
+  }
+
+  :root[data-theme='dark'] .picker-item:has(:hover) {
+    background-color: color-mix(
+      in oklab,
+      var(--sl-color-accent) 10%,
+      var(--sl-color-bg-nav)
+    );
   }
 
   .picker-item-main {
