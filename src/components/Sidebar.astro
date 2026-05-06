@@ -2,13 +2,12 @@
 /**
  * Custom Sidebar override that implements TanStack-style navigation:
  *
- * 1. On main site pages: Shows a library switcher list at the top,
+ * 1. On main site pages: Shows a static library list at the top,
  *    followed by the normal Starlight sidebar navigation below.
  *
  * 2. On library pages (/docs/<library>/): Replaces the entire sidebar with:
  *    - A hamburger toggle showing current library name
- *    - Clicking it reveals: "Learn Algorand" link, "Library Docs" link,
- *      and full library list for quick switching
+ *    - Clicking it reveals: "Learn Algorand" and "Library Docs" links
  *    - Language + version selectors
  *    - The library-specific sidebar navigation
  */
@@ -33,11 +32,14 @@ const mainSidebar = sidebar.filter(
 {
   activeLibrary ? (
     /* Library virtual collection view */
-    <LibraryDocsSidebar library={activeLibrary} currentPath={currentPath} />
-  ) : (
-    /* Main site view: library switcher at top + normal sidebar */
     <>
-      <LibraryPicker currentPath={currentPath} />
+      <LibraryPicker currentPath={currentPath} compact />
+      <LibraryDocsSidebar library={activeLibrary} currentPath={currentPath} />
+    </>
+  ) : (
+    /* Main site view: static library list at top + normal sidebar */
+    <>
+      <LibraryPicker currentPath={currentPath} compact />
       <SidebarPersister>
         <SidebarSublist sublist={mainSidebar} />
       </SidebarPersister>

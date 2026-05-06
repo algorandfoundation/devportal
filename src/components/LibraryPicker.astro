@@ -1,11 +1,10 @@
 ---
 /**
- * LibraryPicker - Compact dropdown for selecting a library in the main sidebar.
+ * LibraryPicker - Sidebar library navigation.
  *
- * Renders as a button that expands to show the full library list with:
- * - Colored dot per library
- * - Library name (plain text label)
- * - Clickable language icons that link directly to each variant
+ * Renders either:
+ * - a compact, always-visible TanStack-style library list
+ * - or a dropdown list (legacy mode)
  */
 import {
   libraries,
@@ -13,15 +12,15 @@ import {
   type LibraryConfig,
 } from '../config/libraries';
 import { langIcons } from '../config/lang-icons';
-import LinkChip from './LinkChip.astro';
 
 interface Props {
   currentPath: string;
-  /** When true, hides the toggle button and renders the library list directly (used inside HeaderMenu). */
+  /** When true, renders the library list directly instead of a dropdown. */
   compact?: boolean;
 }
 
 const { currentPath, compact = false } = Astro.props;
+const isLibraryPage = currentPath.startsWith('/docs/');
 
 const categoryOrder = ['sdk', 'cli', 'language', 'tool', 'api'];
 const categories: Record<string, LibraryConfig[]> = {};
@@ -29,47 +28,118 @@ for (const lib of libraries) {
   if (!categories[lib.category]) categories[lib.category] = [];
   categories[lib.category].push(lib);
 }
+
+interface CompactEntry {
+  href: string;
+  isActive: boolean;
+  label: string;
+}
+
+interface AreaEntry {
+  href: string;
+  isActive: boolean;
+  label: string;
+}
+
+const areaEntry: AreaEntry = {
+  href: '/concepts/smart-contracts/overview/',
+  isActive:
+    !currentPath.startsWith('/docs/') && currentPath.startsWith('/concepts/'),
+  label: 'Main Docs',
+};
+
+function buildPrimaryLibraryHref(
+  lib: LibraryConfig,
+  defaultVersion: string,
+): string {
+  const defaultLanguage = lib.languages[0];
+  return defaultLanguage
+    ? buildLibraryUrl(lib, defaultLanguage, defaultVersion)
+    : `/docs/${lib.slug}/`;
+}
+
+function buildCompactEntries(lib: LibraryConfig, currentPath: string): CompactEntry[] {
+  const defaultVersion = lib.versions[0]?.slug ?? 'latest';
+
+  if (lib.languages.length <= 1) {
+    const href = buildPrimaryLibraryHref(lib, defaultVersion);
+    return [
+      {
+        href,
+        isActive: currentPath.startsWith(href),
+        label: lib.label,
+      },
+    ];
+  }
+
+  return lib.languages.map(lang => {
+    const href = buildLibraryUrl(lib, lang, defaultVersion);
+    const normalizedLabel = lib.label.toLowerCase();
+    const normalizedLang = lang.toLowerCase();
+    const label = normalizedLabel.includes(normalizedLang)
+      ? lib.label
+      : `${lib.label} ${lang}`;
+
+    return {
+      href,
+      isActive: currentPath.startsWith(href),
+      label,
+    };
+  });
+}
 ---
 
 {
   compact ? (
     <div class='library-picker compact'>
-      <ul class='picker-list' role='list'>
-        {categoryOrder.map(cat =>
-          categories[cat]?.map(lib => {
-            const rootHref = `/docs/${lib.slug}/`;
-            const isActive = currentPath.startsWith(rootHref);
-            const defaultVersion = lib.versions[0]?.slug ?? 'latest';
-            return (
-              <li class:list={['picker-item', { active: isActive }]}>
-                <span class='picker-dot' style={`--dot-color: ${lib.color}`} />
-                <span class='picker-item-label'>{lib.label}</span>
-                {lib.languages.length > 0 && (
-                  <span class='picker-variants'>
-                    {lib.languages.map(lang => {
-                      const icon = langIcons[lang];
-                      if (!icon) return null;
-                      const variantHref = buildLibraryUrl(
-                        lib,
-                        lang,
-                        defaultVersion,
-                      );
-                      return (
-                        <LinkChip
-                          href={variantHref}
-                          label={lang}
-                          icon={icon.svg}
-                          accentColor={icon.color}
-                        />
-                      );
-                    })}
-                  </span>
-                )}
-              </li>
-            );
-          }),
-        )}
-      </ul>
+      {isLibraryPage && (
+        <a class='picker-heading picker-heading-link' href={areaEntry.href}>
+          <span aria-hidden='true'>←</span>
+          <span>Back to Concepts</span>
+        </a>
+      )}
+
+      <details class='picker-group' open={!isLibraryPage}>
+        <summary class='picker-heading picker-heading-toggle'>
+          <span>Library Docs</span>
+          <svg
+            class='picker-heading-chevron'
+            width='12'
+            height='12'
+            viewBox='0 0 12 12'
+            fill='none'
+            aria-hidden='true'
+          >
+            <path
+              d='M3 5L6 8L9 5'
+              stroke='currentColor'
+              stroke-width='1.5'
+              stroke-linecap='round'
+              stroke-linejoin='round'
+            />
+          </svg>
+        </summary>
+        <ul class='picker-list' role='list'>
+          {categoryOrder.map(cat =>
+            categories[cat]?.map(lib => {
+              return buildCompactEntries(lib, currentPath).map(entry => (
+                <li>
+                  <a
+                  class:list={[
+                    'picker-item',
+                    'picker-item-static',
+                    { active: entry.isActive },
+                  ]}
+                  href={entry.href}
+                >
+                    <span class='picker-item-label'>{entry.label}</span>
+                  </a>
+                </li>
+              ));
+            }),
+          )}
+        </ul>
+      </details>
     </div>
   ) : (
     <library-picker class='library-picker'>
@@ -129,28 +199,49 @@ for (const lib of libraries) {
                     class='picker-dot'
                     style={`--dot-color: ${lib.color}`}
                   />
-                  <span class='picker-item-label'>{lib.label}</span>
-                  {lib.languages.length > 0 && (
-                    <span class='picker-variants'>
-                      {lib.languages.map(lang => {
-                        const icon = langIcons[lang];
-                        if (!icon) return null;
-                        const variantHref = buildLibraryUrl(
-                          lib,
-                          lang,
-                          defaultVersion,
-                        );
-                        return (
-                          <LinkChip
-                            href={variantHref}
-                            label={lang}
-                            icon={icon.svg}
-                            accentColor={icon.color}
-                          />
-                        );
-                      })}
-                    </span>
-                  )}
+                  <div class='picker-item-main'>
+                    <a
+                      class='picker-item-link'
+                      href={buildPrimaryLibraryHref(lib, defaultVersion)}
+                    >
+                      <span class='picker-item-label'>{lib.label}</span>
+                    </a>
+                    {lib.languages.length > 0 && (
+                      <span class='picker-variants'>
+                        {lib.languages.map((lang, index) => {
+                          const icon = langIcons[lang];
+                          const variantHref = buildLibraryUrl(
+                            lib,
+                            lang,
+                            defaultVersion,
+                          );
+                          return (
+                            <>
+                              {index > 0 && (
+                                <span
+                                  class='picker-variant-separator'
+                                  aria-hidden='true'
+                                >
+                                  ·
+                                </span>
+                              )}
+                              <a
+                                class='picker-variant-link'
+                                href={variantHref}
+                                style={
+                                  icon
+                                    ? `--variant-accent: ${icon.color}`
+                                    : undefined
+                                }
+                              >
+                                {lang}
+                              </a>
+                            </>
+                          );
+                        })}
+                      </span>
+                    )}
+                  </div>
                 </li>
               );
             }),
@@ -210,7 +301,48 @@ for (const lib of libraries) {
   }
 
   .library-picker.compact {
-    padding: 0;
+    padding: 0.55rem;
+    margin-bottom: 0.25rem;
+    background: color-mix(
+      in oklab,
+      var(--sl-color-bg-nav) 88%,
+      var(--sl-color-gray-6)
+    );
+  }
+
+  .picker-heading {
+    margin: 0 0 0.25rem;
+    color: var(--sl-color-gray-3);
+    font-size: var(--sl-text-2xs);
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .picker-group {
+    margin: 0;
+  }
+
+  .picker-heading-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    list-style: none;
+  }
+
+  .picker-heading-toggle::-webkit-details-marker {
+    display: none;
+  }
+
+  .picker-heading-chevron {
+    flex-shrink: 0;
+    opacity: 0.75;
+    transition: transform 0.2s ease;
+  }
+
+  .picker-group[open] .picker-heading-chevron {
+    transform: rotate(180deg);
   }
 
   /* Trigger button */
@@ -293,16 +425,54 @@ for (const lib of libraries) {
     margin: 0;
   }
 
+  .picker-area-list {
+    margin-bottom: 0.45rem;
+  }
+
+  .picker-heading-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    margin-bottom: 0.45rem;
+    padding: 0;
+    color: var(--sl-color-gray-2);
+    text-decoration: none;
+    transition:
+      color 0.15s,
+      opacity 0.15s;
+  }
+
+  .picker-heading-link:hover {
+    color: var(--sl-color-white);
+    opacity: 1;
+  }
+
+  .picker-heading-link:focus-visible {
+    outline: 2px solid var(--sl-color-accent);
+    outline-offset: 2px;
+  }
+
   /* Individual library item */
   .picker-item {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     gap: 0.5rem;
-    padding: 0.35rem 0.5rem;
+    padding: 0.45rem 0.5rem;
     border-radius: 0.25rem;
     color: var(--sl-color-gray-2);
     font-size: var(--sl-text-base);
     line-height: 1.4;
+  }
+
+  .picker-item-static {
+    align-items: center;
+    padding: 0.28rem 0.3rem;
+    text-decoration: none;
+    font-size: var(--sl-text-sm);
+  }
+
+  .picker-item-area {
+    gap: 0;
   }
 
   @media (min-width: 50rem) {
@@ -320,30 +490,78 @@ for (const lib of libraries) {
     background-color: var(--sl-color-gray-5);
   }
 
-  .picker-dot {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background-color: var(--dot-color);
-    flex-shrink: 0;
+  .picker-item-main {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    min-width: 0;
+    gap: 0.05rem;
+  }
+
+  .picker-item-link {
+    display: inline-flex;
+    min-width: 0;
+    color: inherit;
+    text-decoration: none;
+    width: fit-content;
+  }
+
+  .picker-item-link:hover .picker-item-label {
+    color: var(--sl-color-white);
+  }
+
+  .picker-item-link:focus-visible {
+    outline: 2px solid var(--sl-color-accent);
+    outline-offset: 2px;
+    border-radius: 0.25rem;
   }
 
   /* Library name label */
   .picker-item-label {
-    white-space: nowrap;
+    white-space: normal;
     color: inherit;
+  }
+
+  .picker-item-static .picker-item-label {
+    white-space: nowrap;
+  }
+
+  .picker-item-static .picker-dot {
+    margin-top: 0;
   }
 
   .picker-item.active .picker-item-label {
     font-weight: 600;
   }
 
-  /* Language variant links */
   .picker-variants {
     display: flex;
     flex-wrap: wrap;
-    justify-content: flex-end;
-    gap: 0.3rem;
-    margin-inline-start: auto;
+    align-items: center;
+    gap: 0.35rem;
+    color: var(--sl-color-gray-3);
+    font-size: var(--sl-text-xs);
+    line-height: 1.3;
+  }
+
+  .picker-variant-link {
+    color: var(--variant-accent, var(--sl-color-gray-3));
+    text-decoration: none;
+  }
+
+  .picker-variant-link:hover {
+    color: var(--sl-color-white);
+    text-decoration: underline;
+    text-underline-offset: 0.14em;
+  }
+
+  .picker-variant-link:focus-visible {
+    outline: 2px solid var(--sl-color-accent);
+    outline-offset: 2px;
+    border-radius: 0.2rem;
+  }
+
+  .picker-variant-separator {
+    color: var(--sl-color-gray-5);
   }
 </style>
