@@ -74,7 +74,7 @@ npm install -D typescript @types/node tsx
 #### Install dependencies
 
 ```bash
-npm install @x402-avm/fetch@^2.6.1 @x402-avm/avm@^2.6.1 @algorandfoundation/algokit-utils@10.0.0-alpha.42 dotenv
+npm install @x402/core @x402/fetch @x402/avm @algorandfoundation/algokit-utils@10.0.0-alpha.42 dotenv
 ```
 
 :::note
@@ -82,17 +82,6 @@ This tutorial currently uses an alpha release of `@algorandfoundation/algokit-ut
 :::
 
 #### Client config
-
-The x402 packages use ESM imports, so `package.json` needs `"type": "module"`. Open the generated `package.json` and add it:
-
-```json
-{
-  "name": "x402-demo-client",
-  "type": "module"
-}
-```
-
-Only `"type": "module"` matters — leave the rest of the generated fields as-is.
 
 Create `tsconfig.json` in the project root:
 
@@ -159,9 +148,8 @@ Now replace `index.ts` with the paying version. Instead of a plain `fetch`, `wra
 
 ```typescript
 import { config } from 'dotenv';
-import { x402Client, wrapFetchWithPayment, x402HTTPClient } from '@x402-avm/fetch';
-import { toClientAvmSigner } from '@x402-avm/avm';
-import { registerExactAvmScheme } from '@x402-avm/avm/exact/client';
+import { x402Client, wrapFetchWithPayment, x402HTTPClient } from '@x402/fetch';
+import { toClientAvmSigner, ExactAvmScheme, ALGORAND_TESTNET_CAIP2 } from '@x402/avm';
 import {
   ed25519SigningKeyFromWrappedSecret,
   type WrappedEd25519Seed,
@@ -180,8 +168,10 @@ async function main(): Promise<void> {
 
   // Initialize the x402 client.
   const client = new x402Client();
-  // Register the exact AVM scheme so the client knows how to satisfy Algorand "exact" requirements.
-  registerExactAvmScheme(client, { signer: avmSigner });
+
+  // Register with network
+  client.register(ALGORAND_TESTNET_CAIP2, new ExactAvmScheme(avmSigner));
+
   console.info(`AVM signer: ${avmSigner.address}`);
 
   // Wrap fetch so 402 responses trigger payment handling automatically.
@@ -209,6 +199,7 @@ async function getSecretKeyFromMnemonic(avmMnemonic: string): Promise<string> {
     wrapEd25519Seed: async () => {},
   };
   const wrappedSecret = await ed25519SigningKeyFromWrappedSecret(wrappedSeed);
+
   return Buffer.concat([Buffer.from(seedCopy), Buffer.from(wrappedSecret.ed25519Pubkey)]).toString(
     'base64',
   );
@@ -231,8 +222,10 @@ Expected output (addresses and transaction IDs will differ):
 ```
 AVM signer: ABC123...
 Payment response: {
-  "transactionId": "TXID...",
-  "status": "settled"
+  "success": true,
+  "payer": "ABC123...",
+  "transaction": "TXID...",
+  "network": "algorand:..."
 }
 ```
 
@@ -257,21 +250,12 @@ npm install -D typescript @types/node tsx
 #### Install dependencies
 
 ```bash
-npm install @x402-avm/hono@^2.6.1 @x402-avm/avm@^2.6.1 @x402-avm/core@^2.6.1 hono @hono/node-server dotenv
+npm install @x402/core @x402/avm @x402/hono hono @hono/node-server dotenv
 ```
 
 #### Server config
 
-As with the client, set `"type": "module"` in `package.json`:
-
-```json
-{
-  "name": "x402-demo-server",
-  "type": "module"
-}
-```
-
-Then copy `tsconfig.json` from [Client config](#client-config).
+Similarly, copy the `tsconfig.json` from [Client config](#client-config).
 
 #### Environment variables
 
@@ -292,70 +276,68 @@ The `accepts` array defines what the server will accept as payment. Each entry s
 
 ```typescript
 import { config } from 'dotenv';
-import { paymentMiddleware, x402ResourceServer } from '@x402-avm/hono';
-import { ExactAvmScheme } from '@x402-avm/avm/exact/server';
-import { HTTPFacilitatorClient } from '@x402-avm/core/server';
 import { Hono } from 'hono';
 import { serve } from '@hono/node-server';
+import { paymentMiddleware } from '@x402/hono';
+import { x402ResourceServer, HTTPFacilitatorClient } from '@x402/core/server';
+import { ExactAvmScheme } from '@x402/avm/exact/server';
+import { ALGORAND_TESTNET_CAIP2, USDC_TESTNET_ASA_ID } from '@x402/avm';
+
 config();
 
 const avmAddress = process.env.AVM_ADDRESS;
-if (!avmAddress) {
-  console.error('Missing AVM_ADDRESS environment variable');
-  process.exit(1);
-}
-
 const facilitatorUrl = process.env.FACILITATOR_URL;
-if (!facilitatorUrl) {
-  console.error('Missing FACILITATOR_URL environment variable');
+
+if (!avmAddress || !facilitatorUrl) {
+  console.error('Missing environment variables: AVM_ADDRESS or FACILITATOR_URL');
   process.exit(1);
 }
+
+// Initialize the Resource Server
 const facilitatorClient = new HTTPFacilitatorClient({ url: facilitatorUrl });
+const server = new x402ResourceServer(facilitatorClient);
 
-const accepts = [
-  {
-    scheme: 'exact',
-    price: '$0.001',
-    network: 'algorand:SGO1GKSzyE7IEPItTxCByw9x8FmnrCDexi9/cOUJOiI=' as const,
-    payTo: avmAddress,
-  },
-];
-
-const server = new x402ResourceServer(facilitatorClient).register(
-  'algorand:SGO1GKSzyE7IEPItTxCByw9x8FmnrCDexi9/cOUJOiI=',
-  new ExactAvmScheme(),
-);
+// Register Network Schemes
+const avmServerScheme = new ExactAvmScheme();
+server.register(ALGORAND_TESTNET_CAIP2, avmServerScheme);
 
 const app = new Hono();
 
+// Protected Route Middleware
 app.use(
   paymentMiddleware(
     {
       'GET /weather': {
-        accepts,
-        description: 'Weather data',
-        mimeType: 'application/json',
+        accepts: [
+          {
+            scheme: 'exact',
+            price: '$0.005',
+            network: ALGORAND_TESTNET_CAIP2,
+            payTo: avmAddress,
+            extra: { asset: USDC_TESTNET_ASA_ID },
+          },
+        ],
+        description: 'Weather data access',
       },
     },
     server,
   ),
 );
 
+// Resource Handler
 app.get('/weather', c => {
   return c.json({
     report: {
       weather: 'sunny',
       temperature: 70,
+      timestamp: new Date().toISOString(),
     },
   });
 });
 
-serve({
-  fetch: app.fetch,
-  port: 4021,
+serve({ fetch: app.fetch, port: 4021 }, () => {
+  console.log(`x402 Resource Server listening at http://localhost:4021`);
 });
-
-console.log(`Server listening at http://localhost:4021`);
 ```
 
 Unpaid `GET /weather` returns HTTP 402; paid requests return the JSON body.
