@@ -1,5 +1,5 @@
 ---
-title: '`AlgorandSubscriber`'
+title: 'AlgorandSubscriber'
 ---
 
 `AlgorandSubscriber` is a class that allows you to easily subscribe to the Algorand Blockchain, define a series of events that you are interested in, and react to those events. It has a similar programming model to [EventEmitter](https://nodejs.org/docs/latest/api/events.html), but also supports async/await.
