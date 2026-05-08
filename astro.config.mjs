@@ -1285,6 +1285,10 @@ export default defineConfig({
               link: 'resources/overview',
             },
             {
+              label: 'Security Best Practices',
+              link: 'resources/security-best-practices',
+            },
+            {
               label: 'Liquid Auth',
               link: 'resources/liquid-auth',
             },
