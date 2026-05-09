@@ -3,9 +3,12 @@ title: Smart Contract Security Best Practices
 description: A practical Algorand smart contract security guide covering common vulnerabilities, secure patterns, and runnable examples for Algorand TypeScript and Algorand Python.
 sidebar:
   label: Security Best Practices
+tableOfContents:
+  minHeadingLevel: 2
+  maxHeadingLevel: 2
 ---
 
-# Algorand Smart Contract Security Best Practices
+import { CardGrid, LinkCard, Tabs, TabItem } from '@astrojs/starlight/components';
 
 Smart contracts on Algorand manage real value and a single vulnerability can result in irreversible loss of funds. Unlike traditional software, deployed contracts are immutable by default and operate in an adversarial environment where every transaction is public and anyone can interact with your program. Therefore, security has to be built in from the start.
 
@@ -15,14 +18,11 @@ Whether you're building your first contract or preparing for a mainnet launch, u
 
 In this guide, **smart contract** is the umbrella term for AVM programs. When contrasting Algorand's two main contract models, this guide uses **application** for a stateful app and **LogicSig** for a stateless smart signature.
 
-> [!WARNING]
-> This is a work in progress at an early stage. It is not definitive or complete.
+:::caution
+This guide covers common vulnerabilities and best practices, but it is not exhaustive. Always have your contracts audited by a professional security firm before deploying to mainnet with real value.
+:::
 
-> **Disclaimer:** This guide covers common vulnerabilities and best practices but is not exhaustive. Always have your contracts audited by a professional security firm before deploying to mainnet with real value.
-
----
-
-## How to Read This Guide
+### How to Read This Guide
 
 Each section highlights risks with concrete code examples. Headings are categorized by the nature of the risk:
 
@@ -30,39 +30,18 @@ Each section highlights risks with concrete code examples. Headings are categori
 - **DON'T / DO**: Defensive best practices that aren't directly exploitable but lead to fragility, denial of service, or operational risk.
 - **Pattern**: Recommended implementation approaches.
 
----
-
-## Table of Contents
-
-1. [Applications vs Logic Signatures](#1-applications-vs-logic-signatures)
-2. [Access Control](#2-access-control)
-3. [Fee Management](#3-fee-management)
-4. [Transaction & Input Validation](#4-transaction--input-validation)
-5. [ASA Configuration Security](#5-asa-configuration-security)
-6. [Rekeying & Account Draining](#6-rekeying--account-draining)
-7. [Group Transaction Security](#7-group-transaction-security)
-8. [State Management & Storage Security](#8-state-management--storage-security)
-9. [Arithmetic Safety](#9-arithmetic-safety)
-10. [Updatability & Deletability](#10-updatability--deletability)
-11. [Randomness](#11-randomness)
-12. [Oracles](#12-oracles)
-13. [Key Management & Deployment](#13-key-management--deployment)
-14. [Security Tooling & Audit](#14-security-tooling--audit)
-15. [Off-Chain & Operational Security](#15-off-chain--operational-security)
-16. [Further Reading](#16-further-reading)
-
----
-
 ## 1. Applications vs Logic Signatures
 
-[Logic Signatures](https://dev.algorand.co/concepts/smart-contracts/logic-sigs/) (LogicSigs) are programs that authorize transactions. If the program returns non-zero, the transaction is approved. They operate in two modes:
+[Logic Signatures](/concepts/smart-contracts/logic-sigs/) (LogicSigs) are programs that authorize transactions. If the program returns non-zero, the transaction is approved. They operate in two modes:
 
 1. **Contract Account** - the compiled program hash becomes an escrow address with no private key
 2. **Delegated** - an account owner signs the program, letting anyone with the signed program transact on their behalf.
 
 LogicSigs are powerful but dangerous, especially in delegated mode, where a single missing check can permanently compromise the signer's account. **Prefer applications** where possible.
 
-> **Note:** As of **April 21, 2026**, when publishing this guide, typed LogicSig arguments are available in the **`1.2.0-beta`** PuyaTs / Algorand TypeScript release line. Support first appeared in **`v1.2.0-beta.19`** on **March 18, 2026**. If you are on an older stable toolchain, you may still only have the older raw-`op.arg(...)` workflow.
+:::note
+As of **April 21, 2026**, typed LogicSig arguments are available in the **`1.2.0-beta`** PuyaTs / Algorand TypeScript release line. Support first appeared in **`v1.2.0-beta.19`** on **March 18, 2026**. If you are on an older stable toolchain, you may still only have the older raw-`op.arg(...)` workflow.
+:::
 
 ### Risk
 
@@ -96,7 +75,8 @@ See sections [3 (Fee Management)](#3-fee-management) and [6 (Rekeying)](#6-rekey
 
 A delegated LogicSig that reads its amount cap from a caller-supplied typed LogicSig parameter and only checks the amount. Everything else is unvalidated. If Alice signs this program, anyone who obtains it can transact from Alice's account.
 
-Algorand TypeScript — VULNERABLE
+<Tabs syncKey='lang'>
+  <TabItem label='TypeScript' icon='seti:typescript'>
 
 ```typescript
 import { LogicSig, Txn, type uint64 } from '@algorandfoundation/algorand-typescript';
@@ -110,7 +90,8 @@ class UnsafePaymentSig extends LogicSig {
 }
 ```
 
-Algorand Python — VULNERABLE
+  </TabItem>
+  <TabItem label='Python' icon='seti:python'>
 
 ```python
 from algopy import logicsig, Txn, UInt64
@@ -121,6 +102,9 @@ from algopy import logicsig, Txn, UInt64
 def unsafe_payment_sig(max_amount: UInt64) -> bool:
     return Txn.amount <= max_amount
 ```
+
+  </TabItem>
+</Tabs>
 
 **An attacker with the signed program can:**
 
@@ -134,7 +118,8 @@ def unsafe_payment_sig(max_amount: UInt64) -> bool:
 
 The safe version locks down every dangerous field. Alice delegates to Bob. Bob can pull up to 1 ALGO per transaction, but only to a pre-specified receiver, with replay protection. If you need LogicSig args, prefer typed parameters in PuyaPy / PuyaTs. Their encoding is validated by default, but the caller still controls the values, so keep authorization-critical decisions in checked transaction fields or template values instead. If you disable validation or drop to raw `op.arg(...)`, validation becomes your responsibility.
 
-Algorand TypeScript — SAFE
+<Tabs syncKey='lang'>
+  <TabItem label='TypeScript' icon='seti:typescript'>
 
 ```typescript
 import {
@@ -168,7 +153,8 @@ class SafePaymentSig extends LogicSig {
 }
 ```
 
-Algorand Python — SAFE
+  </TabItem>
+  <TabItem label='Python' icon='seti:python'>
 
 ```python
 from algopy import logicsig, Txn, Global, UInt64, Bytes, TransactionType, TemplateVar, Account
@@ -189,7 +175,10 @@ def safe_payment_sig() -> bool:
     )
 ```
 
-> **Runnable examples:** [UnsafePaymentSig & SafePaymentSig source](./smart-contract-examples/projects/smart-contract-examples/smart_contracts/1-smart-contracts-vs-logic-signatures/delegated-logic-sig.algo.ts) | [Unit Tests](./smart-contract-examples/projects/smart-contract-examples/smart_contracts/1-smart-contracts-vs-logic-signatures/delegated-logic-sig.algo.spec.ts) | [E2E Usage](./smart-contract-examples/projects/smart-contract-examples/smart_contracts/1-smart-contracts-vs-logic-signatures/delegated-logic-sig.e2e.spec.ts)
+  </TabItem>
+</Tabs>
+
+{/* TODO(devportal-security-guide): Replace the inline LogicSig security samples in section 1 with devportal-native example references after migrating the corresponding companion examples. */}
 
 This is correct but fragile. Miss any single check and Alice's account is compromised.
 
@@ -197,7 +186,8 @@ This is correct but fragile. Miss any single check and Alice's account is compro
 
 A Contract Account escrow that releases funds only to a specific recipient, with amount limits and a fixed validity window. The compiled program hash _is_ the escrow address. Fund it, and anyone with the bytecode can submit withdrawals that satisfy all conditions — but only once, thanks to the pinned lease and validity window.
 
-Algorand TypeScript
+<Tabs syncKey='lang'>
+  <TabItem label='TypeScript' icon='seti:typescript'>
 
 ```typescript
 import {
@@ -230,7 +220,8 @@ class EscrowSig extends LogicSig {
 }
 ```
 
-Algorand Python
+  </TabItem>
+  <TabItem label='Python' icon='seti:python'>
 
 ```python
 from algopy import logicsig, Txn, Global, UInt64, Bytes, TransactionType, TemplateVar, Account
@@ -252,7 +243,8 @@ def escrow_sig() -> bool:
     )
 ```
 
-> **Runnable examples:** [EscrowSig source](./smart-contract-examples/projects/smart-contract-examples/smart_contracts/1-smart-contracts-vs-logic-signatures/escrow-logic-sig.algo.ts) | [Unit Tests](./smart-contract-examples/projects/smart-contract-examples/smart_contracts/1-smart-contracts-vs-logic-signatures/escrow-logic-sig.algo.spec.ts) | [E2E Usage](./smart-contract-examples/projects/smart-contract-examples/smart_contracts/1-smart-contracts-vs-logic-signatures/escrow-logic-sig.e2e.spec.ts)
+  </TabItem>
+</Tabs>
 
 **How it works:** Compile the program with template values (recipient address, max amount, first/last valid rounds) → the hash becomes the escrow address → fund that address → anyone with the bytecode can submit a payment that satisfies all conditions. The `TemplateVar` values are baked into the compiled bytecode, so they cannot be changed after deployment.
 
@@ -264,7 +256,8 @@ Typed LogicSig parameters do not change that trust model. They improve decoding 
 
 ### Vulnerable: LogicSig using arguments for access control
 
-Algorand TypeScript — VULNERABLE
+<Tabs syncKey='lang'>
+  <TabItem label='TypeScript' icon='seti:typescript'>
 
 ```typescript
 import {
@@ -292,7 +285,8 @@ export class UnsafeArgSig extends LogicSig {
 }
 ```
 
-Algorand Python — VULNERABLE
+  </TabItem>
+  <TabItem label='Python' icon='seti:python'>
 
 ```python
 from algopy import logicsig, Txn, Global, Bytes, TransactionType
@@ -311,31 +305,33 @@ def unsafe_arg_sig(password: Bytes) -> bool:
     )
 ```
 
+  </TabItem>
+</Tabs>
+
 The developer's intent is that only someone who knows the password can trigger payments from this escrow. This fails for multiple reasons:
 
 1. **The password is the only gate.** The receiver is not constrained, so an attacker who knows the password can send funds to any address. Even if you checked the receiver against a second typed LogicSig parameter, the attacker controls all arguments and can set both the password and the receiver to whatever they want.
 
 2. **The password is plainly visible.** The compiled TEAL contains `pushbytes "s3cret"` in plain text. Anyone who reads the bytecode discovers it immediately. The argument values are also visible in the transaction history of every transaction that uses the LogicSig.
 
-3. **Using `TemplateVar` for the password doesn't help.** You might think baking the password into the bytecode via `TemplateVar<bytes>('PASSWORD')` instead of `op.arg(0)` is more secure, since the attacker can no longer swap in a different value. But the substituted value is still embedded in plain text in the compiled TEAL (e.g., `pushbytes "s3cret"`). An attacker reads the program from on-chain transaction history, finds the password, and uses it. LogicSigs cannot keep secrets.
-
-> **Runnable examples:** [UnsafeArgSig source](./smart-contract-examples/projects/smart-contract-examples/smart_contracts/7-group-transaction-security/unsigned-args.algo.ts) | [Unit Tests](./smart-contract-examples/projects/smart-contract-examples/smart_contracts/7-group-transaction-security/unsigned-args.algo.spec.ts) | [E2E Tests](./smart-contract-examples/projects/smart-contract-examples/smart_contracts/7-group-transaction-security/unsigned-args.e2e.spec.ts)
+3. **Using `TemplateVar` for the password doesn't help.** You might think baking the password into the bytecode via `TemplateVar<bytes>('PASSWORD')` instead of `op.arg(0)` is more secure, since the attacker can no longer swap in a different value. But the substituted value is still embedded in plain text in the compiled TEAL (for example, `pushbytes "s3cret"`). An attacker reads the program from on-chain transaction history, finds the password, and uses it. LogicSigs cannot keep secrets.
 
 ### DO: Use Lease + pinned FirstValid/LastValid for replay protection
 
 A LogicSig has no state to track previous executions. Without replay protection, an attacker can replay the same transaction unbounded, withdrawing from escrows or spending from delegated accounts.
 
-Every Algorand transaction requires `FirstValid` and `LastValid` (up to 1000 rounds apart). A [Lease](https://dev.algorand.co/concepts/transactions/leases/) creates a `{Sender : Lease}` lock that persists until `LastValid` passes, blocking any other transaction with the same sender and lease during that window. **The lock expires after `LastValid`**, so the lease alone is not a one-time gate.
+Every Algorand transaction requires `FirstValid` and `LastValid` (up to 1000 rounds apart). A [Lease](/concepts/transactions/leases/) creates a `{Sender : Lease}` lock that persists until `LastValid` passes, blocking any other transaction with the same sender and lease during that window. **The lock expires after `LastValid`**, so the lease alone is not a one-time gate.
 
 For "execute at most once" semantics, a LogicSig must pin both `FirstValid` and `LastValid` to exact template values. If either is left unchecked, the attacker chooses short-lived windows, waits for each lock to expire, and replays. All LogicSig examples above include `Lease`, `FirstValid`, and `LastValid` checks.
 
 ### DO: Check GenesisHash for network-specific LogicSigs
 
-A LogicSig compiled on testnet works identically on mainnet. If a LogicSig should only operate on a specific network, it must explicitly check the genesis hash.
+A LogicSig compiled on testnet works identically on mainnet. If a LogicSig should only operate on a specific network, it must explicitly check the genesis hash. See [transaction networks](/concepts/transactions/networks/) for the environments you are pinning against.
 
 ### DON'T: Deploy LogicSigs without network restriction
 
-Algorand TypeScript — VULNERABLE
+<Tabs syncKey='lang'>
+  <TabItem label='TypeScript' icon='seti:typescript'>
 
 ```typescript
 import {
@@ -364,7 +360,8 @@ export class CrossNetworkSig extends LogicSig {
 }
 ```
 
-Algorand Python — VULNERABLE
+  </TabItem>
+  <TabItem label='Python' icon='seti:python'>
 
 ```python
 from algopy import logicsig, Txn, Global, UInt64, Bytes, TransactionType, TemplateVar
@@ -383,9 +380,13 @@ def cross_network_sig() -> bool:
     )
 ```
 
+  </TabItem>
+</Tabs>
+
 ### DO: Restrict LogicSigs to a specific network
 
-Algorand TypeScript — SAFE
+<Tabs syncKey='lang'>
+  <TabItem label='TypeScript' icon='seti:typescript'>
 
 ```typescript
 import {
@@ -415,7 +416,8 @@ export class NetworkRestrictedSig extends LogicSig {
 }
 ```
 
-Algorand Python — SAFE
+  </TabItem>
+  <TabItem label='Python' icon='seti:python'>
 
 ```python
 from algopy import logicsig, Txn, Global, UInt64, Bytes, TransactionType, TemplateVar
@@ -435,20 +437,26 @@ def network_restricted_sig() -> bool:
     )
 ```
 
+  </TabItem>
+</Tabs>
+
 ### DO: Prefer Applications
 
 Both LogicSig examples above are fragile. Compare with the application equivalent, which gets most of these protections for free:
 
-Algorand TypeScript
+<Tabs syncKey='lang'>
+  <TabItem label='TypeScript' icon='seti:typescript'>
 
 ```typescript
 import {
+  Account,
   Contract,
   Txn,
   Global,
   assert,
   Uint64,
   itxn,
+  type uint64,
 } from '@algorandfoundation/algorand-typescript';
 
 export class SafePaymentManager extends Contract {
@@ -467,7 +475,8 @@ export class SafePaymentManager extends Contract {
 }
 ```
 
-Algorand Python
+  </TabItem>
+  <TabItem label='Python' icon='seti:python'>
 
 ```python
 from algopy import ARC4Contract, Txn, Global, arc4, Account, UInt64, itxn
@@ -485,7 +494,8 @@ class SafePaymentManager(ARC4Contract):
         ).submit()
 ```
 
-> **Runnable examples:** [SafePaymentManager source](./smart-contract-examples/projects/smart-contract-examples/smart_contracts/1-smart-contracts-vs-logic-signatures/safe-payment-manager.algo.ts) | [Tests](./smart-contract-examples/projects/smart-contract-examples/smart_contracts/1-smart-contracts-vs-logic-signatures/safe-payment-manager.e2e.spec.ts)
+  </TabItem>
+</Tabs>
 
 The application account can't be closed, can't be rekeyed, and inner transaction fees default to the minimum. These are all things that LogicSigs must guard against manually and can easily get wrong.
 
@@ -498,6 +508,29 @@ The application account can't be closed, can't be rekeyed, and inner transaction
 - **If you disable LogicSig-arg validation or use raw `op.arg(...)`:** validate count, length, and meaning yourself, and keep authorization-critical values out of them.
 - **Check `Global.genesisHash`** in network-specific LogicSigs to prevent cross-network reuse.
 - **Default to applications** unless you have a specific reason not to. They give you access control, state, and composability for free.
+
+<CardGrid>
+  <LinkCard
+    title='Fee Management'
+    href='#3-fee-management'
+    description='Continue to section 3 for fee bounds, pooled fees, and congestion tradeoffs.'
+  />
+  <LinkCard
+    title='Rekeying and Draining'
+    href='#6-rekeying--account-draining'
+    description='Continue to section 6 for rekey, close-out, and draining attack patterns.'
+  />
+  <LinkCard
+    title='LogicSig Concepts'
+    href='/concepts/smart-contracts/logic-sigs/'
+    description='Review the protocol-level LogicSig model alongside these security rules.'
+  />
+  <LinkCard
+    title='Inner Transactions'
+    href='/concepts/smart-contracts/inner-txn/'
+    description='See why application-based authorization is usually safer and more composable.'
+  />
+</CardGrid>
 
 ### DON'T: Assume delegated LogicSigs can be revoked
 
@@ -515,7 +548,9 @@ Algorand TypeScript and Algorand Python **reject update and delete operations by
 
 The risk arises when you **do** define these handlers (because you need the contract to be upgradeable) but forget to add access control. Without checks, **any account** can call your handler and replace the contract code or delete the application, stealing all funds held by the application address.
 
-**Note:** In raw TEAL, the opposite applies. Update and delete are allowed unless the program explicitly rejects them.
+:::note
+In raw TEAL, the opposite applies. Update and delete are allowed unless the program explicitly rejects them.
+:::
 
 ### DO: Restrict update and delete handlers. Or don't define them at all
 
@@ -523,7 +558,8 @@ If your contract needs to be updatable or deletable, always restrict those opera
 
 ### Vulnerable: Update/delete handlers without access control
 
-Algorand TypeScript — VULNERABLE
+<Tabs syncKey='lang'>
+  <TabItem label='TypeScript' icon='seti:typescript'>
 
 ```typescript
 import { Contract } from '@algorandfoundation/algorand-typescript';
@@ -544,7 +580,8 @@ export class VulnerableContract extends Contract {
 }
 ```
 
-Algorand Python — VULNERABLE
+  </TabItem>
+  <TabItem label='Python' icon='seti:python'>
 
 ```python
 from algopy import ARC4Contract, arc4
@@ -567,9 +604,13 @@ class VulnerableContract(ARC4Contract):
         pass
 ```
 
+  </TabItem>
+</Tabs>
+
 ### Fixed: Creator-only access control
 
-Algorand TypeScript — SAFE
+<Tabs syncKey='lang'>
+  <TabItem label='TypeScript' icon='seti:typescript'>
 
 ```typescript
 import { Contract, Txn, Global, assert } from '@algorandfoundation/algorand-typescript';
@@ -589,7 +630,8 @@ export class SecureContract extends Contract {
 }
 ```
 
-Algorand Python — SAFE
+  </TabItem>
+  <TabItem label='Python' icon='seti:python'>
 
 ```python
 from algopy import ARC4Contract, Txn, arc4
@@ -609,7 +651,10 @@ class SecureContract(ARC4Contract):
         pass
 ```
 
-> **Runnable examples:** [Source](./smart-contract-examples/projects/smart-contract-examples/smart_contracts/2-access-control/access-control.algo.ts) | [Tests](./smart-contract-examples/projects/smart-contract-examples/smart_contracts/2-access-control/access-control.e2e.spec.ts)
+  </TabItem>
+</Tabs>
+
+{/* TODO(devportal-security-guide): Replace the inline creator-only access control samples in section 2 with devportal-native example references after migrating the corresponding companion examples. */}
 
 ### DO: Classify every ABI method as permissionless or permissioned
 
@@ -622,7 +667,8 @@ Do not leave this implicit. A business method that moves funds, changes configur
 
 ### Vulnerable: Privileged method exposed as permissionless
 
-Algorand TypeScript — VULNERABLE
+<Tabs syncKey='lang'>
+  <TabItem label='TypeScript' icon='seti:typescript'>
 
 ```typescript
 import type { bytes } from '@algorandfoundation/algorand-typescript';
@@ -642,7 +688,8 @@ export class VulnerableTreasuryContract extends Contract {
 }
 ```
 
-Algorand Python — VULNERABLE
+  </TabItem>
+  <TabItem label='Python' icon='seti:python'>
 
 ```python
 from algopy import ARC4Contract, Account, Bytes, Global, arc4
@@ -661,9 +708,13 @@ class VulnerableTreasuryContract(ARC4Contract):
         self.treasury = new_treasury.bytes
 ```
 
+  </TabItem>
+</Tabs>
+
 ### Fixed: Restrict privileged methods with an explicit authorization policy
 
-Algorand TypeScript — SAFE
+<Tabs syncKey='lang'>
+  <TabItem label='TypeScript' icon='seti:typescript'>
 
 ```typescript
 import type { bytes } from '@algorandfoundation/algorand-typescript';
@@ -701,7 +752,8 @@ export class SafeTreasuryContract extends Contract {
 }
 ```
 
-Algorand Python — SAFE
+  </TabItem>
+  <TabItem label='Python' icon='seti:python'>
 
 ```python
 from algopy import ARC4Contract, Account, Bytes, Global, Txn, arc4
@@ -730,13 +782,17 @@ class SafeTreasuryContract(ARC4Contract):
         self.admin = new_admin.bytes
 ```
 
-> **Runnable examples:** [Source](./smart-contract-examples/projects/smart-contract-examples/smart_contracts/2-access-control/method-authorization.algo.ts) | [Tests](./smart-contract-examples/projects/smart-contract-examples/smart_contracts/2-access-control/method-authorization.e2e.spec.ts)
+  </TabItem>
+</Tabs>
+
+{/* TODO(devportal-security-guide): Replace the inline privileged-method authorization samples in section 2 with devportal-native example references after migrating the corresponding companion examples. */}
 
 ### Pattern: Updatable authorization policy without lock-in
 
 If a permission policy can change over time, define **who can change it**, **how it changes**, and **how you recover from mistakes**. A one-step `setAdmin()` can permanently lock the contract if it sets the wrong address. Prefer a two-step handoff where the current admin nominates the next admin and the next admin explicitly accepts the role.
 
-Algorand TypeScript
+<Tabs syncKey='lang'>
+  <TabItem label='TypeScript' icon='seti:typescript'>
 
 ```typescript
 import type { bytes } from '@algorandfoundation/algorand-typescript';
@@ -781,7 +837,8 @@ export class RotatingAdminContract extends Contract {
 }
 ```
 
-Algorand Python
+  </TabItem>
+  <TabItem label='Python' icon='seti:python'>
 
 ```python
 from algopy import ARC4Contract, Account, Bytes, Global, Txn, arc4
@@ -816,7 +873,10 @@ class RotatingAdminContract(ARC4Contract):
         self.pending_admin = Bytes()
 ```
 
-> **Runnable examples:** [Source](./smart-contract-examples/projects/smart-contract-examples/smart_contracts/2-access-control/method-authorization.algo.ts) | [Tests](./smart-contract-examples/projects/smart-contract-examples/smart_contracts/2-access-control/method-authorization.e2e.spec.ts)
+  </TabItem>
+</Tabs>
+
+{/* TODO(devportal-security-guide): Replace the inline rotating-admin samples in section 2 with devportal-native example references after migrating the corresponding companion examples. */}
 
 ### DON'T: Allow deletion while the contract still holds funds
 
@@ -824,7 +884,8 @@ Even with proper access control, deleting a contract while its application accou
 
 Guard your `deleteApplication()` handler to ensure funds have been withdrawn first:
 
-Algorand TypeScript
+<Tabs syncKey='lang'>
+  <TabItem label='TypeScript' icon='seti:typescript'>
 
 ```typescript
 public deleteApplication(): void {
@@ -836,7 +897,8 @@ public deleteApplication(): void {
 }
 ```
 
-Algorand Python
+  </TabItem>
+  <TabItem label='Python' icon='seti:python'>
 
 ```python
 @arc4.abimethod(allow_actions=["DeleteApplication"])
@@ -848,15 +910,21 @@ def delete(self) -> None:
     ), "Drain funds before deleting"
 ```
 
-> **Runnable examples:** [SafeDeleteContract source](./smart-contract-examples/projects/smart-contract-examples/smart_contracts/2-access-control/access-control.algo.ts) | [Tests](./smart-contract-examples/projects/smart-contract-examples/smart_contracts/2-access-control/access-control.e2e.spec.ts)
+  </TabItem>
+</Tabs>
+
+{/* TODO(devportal-security-guide): Replace the inline delete-guard samples in section 2 with devportal-native example references after migrating the corresponding companion examples. */}
 
 ### Pattern: Role-Based Access Control
 
 For complex protocols, a single creator check is insufficient. Use a role-based pattern with a `BoxMap` to manage multiple admin roles (inspired by the [Folks Finance AccessControl pattern](https://github.com/Folks-Finance/algorand-smart-contract-library)). For very small and stable role sets, fixed global-state slots can be simpler. This example keeps `BoxMap` because it scales to arbitrary memberships without depending on per-user opt-in state.
 
-> **Note:** If you only have a limited, fixed set of roles or addresses, `GlobalState` fields can be simpler than a `BoxMap`. Reach for `BoxMap` when membership needs to grow, rotate, or become more dynamic over time.
+:::note
+If you only have a limited, fixed set of roles or addresses, `GlobalState` fields can be simpler than a `BoxMap`. Reach for `BoxMap` when membership needs to grow, rotate, or become more dynamic over time.
+:::
 
-Algorand TypeScript
+<Tabs syncKey='lang'>
+  <TabItem label='TypeScript' icon='seti:typescript'>
 
 ```typescript
 import type { uint64, bytes } from '@algorandfoundation/algorand-typescript';
@@ -924,7 +992,8 @@ export class RoleBasedContract extends Contract {
 }
 ```
 
-Algorand Python
+  </TabItem>
+  <TabItem label='Python' icon='seti:python'>
 
 ```python
 from algopy import ARC4Contract, BoxMap, Txn, arc4, Bytes, UInt64, Account, subroutine
@@ -975,7 +1044,10 @@ class RoleBasedContract(ARC4Contract):
         self._require_role(Bytes(ROLE_ADMIN))
 ```
 
-> **Runnable examples:** [Source](./smart-contract-examples/projects/smart-contract-examples/smart_contracts/2-access-control/role-based-access.algo.ts) | [Tests](./smart-contract-examples/projects/smart-contract-examples/smart_contracts/2-access-control/role-based-access.e2e.spec.ts)
+  </TabItem>
+</Tabs>
+
+{/* TODO(devportal-security-guide): Replace the inline role-based access control samples in section 2 with devportal-native example references after migrating the corresponding companion examples. */}
 
 ### Key Takeaways
 
@@ -987,6 +1059,29 @@ class RoleBasedContract(ARC4Contract):
 - Guard deletion: ensure the application account's funds have been withdrawn before allowing `deleteApplication()`, otherwise ALGO and ASAs can be permanently locked.
 - Start with creator-only checks. Graduate to role-based access when your protocol requires multiple admins or operators.
 - Use `BoxMap` for growing or frequently changing role membership. For very small fixed role sets, fixed global-state slots can be simpler.
+
+<CardGrid>
+  <LinkCard
+    title='Updatability & Deletability'
+    href='#10-updatability--deletability'
+    description='Continue to section 10 for upgrade strategy, timelocks, and delete-path design.'
+  />
+  <LinkCard
+    title='State Management & Storage Security'
+    href='#8-state-management--storage-security'
+    description='Continue to section 8 for box-backed state, clear-state handling, and lifecycle guards.'
+  />
+  <LinkCard
+    title='Fee Management'
+    href='#3-fee-management'
+    description='Continue to section 3 for pooled fee risks and inner transaction fee handling.'
+  />
+  <LinkCard
+    title='Rekeying & Account Draining'
+    href='#6-rekeying--account-draining'
+    description='Continue to section 6 for the account-level damage caused by missing field restrictions.'
+  />
+</CardGrid>
 
 ---
 
@@ -1000,7 +1095,9 @@ Algorand Python and Algorand TypeScript protect against this by defaulting inner
 
 Never hard-code fee values like `1000` microALGO. If you need to reference the minimum fee (e.g., in a LogicSig fee bound), use `Global.minTxnFee`.
 
-**Note:** In raw TEAL, the default inner transaction fee is set to the global minimum transaction fee. The fee must be manually set to `0`.
+:::note
+In raw TEAL, the default inner transaction fee is set to the global minimum transaction fee. The fee must be manually set to `0`.
+:::
 
 ### DO: Bound LogicSig fees
 
@@ -1010,7 +1107,8 @@ A LogicSig that checks everything _except_ the fee is still vulnerable. An attac
 
 ### Vulnerable: LogicSig without fee bound
 
-Algorand TypeScript — VULNERABLE
+<Tabs syncKey='lang'>
+  <TabItem label='TypeScript' icon='seti:typescript'>
 
 ```typescript
 import {
@@ -1040,7 +1138,8 @@ class UnboundedFeeSig extends LogicSig {
 }
 ```
 
-Algorand Python — VULNERABLE
+  </TabItem>
+  <TabItem label='Python' icon='seti:python'>
 
 ```python
 from algopy import logicsig, Txn, Global, UInt64, Bytes, TransactionType, TemplateVar, Account
@@ -1059,9 +1158,13 @@ def unbounded_fee_sig() -> bool:
     )
 ```
 
+  </TabItem>
+</Tabs>
+
 ### Fixed: LogicSig with fee bound
 
-Algorand TypeScript — SAFE
+<Tabs syncKey='lang'>
+  <TabItem label='TypeScript' icon='seti:typescript'>
 
 ```typescript
 import {
@@ -1095,7 +1198,8 @@ class BoundedFeeSig extends LogicSig {
 }
 ```
 
-Algorand Python — SAFE
+  </TabItem>
+  <TabItem label='Python' icon='seti:python'>
 
 ```python
 from algopy import logicsig, Txn, Global, UInt64, Bytes, TransactionType, TemplateVar, Account
@@ -1117,7 +1221,10 @@ def bounded_fee_sig() -> bool:
     )
 ```
 
-> **Runnable examples:** [UnboundedFeeSig & BoundedFeeSig source](./smart-contract-examples/projects/smart-contract-examples/smart_contracts/3-fee-management/fee-bounding.algo.ts) | [Tests](./smart-contract-examples/projects/smart-contract-examples/smart_contracts/3-fee-management/fee-bounding.algo.spec.ts)
+  </TabItem>
+</Tabs>
+
+{/* TODO(devportal-security-guide): Replace the inline fee-bounding samples in section 3 with devportal-native example references after migrating the corresponding companion examples. */}
 
 ### DO: Handle network congestion
 
@@ -1133,6 +1240,29 @@ During network congestion, the minimum fee may not be sufficient for timely incl
 - Use `Global.minTxnFee` when referencing the fee. Never hard-code `1000`.
 - Bound LogicSig fees to prevent fee draining. `Txn.fee <= Global.minTxnFee` is the safest default, but tighter bounds trade off against congestion tolerance and composability.
 - Callers must include enough fee to cover all inner transactions via fee pooling.
+
+<CardGrid>
+  <LinkCard
+    title='Transaction Fees'
+    href='/concepts/transactions/fees/'
+    description='Review protocol fee behavior, pooled fees, and fee-setting guidance.'
+  />
+  <LinkCard
+    title='Atomic Transaction Groups'
+    href='/concepts/transactions/atomic-txn-groups/'
+    description='Review how pooled outer fees work across grouped transactions.'
+  />
+  <LinkCard
+    title='Applications vs Logic Signatures'
+    href='#1-applications-vs-logic-signatures'
+    description='Return to section 1 for the broader LogicSig field-check checklist.'
+  />
+  <LinkCard
+    title='Transaction & Input Validation'
+    href='#4-transaction--input-validation'
+    description='Continue to section 4 for asset, argument, and transaction validation rules.'
+  />
+</CardGrid>
 
 ---
 
@@ -1150,7 +1280,8 @@ If a contract accepts an asset transfer without verifying the asset ID, an attac
 
 ### Vulnerable: Unchecked asset ID
 
-Algorand TypeScript — VULNERABLE
+<Tabs syncKey='lang'>
+  <TabItem label='TypeScript' icon='seti:typescript'>
 
 ```typescript
 import { Contract, gtxn, Global, Uint64, assert } from '@algorandfoundation/algorand-typescript';
@@ -1167,7 +1298,8 @@ export class VulnerableAssetContract extends Contract {
 }
 ```
 
-Algorand Python — VULNERABLE
+  </TabItem>
+  <TabItem label='Python' icon='seti:python'>
 
 ```python
 from algopy import ARC4Contract, gtxn, Global, UInt64, arc4
@@ -1185,11 +1317,15 @@ class VulnerableAssetContract(ARC4Contract):
         # Attacker can send any worthless ASA instead of the expected token
 ```
 
+  </TabItem>
+</Tabs>
+
 ### Fixed: Asset ID validation with typed ABI parameter
 
 Instead of manually indexing into the group transaction array, accept the asset transfer as a **typed ABI method parameter**. The ARC-4 router automatically resolves the correct transaction reference, eliminating index errors and making the validation explicit:
 
-Algorand TypeScript — SAFE
+<Tabs syncKey='lang'>
+  <TabItem label='TypeScript' icon='seti:typescript'>
 
 ```typescript
 import {
@@ -1220,7 +1356,8 @@ export class SecureDepositContract extends Contract {
 }
 ```
 
-Algorand Python — SAFE
+  </TabItem>
+  <TabItem label='Python' icon='seti:python'>
 
 ```python
 from algopy import ARC4Contract, gtxn, Global, Asset, Txn, arc4
@@ -1244,15 +1381,22 @@ class SecureDepositContract(ARC4Contract):
         assert payment.asset_amount > 0, "Must send nonzero amount"
 ```
 
-> **Runnable examples:** [Source](./smart-contract-examples/projects/smart-contract-examples/smart_contracts/4-transaction-input-validation/contract.algo.ts) | [Tests](./smart-contract-examples/projects/smart-contract-examples/smart_contracts/4-transaction-input-validation/contract.e2e.spec.ts)
+  </TabItem>
+</Tabs>
+
+{/* TODO(devportal-security-guide): Replace the inline asset-transfer validation samples in section 4 with devportal-native example references after migrating the corresponding companion examples. */}
 
 ### ARC-4 Input Validation
 
 The **Puya** (Python) and **PuyaTs** (TypeScript) compilers automatically validate [ARC-4](https://dev.algorand.co/arc-standards/arc-0004/) encoding for ABI method arguments by default, but this only checks that the encoding is well-formed. For dynamic types like `string` and `byte[]`, it confirms the length prefix matches the data but does **not** enforce maximum lengths or other application-level constraints. You should still validate dynamic inputs in your contract logic to prevent oversized inputs from consuming opcode budget or storage.
 
-> **Note:** If you disable per-method validation via `validate_encoding="unsafe_disabled"`, you must validate inputs manually.
+:::note
+If you disable per-method validation via `validate_encoding="unsafe_disabled"`, you must validate inputs manually.
+:::
 
-> **Note:** Typed LogicSig parameters in PuyaPy / PuyaTs now follow the same default encoding-validation model as typed ABI parameters. If you disable LogicSig validation, or if you intentionally read raw `op.arg(...)` values, manual validation becomes your responsibility.
+:::note
+Typed LogicSig parameters in PuyaPy / PuyaTs now follow the same default encoding-validation model as typed ABI parameters. If you disable LogicSig validation, or if you intentionally read raw `op.arg(...)` values, manual validation becomes your responsibility.
+:::
 
 If you are writing **raw TEAL**, you must manually validate all ABI-decoded inputs. See [Validating ABI Values](https://dev.algorand.co/concepts/smart-contracts/abi/#validating-abi-values) for details.
 
@@ -1260,7 +1404,8 @@ If you are writing **raw TEAL**, you must manually validate all ABI-decoded inpu
 
 Even with Puya's automatic encoding validation, dynamic types like `string` and `DynamicBytes` can be arbitrarily long. Always assert application-level length constraints.
 
-Algorand TypeScript — SAFE
+<Tabs syncKey='lang'>
+  <TabItem label='TypeScript' icon='seti:typescript'>
 
 ```typescript
 import { Contract, assert, Uint64 } from '@algorandfoundation/algorand-typescript';
@@ -1284,7 +1429,8 @@ class ProfileContract extends Contract {
 }
 ```
 
-Algorand Python — SAFE
+  </TabItem>
+  <TabItem label='Python' icon='seti:python'>
 
 ```python
 from algopy import ARC4Contract, arc4, String
@@ -1304,11 +1450,15 @@ class ProfileContract(ARC4Contract):
         # ... process data
 ```
 
+  </TabItem>
+</Tabs>
+
 ### DO: Validate fixed-length arguments
 
 If a permissionless method expects an argument to be exactly 32 bytes, 8 bytes, or any other fixed size, assert that exact size in the application. Do not assume the caller or client library will always provide the right shape.
 
-Algorand TypeScript — SAFE
+<Tabs syncKey='lang'>
+  <TabItem label='TypeScript' icon='seti:typescript'>
 
 ```typescript
 import type { bytes } from '@algorandfoundation/algorand-typescript';
@@ -1321,7 +1471,8 @@ export class FixedLengthValidationContract extends Contract {
 }
 ```
 
-Algorand Python — SAFE
+  </TabItem>
+  <TabItem label='Python' icon='seti:python'>
 
 ```python
 from algopy import ARC4Contract, Bytes, UInt64, arc4
@@ -1332,13 +1483,15 @@ class FixedLengthValidationContract(ARC4Contract):
         assert commitment.length == UInt64(32), "Commitment must be 32 bytes"
 ```
 
-> **Runnable examples:** [Source](./smart-contract-examples/projects/smart-contract-examples/smart_contracts/4-transaction-input-validation/permissionless-args.algo.ts) | [Tests](./smart-contract-examples/projects/smart-contract-examples/smart_contracts/4-transaction-input-validation/permissionless-args.e2e.spec.ts)
+  </TabItem>
+</Tabs>
 
 ### DO: Validate bounded arguments
 
 If an argument is only safe within a numeric range, assert both the lower and upper bound before you use it. This includes basis points, percentages, windows, durations, and quantity limits.
 
-Algorand TypeScript — SAFE
+<Tabs syncKey='lang'>
+  <TabItem label='TypeScript' icon='seti:typescript'>
 
 ```typescript
 import type { uint64 } from '@algorandfoundation/algorand-typescript';
@@ -1351,7 +1504,8 @@ export class BoundedInputContract extends Contract {
 }
 ```
 
-Algorand Python — SAFE
+  </TabItem>
+  <TabItem label='Python' icon='seti:python'>
 
 ```python
 from algopy import ARC4Contract, UInt64, arc4
@@ -1362,13 +1516,15 @@ class BoundedInputContract(ARC4Contract):
         assert slippage_bps.native <= UInt64(10_000), "Slippage out of range"
 ```
 
-> **Runnable examples:** [Source](./smart-contract-examples/projects/smart-contract-examples/smart_contracts/4-transaction-input-validation/permissionless-args.algo.ts) | [Tests](./smart-contract-examples/projects/smart-contract-examples/smart_contracts/4-transaction-input-validation/permissionless-args.e2e.spec.ts)
+  </TabItem>
+</Tabs>
 
 ### DO: Validate enumerated arguments
 
 If a method only supports a closed set of values, reject everything else. This is common for action selectors, swap modes, order sides, and phase identifiers.
 
-Algorand TypeScript — SAFE
+<Tabs syncKey='lang'>
+  <TabItem label='TypeScript' icon='seti:typescript'>
 
 ```typescript
 import type { uint64 } from '@algorandfoundation/algorand-typescript';
@@ -1384,7 +1540,8 @@ export class EnumeratedInputContract extends Contract {
 }
 ```
 
-Algorand Python — SAFE
+  </TabItem>
+  <TabItem label='Python' icon='seti:python'>
 
 ```python
 from algopy import ARC4Contract, UInt64, arc4
@@ -1399,7 +1556,10 @@ class EnumeratedInputContract(ARC4Contract):
         assert value == MODE_EXACT_IN or value == MODE_EXACT_OUT, "Invalid mode"
 ```
 
-> **Runnable examples:** [Source](./smart-contract-examples/projects/smart-contract-examples/smart_contracts/4-transaction-input-validation/permissionless-args.algo.ts) | [Tests](./smart-contract-examples/projects/smart-contract-examples/smart_contracts/4-transaction-input-validation/permissionless-args.e2e.spec.ts)
+  </TabItem>
+</Tabs>
+
+{/* TODO(devportal-security-guide): Replace the inline permissionless-argument validation samples in section 4 with devportal-native example references after migrating the corresponding companion examples. */}
 
 ### Key Takeaways
 
@@ -1414,13 +1574,36 @@ class EnumeratedInputContract(ARC4Contract):
 - Keep your Puya compiler updated: check the [security bulletins](https://dev.algorand.co/bulletins/).
 - Never trust clear state transactions as part of validation logic.
 
+<CardGrid>
+  <LinkCard
+    title='Atomic Transaction Groups'
+    href='/concepts/transactions/atomic-txn-groups/'
+    description='Review grouped transaction structure when validating companion transactions.'
+  />
+  <LinkCard
+    title='ARC-4'
+    href='https://dev.algorand.co/arc-standards/arc-0004/'
+    description='Review the ARC-4 ABI encoding model and parameter conventions.'
+  />
+  <LinkCard
+    title='Fee Management'
+    href='#3-fee-management'
+    description='Return to section 3 for fee-pooling and fee-bound security considerations.'
+  />
+  <LinkCard
+    title='ASA Configuration Security'
+    href='#5-asa-configuration-security'
+    description='Continue to section 5 for asset-level control and configuration hazards.'
+  />
+</CardGrid>
+
 ---
 
 ## 5. ASA Configuration Security
 
 ### Risk
 
-When creating or reconfiguring an [Algorand Standard Asset (ASA)](https://dev.algorand.co/concepts/assets/overview/), four control addresses govern critical capabilities: **manager** (can change all addresses and destroy the asset), **clawback** (can revoke assets from any holder), **freeze** (can freeze any holder's balance), and **reserve** (indicates non-circulating supply; used by [ARC-19](https://dev.algorand.co/arc-standards/arc-0019/) for metadata resolution). Misconfiguring these can lead to permanent loss of control or unauthorized asset seizure.
+When creating or reconfiguring an [Algorand Standard Asset (ASA)](/concepts/assets/overview/), four control addresses govern critical capabilities: **manager** (can change all addresses and destroy the asset), **clawback** (can revoke assets from any holder), **freeze** (can freeze any holder's balance), and **reserve** (indicates non-circulating supply; used by [ARC-19](https://dev.algorand.co/arc-standards/arc-0019/) for metadata resolution). Misconfiguring these can lead to permanent loss of control or unauthorized asset seizure.
 
 Setting any control address to empty **permanently and irreversibly** disables that capability. There is no way to restore it. If the manager address is compromised, an attacker gains full reconfiguration power, including granting themselves freeze and clawback.
 
@@ -1430,7 +1613,8 @@ Also remember that reconfiguration only applies to the control addresses. Core a
 
 ### DON'T: Reconfigure ASAs without preserving all control addresses
 
-Algorand TypeScript — VULNERABLE
+<Tabs syncKey='lang'>
+  <TabItem label='TypeScript' icon='seti:typescript'>
 
 ```typescript
 import { Contract, Global, itxn } from '@algorandfoundation/algorand-typescript';
@@ -1454,7 +1638,8 @@ class VulnerableAssetManager extends Contract {
 }
 ```
 
-Algorand Python — VULNERABLE
+  </TabItem>
+  <TabItem label='Python' icon='seti:python'>
 
 ```python
 from algopy import ARC4Contract, Asset, Account, Global, Txn, arc4, itxn, op
@@ -1473,9 +1658,13 @@ class VulnerableAssetManager(ARC4Contract):
         ).submit()
 ```
 
+  </TabItem>
+</Tabs>
+
 ### DO: Preserve all control addresses when reconfiguring ASAs
 
-Algorand TypeScript — SAFE
+<Tabs syncKey='lang'>
+  <TabItem label='TypeScript' icon='seti:typescript'>
 
 ```typescript
 import { Contract, Global, itxn } from '@algorandfoundation/algorand-typescript';
@@ -1501,7 +1690,8 @@ class SafeAssetManager extends Contract {
 }
 ```
 
-Algorand Python — SAFE
+  </TabItem>
+  <TabItem label='Python' icon='seti:python'>
 
 ```python
 from algopy import ARC4Contract, Asset, Account, Global, Txn, arc4, itxn, op
@@ -1522,11 +1712,15 @@ class SafeAssetManager(ARC4Contract):
         ).submit()
 ```
 
+  </TabItem>
+</Tabs>
+
 ### Pattern: Safe ASA creation with explicit address configuration
 
 When creating an ASA via inner transaction, always explicitly set the control addresses appropriate for your use case. Omitting them silently leaves them unset (empty), which is permanent.
 
-Algorand TypeScript — SAFE
+<Tabs syncKey='lang'>
+  <TabItem label='TypeScript' icon='seti:typescript'>
 
 ```typescript
 import { Contract, Global, itxn, uint64 } from '@algorandfoundation/algorand-typescript';
@@ -1554,7 +1748,8 @@ class TokenFactory extends Contract {
 }
 ```
 
-Algorand Python — SAFE
+  </TabItem>
+  <TabItem label='Python' icon='seti:python'>
 
 ```python
 from algopy import ARC4Contract, Global, UInt64, itxn, arc4
@@ -1577,7 +1772,10 @@ class TokenFactory(ARC4Contract):
         return result.created_asset.id
 ```
 
-> **Runnable examples:** [Tests](./smart-contract-examples/projects/smart-contract-examples/smart_contracts/5-asa-config-security/asa-reconfig-pitfall.e2e.spec.ts)
+  </TabItem>
+</Tabs>
+
+{/* TODO(devportal-security-guide): Replace the inline ASA configuration samples in section 5 with devportal-native example references after migrating the corresponding companion examples. */}
 
 ### Key Takeaways
 
@@ -1585,6 +1783,29 @@ class TokenFactory(ARC4Contract):
 - Understand the role of each control address (manager, freeze, clawback, reserve) and remove those not needed.
 - Reconfiguration transactions must re-specify all addresses you want to keep. Omitted fields are permanently cleared.
 - Decide immutable ASA parameters at creation time. Reconfiguration does not let you revisit the asset's core definition later.
+
+<CardGrid>
+  <LinkCard
+    title='Assets Overview'
+    href='/concepts/assets/overview/'
+    description='Review the protocol model for ASAs and the meaning of each control address.'
+  />
+  <LinkCard
+    title='ARC-19'
+    href='https://dev.algorand.co/arc-standards/arc-0019/'
+    description='Review reserve-address metadata resolution when designing mutable asset behavior.'
+  />
+  <LinkCard
+    title='Rekeying & Account Draining'
+    href='#6-rekeying--account-draining'
+    description='Continue to section 6 for transaction fields that can drain or permanently redirect accounts.'
+  />
+  <LinkCard
+    title='Access Control'
+    href='#2-access-control'
+    description='Return to section 2 for authorization patterns around privileged asset-management methods.'
+  />
+</CardGrid>
 
 ---
 
@@ -1610,7 +1831,8 @@ If a LogicSig does not check `RekeyTo`, an attacker submits a transaction that p
 
 ### Vulnerable: LogicSig missing RekeyTo check
 
-Algorand TypeScript — VULNERABLE
+<Tabs syncKey='lang'>
+  <TabItem label='TypeScript' icon='seti:typescript'>
 
 ```typescript
 import { LogicSig, Txn, Global, Uint64 } from '@algorandfoundation/algorand-typescript';
@@ -1628,7 +1850,8 @@ class VulnerableRekey extends LogicSig {
 }
 ```
 
-Algorand Python — VULNERABLE
+  </TabItem>
+  <TabItem label='Python' icon='seti:python'>
 
 ```python
 from algopy import logicsig, Txn, Global, UInt64, TransactionType
@@ -1644,9 +1867,13 @@ def vulnerable_rekey() -> bool:
     )
 ```
 
+  </TabItem>
+</Tabs>
+
 ### Fixed: LogicSig that blocks rekeying and draining
 
-Algorand TypeScript — SAFE
+<Tabs syncKey='lang'>
+  <TabItem label='TypeScript' icon='seti:typescript'>
 
 ```typescript
 import { LogicSig, Txn, Global, Uint64 } from '@algorandfoundation/algorand-typescript';
@@ -1664,7 +1891,8 @@ class SafeLogicSig extends LogicSig {
 }
 ```
 
-Algorand Python — SAFE
+  </TabItem>
+  <TabItem label='Python' icon='seti:python'>
 
 ```python
 from algopy import logicsig, Txn, Global, UInt64, TransactionType
@@ -1680,7 +1908,8 @@ def safe_logic_sig() -> bool:
     )
 ```
 
-> **Runnable examples:** [VulnerableRekey & SafeLogicSig source](./smart-contract-examples/projects/smart-contract-examples/smart_contracts/6-rekeying-draining/rekey-logicsig.algo.ts) | [Unit Tests](./smart-contract-examples/projects/smart-contract-examples/smart_contracts/6-rekeying-draining/rekey-logicsig.algo.spec.ts)
+  </TabItem>
+</Tabs>
 
 ### Account Closing Attack
 
@@ -1690,7 +1919,8 @@ Smart contracts face the same risk: if your contract constructs inner transactio
 
 ### Vulnerable: Inner transaction with user-controlled close field
 
-Algorand TypeScript — VULNERABLE
+<Tabs syncKey='lang'>
+  <TabItem label='TypeScript' icon='seti:typescript'>
 
 ```typescript
 // VULNERABLE: User-controlled close field on inner transaction
@@ -1704,7 +1934,8 @@ public unsafeTransfer(receiver: Account, closeTo: Account): void {
 }
 ```
 
-Algorand Python — VULNERABLE
+  </TabItem>
+  <TabItem label='Python' icon='seti:python'>
 
 ```python
 # VULNERABLE: User-controlled close field on inner transaction
@@ -1718,9 +1949,13 @@ def unsafe_transfer(self, receiver: Account, close_to: Account) -> None:
     ).submit()
 ```
 
+  </TabItem>
+</Tabs>
+
 ### Fixed: Inner transaction that never exposes close/rekey fields
 
-Algorand TypeScript — SAFE
+<Tabs syncKey='lang'>
+  <TabItem label='TypeScript' icon='seti:typescript'>
 
 ```typescript
 // SAFE: Never expose close/rekey fields to callers
@@ -1734,7 +1969,8 @@ public safeTransfer(receiver: Account, amount: uint64): void {
 }
 ```
 
-Algorand Python — SAFE
+  </TabItem>
+  <TabItem label='Python' icon='seti:python'>
 
 ```python
 # SAFE: Never expose close/rekey fields to callers
@@ -1748,7 +1984,10 @@ def safe_transfer(self, receiver: Account, amount: UInt64) -> None:
     ).submit()
 ```
 
-> **Runnable examples:** [CloseFieldContract source](./smart-contract-examples/projects/smart-contract-examples/smart_contracts/6-rekeying-draining/close-field.algo.ts) | [E2E Tests](./smart-contract-examples/projects/smart-contract-examples/smart_contracts/6-rekeying-draining/close-field.e2e.spec.ts)
+  </TabItem>
+</Tabs>
+
+{/* TODO(devportal-security-guide): Replace the inline rekeying and close-field samples in section 6 with devportal-native example references after migrating the companion examples. */}
 
 ### Application Account Rekeying
 
@@ -1759,6 +1998,29 @@ Avoid rekeying the application account to an externally-owned address. If that k
 - **Every LogicSig** must check `RekeyTo == ZeroAddress`, `CloseRemainderTo == ZeroAddress`, and `AssetCloseTo == ZeroAddress`.
 - **Smart contracts** must never let callers control `rekeyTo`, `closeRemainderTo`, or `assetCloseTo` on inner transactions.
 - Avoid rekeying the application account to an externally-owned address. Use a multisig or contract address if rekeying is needed.
+
+<CardGrid>
+  <LinkCard
+    title='Rekeying Accounts'
+    href='/concepts/accounts/rekeying/'
+    description='Review the protocol-level rekeying model, authorized addresses, and operational consequences.'
+  />
+  <LinkCard
+    title='Logic Signatures'
+    href='/concepts/smart-contracts/logic-sigs/'
+    description='Revisit LogicSig execution rules and why missing field checks are especially dangerous.'
+  />
+  <LinkCard
+    title='Inner Transactions'
+    href='/concepts/smart-contracts/inner-txn/'
+    description='Review how application accounts submit inner transactions and why fee-pooling plus omitted fields is the safe default.'
+  />
+  <LinkCard
+    title='Group Transaction Security'
+    href='#7-group-transaction-security'
+    description='Continue to section 7 for grouped-call validation, replay resistance, and composability pitfalls.'
+  />
+</CardGrid>
 
 ---
 
@@ -1774,7 +2036,8 @@ Requiring an exact group size (e.g., `assert(Global.groupSize === Uint64(2))`) p
 
 ### Vulnerable: No group size check, counting payment by index
 
-Algorand TypeScript — VULNERABLE
+<Tabs syncKey='lang'>
+  <TabItem label='TypeScript' icon='seti:typescript'>
 
 ```typescript
 import {
@@ -1806,7 +2069,8 @@ export class VulnerableGroupContract extends Contract {
 }
 ```
 
-Algorand Python — VULNERABLE
+  </TabItem>
+  <TabItem label='Python' icon='seti:python'>
 
 ```python
 from algopy import ARC4Contract, GlobalState, gtxn, Global, UInt64, arc4
@@ -1828,9 +2092,13 @@ class VulnerableGroupContract(ARC4Contract):
         self.total_credits += UInt64(1)
 ```
 
+  </TabItem>
+</Tabs>
+
 ### Fixed: Use relative indexing via ABI parameters
 
-Algorand TypeScript — SAFE
+<Tabs syncKey='lang'>
+  <TabItem label='TypeScript' icon='seti:typescript'>
 
 ```typescript
 import {
@@ -1861,7 +2129,8 @@ export class SecureGroupContract extends Contract {
 }
 ```
 
-Algorand Python — SAFE
+  </TabItem>
+  <TabItem label='Python' icon='seti:python'>
 
 ```python
 from algopy import ARC4Contract, GlobalState, gtxn, Global, UInt64, arc4
@@ -1882,13 +2151,15 @@ class SecureGroupContract(ARC4Contract):
         self.total_credits += UInt64(1)
 ```
 
-> **Runnable examples:** [Source](./smart-contract-examples/projects/smart-contract-examples/smart_contracts/7-group-transaction-security/group-validation.algo.ts) | [Tests](./smart-contract-examples/projects/smart-contract-examples/smart_contracts/7-group-transaction-security/group-validation.e2e.spec.ts)
+  </TabItem>
+</Tabs>
 
 ### DON'T: Use one-step password reveal for application authorization
 
 If an application authorizes a payout by checking a secret or hash preimage in the same call that performs the action, anyone watching the mempool can copy that reveal transaction and front-run it. Hashing the secret does not help: the secret becomes public the moment it is revealed on the wire.
 
-Algorand TypeScript — VULNERABLE
+<Tabs syncKey='lang'>
+  <TabItem label='TypeScript' icon='seti:typescript'>
 
 ```typescript
 import type { bytes, uint64 } from '@algorandfoundation/algorand-typescript';
@@ -1925,7 +2196,8 @@ export class VulnerablePasswordContract extends Contract {
 }
 ```
 
-Algorand Python — VULNERABLE
+  </TabItem>
+  <TabItem label='Python' icon='seti:python'>
 
 ```python
 from algopy import ARC4Contract, Account, Bytes, arc4, itxn, op
@@ -1956,6 +2228,9 @@ class VulnerablePasswordContract(ARC4Contract):
         ).submit()
 ```
 
+  </TabItem>
+</Tabs>
+
 An attacker can copy the same `secret` from the mempool, submit the same call with a higher fee, and change the `receiver` to their own address. If you truly need secret-based authorization, use a two-step commit-reveal flow across separate confirmed rounds, bind the commitment to the intended action (`receiver`, `amount`, and so on), and include timeout or cancellation logic so stale commits cannot block the app indefinitely.
 
 ### DO: Design methods to be replay-safe
@@ -1978,12 +2253,37 @@ Rate limiting mitigates this by capping how much value can flow through a contra
 
 The [Folks Finance RateLimiter](https://github.com/Folks-Finance/algorand-smart-contract-library/blob/main/folks_contracts/library/RateLimiter.py) provides a reference implementation using a **token bucket algorithm** with box storage. Each bucket has a capacity limit and a duration. Capacity refills linearly over time and is consumed by each action. If insufficient capacity remains, the transaction is rejected.
 
+{/* TODO(devportal-security-guide): Replace the inline group-validation and password-reveal samples in section 7 with devportal-native example references after migrating the companion examples. */}
+
 ### Key Takeaways
 
 - Use ABI method parameters for group transaction references instead of hard-coded indexes.
 - Never authorize an application action by revealing a password or preimage in the same transaction that performs it.
 - Design methods to be either idempotent or guarded against re-execution.
 - Implement rate limiting for contracts exposed to flash-loan risk.
+
+<CardGrid>
+  <LinkCard
+    title='Atomic Transaction Groups'
+    href='/concepts/transactions/atomic-txn-groups/'
+    description='Review how grouped transactions are formed and why composability changes the validation model.'
+  />
+  <LinkCard
+    title='ARC-4'
+    href='https://dev.algorand.co/arc-standards/arc-0004/'
+    description='Review typed transaction parameters and ABI routing conventions used in the safe examples.'
+  />
+  <LinkCard
+    title='Transaction & Input Validation'
+    href='#4-transaction--input-validation'
+    description='Return to section 4 for companion-transaction field validation and argument-boundary checks.'
+  />
+  <LinkCard
+    title='State Management & Storage Security'
+    href='#8-state-management--storage-security'
+    description='Continue to section 8 for replay-resistant state tracking, clear-state handling, and storage safety.'
+  />
+</CardGrid>
 
 ---
 
@@ -1999,7 +2299,8 @@ A user can **always** clear their local state by sending a `ClearState` transact
 
 If a contract stores a user's debt or collateral in `LocalState`, the user can send a `ClearState` transaction to erase it, escaping liquidation, penalties, or repayment obligations.
 
-Algorand TypeScript — VULNERABLE
+<Tabs syncKey='lang'>
+  <TabItem label='TypeScript' icon='seti:typescript'>
 
 ```typescript
 import { Contract, Txn, LocalState, Uint64, assert } from '@algorandfoundation/algorand-typescript';
@@ -2027,7 +2328,8 @@ export class VulnerableLoanContract extends Contract {
 }
 ```
 
-Algorand Python — VULNERABLE
+  </TabItem>
+  <TabItem label='Python' icon='seti:python'>
 
 ```python
 from algopy import ARC4Contract, Txn, LocalState, UInt64, arc4, Account
@@ -2055,9 +2357,13 @@ class VulnerableLoanContract(ARC4Contract):
         # ... seize collateral
 ```
 
+  </TabItem>
+</Tabs>
+
 ### Fixed: Loan contract using BoxMap for persistent debt tracking
 
-Algorand TypeScript — SAFE
+<Tabs syncKey='lang'>
+  <TabItem label='TypeScript' icon='seti:typescript'>
 
 ```typescript
 import { Contract, Txn, BoxMap, Uint64, assert } from '@algorandfoundation/algorand-typescript';
@@ -2085,7 +2391,8 @@ export class SecureLoanContract extends Contract {
 }
 ```
 
-Algorand Python — SAFE
+  </TabItem>
+  <TabItem label='Python' icon='seti:python'>
 
 ```python
 from algopy import ARC4Contract, Txn, BoxMap, UInt64, arc4, Account
@@ -2113,7 +2420,8 @@ class SecureLoanContract(ARC4Contract):
         # ... seize collateral
 ```
 
-> **Runnable examples:** [VulnerableLoanContract source](./smart-contract-examples/projects/smart-contract-examples/smart_contracts/8-state-management/local-state-loan.algo.ts) | [Tests](./smart-contract-examples/projects/smart-contract-examples/smart_contracts/8-state-management/local-state-loan.e2e.spec.ts) | [SecureLoanContract source](./smart-contract-examples/projects/smart-contract-examples/smart_contracts/8-state-management/boxmap-loan.algo.ts) | [Tests](./smart-contract-examples/projects/smart-contract-examples/smart_contracts/8-state-management/boxmap-loan.e2e.spec.ts)
+  </TabItem>
+</Tabs>
 
 The clear state program should still handle cleanup gracefully. See below.
 
@@ -2125,7 +2433,8 @@ Keep in mind: the clear state program **cannot** access boxes (all box-related o
 
 ### Pattern: Handle clear state by tracking cleared values
 
-Algorand TypeScript
+<Tabs syncKey='lang'>
+  <TabItem label='TypeScript' icon='seti:typescript'>
 
 ```typescript
 import {
@@ -2158,7 +2467,8 @@ export class SafeClearContract extends Contract {
 }
 ```
 
-Algorand Python
+  </TabItem>
+  <TabItem label='Python' icon='seti:python'>
 
 ```python
 from algopy import Contract, Txn, UInt64
@@ -2178,7 +2488,8 @@ class SafeClearContract(Contract):
         return UInt64(1)  # Always approve
 ```
 
-> **Runnable examples:** [SafeClearContract source](./smart-contract-examples/projects/smart-contract-examples/smart_contracts/8-state-management/safe-clear-state.algo.ts) | [Tests](./smart-contract-examples/projects/smart-contract-examples/smart_contracts/8-state-management/safe-clear-state.e2e.spec.ts)
+  </TabItem>
+</Tabs>
 
 ### DON'T: Model protocol states with overlapping flags
 
@@ -2186,7 +2497,8 @@ If your application behaves like a finite state machine, define its states so th
 
 When the states overlap, methods that should be impossible together can become callable in the same configuration. That is a logic bug even if every individual `assert()` looks reasonable in isolation.
 
-Algorand TypeScript — VULNERABLE
+<Tabs syncKey='lang'>
+  <TabItem label='TypeScript' icon='seti:typescript'>
 
 ```typescript
 import type { uint64 } from '@algorandfoundation/algorand-typescript';
@@ -2224,7 +2536,8 @@ export class VulnerableLifecycleContract extends Contract {
 }
 ```
 
-Algorand Python — VULNERABLE
+  </TabItem>
+  <TabItem label='Python' icon='seti:python'>
 
 ```python
 from algopy import ARC4Contract, UInt64, arc4
@@ -2256,9 +2569,13 @@ class VulnerableLifecycleContract(ARC4Contract):
         assert self.settlement_open == UInt64(1), "Settlement closed"
 ```
 
+  </TabItem>
+</Tabs>
+
 ### Fixed: Restrict methods to explicit mutually exclusive states
 
-Algorand TypeScript — SAFE
+<Tabs syncKey='lang'>
+  <TabItem label='TypeScript' icon='seti:typescript'>
 
 ```typescript
 import type { uint64 } from '@algorandfoundation/algorand-typescript';
@@ -2302,7 +2619,8 @@ export class SafeLifecycleContract extends Contract {
 }
 ```
 
-Algorand Python — SAFE
+  </TabItem>
+  <TabItem label='Python' icon='seti:python'>
 
 ```python
 from algopy import ARC4Contract, UInt64, arc4
@@ -2340,13 +2658,15 @@ class SafeLifecycleContract(ARC4Contract):
         self.phase = PHASE_CLOSED
 ```
 
-> **Runnable examples:** [Source](./smart-contract-examples/projects/smart-contract-examples/smart_contracts/8-state-management/state-machine.algo.ts) | [Tests](./smart-contract-examples/projects/smart-contract-examples/smart_contracts/8-state-management/state-machine.e2e.spec.ts)
+  </TabItem>
+</Tabs>
 
 ### Pattern: Explicit finite state machine with guarded transitions
 
 Centralize state checks in helpers such as `requirePhase()` or `transitionTo()` so every transition uses the same rules. This makes it much harder to forget to clear a flag or accidentally permit a method in two incompatible states. Treat phase identifiers the same way as other security-sensitive inputs: validate them, keep them single-source, and cross-check them with access control from [2 (Access Control)](#2-access-control).
 
-Algorand TypeScript
+<Tabs syncKey='lang'>
+  <TabItem label='TypeScript' icon='seti:typescript'>
 
 ```typescript
 import type { uint64 } from '@algorandfoundation/algorand-typescript';
@@ -2387,7 +2707,8 @@ export class PhaseGuardContract extends Contract {
 }
 ```
 
-Algorand Python
+  </TabItem>
+  <TabItem label='Python' icon='seti:python'>
 
 ```python
 from algopy import ARC4Contract, UInt64, arc4
@@ -2421,7 +2742,8 @@ class PhaseGuardContract(ARC4Contract):
         self._transition_to(PHASE_SETTLEMENT, PHASE_CLOSED)
 ```
 
-> **Runnable examples:** [Source](./smart-contract-examples/projects/smart-contract-examples/smart_contracts/8-state-management/state-machine.algo.ts) | [Tests](./smart-contract-examples/projects/smart-contract-examples/smart_contracts/8-state-management/state-machine.e2e.spec.ts)
+  </TabItem>
+</Tabs>
 
 ### DO: Use pull-based withdrawals instead of push-based distribution
 
@@ -2429,7 +2751,8 @@ When distributing funds to multiple users, prefer letting each user withdraw the
 
 ### Vulnerable: Push-based distribution
 
-Algorand TypeScript — VULNERABLE
+<Tabs syncKey='lang'>
+  <TabItem label='TypeScript' icon='seti:typescript'>
 
 ```typescript
 // VULNERABLE: If any inner payment fails, the entire
@@ -2446,7 +2769,8 @@ public distribute(recipients: Account[]): void {
 }
 ```
 
-Algorand Python — VULNERABLE
+  </TabItem>
+  <TabItem label='Python' icon='seti:python'>
 
 ```python
 # VULNERABLE: If any inner payment fails, the entire
@@ -2462,9 +2786,13 @@ def distribute(self, recipients: tuple[Account, Account, Account]) -> None:
         ).submit()
 ```
 
+  </TabItem>
+</Tabs>
+
 ### Fixed: Pull-based withdrawal pattern
 
-Algorand TypeScript — SAFE
+<Tabs syncKey='lang'>
+  <TabItem label='TypeScript' icon='seti:typescript'>
 
 ```typescript
 import {
@@ -2505,7 +2833,8 @@ export class PullPatternContract extends Contract {
 }
 ```
 
-Algorand Python — SAFE
+  </TabItem>
+  <TabItem label='Python' icon='seti:python'>
 
 ```python
 from algopy import ARC4Contract, Txn, BoxMap, Account, UInt64, itxn, arc4
@@ -2536,7 +2865,8 @@ class PullPatternContract(ARC4Contract):
         del self.pending_withdrawals[Txn.sender]
 ```
 
-> **Runnable examples:** [PullPatternContract source](./smart-contract-examples/projects/smart-contract-examples/smart_contracts/8-state-management/pull-pattern.algo.ts) | [Tests](./smart-contract-examples/projects/smart-contract-examples/smart_contracts/8-state-management/pull-pattern.e2e.spec.ts)
+  </TabItem>
+</Tabs>
 
 ### DON'T: Delete a contract with boxes still allocated
 
@@ -2546,7 +2876,8 @@ Before deleting a contract, **all boxes must be deleted first**. Boxes hold MBR 
 
 This is primarily an **operational correctness** issue rather than a classic exploit category. The contract account's minimum balance depends on opted-in assets, created apps, local state schemas, and boxes. Hard-coding a value means the contract will break if any of these change. For example, it will break after creating a new box or opting into an asset.
 
-Algorand TypeScript
+<Tabs syncKey='lang'>
+  <TabItem label='TypeScript' icon='seti:typescript'>
 
 ```typescript
 // Hard-coded minimum balance breaks when the contract
@@ -2558,7 +2889,8 @@ public withdraw(amount: uint64): void {
 }
 ```
 
-Algorand Python
+  </TabItem>
+  <TabItem label='Python' icon='seti:python'>
 
 ```python
 # Hard-coded minimum balance breaks when the contract
@@ -2570,11 +2902,15 @@ def withdraw(self, amount: UInt64) -> None:
     # ... send inner payment
 ```
 
+  </TabItem>
+</Tabs>
+
 ### DO: Prefer dynamic minimum balance checks
 
 Using `app.minBalance` is recommended because it makes the invariant explicit, avoids stale assumptions, and gives callers a clear application error instead of relying on a later AVM failure.
 
-Algorand TypeScript
+<Tabs syncKey='lang'>
+  <TabItem label='TypeScript' icon='seti:typescript'>
 
 ```typescript
 // Uses the AVM's min_balance opcode to calculate spendable balance dynamically
@@ -2585,7 +2921,8 @@ public withdraw(amount: uint64): void {
 }
 ```
 
-Algorand Python
+  </TabItem>
+  <TabItem label='Python' icon='seti:python'>
 
 ```python
 # Uses the AVM's min_balance opcode to calculate spendable balance dynamically
@@ -2596,13 +2933,15 @@ def withdraw(self, amount: UInt64) -> None:
     # ... send inner payment
 ```
 
-> **Runnable examples:** [Source](./smart-contract-examples/projects/smart-contract-examples/smart_contracts/8-state-management/min-balance-check.algo.ts) | [Tests](./smart-contract-examples/projects/smart-contract-examples/smart_contracts/8-state-management/min-balance-check.e2e.spec.ts)
+  </TabItem>
+</Tabs>
 
 ### Pattern: Refund released MBR by measuring before and after storage changes
 
 If a method deletes boxes or other storage and should return the released ALGO to the caller, do not hard-code the refund amount. Measure `app.minBalance` before and after the storage change, then refund the exact delta that was released.
 
-Algorand TypeScript
+<Tabs syncKey='lang'>
+  <TabItem label='TypeScript' icon='seti:typescript'>
 
 ```typescript
 import type { bytes, uint64 } from '@algorandfoundation/algorand-typescript';
@@ -2641,7 +2980,8 @@ export class StorageRefundContract extends Contract {
 }
 ```
 
-Algorand Python
+  </TabItem>
+  <TabItem label='Python' icon='seti:python'>
 
 ```python
 from algopy import ARC4Contract, BoxMap, Bytes, Global, Txn, UInt64, arc4, itxn
@@ -2668,7 +3008,10 @@ class StorageRefundContract(ARC4Contract):
             ).submit()
 ```
 
-> **Runnable examples:** [Source](./smart-contract-examples/projects/smart-contract-examples/smart_contracts/8-state-management/mbr-refund.algo.ts) | [E2E Tests](./smart-contract-examples/projects/smart-contract-examples/smart_contracts/8-state-management/mbr-refund.e2e.spec.ts)
+  </TabItem>
+</Tabs>
+
+{/* TODO(devportal-security-guide): Replace the inline state-management samples in section 8 with devportal-native example references after migrating the companion examples. */}
 
 ### Key Takeaways
 
@@ -2679,6 +3022,29 @@ class StorageRefundContract(ARC4Contract):
 - Use the **pull pattern** (users withdraw their own funds) instead of the push pattern (contract distributes to users).
 - Delete all boxes before deleting a contract.
 - Never hard-code minimum balance values or storage-release refunds.
+
+<CardGrid>
+  <LinkCard
+    title='Box Storage'
+    href='/concepts/smart-contracts/storage/box/'
+    description='Review box behavior, lifecycle, and storage tradeoffs when deciding what must persist through clear state.'
+  />
+  <LinkCard
+    title='Local Storage'
+    href='/concepts/smart-contracts/storage/local/'
+    description='Review local-state behavior and why users can always clear it unilaterally.'
+  />
+  <LinkCard
+    title='Global Storage'
+    href='/concepts/smart-contracts/storage/global/'
+    description='Review global-state access patterns for clear-state accounting and phase tracking.'
+  />
+  <LinkCard
+    title='Arithmetic Safety'
+    href='#9-arithmetic-safety'
+    description='Continue to section 9 for overflow, underflow, and configuration-time numeric invariant checks.'
+  />
+</CardGrid>
 
 ---
 
@@ -2698,7 +3064,8 @@ If a method later computes `eligible_deposits * rate / scale`, then any configur
 
 ### Vulnerable: Store arithmetic parameters without numeric analysis
 
-Algorand TypeScript — VULNERABLE
+<Tabs syncKey='lang'>
+  <TabItem label='TypeScript' icon='seti:typescript'>
 
 ```typescript
 import type { uint64 } from '@algorandfoundation/algorand-typescript';
@@ -2739,7 +3106,8 @@ export class VulnerableRewardsConfigContract extends Contract {
 }
 ```
 
-Algorand Python — VULNERABLE
+  </TabItem>
+  <TabItem label='Python' icon='seti:python'>
 
 ```python
 from algopy import ARC4Contract, Global, Txn, UInt64, arc4
@@ -2770,9 +3138,13 @@ class VulnerableRewardsConfigContract(ARC4Contract):
         return arc4.UInt64((value * self.reward_rate) // self.reward_scale)
 ```
 
+  </TabItem>
+</Tabs>
+
 ### Fixed: Validate numeric invariants before storing configuration
 
-Algorand TypeScript — SAFE
+<Tabs syncKey='lang'>
+  <TabItem label='TypeScript' icon='seti:typescript'>
 
 ```typescript
 import type { uint64 } from '@algorandfoundation/algorand-typescript';
@@ -2817,7 +3189,8 @@ export class SafeRewardsConfigContract extends Contract {
 }
 ```
 
-Algorand Python — SAFE
+  </TabItem>
+  <TabItem label='Python' icon='seti:python'>
 
 ```python
 from algopy import ARC4Contract, Global, Txn, UInt64, arc4
@@ -2857,7 +3230,8 @@ class SafeRewardsConfigContract(ARC4Contract):
         return arc4.UInt64((value * self.reward_rate) // self.reward_scale)
 ```
 
-> **Runnable examples:** [Source](./smart-contract-examples/projects/smart-contract-examples/smart_contracts/9-arithmetic-safety/config-validation.algo.ts) | [Tests](./smart-contract-examples/projects/smart-contract-examples/smart_contracts/9-arithmetic-safety/config-validation.e2e.spec.ts)
+  </TabItem>
+</Tabs>
 
 ### Pattern: Validate numeric invariants at configuration time, then keep runtime guards cheap
 
@@ -2868,7 +3242,8 @@ For arithmetic-heavy apps, combine two layers:
 
 For example, if your reward formula assumes `eligible_deposits * reward_rate` fits in `uint64`, validate that relationship when `reward_rate` and `max_eligible_deposits` are configured, then only allow runtime state to remain within that configured envelope.
 
-Algorand TypeScript
+<Tabs syncKey='lang'>
+  <TabItem label='TypeScript' icon='seti:typescript'>
 
 ```typescript
 import type { uint64 } from '@algorandfoundation/algorand-typescript';
@@ -2922,7 +3297,8 @@ export class BoundedRewardsContract extends Contract {
 }
 ```
 
-Algorand Python
+  </TabItem>
+  <TabItem label='Python' icon='seti:python'>
 
 ```python
 from algopy import ARC4Contract, Global, Txn, UInt64, arc4
@@ -2969,7 +3345,8 @@ class BoundedRewardsContract(ARC4Contract):
         return arc4.UInt64((self.eligible_deposits * self.reward_rate) // self.reward_scale)
 ```
 
-> **Runnable examples:** [Source](./smart-contract-examples/projects/smart-contract-examples/smart_contracts/9-arithmetic-safety/config-validation.algo.ts) | [Tests](./smart-contract-examples/projects/smart-contract-examples/smart_contracts/9-arithmetic-safety/config-validation.e2e.spec.ts)
+  </TabItem>
+</Tabs>
 
 ### Overflow
 
@@ -2979,7 +3356,8 @@ On the AVM, `uint64` overflow causes the transaction to **fail** (the AVM panics
 
 Relying on the AVM panic is sometimes acceptable. Add an explicit bound when you want clearer control flow, a more specific error, or stronger protection against a caller repeatedly forcing a failure on an important path.
 
-Algorand TypeScript
+<Tabs syncKey='lang'>
+  <TabItem label='TypeScript' icon='seti:typescript'>
 
 ```typescript
 import { Contract, Uint64 } from '@algorandfoundation/algorand-typescript';
@@ -2993,7 +3371,8 @@ export class UnguardedOverflowContract extends Contract {
 }
 ```
 
-Algorand Python
+  </TabItem>
+  <TabItem label='Python' icon='seti:python'>
 
 ```python
 from algopy import ARC4Contract, arc4
@@ -3005,9 +3384,13 @@ class UnguardedOverflowContract(ARC4Contract):
         return arc4.UInt64(a.native + b.native)  # Panics on overflow
 ```
 
+  </TabItem>
+</Tabs>
+
 ### DO: Add explicit bounds when clearer errors or control flow matter
 
-Algorand TypeScript
+<Tabs syncKey='lang'>
+  <TabItem label='TypeScript' icon='seti:typescript'>
 
 ```typescript
 import { Contract, Uint64, assert } from '@algorandfoundation/algorand-typescript';
@@ -3022,7 +3405,8 @@ export class SafeOverflowContract extends Contract {
 }
 ```
 
-Algorand Python
+  </TabItem>
+  <TabItem label='Python' icon='seti:python'>
 
 ```python
 from algopy import ARC4Contract, UInt64, arc4
@@ -3036,7 +3420,8 @@ class SafeOverflowContract(ARC4Contract):
         return arc4.UInt64(x + y)
 ```
 
-> **Runnable examples:** [Source](./smart-contract-examples/projects/smart-contract-examples/smart_contracts/9-arithmetic-safety/contract.algo.ts) | [Tests](./smart-contract-examples/projects/smart-contract-examples/smart_contracts/9-arithmetic-safety/contract.e2e.spec.ts)
+  </TabItem>
+</Tabs>
 
 ### Underflow
 
@@ -3044,7 +3429,8 @@ Subtracting a larger value from a smaller one panics on the AVM. As with overflo
 
 ### DO: Consider explicit underflow guards on critical paths
 
-Algorand TypeScript
+<Tabs syncKey='lang'>
+  <TabItem label='TypeScript' icon='seti:typescript'>
 
 ```typescript
 // Panics if balance < amount
@@ -3054,7 +3440,8 @@ public unsafeWithdraw(amount: uint64): void {
 }
 ```
 
-Algorand Python
+  </TabItem>
+  <TabItem label='Python' icon='seti:python'>
 
 ```python
 # Panics if balance < amount
@@ -3064,9 +3451,13 @@ def unsafe_withdraw(self, amount: UInt64) -> None:
     self.user_balance[Txn.sender] = balance - amount  # Underflow!
 ```
 
+  </TabItem>
+</Tabs>
+
 ### DO: Add explicit ordering checks when invariants should be surfaced
 
-Algorand TypeScript
+<Tabs syncKey='lang'>
+  <TabItem label='TypeScript' icon='seti:typescript'>
 
 ```typescript
 public safeWithdraw(amount: uint64): void {
@@ -3076,7 +3467,8 @@ public safeWithdraw(amount: uint64): void {
 }
 ```
 
-Algorand Python
+  </TabItem>
+  <TabItem label='Python' icon='seti:python'>
 
 ```python
 @arc4.abimethod
@@ -3086,13 +3478,15 @@ def safe_withdraw(self, amount: UInt64) -> None:
     self.user_balance[Txn.sender] = balance - amount
 ```
 
-> **Runnable examples:** [Source](./smart-contract-examples/projects/smart-contract-examples/smart_contracts/9-arithmetic-safety/contract.algo.ts) | [Tests](./smart-contract-examples/projects/smart-contract-examples/smart_contracts/9-arithmetic-safety/contract.e2e.spec.ts)
+  </TabItem>
+</Tabs>
 
 ### DO: Use BigUInt for intermediate calculations
 
 If your contract handles token amounts that could exceed 2^64 - 1 (e.g., multiplying two large `uint64` values for price calculations), use `biguint` (PuyaTS) / `BigUInt` (PuyaPy) for intermediate calculations.
 
-Algorand TypeScript
+<Tabs syncKey='lang'>
+  <TabItem label='TypeScript' icon='seti:typescript'>
 
 ```typescript
 import {
@@ -3117,7 +3511,8 @@ export class BigUintContract extends Contract {
 }
 ```
 
-Algorand Python
+  </TabItem>
+  <TabItem label='Python' icon='seti:python'>
 
 ```python
 from algopy import ARC4Contract, BigUInt, UInt64, arc4, subroutine
@@ -3132,7 +3527,8 @@ def safe_multiply_divide(a: UInt64, b: UInt64, denominator: UInt64) -> UInt64:
     return UInt64.from_bytes(result.bytes[-8:])
 ```
 
-> **Runnable examples:** [Source](./smart-contract-examples/projects/smart-contract-examples/smart_contracts/9-arithmetic-safety/contract.algo.ts) | [Tests](./smart-contract-examples/projects/smart-contract-examples/smart_contracts/9-arithmetic-safety/contract.e2e.spec.ts)
+  </TabItem>
+</Tabs>
 
 ### DO: Perform invariant analysis on arithmetic-heavy contracts
 
@@ -3143,6 +3539,8 @@ For any arithmetic-heavy contract (DEX, lending, staking), perform **semi-formal
 3. **Check edge cases**: Zero amounts, maximum values, single-unit remainders.
 4. **Test with boundary values**: `0`, `1`, `2^64 - 1`, `2^64 - 2`.
 
+{/* TODO(devportal-security-guide): Replace the inline arithmetic-safety samples in section 9 with devportal-native example references after migrating the companion examples. */}
+
 ### Key Takeaways
 
 - The AVM panics on overflow/underflow instead of wrapping, so unchecked arithmetic is already fail-safe by default.
@@ -3151,6 +3549,29 @@ For any arithmetic-heavy contract (DEX, lending, staking), perform **semi-formal
 - Add explicit runtime guards when they clarify invariants, improve errors, or help defend arithmetic-heavy critical paths against panic-based DoS.
 - Use `biguint`/`BigUInt` for intermediate calculations that could exceed `uint64` range.
 - Perform invariant analysis on any contract with nontrivial arithmetic.
+
+<CardGrid>
+  <LinkCard
+    title='Transaction & Input Validation'
+    href='#4-transaction--input-validation'
+    description='Review validation patterns for inputs and identifiers before arithmetic-heavy logic consumes them.'
+  />
+  <LinkCard
+    title='State Management & Storage Security'
+    href='#8-state-management--storage-security'
+    description='Review storage patterns for numeric state that must persist safely across user actions and lifecycle changes.'
+  />
+  <LinkCard
+    title='Global Storage'
+    href='/concepts/smart-contracts/storage/global/'
+    description='Review global-state behavior for contract configuration values such as rates, scales, and bounds.'
+  />
+  <LinkCard
+    title='Updatability & Deletability'
+    href='#10-updatability--deletability'
+    description='Continue to section 10 for upgrade strategy, migration planning, and delete-path constraints.'
+  />
+</CardGrid>
 
 ---
 
@@ -3164,7 +3585,7 @@ An updatable contract can have its approval program replaced, meaning the contra
 
 An `UpdateApplication` transaction replaces the approval and clear state programs entirely. The current program runs first and can reject the update, so guardrails like timelocks or multisig checks are enforced. But once approved, the new program replaces everything, including those guardrails. Note: programs on AVM version 4+ [cannot be downgraded](https://github.com/algorandfoundation/specs/blob/master/_archive/dev/ledger.md).
 
-**Immutable contracts**: Don't define `updateApplication` or `deleteApplication` methods. Users can verify the rules cannot change, but vulnerabilities cannot be patched. For additional hardening, rekey the creator account to `Global.zeroAddress` after deployment (see [Section 12](#12-key-management--deployment)).
+**Immutable contracts**: Don't define `updateApplication` or `deleteApplication` methods. Users can verify the rules cannot change, but vulnerabilities cannot be patched. For additional hardening, rekey the creator account to `Global.zeroAddress` after deployment (see [Section 13](#13-key-management--deployment)).
 
 **Upgradeable contracts**: Allow patching and protocol evolution, but require users to trust whoever can satisfy the update conditions. An approved update can remove all prior restrictions.
 
@@ -3188,7 +3609,8 @@ A **timelock pattern** announces the upgrade in advance, waits a minimum delay, 
 
 Inspired by the [Folks Finance Upgradeable pattern](https://github.com/Folks-Finance/algorand-smart-contract-library):
 
-Algorand TypeScript
+<Tabs syncKey='lang'>
+  <TabItem label='TypeScript' icon='seti:typescript'>
 
 ```typescript
 import {
@@ -3241,7 +3663,8 @@ export class UpgradeableContract extends Contract {
 }
 ```
 
-Algorand Python
+  </TabItem>
+  <TabItem label='Python' icon='seti:python'>
 
 ```python
 from algopy import ARC4Contract, Txn, Global, UInt64, Bytes, arc4, op
@@ -3282,7 +3705,8 @@ class UpgradeableContract(ARC4Contract):
         self.upgrade_ready = UInt64(0)
 ```
 
-> **Runnable examples:** [Source](./smart-contract-examples/projects/smart-contract-examples/smart_contracts/10-updatability-deletability/contract.algo.ts) | [Tests](./smart-contract-examples/projects/smart-contract-examples/smart_contracts/10-updatability-deletability/contract.e2e.spec.ts)
+  </TabItem>
+</Tabs>
 
 ### DON'T: Delete a funded contract
 
@@ -3292,6 +3716,8 @@ If a contract's application address holds ALGO or assets, deleting the contract 
 2. Delete all boxes (to reclaim MBR).
 3. Then delete the application.
 
+{/* TODO(devportal-security-guide): Replace the inline updatability-deletability samples in section 10 with devportal-native example references after migrating the companion examples. */}
+
 ### Key Takeaways
 
 - Choose immutable or upgradeable: document the choice for users.
@@ -3300,19 +3726,44 @@ If a contract's application address holds ALGO or assets, deleting the contract 
 - Never delete a contract that holds funds.
 - For immutable contracts, consider rekeying the creator to zero address for provable immutability.
 
+<CardGrid>
+  <LinkCard
+    title='Access Control'
+    href='#2-access-control'
+    description='Review who is allowed to update, delete, schedule, or cancel privileged contract actions.'
+  />
+  <LinkCard
+    title='State Management & Storage Security'
+    href='#8-state-management--storage-security'
+    description='Review how boxes, global state, and storage layout affect upgrade and deletion safety.'
+  />
+  <LinkCard
+    title='Key Management & Deployment'
+    href='#13-key-management--deployment'
+    description='Continue to section 13 for creator-account security, multisig deployment practices, and operational controls.'
+  />
+  <LinkCard
+    title='Randomness'
+    href='#11-randomness'
+    description='Continue to section 11 for beacon integration, commitment timing, and failure-handling patterns.'
+  />
+</CardGrid>
+
 ---
 
 ## 11. Randomness
 
 ### Risk
 
-Smart contracts are fully deterministic and all on-chain data is public. Any value derived from block or transaction data is predictable, so contracts cannot generate their own randomness. The [Algorand VRF Randomness Beacon](https://dev.algorand.co/concepts/protocol/randomness/#algorand-randomness-beacon) solves this by providing verifiable pseudo-random values on-chain.
+Smart contracts are fully deterministic and all on-chain data is public. Any value derived from block or transaction data is predictable, so contracts cannot generate their own randomness. The [Algorand VRF Randomness Beacon](/concepts/protocol/randomness/) solves this by providing verifiable pseudo-random values on-chain.
 
 The beacon smart contract app IDs are: **TestNet:** `600011887` | **MainNet:** `1615566206`
 
 ### DO: Follow randomness beacon best practices
 
-> **Warning:** Not following these best practices can lead to complete loss of funds.
+:::caution
+Not following these best practices can lead to complete loss of funds.
+:::
 
 The randomness beacon generates VRF proofs every 8 rounds and stores the last 189 outputs (covering 1,512 rounds). Smart contracts query it via two ABI methods:
 
@@ -3377,6 +3828,29 @@ export class BeaconStub extends Contract {
 - Always provide an escape hatch for beacon downtime or discontinuation.
 - Allow anyone to trigger the randomness call.
 
+<CardGrid>
+  <LinkCard
+    title='Randomness Concepts'
+    href='/concepts/protocol/randomness/'
+    description='Review how the beacon works, why commitment timing matters, and how values are retrieved on-chain.'
+  />
+  <LinkCard
+    title='Updatability & Deletability'
+    href='#10-updatability--deletability'
+    description='Review upgrade patterns if your app may need to rotate to a new beacon contract in the future.'
+  />
+  <LinkCard
+    title='Oracles'
+    href='#12-oracles'
+    description='Continue to section 12 for external-data trust assumptions and validation patterns.'
+  />
+  <LinkCard
+    title='Key Management & Deployment'
+    href='#13-key-management--deployment'
+    description='Continue to section 13 for creator-account security and deployment controls around production randomness flows.'
+  />
+</CardGrid>
+
 ---
 
 ## 12. Oracles
@@ -3397,6 +3871,29 @@ If your contract depends on external data (prices, timestamps, weather), underst
 ### Key Takeaways
 
 - Document and restrict oracle trust assumptions explicitly.
+
+<CardGrid>
+  <LinkCard
+    title='ARC-21 Oracles'
+    href='/arc-standards/arc-0021/'
+    description='Review the round-based datafeed oracle standard when designing oracle interfaces and freshness guarantees.'
+  />
+  <LinkCard
+    title='Randomness'
+    href='#11-randomness'
+    description='Review the adjacent trust and availability considerations for on-chain randomness sources.'
+  />
+  <LinkCard
+    title='Group Transaction Security'
+    href='#7-group-transaction-security'
+    description='Review atomic-group attack surfaces such as flash-loan-style oracle manipulation.'
+  />
+  <LinkCard
+    title='Key Management & Deployment'
+    href='#13-key-management--deployment'
+    description='Continue to section 13 for operator-key security and deployment controls around oracle-fed systems.'
+  />
+</CardGrid>
 
 ---
 
@@ -3430,6 +3927,29 @@ Never use a single-key account as the creator of a contract holding significant 
 - Document signer ordering and use a majority threshold: avoid 1-of-N or N-of-N.
 - Never store keys in code or version-controlled config files.
 
+<CardGrid>
+  <LinkCard
+    title='Keys and Signing'
+    href='/concepts/accounts/keys-signing/'
+    description='Review Algorand account key models, signing approaches, and operational key-handling concepts.'
+  />
+  <LinkCard
+    title='Updatability & Deletability'
+    href='#10-updatability--deletability'
+    description='Review why creator-account security matters most when contracts can still be updated or deleted.'
+  />
+  <LinkCard
+    title='Security Tooling & Audit'
+    href='#14-security-tooling--audit'
+    description='Continue to section 14 for compiler hygiene, analysis tooling, audits, and bug bounty practices.'
+  />
+  <LinkCard
+    title='Off-Chain & Operational Security'
+    href='#15-off-chain--operational-security'
+    description='Continue to section 15 for node trust, monitoring, and incident-response practices.'
+  />
+</CardGrid>
+
 ---
 
 ## 14. Security Tooling & Audit
@@ -3439,7 +3959,7 @@ Never use a single-key account as the creator of a contract holding significant 
 Like any compiler, Puya can have security-relevant bugs. Always:
 
 - **Pin your compiler version** in your project configuration.
-- **Monitor the [Algorand security bulletins](https://dev.algorand.co/bulletins/puya-issues-27-10-2025/)** for disclosures.
+- **Monitor the [Algorand security bulletins](/bulletins/puya-issues-27-10-2025/)** for disclosures.
 - **Update promptly** when security fixes are released.
 - **Re-compile and re-deploy** if you were using an affected version.
 
@@ -3452,7 +3972,9 @@ Compiler optimization bugs are rare, but they are security-relevant when they ha
 
 If behavior diverges between optimization levels, or the compiler crashes on valid source, treat that as a compiler bug rather than ordinary test flakiness. Stop the release, preserve the reproducer, and report it through the Algorand security channels referenced in the security bulletins.
 
-> **Note:** This guidance is not only about optimization soundness. It also applies when a contract compiles at one level but crashes, fails, or behaves differently at another. That discrepancy is itself security-relevant.
+:::note
+This guidance is not only about optimization soundness. It also applies when a contract compiles at one level but crashes, fails, or behaves differently at another. That discrepancy is itself security-relevant.
+:::
 
 ### DO: Run static analysis in CI
 
@@ -3484,6 +4006,29 @@ If your protocol manages user funds, establish a bug bounty program. This create
 - Get a professional audit before mainnet deployment with real value.
 - Run a bug bounty program for protocols managing user funds.
 
+<CardGrid>
+  <LinkCard
+    title='Puya Security Bulletin'
+    href='/bulletins/puya-issues-27-10-2025/'
+    description='Review the referenced Puya bulletin and reporting guidance for compiler-related security issues.'
+  />
+  <LinkCard
+    title='AlgoKit Analyze Task'
+    href='/algokit/cli/tasks/analyze/'
+    description='Review the built-in analysis workflow for adding TEAL-oriented checks to CI.'
+  />
+  <LinkCard
+    title='Key Management & Deployment'
+    href='#13-key-management--deployment'
+    description='Review creator-account and deployment-key controls that complement audits and compiler hygiene.'
+  />
+  <LinkCard
+    title='Off-Chain & Operational Security'
+    href='#15-off-chain--operational-security'
+    description='Continue to section 15 for monitoring, incident response, and infrastructure controls beyond contract code.'
+  />
+</CardGrid>
+
 ---
 
 ## 15. Off-Chain & Operational Security
@@ -3512,14 +4057,15 @@ Your dApp frontend and backend are standard web applications. Apply the [OWASP T
   - `UpdateApplication` or `DeleteApplication` calls
   - Large or unusual fund movements
   - Rapid increase in transaction volume
-- **Use [AlgoKit Subscriber](https://github.com/algorandfoundation/algokit-subscriber-ts) ([TypeScript](https://www.npmjs.com/package/@algorandfoundation/algokit-subscriber) | [Python](https://pypi.org/project/algokit-subscriber/))** to subscribe to on-chain events and build real-time monitoring services.
+- **Use [AlgoKit Subscriber](/algokit/subscriber/typescript/overview/) ([TypeScript](/algokit/subscriber/typescript/overview/) | [Python](/algokit/subscriber/python/overview/))** to subscribe to on-chain events and build real-time monitoring services.
 - **Have an incident response plan**: who to contact, how to pause the contract (if a kill switch exists), and how to communicate with users.
 
 ### Pattern: Pausable contract with kill switch
 
 For contracts managing significant value, consider a **pause mechanism** that allows an authorized account to halt all critical operations if an exploit is detected, giving you time to investigate and respond without further loss of funds:
 
-Algorand TypeScript
+<Tabs syncKey='lang'>
+  <TabItem label='TypeScript' icon='seti:typescript'>
 
 ```typescript
 import {
@@ -3559,7 +4105,8 @@ export class PausableContract extends Contract {
 }
 ```
 
-Algorand Python
+  </TabItem>
+  <TabItem label='Python' icon='seti:python'>
 
 ```python
 from algopy import ARC4Contract, Txn, UInt64, arc4, subroutine
@@ -3588,7 +4135,10 @@ class PausableContract(ARC4Contract):
         # ... deposit logic
 ```
 
-> **Runnable examples:** [Source](./smart-contract-examples/projects/smart-contract-examples/smart_contracts/14-off-chain-operational-security/contract.algo.ts) | [Tests](./smart-contract-examples/projects/smart-contract-examples/smart_contracts/14-off-chain-operational-security/contract.e2e.spec.ts)
+  </TabItem>
+</Tabs>
+
+{/* TODO(devportal-security-guide): Replace the inline off-chain-operational-security samples in section 15 with devportal-native example references after migrating the companion examples. */}
 
 ### Key Takeaways
 
@@ -3597,19 +4147,71 @@ class PausableContract(ARC4Contract):
 - Monitor on-chain activity and have an incident response plan.
 - Consider a pause mechanism for contracts managing significant value.
 
+<CardGrid>
+  <LinkCard
+    title='AlgoKit Subscriber'
+    href='/algokit/subscriber/typescript/overview/'
+    description='Review the subscriber tooling used to build on-chain monitors and alerting pipelines.'
+  />
+  <LinkCard
+    title='Key Management & Deployment'
+    href='#13-key-management--deployment'
+    description='Review operator-key controls and deployment hygiene for the systems surrounding your contract.'
+  />
+  <LinkCard
+    title='Security Tooling & Audit'
+    href='#14-security-tooling--audit'
+    description='Review the complementary compiler, testing, and audit controls that support operational readiness.'
+  />
+  <LinkCard
+    title='Further Reading'
+    href='#16-further-reading'
+    description='Continue to the final reading list for core docs, standards, and external security references.'
+  />
+</CardGrid>
+
 ---
 
 ## 16. Further Reading
 
-- **Algorand Developer Portal:** [dev.algorand.co](https://dev.algorand.co/)
-- **Algorand TypeScript:** [dev.algorand.co/algokit/languages/typescript](https://dev.algorand.co/algokit/languages/typescript/)
-- **Algorand Python:** [dev.algorand.co/algokit/languages/python](https://dev.algorand.co/algokit/languages/python/)
-- **Smart Contract Concepts:** [dev.algorand.co/concepts/smart-contracts](https://dev.algorand.co/concepts/smart-contracts/)
-- **Smart Contract Guidelines:** [dev.algorand.co/docs/get-details/dapps/smart-contracts/guidelines](https://dev.algorand.co/docs/get-details/dapps/smart-contracts/guidelines/)
-- **ARC-4 ABI Specification:** [dev.algorand.co/arc-standards/arc-0004](https://dev.algorand.co/arc-standards/arc-0004/)
-- **Logic Signatures**: [https://dev.algorand.co/concepts/smart-contracts/logic-sigs/]
+### Core Docs
+
+<CardGrid>
+  <LinkCard
+    title='Algorand TypeScript'
+    href='/algokit/languages/typescript/'
+    description='Review the TypeScript language docs and related AlgoKit guidance for smart contract development.'
+  />
+  <LinkCard
+    title='Algorand Python'
+    href='/algokit/languages/python/'
+    description='Review the Python language docs and related AlgoKit guidance for smart contract development.'
+  />
+  <LinkCard
+    title='Smart Contract Concepts'
+    href='/concepts/smart-contracts/overview'
+    description='Review the core application, LogicSig, AVM, and lifecycle concepts behind the patterns in this guide.'
+  />
+  <LinkCard
+    title='ARC-4 ABI Specification'
+    href='/arc-standards/arc-0004/'
+    description='Review the ABI standard used for application method interfaces, encoding, and decoding.'
+  />
+  <LinkCard
+    title='Logic Signatures'
+    href='/concepts/smart-contracts/logic-sigs/'
+    description='Review the protocol-level LogicSig model and the field restrictions discussed throughout this guide.'
+  />
+  <LinkCard
+    title='VRF Randomness Beacon'
+    href='/concepts/protocol/randomness/'
+    description='Review the randomness beacon model, commitment timing, and availability constraints for secure use.'
+  />
+</CardGrid>
+
+### External References
+
 - **Trail of Bits Algorand Vulnerabilities:** [github.com/crytic/building-secure-contracts](https://github.com/crytic/building-secure-contracts/tree/master/not-so-smart-contracts/algorand)
 - **Folks Finance Contract Library:** [github.com/Folks-Finance/algorand-smart-contract-library](https://github.com/Folks-Finance/algorand-smart-contract-library)
-- **VRF Randomness Beacon:** [dev.algorand.co/concepts/smart-contracts/randomness](https://dev.algorand.co/concepts/protocol/randomness/)
 
 ---
