@@ -377,7 +377,6 @@ Both are first-class supported ways of using this library, but we generally reco
 
 [See reference docs](https://github.com/algorandfoundation/algokit-subscriber-py).
 
-
 ## Emit ARC-28 events
 
 To emit ARC-28 events from your smart contract you can use the following syntax.
