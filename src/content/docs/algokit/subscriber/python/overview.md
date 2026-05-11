@@ -98,7 +98,7 @@ The `sync_behaviour` parameter can also be set to `sync-oldest`, which is a more
 
 ### Low latency processing
 
-You can control the polling semantics of the library when using the [`AlgorandSubscriber`](./subscriber) by either specifying the `frequency_in_seconds` parameter to control the duration between polls or you can use the `wait_for_block_when_at_tip` parameter to indicate the subscriber should [call algod to ask it to inform the subscriber when a new round is available](https://dev.algorand.co/reference/rest-apis/algod/#waitforblock) so the subscriber can immediately process that round with a much lower-latency. When this mode is set, the subscriber intelligently uses this option only when it's caught up to the tip of the chain, but otherwise uses `frequency_in_seconds` while catching up to the tip of the chain.
+You can control the polling semantics of the library when using `AlgorandSubscriber` by either specifying the `frequency_in_seconds` parameter to control the duration between polls or you can use the `wait_for_block_when_at_tip` parameter to indicate the subscriber should [call algod to ask it to inform the subscriber when a new round is available](https://dev.algorand.co/reference/rest-api/algod/operations/waitforblock/) so the subscriber can immediately process that round with a much lower-latency. When this mode is set, the subscriber intelligently uses this option only when it's caught up to the tip of the chain, but otherwise uses `frequency_in_seconds` while catching up to the tip of the chain.
 
 e.g.
 
@@ -126,7 +126,7 @@ algod.status_after_block(round_number_to_wait_for)
 
 You can create reliable syncing / indexing services through a simple round watermarking capability that allows you to create resilient syncing services that can recover from an outage.
 
-This works through the use of the `watermark_persistence` parameter in [`AlgorandSubscriber`](./subscriber) and `watermark` parameter in [`get_subscribed_transactions`](./subscriptions):
+This works through the use of the `watermark_persistence` parameter in `AlgorandSubscriber` and `watermark` parameter in [`get_subscribed_transactions`](./subscriptions):
 
 ```python
 def get_saved_watermark() -> int:
@@ -229,7 +229,7 @@ Currently this allows you filter based on any combination (AND logic) of:
   - Amount transferred (min and/or max) e.g. `'filter': { 'type': 'pay', 'min_amount': 1, 'max_amount': 100 }`
   - Balance changes (sender, receiver, close to, min and/or max change) e.g. `'filter': { 'balance_changes': [{'roles': [BalanceChangeRole.Sender], 'address': "ABC...", 'min_amount': 1, 'max_amount': 2}]}`
 
-You can supply multiple, named filters via the [`NamedTransactionFilter`](subscriptions#namedtransactionfilter) type. When subscribed transactions are returned each transaction will have a `filters_matched` property that will have an array of any filter(s) that caused that transaction to be returned. When using [`AlgorandSubscriber`](./subscriber), you can subscribe to events that are emitted with the filter name.
+You can supply multiple, named filters via the [`NamedTransactionFilter`](subscriptions#namedtransactionfilter) type. When subscribed transactions are returned each transaction will have a `filters_matched` property that will have an array of any filter(s) that caused that transaction to be returned. When using `AlgorandSubscriber`, you can subscribe to events that are emitted with the filter name.
 
 ### ARC-28 event subscription and reads
 
@@ -237,7 +237,7 @@ You can [subscribe to ARC-28 events](#extensive-subscription-filtering) for a sm
 
 Furthermore, you can receive any ARC-28 events that a smart contract call you subscribe to emitted in the [subscribed transaction object](subscriptions#subscribedtransaction).
 
-Both subscription and receiving ARC-28 events work through the use of the `arc28Events` parameter in [`AlgorandSubscriber`](./subscriber) and [`get_subscribed_transactions`](./subscriptions):
+Both subscription and receiving ARC-28 events work through the use of the `arc28Events` parameter in `AlgorandSubscriber` and [`get_subscribed_transactions`](./subscriptions):
 
 ```python
 group1_events = {
@@ -312,17 +312,17 @@ If you [receive](subscriptions#subscribedtransaction) an inner transaction then 
 
 The `id` of an inner transaction will be set to `{parent_transaction_id}/inner/{index-of-child-within-parent}` where `{index-of-child-within-parent}` is calculated based on uniquely walking the tree of potentially nested inner transactions. [This transaction in Allo.info](https://allo.info/tx/group/cHiEEvBCRGnUhz9409gHl%2Fvn00lYDZnJoppC3YexRr0%3D) is a good illustration of how inner transaction indexes are allocated (this library uses the same approach).
 
-All [returned](subscriptions#subscribedtransaction) transactions will have an `inner-txns` property with any inner transactions of that transaction populated (recursively).
+All returned transactions will have an `inner-txns` property with any inner transactions of that transaction populated (recursively).
 
 The `intra-round-offset` field in a [subscribed transaction or inner transaction within](subscriptions#subscribedtransaction) is calculated by walking the full tree depth-first from the first transaction in the block, through any inner transactions recursively starting from an index of 0. This algorithm matches the one in Algorand Indexer and ensures that all transactions have a unique index, but the top level transaction in the block don't necessarily have a sequential index.
 
 ### State-proof support
 
-You can subscribe to [state proof](https://dev.algorand.co/concepts/protocol/stateproofs) transactions using this subscriber library. At the time of writing state proof transactions are not supported by algosdk v2 and custom handling has been added to ensure this valuable type of transaction can be subscribed to.
+You can subscribe to [state proof](https://dev.algorand.co/concepts/protocol/state-proofs/) transactions using this subscriber library. At the time of writing state proof transactions are not supported by algosdk v2 and custom handling has been added to ensure this valuable type of transaction can be subscribed to.
 
-The field level documentation of the [returned state proof transaction](subscriptions#subscribedtransaction) is comprehensively documented via [AlgoKit Utils](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/indexer.ts#L277).
+The field level documentation of the [returned state proof transaction](subscriptions#subscribedtransaction) is comprehensively documented via [AlgoKit Subscriber](https://github.com/algorandfoundation/algokit-subscriber-py/blob/main/src/algokit_subscriber/types/subscription.py).
 
-By exposing this functionality, this library can be used to create a [light client](https://dev.algorand.co/concepts/protocol/stateproofs).
+By exposing this functionality, this library can be used to create a [light client](https://github.com/algorand/light-client-poc).
 
 ### Simple programming model
 
@@ -356,7 +356,7 @@ The indexer catchup isn't magic - if the filter you are trying to catch up with 
 
 To understand how the indexer behaviour works to know if you are likely to generate a lot of transactions it's worth understanding the architecture of the indexer catchup; indexer catchup runs in two stages:
 
-1. **Pre-filtering**: Any filters that can be translated to the [indexer search transactions endpoint](https://dev.algorand.co/reference/rest-apis/indexer/#lookuptransaction). This query is then run between the rounds that need to be synced and paginated in the max number of results (1000) at a time until all of the transactions are retrieved. This ensures we get round-based transactional consistency. This is the filter that can easily explode out though and take a long time when using indexer catchup. For avoidance of doubt, the following filters are the ones that are converted to a pre-filter:
+1. **Pre-filtering**: Any filters that can be translated to the [indexer search transactions endpoint](https://dev.algorand.co/algokit/utils/typescript/indexer/#indexer-wrapper-functions). This query is then run between the rounds that need to be synced and paginated in the max number of results (1000) at a time until all of the transactions are retrieved. This ensures we get round-based transactional consistency. This is the filter that can easily explode out though and take a long time when using indexer catchup. For avoidance of doubt, the following filters are the ones that are converted to a pre-filter:
    - `sender` (single value)
    - `receiver` (single value)
    - `type` (single value)
@@ -375,7 +375,8 @@ Both are first-class supported ways of using this library, but we generally reco
 
 ## Reference docs
 
-[See reference docs](./code/README).
+[See reference docs](https://github.com/algorandfoundation/algokit-subscriber-py).
+
 
 ## Emit ARC-28 events
 
