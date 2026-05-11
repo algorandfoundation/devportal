@@ -3,7 +3,7 @@
 import { fileURLToPath } from 'url';
 import { dirname, resolve } from 'path';
 import { promises as fs } from 'fs';
-import type { ImportOptions } from '@larkiny/astro-github-loader';
+import type { ImportOptions } from '@algorandfoundation/astro-github-loader';
 import * as exportedConfigs from '../imports/configs/index.js';
 
 const __filename = fileURLToPath(import.meta.url);
