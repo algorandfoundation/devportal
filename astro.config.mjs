@@ -179,8 +179,30 @@ export default defineConfig({
           items: [
             { label: 'Portal Guide', link: '/getting-started/portal-guide' },
             {
-              label: 'Tutorial: Your First Smart Contract',
-              link: 'getting-started/algokit-quick-start',
+              label: 'Tutorials',
+              collapsed: false,
+              items: [
+                {
+                  label: 'Getting Ready To Build',
+                  link: 'getting-started/tutorials/get-ready-to-build',
+                },
+                {
+                  label: 'Using LORA',
+                  link: 'getting-started/tutorials/using-lora',
+                },
+                {
+                  label: 'Your First Asset',
+                  link: 'getting-started/tutorials/your-first-asset',
+                },
+                {
+                  label: 'Your First Transaction',
+                  link: 'getting-started/tutorials/your-first-transaction',
+                },
+                {
+                  label: 'Your First Smart Contract',
+                  link: 'getting-started/tutorials/first-smart-contract',
+                },
+              ],
             },
             {
               label: 'AlgoKit Examples Gallery',
