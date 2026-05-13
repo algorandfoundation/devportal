@@ -227,10 +227,9 @@ async function getSecretKeyFromMnemonic(avmMnemonic: string): Promise<string> {
 
   const wrappedSecret = await ed25519SigningKeyFromWrappedSecret(wrappedSeed);
 
-  return Buffer.concat([
-    Buffer.from(seedCopy),
-    Buffer.from(wrappedSecret.ed25519Pubkey),
-  ]).toString('base64');
+  return Buffer.concat([Buffer.from(seedCopy), Buffer.from(wrappedSecret.ed25519Pubkey)]).toString(
+    'base64',
+  );
 }
 
 main().catch(error => {
