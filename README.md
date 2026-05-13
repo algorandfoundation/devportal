@@ -115,7 +115,7 @@ Before you begin, ensure you have the following installed:
 
 ### Content & Documentation
 
-- **[@larkiny/astro-github-loader](https://www.npmjs.com/package/@larkiny/astro-github-loader)** - Import documentation from GitHub repositories
+- **[@algorandfoundation/astro-github-loader](https://www.npmjs.com/package/@algorandfoundation/astro-github-loader)** - Import documentation from GitHub repositories
 - **[starlight-openapi](https://www.npmjs.com/package/starlight-openapi)** - OpenAPI/Swagger documentation
 - **[starlight-auto-sidebar](https://www.npmjs.com/package/starlight-auto-sidebar)** - Automatic sidebar generation
 - **[astro-d2](https://www.npmjs.com/package/astro-d2)** - D2 diagram integration
@@ -161,7 +161,7 @@ All commands are run from the root of the project:
 
 ### Content Import
 
-Documentation is imported from external GitHub repositories using `@larkiny/astro-github-loader`. Import configurations are defined in `imports/configs/`.
+Documentation is imported from external GitHub repositories using `@algorandfoundation/astro-github-loader`. Import configurations are defined in `imports/configs/`.
 
 | Command                   | Description                                                         |
 | ------------------------- | ------------------------------------------------------------------- |
@@ -201,7 +201,7 @@ The following environment variables can be configured:
 | `IMPORT_DRY_RUN` | Preview imports without writing files            | `false` |
 | `FORCE_IMPORT`   | Force re-import, ignoring cache                  | `false` |
 
-Set these in your shell or use your preferred environment management tool.
+Set these in a `.env` file in the project root. Run `source .env` before running import commands.
 
 ### Astro Configuration
 
@@ -243,7 +243,7 @@ Your content here...
 
 ### Importing External Documentation
 
-The project uses `@larkiny/astro-github-loader` to import documentation from external repositories. Configure imports in `imports/configs/`. See the package [documentation](https://github.com/larkiny/starlight-github-loader/blob/main/packages/astro-github-loader/README.md) for details on how to configure external documentation imports.
+The project uses `@algorandfoundation/astro-github-loader` to import documentation from external repositories. Configure imports in `imports/configs/`. See the [documentation](https://github.com/algorandfoundation/astro-github-loader/blob/main/packages/astro-github-loader/README.md) for details on how to configure external documentation imports.
 
 ## Contributing
 
