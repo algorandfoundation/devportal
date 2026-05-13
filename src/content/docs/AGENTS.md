@@ -86,6 +86,14 @@ Add when needed: `sidebar.label` (title too long for sidebar), `sidebar.order` (
 - **Consistent terminology.** Same concept, same name, every page. Pick one and stick with it.
 - **Consistent product names.** `algokit` (command) vs. `AlgoKit` (product).
 
+## Acronyms and abbreviations
+
+**Domain- and product-specific acronyms must be defined on first use on each page**, with the expansion followed by the acronym in parentheses. The acronym can then be used freely for the rest of the page.
+
+> The Algorand Virtual Machine (AVM) executes smart contract code. Each AVM operation has a defined cost…
+
+This applies per page, not per site — readers land on individual pages from search, deep links, and AI tools, so each page must stand alone.
+
 ## Code Examples
 
 **Inline triple-backtick** when: fewer than 5 lines, illustrative only, or demonstrating syntax (not meant to run).
