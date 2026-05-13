@@ -30,7 +30,8 @@ This tutorial walks through the protocol by building a working example on Algora
 
 ### Prerequisites
 
-- [Node.js](https://nodejs.org/) (LTS or newer) with npm
+- [Node.js](https://nodejs.org/) (LTS or newer)
+- [pnpm](https://pnpm.io/installation) (package manager)
 
 ### Setup
 
@@ -62,19 +63,19 @@ In this part you'll build a client that sends a request, handles the 402 respons
 ```bash
 mkdir x402-demo-client
 cd x402-demo-client
-npm init -y
+pnpm init
 ```
 
 #### Add TypeScript tooling
 
 ```bash
-npm install -D typescript @types/node tsx
+pnpm add -D typescript @types/node tsx
 ```
 
 #### Install dependencies
 
 ```bash
-npm install @x402/core @x402/fetch @x402/avm @algorandfoundation/algokit-utils@10.0.0-alpha.42 dotenv
+pnpm add @x402/core @x402/fetch @x402/avm @algorandfoundation/algokit-utils@10.0.0-alpha.42 dotenv
 ```
 
 :::note
@@ -132,8 +133,12 @@ main().catch(console.error);
 Run:
 
 ```bash
-npx tsx index.ts
+pnpm tsx index.ts
 ```
+
+:::note
+If pnpm prompts about build scripts, run `pnpm approve-builds` to allow native builds (required for esbuild).
+:::
 
 Expected output (your `payment-required` value will differ):
 
@@ -230,7 +235,7 @@ main().catch(error => {
 Run the paying client from the project root:
 
 ```bash
-npx tsx index.ts
+pnpm tsx index.ts
 ```
 
 Expected output (addresses and transaction IDs will differ):
@@ -254,19 +259,19 @@ In this part you'll build a resource server that hosts a `/weather` endpoint. It
 ```bash
 mkdir x402-demo-server
 cd x402-demo-server
-npm init -y
+pnpm init
 ```
 
 #### Add TypeScript tooling
 
 ```bash
-npm install -D typescript @types/node tsx
+pnpm add -D typescript @types/node tsx
 ```
 
 #### Install dependencies
 
 ```bash
-npm install @x402/core @x402/avm @x402/hono hono @hono/node-server dotenv
+pnpm add @x402/core @x402/avm @x402/hono hono @hono/node-server dotenv
 ```
 
 #### Server config
@@ -367,7 +372,7 @@ In Part 1 you hit a hosted resource server. Now you'll point the client at your 
 From the `x402-demo-server` directory:
 
 ```bash
-npx tsx index.ts
+pnpm tsx index.ts
 ```
 
 Leave it running on `http://localhost:4021`.
@@ -391,7 +396,7 @@ const url = 'http://localhost:4021/weather';
 From the `x402-demo-client` directory:
 
 ```bash
-npx tsx index.ts
+pnpm tsx index.ts
 ```
 
 You should get the weather JSON after payment settles. The output will look similar to the [Part 1 output](#add-x402-payment-support), with your local server's transaction details.
