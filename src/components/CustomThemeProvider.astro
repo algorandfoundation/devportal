@@ -23,16 +23,16 @@ import Default from '@astrojs/starlight/components/ThemeProvider.astro';
      * in the current widget bundle); Kapa does not pass `data-modal-close-button-color`
      * into that node, so it is styled the same way here.
      */
-    var STYLE_ID = 'devportal-kapa-dimmed-override';
+    const STYLE_ID = 'devportal-kapa-dimmed-override';
 
     function starlightDark() {
       return document.documentElement.getAttribute('data-theme') === 'dark';
     }
 
     function applyKapaDimmedOverride() {
-      var host = document.getElementById('kapa-widget-container');
+      const host = document.getElementById('kapa-widget-container');
       if (!host || !host.shadowRoot) return;
-      var style = host.shadowRoot.getElementById(STYLE_ID);
+      let style = host.shadowRoot.getElementById(STYLE_ID);
       if (!style) {
         style = document.createElement('style');
         style.id = STYLE_ID;
@@ -48,10 +48,13 @@ import Default from '@astrojs/starlight/components/ThemeProvider.astro';
     }
 
     function observe() {
-      new MutationObserver(applyKapaDimmedOverride).observe(document.documentElement, {
-        attributes: true,
-        attributeFilter: ['data-theme'],
-      });
+      new MutationObserver(applyKapaDimmedOverride).observe(
+        document.documentElement,
+        {
+          attributes: true,
+          attributeFilter: ['data-theme'],
+        },
+      );
       new MutationObserver(applyKapaDimmedOverride).observe(document.body, {
         childList: true,
         subtree: false,
@@ -61,8 +64,8 @@ import Default from '@astrojs/starlight/components/ThemeProvider.astro';
     function boot() {
       observe();
       applyKapaDimmedOverride();
-      var n = 0;
-      var id = window.setInterval(function () {
+      let n = 0;
+      const id = window.setInterval(function () {
         applyKapaDimmedOverride();
         if (++n > 120) window.clearInterval(id);
       }, 500);
