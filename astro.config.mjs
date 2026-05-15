@@ -199,10 +199,6 @@ export default defineConfig({
                   link: 'getting-started/tutorials/your-first-transaction',
                 },
                 {
-                  label: 'Atomic Transaction Groups With goal',
-                  link: 'getting-started/tutorials/atomic-transaction-groups-with-goal',
-                },
-                {
                   label: 'Your First Smart Contract',
                   link: 'getting-started/tutorials/first-smart-contract',
                 },
