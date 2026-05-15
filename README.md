@@ -66,7 +66,7 @@ Before you begin, ensure you have the following installed:
 
 ## Project Structure
 
-```
+```text
 .
 ├── .github/
 │   └── workflows/          # CI/CD workflows
@@ -194,12 +194,12 @@ The `starlight-auto-sidebar` plugin enables you to customize the order and appea
 
 The following environment variables can be configured:
 
-| Variable         | Description                                      | Default |
-| ---------------- | ------------------------------------------------ | ------- |
-| `GITHUB_TOKEN`   | GitHub API token (required for importing docs)   | -       |
-| `IMPORT_GITHUB`  | Enable GitHub content import                     | `false` |
-| `IMPORT_DRY_RUN` | Preview imports without writing files            | `false` |
-| `FORCE_IMPORT`   | Force re-import, ignoring cache                  | `false` |
+| Variable         | Description                                    | Default |
+| ---------------- | ---------------------------------------------- | ------- |
+| `GITHUB_TOKEN`   | GitHub API token (required for importing docs) | -       |
+| `IMPORT_GITHUB`  | Enable GitHub content import                   | `false` |
+| `IMPORT_DRY_RUN` | Preview imports without writing files          | `false` |
+| `FORCE_IMPORT`   | Force re-import, ignoring cache                | `false` |
 
 Set these in a `.env` file in the project root. Run `source .env` before running import commands.
 
@@ -267,6 +267,19 @@ This project adheres to the [Contributor Covenant Code of Conduct](code_of_condu
 - [Astro Documentation](https://docs.astro.build)
 - [Algorand Developer Portal](https://dev.algorand.co)
 - [Algorand Foundation](https://algorand.co)
+
+## Deployment
+
+This project is currently served via Cloudflare. In addition to serving statically generated pages of styled HTML, the deployment also leverages their ability to serve pages as markdown upon request by content negotiation headers. This is particularly useful for AI agents with limited context window sizes, as page content rendered as markdown can be 80-98% smaller than the original HTML markup.
+
+This feature is enabled by a rule configured in the Cloudflare dashboard under Rules --> Overview --> rule named "Serve docs to agents as markdown".
+
+One can quickly see the difference in content by requesting a page with/without the `Accept: text/markdown` header.
+
+```bash
+curl https://dev.algorand.co/getting-started/portal-guide/ \
+  -H "Accept: text/markdown" | wc -c
+```
 
 ## License
 
