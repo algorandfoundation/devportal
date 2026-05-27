@@ -6,7 +6,7 @@
  * - LIBRARY_CONFIGS: Full LibraryImportConfig objects for the UI registry
  */
 
-import type { ImportOptions } from '@larkiny/astro-github-loader';
+import type { ImportOptions } from '@algorandfoundation/astro-github-loader';
 import type { LibraryImportConfig, SidebarMetadata } from '../types';
 import { isArtifactVariant } from '../types.js';
 

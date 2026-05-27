@@ -8,7 +8,7 @@
 import type {
   ImportOptions,
   VersionConfig,
-} from '@larkiny/astro-github-loader';
+} from '@algorandfoundation/astro-github-loader';
 
 // Re-export loader types that config files need
 export type { ImportOptions, VersionConfig };
@@ -30,7 +30,7 @@ export interface LibraryMetadata {
 }
 
 /**
- * Raw-file strategy (existing @larkiny/astro-github-loader path).
+ * Raw-file strategy (existing GitHub loader path).
  *
  * Extends the loader's ImportOptions with required language and version fields.
  * `source` is optional and defaults to 'github-loader' — existing configs

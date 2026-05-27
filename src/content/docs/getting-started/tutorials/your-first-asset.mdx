@@ -1,0 +1,369 @@
+---
+title: Your First Asset
+---
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+import { Steps } from '@astrojs/starlight/components';
+import { LinkCard } from '@astrojs/starlight/components';
+import Figure from '/src/components/Figure.astro';
+
+import LORAConnectWallet from '@images/lora-connect-wallet.png';
+import LORAConnectAlice from '@images/lora-connect-alice.png';
+import LORAaddTransaction from '@images/lora-add-transaction.png';
+import LORAassetConfig from '@images/lora-createasset-config.png';
+import LORAsubmitCreateAssetTransaction from '@images/lora-submit-createasset-transaction-wizard.png';
+import LORAassteCreateExplore from '@images/lora-assetcreate-explore.png';
+import LORAassetCreatorBalance from '@images/lora-assetcreator-balance.png';
+import LORAassetCreatViewAlice from '@images/lora-createasset-view-alice.png';
+import LORAassetCreateAssetinfo from '@images/lora-createasset-asset-info.png';
+
+import TScreateAssetFile from '@images/TScreateasset-file-location.png';
+import TScreateAssetLog from '@images/TSassetcreate-log.png';
+
+import PYcreateAssetFile from '@images/PYcreateasset-file-location.png';
+import PYcreateAssetLog from '@images/PYassetcreate-log.png';
+
+**Hello, Developer! Let’s create your first asset on Algorand.**
+
+This guide shows two ways to create your first **Algorand Standard Asset (ASA)** on LocalNet.
+
+By the end, you will:
+
+- Create an ASA using LORA (Live Onchain Resource Analyzer)
+- Create an ASA programmatically with TypeScript or Python
+- View your asset onchain using LORA
+
+If you want to know more about what ASAs are, check out the documentation here:
+
+<LinkCard
+  title='Algorand Standard Assets (ASA)'
+  href='/concepts/assets/overview'
+  description='Learn what ASAs are and how they work'
+/>
+
+When you're ready, let's dive in!
+
+---
+
+## Create an Asset
+
+<Tabs syncKey="lang">
+<TabItem label="LORA" icon="laptop">
+ 
+#### Creating an asset with LORA
+
+<Steps>
+    1. Follow the steps in [Getting Ready To Build](/getting-started/tutorials/get-ready-to-build) to start LocalNet
+    
+    2. Follow the steps in [Using LORA](/getting-started/tutorials/using-lora) to connect a test wallet funded with Algo.
+
+    3. Navigate to Txn Wizard.
+
+    4. Click `Add Transaction`.
+
+        <Figure src={LORAaddTransaction} alt='Add Transaction' />
+
+
+    5. Choose `Asset create` from the dropdown and fill out the asset configuration fields.
+
+        For this example, we'll use the following basic config:
+
+        <Figure src={LORAassetConfig} alt='Asset Configuration' />
+
+        *The creator field is auto-populated with your connected wallet address.*
+
+        For more information on the optional fields like Manager, Reserve, Freeze, and Clawback, check out the [ASA documentation](/concepts/assets/overview).
+
+    6. Click `Add` and the Asset Config transaction will be added to the transaction group. Click `Send` to submit the transaction.
+
+        <Figure src={LORAsubmitCreateAssetTransaction} alt='Submit Transaction' />
+
+    7. You've now successfully created an asset using LORA! Next, try creating the asset using [TypeScript or Python](/getting-started/tutorials/your-first-asset#choose-lora-or-a-programming-language).
+
+</Steps>
+</TabItem>
+
+<TabItem label="TypeScript" icon="seti:typescript">
+
+<Steps>
+
+    1. Follow the steps in [Getting Ready To Build](/getting-started/tutorials/get-ready-to-build) to initialize a new AlgoKit project and start LocalNet
+
+    2. Create a new file where we will write the script that will create your new asset. You can create it wherever you'd like, but in this example, we've created it in the root directory and called it `first-asset.ts`
+
+        <Figure src={TScreateAssetFile} alt='File Structure' />
+
+    3. Write the script that will create the asset.
+
+        Each of the following sub-sections will add code to the file you just created:
+
+        **a. Initialize the client and create the test account that will create the asset**
+
+        ```ts showLineNumbers=false frame=none
+        import { AlgorandClient, algo } from "@algorandfoundation/algokit-utils";
+
+        async function main(): Promise<void> {
+        console.log("🚀 Creating your first asset...");
+
+        const algorand = AlgorandClient.defaultLocalNet(); // Create a client connected to LocalNet
+
+        const alice = await algorand.account.fromEnvironment("ALICE", algo(100)); // ALICE is a pre-funded LocalNet test account
+
+        console.log(`Alice: ${alice.addr}`);
+        ```
+
+        **b. Define the parameters for the [assetCreate()](/algokit/utils/typescript/asset/#creation) method**
+
+        ```ts showLineNumbers=false frame=none
+        const result = await algorand.send.assetCreate({
+            //Mandatory fields
+            sender: alice.addr,
+            decimals: 6, //Number decimal places a whole unit can be broken up into
+            total: 1_000_000_000n, // Total supply in base units (includes decimals)
+            defaultFrozen: false,
+
+            //Optional asset config fields
+            assetName: 'My First ASA',
+            unitName: 'MFA',
+            manager: alice.addr,
+            reserve: alice.addr,
+            freeze: alice.addr,
+            clawback: alice.addr,
+            url: 'https://algorand.co',
+        });
+
+        //Capture the unique asset ID of the asset after it's created
+        const assetId = result.assetId; // This is automatically assigned to each ASA as it's created
+
+        console.log(`Asset created with ID: ${assetId}`);
+        }
+        ```
+
+        **c. Call the main function**
+        ```ts showLineNumbers=false frame=none
+        main().catch(console.error); //Calls the function when you run the script
+        ```
+
+        **d. Final script:**
+            ```ts showLineNumbers=false frame=none
+            import { AlgorandClient, algo } from "@algorandfoundation/algokit-utils";
+
+            async function main(): Promise<void> {
+            console.log("🚀 Creating your first asset...");
+
+            const algorand = AlgorandClient.defaultLocalNet();
+
+            const alice = await algorand.account.fromEnvironment("ALICE", algo(100));
+
+            console.log(`Alice: ${alice.addr}`);
+
+            const result = await algorand.send.assetCreate({
+                //Mandatory fields
+                sender: alice.addr,
+                total: 1_000_000_000n,
+                decimals: 6,
+                defaultFrozen: false,
+
+                //Optional asset config fields
+                assetName: 'My First ASA',
+                unitName: 'MFA',
+                manager: alice.addr,
+                reserve: alice.addr,
+                freeze: alice.addr,
+                clawback: alice.addr,
+                url: 'https://algorand.co',
+            });
+
+            //Capture the unique asset ID of the asset after it's created
+            const assetId = result.assetId;
+
+            console.log(`Asset created with ID: ${assetId}`);
+            }
+
+            main().catch(console.error);
+            ```
+
+    4. Run the script:
+
+        ```shell showLineNumbers=false frame=none
+        npx tsx first-asset.ts
+        ```
+
+    5. Your console log should look something like this:
+        <Figure src={TScreateAssetLog} alt='Create Asset Logs' />
+
+    6. You've successfully created a new asset programmatically! To view it onchain, you can use [LORA](/algokit/lora/overview). In your terminal, type the following command to open it in the browser:
+
+        ```shell showLineNumbers=false frame=none
+        algokit explore
+        ```
+
+</Steps>
+
+You can now check the Explore tab, and you will see that a new block was created containing your Create Asset transaction. Click on that to view information about the transaction.
+
+        <Figure src={LORAassteCreateExplore} alt='New Asset Creation Explore' />
+
+---
+
+</TabItem>
+
+<TabItem label="Python" icon="seti:python">
+
+<Steps>
+
+    1. Follow the steps in [Getting Ready To Build](/getting-started/tutorials/get-ready-to-build) to initialize a new AlgoKit project and start LocalNet
+
+    2. Create a new file where we will write the script that will create your new asset. You can create it wherever you'd like, but in this example, we've created it in the root directory and called it `first_asset.py`
+
+        <Figure src={PYcreateAssetFile} alt='File Structure' />
+
+    3. Write the script that will create the asset.
+
+        Each of the following sub-sections will add code to the file you just created:
+
+        **a. Initialize the client and create the test account that will create the asset**
+
+        ```python showLineNumbers=false frame=none
+        from algokit_utils import AlgorandClient, AlgoAmount, AssetCreateParams
+
+        def main():
+            print("🚀 Creating your first asset...")
+
+            algorand = AlgorandClient.default_localnet()
+
+            alice = algorand.account.from_environment("ALICE", AlgoAmount(algo=100))
+
+            print(f"Alice: {alice.address}")
+        ```
+
+        **b. Define the parameters for the [asset_create()](/algokit/utils/python/asset/#creation) method**
+
+        ```python showLineNumbers=false frame=none
+            result = algorand.send.asset_create(
+                AssetCreateParams(
+                    # Mandatory fields
+                    sender=alice.address,
+                    total=1_000_000_000,       # Amount of whole units of the asset
+                    decimals=6,                # Amount of fractional units of the asset
+                    default_frozen=False,
+
+                    # Optional asset config fields
+                    asset_name="My First ASA",
+                    unit_name="MFA",
+                    manager=alice.address,
+                    reserve=alice.address,
+                    freeze=alice.address,
+                    clawback=alice.address,
+                    url="https://algorand.co",
+                )
+            )
+
+            # Capture the unique asset ID of the asset after it's created
+            asset_id = result.asset_id
+
+            print(f"Asset created with ID: {asset_id}")
+        ```
+
+        **c. Call the main function**
+        ```python showLineNumbers=false frame=none
+        if __name__ == "__main__":
+            main()
+        ```
+
+        **d. Final script:**
+        ```python showLineNumbers=false frame=none
+        from algokit_utils import AlgorandClient, AlgoAmount, AssetCreateParams
+
+        def main():
+            print("🚀 Creating your first asset...")
+
+            algorand = AlgorandClient.default_localnet()
+
+            alice = algorand.account.from_environment("ALICE", AlgoAmount(algo=100))
+
+            print(f"Alice: {alice.address}")
+
+            result = algorand.send.asset_create(
+                AssetCreateParams(
+                    # Mandatory fields
+                    sender=alice.address,
+                    total=1_000_000_000,       # Amount of whole units of the asset
+                    decimals=6,                # Amount of fractional units of the asset
+                    default_frozen=False,
+
+                    # Optional asset config fields
+                    asset_name="My First ASA",
+                    unit_name="MFA",
+                    manager=alice.address,
+                    reserve=alice.address,
+                    freeze=alice.address,
+                    clawback=alice.address,
+                    url="https://algorand.co",
+                )
+            )
+
+            # Capture the unique asset ID of the asset after it's created
+            asset_id = result.asset_id
+
+            print(f"Asset created with ID: {asset_id}")
+
+        if __name__ == "__main__":
+            main()
+        ```
+
+    4. Run the script:
+
+        ```shell showLineNumbers=false frame=none
+        python first_asset.py
+        ```
+
+    5. Your console log should look something like this:
+
+        <Figure src={PYcreateAssetLog} alt='Create Asset Logs' />
+
+    6. You've successfully created a new asset programmatically! To view it onchain, you can use [LORA](/algokit/lora/overview). In your terminal, type the following command to open it in the browser:
+
+        ```shell showLineNumbers=false frame=none
+        algokit explore
+        ```
+
+</Steps>
+
+You can now check the Explore tab, and you will see that a new block was created containing your Create Asset transaction. Click on that to view information about the transaction.
+
+        <Figure src={LORAassteCreateExplore} alt='New Asset Creation Explore' />
+
+---
+
+</TabItem>
+</Tabs>
+
+## View Your Asset onchain with LORA
+
+<Steps>
+    1. If you haven't already, open LORA and connect your wallet
+
+        <Figure src={LORAConnectWallet} alt='LORA home screen' />
+
+    2.  Click on **Accounts** and select the account you used to create the asset.
+
+        <Figure src={LORAConnectAlice} alt='LORA connect wallet modal' />
+
+    3.  With Alice selected, click `view` to open the account details.
+
+        <Figure src={LORAassetCreatViewAlice} alt='View Alice' />
+
+    4. You will see a history of all the transactions from this account, and if you scroll to the **Assets** section, you should see your newly created asset listed.
+
+        <Figure src={LORAassetCreatorBalance} alt="Creator's Balance"/>
+
+    5.  Click the Asset ID to view the asset. You will see the configuration details used to create the asset, as well as a history of all the transactions for that asset.
+
+        <Figure src={LORAassetCreateAssetinfo} alt='Asset details' />
+
+</Steps>
+
+## Next Steps
+
+Now that you've learned multiple ways to create an asset, we will show you how to transfer the asset programmatically or using LORA.

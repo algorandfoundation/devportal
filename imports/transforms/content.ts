@@ -1,4 +1,4 @@
-import type { TransformFunction } from '@larkiny/astro-github-loader';
+import type { TransformFunction } from '@algorandfoundation/astro-github-loader';
 
 /**
  * Creates a transform function that removes specific lines from content

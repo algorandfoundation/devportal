@@ -2,8 +2,8 @@ import { defineCollection, z } from 'astro:content';
 import { docsSchema } from '@astrojs/starlight/schema';
 import { docsLoader } from '@astrojs/starlight/loaders';
 import { Octokit } from 'octokit';
-import { githubLoader } from '@larkiny/astro-github-loader';
-import type { LoaderContext } from '@larkiny/astro-github-loader';
+import { githubLoader } from '@algorandfoundation/astro-github-loader';
+import type { LoaderContext } from '@algorandfoundation/astro-github-loader';
 import { autoSidebarLoader } from 'starlight-auto-sidebar/loader';
 import { autoSidebarSchema } from 'starlight-auto-sidebar/schema';
 import { REMOTE_CONTENT } from '../../imports/configs/index.js';
@@ -11,7 +11,7 @@ import { REMOTE_CONTENT } from '../../imports/configs/index.js';
 const IMPORT_GITHUB = process.env.IMPORT_GITHUB === 'true';
 const IMPORT_DRY_RUN = process.env.IMPORT_DRY_RUN === 'true';
 const FORCE_IMPORT = process.env.FORCE_IMPORT === 'true';
-const GITHUB_API_CLIENT = new Octokit({ auth: import.meta.env.GITHUB_TOKEN });
+const GITHUB_API_CLIENT = new Octokit({ auth: process.env.GITHUB_TOKEN });
 
 export const collections = {
   docs: defineCollection({

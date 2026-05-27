@@ -1,39 +1,35 @@
 ---
 title: Atomic Transaction Groups
+description: Explains how Algorand runs multiple transactions as one atomic unit, common use cases, and how grouping and the group ID enforce all-or-nothing execution.
 ---
 
-import { Image } from 'astro:assets';
-import Figure from '/src/components/Figure.astro';
-import { Code } from '@astrojs/starlight/components';
-import { Tabs, TabItem } from '@astrojs/starlight/components';
-import RemoteCode from '/src/components/RemoteCode.astro';
-import txnAtomic from '@images/transactions-atomic-diagram.png';
+import { LinkCard } from '@astrojs/starlight/components';
 
-In traditional finance, trading assets generally requires a trusted intermediary, like a bank or an exchange, to make sure that both sides receive what they agreed to. On the Algorand blockchain, this type of trade is implemented within the protocol as an _Atomic Transfer_. This simply means that transactions that are part of the transfer either all succeed or all fail. Atomic transfers allow complete strangers to trade assets without the need for a trusted intermediary, all while guaranteeing that each party will receive what they agreed to.
+In traditional finance, trading assets generally requires a trusted intermediary, like a bank or an exchange, to make sure that both sides receive what they agreed to. On the Algorand blockchain, this type of trade is implemented within the protocol as an _atomic transfer_: every transaction in the group either succeeds or none of them do. Atomic transfers allow parties to exchange value without a trusted intermediary while still ensuring each side receives what was agreed.
 
-On Algorand, atomic transfers are implemented as irreducible batch operations, where a group of [transactions](/concepts/transactions/overview) are submitted as a unit and all transactions in the batch either pass or fail. This also eliminates the need for more complex solutions like [hashed timelock contracts](https://en.bitcoinwiki.org/wiki/Hashed_Timelock_Contracts) that are implemented on other blockchains. An atomic transfer on Algorand is confirmed in the same time like any other transaction. These atomic transactions can contain any type of transactions inside of the group.
+On Algorand, atomic transfers are implemented as irreducible batch operations, where a group of [transactions](/concepts/transactions/overview) are submitted as a unit and the whole batch either passes or fails. This design can avoid more elaborate patterns—such as hashed timelock contracts (HTLCs) used on some other chains—for many coordination problems. An atomic transfer on Algorand is confirmed in the same time as any other transaction. A group may contain any mix of supported transaction types.
 
 :::note
-Unlike many other popular blockchains, atomic transaction groups are a native feature of the Algorand protocol, meaning they benefit from the proven security and reliability of the AVM.
+Unlike many other popular blockchains, atomic transaction groups are a native feature of the Algorand protocol, so they inherit the same security and reliability model as the Algorand Virtual Machine (AVM) and the rest of consensus.
 :::
 
 ## Use Cases
 
 Atomic transfers enable use cases such as:
 
-- **Circular Trades**- Alice pays Bob if and only if Bob pays Claire if and only if Claire pays Alice.
+- **Circular trades** — Alice pays Bob if and only if Bob pays Claire if and only if Claire pays Alice.
 
-- **Group Payments**- Everyone pays or no one pays.
+- **Group payments** — Everyone pays or no one pays.
 
-- **Decentralized Exchanges**- Trade one asset for another without going through a centralized exchange.
+- **Decentralized exchanges** — Trade one asset for another without routing through a centralized exchange.
 
-- **Distributed Payments**- Payments to multiple recipients.
+- **Distributed payments** — Pay multiple recipients in one atomic unit.
 
-- **Pooled Transaction Fees**- One transaction pays the fees of others.
+- **Pooled transaction fees** — One transaction covers fees for others in the group.
 
 ## Process Overview
 
-To implement an atomic transfer, generate all of the transactions that will be involved in the transfer and then group those transactions together. The result of grouping is that each transaction is assigned the same group ID. Once all transactions contain this group ID, the transactions can be split up and sent to their respective senders to be authorized. A single party can then collect all the authorized transactions and submit them to the network together.
+To implement an atomic transfer, all participants first define the transactions that will move together. Those transactions are then **grouped**: each one receives the same group ID derived from the ordered set. Senders sign only their own transactions (possibly after the set is split for signing). Finally, a submitter broadcasts the full ordered group so the network can accept or reject it as a single unit.
 
 <figure>
 
@@ -180,105 +176,21 @@ To implement an atomic transfer, generate all of the transactions that will be i
   }
 ```
 
-  <figcaption>Figure: Atomic Transfer Flow</figcaption>
+  <figcaption>Atomic transaction group signing flow</figcaption>
 </figure>
 
-## How-to
+The group ID is stored in the [Group](/concepts/transactions/reference/#common-fields-header-and-type) field on each transaction header. Anyone can rebuild the ordered set and recompute the ID to confirm the batch matches what signers approved. **Order matters:** the group ID depends on the exact sequence of transactions.
 
-Below you will find how to create and send atomic transaction groups using Algokit Utils in Python and Typescript
+## Try It in a Tutorial
 
-<Tabs syncKey='lang'>
-  <TabItem label='Python' icon='seti:python'>
-    <RemoteCode
-      src='https://raw.githubusercontent.com/algorandfoundation/devportal-code-examples/refs/heads/main/projects/python-examples/algokit_utils_py_examples/transactions/atomic_transaction_groups.py'
-      snippet='ATOMIC_TRANSACTION_GROUP'
-      lang='py'
-      title='ATG'
-      frame='none'
-    />
-  </TabItem>
-  <TabItem label='Typescript' icon='seti:typescript'>
-    <RemoteCode
-      src='https://raw.githubusercontent.com/algorandfoundation/devportal-code-examples/refs/heads/main/projects/typescript-examples/algokit-utils-ts/transactions/atomic-transaction-groups.ts'
-      snippet='ATOMIC_GROUP'
-      lang='ts'
-      title='ATG'
-      frame='none'
-    />
-  </TabItem>
-</Tabs>
+This guide walk through building and submitting atomic groups step by step.
 
-## Step by Step in Goal
+<LinkCard
+  title='Your First Transaction'
+  href='/getting-started/tutorials/your-first-transaction'
+  description='Build an atomic group with AlgoKit in TypeScript or Python (and with LORA on LocalNet).'
+/>
 
-The next guide will illustrate how atomic transaction groups can be created following a step by step approach using goal.
+## Additional Resources
 
-### Create Transactions
-
-Create two or more (up to 16 total) unsigned transactions of any type. Read about transaction types in the [Transactions Overview](/concepts/transactions/overview) section.
-
-This could be done by a service or by each party involved in the transaction. For example, an asset exchange application can create the entire atomic transfer and allow individual parties to sign from their location.
-
-The example below illustrates creating, grouping, and signing transactions atomically and submitting to the network.
-
-    ``` goal
-    $ goal clerk send --from=my-account-a<PLACEHOLDER> --to=my-account-c<PLACEHOLDER> --fee=1000 --amount=100000 --out=unsginedtransaction1.txn"
-
-    $ goal clerk send --from=my-account-b<PLACEHOLDER> --to=my-account-a<PLACEHOLDER> --fee=1000 --amount=200000 --out=unsginedtransaction2.txn"
-    ```
-
-At this point, these are just individual transactions. The next critical step is to combine them and then calculate the group ID.
-
-### Group Transactions
-
-The result of this step is what ultimately guarantees that a particular transaction belongs to a group and is not valid if sent alone (even if properly signed). A group-id is calculated by hashing the concatenation of a set of related transactions. The resulting hash is assigned to the [Group](/concepts/transactions/reference/#common-fields-header-and-type) field within each transaction. This mechanism allows anyone to recreate all transactions and recalculate the group ID to verify that the contents are as agreed upon by all parties. Ordering of the transaction set must be maintained.
-
-    ```goal
-    $ cat unsignedtransaction1.tx unsignedtransaction2.tx > combinedtransactions.tx
-    $ goal clerk group -i combinedtransactions.tx -o groupedtransactions.tx -d data -w yourwallet
-    ```
-
-### Split Transactions Goal Only
-
-At this point the transaction set must be split to allow distributing each component transaction to the appropriate wallet for authorization.
-
-    ```goal
-    # keys in distinct wallets
-    $ goal clerk split -i groupedtransactions.tx -o splitfiles -d data -w yourwallet
-
-    Wrote transaction 0 to splitfiles-0
-    Wrote transaction 1 to splitfiles-1
-
-    # distribute files for authorization
-    ```
-
-### Sign Transactions
-
-With a group ID assigned, each transaction sender must authorize their respective transaction.
-
-    ```goal
-    # sign from single wallet containing all keys
-    $ goal clerk sign -i groupedtransactions.tx -o signout.tx -d data -w yourwallet
-
-    # -- OR --
-
-    # sign from distinct wallets
-    $ goal clerk sign -i splitfiles-0 -o splitfiles-0.sig -d data -w my_wallet_1
-    $ goal clerk sign -i splitfiles-1 -o splitfiles-1.sig -d data -w my_wallet_2
-    ```
-
-### Assemble Transaction Group
-
-All authorized transactions are now assembled into an array, maintaining the original transaction ordering, which represents the transaction group.
-
-    ``` goal
-    # combine signed transactions files
-    cat splitfiles-0.sig splitfiles-1.sig > signout.tx
-    ```
-
-### Send Transaction Group
-
-The transaction group is now broadcast to the network.
-
-    ```goal
-    goal clerk rawsend -f signout.tx -d data -w yourwallet
-    ```
+- [Hashed Timelock Contracts](https://en.bitcoinwiki.org/wiki/Hashed_Timelock_Contracts) — overview of an HTLC pattern used on some other blockchains for atomic-style swaps across time and parties.

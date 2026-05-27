@@ -1,0 +1,144 @@
+---
+title: Atomic Transaction Groups With the goal CLI
+description: Walkthrough for creating unsigned transactions, assigning a group ID with goal, signing from one or multiple wallets, and submitting the group with goal clerk.
+---
+
+import { LinkCard, Steps } from '@astrojs/starlight/components';
+
+**Hello, Developer!** This guide walks you through building a small **atomic transaction group** using only the `goal` command-line tool—no AlgoKit project required.
+
+This path is useful when you are operating a node (or sandbox) and want to work with raw transaction files, multiple signers, and `goal clerk` directly. If you prefer TypeScript or Python with AlgoKit on LocalNet, follow [Your First Transaction](/getting-started/tutorials/your-first-transaction) instead.
+
+By the end, you will:
+
+- Create two unsigned payment transactions with `goal clerk send`
+- Bind them with a shared group ID using `goal clerk group`
+- Sign with one wallet or split the group for separate wallets
+- Concatenate signed blobs in order and submit with `goal clerk rawsend`
+
+If you want the concepts first (group ID, ordering, use cases), see:
+
+<LinkCard
+  title='Atomic Transaction Groups'
+  href='/concepts/transactions/atomic-txn-groups'
+  description='Why atomic groups exist, how the group ID works, and common patterns.'
+/>
+
+<LinkCard
+  title='Transaction Types'
+  href='/concepts/transactions/types'
+  description='Payment, asset, application, and other transaction kinds you can place in a group.'
+/>
+
+When you're ready, let's dive in!
+
+---
+
+## Prerequisites
+
+Before you start, make sure you have the following:
+
+- A running Algorand node or sandbox with `goal` on your `PATH`
+- A `goal` data directory (`-d`) and an unlocked wallet (`-w`) with accounts that hold enough ALGO to pay fees and send the amounts in the example
+- Two or more funded addresses you can use for `--from` and `--to` (the commands below use `my-account-a<PLACEHOLDER>` style labels—replace those with your real addresses)
+
+---
+
+## Build an Atomic Transaction Group With goal
+
+<Steps>
+
+1. Create two unsigned payment transactions (you can use up to 16 transactions of any supported type in one group). The example writes each unsigned blob to a `.txn` file:
+
+   ```shell showLineNumbers=false frame=none
+   goal clerk send \
+     --from=my-account-a<PLACEHOLDER> \
+     --to=my-account-c<PLACEHOLDER> \
+     --fee=1000 \
+     --amount=100000 \
+     --out=unsignedtransaction1.txn
+
+   goal clerk send \
+     --from=my-account-b<PLACEHOLDER> \
+     --to=my-account-a<PLACEHOLDER> \
+     --fee=1000 \
+     --amount=200000 \
+     --out=unsignedtransaction2.txn
+   ```
+
+   You should now have two standalone unsigned files. They are not yet atomic; the next step assigns one group ID across both.
+
+2. Concatenate the files in the order you intend to submit, then run `goal clerk group`. That hashes the ordered set and writes the same [Group](/concepts/transactions/reference/#common-fields-header-and-type) field into each transaction. **Keep this order for every later step.**
+
+   ```shell showLineNumbers=false frame=none
+   cat unsignedtransaction1.txn unsignedtransaction2.txn > combinedtransactions.txn
+
+   goal clerk group \
+     -i combinedtransactions.txn \
+     -o groupedtransactions.txn \
+     -d data \
+     -w yourwallet
+   ```
+
+3. Sign the grouped transactions. **If every sender’s key lives in the same wallet**, sign the combined grouped file in one shot:
+
+   ```shell showLineNumbers=false frame=none
+   goal clerk sign \
+     -i groupedtransactions.txn \
+     -o signout.txn \
+     -d data \
+     -w yourwallet
+   ```
+
+   **If senders use different wallets**, split first so each party signs only their transaction:
+
+   ```shell showLineNumbers=false frame=none
+   goal clerk split \
+     -i groupedtransactions.txn \
+     -o splitfiles \
+     -d data \
+     -w yourwallet
+   ```
+
+   You should see lines similar to:
+
+   ```text showLineNumbers=false frame=none
+   Wrote transaction 0 to splitfiles-0
+   Wrote transaction 1 to splitfiles-1
+   ```
+
+   Distribute each `splitfiles-*` file to the correct signer, then sign:
+
+   ```shell showLineNumbers=false frame=none
+   goal clerk sign -i splitfiles-0 -o splitfiles-0.sig -d data -w my_wallet_1
+   goal clerk sign -i splitfiles-1 -o splitfiles-1.sig -d data -w my_wallet_2
+   ```
+
+4. If you signed split files, concatenate the signed outputs in the **same order as step 2** into one blob for `rawsend`:
+
+   ```shell showLineNumbers=false frame=none
+   cat splitfiles-0.sig splitfiles-1.sig > signout.txn
+   ```
+
+   If you used step 3’s single-wallet `goal clerk sign` on `groupedtransactions.txn`, you already have `signout.txn` and can skip this step.
+
+5. Broadcast the assembled group:
+
+   ```shell showLineNumbers=false frame=none
+   goal clerk rawsend -f signout.txn -d data -w yourwallet
+   ```
+
+   You should see the group accepted or a clear error from `goal` if a balance, signature, or ordering constraint failed.
+
+</Steps>
+
+---
+
+## Next Steps
+
+- Programmatic atomic groups on LocalNet: [Your First Transaction](/getting-started/tutorials/your-first-transaction)
+- Conceptual overview: [Atomic Transaction Groups](/concepts/transactions/atomic-txn-groups)
+
+## Additional Resources
+
+- [Algorand sandbox](https://github.com/algorand/sandbox) — optional local environment that includes `goal` for experimentation.

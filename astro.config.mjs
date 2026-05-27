@@ -222,7 +222,17 @@ export default defineConfig({
           collapsed: false,
           items: [
             { slug: 'getting-started/portal-guide' },
-            { slug: 'getting-started/algokit-quick-start' },
+            {
+              label: 'Tutorials',
+              collapsed: false,
+              items: [
+                { slug: 'getting-started/tutorials/get-ready-to-build' },
+                { slug: 'getting-started/tutorials/using-lora' },
+                { slug: 'getting-started/tutorials/your-first-asset' },
+                { slug: 'getting-started/tutorials/your-first-transaction' },
+                { slug: 'getting-started/tutorials/first-smart-contract' },
+              ],
+            },
             {
               label: 'AlgoKit Examples Gallery',
               link: 'https://examples.dev.algorand.co',
@@ -279,14 +289,7 @@ export default defineConfig({
               items: [
                 { slug: 'concepts/assets/overview' },
                 { slug: 'concepts/assets/asset-operations' },
-                // {
-                //   label: 'Assets Metadata',
-                //   link: 'concepts/assets/asset-metadata',
-                // },
-                // {
-                //   label: 'Known Assets',
-                //   link: 'concepts/assets/known-assets',
-                // },
+                { slug: 'concepts/assets/asset-metadata' },
               ],
             },
             {
@@ -572,6 +575,8 @@ export default defineConfig({
             { slug: 'resources/overview' },
             { slug: 'resources/liquid-auth' },
             { slug: 'resources/bridging' },
+            { slug: 'resources/x402-on-algorand' },
+            { slug: 'resources/algo-x-evm' },
             {
               label: 'Algorand Specifications',
               link: 'https://specs.algorand.co',

@@ -33,6 +33,7 @@
     "prepare": "husky"
   },
   "dependencies": {
+    "@algorandfoundation/astro-github-loader": "^0.1.0",
     "@astrojs/check": "^0.9.6",
     "@astrojs/markdown-remark": "^6.3.10",
     "@astrojs/react": "^4.4.2",
@@ -43,7 +44,6 @@
     "@catppuccin/palette": "^1.7.1",
     "@catppuccin/vscode": "^3.18.1",
     "@kapaai/react-sdk": "^0.9.1",
-    "@larkiny/astro-github-loader": "^0.14.6",
     "@nanostores/react": "^1.0.0",
     "@tailwindcss/vite": "^4.1.18",
     "@types/js-yaml": "^4.0.9",

@@ -18,6 +18,9 @@ importers:
 
   .:
     dependencies:
+      '@algorandfoundation/astro-github-loader':
+        specifier: ^0.1.0
+        version: 0.1.0(astro@5.17.1(@types/node@25.2.2)(jiti@2.6.1)(lightningcss@1.30.2)(rollup@4.57.1)(tsx@4.21.0)(typescript@5.9.3)(yaml@2.7.1))
       '@astrojs/check':
         specifier: ^0.9.6
         version: 0.9.6(prettier-plugin-astro@0.14.1)(prettier@3.8.1)(typescript@5.9.3)
@@ -48,9 +51,6 @@ importers:
       '@kapaai/react-sdk':
         specifier: ^0.9.1
         version: 0.9.1(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
-      '@larkiny/astro-github-loader':
-        specifier: ^0.14.6
-        version: 0.14.6(astro@5.17.1(@types/node@25.2.2)(jiti@2.6.1)(lightningcss@1.30.2)(rollup@4.57.1)(tsx@4.21.0)(typescript@5.9.3)(yaml@2.7.1))
       '@nanostores/react':
         specifier: ^1.0.0
         version: 1.0.0(nanostores@1.1.0)(react@19.2.4)
@@ -222,6 +222,11 @@ importers:
         version: 4.0.18(@types/node@25.2.2)(jiti@2.6.1)(lightningcss@1.30.2)(tsx@4.21.0)(yaml@2.7.1)
 
 packages:
+
+  '@algorandfoundation/astro-github-loader@0.1.0':
+    resolution: {integrity: sha512-+vaw7utnrjCMmmAnjhA+C9/eveXfBq+Q9pIjOPDuKCgf8bmbtt4L3ewdZvXceh+RVjqkysdBMFB4OLgZzZcqWg==}
+    peerDependencies:
+      astro: ^5.5.6
 
   '@antfu/install-pkg@1.1.0':
     resolution: {integrity: sha512-MGQsmw10ZyI+EJo45CdSER4zEb+p31LpDAFp2Z3gkSd1yqVZGi0Ebx++YTEMonJy4oChEMLsxZ64j8FH6sSqtQ==}
@@ -1033,11 +1038,6 @@ packages:
     peerDependencies:
       react: '>=17.0.0'
       react-dom: '>=17.0.0'
-
-  '@larkiny/astro-github-loader@0.14.6':
-    resolution: {integrity: sha512-RG5O1XZhB5+FJE0CDLJvM68BLxZH1blmLwuIYtLWLlVnIZfLU3yccyQWEVTbyLnFNpbnau/2c2KYe/y/2knIoA==}
-    peerDependencies:
-      astro: ^5.5.6
 
   '@mdx-js/mdx@3.1.1':
     resolution: {integrity: sha512-f6ZO2ifpwAQIpzGWaBQT2TXxPv6z3RBzQKpVftEWN78Vl/YweF1uwussDx8ECAXVtr3Rs89fKyG9YlzUs9DyGQ==}
@@ -4490,6 +4490,13 @@ packages:
 
 snapshots:
 
+  '@algorandfoundation/astro-github-loader@0.1.0(astro@5.17.1(@types/node@25.2.2)(jiti@2.6.1)(lightningcss@1.30.2)(rollup@4.57.1)(tsx@4.21.0)(typescript@5.9.3)(yaml@2.7.1))':
+    dependencies:
+      '@octokit/auth-app': 8.2.0
+      astro: 5.17.1(@types/node@25.2.2)(jiti@2.6.1)(lightningcss@1.30.2)(rollup@4.57.1)(tsx@4.21.0)(typescript@5.9.3)(yaml@2.7.1)
+      octokit: 5.0.5
+      picomatch: 4.0.3
+
   '@antfu/install-pkg@1.1.0':
     dependencies:
       package-manager-detector: 1.6.0
@@ -5272,13 +5279,6 @@ snapshots:
       react: 19.2.4
       react-dom: 19.2.4(react@19.2.4)
       tldts: 7.0.23
-
-  '@larkiny/astro-github-loader@0.14.6(astro@5.17.1(@types/node@25.2.2)(jiti@2.6.1)(lightningcss@1.30.2)(rollup@4.57.1)(tsx@4.21.0)(typescript@5.9.3)(yaml@2.7.1))':
-    dependencies:
-      '@octokit/auth-app': 8.2.0
-      astro: 5.17.1(@types/node@25.2.2)(jiti@2.6.1)(lightningcss@1.30.2)(rollup@4.57.1)(tsx@4.21.0)(typescript@5.9.3)(yaml@2.7.1)
-      octokit: 5.0.5
-      picomatch: 4.0.3
 
   '@mdx-js/mdx@3.1.1':
     dependencies:
