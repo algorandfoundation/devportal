@@ -1,4 +1,4 @@
-import type { ImportOptions } from '@larkiny/astro-github-loader';
+import type { ImportOptions } from '@algorandfoundation/astro-github-loader';
 import {
   conditionalTransform,
   convertH1ToTitle,
