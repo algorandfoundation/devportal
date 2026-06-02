@@ -106,7 +106,10 @@ export default defineConfig({
       head: [
         {
           tag: 'script',
-          attrs: { src: 'https://plausible.io/js/pa-LzVeE3NPLc74nQKRGDgxI.js' },
+          attrs: {
+            src: 'https://plausible.io/js/pa-LzVeE3NPLc74nQKRGDgxI.js',
+            defer: true,
+          },
         },
         {
           tag: 'script',
@@ -116,6 +119,7 @@ export default defineConfig({
           tag: 'script',
           attrs: {
             src: 'https://widget.kapa.ai/kapa-widget.bundle.js',
+            defer: true,
             'data-website-id': '6e799942-b20a-4203-8103-93582a2611e1',
             'data-project-name': 'Algorand',
             'data-color-scheme-selector': "[data-theme='dark']",
