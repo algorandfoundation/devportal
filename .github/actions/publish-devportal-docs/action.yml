@@ -81,7 +81,7 @@ runs:
 
     - name: Upsert docs-latest release (nightly/manual)
       if: steps.release-tag.outputs.prerelease == 'true'
-      uses: softprops/action-gh-release@v2
+      uses: softprops/action-gh-release@v3
       with:
         tag_name: docs-latest
         name: 'Documentation (Latest)'
@@ -92,7 +92,7 @@ runs:
 
     - name: Attach to version release (tag push)
       if: steps.release-tag.outputs.prerelease == 'false'
-      uses: softprops/action-gh-release@v2
+      uses: softprops/action-gh-release@v3
       with:
         tag_name: ${{ github.ref_name }}
         files: ${{ inputs.docs-dir }}/devportal-docs.tar.gz
