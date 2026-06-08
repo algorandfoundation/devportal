@@ -1,7 +1,7 @@
-import type { TransformContext } from '@larkiny/astro-github-loader';
+import type { TransformContext } from '@algorandfoundation/astro-github-loader';
 
 /**
- * Minimal mock for @larkiny/astro-github-loader's TransformContext.
+ * Minimal mock for @algorandfoundation/astro-github-loader's TransformContext.
  * Only includes fields actually read by devportal transforms.
  */
 export function makeContext(overrides: {
