@@ -162,7 +162,42 @@ export default defineConfig({
       head: [
         {
           tag: 'script',
-          content: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-5XBZ7HB');`,
+          attrs: {
+            src: 'https://plausible.io/js/pa-LzVeE3NPLc74nQKRGDgxI.js',
+            defer: true,
+          },
+        },
+        {
+          tag: 'script',
+          content: `window.plausible=window.plausible||function(){(plausible.q=plausible.q||[]).push(arguments)},plausible.init=plausible.init||function(i){plausible.o=i||{}};plausible.init()`,
+        },
+        {
+          tag: 'script',
+          attrs: {
+            src: 'https://widget.kapa.ai/kapa-widget.bundle.js',
+            defer: true,
+            'data-website-id': '6e799942-b20a-4203-8103-93582a2611e1',
+            'data-project-name': 'Algorand',
+            'data-color-scheme-selector': "[data-theme='dark']",
+            'data-project-color': '#99A1A7',
+            'data-project-color-dark': '#aeb6bc',
+            'data-font-family': 'Inter, sans-serif',
+            'data-modal-title': 'Ask AI',
+            'data-modal-header-background-color': '#17cac6',
+            'data-modal-header-background-color-dark': '#0f9d9a',
+            'data-modal-title-color': '#ffffff',
+            'data-modal-body-background-color': '#f6f6f6',
+            'data-modal-body-background-color-dark': '#001324',
+            'data-text-color-dark': '#ffffff',
+            'data-kapa-branding-color': '#99A1A7',
+            'data-kapa-branding-color-dark': '#ffffff',
+            'data-captcha-disclaimer-color': '#99A1A7',
+            'data-captcha-disclaimer-color-dark': '#ffffff',
+            'data-modal-close-button-color-dark': '#ffffff',
+            'data-project-logo': '/algorand-logo.png',
+            'data-mcp-enabled': 'true',
+            'data-mcp-server-url': 'https://algorand-docs.mcp.kapa.ai/',
+          },
         },
         {
           tag: 'meta',
