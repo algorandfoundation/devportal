@@ -43,7 +43,8 @@ export const LIBRARY_CONFIGS: LibraryImportConfig[] = [
   algorandPython,
   algorandTypescript,
   algokitSubscriber,
-  nodekit,
+  // NodeKit is still imported below for the Running A Node command reference,
+  // but is not exposed as a full library section yet.
 ];
 
 /** Flat list of all import configs for the content loader. */

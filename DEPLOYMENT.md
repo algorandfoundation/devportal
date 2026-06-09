@@ -43,8 +43,12 @@ This is one step inside `pnpm run import:docs`.
 Current examples include:
 
 - `algorand-python`
-- `nodekit`
 - `arc-standards`
+
+`nodekit` also uses this import path, but it is currently imported only as a
+command reference for the local `Running A Node` section. It is intentionally
+kept out of the library picker until there is a fuller NodeKit docs section to
+expose as standalone library/tool documentation.
 
 ### 2. GitHub Artifact
 
