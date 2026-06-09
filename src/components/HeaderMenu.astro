@@ -4,15 +4,7 @@
  *
  * Renders a hamburger button that opens a dropdown panel with:
  * - Navigation links back to main site areas
- * - LibraryPicker in compact mode (library list with LinkChip variant links)
  */
-import LibraryPicker from './LibraryPicker.astro';
-
-interface Props {
-  currentPath: string;
-}
-
-const { currentPath } = Astro.props;
 ---
 
 <library-header-menu class='header-menu'>
@@ -71,8 +63,6 @@ const { currentPath } = Astro.props;
         </svg>
         Library Docs
       </a>
-      <div class='menu-divider'></div>
-      <LibraryPicker currentPath={currentPath} compact />
     </div>
   </div>
 </library-header-menu>
@@ -197,11 +187,5 @@ const { currentPath } = Astro.props;
   .menu-nav-link:hover {
     color: var(--sl-color-white);
     background-color: var(--sl-color-gray-6);
-  }
-
-  .menu-divider {
-    height: 1px;
-    background-color: var(--sl-color-hairline-light);
-    margin: 0.4rem 0;
   }
 </style>
