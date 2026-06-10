@@ -1,21 +1,16 @@
-import { useStore } from '@nanostores/react';
-import { isChatOpen } from '../stores/chatStore';
-
 export default function AIChatTrigger() {
-  const isOpen = useStore(isChatOpen);
-
   return (
     <button
-      onClick={() => isChatOpen.set(!isOpen)}
+      type='button'
+      data-kapa-ask-ai-trigger
       aria-label='Ask AI'
-      aria-expanded={isOpen}
-      className={`flex items-center gap-1.5 h-10 px-0 md:px-3 rounded-lg
+      className='flex items-center gap-1.5 h-10 px-0 md:px-3 rounded-lg
         border-0 md:border
         text-[length:var(--sl-text-sm)] font-medium font-[family-name:inherit] whitespace-nowrap
         cursor-pointer transition-[border-color,background-color,color] duration-150
         md:border-[var(--sl-color-gray-5)] text-algo-accent-green
         hover:md:border-algo-accent-green hover:text-algo-accent-green
-        bg-transparent ${isOpen ? 'md:bg-[var(--sl-color-gray-6)]' : ''}`}
+        bg-transparent'
     >
       <svg
         width='16'

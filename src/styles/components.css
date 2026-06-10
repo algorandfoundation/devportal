@@ -223,6 +223,15 @@ div.opcode-section table td {
   display: none !important;
 }
 
+/* ---- Kapa AI widget ---- */
+/* Hide the floating Google reCAPTCHA badge. The widget still shows a
+   "Protected by reCAPTCHA" disclaimer in its modal footer, which satisfies
+   Google's branding requirement. Use visibility (not display) so reCAPTCHA
+   bot protection keeps working. */
+.grecaptcha-badge {
+  visibility: hidden !important;
+}
+
 /* ==========================================================================
    View Transitions
    ========================================================================== */
@@ -251,12 +260,6 @@ div.opcode-section table td {
 
 ::view-transition-new(root) {
   animation: 75ms ease-in both vtFadeIn;
-}
-
-/* Persisted chat panel should not animate during transitions */
-::view-transition-old(ai-chat-panel),
-::view-transition-new(ai-chat-panel) {
-  animation: none;
 }
 
 @media (prefers-reduced-motion: reduce) {
