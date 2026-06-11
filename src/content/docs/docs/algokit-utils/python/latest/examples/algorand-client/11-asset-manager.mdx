@@ -1,0 +1,538 @@
+---
+title: 'Asset Manager'
+description: 'This example demonstrates the AssetManager functionality for querying asset information and performing bulk opt-in/opt-out operations:'
+sidebar:
+  order: 11
+---
+
+[← Back to Algorand Client](/docs/algokit-utils/python/latest/examples/algorand-client/)
+
+## Description
+
+This example demonstrates the AssetManager functionality for querying asset information and performing bulk opt-in/opt-out operations:
+
+- algorand.asset.get_by_id() to fetch asset information by asset ID
+- algorand.asset.get_account_information() to get an account's asset holding
+- algorand.asset.bulk_opt_in() to opt into multiple assets at once
+- algorand.asset.bulk_opt_out() to opt out of multiple assets at once
+- Efficiency comparison: bulk operations vs individual opt-ins
+- Error handling for non-existent assets and non-opted-in accounts
+
+## Prerequisites
+
+LocalNet required for asset operations
+
+## Run This Example
+
+From the repository's `examples` directory:
+
+```bash
+cd examples
+uv run python algorand_client/11_asset_manager.py
+```
+
+## Code
+
+[View source on GitHub](https://github.com/algorandfoundation/algokit-utils-py/blob/main/examples/algorand_client/11_asset_manager.py)
+
+```python title="11_asset_manager.py"
+# ruff: noqa: N999, C901, PLR0912, PLR0915, PLR2004
+"""
+Example: Asset Manager
+
+This example demonstrates the AssetManager functionality for querying
+asset information and performing bulk opt-in/opt-out operations:
+- algorand.asset.get_by_id() to fetch asset information by asset ID
+- algorand.asset.get_account_information() to get an account's asset holding
+- algorand.asset.bulk_opt_in() to opt into multiple assets at once
+- algorand.asset.bulk_opt_out() to opt out of multiple assets at once
+- Efficiency comparison: bulk operations vs individual opt-ins
+- Error handling for non-existent assets and non-opted-in accounts
+
+LocalNet required for asset operations
+"""
+
+from shared import (
+    print_error,
+    print_header,
+    print_info,
+    print_step,
+    print_success,
+    shorten_address,
+)
+
+from algokit_utils import AlgoAmount, AlgorandClient
+from algokit_utils.transactions.types import (
+    AssetCreateParams,
+    AssetDestroyParams,
+    AssetOptInParams,
+    AssetOptOutParams,
+    AssetTransferParams,
+)
+
+
+def main() -> None:
+    print_header("Asset Manager Example")
+
+    # Initialize client and verify LocalNet is running
+    algorand = AlgorandClient.default_localnet()
+
+    try:
+        algorand.client.algod.status()
+        print_success("Connected to LocalNet")
+    except Exception as e:
+        print_error(f"Failed to connect to LocalNet: {e}")
+        print_info("Make sure LocalNet is running (e.g., algokit localnet start)")
+        return
+
+    # Step 1: Create and fund test accounts
+    print_step(1, "Create and fund test accounts")
+    print_info("Creating accounts for asset manager demonstrations")
+
+    creator = algorand.account.random()
+    holder = algorand.account.random()
+
+    print_info("")
+    print_info("Created accounts:")
+    print_info(f"  Creator: {shorten_address(str(creator.addr))}")
+    print_info(f"  Holder: {shorten_address(str(holder.addr))}")
+
+    # Fund accounts
+    algorand.account.ensure_funded_from_environment(creator.addr, AlgoAmount.from_algo(20))
+    algorand.account.ensure_funded_from_environment(holder.addr, AlgoAmount.from_algo(10))
+
+    print_success("Created and funded test accounts")
+
+    # Step 2: Create test assets
+    print_step(2, "Create test assets")
+    print_info("Creating multiple assets to demonstrate bulk operations")
+
+    # Create first asset
+    asset1_result = algorand.send.asset_create(
+        AssetCreateParams(
+            sender=creator.addr,
+            total=1_000_000,
+            decimals=2,
+            asset_name="Asset Manager Token 1",
+            unit_name="AMT1",
+            url="https://example.com/amt1",
+            manager=creator.addr,
+        )
+    )
+    asset1_id = asset1_result.asset_id
+
+    # Create second asset
+    asset2_result = algorand.send.asset_create(
+        AssetCreateParams(
+            sender=creator.addr,
+            total=500_000,
+            decimals=0,
+            asset_name="Asset Manager Token 2",
+            unit_name="AMT2",
+            url="https://example.com/amt2",
+            manager=creator.addr,
+        )
+    )
+    asset2_id = asset2_result.asset_id
+
+    # Create third asset
+    asset3_result = algorand.send.asset_create(
+        AssetCreateParams(
+            sender=creator.addr,
+            total=10_000_000,
+            decimals=6,
+            asset_name="Asset Manager Token 3",
+            unit_name="AMT3",
+            url="https://example.com/amt3",
+            manager=creator.addr,
+        )
+    )
+    asset3_id = asset3_result.asset_id
+
+    print_info("")
+    print_info("Created assets:")
+    print_info(f"  Asset 1 (AMT1): ID {asset1_id}")
+    print_info(f"  Asset 2 (AMT2): ID {asset2_id}")
+    print_info(f"  Asset 3 (AMT3): ID {asset3_id}")
+
+    print_success("Test assets created")
+
+    # Step 3: Demonstrate algorand.asset.get_by_id()
+    print_step(3, "Demonstrate algorand.asset.get_by_id() to fetch asset information")
+    print_info("Fetching detailed information about an asset by its ID")
+
+    asset_info = algorand.asset.get_by_id(asset1_id)
+
+    print_info("")
+    print_info(f"Asset information for ID {asset1_id}:")
+    print_info(f"  Asset ID (index): {asset_info.asset_id}")
+    print_info(f"  Name: {asset_info.asset_name}")
+    print_info(f"  Unit Name: {asset_info.unit_name}")
+    print_info(f"  Total Supply: {asset_info.total} (smallest units)")
+    print_info(f"  Decimals: {asset_info.decimals}")
+    print_info(f"  Creator: {shorten_address(str(asset_info.creator))}")
+    manager_str = shorten_address(str(asset_info.manager)) if asset_info.manager else "none"
+    print_info(f"  Manager: {manager_str}")
+    reserve_str = shorten_address(str(asset_info.reserve)) if asset_info.reserve else "none"
+    print_info(f"  Reserve: {reserve_str}")
+    freeze_str = shorten_address(str(asset_info.freeze)) if asset_info.freeze else "none"
+    print_info(f"  Freeze: {freeze_str}")
+    clawback_str = shorten_address(str(asset_info.clawback)) if asset_info.clawback else "none"
+    print_info(f"  Clawback: {clawback_str}")
+    print_info(f"  Default Frozen: {asset_info.default_frozen}")
+    print_info(f"  URL: {asset_info.url or 'none'}")
+
+    # Show all three assets for comparison
+    print_info("")
+    print_info("Comparing all created assets:")
+    asset2_info = algorand.asset.get_by_id(asset2_id)
+    asset3_info = algorand.asset.get_by_id(asset3_id)
+
+    print_info("")
+    print_info(f"  Asset 1: {asset_info.asset_name} ({asset_info.unit_name})")
+    print_info(f"    Total: {asset_info.total} | Decimals: {asset_info.decimals}")
+    print_info(f"  Asset 2: {asset2_info.asset_name} ({asset2_info.unit_name})")
+    print_info(f"    Total: {asset2_info.total} | Decimals: {asset2_info.decimals}")
+    print_info(f"  Asset 3: {asset3_info.asset_name} ({asset3_info.unit_name})")
+    print_info(f"    Total: {asset3_info.total} | Decimals: {asset3_info.decimals}")
+
+    print_success("Asset information retrieved")
+
+    # Step 4: Handle case where asset doesn't exist
+    print_step(4, "Handle case where asset does not exist")
+    print_info("Demonstrating error handling for non-existent asset IDs")
+
+    non_existent_asset_id = 999999999
+    print_info("")
+    print_info(f"Attempting to fetch asset with ID {non_existent_asset_id}...")
+
+    try:
+        algorand.asset.get_by_id(non_existent_asset_id)
+        print_error("Expected an error but none was thrown!")
+    except Exception as e:
+        error_message = str(e)
+        print_info("  Error caught: Asset not found")
+        print_info(f"  Error details: {error_message[:80]}...")
+
+    print_success("Non-existent asset handled correctly")
+
+    # Step 5: Demonstrate algorand.asset.bulk_opt_in()
+    print_step(5, "Demonstrate algorand.asset.bulk_opt_in() to opt into multiple assets at once")
+    print_info("Bulk opt-in is more efficient than individual opt-ins")
+    print_info("Transactions are batched in groups of up to 16")
+
+    asset_ids = [asset1_id, asset2_id, asset3_id]
+    print_info("")
+    print_info(f"Opting holder into {len(asset_ids)} assets in a single batch...")
+
+    bulk_opt_in_results = algorand.asset.bulk_opt_in(
+        holder.addr,
+        asset_ids,
+    )
+
+    print_info("")
+    print_info("Bulk opt-in results:")
+    for result in bulk_opt_in_results:
+        tx_id_short = result.transaction_id[:20]
+        print_info(f"  Asset {result.asset_id}: Transaction {tx_id_short}...")
+
+    print_info("")
+    print_info(f"Total transactions: {len(bulk_opt_in_results)}")
+    print_info(f"Efficiency: {len(asset_ids)} assets opted in with a single method call")
+
+    print_success("Bulk opt-in completed")
+
+    # Step 6: Demonstrate algorand.asset.get_account_information()
+    print_step(6, "Demonstrate algorand.asset.get_account_information() to get account asset holding")
+    print_info("Fetching holder's asset holding information after opt-in")
+
+    holding_info1 = algorand.asset.get_account_information(holder.addr, asset1_id)
+
+    print_info("")
+    print_info(f"Holder's holding for Asset {asset1_id}:")
+    print_info(f"  Asset ID: {holding_info1.asset_id}")
+    print_info(f"  Balance: {holding_info1.balance} (smallest units)")
+    print_info(f"  Frozen: {holding_info1.frozen}")
+
+    # Transfer some assets to show non-zero balance
+    print_info("")
+    print_info("Transferring assets to holder...")
+    algorand.send.asset_transfer(
+        AssetTransferParams(
+            sender=creator.addr,
+            receiver=holder.addr,
+            asset_id=asset1_id,
+            amount=10_000,  # 100 whole tokens (100 * 10^2)
+        )
+    )
+    algorand.send.asset_transfer(
+        AssetTransferParams(
+            sender=creator.addr,
+            receiver=holder.addr,
+            asset_id=asset2_id,
+            amount=500,
+        )
+    )
+
+    # Re-fetch holding info
+    holding_info1_updated = algorand.asset.get_account_information(holder.addr, asset1_id)
+    holding_info2 = algorand.asset.get_account_information(holder.addr, asset2_id)
+    holding_info3 = algorand.asset.get_account_information(holder.addr, asset3_id)
+
+    print_info("")
+    print_info("Updated holder balances:")
+    print_info(f"  Asset {asset1_id} (AMT1): {holding_info1_updated.balance} (100 tokens with 2 decimals)")
+    print_info(f"  Asset {asset2_id} (AMT2): {holding_info2.balance} (500 whole units)")
+    print_info(f"  Asset {asset3_id} (AMT3): {holding_info3.balance} (no transfers yet)")
+
+    print_success("Account asset information retrieved")
+
+    # Step 7: Handle case where account not opted in
+    print_step(7, "Handle case where account is not opted in")
+    print_info("Demonstrating error handling when querying for assets not opted in")
+
+    # Create a new account that hasn't opted in to any assets
+    non_opted_account = algorand.account.random()
+    algorand.account.ensure_funded_from_environment(non_opted_account.addr, AlgoAmount.from_algo(1))
+
+    print_info("")
+    print_info("Querying asset holding for account that hasn't opted in...")
+
+    try:
+        algorand.asset.get_account_information(non_opted_account.addr, asset1_id)
+        print_error("Expected an error but none was thrown!")
+    except Exception as e:
+        error_message = str(e)
+        print_info("  Error caught: Account not opted in to asset")
+        print_info(f"  Error details: {error_message[:80]}...")
+
+    print_success("Non-opted-in account handled correctly")
+
+    # Step 8: Compare bulk operations vs individual opt-ins
+    print_step(8, "Show how bulk operations are more efficient than individual opt-ins")
+    print_info("Comparing the approaches for clarity")
+
+    print_info("")
+    print_info("Individual opt-in approach (NOT RECOMMENDED for multiple assets):")
+    print_info("  # Requires 3 separate transactions and 3 API calls")
+    print_info("  algorand.send.asset_opt_in(AssetOptInParams(sender=addr, asset_id=asset1_id))")
+    print_info("  algorand.send.asset_opt_in(AssetOptInParams(sender=addr, asset_id=asset2_id))")
+    print_info("  algorand.send.asset_opt_in(AssetOptInParams(sender=addr, asset_id=asset3_id))")
+
+    print_info("")
+    print_info("Bulk opt-in approach (RECOMMENDED):")
+    print_info("  # Single method call, transactions batched in groups of 16")
+    print_info("  algorand.asset.bulk_opt_in(account, [asset1_id, asset2_id, asset3_id])")
+
+    print_info("")
+    print_info("Efficiency benefits:")
+    print_info("  - Single method call for any number of assets")
+    print_info("  - Automatic batching (up to 16 transactions per group)")
+    print_info("  - Reduced code complexity")
+    print_info("  - Better error handling with clear result mapping")
+
+    print_success("Efficiency comparison demonstrated")
+
+    # Step 9: Prepare for bulk opt-out by transferring assets back
+    print_step(9, "Prepare for bulk opt-out")
+    print_info("Before opting out, all asset balances must be zero")
+    print_info("Transferring all held assets back to creator")
+
+    # Transfer assets back
+    current_balance1 = algorand.asset.get_account_information(holder.addr, asset1_id)
+    current_balance2 = algorand.asset.get_account_information(holder.addr, asset2_id)
+
+    if current_balance1.balance > 0:
+        algorand.send.asset_transfer(
+            AssetTransferParams(
+                sender=holder.addr,
+                receiver=creator.addr,
+                asset_id=asset1_id,
+                amount=current_balance1.balance,
+            )
+        )
+        print_info(f"  Transferred {current_balance1.balance} units of Asset {asset1_id} back to creator")
+
+    if current_balance2.balance > 0:
+        algorand.send.asset_transfer(
+            AssetTransferParams(
+                sender=holder.addr,
+                receiver=creator.addr,
+                asset_id=asset2_id,
+                amount=current_balance2.balance,
+            )
+        )
+        print_info(f"  Transferred {current_balance2.balance} units of Asset {asset2_id} back to creator")
+
+    # Verify zero balances
+    final_balance1 = algorand.asset.get_account_information(holder.addr, asset1_id)
+    final_balance2 = algorand.asset.get_account_information(holder.addr, asset2_id)
+    final_balance3 = algorand.asset.get_account_information(holder.addr, asset3_id)
+
+    print_info("")
+    print_info("Verified zero balances:")
+    print_info(f"  Asset {asset1_id}: {final_balance1.balance}")
+    print_info(f"  Asset {asset2_id}: {final_balance2.balance}")
+    print_info(f"  Asset {asset3_id}: {final_balance3.balance}")
+
+    print_success("Ready for bulk opt-out")
+
+    # Step 10: Demonstrate algorand.asset.bulk_opt_out()
+    print_step(10, "Demonstrate algorand.asset.bulk_opt_out() to opt out of multiple assets at once")
+    print_info("Bulk opt-out validates zero balances by default (ensure_zero_balance=True)")
+
+    opt_out_asset_ids = [asset1_id, asset2_id, asset3_id]
+    print_info("")
+    print_info(f"Opting holder out of {len(opt_out_asset_ids)} assets in a single batch...")
+
+    bulk_opt_out_results = algorand.asset.bulk_opt_out(
+        account=holder.addr,
+        asset_ids=opt_out_asset_ids,
+        ensure_zero_balance=True,  # Default - validates balances before opting out
+    )
+
+    print_info("")
+    print_info("Bulk opt-out results:")
+    for result in bulk_opt_out_results:
+        tx_id_short = result.transaction_id[:20]
+        print_info(f"  Asset {result.asset_id}: Transaction {tx_id_short}...")
+
+    print_info("")
+    print_info(f"Total transactions: {len(bulk_opt_out_results)}")
+    print_info(f"Efficiency: {len(opt_out_asset_ids)} assets opted out with a single method call")
+
+    # Verify opt-out
+    print_info("")
+    print_info("Verifying holder is no longer opted in...")
+    for asset_id in opt_out_asset_ids:
+        try:
+            algorand.asset.get_account_information(holder.addr, asset_id)
+            print_error(f"Holder should not be opted in to asset {asset_id}!")
+        except Exception:
+            print_info(f"  Asset {asset_id}: Confirmed not opted in")
+
+    print_success("Bulk opt-out completed")
+
+    # Step 11: Demonstrate error handling for bulk opt-out with non-zero balance
+    print_step(11, "Demonstrate error handling: bulk opt-out with non-zero balance")
+    print_info("bulk_opt_out throws an error if ensure_zero_balance is True and balance is non-zero")
+
+    # First, opt back in to an asset and transfer some tokens
+    algorand.send.asset_opt_in(
+        AssetOptInParams(
+            sender=holder.addr,
+            asset_id=asset1_id,
+        )
+    )
+    algorand.send.asset_transfer(
+        AssetTransferParams(
+            sender=creator.addr,
+            receiver=holder.addr,
+            asset_id=asset1_id,
+            amount=100,
+        )
+    )
+
+    print_info("")
+    print_info(f"Holder has balance of 100 for Asset {asset1_id}")
+    print_info("Attempting bulk opt-out with ensure_zero_balance=True...")
+
+    try:
+        algorand.asset.bulk_opt_out(
+            account=holder.addr,
+            asset_ids=[asset1_id],
+            ensure_zero_balance=True,
+        )
+        print_error("Expected an error but none was thrown!")
+    except Exception as e:
+        error_message = str(e)
+        print_info("  Error caught: Non-zero balance prevents opt-out")
+        print_info(f"  Error details: {error_message[:100]}...")
+
+    # Clean up - transfer back and opt out
+    algorand.send.asset_transfer(
+        AssetTransferParams(
+            sender=holder.addr,
+            receiver=creator.addr,
+            asset_id=asset1_id,
+            amount=100,
+        )
+    )
+    algorand.send.asset_opt_out(
+        AssetOptOutParams(
+            sender=holder.addr,
+            asset_id=asset1_id,
+            creator=creator.addr,
+        ),
+        ensure_zero_balance=True,
+    )
+
+    print_success("Error handling demonstrated")
+
+    # Step 12: Summary
+    print_step(12, "Summary - Asset Manager API")
+    print_info("The AssetManager provides efficient asset operations:")
+    print_info("")
+    print_info("algorand.asset.get_by_id(asset_id):")
+    print_info("  - Fetches complete asset information by ID")
+    print_info("  - Returns: AssetInformation object with all asset properties")
+    print_info("  - Properties: asset_id, asset_name, unit_name, total, decimals,")
+    print_info("    creator, manager, reserve, freeze, clawback, default_frozen, url")
+    print_info("")
+    print_info("algorand.asset.get_account_information(account, asset_id):")
+    print_info("  - Fetches an account's holding for a specific asset")
+    print_info("  - Returns: AccountAssetInformation object")
+    print_info("  - Properties: asset_id, balance, frozen")
+    print_info("  - Throws if account is not opted in to the asset")
+    print_info("")
+    print_info("algorand.asset.bulk_opt_in(account, asset_ids):")
+    print_info("  - Opts an account into multiple assets at once")
+    print_info("  - Batches transactions in groups of 16 (max atomic group size)")
+    print_info("  - Returns: list[BulkAssetOptInOutResult] with asset_id and transaction_id")
+    print_info("  - More efficient than individual asset_opt_in calls")
+    print_info("")
+    print_info("algorand.asset.bulk_opt_out(account=..., asset_ids=..., ensure_zero_balance=True):")
+    print_info("  - Opts an account out of multiple assets at once")
+    print_info("  - ensure_zero_balance=True (default) validates balances first")
+    print_info("  - Batches transactions in groups of 16")
+    print_info("  - Returns: list[BulkAssetOptInOutResult] with asset_id and transaction_id")
+    print_info("  - Automatically fetches asset creators for opt-out transactions")
+    print_info("")
+    print_info("Bulk operation benefits:")
+    print_info("  - Single method call for any number of assets")
+    print_info("  - Automatic batching for optimal efficiency")
+    print_info("  - Consistent result format with asset ID to transaction ID mapping")
+    print_info("  - Built-in validation for safe opt-out operations")
+
+    # Clean up - destroy test assets
+    algorand.send.asset_destroy(AssetDestroyParams(sender=creator.addr, asset_id=asset1_id))
+    algorand.send.asset_destroy(AssetDestroyParams(sender=creator.addr, asset_id=asset2_id))
+    algorand.send.asset_destroy(AssetDestroyParams(sender=creator.addr, asset_id=asset3_id))
+
+    print_success("Asset Manager example completed!")
+
+
+if __name__ == "__main__":
+    main()
+
+```
+
+---
+
+### Other examples in Algorand Client
+
+- [Client Instantiation](/docs/algokit-utils/python/latest/examples/algorand-client/01-client-instantiation/)
+- [AlgoAmount Utility](/docs/algokit-utils/python/latest/examples/algorand-client/02-algo-amount/)
+- [Signer Configuration](/docs/algokit-utils/python/latest/examples/algorand-client/03-signer-config/)
+- [Suggested Params Configuration](/docs/algokit-utils/python/latest/examples/algorand-client/04-params-config/)
+- [Account Manager](/docs/algokit-utils/python/latest/examples/algorand-client/05-account-manager/)
+- [Send Payment](/docs/algokit-utils/python/latest/examples/algorand-client/06-send-payment/)
+- [Send Asset Operations](/docs/algokit-utils/python/latest/examples/algorand-client/07-send-asset-ops/)
+- [Send Application Operations](/docs/algokit-utils/python/latest/examples/algorand-client/08-send-app-ops/)
+- [Create Transaction (Unsigned Transactions)](/docs/algokit-utils/python/latest/examples/algorand-client/09-create-transaction/)
+- [Transaction Composer (Atomic Transaction Groups)](/docs/algokit-utils/python/latest/examples/algorand-client/10-transaction-composer/)
+- **Asset Manager**
+- [App Manager](/docs/algokit-utils/python/latest/examples/algorand-client/12-app-manager/)
+- [App Deployer](/docs/algokit-utils/python/latest/examples/algorand-client/13-app-deployer/)
+- [Client Manager](/docs/algokit-utils/python/latest/examples/algorand-client/14-client-manager/)
+- [Error Transformers](/docs/algokit-utils/python/latest/examples/algorand-client/15-error-transformers/)

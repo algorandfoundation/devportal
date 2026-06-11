@@ -1,6 +1,10 @@
 ---
+import { ClientRouter } from 'astro:transitions';
 import Default from '@astrojs/starlight/components/ThemeProvider.astro';
+import AIChatPanel from './AIChatPanel.tsx';
 ---
+
+<ClientRouter />
 
 <script is:inline>
   if (
@@ -9,6 +13,41 @@ import Default from '@astrojs/starlight/components/ThemeProvider.astro';
   ) {
     localStorage.setItem('starlight-theme', 'dark');
   }
+
+  // Preserve dark mode across View Transition swaps.
+  // Guarded to register only once despite is:inline re-execution.
+  if (!window.__themeSwapRegistered) {
+    window.__themeSwapRegistered = true;
+    document.addEventListener('astro:before-swap', e => {
+      const theme = document.documentElement.getAttribute('data-theme');
+      if (theme) {
+        e.newDocument.documentElement.setAttribute('data-theme', theme);
+      }
+    });
+  }
+
+  // GTM virtual page views for client-side navigations (DVP-1207).
+  // astro:page-load fires on every navigation including the initial load.
+  // Skip the first fire — GTM's own script handles the initial page view.
+  if (!window.__gtmPageLoadRegistered) {
+    window.__gtmPageLoadRegistered = true;
+    let isInitialLoad = true;
+    document.addEventListener('astro:page-load', () => {
+      if (isInitialLoad) {
+        isInitialLoad = false;
+        return;
+      }
+      window.dataLayer?.push({
+        event: 'page_view',
+        page_path: window.location.pathname,
+        page_title: document.title,
+      });
+    });
+  }
 </script>
 
 <Default {...Astro.props}><slot /></Default>
+
+<div transition:persist='ai-chat-panel'>
+  <AIChatPanel client:only='react' />
+</div>

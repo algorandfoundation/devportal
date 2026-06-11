@@ -1,0 +1,512 @@
+---
+title: 'Application Boxes Lookup'
+description: 'This example demonstrates how to query application boxes using the IndexerClient search_for_application_boxes() and lookup_application_box_by_id_and_name() methods.'
+sidebar:
+  order: 13
+---
+
+[← Back to Indexer Client](/docs/algokit-utils/python/latest/examples/indexer-client/)
+
+## Description
+
+This example demonstrates how to query application boxes using the IndexerClient search_for_application_boxes() and lookup_application_box_by_id_and_name() methods.
+Prerequisites:
+
+## Prerequisites
+
+- LocalNet running (via `algokit localnet start`)
+
+## Run This Example
+
+From the repository's `examples` directory:
+
+```bash
+cd examples
+uv run python indexer_client/13_application_boxes.py
+```
+
+## Code
+
+[View source on GitHub](https://github.com/algorandfoundation/algokit-utils-py/blob/main/examples/indexer_client/13_application_boxes.py)
+
+```python title="13_application_boxes.py"
+# ruff: noqa: N999, C901, PLR0912, PLR0915, PLR2004
+"""
+Example: Application Boxes Lookup
+
+This example demonstrates how to query application boxes using
+the IndexerClient search_for_application_boxes() and lookup_application_box_by_id_and_name() methods.
+
+Prerequisites:
+- LocalNet running (via `algokit localnet start`)
+"""
+
+import base64
+import time
+
+from shared import (
+    create_algod_client,
+    create_algorand_client,
+    create_indexer_client,
+    load_teal_source,
+    print_error,
+    print_header,
+    print_info,
+    print_step,
+    print_success,
+    shorten_address,
+)
+
+from algokit_common import get_application_address
+from algokit_transact import BoxReference
+from algokit_utils import AlgoAmount, PaymentParams
+from algokit_utils.transactions.types import AppCallParams, AppCreateParams
+
+
+def decode_box_name(name_bytes: bytes) -> str:
+    """
+    Decode box name bytes to a displayable string.
+    Shows as a UTF-8 string if printable, otherwise as hex.
+    """
+    try:
+        decoded = name_bytes.decode("utf-8")
+        # Check if it's printable ASCII/UTF-8
+        if all(0x20 <= ord(c) <= 0x7E or c in "\t\n\r" for c in decoded):
+            return f'"{decoded}"'
+    except (UnicodeDecodeError, AttributeError):
+        pass
+
+    # Display as hex for binary data
+    hex_str = name_bytes.hex()
+    return f"0x{hex_str} ({len(name_bytes)} bytes)"
+
+
+def decode_box_value(value_bytes: bytes) -> str:
+    """
+    Decode box value bytes to a displayable string.
+    Shows as a UTF-8 string if printable, otherwise as hex.
+    """
+    try:
+        decoded = value_bytes.decode("utf-8")
+        # Check if it's printable ASCII/UTF-8
+        if all(0x20 <= ord(c) <= 0x7E or c in "\t\n\r" for c in decoded):
+            return f'"{decoded}"'
+    except (UnicodeDecodeError, AttributeError):
+        pass
+
+    # Display as hex for binary data
+    hex_str = value_bytes.hex()
+    return f"0x{hex_str} ({len(value_bytes)} bytes)"
+
+
+def main() -> None:
+    print_header("Application Boxes Lookup Example")
+
+    # Create clients
+    indexer = create_indexer_client()
+    algorand = create_algorand_client()
+    algod = create_algod_client()
+
+    # =========================================================================
+    # Step 1: Get a funded account from LocalNet
+    # =========================================================================
+    print_step(1, "Getting a funded account from LocalNet")
+
+    try:
+        creator_account = algorand.account.localnet_dispenser()
+        algorand.set_signer_from_account(creator_account)
+        creator_address = creator_account.addr
+        print_success(f"Using dispenser account: {shorten_address(creator_address)}")
+    except Exception as e:
+        print_error(f"Failed to get dispenser account: {e}")
+        print_info("")
+        print_info("Make sure LocalNet is running: algokit localnet start")
+        print_info("If issues persist, try: algokit localnet reset")
+        return
+
+    # =========================================================================
+    # Step 2: Deploy an application that uses box storage
+    # =========================================================================
+    print_step(2, "Deploying an application that uses box storage")
+
+    try:
+        # Load approval program from shared artifacts
+        approval_source = load_teal_source("approval-box-ops.teal")
+        clear_source = load_teal_source("clear-state-approve.teal")
+
+        # Compile TEAL programs
+        print_info("Compiling TEAL programs...")
+        approval_result = algod.teal_compile(approval_source.encode())
+        approval_program = base64.b64decode(approval_result.result)
+
+        clear_result = algod.teal_compile(clear_source.encode())
+        clear_state_program = base64.b64decode(clear_result.result)
+
+        print_info(f"Approval program: {len(approval_program)} bytes")
+        print_info(f"Clear state program: {len(clear_state_program)} bytes")
+        print_info("")
+
+        # Create application using AlgorandClient's high-level API
+        print_info("Creating application...")
+        result = algorand.send.app_create(
+            AppCreateParams(
+                sender=creator_address,
+                approval_program=approval_program,
+                clear_state_program=clear_state_program,
+                schema={
+                    "global_ints": 0,
+                    "global_byte_slices": 0,
+                    "local_ints": 0,
+                    "local_byte_slices": 0,
+                },
+            )
+        )
+
+        app_id = result.app_id
+        print_success(f"Created application with ID: {app_id}")
+
+        # Fund the application account for box storage MBR
+        app_address = get_application_address(app_id)
+        print_info(f"Funding application account: {shorten_address(app_address)}")
+        algorand.send.payment(
+            PaymentParams(
+                sender=creator_address,
+                receiver=app_address,
+                amount=AlgoAmount.from_algo(1),
+            )
+        )
+        print_success("Funded application account with 1 ALGO for box storage")
+        print_info("")
+    except Exception as e:
+        print_error(f"Failed to create application: {e}")
+        print_info("")
+        print_info("If LocalNet errors occur, try: algokit localnet reset")
+        return
+
+    # =========================================================================
+    # Step 3: Handle case where application has no boxes
+    # =========================================================================
+    print_step(3, "Handling case where application has no boxes")
+
+    try:
+        # search_for_application_boxes() returns an empty array when no boxes exist
+        empty_result = indexer.search_for_application_boxes(app_id)
+
+        print_info(f"Application ID: {empty_result.application_id}")
+        print_info(f"Number of boxes: {len(empty_result.boxes or [])}")
+
+        if len(empty_result.boxes or []) == 0:
+            print_success("Correctly returned empty boxes array for new application")
+            print_info("Applications start with no boxes - boxes are created via app calls")
+    except Exception as e:
+        print_error(f"search_for_application_boxes failed: {e}")
+
+    # =========================================================================
+    # Step 4: Create several boxes with different names and values
+    # =========================================================================
+    print_step(4, "Creating several boxes with different names and values")
+
+    # Box data to create
+    box_data = [
+        {"name": "user_count", "value": "42"},
+        {"name": "settings", "value": '{"theme":"dark","lang":"en"}'},
+        {"name": "metadata", "value": "v1.0.0-production"},
+        {"name": "box_alpha", "value": "First box in alphabetical order"},
+        {"name": "box_beta", "value": "Second box in alphabetical order"},
+        {"name": "box_gamma", "value": "Third box in alphabetical order"},
+    ]
+
+    try:
+        for box in box_data:
+            box_name_bytes = box["name"].encode("utf-8")
+            box_value_bytes = box["value"].encode("utf-8")
+
+            algorand.send.app_call(
+                AppCallParams(
+                    sender=creator_address,
+                    app_id=app_id,
+                    args=[b"create_box", box_name_bytes, box_value_bytes],
+                    box_references=[BoxReference(app_id=app_id, name=box_name_bytes)],
+                )
+            )
+
+            print_info(f'Created box "{box["name"]}" with value: "{box["value"]}"')
+        print_success(f"Created {len(box_data)} boxes for demonstration")
+        print_info("")
+    except Exception as e:
+        print_error(f"Failed to create boxes: {e}")
+        return
+
+    # =========================================================================
+    # Step 5: Search for application boxes with search_for_application_boxes()
+    # =========================================================================
+    print_step(5, "Searching for application boxes with search_for_application_boxes()")
+
+    # Wait for the indexer to catch up with the algod transactions
+    print_info("Waiting for indexer to sync...")
+    time.sleep(3)
+
+    try:
+        # search_for_application_boxes() returns all box names for an application
+        boxes_result = indexer.search_for_application_boxes(app_id)
+
+        print_success(f"Retrieved boxes for application {boxes_result.application_id}")
+        print_info(f"Total boxes found: {len(boxes_result.boxes or [])}")
+        print_info("")
+
+        if len(boxes_result.boxes or []) > 0:
+            print_info("Box names (sorted lexicographically):")
+            for i, box_descriptor in enumerate(boxes_result.boxes or []):
+                # Handle both bytes and base64-encoded strings
+                name_bytes = (
+                    base64.b64decode(box_descriptor.name)
+                    if isinstance(box_descriptor.name, str)
+                    else box_descriptor.name
+                )
+                name_display = decode_box_name(name_bytes)
+                print_info(f"  [{i}] {name_display}")
+            print_info("")
+            print_info("Note: search_for_application_boxes returns only box names (BoxDescriptor[]),")
+            print_info("not the values. Use lookup_application_box_by_id_and_name to get values.")
+
+        if boxes_result.next_token:
+            token_preview = boxes_result.next_token[:20]
+            print_info(f"More results available (nextToken: {token_preview}...)")
+    except Exception as e:
+        print_error(f"search_for_application_boxes failed: {e}")
+
+    # =========================================================================
+    # Step 6: Lookup specific box by name with lookup_application_box_by_id_and_name()
+    # =========================================================================
+    print_step(6, "Looking up specific box values with lookup_application_box_by_id_and_name()")
+
+    try:
+        # lookup_application_box_by_id_and_name() requires the box name as a string
+        # Use the b64: prefix to pass base64-encoded box name
+        box_name_bytes = b"settings"
+        box_name_str = "b64:" + base64.b64encode(box_name_bytes).decode()
+
+        print_info('Looking up box with name "settings"...')
+        print_info(f"Box name encoded: {box_name_str}")
+        print_info("")
+
+        box_result = indexer.lookup_application_box_by_id_and_name(app_id, box_name_str)
+
+        print_success("Retrieved box details:")
+        print_info(f"  Round: {box_result.round_}")
+
+        # Handle both bytes and base64-encoded strings for name and value
+        name_bytes = base64.b64decode(box_result.name) if isinstance(box_result.name, str) else box_result.name
+        value_bytes = base64.b64decode(box_result.value) if isinstance(box_result.value, str) else box_result.value
+
+        print_info(f"  Name:  {decode_box_name(name_bytes)}")
+        print_info(f"  Value: {decode_box_value(value_bytes)}")
+        print_info(f"  Value size: {len(value_bytes)} bytes")
+        print_info("")
+
+        # Try parsing as JSON since we know this box contains JSON
+        value_str = value_bytes.decode("utf-8")
+        if value_str.startswith("{"):
+            import json
+
+            try:
+                parsed = json.loads(value_str)
+                print_info("Parsed as JSON:")
+                for key, val in parsed.items():
+                    print_info(f"  {key}: {json.dumps(val)}")
+            except json.JSONDecodeError:
+                pass
+    except Exception as e:
+        print_error(f"lookup_application_box_by_id_and_name failed: {e}")
+
+    # =========================================================================
+    # Step 7: Show how to properly encode box names using bytes
+    # =========================================================================
+    print_step(7, "Demonstrating box name encoding with bytes")
+
+    try:
+        print_info("Box names use the 'b64:<base64>' or 'str:<string>' format for the indexer API.")
+        print_info("")
+
+        # Example 1: String to b64-encoded name
+        string_name = "user_count"
+        string_name_encoded = "b64:" + base64.b64encode(string_name.encode("utf-8")).decode()
+        print_info(f'1. String "{string_name}" encoded for API:')
+        print_info(f'   "b64:" + base64.b64encode("{string_name}".encode("utf-8")).decode()')
+        print_info(f"   Result: {string_name_encoded}")
+        print_info("")
+
+        # Lookup this box
+        box1 = indexer.lookup_application_box_by_id_and_name(app_id, string_name_encoded)
+        value1 = base64.b64decode(box1.value) if isinstance(box1.value, str) else box1.value
+        print_info(f"   Box value: {decode_box_value(value1)}")
+        print_info("")
+
+        # Example 2: Direct bytes encoded as b64
+        print_info("2. Direct bytes encoded as b64:")
+        direct_bytes = bytes([109, 101, 116, 97, 100, 97, 116, 97])  # "metadata"
+        direct_encoded = "b64:" + base64.b64encode(direct_bytes).decode()
+        print_info(f"   bytes([{', '.join(str(b) for b in direct_bytes)}])")
+        print_info(f'   Decodes to: "{direct_bytes.decode("utf-8")}"')
+        print_info(f"   Encoded: {direct_encoded}")
+
+        box2 = indexer.lookup_application_box_by_id_and_name(app_id, direct_encoded)
+        value2 = base64.b64decode(box2.value) if isinstance(box2.value, str) else box2.value
+        print_info(f"   Box value: {decode_box_value(value2)}")
+        print_info("")
+
+        # Example 3: Hex string to bytes to b64
+        print_info("3. Hex string to bytes to b64 (for binary box names):")
+        hex_str = "73657474696e6773"  # "settings" in hex
+        hex_bytes = bytes.fromhex(hex_str)
+        hex_encoded = "b64:" + base64.b64encode(hex_bytes).decode()
+        print_info(f'   Hex "{hex_str}" to bytes')
+        print_info(f'   Decodes to: "{hex_bytes.decode("utf-8")}"')
+        print_info(f"   Encoded: {hex_encoded}")
+
+        box3 = indexer.lookup_application_box_by_id_and_name(app_id, hex_encoded)
+        value3 = base64.b64decode(box3.value) if isinstance(box3.value, str) else box3.value
+        print_info(f"   Box value: {decode_box_value(value3)}")
+    except Exception as e:
+        print_error(f"Box name encoding demo failed: {e}")
+
+    # =========================================================================
+    # Step 8: Handle case where box is not found
+    # =========================================================================
+    print_step(8, "Handling case where box is not found")
+
+    try:
+        non_existent_name = "b64:" + base64.b64encode(b"does_not_exist").decode()
+        print_info('Attempting to lookup non-existent box "does_not_exist"...')
+
+        indexer.lookup_application_box_by_id_and_name(app_id, non_existent_name)
+
+        # If we get here, the box was found (unexpected)
+        print_info("Box was found (unexpected)")
+    except Exception as e:
+        print_success("Correctly caught error for non-existent box")
+        print_info(f"Error message: {e}")
+        print_info("")
+        print_info("Always handle the case where a box may not exist.")
+        print_info("The indexer throws an error when the box is not found.")
+
+    # =========================================================================
+    # Step 9: Demonstrate pagination for applications with many boxes
+    # =========================================================================
+    print_step(9, "Demonstrating pagination with limit and next parameters")
+
+    try:
+        # First page with limit of 2
+        print_info("Fetching first page of boxes (limit: 2)...")
+        page1 = indexer.search_for_application_boxes(app_id, limit=2)
+
+        print_info(f"Page 1: Retrieved {len(page1.boxes or [])} box(es)")
+        for box in page1.boxes or []:
+            name_bytes = base64.b64decode(box.name) if isinstance(box.name, str) else box.name
+            print_info(f"  - {decode_box_name(name_bytes)}")
+
+        # Check if there are more results
+        if page1.next_token:
+            token_preview = page1.next_token[:20]
+            print_info(f"Next token available: {token_preview}...")
+            print_info("")
+
+            # Fetch second page using next token
+            print_info("Fetching second page using next token...")
+            page2 = indexer.search_for_application_boxes(
+                app_id,
+                limit=2,
+                next_=page1.next_token,
+            )
+
+            print_info(f"Page 2: Retrieved {len(page2.boxes or [])} box(es)")
+            for box in page2.boxes or []:
+                name_bytes = base64.b64decode(box.name) if isinstance(box.name, str) else box.name
+                print_info(f"  - {decode_box_name(name_bytes)}")
+
+            if page2.next_token:
+                print_info("More results available (nextToken present)")
+                print_info("")
+
+                # Fetch remaining boxes
+                print_info("Fetching remaining boxes...")
+                page3 = indexer.search_for_application_boxes(
+                    app_id,
+                    limit=10,
+                    next_=page2.next_token,
+                )
+
+                print_info(f"Page 3: Retrieved {len(page3.boxes or [])} box(es)")
+                for box in page3.boxes or []:
+                    name_bytes = base64.b64decode(box.name) if isinstance(box.name, str) else box.name
+                    print_info(f"  - {decode_box_name(name_bytes)}")
+
+                if not page3.next_token:
+                    print_info("No more results (no nextToken)")
+            else:
+                print_info("No more results (no nextToken)")
+        else:
+            print_info("No pagination needed (all results fit in one page)")
+    except Exception as e:
+        print_error(f"Pagination demo failed: {e}")
+
+    # =========================================================================
+    # Summary
+    # =========================================================================
+    print_header("Summary")
+    print_info("This example demonstrated:")
+    print_info("  1. Deploying an application that uses box storage")
+    print_info("  2. Creating several boxes via app calls")
+    print_info("  3. Handling the case where application has no boxes")
+    print_info("  4. search_for_application_boxes(app_id) - List all box names")
+    print_info("  5. lookup_application_box_by_id_and_name(app_id, box_name) - Get specific box value")
+    print_info("  6. Properly encoding box names using bytes")
+    print_info("  7. Displaying box values after decoding from bytes")
+    print_info("  8. Handling the case where box is not found")
+    print_info("  9. Pagination with limit and next parameters")
+    print_info("")
+    print_info("Key search_for_application_boxes response fields (BoxesResponse):")
+    print_info("  - application_id: The application identifier (int)")
+    print_info("  - boxes: Array of BoxDescriptor objects (just names, not values)")
+    print_info("  - next_token: Pagination token for next page (optional)")
+    print_info("")
+    print_info("Key BoxDescriptor fields:")
+    print_info("  - name: Box name as bytes (raw bytes)")
+    print_info("")
+    print_info("Key lookup_application_box_by_id_and_name response fields (Box):")
+    print_info("  - round: Round at which box was retrieved (int)")
+    print_info("  - name: Box name as bytes")
+    print_info("  - value: Box value as bytes")
+    print_info("")
+    print_info("search_for_application_boxes() filter parameters:")
+    print_info("  - limit: Maximum results per page")
+    print_info("  - next: Pagination token from previous response")
+    print_info("")
+    print_info("Note: Box names are returned sorted lexicographically by the indexer.")
+
+
+if __name__ == "__main__":
+    main()
+
+```
+
+---
+
+### Other examples in Indexer Client
+
+- [Indexer Health Check](/docs/algokit-utils/python/latest/examples/indexer-client/01-health-check/)
+- [Account Lookup](/docs/algokit-utils/python/latest/examples/indexer-client/02-account-lookup/)
+- [Account Assets](/docs/algokit-utils/python/latest/examples/indexer-client/03-account-assets/)
+- [Account Applications](/docs/algokit-utils/python/latest/examples/indexer-client/04-account-applications/)
+- [Account Transactions](/docs/algokit-utils/python/latest/examples/indexer-client/05-account-transactions/)
+- [Transaction Lookup](/docs/algokit-utils/python/latest/examples/indexer-client/06-transaction-lookup/)
+- [Transaction Search](/docs/algokit-utils/python/latest/examples/indexer-client/07-transaction-search/)
+- [Asset Lookup](/docs/algokit-utils/python/latest/examples/indexer-client/08-asset-lookup/)
+- [Asset Balances](/docs/algokit-utils/python/latest/examples/indexer-client/09-asset-balances/)
+- [Asset Transactions](/docs/algokit-utils/python/latest/examples/indexer-client/10-asset-transactions/)
+- [Application Lookup](/docs/algokit-utils/python/latest/examples/indexer-client/11-application-lookup/)
+- [Application Logs Lookup](/docs/algokit-utils/python/latest/examples/indexer-client/12-application-logs/)
+- **Application Boxes Lookup**
+- [Block Lookup](/docs/algokit-utils/python/latest/examples/indexer-client/14-block-lookup/)
+- [Block Headers Search](/docs/algokit-utils/python/latest/examples/indexer-client/15-block-headers/)
+- [Pagination](/docs/algokit-utils/python/latest/examples/indexer-client/16-pagination/)

@@ -1,0 +1,387 @@
+---
+title: 'ABI Struct Type'
+description: 'This example demonstrates how to encode and decode named structs using StructType:'
+sidebar:
+  order: 8
+---
+
+[← Back to ABI Encoding](/docs/algokit-utils/python/latest/examples/abi/)
+
+## Description
+
+This example demonstrates how to encode and decode named structs using StructType:
+
+- Creating StructType with named fields
+- Encoding struct values as objects with named keys
+- Comparing struct encoding to equivalent tuple encoding
+- Accessing struct field names and types
+- Decoding back to struct values with named fields
+  Key characteristics of struct encoding:
+- Structs are named tuples - the encoding is identical to the equivalent tuple
+- Field names provide semantic meaning but don't affect the binary encoding
+- Decoded values are objects with named properties (not arrays like tuples)
+  ARC-4 specification: Structs are tuples with named fields for improved readability.
+
+## Prerequisites
+
+No LocalNet required - pure ABI encoding/decoding
+
+## Run This Example
+
+From the repository's `examples` directory:
+
+```bash
+cd examples
+uv run python abi/08_struct_type.py
+```
+
+## Code
+
+[View source on GitHub](https://github.com/algorandfoundation/algokit-utils-py/blob/main/examples/abi/08_struct_type.py)
+
+```python title="08_struct_type.py"
+# ruff: noqa: N999, C901, PLR0912, PLR0915
+"""
+Example: ABI Struct Type
+
+This example demonstrates how to encode and decode named structs using StructType:
+- Creating StructType with named fields
+- Encoding struct values as objects with named keys
+- Comparing struct encoding to equivalent tuple encoding
+- Accessing struct field names and types
+- Decoding back to struct values with named fields
+
+Key characteristics of struct encoding:
+- Structs are named tuples - the encoding is identical to the equivalent tuple
+- Field names provide semantic meaning but don't affect the binary encoding
+- Decoded values are objects with named properties (not arrays like tuples)
+
+ARC-4 specification: Structs are tuples with named fields for improved readability.
+
+No LocalNet required - pure ABI encoding/decoding
+"""
+
+from shared import format_hex, print_header, print_info, print_step, print_success
+
+from algokit_abi import abi
+
+
+def main() -> None:
+    print_header("ABI Struct Type Example")
+
+    # Step 1: Creating StructType with named fields
+    print_step(1, "Creating StructType with Named Fields")
+
+    # Create a struct: { name: string, age: uint64, active: bool }
+    user_struct = abi.StructType(
+        struct_name="User",
+        fields={
+            "name": abi.StringType(),
+            "age": abi.UintType(64),
+            "active": abi.BoolType(),
+        },
+    )
+
+    print_info("Created struct using StructType():")
+    print_info(f"  Struct name: {user_struct.struct_name}")
+    print_info(f"  Display name: {user_struct.display_name}")
+    print_info(f"  ABI type name: {user_struct.name}")
+    print_info(f"  Number of fields: {len(user_struct.fields)}")
+    print_info(f"  is_dynamic(): {user_struct.is_dynamic()} (because string is dynamic)")
+
+    print_info("\nStruct fields:")
+    for i, (field_name, field_type) in enumerate(user_struct.fields.items()):
+        print_info(f"  [{i}] {field_name}: {field_type}")
+
+    # Step 2: Encoding struct values as objects with named keys
+    print_step(2, "Encoding Struct Values as Objects")
+
+    user_value = {
+        "name": "Alice",
+        "age": 30,
+        "active": True,
+    }
+
+    user_encoded = user_struct.encode(user_value)
+
+    print_info(
+        f'Input object: {{ name: "{user_value["name"]}", age: {user_value["age"]}, active: {user_value["active"]} }}'
+    )
+    print_info(f"Encoded: {format_hex(user_encoded)}")
+    print_info(f"Total bytes: {len(user_encoded)}")
+
+    # Break down the encoding
+    print_info("\nByte layout (head/tail encoding because string is dynamic):")
+    print_info("HEAD SECTION:")
+
+    # string is dynamic - 2-byte offset
+    name_offset = (user_encoded[0] << 8) | user_encoded[1]
+    print_info(f"  [0-1]   name offset:  {format_hex(user_encoded[0:2])} = {name_offset} (points to tail)")
+
+    # uint64 is static - 8 bytes
+    print_info(f"  [2-9]   age (uint64): {format_hex(user_encoded[2:10])} = {user_value['age']}")
+
+    # bool is static - 1 byte
+    print_info(f"  [10]    active (bool): {format_hex(user_encoded[10:11])} = {user_value['active']}")
+
+    print_info("\nTAIL SECTION:")
+    name_len_bytes = user_encoded[name_offset : name_offset + 2]
+    name_len = (name_len_bytes[0] << 8) | name_len_bytes[1]
+    name_content = user_encoded[name_offset + 2 : name_offset + 2 + name_len]
+    len_start = name_offset
+    len_end = name_offset + 1
+    content_start = name_offset + 2
+    content_end = name_offset + 1 + name_len
+    hex_len = format_hex(name_len_bytes)
+    hex_content = format_hex(name_content)
+    print_info(f"  [{len_start}-{len_end}]   string length: {hex_len} = {name_len} bytes")
+    print_info(f'  [{content_start}-{content_end}]  string content: {hex_content} = "{user_value["name"]}"')
+
+    # Step 3: Struct encoding is identical to equivalent tuple encoding
+    print_step(3, "Struct Encoding vs Tuple Encoding")
+
+    # Create equivalent tuple type
+    equivalent_tuple = abi.TupleType([abi.StringType(), abi.UintType(64), abi.BoolType()])
+    tuple_value = ("Alice", 30, True)
+    tuple_encoded = equivalent_tuple.encode(tuple_value)
+
+    print_info(f"Struct type: {user_struct.name}")
+    print_info(f"Tuple type:  {equivalent_tuple.name}")
+
+    print_info("\nStruct encoded:")
+    print_info(f"  {format_hex(user_encoded)}")
+
+    print_info("\nTuple encoded (same values):")
+    print_info(f"  {format_hex(tuple_encoded)}")
+
+    # Compare byte by byte
+    encodings_match = user_encoded == tuple_encoded
+
+    print_info(f"\nEncodings are identical: {encodings_match}")
+    print_info("This confirms structs are just named tuples with the same binary encoding.")
+
+    # Step 4: Accessing struct field names and types via the type object
+    print_step(4, "Accessing Struct Field Names and Types")
+
+    print_info("Field information from fields property:")
+    for i, (field_name, field_type) in enumerate(user_struct.fields.items()):
+        print_info(f"\n  Field {i}:")
+        print_info(f"    Name: {field_name}")
+        print_info(f"    Type: {field_type}")
+        print_info(f"    is_dynamic: {field_type.is_dynamic()}")
+        byte_len = field_type.byte_len()
+        if byte_len is not None:
+            print_info(f"    byte_len: {byte_len}")
+
+    print_info("\nConverting struct to tuple type:")
+    tuple_from_struct = user_struct._tuple_type  # noqa: SLF001
+    print_info(f"  _tuple_type: {tuple_from_struct}")
+    print_info(f"  elements length: {len(tuple_from_struct.elements)}")
+
+    # Step 5: Decoding back to struct value with named fields
+    print_step(5, "Decoding to Struct with Named Fields")
+
+    user_decoded = user_struct.decode(user_encoded)
+
+    print_info("Decoded struct value (dict with named keys):")
+    print_info(f"  typeof decoded: {type(user_decoded).__name__}")
+    print_info(f'  decoded["name"]: "{user_decoded["name"]}"')
+    print_info(f'  decoded["age"]: {user_decoded["age"]}')
+    print_info(f'  decoded["active"]: {user_decoded["active"]}')
+
+    # Compare with tuple decoding
+    tuple_decoded = equivalent_tuple.decode(user_encoded)
+    print_info("\nCompare with tuple decoding (tuple with index access):")
+    print_info(f"  typeof decoded: {type(tuple_decoded).__name__}")
+    print_info(f'  decoded[0]: "{tuple_decoded[0]}"')
+    print_info(f"  decoded[1]: {tuple_decoded[1]}")
+    print_info(f"  decoded[2]: {tuple_decoded[2]}")
+
+    print_info("\nKey difference:")
+    print_info("  Struct decode() returns a DICT with named properties")
+    print_info("  Tuple decode() returns a TUPLE with indexed elements")
+
+    # Step 6: Static struct example
+    print_step(6, "Static Struct Example")
+
+    # Create a struct with all static fields
+    point_struct = abi.StructType(
+        struct_name="Point",
+        fields={
+            "x": abi.UintType(32),
+            "y": abi.UintType(32),
+        },
+    )
+
+    print_info("Static struct (all fields are static types):")
+    print_info(f"  Struct name: {point_struct.struct_name}")
+    print_info(f"  ABI type: {point_struct.name}")
+    print_info(f"  is_dynamic(): {point_struct.is_dynamic()}")
+    print_info(f"  byte_len(): {point_struct.byte_len()} (4 + 4 = 8 bytes)")
+
+    point_value = {"x": 100, "y": 200}
+    point_encoded = point_struct.encode(point_value)
+    point_decoded = point_struct.decode(point_encoded)
+
+    print_info(f"\nEncode {{ x: {point_value['x']}, y: {point_value['y']} }}:")
+    print_info(f"  Encoded: {format_hex(point_encoded)}")
+    print_info(f"  Total bytes: {len(point_encoded)}")
+
+    print_info("\nByte layout (all static, no offsets):")
+    print_info(f"  [0-3] x (uint32): {format_hex(point_encoded[0:4])} = {point_value['x']}")
+    print_info(f"  [4-7] y (uint32): {format_hex(point_encoded[4:8])} = {point_value['y']}")
+
+    print_info(f"\nDecoded: {{ x: {point_decoded['x']}, y: {point_decoded['y']} }}")
+
+    # Step 7: Encoding struct as tuple (tuple-style)
+    print_step(7, "Encoding Struct as Tuple (Tuple-style)")
+
+    print_info("StructType.encode() accepts both dicts and tuples:")
+
+    # Encode as dict
+    obj_encoded = user_struct.encode({"name": "Bob", "age": 25, "active": False})
+
+    # Encode as tuple (tuple-style)
+    arr_encoded = user_struct.encode(("Bob", 25, False))
+
+    print_info('\nEncoded as dict { name: "Bob", age: 25, active: False }:')
+    print_info(f"  {format_hex(obj_encoded)}")
+
+    print_info('\nEncoded as tuple ("Bob", 25, False):')
+    print_info(f"  {format_hex(arr_encoded)}")
+
+    array_obj_match = obj_encoded == arr_encoded
+
+    print_info(f"\nEncodings are identical: {array_obj_match}")
+    print_info("Both input formats produce the same encoded bytes.")
+
+    # Step 8: Nested struct example
+    print_step(8, "Nested Struct Example")
+
+    # Create nested structs: Person containing Address
+    address_struct = abi.StructType(
+        struct_name="Address",
+        fields={
+            "street": abi.StringType(),
+            "city": abi.StringType(),
+        },
+    )
+
+    person_struct = abi.StructType(
+        struct_name="Person",
+        fields={
+            "name": abi.StringType(),
+            "age": abi.UintType(8),
+            "address": address_struct,
+        },
+    )
+
+    print_info("Nested struct Person containing Address:")
+    print_info(f"  Person ABI type: {person_struct.name}")
+
+    person_value = {
+        "name": "Charlie",
+        "age": 28,
+        "address": {
+            "street": "123 Main St",
+            "city": "Boston",
+        },
+    }
+
+    person_encoded = person_struct.encode(person_value)
+    person_decoded = person_struct.decode(person_encoded)
+
+    print_info(f'\nInput: {{ name: "{person_value["name"]}", age: {person_value["age"]}, address: {{...}} }}')
+    print_info(f"Encoded: {format_hex(person_encoded)}")
+    print_info(f"Total bytes: {len(person_encoded)}")
+
+    print_info("\nDecoded nested struct:")
+    print_info(f'  decoded["name"]: "{person_decoded["name"]}"')
+    print_info(f'  decoded["age"]: {person_decoded["age"]}')
+    print_info(f'  decoded["address"]["street"]: "{person_decoded["address"]["street"]}"')
+    print_info(f'  decoded["address"]["city"]: "{person_decoded["address"]["city"]}"')
+
+    # Step 9: Creating StructType programmatically
+    print_step(9, "Creating StructType Programmatically")
+
+    # Create struct type using constructor directly
+    custom_struct = abi.StructType(
+        struct_name="Score",
+        fields={
+            "playerId": abi.UintType(64),
+            "score": abi.UintType(32),
+            "isHighScore": abi.BoolType(),
+        },
+    )
+
+    print_info('Created with: StructType(struct_name="Score", fields={...})')
+    print_info(f"  Struct name: {custom_struct.struct_name}")
+    print_info(f"  ABI type: {custom_struct.name}")
+    print_info(f"  is_dynamic(): {custom_struct.is_dynamic()}")
+    print_info(f"  byte_len(): {custom_struct.byte_len()} (8 + 4 + 1 = 13 bytes)")
+
+    score_value = {"playerId": 12345, "score": 9999, "isHighScore": True}
+    score_encoded = custom_struct.encode(score_value)
+    score_decoded = custom_struct.decode(score_encoded)
+
+    player_id = score_value["playerId"]
+    score = score_value["score"]
+    is_high = score_value["isHighScore"]
+    print_info(f"\nEncode: {{ playerId: {player_id}, score: {score}, isHighScore: {is_high} }}")
+    print_info(f"  Encoded: {format_hex(score_encoded)}")
+    dec_player_id = score_decoded["playerId"]
+    dec_score = score_decoded["score"]
+    dec_is_high = score_decoded["isHighScore"]
+    print_info(f"  Decoded: {{ playerId: {dec_player_id}, score: {dec_score}, isHighScore: {dec_is_high} }}")
+
+    # Step 10: Summary
+    print_step(10, "Summary")
+
+    print_info("StructType key properties:")
+    print_info("  - struct_name: The name of the struct")
+    print_info("  - fields: Dict of { name: type } field definitions")
+    print_info("  - _tuple_type: Internal tuple type representation")
+    print_info("  - is_dynamic(): True if ANY field is dynamic")
+    print_info("  - byte_len(): only valid for static structs")
+
+    print_info("\nStruct vs Tuple:")
+    print_info("  - Structs are named tuples with identical binary encoding")
+    print_info("  - Field names provide semantic meaning, not encoding differences")
+    print_info("  - encode() accepts dicts OR tuples")
+    print_info("  - decode() returns dicts with named properties (not tuples)")
+
+    print_info("\nCreating struct types:")
+    print_info("  - StructType(struct_name=name, fields={...}) - programmatic with ABIType instances")
+
+    print_info("\nNested structs:")
+    print_info("  - Structs can contain other structs")
+    print_info("  - Pass struct types directly in fields")
+    print_info("  - Nested struct values are dicts within dicts")
+
+    print_success("ABI Struct Type example completed successfully!")
+
+
+if __name__ == "__main__":
+    main()
+
+```
+
+---
+
+### Other examples in ABI Encoding
+
+- [ABI Type Parsing](/docs/algokit-utils/python/latest/examples/abi/01-type-parsing/)
+- [ABI Primitive Types](/docs/algokit-utils/python/latest/examples/abi/02-primitive-types/)
+- [ABI Address Type](/docs/algokit-utils/python/latest/examples/abi/03-address-type/)
+- [ABI String Type](/docs/algokit-utils/python/latest/examples/abi/04-string-type/)
+- [ABI Static Array Type](/docs/algokit-utils/python/latest/examples/abi/05-static-array/)
+- [ABI Dynamic Array Type](/docs/algokit-utils/python/latest/examples/abi/06-dynamic-array/)
+- [ABI Tuple Type](/docs/algokit-utils/python/latest/examples/abi/07-tuple-type/)
+- **ABI Struct Type**
+- [ABI Struct and Tuple Conversion](/docs/algokit-utils/python/latest/examples/abi/09-struct-tuple-conversion/)
+- [ABI Bool Array Packing](/docs/algokit-utils/python/latest/examples/abi/10-bool-packing/)
+- [ABI Method](/docs/algokit-utils/python/latest/examples/abi/11-abi-method/)
+- [AVM Type Encoding](/docs/algokit-utils/python/latest/examples/abi/12-avm-types/)
+- [Type Guards](/docs/algokit-utils/python/latest/examples/abi/13-type-guards/)
+- [ABI Complex Nested Types](/docs/algokit-utils/python/latest/examples/abi/14-complex-nested/)
+- [ARC-56 Storage Helpers](/docs/algokit-utils/python/latest/examples/abi/15-arc56-storage/)

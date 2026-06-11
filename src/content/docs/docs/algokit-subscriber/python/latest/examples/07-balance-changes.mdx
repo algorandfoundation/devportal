@@ -1,0 +1,286 @@
+---
+title: 'Balance Change Tracking'
+description: 'Demonstrates balance change filtering for ALGO and ASA transfers:'
+sidebar:
+  order: 7
+---
+
+[← Back to Examples](/docs/algokit-subscriber/python/latest/examples/)
+
+## Description
+
+Demonstrates balance change filtering for ALGO and ASA transfers:
+
+- Filter by assetId, role, minAbsoluteAmount, and address
+- Inspect balanceChanges array on matched transactions
+- Explore BalanceChangeRole enum values
+
+## Prerequisites
+
+- LocalNet running (via `algokit localnet start`)
+
+## Run This Example
+
+From the repository's `examples/subscriber` directory:
+
+```bash
+cd examples/subscriber
+uv run python 07_balance_changes.py
+```
+
+## Code
+
+[View source on GitHub](https://github.com/algorandfoundation/algokit-subscriber-py/blob/main/examples/subscriber/07_balance_changes.py)
+
+```python title="07_balance_changes.py"
+"""Example 07: Balance Change Tracking
+
+Demonstrates balance change filtering for ALGO and ASA transfers:
+- Filter by assetId, role, minAbsoluteAmount, and address
+- Inspect balanceChanges array on matched transactions
+- Explore BalanceChangeRole enum values
+
+Prerequisites:
+- LocalNet running (via `algokit localnet start`)
+"""
+
+from algokit_utils import (
+    AlgoAmount,
+    AlgorandClient,
+    AssetCreateParams,
+    AssetOptInParams,
+    AssetTransferParams,
+    PaymentParams,
+)
+from shared import (
+    ALGOD_CONFIG,
+    KMD_CONFIG,
+    create_filter_tester,
+    print_header,
+    print_info,
+    print_step,
+    print_success,
+    shorten_address,
+)
+
+from algokit_subscriber import BalanceChangeFilter, BalanceChangeRole, SubscribedTransaction
+
+
+def format_note(txn: SubscribedTransaction) -> None:
+    """Print transaction note and short ID."""
+    note = txn.note.decode() if txn.note else ""
+    print_info(f"  {note}: id={txn.id_[:12]}...")
+
+
+def setup_and_send(
+    algorand: AlgorandClient,
+) -> tuple[str, str, int, int]:
+    """Steps 2-4: Create accounts, ASA, and send transactions."""
+    # Step 2: Create and fund accounts
+    print_step(2, "Create and fund accounts")
+    dispenser = algorand.account.localnet_dispenser().addr
+    sender = algorand.account.random().addr
+    receiver = algorand.account.random().addr
+    for acct in (sender, receiver):
+        algorand.send.payment(
+            PaymentParams(sender=dispenser, receiver=acct, amount=AlgoAmount(algo=100))
+        )
+    print_info(f"Sender: {shorten_address(sender)}")
+    print_info(f"Receiver: {shorten_address(receiver)}")
+    print_success("Accounts created and funded")
+
+    # Step 3: Create an ASA and opt in receiver
+    print_step(3, "Create ASA and opt in receiver")
+    asa_result = algorand.send.asset_create(
+        AssetCreateParams(
+            sender=sender,
+            total=1_000_000,
+            decimals=0,
+            asset_name="BalTestToken",
+            unit_name="BTT",
+        )
+    )
+    asset_id = asa_result.asset_id
+    assert asset_id is not None
+    print_info(f"Asset ID: {asset_id}")
+    algorand.send.asset_opt_in(AssetOptInParams(sender=receiver, asset_id=asset_id))
+    print_success("Receiver opted in to ASA")
+
+    # Step 4: Send Algo payments and ASA transfers
+    print_step(4, "Send Algo payments and ASA transfers")
+    pay1 = algorand.send.payment(
+        PaymentParams(
+            sender=sender,
+            receiver=receiver,
+            amount=AlgoAmount(algo=5),
+            note=b"bal-pay-1",
+        )
+    )
+    print_info("Txn 1: Sender -> Receiver, 5 ALGO")
+    algorand.send.payment(
+        PaymentParams(
+            sender=sender,
+            receiver=receiver,
+            amount=AlgoAmount(algo=2),
+            note=b"bal-pay-2",
+        )
+    )
+    print_info("Txn 2: Sender -> Receiver, 2 ALGO")
+    algorand.send.asset_transfer(
+        AssetTransferParams(
+            sender=sender,
+            receiver=receiver,
+            asset_id=asset_id,
+            amount=500,
+            note=b"bal-axfer-1",
+        )
+    )
+    print_info("Txn 3: Sender -> Receiver, 500 BTT (ASA)")
+    print_success("All transactions sent")
+
+    confirmed_round = pay1.confirmation.confirmed_round
+    assert confirmed_round is not None
+    watermark_before = confirmed_round - 1
+    return sender, receiver, asset_id, watermark_before
+
+
+def inspect_balance_changes(txn_lists: list[list[SubscribedTransaction]]) -> None:
+    """Step 8: Inspect balanceChanges on deduplicated transactions."""
+    print_step(8, "Inspect balanceChanges array on matched transactions")
+    seen: set[str] = set()
+    for txn in [t for group in txn_lists for t in group]:
+        if txn.id_ in seen:
+            continue
+        seen.add(txn.id_)
+        note = txn.note.decode() if txn.note else ""
+        print()
+        print_info(f"Transaction: {note} ({txn.id_[:12]}...)")
+        if txn.balance_changes:
+            for bc in txn.balance_changes:
+                asset_label = "ALGO" if bc.asset_id == 0 else f"ASA #{bc.asset_id}"
+                roles = ", ".join(r.value for r in bc.roles)
+                print_info(
+                    f"  {shorten_address(bc.address)}:"
+                    f" asset={asset_label},"
+                    f" amount={bc.amount},"
+                    f" roles=[{roles}]"
+                )
+        else:
+            print_info("  (no balance changes)")
+
+
+def print_summary() -> None:
+    """Step 10: Print summary table."""
+    print_step(10, "Summary")
+    print()
+    print("  ┌──────────────────┬──────────────────────────────────────────────────┐")
+    print("  │ Filter           │ Description                                      │")
+    print("  ├──────────────────┼──────────────────────────────────────────────────┤")
+    print("  │ algo-sender      │ assetId=0, role=Sender, minAbsoluteAmount=2M     │")
+    print("  │ asa-receiver     │ assetId=ASA, role=Receiver                       │")
+    print("  │ address          │ address=Sender (any role, any asset)             │")
+    print("  └──────────────────┴──────────────────────────────────────────────────┘")
+    print()
+
+
+def main() -> None:
+    print_header("07 — Balance Change Tracking")
+
+    # Step 1: Connect to LocalNet
+    print_step(1, "Connect to LocalNet")
+    algorand = AlgorandClient.from_config(algod_config=ALGOD_CONFIG, kmd_config=KMD_CONFIG)
+    algod = algorand.client.algod
+    status = algod.status()
+    print_info(f"Current round: {status.last_round}")
+    print_success("Connected to LocalNet")
+
+    sender, _receiver, asset_id, watermark_before = setup_and_send(algorand)
+    test_filter = create_filter_tester(algod, watermark_before)
+
+    # Step 5: Filter — Algo Sender with minAbsoluteAmount
+    print_step(5, "Filter: Algo balance changes for Sender role with minAbsoluteAmount")
+    algo_sender_txns = test_filter(
+        "algo-sender-changes",
+        {
+            "balance_changes": [
+                BalanceChangeFilter(
+                    asset_id=0,
+                    role=BalanceChangeRole.Sender,
+                    min_absolute_amount=2_000_000,
+                ),
+            ]
+        },
+        format_txn=format_note,
+    )
+    if len(algo_sender_txns) < 2:
+        msg = f"Expected >= 2 Algo Sender txns (>= 2M), got {len(algo_sender_txns)}"
+        raise RuntimeError(msg)
+    print_success("Algo Sender filter matched expected transactions")
+
+    # Step 6: Filter — ASA Receiver
+    print_step(6, "Filter: ASA balance changes for Receiver role")
+    asa_receiver_txns = test_filter(
+        "asa-receiver-changes",
+        {
+            "balance_changes": [
+                BalanceChangeFilter(asset_id=asset_id, role=BalanceChangeRole.Receiver),
+            ]
+        },
+        format_txn=format_note,
+    )
+    if len(asa_receiver_txns) < 1:
+        msg = f"Expected >= 1 ASA Receiver txn, got {len(asa_receiver_txns)}"
+        raise RuntimeError(msg)
+    print_success("ASA Receiver filter matched expected transactions")
+
+    # Step 7: Filter — Address (any role)
+    print_step(7, "Filter: All balance changes for a specific address")
+    address_txns = test_filter(
+        "address-changes",
+        {"balance_changes": [BalanceChangeFilter(address=sender)]},
+        format_txn=format_note,
+    )
+    if len(address_txns) < 3:
+        msg = f"Expected >= 3 address-filtered txns, got {len(address_txns)}"
+        raise RuntimeError(msg)
+    print_success("Address filter matched expected transactions")
+
+    inspect_balance_changes([algo_sender_txns, asa_receiver_txns])
+
+    # Step 9: BalanceChangeRole enum values
+    print_step(9, "BalanceChangeRole enum values")
+    print_info(f"Sender: {BalanceChangeRole.Sender.value}")
+    print_info(f"Receiver: {BalanceChangeRole.Receiver.value}")
+    print_info(f"CloseTo: {BalanceChangeRole.CloseTo.value}")
+    print_info(f"AssetCreator: {BalanceChangeRole.AssetCreator.value}")
+    print_info(f"AssetDestroyer: {BalanceChangeRole.AssetDestroyer.value}")
+    print_success("All BalanceChangeRole values demonstrated")
+
+    print_summary()
+    print_header("Example complete")
+
+
+if __name__ == "__main__":
+    main()
+
+```
+
+---
+
+### Other examples
+
+- [Basic Poll Once](/docs/algokit-subscriber/python/latest/examples/01-basic-poll-once/)
+- [Continuous Subscriber](/docs/algokit-subscriber/python/latest/examples/02-continuous-subscriber/)
+- [Payment Filters](/docs/algokit-subscriber/python/latest/examples/03-payment-filters/)
+- [Asset Transfer](/docs/algokit-subscriber/python/latest/examples/04-asset-transfer/)
+- [App Call Subscription](/docs/algokit-subscriber/python/latest/examples/05-app-call/)
+- [Multiple Named Filters](/docs/algokit-subscriber/python/latest/examples/06-multiple-filters/)
+- **Balance Change Tracking**
+- [ARC-28 Event Subscription](/docs/algokit-subscriber/python/latest/examples/08-arc28-events/)
+- [Inner Transaction Subscription](/docs/algokit-subscriber/python/latest/examples/09-inner-transactions/)
+- [Batch Handling & Data Mappers](/docs/algokit-subscriber/python/latest/examples/10-batch-and-mappers/)
+- [Watermark Persistence](/docs/algokit-subscriber/python/latest/examples/11-watermark-persistence/)
+- [Sync Behaviours](/docs/algokit-subscriber/python/latest/examples/12-sync-behaviours/)
+- [Custom Filters](/docs/algokit-subscriber/python/latest/examples/13-custom-filters/)
+- [Stateless Subscriptions](/docs/algokit-subscriber/python/latest/examples/14-stateless-subscriptions/)
+- [Lifecycle Hooks & Error Handling](/docs/algokit-subscriber/python/latest/examples/15-lifecycle-hooks/)

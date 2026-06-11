@@ -80,7 +80,7 @@ Before you begin, ensure you have the following installed:
 ├── scripts/               # Build and utility scripts
 │   ├── clean-docs-import.ts       # Clear imported documentation
 │   ├── generate-opcode-list.js    # Generate Algorand opcodes list
-│   ├── manage-sidebar-meta.js     # Sidebar management
+│   ├── manage-sidebar-meta.ts     # Sidebar metadata generator
 │   └── prose-check.ts             # AI-powered prose quality checker
 ├── src/
 │   ├── assets/            # Images and media files
@@ -172,7 +172,7 @@ Documentation is imported from external GitHub repositories using `@algorandfoun
 
 ### Auto-Sidebar Management
 
-The `starlight-auto-sidebar` plugin enables you to customize the order and appearance of auto-generated sidebar entries, including cascading frontmatter configuration to files within a folder. The following commands enable you to quickly generate the `_meta.yml` files from the config defined in `auto-sidebar-config.yml`.
+The `starlight-auto-sidebar` plugin enables you to customize the order and appearance of auto-generated sidebar entries, including cascading frontmatter configuration to files within a folder. The following commands generate `_meta.yml` files from the `sidebarMetadata` configs defined in each library's `imports/configs/{lib}/sidebar.config.ts`.
 
 | Command                      | Description                             |
 | ---------------------------- | --------------------------------------- |
@@ -194,12 +194,19 @@ The `starlight-auto-sidebar` plugin enables you to customize the order and appea
 
 The following environment variables can be configured:
 
-| Variable         | Description                                    | Default |
-| ---------------- | ---------------------------------------------- | ------- |
-| `GITHUB_TOKEN`   | GitHub API token (required for importing docs) | -       |
-| `IMPORT_GITHUB`  | Enable GitHub content import                   | `false` |
-| `IMPORT_DRY_RUN` | Preview imports without writing files          | `false` |
-| `FORCE_IMPORT`   | Force re-import, ignoring cache                | `false` |
+| Variable                       | Description                                      | Default    |
+| ------------------------------ | ------------------------------------------------ | ---------- |
+| `GITHUB_TOKEN`                 | GitHub API token (required for importing docs)   | -          |
+| `IMPORT_GITHUB`                | Enable GitHub content import                     | `false`    |
+| `IMPORT_DRY_RUN`               | Preview imports without writing files            | `false`    |
+| `FORCE_IMPORT`                 | Force re-import, ignoring cache                  | `false`    |
+| `PUBLIC_KAPA_INTEGRATION_ID`   | [Kapa.ai](https://kapa.ai) integration ID for the AI chat panel | -          |
+| `OPENAI_API_KEY`               | OpenAI API key for the prose checker             | -          |
+| `PROSE_CHECK_ENABLED`          | Enable AI prose quality checking                 | `false`    |
+| `PROSE_CHECK_MODE`             | Prose checker mode (`warn` or `error`)           | `warn`     |
+| `PROSE_CHECK_MODEL`            | OpenAI model for prose checking                  | `gpt-4o-mini` |
+| `PROSE_CHECK_SENSITIVITY`      | Prose checker sensitivity level                  | `medium`   |
+| `PROSE_CHECK_EXCLUDE`          | Glob pattern for paths to exclude from checking  | `src/content/docs/reference/` |
 
 Set these in a `.env` file in the project root. Run `source .env` before running import commands.
 

@@ -1,0 +1,405 @@
+---
+title: 'Application Boxes'
+description: 'This example demonstrates how to query application boxes using the AlgodClient methods: application_boxes() and application_box_by_name()'
+sidebar:
+  order: 11
+---
+
+[← Back to Algod Client](/docs/algokit-utils/python/latest/examples/algod-client/)
+
+## Description
+
+This example demonstrates how to query application boxes using the AlgodClient methods: application_boxes() and application_box_by_name()
+API Patterns:
+
+- application_boxes(app_id) returns BoxesResponse with .boxes attribute (list of BoxDescriptor)
+- application*box_by_name(app_id, box_name_bytes) returns Box with .name, .value, .round* attributes
+- BoxDescriptor.name is bytes (not base64)
+- Box.name and Box.value are bytes (not base64)
+- Box.round\_ uses underscore to avoid Python reserved keyword
+  Prerequisites:
+
+## Prerequisites
+
+- LocalNet running (via `algokit localnet start`)
+
+## Run This Example
+
+From the repository's `examples` directory:
+
+```bash
+cd examples
+uv run python algod_client/11_application_boxes.py
+```
+
+## Code
+
+[View source on GitHub](https://github.com/algorandfoundation/algokit-utils-py/blob/main/examples/algod_client/11_application_boxes.py)
+
+```python title="11_application_boxes.py"
+# ruff: noqa: N999, C901, PLR0912, PLR0915, PLR2004
+"""
+Example: Application Boxes
+
+This example demonstrates how to query application boxes using
+the AlgodClient methods: application_boxes() and application_box_by_name()
+
+API Patterns:
+- application_boxes(app_id) returns BoxesResponse with .boxes attribute (list of BoxDescriptor)
+- application_box_by_name(app_id, box_name_bytes) returns Box with .name, .value, .round_ attributes
+- BoxDescriptor.name is bytes (not base64)
+- Box.name and Box.value are bytes (not base64)
+- Box.round_ uses underscore to avoid Python reserved keyword
+
+Prerequisites:
+- LocalNet running (via `algokit localnet start`)
+"""
+
+import base64
+
+from shared import (
+    create_algod_client,
+    create_algorand_client,
+    get_funded_account,
+    load_teal_source,
+    print_error,
+    print_header,
+    print_info,
+    print_step,
+    print_success,
+    shorten_address,
+)
+
+from algokit_common import get_application_address
+from algokit_utils import AlgoAmount, AppCallParams, AppCreateParams, BoxReference, PaymentParams
+
+
+def main() -> None:
+    print_header("Application Boxes Example")
+
+    # Create an Algod client connected to LocalNet
+    algod = create_algod_client()
+
+    # Create an AlgorandClient for application deployment
+    algorand = create_algorand_client()
+
+    # =========================================================================
+    # Step 1: Get a Funded Account from LocalNet
+    # =========================================================================
+    print_step(1, "Getting a funded account from LocalNet")
+
+    try:
+        creator = get_funded_account(algorand)
+        print_success(f"Got funded account: {shorten_address(str(creator.addr))}")
+    except Exception as e:
+        print_error(f"Failed to get funded account: {e}")
+        print_info("Make sure LocalNet is running with `algokit localnet start`")
+        print_info("If issues persist, try `algokit localnet reset`")
+        raise SystemExit(1) from e
+
+    # =========================================================================
+    # Step 2: Deploy an Application that Uses Box Storage
+    # =========================================================================
+    print_step(2, "Deploying an application that uses box storage")
+
+    # Load approval program from shared artifacts that supports box operations:
+    # - On create: does nothing (just succeeds)
+    # - On call with arg "create_box": creates a box with name from arg[1] and value from arg[2]
+    # - On call with arg "delete_box": deletes a box with name from arg[1]
+    # Box operations require the box to be referenced in the transaction
+    approval_source = load_teal_source("approval-box-ops.teal")
+
+    # Load clear state program from shared artifacts
+    clear_source = load_teal_source("clear-state-approve.teal")
+
+    try:
+        print_info("Compiling TEAL programs...")
+        # teal_compile() takes bytes, returns CompileResponse with .hash_ and .result
+        approval_compiled = algod.teal_compile(approval_source.encode())
+        clear_compiled = algod.teal_compile(clear_source.encode())
+        print_success(f"Approval program hash: {approval_compiled.hash_}")
+
+        print_info("Deploying application...")
+        # app_create() requires AppCreateParams wrapper
+        result = algorand.send.app_create(
+            AppCreateParams(
+                sender=str(creator.addr),
+                approval_program=base64.b64decode(approval_compiled.result),
+                clear_state_program=base64.b64decode(clear_compiled.result),
+                schema={
+                    "global_ints": 0,
+                    "global_byte_slices": 0,
+                    "local_ints": 0,
+                    "local_byte_slices": 0,
+                },
+            )
+        )
+
+        app_id = result.app_id
+        print_success(f"Application deployed with ID: {app_id}")
+        print_info("")
+
+        # =========================================================================
+        # Step 3: Handle Case Where Application Has No Boxes
+        # =========================================================================
+        print_step(3, "Querying boxes when application has no boxes")
+
+        # application_boxes() returns BoxesResponse with .boxes attribute
+        # .boxes can be None when empty, use `or []` for safe access
+        empty_boxes = algod.application_boxes(app_id)
+        boxes_list = empty_boxes.boxes or []
+        print_info("Boxes response for new application:")
+        print_info(f"  Total boxes: {len(boxes_list)}")
+
+        if len(boxes_list) == 0:
+            print_success("Correctly shows 0 boxes for new application")
+            print_info("Applications start with no boxes - boxes are created via app calls")
+        print_info("")
+
+        # =========================================================================
+        # Step 4: Create Several Boxes with Different Names and Values
+        # =========================================================================
+        print_step(4, "Creating several boxes with different names and values")
+
+        # Box names and values to create
+        box_data = [
+            {"name": "user_count", "value": "counter:42"},
+            {"name": "settings", "value": '{"theme":"dark","lang":"en"}'},
+            {"name": "metadata", "value": "v1.0.0-production"},
+        ]
+
+        # Need to fund the app account for box storage MBR
+        print_info("Funding application account for box storage MBR...")
+        app_address = get_application_address(app_id)
+        # send.payment() requires PaymentParams wrapper
+        algorand.send.payment(
+            PaymentParams(
+                sender=str(creator.addr),
+                receiver=app_address,
+                amount=AlgoAmount.from_algo(1),  # 1 ALGO should cover several boxes
+            )
+        )
+        print_success(f"Funded app account: {shorten_address(app_address)}")
+
+        for box in box_data:
+            box_name = box["name"]
+            box_value = box["value"]
+            print_info(f'Creating box "{box_name}" with value "{box_value}"...')
+
+            box_name_bytes = box_name.encode("utf-8")
+            box_value_bytes = box_value.encode("utf-8")
+
+            # send.app_call() requires AppCallParams wrapper
+            # box_references requires BoxReference objects, not tuples
+            algorand.send.app_call(
+                AppCallParams(
+                    sender=str(creator.addr),
+                    app_id=app_id,
+                    args=[b"create_box", box_name_bytes, box_value_bytes],
+                    box_references=[BoxReference(app_id=app_id, name=box_name_bytes)],
+                )
+            )
+
+            print_success(f'Created box "{box_name}"')
+        print_info("")
+
+        # =========================================================================
+        # Step 5: Demonstrate application_boxes() to List All Boxes
+        # =========================================================================
+        print_step(5, "Listing all boxes with application_boxes(app_id)")
+
+        # application_boxes() returns BoxesResponse with .boxes attribute
+        # .boxes can be None when empty, use `or []` for safe access
+        boxes_response = algod.application_boxes(app_id)
+        boxes_list = boxes_response.boxes or []
+
+        print_info("BoxesResponse structure:")
+        print_info(f"  boxes: list[BoxDescriptor] (length: {len(boxes_list)})")
+        print_info("")
+
+        print_info("All boxes for this application:")
+        for i, box_descriptor in enumerate(boxes_list):
+            # BoxDescriptor.name is bytes (not base64)
+            name_bytes = box_descriptor.name
+            try:
+                name_str = name_bytes.decode("utf-8")
+            except Exception:
+                name_str = repr(name_bytes)
+            name_hex = name_bytes.hex()
+            print_info(f'  [{i}] Name: "{name_str}"')
+            print_info(f"       Raw (hex): 0x{name_hex}")
+            print_info(f"       Raw (bytes): {len(name_bytes)} bytes")
+        print_info("")
+
+        print_info("application_boxes() returns BoxesResponse with list of BoxDescriptor")
+        print_info("To get the actual values, use application_box_by_name()")
+        print_info("")
+
+        # =========================================================================
+        # Step 6: Demonstrate application_box_by_name() to Get Specific Box
+        # =========================================================================
+        print_step(6, "Getting specific box values with application_box_by_name()")
+
+        for box in box_data:
+            box_name = box["name"]
+            box_name_bytes = box_name.encode("utf-8")
+            # application_box_by_name() takes bytes directly (not base64)
+            box_result = algod.application_box_by_name(app_id, box_name_bytes)
+
+            # Box attributes: .name (bytes), .value (bytes), .round_ (int)
+            try:
+                result_name = box_result.name.decode("utf-8")
+            except Exception:
+                result_name = repr(box_result.name)
+
+            try:
+                result_value = box_result.value.decode("utf-8")
+            except Exception:
+                result_value = repr(box_result.value)
+
+            print_info(f'Box "{box_name}":')
+            print_info(f"  Round:  {box_result.round_}")
+            print_info(f'  Name:   "{result_name}"')
+            print_info(f'  Value:  "{result_value}"')
+            print_info(f"  Size:   {len(box_result.value)} bytes")
+            print_info("")
+
+        # =========================================================================
+        # Step 7: Show Box Structure and Decoding
+        # =========================================================================
+        print_step(7, "Understanding Box structure and decoding")
+
+        # application_box_by_name() takes bytes directly
+        example_box = algod.application_box_by_name(app_id, b"settings")
+
+        # Box attributes: .name (bytes), .value (bytes), .round_ (int with underscore)
+        try:
+            example_value_str = example_box.value.decode("utf-8")
+        except Exception:
+            example_value_str = repr(example_box.value)
+
+        print_info("Box type structure:")
+        print_info("  {")
+        print_info(f"    round_: int = {example_box.round_}")
+        print_info(f"    name: bytes = {len(example_box.name)!s} bytes")
+        print_info(f"    value: bytes = {len(example_box.value)!s} bytes")
+        print_info("  }")
+        print_info("")
+
+        print_info("Different decoding methods:")
+        print_info(f'  As UTF-8 string: "{example_value_str}"')
+        print_info(f"  As hex:          0x{example_box.value.hex()}")
+        print_info(f"  As base64:       {base64.b64encode(example_box.value).decode('ascii')}")
+        print_info("")
+
+        # Parse JSON if it looks like JSON
+        if example_value_str.startswith("{"):
+            import json
+
+            try:
+                parsed = json.loads(example_value_str)
+                print_info("  As parsed JSON:")
+                for key, val in parsed.items():
+                    print_info(f"    {key}: {json.dumps(val)}")
+            except json.JSONDecodeError:
+                pass
+        print_info("")
+
+        print_info("Box values are raw bytes - the encoding/format is application-defined")
+        print_info("")
+
+        # =========================================================================
+        # Step 8: Handle Box Not Found Error
+        # =========================================================================
+        print_step(8, "Handling non-existent box")
+
+        try:
+            # application_box_by_name() takes bytes directly
+            print_info('Querying non-existent box "does_not_exist"...')
+            algod.application_box_by_name(app_id, b"does_not_exist")
+            print_error("Expected an error but none was thrown")
+        except Exception as e:
+            print_success("Correctly caught error for non-existent box")
+            print_info(f"  Error message: {e}")
+            print_info("Always handle the case where a box may not exist")
+        print_info("")
+
+        # =========================================================================
+        # Step 9: Box Costs and MBR
+        # =========================================================================
+        print_step(9, "Understanding box storage costs")
+
+        print_info("Box storage requires minimum balance (MBR) in the app account:")
+        print_info("  - Base cost per box: 2,500 microAlgo (0.0025 ALGO)")
+        print_info("  - Cost per byte: 400 microAlgo per byte")
+        print_info("  - Formula: 2500 + (400 * (box_name_length + box_value_length))")
+        print_info("")
+
+        # Calculate MBR for our boxes
+        print_info("MBR for boxes we created:")
+        for box in box_data:
+            name_len = len(box["name"].encode("utf-8"))
+            value_len = len(box["value"].encode("utf-8"))
+            mbr = 2500 + 400 * (name_len + value_len)
+            print_info(f'  "{box["name"]}": {mbr:,} uALGO (name: {name_len}B, value: {value_len}B)')
+        print_info("")
+    except Exception as e:
+        print_error(f"Failed to complete example: {e}")
+        print_info("If LocalNet errors occur, try `algokit localnet reset`")
+        raise SystemExit(1) from e
+
+    # =========================================================================
+    # Summary
+    # =========================================================================
+    print_header("Summary")
+    print_info("This example demonstrated:")
+    print_info("  1. Deploying an application that uses box storage")
+    print_info("  2. Creating boxes via app calls with box_references")
+    print_info("  3. application_boxes(app_id) - List all box names for an app")
+    print_info("  4. application_box_by_name(app_id, box_name) - Get specific box value")
+    print_info("  5. Handling the case where application has no boxes")
+    print_info("  6. Error handling for non-existent boxes")
+    print_info("  7. Understanding box storage costs (MBR)")
+    print_info("")
+    print_info("Key types and methods:")
+    print_info("  - application_boxes(app_id) -> BoxesResponse with .boxes: list[BoxDescriptor]")
+    print_info("  - application_box_by_name(app_id, box_name_bytes) -> Box with .round_, .name, .value")
+    print_info("  - BoxDescriptor: .name (bytes)")
+    print_info("  - Box: .round_ (int), .name (bytes), .value (bytes)")
+    print_info("")
+    print_info("Box storage notes:")
+    print_info("  - Boxes must be referenced in transaction box_references to be accessed")
+    print_info("  - Box names can be any bytes (not just UTF-8 strings)")
+    print_info("  - Box values are raw bytes - format is application-defined")
+    print_info("  - App account must have sufficient MBR for box storage")
+    print_info("  - Max box name: 64 bytes, max box value: 32,768 bytes")
+
+
+if __name__ == "__main__":
+    main()
+
+```
+
+---
+
+### Other examples in Algod Client
+
+- [Node Health and Status](/docs/algokit-utils/python/latest/examples/algod-client/01-node-health-status/)
+- [Version and Genesis Information](/docs/algokit-utils/python/latest/examples/algod-client/02-version-genesis/)
+- [Ledger Supply Information](/docs/algokit-utils/python/latest/examples/algod-client/03-ledger-supply/)
+- [Account Information](/docs/algokit-utils/python/latest/examples/algod-client/04-account-info/)
+- [Transaction Parameters](/docs/algokit-utils/python/latest/examples/algod-client/05-transaction-params/)
+- [Send and Confirm Transaction](/docs/algokit-utils/python/latest/examples/algod-client/06-send-transaction/)
+- [Pending Transactions](/docs/algokit-utils/python/latest/examples/algod-client/07-pending-transactions/)
+- [Block Data](/docs/algokit-utils/python/latest/examples/algod-client/08-block-data/)
+- [Asset Information](/docs/algokit-utils/python/latest/examples/algod-client/09-asset-info/)
+- [Application Information](/docs/algokit-utils/python/latest/examples/algod-client/10-application-info/)
+- **Application Boxes**
+- [TEAL Compile and Disassemble](/docs/algokit-utils/python/latest/examples/algod-client/12-teal-compile/)
+- [Transaction Simulation](/docs/algokit-utils/python/latest/examples/algod-client/13-simulation/)
+- [Ledger State Deltas](/docs/algokit-utils/python/latest/examples/algod-client/14-state-deltas/)
+- [Transaction Proof](/docs/algokit-utils/python/latest/examples/algod-client/15-transaction-proof/)
+- [Light Block Header Proof](/docs/algokit-utils/python/latest/examples/algod-client/16-lightblock-proof/)
+- [State Proof](/docs/algokit-utils/python/latest/examples/algod-client/17-state-proof/)
+- [DevMode Timestamp Offset](/docs/algokit-utils/python/latest/examples/algod-client/18-devmode-timestamp/)
+- [Sync Round Management](/docs/algokit-utils/python/latest/examples/algod-client/19-sync-round/)

@@ -1,0 +1,386 @@
+---
+title: 'ABI Bool Array Packing'
+description: 'This example demonstrates how bool arrays are packed efficiently in ARC-4:'
+sidebar:
+  order: 10
+---
+
+[← Back to ABI Encoding](/docs/algokit-utils/python/latest/examples/abi/)
+
+## Description
+
+This example demonstrates how bool arrays are packed efficiently in ARC-4:
+
+- 8 booleans fit in 1 byte (1 bit per boolean)
+- bool[8] encodes to exactly 1 byte
+- bool[16] encodes to 2 bytes
+- Partial byte arrays (e.g., bool[5]) still use full bytes
+  Key characteristics of bool array packing:
+- Each bool is stored as a single bit, not a full byte
+- Bools are packed left-to-right starting from the MSB (most significant bit)
+- Array length is rounded up to the next full byte
+- This is much more space-efficient than storing each bool as uint8
+
+## Prerequisites
+
+No LocalNet required - pure ABI encoding/decoding
+
+## Run This Example
+
+From the repository's `examples` directory:
+
+```bash
+cd examples
+uv run python abi/10_bool_packing.py
+```
+
+## Code
+
+[View source on GitHub](https://github.com/algorandfoundation/algokit-utils-py/blob/main/examples/abi/10_bool_packing.py)
+
+```python title="10_bool_packing.py"
+# ruff: noqa: N999, C901, PLR0912, PLR0915
+"""
+Example: ABI Bool Array Packing
+
+This example demonstrates how bool arrays are packed efficiently in ARC-4:
+- 8 booleans fit in 1 byte (1 bit per boolean)
+- bool[8] encodes to exactly 1 byte
+- bool[16] encodes to 2 bytes
+- Partial byte arrays (e.g., bool[5]) still use full bytes
+
+Key characteristics of bool array packing:
+- Each bool is stored as a single bit, not a full byte
+- Bools are packed left-to-right starting from the MSB (most significant bit)
+- Array length is rounded up to the next full byte
+- This is much more space-efficient than storing each bool as uint8
+
+No LocalNet required - pure ABI encoding/decoding
+"""
+
+import math
+
+from shared import format_hex, print_header, print_info, print_step, print_success
+
+from algokit_abi import abi
+
+
+def format_binary(byte: int) -> str:
+    """Format a byte as a binary string showing all 8 bits."""
+    return bin(byte)[2:].zfill(8)
+
+
+def format_binary_bytes(data: bytes) -> str:
+    """Format a byte array as binary showing the bit layout."""
+    return " ".join(format_binary(b) for b in data)
+
+
+def main() -> None:
+    print_header("ABI Bool Array Packing Example")
+
+    # Step 1: Introduction to bool array packing
+    print_step(1, "Introduction to Bool Array Packing")
+
+    print_info("In ARC-4 ABI encoding, boolean arrays use bit-packing:")
+    print_info("  - Each bool takes 1 bit (not 1 byte)")
+    print_info("  - 8 bools fit in 1 byte")
+    print_info("  - Bools are packed from MSB (bit 7) to LSB (bit 0)")
+    print_info("  - true = 1, false = 0")
+
+    # Step 2: bool[8] - exactly 1 byte
+    print_step(2, "bool[8] Encoding - Exactly 1 Byte")
+
+    bool8_type = abi.ABIType.from_string("bool[8]")
+
+    print_info(f"Type: {bool8_type}")
+    if isinstance(bool8_type, abi.StaticArrayType):
+        print_info(f"element: {bool8_type.element}")
+        print_info(f"size: {bool8_type.size}")
+        print_info(f"byte_len(): {bool8_type.byte_len()}")
+        print_info(f"is_dynamic(): {bool8_type.is_dynamic()}")
+
+        # All true - should be 0b11111111 = 0xFF
+        all_true8 = [True, True, True, True, True, True, True, True]
+        all_true8_encoded = bool8_type.encode(all_true8)
+
+        print_info(f"\nAll true: {all_true8}")
+        print_info(f"  Encoded: {format_hex(all_true8_encoded)}")
+        print_info(f"  Binary:  {format_binary_bytes(all_true8_encoded)}")
+        print_info(f"  Length:  {len(all_true8_encoded)} byte")
+
+        # All false - should be 0b00000000 = 0x00
+        all_false8 = [False, False, False, False, False, False, False, False]
+        all_false8_encoded = bool8_type.encode(all_false8)
+
+        print_info(f"\nAll false: {all_false8}")
+        print_info(f"  Encoded: {format_hex(all_false8_encoded)}")
+        print_info(f"  Binary:  {format_binary_bytes(all_false8_encoded)}")
+        print_info(f"  Length:  {len(all_false8_encoded)} byte")
+
+        # Alternating pattern - should be 0b10101010 = 0xAA
+        alternating8 = [True, False, True, False, True, False, True, False]
+        alternating8_encoded = bool8_type.encode(alternating8)
+
+        print_info(f"\nAlternating: {alternating8}")
+        print_info(f"  Encoded: {format_hex(alternating8_encoded)}")
+        print_info(f"  Binary:  {format_binary_bytes(alternating8_encoded)}")
+        print_info("  Expected: 10101010 = 0xAA")
+        expected_alternating = 0xAA  # 10101010 binary
+        print_info(f"  Matches: {alternating8_encoded[0] == expected_alternating}")
+
+    # Step 3: Bit position mapping
+    print_step(3, "Bit Position Mapping")
+
+    print_info("Bools map to bit positions (MSB first):")
+    print_info("  Array index:  [0]  [1]  [2]  [3]  [4]  [5]  [6]  [7]")
+    print_info("  Bit position: b7   b6   b5   b4   b3   b2   b1   b0")
+    print_info("  Bit value:    128  64   32   16   8    4    2    1")
+
+    # Single true at each position
+    print_info("\nSingle true at each position:")
+
+    if isinstance(bool8_type, abi.StaticArrayType):
+        for i in range(8):
+            bools = [False] * 8
+            bools[i] = True
+            encoded = bool8_type.encode(bools)
+            expected_byte = 1 << (7 - i)  # MSB first
+            print_info(
+                f"  Index {i}: {format_binary(encoded[0])} = 0x{encoded[0]:02x} (expected: 0x{expected_byte:02x})"
+            )
+
+    # Step 4: bool[16] - 2 bytes
+    print_step(4, "bool[16] Encoding - 2 Bytes")
+
+    bool16_type = abi.ABIType.from_string("bool[16]")
+
+    print_info(f"Type: {bool16_type}")
+    if isinstance(bool16_type, abi.StaticArrayType):
+        print_info(f"byte_len(): {bool16_type.byte_len()}")
+
+        # First 8 true, rest false
+        first_half16 = [True] * 8 + [False] * 8
+        first_half16_encoded = bool16_type.encode(first_half16)
+
+        print_info("\nFirst 8 true, rest false:")
+        print_info(f"  Encoded: {format_hex(first_half16_encoded)}")
+        print_info(f"  Binary:  {format_binary_bytes(first_half16_encoded)}")
+        print_info(f"  Byte 0:  {format_binary(first_half16_encoded[0])} (positions 0-7)")
+        print_info(f"  Byte 1:  {format_binary(first_half16_encoded[1])} (positions 8-15)")
+
+        # All true 16
+        all_true16 = [True] * 16
+        all_true16_encoded = bool16_type.encode(all_true16)
+
+        print_info("\nAll 16 true:")
+        print_info(f"  Encoded: {format_hex(all_true16_encoded)}")
+        print_info(f"  Binary:  {format_binary_bytes(all_true16_encoded)}")
+        print_info(f"  Length:  {len(all_true16_encoded)} bytes")
+
+    # Step 5: Partial byte arrays (bool[5])
+    print_step(5, "Partial Byte Arrays - bool[5]")
+
+    bool5_type = abi.ABIType.from_string("bool[5]")
+
+    print_info(f"Type: {bool5_type}")
+    if isinstance(bool5_type, abi.StaticArrayType):
+        print_info(f"byte_len(): {bool5_type.byte_len()}")
+        print_info("Note: 5 bools still require 1 full byte (bits 0-4 used, bits 5-7 are padding zeros)")
+
+        bool5_values = [True, True, True, True, True]
+        bool5_encoded = bool5_type.encode(bool5_values)
+
+        print_info(f"\nAll 5 true: {bool5_values}")
+        print_info(f"  Encoded: {format_hex(bool5_encoded)}")
+        print_info(f"  Binary:  {format_binary_bytes(bool5_encoded)}")
+        print_info("  Expected: 11111000 (5 ones + 3 padding zeros)")
+        expected_5_true = 0xF8  # 11111000 binary
+        print_info(f"  Expected value: 0xF8 = {expected_5_true}")
+        print_info(f"  Matches: {bool5_encoded[0] == expected_5_true}")
+
+        # Different bool[5] patterns
+        bool5_pattern = [True, False, True, False, True]
+        bool5_pattern_encoded = bool5_type.encode(bool5_pattern)
+
+        print_info(f"\nPattern {bool5_pattern}:")
+        print_info(f"  Encoded: {format_hex(bool5_pattern_encoded)}")
+        print_info(f"  Binary:  {format_binary_bytes(bool5_pattern_encoded)}")
+        print_info("  Expected: 10101000 (pattern + 3 padding zeros)")
+
+    # Step 6: Various partial byte sizes
+    print_step(6, "Byte Length Formula for Bool Arrays")
+
+    print_info("Formula: byte_len = ceil(arrayLength / 8)")
+    print_info("")
+    print_info("Length | Bytes | Formula")
+    print_info("-------|-------|--------")
+
+    bool_sizes = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 15, 16, 17, 24, 32]
+
+    for size in bool_sizes:
+        parsed_type = abi.ABIType.from_string(f"bool[{size}]")
+        expected_bytes = math.ceil(size / 8)
+        if isinstance(parsed_type, abi.StaticArrayType):
+            actual_bytes = parsed_type.byte_len()
+            print_info(f"{size:6} | {actual_bytes:5} | ceil({size}/8) = {expected_bytes}")
+
+    # Step 7: Compare bool[] vs uint8[] encoding size
+    print_step(7, "Size Comparison: bool[] vs uint8[]")
+
+    print_info("Comparison of encoded sizes for same element count:")
+    print_info("")
+    print_info("Count | bool[N] bytes | uint8[N] bytes | Savings")
+    print_info("------|---------------|----------------|--------")
+
+    counts = [8, 16, 32, 64, 100, 256]
+
+    for count in counts:
+        bool_type = abi.ABIType.from_string(f"bool[{count}]")
+        uint8_type = abi.ABIType.from_string(f"uint8[{count}]")
+
+        if isinstance(bool_type, abi.StaticArrayType) and isinstance(uint8_type, abi.StaticArrayType):
+            bool_bytes = bool_type.byte_len()
+            uint8_bytes = uint8_type.byte_len()
+            if bool_bytes is not None and uint8_bytes is not None:
+                savings = (1 - bool_bytes / uint8_bytes) * 100
+                print_info(f"{count:5} | {bool_bytes:13} | {uint8_bytes:14} | {savings:.1f}%")
+
+    print_info("\nBool arrays use 8x less space than uint8 arrays for boolean data!")
+
+    # Step 8: Dynamic bool arrays
+    print_step(8, "Dynamic Bool Arrays")
+
+    bool_dynamic_type = abi.ABIType.from_string("bool[]")
+
+    print_info(f"Type: {bool_dynamic_type}")
+    if isinstance(bool_dynamic_type, abi.DynamicArrayType):
+        print_info(f"element: {bool_dynamic_type.element}")
+        print_info(f"is_dynamic(): {bool_dynamic_type.is_dynamic()}")
+
+        # Encode a dynamic bool array
+        dynamic_bools = [True, True, False, True, True, False, False, True, True, False]
+        dynamic_encoded = bool_dynamic_type.encode(dynamic_bools)
+
+        print_info(f"\nDynamic array: {dynamic_bools} ({len(dynamic_bools)} elements)")
+        print_info(f"  Encoded: {format_hex(dynamic_encoded)}")
+        print_info(f"  Length:  {len(dynamic_encoded)} bytes")
+
+        # Break down the encoding
+        length_prefix = (dynamic_encoded[0] << 8) | dynamic_encoded[1]
+        data_bytes = dynamic_encoded[2:]
+
+        print_info("\nEncoding breakdown:")
+        print_info(f"  Length prefix: {format_hex(bytes(dynamic_encoded[0:2]))} = {length_prefix} elements")
+        print_info(f"  Data bytes:    {format_hex(data_bytes)}")
+        print_info(f"  Data binary:   {format_binary_bytes(data_bytes)}")
+
+    # Step 9: Decoding packed bool arrays
+    print_step(9, "Decoding Packed Bool Arrays")
+
+    if isinstance(bool8_type, abi.StaticArrayType):
+        # Static array decode
+        encode_values = [True, False, True, True, False, False, True, False]
+        encoded = bool8_type.encode(encode_values)
+        decoded = list(bool8_type.decode(encoded))
+
+        print_info(f"Original:  {encode_values}")
+        print_info(f"Encoded:   {format_hex(encoded)} = {format_binary_bytes(encoded)}")
+        print_info(f"Decoded:   {decoded}")
+        print_info(f"Round-trip: {decoded == encode_values}")
+
+    if isinstance(bool_dynamic_type, abi.DynamicArrayType):
+        # Dynamic array decode
+        dynamic_decoded = list(bool_dynamic_type.decode(dynamic_encoded))
+
+        print_info(f"\nDynamic original: {dynamic_bools}")
+        print_info(f"Dynamic decoded:  {dynamic_decoded}")
+        print_info(f"Round-trip: {dynamic_decoded == dynamic_bools}")
+
+    # Step 10: Bit-level view visualization
+    print_step(10, "Bit-Level View Visualization")
+
+    print_info("Detailed bit-level view of bool[8] encoding:")
+    print_info("")
+
+    if isinstance(bool8_type, abi.StaticArrayType):
+        visual_bools = [True, False, True, True, False, True, False, True]
+        visual_encoded = bool8_type.encode(visual_bools)
+
+        print_info(f"Values: {visual_bools}")
+        print_info(f"Byte:   {format_hex(visual_encoded)} = {format_binary(visual_encoded[0])}")
+        print_info("")
+        print_info("Position |  0  |  1  |  2  |  3  |  4  |  5  |  6  |  7  |")
+        print_info("---------|-----|-----|-----|-----|-----|-----|-----|-----|")
+        print_info(f"Value    |  {'  |  '.join('T' if b else 'F' for b in visual_bools)}  |")
+        print_info(f"Bit      |  {'  |  '.join(format_binary(visual_encoded[0]))}  |")
+        print_info("Weight   | 128 |  64 |  32 |  16 |  8  |  4  |  2  |  1  |")
+
+        # Calculate the byte value step by step
+        byte_value = 0
+        contributions: list[str] = []
+
+        for i in range(8):
+            if visual_bools[i]:
+                bit_value = 1 << (7 - i)
+                byte_value += bit_value
+                contributions.append(str(bit_value))
+
+        print_info("")
+        print_info(f"Byte value = {' + '.join(contributions)} = {byte_value} = 0x{byte_value:02x}")
+
+    # Step 11: Summary
+    print_step(11, "Summary")
+
+    print_info("Bool array packing in ARC-4:")
+    print_info("")
+    print_info("Packing rules:")
+    print_info("  - Each bool = 1 bit")
+    print_info("  - 8 bools pack into 1 byte")
+    print_info("  - Bit order: MSB first (index 0 = bit 7)")
+    print_info("  - Padding: zeros added to complete the last byte")
+    print_info("")
+    print_info("Size formula:")
+    print_info("  - Static:  byte_len = ceil(arrayLength / 8)")
+    print_info("  - Dynamic: 2 (length prefix) + ceil(arrayLength / 8)")
+    print_info("")
+    print_info("Space efficiency:")
+    print_info("  - 8x more efficient than storing bools as uint8")
+    print_info("  - bool[256] = 32 bytes vs uint8[256] = 256 bytes")
+    print_info("")
+    print_info("Bit values by position:")
+    print_info("  Position 0 (MSB): 0x80 = 128")
+    print_info("  Position 1:       0x40 = 64")
+    print_info("  Position 2:       0x20 = 32")
+    print_info("  Position 3:       0x10 = 16")
+    print_info("  Position 4:       0x08 = 8")
+    print_info("  Position 5:       0x04 = 4")
+    print_info("  Position 6:       0x02 = 2")
+    print_info("  Position 7 (LSB): 0x01 = 1")
+
+    print_success("ABI Bool Array Packing example completed successfully!")
+
+
+if __name__ == "__main__":
+    main()
+
+```
+
+---
+
+### Other examples in ABI Encoding
+
+- [ABI Type Parsing](/docs/algokit-utils/python/latest/examples/abi/01-type-parsing/)
+- [ABI Primitive Types](/docs/algokit-utils/python/latest/examples/abi/02-primitive-types/)
+- [ABI Address Type](/docs/algokit-utils/python/latest/examples/abi/03-address-type/)
+- [ABI String Type](/docs/algokit-utils/python/latest/examples/abi/04-string-type/)
+- [ABI Static Array Type](/docs/algokit-utils/python/latest/examples/abi/05-static-array/)
+- [ABI Dynamic Array Type](/docs/algokit-utils/python/latest/examples/abi/06-dynamic-array/)
+- [ABI Tuple Type](/docs/algokit-utils/python/latest/examples/abi/07-tuple-type/)
+- [ABI Struct Type](/docs/algokit-utils/python/latest/examples/abi/08-struct-type/)
+- [ABI Struct and Tuple Conversion](/docs/algokit-utils/python/latest/examples/abi/09-struct-tuple-conversion/)
+- **ABI Bool Array Packing**
+- [ABI Method](/docs/algokit-utils/python/latest/examples/abi/11-abi-method/)
+- [AVM Type Encoding](/docs/algokit-utils/python/latest/examples/abi/12-avm-types/)
+- [Type Guards](/docs/algokit-utils/python/latest/examples/abi/13-type-guards/)
+- [ABI Complex Nested Types](/docs/algokit-utils/python/latest/examples/abi/14-complex-nested/)
+- [ARC-56 Storage Helpers](/docs/algokit-utils/python/latest/examples/abi/15-arc56-storage/)

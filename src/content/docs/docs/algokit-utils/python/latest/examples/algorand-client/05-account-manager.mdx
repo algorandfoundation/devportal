@@ -1,0 +1,479 @@
+---
+title: 'Account Manager'
+description: 'This example demonstrates how to use the account manager to create, import, and manage accounts including:'
+sidebar:
+  order: 5
+---
+
+[← Back to Algorand Client](/docs/algokit-utils/python/latest/examples/algorand-client/)
+
+## Description
+
+This example demonstrates how to use the account manager to create, import, and manage accounts including:
+
+- algorand.account.random() to generate a new random account
+- algorand.account.from_mnemonic() to import from 25-word mnemonic
+- algorand.account.from_environment() to load from env var
+- algorand.account.from_kmd() to get account from KMD wallet
+- algorand.account.multisig() to create a multisig account
+- algorand.account.logicsig() to create a logic signature account
+- algorand.account.rekeyed() to create a rekeyed account reference
+- algorand.account.get_information() to fetch account details from network
+- algorand.account.ensure_funded() to ensure account has minimum balance
+- algorand.account.ensure_funded_from_environment() for dispenser funding
+
+## Prerequisites
+
+LocalNet required for KMD access and account operations
+
+## Run This Example
+
+From the repository's `examples` directory:
+
+```bash
+cd examples
+uv run python algorand_client/05_account_manager.py
+```
+
+## Code
+
+[View source on GitHub](https://github.com/algorandfoundation/algokit-utils-py/blob/main/examples/algorand_client/05_account_manager.py)
+
+```python title="05_account_manager.py"
+# ruff: noqa: N999, C901, PLR0912, PLR0915, PLR2004
+"""
+Example: Account Manager
+
+This example demonstrates how to use the account manager to create, import,
+and manage accounts including:
+- algorand.account.random() to generate a new random account
+- algorand.account.from_mnemonic() to import from 25-word mnemonic
+- algorand.account.from_environment() to load from env var
+- algorand.account.from_kmd() to get account from KMD wallet
+- algorand.account.multisig() to create a multisig account
+- algorand.account.logicsig() to create a logic signature account
+- algorand.account.rekeyed() to create a rekeyed account reference
+- algorand.account.get_information() to fetch account details from network
+- algorand.account.ensure_funded() to ensure account has minimum balance
+- algorand.account.ensure_funded_from_environment() for dispenser funding
+
+LocalNet required for KMD access and account operations
+"""
+
+import secrets
+
+from shared import (
+    format_algo,
+    load_teal_source,
+    print_error,
+    print_header,
+    print_info,
+    print_step,
+    print_success,
+    shorten_address,
+)
+
+from algokit_algo25 import mnemonic_from_seed
+from algokit_transact import MultisigMetadata
+from algokit_utils import AlgoAmount, AlgorandClient
+
+
+def main() -> None:
+    print_header("Account Manager Example")
+
+    # Initialize client and verify LocalNet is running
+    algorand = AlgorandClient.default_localnet()
+
+    try:
+        algorand.client.algod.status()
+        print_success("Connected to LocalNet")
+    except Exception as e:
+        print_error(f"Failed to connect to LocalNet: {e}")
+        print_info("Make sure LocalNet is running (e.g., algokit localnet start)")
+        return
+
+    # Step 1: Generate a random account with algorand.account.random()
+    print_step(1, "Generate random account with algorand.account.random()")
+    print_info("random() creates a new account with a randomly generated keypair")
+    print_info("The account is automatically registered with its signer in AccountManager")
+
+    random_account = algorand.account.random()
+
+    print_info("")
+    print_info("Random account created:")
+    print_info(f"  addr: {random_account.addr}")
+    print_info("  signer: [TransactionSigner function] - automatically registered")
+
+    print_success("Generated random account")
+
+    # Step 2: Import account from 25-word mnemonic with algorand.account.from_mnemonic()
+    print_step(2, "Import account from mnemonic with algorand.account.from_mnemonic()")
+    print_info("from_mnemonic() loads an account from a 25-word mnemonic secret")
+    print_info("WARNING: Never commit mnemonics to source control!")
+
+    # Generate a test mnemonic for demo purposes
+    # In practice, you would load this from environment variables or secure storage
+    random_seed = secrets.token_bytes(32)
+    demo_mnemonic = mnemonic_from_seed(random_seed)
+
+    first_five_words = " ".join(demo_mnemonic.split()[:5])
+    print_info("")
+    print_info(f'Example mnemonic (first 5 words): "{first_five_words}..."')
+
+    # Import using the mnemonic
+    mnemonic_account = algorand.account.from_mnemonic(mnemonic=demo_mnemonic)
+
+    print_info("")
+    print_info("Mnemonic account imported:")
+    print_info(f"  addr: {shorten_address(str(mnemonic_account.addr))}")
+    print_info("  signer: [TransactionSigner function] - ready for signing")
+
+    print_success("Imported account from mnemonic")
+
+    # Step 3: Load account from environment with algorand.account.from_environment()
+    print_step(3, "Load account from environment with algorand.account.from_environment()")
+    print_info("from_environment() loads account based on environment variable conventions:")
+    print_info("")
+    print_info("Non-LocalNet convention:")
+    print_info("  - Loads {NAME}_MNEMONIC as mnemonic secret")
+    print_info("  - Optionally loads {NAME}_SENDER for rekeyed accounts")
+    print_info("")
+    print_info("LocalNet convention:")
+    print_info("  - Creates/retrieves a KMD wallet named {NAME}")
+    print_info("  - Auto-funds with 1000 ALGO by default")
+
+    # On LocalNet, this will create a wallet named "DEMO" and fund it
+    env_account = algorand.account.from_environment("DEMO", fund_with=AlgoAmount.from_algo(10))
+
+    print_info("")
+    print_info('Environment account loaded (LocalNet wallet "DEMO"):')
+    print_info(f"  addr: {shorten_address(str(env_account.addr))}")
+
+    # Verify it was funded
+    env_info = algorand.account.get_information(env_account.addr)
+    print_info(f"  balance: {format_algo(env_info.amount)}")
+
+    print_success("Loaded account from environment")
+
+    # Step 4: Get account from KMD wallet with algorand.account.from_kmd()
+    print_step(4, "Get account from KMD wallet with algorand.account.from_kmd()")
+    print_info("from_kmd() retrieves an account from a KMD wallet by name")
+    print_info("Optional predicate filter to find specific accounts")
+
+    # Get an account from the default LocalNet wallet
+    kmd_account = algorand.account.from_kmd(
+        "unencrypted-default-wallet",
+        # Filter: accounts with > 1000 ALGO (predicate)
+        predicate=lambda a: a["amount"] > 1_000_000_000,
+    )
+
+    print_info("")
+    print_info("KMD account retrieved:")
+    print_info(f"  addr: {shorten_address(str(kmd_account.addr))}")
+    print_info("  wallet: unencrypted-default-wallet")
+
+    kmd_info = algorand.account.get_information(kmd_account.addr)
+    print_info(f"  balance: {format_algo(kmd_info.amount)}")
+
+    print_success("Retrieved account from KMD wallet")
+
+    # Step 5: Create a multisig account with algorand.account.multisig()
+    print_step(5, "Create multisig account with algorand.account.multisig()")
+    print_info("multisig() creates a multisig account from multiple sub-signers")
+    print_info("Requires: version, threshold (min signatures), and participant addresses")
+
+    # Create 3 accounts for the multisig
+    msig1 = algorand.account.random()
+    msig2 = algorand.account.random()
+    msig3 = algorand.account.random()
+
+    multisig_metadata = MultisigMetadata(
+        version=1,  # Multisig version (always 1)
+        threshold=2,  # Require 2 of 3 signatures
+        addrs=[msig1.addr, msig2.addr, msig3.addr],  # Participant addresses (order matters!)
+    )
+
+    # Create multisig with 2 sub-signers (accounts 1 and 2)
+    multisig_account = algorand.account.multisig(multisig_metadata, [msig1, msig2])
+
+    print_info("")
+    print_info("Multisig account created:")
+    print_info(f"  addr: {shorten_address(str(multisig_account.addr))}")
+    print_info(f"  version: {multisig_metadata.version}")
+    print_info(f"  threshold: {multisig_metadata.threshold} of {len(multisig_metadata.addrs)}")
+    print_info("  participants:")
+    print_info(f"    1: {shorten_address(str(msig1.addr))}")
+    print_info(f"    2: {shorten_address(str(msig2.addr))}")
+    print_info(f"    3: {shorten_address(str(msig3.addr))}")
+    print_info("  signer: [MultisigSigner function] - signs with accounts 1 and 2")
+
+    print_success("Created multisig account")
+
+    # Step 6: Create a logic signature account with algorand.account.logicsig()
+    print_step(6, "Create logic signature account with algorand.account.logicsig()")
+    print_info("logicsig() creates an account backed by a compiled TEAL program")
+    print_info("The program defines the conditions under which transactions are approved")
+
+    # Load TEAL program that always approves (for demo purposes only!)
+    # In production, use meaningful logic that validates transactions
+    teal_source = load_teal_source("always-approve.teal")
+
+    # Compile the TEAL program using algorand.app.compile_teal()
+    compile_result = algorand.app.compile_teal(teal_source)
+    program = compile_result.compiled_base64_to_bytes
+
+    # Create the logic signature account
+    logicsig_account = algorand.account.logicsig(program)
+
+    print_info("")
+    print_info("Logic signature account created:")
+    print_info(f"  addr: {shorten_address(str(logicsig_account.addr))}")
+    print_info(f"  program hash: {str(logicsig_account.addr)[:16]}...")
+    print_info(f"  program size: {len(program)} bytes")
+    print_info("  signer: [LogicSigSigner function] - evaluates TEAL program")
+    print_info("")
+    print_info("Note: Logic sig address is derived from the program hash")
+    print_info("Anyone can send transactions from this address if the program approves")
+
+    print_success("Created logic signature account")
+
+    # Step 7: Create a rekeyed account reference with algorand.account.rekeyed()
+    print_step(7, "Create rekeyed account with algorand.account.rekeyed()")
+    print_info("rekeyed() creates a reference to an account that has been rekeyed")
+    print_info('The "sender" is the original address, but signing uses a different account')
+
+    # Create an account that will be the "auth" account (the one that signs)
+    auth_account = algorand.account.random()
+
+    # Create a rekeyed reference: sender = random_account, but auth = auth_account
+    rekeyed_account = algorand.account.rekeyed(sender=random_account.addr, account=auth_account)
+
+    print_info("")
+    print_info("Rekeyed account reference created:")
+    print_info(f"  sender addr: {shorten_address(str(rekeyed_account.addr))}")
+    print_info(f"  auth account: {shorten_address(str(auth_account.addr))}")
+    print_info("  signer: Uses auth_account's signer")
+    print_info("")
+    print_info("Use case: After rekeying account A to account B,")
+    print_info("transactions from A are signed by B's private key")
+
+    print_success("Created rekeyed account reference")
+
+    # Step 8: Fetch account information with algorand.account.get_information()
+    print_step(8, "Fetch account info with algorand.account.get_information()")
+    print_info("get_information() fetches current account status from the network")
+    print_info("Returns balance, min balance, rewards, opted-in assets/apps, and more")
+
+    # Get the dispenser account to demonstrate
+    dispenser = algorand.account.localnet_dispenser()
+    account_info = algorand.account.get_information(dispenser.addr)
+
+    print_info("")
+    print_info("Account information for dispenser:")
+    print_info(f"  address: {shorten_address(str(account_info.address))}")
+    print_info(f"  balance: {format_algo(account_info.amount)}")
+    print_info(f"  min_balance: {format_algo(account_info.min_balance)}")
+    spendable = account_info.amount.micro_algo - account_info.min_balance.micro_algo
+    print_info(f"  spendable: {format_algo(spendable)} (balance - min_balance)")
+    print_info(f"  pending_rewards: {format_algo(account_info.pending_rewards)}")
+    print_info(f"  rewards: {format_algo(account_info.rewards)}")
+    print_info(f"  status: {account_info.status}")
+    print_info(f"  round: {account_info.round}")
+    print_info(f"  total_apps_opted_in: {account_info.total_apps_opted_in}")
+    print_info(f"  total_assets_opted_in: {account_info.total_assets_opted_in}")
+    print_info(f"  total_created_apps: {account_info.total_created_apps}")
+    print_info(f"  total_created_assets: {account_info.total_created_assets}")
+    if account_info.auth_addr:
+        print_info(f"  auth_addr (rekey): {account_info.auth_addr}")
+
+    print_success("Fetched account information")
+
+    # Step 9: Ensure account is funded with algorand.account.ensure_funded()
+    print_step(9, "Ensure account is funded with algorand.account.ensure_funded()")
+    print_info("ensure_funded() funds an account to have a minimum spending balance")
+    print_info("Only sends funds if needed (idempotent)")
+    print_info("min_spending_balance is the balance ABOVE the minimum balance requirement")
+
+    # Create a new account to fund
+    account_to_fund = algorand.account.random()
+
+    print_info("")
+    print_info(f"New account: {shorten_address(str(account_to_fund.addr))}")
+
+    # Check initial balance
+    before_info = algorand.account.get_information(account_to_fund.addr)
+    print_info(f"Initial balance: {format_algo(before_info.amount)}")
+
+    # Ensure it has at least 5 ALGO to spend
+    fund_result = algorand.account.ensure_funded(
+        account_to_fund.addr,
+        dispenser.addr,
+        AlgoAmount.from_algo(5),  # Minimum spending balance (above min balance requirement)
+    )
+
+    if fund_result:
+        print_info("")
+        print_info("Funding transaction:")
+        print_info(f"  tx_id: {fund_result.transaction_id}")
+        print_info(f"  amount_funded: {format_algo(fund_result.amount_funded)}")
+    else:
+        print_info("No funding needed - account already has sufficient balance")
+
+    # Check new balance
+    after_info = algorand.account.get_information(account_to_fund.addr)
+    print_info(f"New balance: {format_algo(after_info.amount)}")
+    print_info(f"Min balance: {format_algo(after_info.min_balance)}")
+    spendable_after = after_info.amount.micro_algo - after_info.min_balance.micro_algo
+    print_info(f"Spendable: {format_algo(spendable_after)}")
+
+    # Call again to show it's idempotent
+    fund_result2 = algorand.account.ensure_funded(
+        account_to_fund.addr,
+        dispenser.addr,
+        AlgoAmount.from_algo(5),
+    )
+
+    if not fund_result2:
+        print_info("")
+        print_info("Second call: No funding needed (idempotent)")
+
+    print_success("Demonstrated ensure_funded()")
+
+    # Step 10: Ensure funded from environment with algorand.account.ensure_funded_from_environment()
+    print_step(10, "Ensure funded from environment with algorand.account.ensure_funded_from_environment()")
+    print_info("ensure_funded_from_environment() uses the dispenser from environment variables")
+    print_info("On LocalNet: uses default LocalNet dispenser")
+    print_info("On other networks: uses DISPENSER_MNEMONIC env var")
+
+    # Create another account to fund
+    account_to_fund2 = algorand.account.random()
+
+    print_info("")
+    print_info(f"New account: {shorten_address(str(account_to_fund2.addr))}")
+
+    # Fund using environment dispenser
+    env_fund_result = algorand.account.ensure_funded_from_environment(
+        account_to_fund2.addr,
+        AlgoAmount.from_algo(2),  # Minimum spending balance
+        min_funding_increment=AlgoAmount.from_algo(5),  # But fund at least 5 ALGO when funding
+    )
+
+    if env_fund_result:
+        print_info("")
+        print_info("Funding from environment:")
+        print_info(f"  tx_id: {env_fund_result.transaction_id}")
+        print_info(f"  amount_funded: {format_algo(env_fund_result.amount_funded)}")
+        print_info("  Note: min_funding_increment(5) > min_spending_balance(2)")
+
+    after_info2 = algorand.account.get_information(account_to_fund2.addr)
+    print_info(f"Final balance: {format_algo(after_info2.amount)}")
+
+    print_success("Demonstrated ensure_funded_from_environment()")
+
+    # Step 11: Account properties summary
+    print_step(11, "Account properties summary")
+    print_info("All account types share common properties:")
+    print_info("")
+    print_info("addr:")
+    print_info("  - The address string for the account")
+    print_info("  - The 58-character string representation")
+    print_info("")
+    print_info("signer (TransactionSigner):")
+    print_info("  - Function that signs transaction groups")
+    print_info("  - Automatically used when sending transactions")
+    print_info("")
+    print_info("Different account types may have additional properties:")
+    print_info("  - MultisigAccount: metadata (multisig metadata)")
+    print_info("  - LogicSigAccount: underlying logic sig")
+    print_info("  - Rekeyed: underlying auth account")
+
+    # Demonstrate accessing properties
+    print_info("")
+    print_info("Example - Random account properties:")
+    print_info(f"  random_account.addr: {random_account.addr}")
+    print_info("  random_account.signer: [Function]")
+
+    print_info("")
+    print_info("Example - Multisig account properties:")
+    print_info(f"  multisig_account.addr: {shorten_address(str(multisig_account.addr))}")
+    print_info("  multisig_account metadata: { version: 1, threshold: 2, addrs: [...] }")
+
+    print_success("Account properties summary complete")
+
+    # Step 12: Summary
+    print_step(12, "Summary")
+    print_info("Account creation methods:")
+    print_info("")
+    print_info("random():")
+    print_info("  - Generates new random keypair")
+    print_info("  - Account is automatically tracked for signing")
+    print_info("  - Returns AddressAndSigner")
+    print_info("")
+    print_info("from_mnemonic(mnemonic, sender?):")
+    print_info("  - Imports from 25-word mnemonic")
+    print_info("  - Optional sender for rekeyed accounts")
+    print_info("  - Returns AddressAndSigner")
+    print_info("")
+    print_info("from_environment(name, fund_with?):")
+    print_info("  - LocalNet: creates/gets KMD wallet, auto-funds")
+    print_info("  - Other: loads {NAME}_MNEMONIC env var")
+    print_info("  - Returns AddressAndSigner")
+    print_info("")
+    print_info("from_kmd(wallet_name, predicate?, sender?):")
+    print_info("  - Gets account from KMD wallet by name")
+    print_info("  - Optional predicate to filter accounts")
+    print_info("  - Returns AddressAndSigner")
+    print_info("")
+    print_info("multisig(params, sub_signers):")
+    print_info("  - Creates multisig from sub-signers")
+    print_info("  - Returns AddressAndSigner")
+    print_info("")
+    print_info("logicsig(program, args?):")
+    print_info("  - Creates logic signature account")
+    print_info("  - Returns AddressAndSigner")
+    print_info("")
+    print_info("rekeyed(sender, auth_account):")
+    print_info("  - Creates rekeyed account reference")
+    print_info("  - Returns AddressAndSigner")
+    print_info("")
+    print_info("Account operations:")
+    print_info("")
+    print_info("get_information(address):")
+    print_info("  - Fetches account details from network")
+    print_info("  - Returns AccountInformation with balance, etc.")
+    print_info("")
+    print_info("ensure_funded(account_to_fund, dispenser, min_spending):")
+    print_info("  - Funds account to have min spending balance")
+    print_info("  - Idempotent - only funds if needed")
+    print_info("")
+    print_info("ensure_funded_from_environment(account_to_fund, min_spending):")
+    print_info("  - Same as ensure_funded but uses env dispenser")
+    print_info("  - LocalNet: default dispenser, Other: DISPENSER_MNEMONIC")
+
+    print_success("Account Manager example completed!")
+
+
+if __name__ == "__main__":
+    main()
+
+```
+
+---
+
+### Other examples in Algorand Client
+
+- [Client Instantiation](/docs/algokit-utils/python/latest/examples/algorand-client/01-client-instantiation/)
+- [AlgoAmount Utility](/docs/algokit-utils/python/latest/examples/algorand-client/02-algo-amount/)
+- [Signer Configuration](/docs/algokit-utils/python/latest/examples/algorand-client/03-signer-config/)
+- [Suggested Params Configuration](/docs/algokit-utils/python/latest/examples/algorand-client/04-params-config/)
+- **Account Manager**
+- [Send Payment](/docs/algokit-utils/python/latest/examples/algorand-client/06-send-payment/)
+- [Send Asset Operations](/docs/algokit-utils/python/latest/examples/algorand-client/07-send-asset-ops/)
+- [Send Application Operations](/docs/algokit-utils/python/latest/examples/algorand-client/08-send-app-ops/)
+- [Create Transaction (Unsigned Transactions)](/docs/algokit-utils/python/latest/examples/algorand-client/09-create-transaction/)
+- [Transaction Composer (Atomic Transaction Groups)](/docs/algokit-utils/python/latest/examples/algorand-client/10-transaction-composer/)
+- [Asset Manager](/docs/algokit-utils/python/latest/examples/algorand-client/11-asset-manager/)
+- [App Manager](/docs/algokit-utils/python/latest/examples/algorand-client/12-app-manager/)
+- [App Deployer](/docs/algokit-utils/python/latest/examples/algorand-client/13-app-deployer/)
+- [Client Manager](/docs/algokit-utils/python/latest/examples/algorand-client/14-client-manager/)
+- [Error Transformers](/docs/algokit-utils/python/latest/examples/algorand-client/15-error-transformers/)

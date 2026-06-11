@@ -1,8 +1,8 @@
 ---
-// @ts-expect-error unusual error
 import { logos } from 'virtual:starlight/user-images';
 import config from 'virtual:starlight/user-config';
 import AltDarkLogo from '../assets/images/portal-logo-dark-mode-alt.svg';
+import { getLibraryFromPath } from '../config/libraries';
 
 interface Props {
   isFooter?: boolean;
@@ -12,11 +12,35 @@ const { siteTitle, siteTitleHref } = Astro.locals.starlightRoute;
 
 const { isFooter } = Astro.props;
 const isHomepage = Astro.locals.starlightRoute.id === 'index.mdx';
+const currentPath = Astro.url.pathname;
+
+// Footer always shows the site logo, never a library logo
+const activeLibrary = !isFooter ? getLibraryFromPath(currentPath) : undefined;
+
+const libraryLogo = activeLibrary?.logo;
+
+// Site logo sources (library logo renders separately as inline SVG)
+const darkLogoSrc = isFooter ? AltDarkLogo.src : logos.dark?.src;
+const lightLogoSrc = isFooter ? logos.dark?.src : logos.light?.src;
+const darkWidth = logos.dark?.width;
+const darkHeight = logos.dark?.height;
+const lightWidth = isFooter ? logos.dark?.width : logos.light?.width;
+const lightHeight = isFooter ? logos.dark?.height : logos.light?.height;
+
+const logoHref = activeLibrary ? `/docs/${activeLibrary.slug}/` : siteTitleHref;
 ---
 
-<a href={siteTitleHref} class='site-title sl-flex'>
+<a href={logoHref} class='site-title sl-flex'>
   {
-    config.logo && logos.dark && (
+    /* Safe: libraryLogo is an SVG string from imports/configs/ loaded at build time */
+    libraryLogo ? (
+      <span
+        class='library-logo'
+        role='img'
+        aria-label={activeLibrary?.label}
+        set:html={libraryLogo}
+      />
+    ) : config.logo && logos.dark ? (
       <>
         <img
           class:list={{
@@ -24,11 +48,10 @@ const isHomepage = Astro.locals.starlightRoute.id === 'index.mdx';
             'h-full!': isHomepage,
           }}
           alt={`light theme ${config.logo.alt}`}
-          src={isFooter ? AltDarkLogo.src : logos.dark.src}
-          width={logos.dark.width}
-          height={logos.dark.height}
+          src={darkLogoSrc}
+          width={darkWidth}
+          height={darkHeight}
         />
-        {/* Show light alternate if a user configure both light and dark logos. */}
         {!('src' in config.logo) && (
           <img
             class:list={[
@@ -38,13 +61,13 @@ const isHomepage = Astro.locals.starlightRoute.id === 'index.mdx';
               },
             ]}
             alt={`dark theme ${config.logo.alt}`}
-            src={isFooter ? logos.dark.src : logos.light?.src}
-            width={isFooter ? logos.dark.width : logos.light?.width}
-            height={isFooter ? logos.dark.height : logos.light?.height}
+            src={lightLogoSrc}
+            width={lightWidth}
+            height={lightHeight}
           />
         )}
       </>
-    )
+    ) : null
   }
   <span class:list={{ 'sr-only': config.logo?.replacesTitle }} translate='no'>
     {siteTitle}
@@ -67,5 +90,16 @@ const isHomepage = Astro.locals.starlightRoute.id === 'index.mdx';
     max-width: 100%;
     object-fit: contain;
     object-position: 0 50%;
+  }
+  .library-logo {
+    display: flex;
+    align-items: center;
+    height: calc(var(--sl-nav-height) - 2 * var(--sl-nav-pad-y));
+    line-height: 0;
+    color: var(--sl-color-white);
+  }
+  .library-logo :global(svg) {
+    height: 100%;
+    width: auto;
   }
 </style>

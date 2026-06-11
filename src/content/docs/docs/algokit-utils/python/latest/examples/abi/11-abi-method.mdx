@@ -1,0 +1,385 @@
+---
+title: 'ABI Method'
+description: 'This example demonstrates how to work with ABI methods:'
+sidebar:
+  order: 11
+---
+
+[← Back to ABI Encoding](/docs/algokit-utils/python/latest/examples/abi/)
+
+## Description
+
+This example demonstrates how to work with ABI methods:
+
+- Parsing method signatures with Method.from_signature()
+- Accessing method name, args, and return type
+- Generating 4-byte method selectors with get_selector()
+- Understanding the relationship: selector = first 4 bytes of SHA-512/256(signature)
+  ABI method signatures follow the pattern: name(arg1Type,arg2Type,...)returnType Examples: 'transfer(address,uint64)uint64', 'hello(string)string'
+
+## Prerequisites
+
+No LocalNet required - pure ABI encoding/decoding
+
+## Run This Example
+
+From the repository's `examples` directory:
+
+```bash
+cd examples
+uv run python abi/11_abi_method.py
+```
+
+## Code
+
+[View source on GitHub](https://github.com/algorandfoundation/algokit-utils-py/blob/main/examples/abi/11_abi_method.py)
+
+```python title="11_abi_method.py"
+# ruff: noqa: N999, C901, PLR0912, PLR0915
+"""
+Example: ABI Method
+
+This example demonstrates how to work with ABI methods:
+- Parsing method signatures with Method.from_signature()
+- Accessing method name, args, and return type
+- Generating 4-byte method selectors with get_selector()
+- Understanding the relationship: selector = first 4 bytes of SHA-512/256(signature)
+
+ABI method signatures follow the pattern: name(arg1Type,arg2Type,...)returnType
+Examples: 'transfer(address,uint64)uint64', 'hello(string)string'
+
+No LocalNet required - pure ABI encoding/decoding
+"""
+
+import hashlib
+
+from shared import format_hex, print_header, print_info, print_step, print_success
+
+from algokit_abi.arc56 import Method, ReferenceType, TransactionType
+
+
+def main() -> None:
+    print_header("ABI Method Example")
+
+    # Step 1: Introduction to ABI Methods
+    print_step(1, "Introduction to ABI Methods")
+
+    print_info("ABI methods define the interface for smart contract functions.")
+    print_info("Method signatures follow the pattern: name(argTypes...)returnType")
+    print_info("")
+    print_info("Key components:")
+    print_info('  - name: The method name (e.g., "transfer")')
+    print_info("  - args: Sequence of argument types (e.g., [address, uint64])")
+    print_info("  - returns: The return type (e.g., uint64)")
+    print_info("  - selector: 4-byte identifier = SHA-512/256(signature)[0:4]")
+
+    # Step 2: Parse a basic method signature
+    print_step(2, "Parsing Method Signatures")
+
+    transfer_method = Method.from_signature("transfer(address,uint64)uint64")
+
+    print_info("Signature: transfer(address,uint64)uint64")
+    print_info(f"  name: {transfer_method.name}")
+    print_info(f"  args count: {len(transfer_method.args)}")
+
+    for i, arg in enumerate(transfer_method.args):
+        print_info(f"  args[{i}].type: {arg.type}")
+
+    print_info(f"  returns.type: {transfer_method.returns.type}")
+
+    # Step 3: Parse various method signatures
+    print_step(3, "Various Method Signatures")
+
+    hello_method = Method.from_signature("hello(string)string")
+    print_info("hello(string)string:")
+    print_info(f"  name: {hello_method.name}")
+    print_info(f"  args: [{', '.join(str(a.type) for a in hello_method.args)}]")
+    print_info(f"  returns: {hello_method.returns.type}")
+
+    add_method = Method.from_signature("add(uint64,uint64)uint64")
+    print_info("\nadd(uint64,uint64)uint64:")
+    print_info(f"  name: {add_method.name}")
+    print_info(f"  args: [{', '.join(str(a.type) for a in add_method.args)}]")
+    print_info(f"  returns: {add_method.returns.type}")
+
+    swap_method = Method.from_signature("swap(address,address,uint64,uint64)bool")
+    print_info("\nswap(address,address,uint64,uint64)bool:")
+    print_info(f"  name: {swap_method.name}")
+    print_info(f"  args: [{', '.join(str(a.type) for a in swap_method.args)}]")
+    print_info(f"  returns: {swap_method.returns.type}")
+
+    # Step 4: Method with no args
+    print_step(4, "Method with No Arguments")
+
+    get_method = Method.from_signature("get()uint64")
+
+    print_info("Signature: get()uint64")
+    print_info(f"  name: {get_method.name}")
+    print_info(f"  args count: {len(get_method.args)}")
+    print_info("  args: []")
+    print_info(f"  returns.type: {get_method.returns.type}")
+
+    get_counter_method = Method.from_signature("getCounter()uint256")
+
+    print_info("\nSignature: getCounter()uint256")
+    print_info(f"  name: {get_counter_method.name}")
+    print_info("  args: []")
+    print_info(f"  returns: {get_counter_method.returns.type}")
+
+    # Step 5: Method with void return
+    print_step(5, "Method with Void Return")
+
+    set_method = Method.from_signature("set(uint64)void")
+
+    print_info("Signature: set(uint64)void")
+    print_info(f"  name: {set_method.name}")
+    print_info(f"  args: [{', '.join(str(a.type) for a in set_method.args)}]")
+    print_info(f"  returns.type: {set_method.returns.type}")
+
+    initialize_method = Method.from_signature("initialize(address,string,uint64)void")
+
+    print_info("\nSignature: initialize(address,string,uint64)void")
+    print_info(f"  name: {initialize_method.name}")
+    print_info(f"  args: [{', '.join(str(a.type) for a in initialize_method.args)}]")
+    print_info(f"  returns: {initialize_method.returns.type}")
+
+    # Step 6: Method selectors
+    print_step(6, "Method Selectors (get_selector)")
+
+    print_info("The method selector is a 4-byte identifier used in ABI calls.")
+    print_info("It is computed as the first 4 bytes of SHA-512/256(signature).")
+    print_info("")
+
+    methods = [
+        Method.from_signature("transfer(address,uint64)uint64"),
+        Method.from_signature("hello(string)string"),
+        Method.from_signature("get()uint64"),
+        Method.from_signature("set(uint64)void"),
+    ]
+
+    for method in methods:
+        selector = method.get_selector()
+        print_info(f"{method.get_signature()}")
+        print_info(f"  selector: {format_hex(selector)}")
+
+    # Step 7: Demonstrate selector computation
+    print_step(7, "Selector Computation Deep Dive")
+
+    demo_method = Method.from_signature("transfer(address,uint64)uint64")
+    signature = demo_method.get_signature()
+
+    print_info(f"Signature: {signature}")
+    print_info("")
+    print_info("Computing selector:")
+    print_info("  1. Take the method signature string")
+    print_info("  2. Compute SHA-512/256 hash of the signature")
+    print_info("  3. Take the first 4 bytes as the selector")
+    print_info("")
+
+    # Compute the hash manually to show the relationship
+    hash_obj = hashlib.new("sha512_256")
+    hash_obj.update(signature.encode("utf-8"))
+    full_hash = hash_obj.digest()
+    first_4_bytes = full_hash[:4]
+
+    print_info(f'  SHA-512/256("{signature}"):')
+    print_info(f"    Full hash: {format_hex(full_hash)}")
+    print_info(f"    First 4 bytes: {format_hex(first_4_bytes)}")
+    print_info("")
+    print_info(f"  get_selector(): {format_hex(demo_method.get_selector())}")
+    print_info(f"  Match: {first_4_bytes == demo_method.get_selector()}")
+
+    # Step 8: Methods with tuple arguments
+    print_step(8, "Methods with Tuple Arguments")
+
+    tuple_arg_method = Method.from_signature("processOrder((uint64,address,uint64),bool)uint64")
+
+    print_info("Signature: processOrder((uint64,address,uint64),bool)uint64")
+    print_info(f"  name: {tuple_arg_method.name}")
+    print_info(f"  args count: {len(tuple_arg_method.args)}")
+    print_info(f"  args[0].type: {tuple_arg_method.args[0].type} (tuple)")
+    print_info(f"  args[1].type: {tuple_arg_method.args[1].type}")
+    print_info(f"  returns: {tuple_arg_method.returns.type}")
+    print_info(f"  selector: {format_hex(tuple_arg_method.get_selector())}")
+
+    nested_tuple_method = Method.from_signature("nested(((uint64,bool),string))void")
+
+    print_info("\nSignature: nested(((uint64,bool),string))void")
+    print_info(f"  name: {nested_tuple_method.name}")
+    print_info(f"  args[0].type: {nested_tuple_method.args[0].type}")
+    print_info(f"  returns: {nested_tuple_method.returns.type}")
+    print_info(f"  selector: {format_hex(nested_tuple_method.get_selector())}")
+
+    # Step 9: Methods with tuple returns
+    print_step(9, "Methods with Tuple Returns")
+
+    tuple_return_method = Method.from_signature("getInfo(address)(uint64,string,bool)")
+
+    print_info("Signature: getInfo(address)(uint64,string,bool)")
+    print_info(f"  name: {tuple_return_method.name}")
+    print_info(f"  args: [{', '.join(str(a.type) for a in tuple_return_method.args)}]")
+    print_info(f"  returns.type: {tuple_return_method.returns.type} (tuple)")
+    print_info(f"  selector: {format_hex(tuple_return_method.get_selector())}")
+
+    complex_return_method = Method.from_signature("swap(uint64,uint64)(uint64,uint64,address)")
+
+    print_info("\nSignature: swap(uint64,uint64)(uint64,uint64,address)")
+    print_info(f"  name: {complex_return_method.name}")
+    print_info(f"  args: [{', '.join(str(a.type) for a in complex_return_method.args)}]")
+    print_info(f"  returns: {complex_return_method.returns.type}")
+    print_info(f"  selector: {format_hex(complex_return_method.get_selector())}")
+
+    # Step 10: Methods with array arguments
+    print_step(10, "Methods with Array Arguments")
+
+    array_arg_method = Method.from_signature("batchTransfer(address[],uint64[])bool")
+
+    print_info("Signature: batchTransfer(address[],uint64[])bool")
+    print_info(f"  name: {array_arg_method.name}")
+    print_info(f"  args: [{', '.join(str(a.type) for a in array_arg_method.args)}]")
+    print_info(f"  returns: {array_arg_method.returns.type}")
+    print_info(f"  selector: {format_hex(array_arg_method.get_selector())}")
+
+    static_array_method = Method.from_signature("setVotes(uint64[5])void")
+
+    print_info("\nSignature: setVotes(uint64[5])void")
+    print_info(f"  name: {static_array_method.name}")
+    print_info(f"  args: [{', '.join(str(a.type) for a in static_array_method.args)}]")
+    print_info(f"  returns: {static_array_method.returns.type}")
+    print_info(f"  selector: {format_hex(static_array_method.get_selector())}")
+
+    # Step 11: get_signature() method
+    print_step(11, "Reconstructing Signature with get_signature()")
+
+    print_info("The get_signature() method returns the canonical signature string.")
+    print_info("")
+
+    test_methods = [
+        Method.from_signature("transfer(address,uint64)uint64"),
+        Method.from_signature("get()uint64"),
+        Method.from_signature("set(uint64)void"),
+        Method.from_signature("process((uint64,bool),string)void"),
+    ]
+
+    for method in test_methods:
+        print_info(f"  get_signature(): {method.get_signature()}")
+
+    # Step 12: Selector uniqueness
+    print_step(12, "Selector Uniqueness")
+
+    print_info("Each method signature produces a unique 4-byte selector.")
+    print_info("Different signatures = different selectors.")
+    print_info("")
+
+    different_methods = [
+        Method.from_signature("get()uint64"),
+        Method.from_signature("get()string"),
+        Method.from_signature("get(uint64)uint64"),
+        Method.from_signature("fetch()uint64"),
+    ]
+
+    print_info("Method                  | Selector")
+    print_info("------------------------|----------")
+
+    for method in different_methods:
+        sig = method.get_signature().ljust(22)
+        sel = format_hex(method.get_selector())
+        print_info(f"{sig}  | {sel}")
+
+    # Step 13: Methods with transaction and reference types
+    print_step(13, "Methods with Transaction and Reference Types")
+
+    print_info("ABI methods can also include transaction and reference types:")
+    print_info("")
+
+    # Transaction types
+    print_info("Transaction types (for group transaction arguments):")
+    for tx_type in TransactionType:
+        print_info(f"  {tx_type.name}: '{tx_type.value}'")
+
+    print_info("")
+
+    # Reference types
+    print_info("Reference types (for foreign references):")
+    for ref_type in ReferenceType:
+        print_info(f"  {ref_type.name}: '{ref_type.value}'")
+
+    print_info("")
+
+    # Parse a method with transaction type
+    swap_with_payment = Method.from_signature("swap(asset,asset,pay,uint64)uint64")
+    print_info("Method: swap(asset,asset,pay,uint64)uint64")
+    print_info(f"  name: {swap_with_payment.name}")
+    print_info(f"  args count: {len(swap_with_payment.args)}")
+
+    for i, arg in enumerate(swap_with_payment.args):
+        arg_type = arg.type
+        type_category = (
+            "transaction"
+            if isinstance(arg_type, TransactionType)
+            else ("reference" if isinstance(arg_type, ReferenceType) else "ABI")
+        )
+        print_info(f"  args[{i}]: {arg_type} ({type_category})")
+
+    print_info(f"  transaction arg count: {swap_with_payment.get_txn_calls()}")
+
+    # Step 14: Summary
+    print_step(14, "Summary")
+
+    print_info("Method provides tools for working with ABI method signatures:")
+    print_info("")
+    print_info("Parsing:")
+    print_info("  Method.from_signature(sig) - Parse a method signature string")
+    print_info("")
+    print_info("Properties:")
+    print_info("  method.name - Method name (string)")
+    print_info("  method.args - Sequence of argument descriptors")
+    print_info("  method.args[i].type - ABIType, TransactionType, or ReferenceType")
+    print_info("  method.returns.type - ABIType of return value (or 'void')")
+    print_info("  method.signature - Canonical signature string")
+    print_info("  method.selector - 4-byte selector (bytes)")
+    print_info("")
+    print_info("Methods:")
+    print_info("  get_signature() - Get canonical signature string")
+    print_info("  get_selector() - Get 4-byte selector (bytes)")
+    print_info("  get_txn_calls() - Count transaction-type arguments")
+    print_info("")
+    print_info("Selector computation:")
+    print_info("  selector = SHA-512/256(signature)[0:4]")
+    print_info("")
+    print_info("Supported signatures:")
+    print_info("  - Simple:     name(type1,type2)returnType")
+    print_info("  - No args:    name()returnType")
+    print_info("  - Void:       name(type1)void")
+    print_info("  - Tuples:     name((t1,t2),t3)(r1,r2)")
+    print_info("  - Arrays:     name(type[],type[N])type")
+    print_info("  - References: name(asset,account,application)type")
+    print_info("  - Transactions: name(txn,pay,axfer)type")
+
+    print_success("ABI Method example completed successfully!")
+
+
+if __name__ == "__main__":
+    main()
+
+```
+
+---
+
+### Other examples in ABI Encoding
+
+- [ABI Type Parsing](/docs/algokit-utils/python/latest/examples/abi/01-type-parsing/)
+- [ABI Primitive Types](/docs/algokit-utils/python/latest/examples/abi/02-primitive-types/)
+- [ABI Address Type](/docs/algokit-utils/python/latest/examples/abi/03-address-type/)
+- [ABI String Type](/docs/algokit-utils/python/latest/examples/abi/04-string-type/)
+- [ABI Static Array Type](/docs/algokit-utils/python/latest/examples/abi/05-static-array/)
+- [ABI Dynamic Array Type](/docs/algokit-utils/python/latest/examples/abi/06-dynamic-array/)
+- [ABI Tuple Type](/docs/algokit-utils/python/latest/examples/abi/07-tuple-type/)
+- [ABI Struct Type](/docs/algokit-utils/python/latest/examples/abi/08-struct-type/)
+- [ABI Struct and Tuple Conversion](/docs/algokit-utils/python/latest/examples/abi/09-struct-tuple-conversion/)
+- [ABI Bool Array Packing](/docs/algokit-utils/python/latest/examples/abi/10-bool-packing/)
+- **ABI Method**
+- [AVM Type Encoding](/docs/algokit-utils/python/latest/examples/abi/12-avm-types/)
+- [Type Guards](/docs/algokit-utils/python/latest/examples/abi/13-type-guards/)
+- [ABI Complex Nested Types](/docs/algokit-utils/python/latest/examples/abi/14-complex-nested/)
+- [ARC-56 Storage Helpers](/docs/algokit-utils/python/latest/examples/abi/15-arc56-storage/)

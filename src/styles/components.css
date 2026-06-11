@@ -1,0 +1,267 @@
+/* ==========================================================================
+   Component-Specific Styles
+
+   Styles for specific UI features. References --sl-* and --color-* tokens
+   defined in theme.css.
+   ========================================================================== */
+
+/* ---- Theme-conditional icon + card colors ---- */
+:root[data-theme='dark'] {
+  [data-icon] {
+    color: var(--color-icon-dark);
+  }
+  article.card {
+    background-color: var(--color-gray-800);
+  }
+}
+:root[data-theme='light'] {
+  [data-icon] {
+    color: var(--color-icon-light);
+  }
+  article.card {
+    background-color: #edf2ff;
+  }
+}
+
+/* ---- Sidebar ---- */
+ul.top-level li {
+  border-inline-start: none;
+}
+
+/* ---- Content panel layout ---- */
+:root .sl-container {
+  --sl-content-width: auto;
+  margin-inline: 0;
+}
+
+/* Center images and their captions */
+.content-panel figure img {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  border-radius: 6px;
+  background-color: var(--sl-color-gray-7, #f6f6f6);
+}
+
+.content-panel figure figcaption {
+  margin-top: 0.5em;
+  text-align: center;
+  font-style: italic;
+  color: var(--sl-color-gray-3);
+}
+
+/* ---- Panel borders (hidden) ---- */
+.sidebar-pane {
+  border: none;
+}
+.right-sidebar {
+  border: none;
+}
+.content-panel + .content-panel {
+  border: none;
+}
+header.header {
+  border: none;
+}
+
+/* ---- Homepage hero ---- */
+html:has(.homepage-hero)[data-theme='light'] {
+  --sl-color-bg: #ffffff;
+  --sl-color-bg-nav: #ffffff;
+}
+
+html:has(.homepage-hero)[data-theme='dark'] {
+  --sl-color-bg: var(--color-algo-navy);
+  --sl-color-bg-nav: var(--color-algo-navy);
+}
+
+html:has(.homepage-hero) {
+  main,
+  .content-panel {
+    padding: 0 !important;
+  }
+
+  header {
+    @apply pt-[14px]! pb-[6px]! md:pb-2! md:pt-4! h-auto!;
+
+    @media (width >= 48rem /* 768px */) {
+      .social-icons svg {
+        --sl-icon-size: 25px !important;
+      }
+    }
+  }
+
+  site-search button[data-open-modal] {
+    width: unset !important;
+    max-width: unset !important;
+    border: unset !important;
+    border-radius: unset !important;
+    display: block !important;
+    background-color: transparent !important;
+    padding: unset !important;
+
+    @apply text-algo-lavender-400! dark:text-algo-teal-700! text-[20px]! h-full! md:text-[25px]!;
+
+    .sl-hidden {
+      display: none !important;
+    }
+  }
+}
+
+/* ---- Table headers ---- */
+div.sl-container thead th {
+  border-bottom: solid 1px var(--sl-color-accent-medium);
+}
+
+/* ==========================================================================
+   AVM Opcode Filters
+   ========================================================================== */
+.op-filters {
+  display: flex;
+  gap: 0.75rem;
+  align-items: end;
+  flex-wrap: wrap;
+}
+
+.op-filters label > span {
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+  display: block;
+}
+
+.op-filters select,
+.op-filters button {
+  font: inherit;
+  color: inherit;
+  border-radius: 0.375rem;
+  border: 1px solid var(--sl-color-gray-4);
+  background-color: var(--sl-color-bg);
+  transition:
+    border-color 0.15s ease,
+    box-shadow 0.15s ease,
+    background-color 0.15s ease,
+    color 0.15s ease;
+}
+
+.op-filters select {
+  padding: 0.35rem 0.6rem;
+  min-width: 10rem;
+}
+
+.op-filters button {
+  padding: 0.15rem 0.8rem;
+  cursor: pointer;
+  background-color: var(--sl-color-accent-low);
+  border-color: var(--sl-color-accent-medium);
+  color: var(--sl-color-text-accent);
+}
+
+.op-filters select:hover {
+  border-color: var(--sl-color-accent-medium);
+}
+.op-filters button:hover {
+  background-color: var(--sl-color-accent);
+  color: var(--sl-color-black);
+}
+
+.op-filters select:focus,
+.op-filters button:focus {
+  outline: none;
+  border-color: var(--sl-color-accent);
+  box-shadow: 0 0 0 2px
+    color-mix(in oklab, var(--sl-color-accent) 55%, transparent);
+}
+
+.op-filters select:disabled,
+.op-filters button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+:root[data-theme='light'] .op-filters select,
+:root[data-theme='light'] .op-filters button {
+  border-color: var(--sl-color-gray-5);
+}
+
+.op-filters {
+  margin: 0 0 1rem;
+}
+
+/* ---- Opcode detail sections ---- */
+div.opcode-section p.starlight-aside__title {
+  display: none;
+}
+
+div.opcode-section {
+  border-bottom: solid 1px var(--sl-color-gray-4);
+  padding-bottom: 1rem;
+}
+
+div.opcode-section aside {
+  font-size: 0.8rem !important;
+}
+
+div.opcode-section table {
+  font-size: 0.8rem !important;
+}
+
+div.opcode-section table td {
+  padding: 0.1rem 0.5rem;
+}
+
+.opcode-detail-caption {
+  display: block;
+  font-weight: bold;
+  margin-top: 0.5rem;
+}
+
+/* ---- Library pages ---- */
+/* Hide Starlight's mobile sidebar toggle on library pages —
+   replaced by the HeaderMenu hamburger. Uses :has() so it's
+   reactive to View Transition DOM swaps without JS cleanup. */
+:root:has(.library-header) starlight-menu-button {
+  display: none !important;
+}
+
+/* ==========================================================================
+   View Transitions
+   ========================================================================== */
+
+@keyframes vtFadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes vtFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+::view-transition-old(root) {
+  animation: 75ms ease-out both vtFadeOut;
+}
+
+::view-transition-new(root) {
+  animation: 75ms ease-in both vtFadeIn;
+}
+
+/* Persisted chat panel should not animate during transitions */
+::view-transition-old(ai-chat-panel),
+::view-transition-new(ai-chat-panel) {
+  animation: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation: none !important;
+  }
+}

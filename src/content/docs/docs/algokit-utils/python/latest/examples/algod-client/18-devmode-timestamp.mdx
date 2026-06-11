@@ -1,0 +1,417 @@
+---
+title: 'DevMode Timestamp Offset'
+description: 'This example demonstrates how to manage block timestamp offset in DevMode using:'
+sidebar:
+  order: 18
+---
+
+[← Back to Algod Client](/docs/algokit-utils/python/latest/examples/algod-client/)
+
+## Description
+
+This example demonstrates how to manage block timestamp offset in DevMode using:
+
+- block_time_stamp_offset() - Get the current timestamp offset
+- set_block_time_stamp_offset(offset) - Set a new timestamp offset
+  In DevMode, you can control the timestamp of blocks by setting an offset. This is useful for testing time-dependent smart contracts without waiting for real time to pass.
+  Key concepts:
+- Timestamp offset is in seconds
+- Setting offset to 0 resets to using the real clock
+- New blocks will have timestamps = realTime + offset
+- These endpoints only work on DevMode nodes (LocalNet in dev mode)
+  Prerequisites:
+  Note: These endpoints return HTTP 404 if not running on a DevMode node.
+
+## Prerequisites
+
+- LocalNet running in dev mode (via `algokit localnet start`)
+
+## Run This Example
+
+From the repository's `examples` directory:
+
+```bash
+cd examples
+uv run python algod_client/18_devmode_timestamp.py
+```
+
+## Code
+
+[View source on GitHub](https://github.com/algorandfoundation/algokit-utils-py/blob/main/examples/algod_client/18_devmode_timestamp.py)
+
+```python title="18_devmode_timestamp.py"
+# ruff: noqa: N999, C901, PLR0912, PLR0915, PLR2004
+"""
+Example: DevMode Timestamp Offset
+
+This example demonstrates how to manage block timestamp offset in DevMode using:
+- block_time_stamp_offset() - Get the current timestamp offset
+- set_block_time_stamp_offset(offset) - Set a new timestamp offset
+
+In DevMode, you can control the timestamp of blocks by setting an offset.
+This is useful for testing time-dependent smart contracts without waiting
+for real time to pass.
+
+Key concepts:
+- Timestamp offset is in seconds
+- Setting offset to 0 resets to using the real clock
+- New blocks will have timestamps = realTime + offset
+- These endpoints only work on DevMode nodes (LocalNet in dev mode)
+
+Prerequisites:
+- LocalNet running in dev mode (via `algokit localnet start`)
+
+Note: These endpoints return HTTP 404 if not running on a DevMode node.
+"""
+
+import time
+from datetime import datetime, timezone
+
+from shared import (
+    create_algod_client,
+    create_algorand_client,
+    get_funded_account,
+    print_error,
+    print_header,
+    print_info,
+    print_step,
+    print_success,
+)
+
+from algokit_algod_client.models import BlockResponse, GetBlockTimeStampOffsetResponse
+from algokit_utils import AlgoAmount, PaymentParams
+
+
+def display_timestamp_offset(response: GetBlockTimeStampOffsetResponse) -> None:
+    """Display the timestamp offset information."""
+    print_info("  GetBlockTimeStampOffsetResponse:")
+    offset = response.offset
+    print_info(f"    offset: {offset} seconds")
+
+    if offset == 0:
+        print_info("    (Using real clock - no offset applied)")
+    elif offset > 0:
+        hours = offset // 3600
+        minutes = (offset % 3600) // 60
+        seconds = offset % 60
+        print_info(f"    ({hours}h {minutes}m {seconds}s in the future)")
+    else:
+        abs_offset = abs(offset)
+        hours = abs_offset // 3600
+        minutes = (abs_offset % 3600) // 60
+        seconds = abs_offset % 60
+        print_info(f"    ({hours}h {minutes}m {seconds}s in the past)")
+    print_info("")
+
+
+def main() -> None:
+    print_header("DevMode Timestamp Offset Example")
+
+    # Create clients
+    algod = create_algod_client()
+    algorand = create_algorand_client()
+
+    # Check if we're running on DevMode
+    print_step(1, "Checking if running on DevMode")
+
+    # On DevMode, block_time_stamp_offset() returns 404 when offset was never set.
+    # We detect DevMode by checking the error message - "block timestamp offset was never set"
+    # means DevMode is active but no offset is set (default behavior).
+    # A different 404 error means the node is not running DevMode.
+    is_devmode = False
+    offset_never_set = False
+
+    try:
+        algod.block_time_stamp_offset()
+        is_devmode = True
+        print_success("Running on DevMode - timestamp offset endpoints are available")
+    except Exception as e:
+        error_message = str(e)
+
+        # Check if this is the "never set" message - this means DevMode IS running
+        if "block timestamp offset was never set" in error_message:
+            is_devmode = True
+            offset_never_set = True
+            print_success("Running on DevMode - timestamp offset was never set (using real clock)")
+            print_info("The block_time_stamp_offset() endpoint returns 404 when offset was never set.")
+            print_info("Setting an offset to 0 will initialize it.")
+        elif "404" in error_message or "not found" in error_message.lower() or "Not Found" in error_message:
+            print_error("Not running on DevMode - timestamp offset endpoints are not available")
+            print_info("These endpoints only work on LocalNet in dev mode.")
+            print_info("Start LocalNet with: algokit localnet start")
+            print_info("")
+            print_header("Summary")
+            print_info("DevMode Timestamp Offset endpoints require a DevMode node.")
+            print_info("On non-DevMode nodes, these endpoints return HTTP 404.")
+            return
+        else:
+            raise
+    print_info("")
+
+    if not is_devmode:
+        return
+
+    # If offset was never set, initialize it by setting to 0
+    if offset_never_set:
+        print_info("Initializing timestamp offset by setting it to 0...")
+        algod.set_block_time_stamp_offset(0)
+        print_success("Timestamp offset initialized to 0")
+        print_info("")
+
+    # =========================================================================
+    # Step 2: Get the current timestamp offset
+    # =========================================================================
+    print_step(2, "Getting current timestamp offset")
+
+    initial_offset = algod.block_time_stamp_offset()
+    display_timestamp_offset(initial_offset)
+
+    # =========================================================================
+    # Step 3: Get a baseline block timestamp
+    # =========================================================================
+    print_step(3, "Getting baseline block timestamp")
+
+    # Get the current time for comparison
+    real_time_now = int(time.time())
+    print_info(f"Real time (system clock): {real_time_now}")
+    print_info(f"Real time (formatted): {datetime.fromtimestamp(real_time_now, tz=timezone.utc).isoformat()}")
+    print_info("")
+
+    # Trigger a new block to see the current block timestamp
+    # We use a self-payment (send to self) to trigger a block without minimum balance issues
+    sender = get_funded_account(algorand)
+
+    print_info("Submitting a transaction to trigger a new block...")
+    result1 = algorand.send.payment(
+        PaymentParams(
+            sender=str(sender.addr),
+            receiver=str(sender.addr),  # Self-payment to trigger block
+            amount=AlgoAmount.from_micro_algo(0),
+            note=b"baseline-block",
+        )
+    )
+
+    # Get the block to see its timestamp
+    confirmed_round1 = result1.confirmation.confirmed_round or 0
+    block1: BlockResponse = algod.block(confirmed_round1)
+    baseline_timestamp = block1.block.header.timestamp
+    print_success(f"Block {confirmed_round1} created")
+    print_info(f"Block timestamp: {baseline_timestamp}")
+    baseline_dt = datetime.fromtimestamp(baseline_timestamp, tz=timezone.utc).isoformat()
+    print_info(f"Block timestamp (formatted): {baseline_dt}")
+    print_info("")
+
+    # =========================================================================
+    # Step 4: Set a timestamp offset
+    # =========================================================================
+    print_step(4, "Setting a timestamp offset")
+
+    # Set offset to 1 hour (3600 seconds) in the future
+    one_hour_in_seconds = 3600
+    print_info(f"Setting timestamp offset to {one_hour_in_seconds} seconds (1 hour in the future)...")
+
+    try:
+        algod.set_block_time_stamp_offset(one_hour_in_seconds)
+        print_success(f"Timestamp offset set to {one_hour_in_seconds} seconds")
+    except Exception as e:
+        error_message = str(e)
+        print_error(f"Failed to set timestamp offset: {error_message}")
+        return
+    print_info("")
+
+    # Verify the offset was set
+    new_offset = algod.block_time_stamp_offset()
+    print_info("Verifying the offset was set:")
+    display_timestamp_offset(new_offset)
+
+    # =========================================================================
+    # Step 5: See how timestamp offset affects block timestamps
+    # =========================================================================
+    print_step(5, "Observing the effect on block timestamps")
+
+    print_info("Submitting another transaction to trigger a new block with the offset applied...")
+    result2 = algorand.send.payment(
+        PaymentParams(
+            sender=str(sender.addr),
+            receiver=str(sender.addr),  # Self-payment to trigger block
+            amount=AlgoAmount.from_micro_algo(0),
+            note=b"offset-block-1h",
+        )
+    )
+
+    # Get the new block's timestamp
+    confirmed_round2 = result2.confirmation.confirmed_round or 0
+    block2: BlockResponse = algod.block(confirmed_round2)
+    offset_timestamp = block2.block.header.timestamp
+    print_success(f"Block {confirmed_round2} created")
+    print_info("")
+
+    # Compare timestamps
+    print_info("Comparing block timestamps:")
+    print_info(f"  Baseline block (round {confirmed_round1}):")
+    print_info(f"    Timestamp: {baseline_timestamp}")
+    print_info(f"    Formatted: {datetime.fromtimestamp(baseline_timestamp, tz=timezone.utc).isoformat()}")
+    print_info("")
+    print_info(f"  Offset block (round {confirmed_round2}):")
+    print_info(f"    Timestamp: {offset_timestamp}")
+    print_info(f"    Formatted: {datetime.fromtimestamp(offset_timestamp, tz=timezone.utc).isoformat()}")
+    print_info("")
+
+    # Calculate actual difference
+    time_diff = offset_timestamp - baseline_timestamp
+    print_info(f"Time difference between blocks: {time_diff} seconds")
+    print_info(f"Expected offset: {one_hour_in_seconds} seconds")
+    print_info("")
+
+    # Note: The actual difference may not exactly match the offset due to real time passing
+    # between the two transactions, but it should be close to the offset value
+    if one_hour_in_seconds - 10 <= time_diff <= one_hour_in_seconds + 60:
+        print_success("Block timestamp reflects the offset (within expected margin)")
+    else:
+        print_info("Note: Actual time difference may vary due to real time elapsed between transactions")
+    print_info("")
+
+    # =========================================================================
+    # Step 6: Test with different offset values
+    # =========================================================================
+    print_step(6, "Testing different offset values")
+
+    # Try setting a larger offset (1 day = 86400 seconds)
+    one_day_in_seconds = 86400
+    print_info(f"Setting timestamp offset to {one_day_in_seconds} seconds (1 day in the future)...")
+    algod.set_block_time_stamp_offset(one_day_in_seconds)
+
+    day_offset = algod.block_time_stamp_offset()
+    print_success(f"Timestamp offset set to {day_offset.offset} seconds")
+    print_info("")
+
+    # Trigger another block
+    print_info("Creating a block with 1-day offset...")
+    result3 = algorand.send.payment(
+        PaymentParams(
+            sender=str(sender.addr),
+            receiver=str(sender.addr),  # Self-payment to trigger block
+            amount=AlgoAmount.from_micro_algo(0),
+            note=b"offset-block-1d",
+        )
+    )
+
+    confirmed_round3 = result3.confirmation.confirmed_round or 0
+    block3: BlockResponse = algod.block(confirmed_round3)
+    future_day_timestamp = block3.block.header.timestamp
+    future_datetime = datetime.fromtimestamp(future_day_timestamp, tz=timezone.utc).isoformat()
+    print_info(f"  Block {confirmed_round3} timestamp: {future_datetime}")
+    print_info("")
+
+    # =========================================================================
+    # Step 7: Reset the offset to 0
+    # =========================================================================
+    print_step(7, "Resetting the timestamp offset to 0")
+
+    print_info("Setting timestamp offset back to 0 (real clock)...")
+    algod.set_block_time_stamp_offset(0)
+
+    reset_offset = algod.block_time_stamp_offset()
+    print_success("Timestamp offset reset to 0")
+    display_timestamp_offset(reset_offset)
+
+    # Verify by creating another block
+    print_info("Creating a block with real clock timestamp...")
+    result4 = algorand.send.payment(
+        PaymentParams(
+            sender=str(sender.addr),
+            receiver=str(sender.addr),  # Self-payment to trigger block
+            amount=AlgoAmount.from_micro_algo(0),
+            note=b"reset-block",
+        )
+    )
+
+    confirmed_round4 = result4.confirmation.confirmed_round or 0
+    block4: BlockResponse = algod.block(confirmed_round4)
+    real_timestamp = block4.block.header.timestamp
+    current_real_time = int(time.time())
+    block4_datetime = datetime.fromtimestamp(real_timestamp, tz=timezone.utc).isoformat()
+    current_datetime = datetime.fromtimestamp(current_real_time, tz=timezone.utc).isoformat()
+    print_info(f"  Block {confirmed_round4} timestamp: {block4_datetime}")
+    print_info(f"  Current real time: {current_datetime}")
+
+    diff_from_real = abs(real_timestamp - current_real_time)
+    if diff_from_real < 60:
+        print_success("Block timestamp is back to real time (within 60 seconds)")
+    else:
+        print_info(f"Block timestamp differs from real time by {diff_from_real} seconds")
+    print_info("")
+
+    # =========================================================================
+    # Summary
+    # =========================================================================
+    print_header("Summary")
+
+    print_info("DevMode Timestamp Offset - Key Points:")
+    print_info("")
+    print_info("1. What It Does:")
+    print_info("   - Allows you to control block timestamps in DevMode")
+    print_info("   - Useful for testing time-dependent smart contracts")
+    print_info("   - New blocks will have timestamps = realTime + offset")
+    print_info("")
+    print_info("2. API Methods:")
+    print_info("   block_time_stamp_offset() -> GetBlockTimeStampOffsetResponse")
+    print_info("     - Returns dataclass with .offset attribute (int, seconds)")
+    print_info("")
+    print_info("   set_block_time_stamp_offset(offset: int) -> None")
+    print_info("     - Sets the timestamp offset in seconds")
+    print_info("     - offset = 0 resets to using real clock")
+    print_info("")
+    print_info("3. GetBlockTimeStampOffsetResponse:")
+    print_info("   @dataclass")
+    print_info("     offset: int  # Timestamp offset in seconds")
+    print_info("")
+    print_info("4. Use Cases:")
+    print_info("   - Testing time-locked smart contracts")
+    print_info("   - Simulating future block timestamps")
+    print_info("   - Testing vesting schedules")
+    print_info("   - Testing auction end times")
+    print_info("   - Any time-dependent logic verification")
+    print_info("")
+    print_info("5. Important Notes:")
+    print_info("   - Only works on DevMode nodes (LocalNet in dev mode)")
+    print_info("   - Returns HTTP 404 on non-DevMode nodes")
+    print_info("   - Offset is in seconds (not milliseconds)")
+    print_info("   - Always reset offset to 0 after testing")
+    print_info("   - The offset affects ALL new blocks until changed")
+    print_info("")
+    print_info("6. Best Practices:")
+    print_info("   - Always check if DevMode is available before using")
+    print_info("   - Reset offset to 0 in cleanup/finally blocks")
+    print_info("   - Document time-sensitive test assumptions")
+    print_info("   - Use try/finally to ensure cleanup happens")
+
+
+if __name__ == "__main__":
+    main()
+
+```
+
+---
+
+### Other examples in Algod Client
+
+- [Node Health and Status](/docs/algokit-utils/python/latest/examples/algod-client/01-node-health-status/)
+- [Version and Genesis Information](/docs/algokit-utils/python/latest/examples/algod-client/02-version-genesis/)
+- [Ledger Supply Information](/docs/algokit-utils/python/latest/examples/algod-client/03-ledger-supply/)
+- [Account Information](/docs/algokit-utils/python/latest/examples/algod-client/04-account-info/)
+- [Transaction Parameters](/docs/algokit-utils/python/latest/examples/algod-client/05-transaction-params/)
+- [Send and Confirm Transaction](/docs/algokit-utils/python/latest/examples/algod-client/06-send-transaction/)
+- [Pending Transactions](/docs/algokit-utils/python/latest/examples/algod-client/07-pending-transactions/)
+- [Block Data](/docs/algokit-utils/python/latest/examples/algod-client/08-block-data/)
+- [Asset Information](/docs/algokit-utils/python/latest/examples/algod-client/09-asset-info/)
+- [Application Information](/docs/algokit-utils/python/latest/examples/algod-client/10-application-info/)
+- [Application Boxes](/docs/algokit-utils/python/latest/examples/algod-client/11-application-boxes/)
+- [TEAL Compile and Disassemble](/docs/algokit-utils/python/latest/examples/algod-client/12-teal-compile/)
+- [Transaction Simulation](/docs/algokit-utils/python/latest/examples/algod-client/13-simulation/)
+- [Ledger State Deltas](/docs/algokit-utils/python/latest/examples/algod-client/14-state-deltas/)
+- [Transaction Proof](/docs/algokit-utils/python/latest/examples/algod-client/15-transaction-proof/)
+- [Light Block Header Proof](/docs/algokit-utils/python/latest/examples/algod-client/16-lightblock-proof/)
+- [State Proof](/docs/algokit-utils/python/latest/examples/algod-client/17-state-proof/)
+- **DevMode Timestamp Offset**
+- [Sync Round Management](/docs/algokit-utils/python/latest/examples/algod-client/19-sync-round/)

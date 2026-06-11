@@ -1,0 +1,162 @@
+---
+title: 'Testing'
+description: 'Testing utilities for mock server setup and Vitest integration.'
+sidebar:
+  label: 'Testing'
+  order: 0
+---
+
+[← Back to Examples Overview](/docs/algokit-utils/typescript/latest/examples/)
+
+Testing utilities for mock server setup and Vitest integration.
+
+## Examples (7)
+
+<table>
+  <thead>
+    <tr>
+      <th>Example</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <a href='01-configuration-constants/'>Configuration Constants</a>
+      </td>
+      <td>
+        <p>
+          This example demonstrates the configuration constants available in the used to configure
+          mock servers for testing Algorand client integrations.
+        </p>
+        <p>No mock server is required - this example just displays the constants.</p>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <a href='02-test-data-constants/'>Test Data Constants</a>
+      </td>
+      <td>
+        <p>
+          This example demonstrates the test data constants available in the the pre-recorded HAR
+          file responses used by the mock server.
+        </p>
+        <p>No mock server is required - this example just displays the constants.</p>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <a href='03-health-check/'>Health Check Utility</a>
+      </td>
+      <td>
+        <p>
+          This example demonstrates how to use checkServerHealth() to verify mock server
+          availability before running tests. The function checks if a server is reachable by
+          performing a health check request.
+        </p>
+        <p>
+          This example works whether or not mock servers are running - it just reports the status of
+          each server.
+        </p>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <a href='04-mock-server-connection/'>Mock Server Connection</a>
+      </td>
+      <td>
+        <p>
+          This example demonstrates how to use getMockServer() to connect to a mock server and
+          understand the MockServer interface. It shows:
+        </p>
+        <ul>
+          <li>The MockServer interface properties (baseUrl and clientType)</li>
+          <li>How getMockServer reads from environment variables</li>
+          <li>Proper error handling for missing env vars and unreachable servers</li>
+        </ul>
+        <p>
+          This example requires MOCK_ALGOD_URL environment variable and a running mock server for a
+          successful connection - otherwise it shows helpful error messages.
+        </p>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <a href='05-global-setup-factory/'>Vitest Global Setup Factory</a>
+      </td>
+      <td>
+        <p>
+          This example demonstrates how to use createGlobalSetup() to create custom Vitest global
+          setup functions for mock server lifecycle management. It shows:
+        </p>
+        <ul>
+          <li>The function signature: createGlobalSetup(clientType: ClientType)</li>
+          <li>Creating custom global setups for algod, indexer, and kmd</li>
+          <li>The returned async setup function and its teardown mechanism</li>
+          <li>Example vitest.config.ts usage with the globalSetup option</li>
+          <li>Environment variables for configuration and debugging</li>
+        </ul>
+        <p>
+          NOTE: This example documents the factory pattern without invoking the setup (no running
+          server needed). The setup functions are designed for use in vitest.config.ts, not direct
+          invocation.
+        </p>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <a href='06-prebuilt-global-setups/'>Pre-built Global Setups</a>
+      </td>
+      <td>
+        <p>
+          This example demonstrates the pre-built global setup functions available for common client
+          types and how to use them in Vitest configuration. It shows:
+        </p>
+        <ul>
+          <li>algodGlobalSetup, indexerGlobalSetup, and kmdGlobalSetup imports</li>
+          <li>How these are pre-configured setup functions ready to use</li>
+          <li>Example vitest.config.ts configurations for each setup</li>
+          <li>Example tests/globalSetup.ts files that re-export the setup</li>
+          <li>The difference between pre-built setups and createGlobalSetup()</li>
+        </ul>
+        <p>
+          NOTE: This example documents usage patterns without invoking setups (no running server
+          needed). The setup functions are designed for use in vitest.config.ts, not direct
+          invocation.
+        </p>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <a href='07-integration-example/'>Integration Example - Complete Test Setup</a>
+      </td>
+      <td>
+        <p>
+          This example demonstrates how all testing package components work together for a real test
+          scenario. It shows:
+        </p>
+        <ul>
+          <li>Importing all major exports from the testing package</li>
+          <li>Checking mock server availability with checkServerHealth()</li>
+          <li>Connecting to mock server using getMockServer()</li>
+          <li>Constructing client configuration using MockServer.baseUrl and DEFAULT_TOKEN</li>
+          <li>Displaying which test data constants can be used with the connected mock server</li>
+          <li>Helpful setup instructions when the server is unavailable</li>
+        </ul>
+        <p>
+          This example works with or without a running mock server, providing helpful guidance in
+          either case.
+        </p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+## Quick Start
+
+Run any example from the repository's `examples` directory:
+
+```bash
+cd examples
+npm run example testing/01-*.ts
+```

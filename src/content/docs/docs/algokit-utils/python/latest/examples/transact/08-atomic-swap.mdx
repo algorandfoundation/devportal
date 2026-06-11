@@ -1,0 +1,396 @@
+---
+title: 'Atomic Swap'
+description: 'This example demonstrates how to perform an atomic swap of ALGO for ASA between two parties. In an atomic swap:'
+sidebar:
+  order: 8
+---
+
+[← Back to Transactions](/docs/algokit-utils/python/latest/examples/transact/)
+
+## Description
+
+This example demonstrates how to perform an atomic swap of ALGO for ASA between two parties. In an atomic swap:
+
+- Party A sends ASA to Party B
+- Party B sends ALGO to Party A
+- Each party signs ONLY their own transaction
+- Signatures are combined and submitted together
+- Both transfers succeed or both fail (atomicity)
+  Key difference from regular atomic groups: different parties sign different transactions.
+  Prerequisites:
+
+## Prerequisites
+
+- LocalNet running (via `algokit localnet start`)
+
+## Run This Example
+
+From the repository's `examples` directory:
+
+```bash
+cd examples
+uv run python transact/08_atomic_swap.py
+```
+
+## Code
+
+[View source on GitHub](https://github.com/algorandfoundation/algokit-utils-py/blob/main/examples/transact/08_atomic_swap.py)
+
+```python title="08_atomic_swap.py"
+# ruff: noqa: N999, C901, PLR0912, PLR0915, PLR2004
+"""
+Example: Atomic Swap
+
+This example demonstrates how to perform an atomic swap of ALGO for ASA between two parties.
+In an atomic swap:
+- Party A sends ASA to Party B
+- Party B sends ALGO to Party A
+- Each party signs ONLY their own transaction
+- Signatures are combined and submitted together
+- Both transfers succeed or both fail (atomicity)
+
+Key difference from regular atomic groups: different parties sign different transactions.
+
+Prerequisites:
+- LocalNet running (via `algokit localnet start`)
+"""
+
+import base64
+
+from shared import (
+    create_algod_client,
+    format_algo,
+    get_account_balance,
+    print_error,
+    print_header,
+    print_info,
+    print_step,
+    print_success,
+    shorten_address,
+    wait_for_confirmation,
+)
+
+from algokit_transact import (
+    AssetConfigTransactionFields,
+    AssetTransferTransactionFields,
+    PaymentTransactionFields,
+    Transaction,
+    TransactionType,
+    assign_fee,
+    group_transactions,
+)
+from algokit_utils import AlgorandClient
+
+
+def main() -> None:
+    print_header("Atomic Swap Example (ALGO <-> ASA)")
+
+    # Step 1: Initialize clients
+    print_step(1, "Initialize Algod Client")
+    algod = create_algod_client()
+    algorand = AlgorandClient.default_localnet()
+
+    try:
+        algod.status()
+        print_info("Connected to LocalNet Algod")
+    except Exception as e:
+        print_error(f"Failed to connect to LocalNet: {e}")
+        print_info("Make sure LocalNet is running (e.g., algokit localnet start)")
+        return
+
+    # Step 2: Get Party A from KMD (asset owner)
+    print_step(2, "Setup Party A (Asset Owner)")
+    party_a = algorand.account.localnet_dispenser()
+    party_a_balance_before = get_account_balance(algorand, party_a.addr)
+    print_info(f"Party A address: {shorten_address(party_a.addr)}")
+    print_info(f"Party A ALGO balance: {format_algo(party_a_balance_before)}")
+
+    # Step 3: Generate and fund Party B
+    print_step(3, "Setup Party B (ALGO holder)")
+    party_b = algorand.account.random()
+
+    # Fund Party B with ALGO for the swap + fees
+    suggested_params = algod.suggested_params()
+    party_b_funding_amount = 10_000_000  # 10 ALGO (will use 5 ALGO for swap)
+
+    fund_b_tx_without_fee = Transaction(
+        transaction_type=TransactionType.Payment,
+        sender=party_a.addr,
+        first_valid=suggested_params.first_valid,
+        last_valid=suggested_params.last_valid,
+        genesis_hash=suggested_params.genesis_hash,
+        genesis_id=suggested_params.genesis_id,
+        payment=PaymentTransactionFields(
+            receiver=party_b.addr,
+            amount=party_b_funding_amount,
+        ),
+    )
+
+    fund_b_tx = assign_fee(
+        fund_b_tx_without_fee,
+        fee_per_byte=suggested_params.fee,
+        min_fee=suggested_params.min_fee,
+    )
+
+    signed_fund_b_tx = party_a.signer([fund_b_tx], [0])
+    algod.send_raw_transaction(signed_fund_b_tx[0])
+    wait_for_confirmation(algod, fund_b_tx.tx_id())
+
+    party_b_balance_before = get_account_balance(algorand, party_b.addr)
+    print_info(f"Party B address: {shorten_address(party_b.addr)}")
+    print_info(f"Party B ALGO balance: {format_algo(party_b_balance_before)}")
+
+    # Step 4: Party A creates an asset
+    print_step(4, "Party A Creates Asset")
+
+    asset_total = 1_000_000  # 1,000,000 units (no decimals for simplicity)
+    asset_decimals = 0
+    asset_name = "Swap Token"
+    asset_unit_name = "SWAP"
+
+    create_params = algod.suggested_params()
+
+    create_asset_tx_without_fee = Transaction(
+        transaction_type=TransactionType.AssetConfig,
+        sender=party_a.addr,
+        first_valid=create_params.first_valid,
+        last_valid=create_params.last_valid,
+        genesis_hash=create_params.genesis_hash,
+        genesis_id=create_params.genesis_id,
+        asset_config=AssetConfigTransactionFields(
+            asset_id=0,
+            total=asset_total,
+            decimals=asset_decimals,
+            default_frozen=False,
+            asset_name=asset_name,
+            unit_name=asset_unit_name,
+            url="https://example.com/swap-token",
+            manager=party_a.addr,
+            reserve=party_a.addr,
+            freeze=party_a.addr,
+            clawback=party_a.addr,
+        ),
+    )
+
+    create_asset_tx = assign_fee(
+        create_asset_tx_without_fee,
+        fee_per_byte=create_params.fee,
+        min_fee=create_params.min_fee,
+    )
+
+    signed_create_tx = party_a.signer([create_asset_tx], [0])
+    algod.send_raw_transaction(signed_create_tx[0])
+    create_pending_info = wait_for_confirmation(algod, create_asset_tx.tx_id())
+
+    asset_id = create_pending_info.asset_id
+    if not asset_id:
+        raise ValueError("Asset ID not found")
+
+    print_info(f"Created asset: {asset_name} ({asset_unit_name})")
+    print_info(f"Asset ID: {asset_id}")
+    print_info(f"Party A holds: {asset_total} {asset_unit_name}")
+
+    # Step 5: Party B opts into the asset
+    print_step(5, "Party B Opts Into Asset")
+
+    opt_in_params = algod.suggested_params()
+
+    opt_in_tx_without_fee = Transaction(
+        transaction_type=TransactionType.AssetTransfer,
+        sender=party_b.addr,
+        first_valid=opt_in_params.first_valid,
+        last_valid=opt_in_params.last_valid,
+        genesis_hash=opt_in_params.genesis_hash,
+        genesis_id=opt_in_params.genesis_id,
+        asset_transfer=AssetTransferTransactionFields(
+            asset_id=asset_id,
+            receiver=party_b.addr,
+            amount=0,
+        ),
+    )
+
+    opt_in_tx = assign_fee(
+        opt_in_tx_without_fee,
+        fee_per_byte=opt_in_params.fee,
+        min_fee=opt_in_params.min_fee,
+    )
+
+    signed_opt_in_tx = party_b.signer([opt_in_tx], [0])
+    algod.send_raw_transaction(signed_opt_in_tx[0])
+    wait_for_confirmation(algod, opt_in_tx.tx_id())
+
+    print_info(f"Party B opted into asset ID: {asset_id}")
+    print_success("Opt-in successful!")
+
+    # Step 6: Build the atomic swap transactions
+    print_step(6, "Build Atomic Swap Transactions")
+
+    swap_asset_amount = 100  # Party A sends 100 SWAP to Party B
+    swap_algo_amount = 5_000_000  # Party B sends 5 ALGO to Party A
+
+    print_info("Swap terms:")
+    print_info(f"  - Party A sends: {swap_asset_amount} {asset_unit_name} -> Party B")
+    print_info(f"  - Party B sends: {format_algo(swap_algo_amount)} -> Party A")
+
+    swap_params = algod.suggested_params()
+
+    # Transaction 1: Party A sends ASA to Party B
+    asa_send_tx_without_fee = Transaction(
+        transaction_type=TransactionType.AssetTransfer,
+        sender=party_a.addr,
+        first_valid=swap_params.first_valid,
+        last_valid=swap_params.last_valid,
+        genesis_hash=swap_params.genesis_hash,
+        genesis_id=swap_params.genesis_id,
+        asset_transfer=AssetTransferTransactionFields(
+            asset_id=asset_id,
+            receiver=party_b.addr,
+            amount=swap_asset_amount,
+        ),
+    )
+
+    asa_send_tx = assign_fee(
+        asa_send_tx_without_fee,
+        fee_per_byte=swap_params.fee,
+        min_fee=swap_params.min_fee,
+    )
+
+    # Transaction 2: Party B sends ALGO to Party A
+    algo_send_tx_without_fee = Transaction(
+        transaction_type=TransactionType.Payment,
+        sender=party_b.addr,
+        first_valid=swap_params.first_valid,
+        last_valid=swap_params.last_valid,
+        genesis_hash=swap_params.genesis_hash,
+        genesis_id=swap_params.genesis_id,
+        payment=PaymentTransactionFields(
+            receiver=party_a.addr,
+            amount=swap_algo_amount,
+        ),
+    )
+
+    algo_send_tx = assign_fee(
+        algo_send_tx_without_fee,
+        fee_per_byte=swap_params.fee,
+        min_fee=swap_params.min_fee,
+    )
+
+    print_info("Transaction 1: Party A sends ASA to Party B")
+    print_info("Transaction 2: Party B sends ALGO to Party A")
+
+    # Step 7: Group the transactions using group_transactions()
+    print_step(7, "Group Transactions with group_transactions()")
+
+    grouped_transactions = group_transactions([asa_send_tx, algo_send_tx])
+
+    group_id = grouped_transactions[0].group
+    group_id_b64 = base64.b64encode(group_id).decode() if group_id else "undefined"
+    print_info("Group ID assigned to both transactions")
+    print_info(f"Group ID (base64): {group_id_b64}")
+    print_success("Transactions grouped successfully!")
+
+    # Step 8: Each party signs ONLY their transaction
+    print_step(8, "Each Party Signs Their Own Transaction")
+
+    print_info("Party A signs transaction 0 (ASA transfer)")
+    signed_asa_tx = party_a.signer([grouped_transactions[0]], [0])
+
+    print_info("Party B signs transaction 1 (ALGO payment)")
+    signed_algo_tx = party_b.signer([grouped_transactions[1]], [0])
+
+    print_success("Both parties signed their respective transactions!")
+    print_info("Note: Party A cannot see/modify Party B's transaction and vice versa")
+    print_info("The atomic group ensures both execute or neither does")
+
+    # Step 9: Combine signatures and submit
+    print_step(9, "Combine Signatures and Submit Atomic Swap")
+
+    # Concatenate signed transactions in group order
+    combined_signed_txns = signed_asa_tx[0] + signed_algo_tx[0]
+
+    print_info("Submitting atomic swap to network...")
+    algod.send_raw_transaction(combined_signed_txns)
+
+    swap_tx_id = grouped_transactions[0].tx_id()
+    pending_info = wait_for_confirmation(algod, swap_tx_id)
+    print_info(f"Atomic swap confirmed in round: {pending_info.confirmed_round}")
+    print_success("Atomic swap executed successfully!")
+
+    # Step 10: Verify the swap results
+    print_step(10, "Verify Swap Results")
+
+    # Get Party A's balances after swap
+    party_a_balance_after = get_account_balance(algorand, party_a.addr)
+    party_a_asset_info = algod.account_asset_information(party_a.addr, asset_id)
+    party_a_asset_balance = party_a_asset_info.asset_holding.amount
+
+    # Get Party B's balances after swap
+    party_b_balance_after = get_account_balance(algorand, party_b.addr)
+    party_b_asset_info = algod.account_asset_information(party_b.addr, asset_id)
+    party_b_asset_balance = party_b_asset_info.asset_holding.amount
+
+    print_info("Party A (after swap):")
+    print_info(f"  - ALGO: {format_algo(party_a_balance_after)}")
+    remaining_a = asset_total - swap_asset_amount
+    print_info(f"  - {asset_unit_name}: {party_a_asset_balance} (sent {swap_asset_amount}, remaining: {remaining_a})")
+
+    print_info("Party B (after swap):")
+    print_info(f"  - ALGO: {format_algo(party_b_balance_after)}")
+    print_info(f"  - {asset_unit_name}: {party_b_asset_balance} (received {swap_asset_amount})")
+
+    # Verification
+    print_info("")
+    print_info("Verification:")
+
+    # Verify Party B received ASA
+    if party_b_asset_balance != swap_asset_amount:
+        raise ValueError(f"Party B ASA balance mismatch: expected {swap_asset_amount}, got {party_b_asset_balance}")
+    print_success(f"Party B received {swap_asset_amount} {asset_unit_name}")
+
+    # Verify Party A's ASA balance decreased
+    expected_party_a_asa_balance = asset_total - swap_asset_amount
+    if party_a_asset_balance != expected_party_a_asa_balance:
+        msg = f"Party A ASA balance mismatch: expected {expected_party_a_asa_balance}, got {party_a_asset_balance}"
+        raise ValueError(msg)
+    print_success(f"Party A ASA balance correctly reduced to {party_a_asset_balance} {asset_unit_name}")
+
+    # Verify Party B's ALGO balance decreased (sent 5 ALGO + fee)
+    party_b_algo_decrease = party_b_balance_before.micro_algo - party_b_balance_after.micro_algo
+    if party_b_algo_decrease < swap_algo_amount:
+        raise ValueError(f"Party B should have sent at least {swap_algo_amount} microALGO")
+    fees_paid = party_b_algo_decrease - swap_algo_amount
+    print_success(f"Party B sent {format_algo(swap_algo_amount)} (plus {format_algo(fees_paid)} in fees)")
+
+    print_info("")
+    print_info("Atomic Swap Summary:")
+    print_info(f"  - Party A gave: {swap_asset_amount} {asset_unit_name}")
+    print_info(f"  - Party A received: {format_algo(swap_algo_amount)}")
+    print_info(f"  - Party B gave: {format_algo(swap_algo_amount)}")
+    print_info(f"  - Party B received: {swap_asset_amount} {asset_unit_name}")
+
+    print_success("Atomic swap example completed successfully!")
+
+
+if __name__ == "__main__":
+    main()
+
+```
+
+---
+
+### Other examples in Transactions
+
+- [Payment Transaction](/docs/algokit-utils/python/latest/examples/transact/01-payment-transaction/)
+- [Payment with Close](/docs/algokit-utils/python/latest/examples/transact/02-payment-close/)
+- [Asset Create](/docs/algokit-utils/python/latest/examples/transact/03-asset-create/)
+- [Asset Transfer](/docs/algokit-utils/python/latest/examples/transact/04-asset-transfer/)
+- [Asset Freeze](/docs/algokit-utils/python/latest/examples/transact/05-asset-freeze/)
+- [Asset Clawback](/docs/algokit-utils/python/latest/examples/transact/06-asset-clawback/)
+- [Atomic Transaction Group](/docs/algokit-utils/python/latest/examples/transact/07-atomic-group/)
+- **Atomic Swap**
+- [Single Signature](/docs/algokit-utils/python/latest/examples/transact/09-single-sig/)
+- [Multisig](/docs/algokit-utils/python/latest/examples/transact/10-multisig/)
+- [Logic Signature](/docs/algokit-utils/python/latest/examples/transact/11-logic-sig/)
+- [Fee Calculation](/docs/algokit-utils/python/latest/examples/transact/12-fee-calculation/)
+- [Encoding/Decoding](/docs/algokit-utils/python/latest/examples/transact/13-encoding-decoding/)
+- [Application Call](/docs/algokit-utils/python/latest/examples/transact/14-app-call/)

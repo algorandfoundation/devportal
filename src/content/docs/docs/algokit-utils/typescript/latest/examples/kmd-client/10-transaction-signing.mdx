@@ -1,0 +1,361 @@
+---
+title: 'Transaction Signing with KMD'
+description: 'This example demonstrates how to sign transactions using the KMD `signTransaction()` method. It shows the complete workflow of creating a wallet, generating a key, funding it, signing a transaction, and submitting it to the network.'
+sidebar:
+  order: 10
+---
+
+[← Back to KMD Client](/docs/algokit-utils/typescript/latest/examples/kmd-client/)
+
+## Description
+
+This example demonstrates how to sign transactions using the KMD `signTransaction()` method. It shows the complete workflow of creating a wallet, generating a key, funding it, signing a transaction, and submitting it to the network.
+
+## Prerequisites
+
+- LocalNet running (via `algokit localnet start`)
+- Covered operations:
+- signTransaction() - Sign a transaction using a key from the wallet
+
+## Run This Example
+
+From the repository root:
+
+```bash
+cd examples
+npm run example kmd_client/10-transaction-signing.ts
+```
+
+## Code
+
+[View source on GitHub](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/examples/kmd_client/10-transaction-signing.ts)
+
+```typescript title="10-transaction-signing.ts"
+/**
+ * Example: Transaction Signing with KMD
+ *
+ * This example demonstrates how to sign transactions using the KMD
+ * `signTransaction()` method. It shows the complete workflow of creating
+ * a wallet, generating a key, funding it, signing a transaction, and
+ * submitting it to the network.
+ *
+ * Prerequisites:
+ * - LocalNet running (via `algokit localnet start`)
+ *
+ * Covered operations:
+ * - signTransaction() - Sign a transaction using a key from the wallet
+ */
+
+import { algo } from '@algorandfoundation/algokit-utils';
+import {
+  Transaction,
+  TransactionType,
+  assignFee,
+} from '@algorandfoundation/algokit-utils/transact';
+import {
+  cleanupTestWallet,
+  createAlgodClient,
+  createAlgorandClient,
+  createKmdClient,
+  createTestWallet,
+  printError,
+  printHeader,
+  printInfo,
+  printStep,
+  printSuccess,
+  shortenAddress,
+} from '../shared/utils.js';
+
+/**
+ * Format a byte array for display, showing first and last few bytes
+ */
+function formatBytesForDisplay(bytes: Uint8Array, showFirst = 8, showLast = 8): string {
+  const hex = Buffer.from(bytes).toString('hex');
+  if (bytes.length <= showFirst + showLast) {
+    return hex;
+  }
+  const firstBytes = hex.slice(0, showFirst * 2);
+  const lastBytes = hex.slice(-(showLast * 2));
+  return `${firstBytes}...${lastBytes}`;
+}
+
+/**
+ * Format microAlgos to a human-readable string
+ */
+function formatMicroAlgo(microAlgos: bigint): string {
+  const algoValue = Number(microAlgos) / 1_000_000;
+  return `${microAlgos.toLocaleString('en-US')} µALGO (${algoValue.toFixed(6)} ALGO)`;
+}
+
+async function main() {
+  printHeader('KMD Transaction Signing Example');
+
+  const kmd = createKmdClient();
+  const algod = createAlgodClient();
+  const algorand = createAlgorandClient();
+  let walletHandleToken = '';
+  const walletPassword = 'test-password';
+
+  try {
+    // =========================================================================
+    // Step 1: Create a Test Wallet
+    // =========================================================================
+    printStep(1, 'Creating a test wallet for transaction signing');
+
+    const testWallet = await createTestWallet(kmd, walletPassword);
+    walletHandleToken = testWallet.walletHandleToken;
+
+    printSuccess(`Test wallet created: ${testWallet.walletName}`);
+    printInfo(`Wallet ID: ${testWallet.walletId}`);
+
+    // =========================================================================
+    // Step 2: Generate a Key in the Wallet
+    // =========================================================================
+    printStep(2, 'Generating a key in the wallet');
+
+    const keyResult = await kmd.generateKey({
+      walletHandleToken,
+    });
+
+    const senderAddress = keyResult.address;
+    printSuccess(`Key generated: ${senderAddress}`);
+
+    // =========================================================================
+    // Step 3: Fund the Generated Key Using the Dispenser
+    // =========================================================================
+    printStep(3, 'Funding the generated key using the dispenser');
+
+    const dispenser = await algorand.account.dispenserFromEnvironment();
+    printInfo(`Dispenser address: ${shortenAddress(dispenser.addr.toString())}`);
+
+    // Fund the generated key with 1 ALGO
+    const fundAmount = algo(1); // 1 ALGO
+    await algorand.send.payment({
+      sender: dispenser.addr,
+      receiver: senderAddress,
+      amount: fundAmount,
+    });
+
+    // Verify funding
+    const accountInfo = await algod.accountInformation(senderAddress.toString());
+    printSuccess(`Account funded: ${formatMicroAlgo(accountInfo.amount)}`);
+
+    const fundAmountMicroAlgos = fundAmount.microAlgo;
+
+    // =========================================================================
+    // Step 4: Create a Payment Transaction
+    // =========================================================================
+    printStep(4, 'Creating a payment transaction using AlgorandClient suggestedParams');
+
+    // Get suggested transaction parameters from algod
+    const suggestedParams = await algod.suggestedParams();
+
+    printInfo('Suggested Parameters:');
+    printInfo(`  First Valid Round: ${suggestedParams.firstValid.toLocaleString('en-US')}`);
+    printInfo(`  Last Valid Round:  ${suggestedParams.lastValid.toLocaleString('en-US')}`);
+    printInfo(`  Genesis ID:        ${suggestedParams.genesisId}`);
+    printInfo(`  Min Fee:           ${formatMicroAlgo(suggestedParams.minFee)}`);
+    printInfo('');
+
+    // Create a receiver (we'll send a small amount back to the dispenser)
+    const receiverAddress = dispenser.addr;
+    const paymentAmount = 100_000n; // 0.1 ALGO
+
+    // Create the transaction using the Transaction class from algokit-transact
+    const transactionWithoutFee = new Transaction({
+      type: TransactionType.Payment,
+      sender: senderAddress,
+      firstValid: suggestedParams.firstValid,
+      lastValid: suggestedParams.lastValid,
+      genesisHash: suggestedParams.genesisHash,
+      genesisId: suggestedParams.genesisId,
+      payment: {
+        receiver: receiverAddress,
+        amount: paymentAmount,
+      },
+    });
+
+    // Assign the fee using suggested params
+    const transaction = assignFee(transactionWithoutFee, {
+      feePerByte: suggestedParams.fee,
+      minFee: suggestedParams.minFee,
+    });
+
+    const txId = transaction.txId();
+
+    printSuccess('Transaction created!');
+    printInfo('');
+    printInfo('Transaction Details:');
+    printInfo(`  Transaction ID:  ${txId}`);
+    printInfo(`  Sender:          ${shortenAddress(senderAddress.toString())}`);
+    printInfo(`  Receiver:        ${shortenAddress(receiverAddress.toString())}`);
+    printInfo(`  Amount:          ${formatMicroAlgo(paymentAmount)}`);
+    printInfo(`  Fee:             ${formatMicroAlgo(transaction.fee ?? 0n)}`);
+
+    // =========================================================================
+    // Step 5: Sign the Transaction Using signTransaction()
+    // =========================================================================
+    printStep(5, 'Signing the transaction with signTransaction()');
+
+    const signResult = await kmd.signTransaction({
+      walletHandleToken,
+      transaction,
+      walletPassword,
+    });
+
+    printSuccess('Transaction signed successfully!');
+    printInfo('');
+    printInfo('SignTransactionResponse fields:');
+    printInfo(`  signedTransaction: Uint8Array (${signResult.signedTransaction.length} bytes)`);
+    printInfo('');
+    printInfo('Signed transaction bytes (abbreviated):');
+    printInfo(`  ${formatBytesForDisplay(signResult.signedTransaction)}`);
+    printInfo('');
+    printInfo('The signTransaction() method:');
+    printInfo('  - Takes walletHandleToken, transaction, and walletPassword');
+    printInfo('  - Finds the private key matching the sender in the wallet');
+    printInfo('  - Signs the transaction and returns the signed bytes');
+
+    // =========================================================================
+    // Step 6: Submit the Signed Transaction to the Network
+    // =========================================================================
+    printStep(6, 'Submitting the signed transaction to the network using algod');
+
+    const submitResponse = await algod.sendRawTransaction(signResult.signedTransaction);
+
+    printSuccess('Transaction submitted!');
+    printInfo(`Transaction ID: ${submitResponse.txId}`);
+
+    // =========================================================================
+    // Step 7: Wait for Confirmation
+    // =========================================================================
+    printStep(7, 'Waiting for confirmation');
+
+    // On LocalNet in dev mode, transactions confirm immediately
+    // Poll for confirmation
+    let confirmedRound: bigint | undefined;
+    const maxWaitRounds = 10;
+    let currentRound = (await algod.status()).lastRound;
+
+    for (let i = 0; i < maxWaitRounds; i++) {
+      const pendingInfo = await algod.pendingTransactionInformation(txId);
+
+      if (pendingInfo.confirmedRound && pendingInfo.confirmedRound > 0n) {
+        confirmedRound = pendingInfo.confirmedRound;
+        break;
+      }
+
+      if (pendingInfo.poolError && pendingInfo.poolError.length > 0) {
+        throw new Error(`Transaction rejected: ${pendingInfo.poolError}`);
+      }
+
+      // Wait for next block
+      await algod.statusAfterBlock(currentRound);
+      currentRound++;
+    }
+
+    if (confirmedRound) {
+      printSuccess(`Transaction confirmed in round ${confirmedRound.toLocaleString('en-US')}`);
+    } else {
+      printError('Transaction not confirmed within expected rounds');
+    }
+
+    // =========================================================================
+    // Step 8: Verify the Transaction
+    // =========================================================================
+    printStep(8, 'Verifying the transaction was successful');
+
+    // Check sender's balance (should be reduced by payment + fee)
+    const senderInfo = await algod.accountInformation(senderAddress.toString());
+    printInfo(`Sender balance after:   ${formatMicroAlgo(senderInfo.amount)}`);
+
+    const expectedBalance =
+      fundAmountMicroAlgos - paymentAmount - (transaction.fee ?? suggestedParams.minFee);
+    printInfo(`Expected balance:       ~${formatMicroAlgo(expectedBalance)}`);
+    printInfo('');
+
+    if (senderInfo.amount <= fundAmountMicroAlgos - paymentAmount) {
+      printSuccess('Transaction verified! Balance reduced as expected.');
+    }
+
+    // =========================================================================
+    // Cleanup
+    // =========================================================================
+    printStep(9, 'Cleaning up test wallet');
+
+    await cleanupTestWallet(kmd, walletHandleToken);
+    walletHandleToken = ''; // Mark as cleaned up
+
+    printSuccess('Test wallet handle released');
+
+    // =========================================================================
+    // Summary
+    // =========================================================================
+    printHeader('Summary');
+    printInfo('This example demonstrated transaction signing with KMD:');
+    printInfo('');
+    printInfo('  signTransaction() - Sign a transaction using a wallet key');
+    printInfo('     Parameters:');
+    printInfo('       - walletHandleToken: The wallet session token');
+    printInfo('       - transaction: The Transaction object to sign');
+    printInfo('       - walletPassword: The wallet password for security');
+    printInfo('     Returns:');
+    printInfo('       - signedTransaction: Uint8Array of signed transaction bytes');
+    printInfo('');
+    printInfo('Complete workflow:');
+    printInfo('  1. Create/unlock a wallet and get walletHandleToken');
+    printInfo('  2. Generate a key in the wallet (or import one)');
+    printInfo('  3. Fund the key using the dispenser or another source');
+    printInfo('  4. Create a Transaction using suggested params from algod');
+    printInfo('  5. Sign with kmd.signTransaction()');
+    printInfo('  6. Submit with algod.sendRawTransaction()');
+    printInfo('  7. Wait for confirmation with pendingTransactionInformation()');
+    printInfo('');
+    printInfo('Key points:');
+    printInfo('  - The wallet password is required to sign transactions');
+    printInfo('  - The sender address in the transaction must match a key in the wallet');
+    printInfo('  - The signed transaction can be submitted to any algod node');
+    printInfo('  - KMD keeps private keys secure; only signed bytes are returned');
+    printInfo('');
+    printInfo('Note: The test wallet remains in KMD (wallets cannot be deleted via API).');
+  } catch (error) {
+    printError(`Error: ${error instanceof Error ? error.message : String(error)}`);
+    printInfo('');
+    printInfo('Troubleshooting:');
+    printInfo('  - Ensure LocalNet is running: algokit localnet start');
+    printInfo('  - If LocalNet issues occur: algokit localnet reset');
+    printInfo('  - Check that KMD is accessible on port 4002');
+    printInfo('  - Check that Algod is accessible on port 4001');
+
+    // Cleanup on error
+    if (walletHandleToken) {
+      await cleanupTestWallet(kmd, walletHandleToken);
+    }
+
+    process.exit(1);
+  }
+}
+
+main().catch(error => {
+  console.error('Fatal error:', error);
+  process.exit(1);
+});
+```
+
+---
+
+### Other examples in KMD Client
+
+- [KMD Version Information](/docs/algokit-utils/typescript/latest/examples/kmd-client/01-version/)
+- [Wallet Creation and Listing](/docs/algokit-utils/typescript/latest/examples/kmd-client/02-wallet-management/)
+- [Wallet Session Management](/docs/algokit-utils/typescript/latest/examples/kmd-client/03-wallet-sessions/)
+- [Key Generation](/docs/algokit-utils/typescript/latest/examples/kmd-client/04-key-generation/)
+- [Key Import and Export](/docs/algokit-utils/typescript/latest/examples/kmd-client/05-key-import-export/)
+- [Key Listing and Deletion](/docs/algokit-utils/typescript/latest/examples/kmd-client/06-key-listing-deletion/)
+- [Master Key Export](/docs/algokit-utils/typescript/latest/examples/kmd-client/07-master-key-export/)
+- [Multisig Account Setup](/docs/algokit-utils/typescript/latest/examples/kmd-client/08-multisig-setup/)
+- [Multisig Account Management](/docs/algokit-utils/typescript/latest/examples/kmd-client/09-multisig-management/)
+- **Transaction Signing with KMD**
+- [Multisig Transaction Signing with KMD](/docs/algokit-utils/typescript/latest/examples/kmd-client/11-multisig-signing/)
+- [Program Signing (Delegated Logic Signatures) with KMD](/docs/algokit-utils/typescript/latest/examples/kmd-client/12-program-signing/)
+- [Multisig Program Signing (Delegated Multisig Logic Signatures) with KMD](/docs/algokit-utils/typescript/latest/examples/kmd-client/13-multisig-program-signing/)
