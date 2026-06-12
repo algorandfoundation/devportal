@@ -16,7 +16,6 @@ import react from '@astrojs/react';
 import { buildAllLibrarySidebarEntries } from './imports/sidebar.js';
 import { LIBRARY_CONFIGS } from './imports/configs/index.js';
 
-
 const algodAPIDocsSidebarGroup = createOpenAPISidebarGroup();
 const indexerAPIDocsSidebarGroup = createOpenAPISidebarGroup();
 const kmdAPIDocsSidebarGroup = createOpenAPISidebarGroup();
@@ -79,10 +78,8 @@ export default defineConfig({
             // Unit-testing docs — references unimported sibling pages
             if (slug.startsWith('algokit/unit-testing/')) return true;
 
-
             // All imported library docs under src/content/docs/docs/
             if (slug.startsWith('docs/')) return true;
-
 
             // ARC standards — cross-references between ARC spec pages
             if (slug.startsWith('arc-standards/') && /^\.\/arc-\d+/.test(link)) return true;
@@ -408,9 +405,7 @@ export default defineConfig({
             {
               label: 'AlgoKit Utils',
               collapsed: true,
-              items: [
-                { slug: 'algokit/utils/algokit-clients' },
-              ],
+              items: [{ slug: 'algokit/utils/algokit-clients' }],
             },
             {
               label: 'Smart Contract Languages',
