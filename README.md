@@ -200,7 +200,6 @@ The following environment variables can be configured:
 | `IMPORT_GITHUB`                | Enable GitHub content import                     | `false`    |
 | `IMPORT_DRY_RUN`               | Preview imports without writing files            | `false`    |
 | `FORCE_IMPORT`                 | Force re-import, ignoring cache                  | `false`    |
-| `PUBLIC_KAPA_INTEGRATION_ID`   | [Kapa.ai](https://kapa.ai) integration ID for the AI chat panel | -          |
 | `OPENAI_API_KEY`               | OpenAI API key for the prose checker             | -          |
 | `PROSE_CHECK_ENABLED`          | Enable AI prose quality checking                 | `false`    |
 | `PROSE_CHECK_MODE`             | Prose checker mode (`warn` or `error`)           | `warn`     |

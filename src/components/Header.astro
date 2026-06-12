@@ -29,7 +29,7 @@ const activeLibrary = getLibraryFromPath(currentPath);
       </div>
       <div class='sl-flex ml-auto! gap-2 items-center'>
         {shouldRenderSearch && <Search {...Astro.props} />}
-        <AIChatTrigger client:idle />
+        <AIChatTrigger />
       </div>
       <div class='sl-flex right-group gap-x-7! ml-7!'>
         <div class='sl-flex social-icons text-algo-lavender-400 dark:text-algo-teal-700'>
@@ -51,7 +51,7 @@ const activeLibrary = getLibraryFromPath(currentPath);
       </div>
       <div class='sl-flex print:hidden items-center gap-2'>
         {shouldRenderSearch && <Search {...Astro.props} />}
-        <AIChatTrigger client:idle />
+        <AIChatTrigger />
       </div>
       <div class='sl-hidden md:sl-flex print:hidden right-group'>
         <div class='sl-flex social-icons'>
@@ -68,7 +68,7 @@ const activeLibrary = getLibraryFromPath(currentPath);
       </div>
       <div class='sl-flex gap-2 items-center'>
         {shouldRenderSearch && <Search {...Astro.props} />}
-        <AIChatTrigger client:idle />
+        <AIChatTrigger />
       </div>
       <div class='sl-hidden md:sl-flex print:hidden right-group'>
         <div class='sl-flex social-icons'>

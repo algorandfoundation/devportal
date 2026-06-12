@@ -1,10 +1,15 @@
 ---
 import { ClientRouter } from 'astro:transitions';
 import Default from '@astrojs/starlight/components/ThemeProvider.astro';
-import AIChatPanel from './AIChatPanel.tsx';
 ---
 
 <ClientRouter />
+
+<script>
+  import { initKapaAskAi } from '../lib/kapaWidget';
+
+  initKapaAskAi();
+</script>
 
 <script is:inline>
   if (
@@ -47,7 +52,3 @@ import AIChatPanel from './AIChatPanel.tsx';
 </script>
 
 <Default {...Astro.props}><slot /></Default>
-
-<div transition:persist='ai-chat-panel'>
-  <AIChatPanel client:only='react' />
-</div>

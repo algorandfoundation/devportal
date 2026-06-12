@@ -170,10 +170,15 @@ export default defineConfig({
         },
         {
           tag: 'script',
+          content: `(function(){let k=window.Kapa;if(!k){let i=function(){i.c(arguments);};i.q=[];i.c=function(args){i.q.push(args);};window.Kapa=i;}})();`,
+        },
+        {
+          tag: 'script',
           attrs: {
             src: 'https://widget.kapa.ai/kapa-widget.bundle.js',
             defer: true,
             'data-website-id': '6e799942-b20a-4203-8103-93582a2611e1',
+            'data-button-hide': 'true',
             'data-project-name': 'Algorand',
             'data-color-scheme-selector': "[data-theme='dark']",
             'data-project-color': '#99A1A7',
