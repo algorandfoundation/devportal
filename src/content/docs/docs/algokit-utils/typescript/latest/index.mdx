@@ -1,0 +1,53 @@
+---
+title: AlgoKit Utils TypeScript
+description: A set of core Algorand utilities that make it easier to build solutions on Algorand
+---
+
+import { Card, CardGrid, Code, Tabs, TabItem } from '@astrojs/starlight/components';
+
+## Installation
+
+<Tabs>
+  <TabItem label='npm'>```bash npm install @algorandfoundation/algokit-utils ```</TabItem>
+  <TabItem label='pnpm'>```bash pnpm add @algorandfoundation/algokit-utils ```</TabItem>
+  <TabItem label='yarn'>```bash yarn add @algorandfoundation/algokit-utils ```</TabItem>
+</Tabs>
+
+## Quick Example
+
+```typescript
+import { AlgorandClient } from '@algorandfoundation/algokit-utils';
+
+// Connect to LocalNet
+const algorand = AlgorandClient.fromEnvironment();
+
+// Create and fund a test account
+const account = algorand.account.random();
+await algorand.account.ensureFunded(account, algorand.account.localNetDispenser(), (10).algo());
+
+// Send a payment
+const result = await algorand.send.payment({
+  sender: account.addr,
+  receiver: 'RECEIVERADDRESS',
+  amount: (1).algo(),
+});
+
+console.log('Transaction ID:', result.txIds[0]);
+```
+
+## Features
+
+<CardGrid>
+  <Card title='AlgorandClient' icon='rocket'>
+    The main entry point for interacting with Algorand networks.
+  </Card>
+  <Card title='Transaction Composer' icon='puzzle'>
+    Build and send atomic transaction groups with ease.
+  </Card>
+  <Card title='App Client' icon='document'>
+    Deploy and interact with smart contracts.
+  </Card>
+  <Card title='Testing Utilities' icon='approve-check'>
+    Comprehensive testing support for LocalNet.
+  </Card>
+</CardGrid>

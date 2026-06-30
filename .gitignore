@@ -11,6 +11,7 @@ dist/
 
 # dependencies
 node_modules/
+.pnpm-store/
 
 # logs
 npm-debug.log*
@@ -31,7 +32,3 @@ pnpm-debug.log*
 # D2 Build directory
 public/d2/
 src/assets/diagrams/svg/
-
-# Lychee link checker cache
-.lycheecache
-lychee-report.md

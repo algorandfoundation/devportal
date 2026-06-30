@@ -1,0 +1,578 @@
+---
+title: 'App Deployer'
+description: 'This example demonstrates the AppDeployer functionality for idempotent application deployment with create, update, and replace strategies:'
+sidebar:
+  order: 13
+---
+
+[← Back to Algorand Client](/docs/algokit-utils/python/latest/examples/algorand-client/)
+
+## Description
+
+This example demonstrates the AppDeployer functionality for idempotent application deployment with create, update, and replace strategies:
+
+- algorand.app_deployer.deploy() for initial deployment
+- Deploy parameters: name, version, approval_program, clear_program, schema, on_update, on_schema_break
+- Idempotency: calling deploy() again with same version does nothing
+- on_update: 'update' to update existing app when version changes
+- on_update: 'replace' to delete and recreate app when version changes
+- on_update: 'fail' to fail if app already exists with different code
+- on_schema_break: 'replace' when schema changes require new app
+- Deployment metadata stored in app global state
+- App name used for idempotent lookups
+
+## Prerequisites
+
+LocalNet required for app deployment
+
+## Run This Example
+
+From the repository's `examples` directory:
+
+```bash
+cd examples
+uv run python algorand_client/13_app_deployer.py
+```
+
+## Code
+
+[View source on GitHub](https://github.com/algorandfoundation/algokit-utils-py/blob/main/examples/algorand_client/13_app_deployer.py)
+
+```python title="13_app_deployer.py"
+# ruff: noqa: N999, C901, PLR0912, PLR0915, PLR2004
+"""
+Example: App Deployer
+
+This example demonstrates the AppDeployer functionality for idempotent
+application deployment with create, update, and replace strategies:
+- algorand.app_deployer.deploy() for initial deployment
+- Deploy parameters: name, version, approval_program, clear_program, schema, on_update, on_schema_break
+- Idempotency: calling deploy() again with same version does nothing
+- on_update: 'update' to update existing app when version changes
+- on_update: 'replace' to delete and recreate app when version changes
+- on_update: 'fail' to fail if app already exists with different code
+- on_schema_break: 'replace' when schema changes require new app
+- Deployment metadata stored in app global state
+- App name used for idempotent lookups
+
+LocalNet required for app deployment
+"""
+
+from shared import (
+    load_teal_source,
+    print_error,
+    print_header,
+    print_info,
+    print_step,
+    print_success,
+    shorten_address,
+)
+
+from algokit_utils import (
+    AlgoAmount,
+    AlgorandClient,
+    AppCreateParams,
+    AppDeleteParams,
+    AppDeploymentMetaData,
+    AppDeployParams,
+    AppUpdateParams,
+    OperationPerformed,
+)
+
+# ============================================================================
+# TEAL Programs - Versioned Application (loaded from shared artifacts)
+# ============================================================================
+
+
+def get_versioned_approval_program(version: int) -> str:
+    """
+    Generate a versioned approval program that supports updates and deletes.
+    Uses TMPL_UPDATABLE and TMPL_DELETABLE for deploy-time control.
+    The version parameter changes the bytecode to simulate code updates.
+    """
+    return load_teal_source("teal-template-versioned.teal").replace("TMPL_VERSION", str(version))
+
+
+# Clear state program (always approves)
+CLEAR_STATE_PROGRAM = load_teal_source("clear-state-approve.teal")
+
+
+def main() -> None:
+    print_header("App Deployer Example")
+
+    # Initialize client and verify LocalNet is running
+    algorand = AlgorandClient.default_localnet()
+
+    try:
+        algorand.client.algod.status()
+        print_success("Connected to LocalNet")
+    except Exception as e:
+        print_error(f"Failed to connect to LocalNet: {e}")
+        print_info("Make sure LocalNet is running (e.g., algokit localnet start)")
+        return
+
+    # Step 1: Create and fund test accounts
+    print_step(1, "Create and fund test accounts")
+    print_info("Creating account for app deployment demonstrations")
+
+    deployer = algorand.account.random()
+
+    print_info("")
+    print_info("Created account:")
+    print_info(f"  Deployer: {shorten_address(str(deployer.addr))}")
+
+    # Fund account generously for multiple deployments
+    algorand.account.ensure_funded_from_environment(deployer.addr, AlgoAmount.from_algo(50))
+
+    print_success("Created and funded test account")
+
+    # Step 2: Initial deployment with app_deployer.deploy()
+    print_step(2, "Initial deployment with algorand.app_deployer.deploy()")
+    print_info("Deploying a versioned application for the first time")
+
+    app_name = "MyVersionedApp"
+
+    result1 = algorand.app_deployer.deploy(
+        AppDeployParams(
+            metadata=AppDeploymentMetaData(
+                name=app_name,
+                version="1.0.0",
+                updatable=True,  # Allow updates via TMPL_UPDATABLE
+                deletable=True,  # Allow deletion via TMPL_DELETABLE
+            ),
+            create_params=AppCreateParams(
+                sender=deployer.addr,
+                approval_program=get_versioned_approval_program(1),
+                clear_state_program=CLEAR_STATE_PROGRAM,
+                schema={
+                    "global_ints": 2,  # version, counter
+                    "global_byte_slices": 0,
+                    "local_ints": 0,
+                    "local_byte_slices": 0,
+                },
+            ),
+            update_params=AppUpdateParams(
+                sender=deployer.addr,
+                app_id=0,
+                approval_program="",
+                clear_state_program="",
+            ),
+            delete_params=AppDeleteParams(
+                sender=deployer.addr,
+                app_id=0,
+            ),
+        )
+    )
+
+    print_info("")
+    print_info("Deployment result:")
+    print_info(f"  Operation performed: {result1.operation_performed}")
+    print_info(f"  App ID: {result1.app.app_id}")
+    print_info(f"  App Address: {shorten_address(str(result1.app.app_address))}")
+    print_info(f"  App Name: {result1.app.name}")
+    print_info(f"  Version: {result1.app.version}")
+    print_info(f"  Updatable: {result1.app.updatable}")
+    print_info(f"  Deletable: {result1.app.deletable}")
+    if result1.create_result and result1.create_result.tx_ids:
+        print_info(f"  Transaction ID: {result1.create_result.tx_ids[0]}")
+
+    print_success("Initial deployment completed (operation: create)")
+
+    # Step 3: Demonstrate idempotency - same version does nothing
+    print_step(3, "Demonstrate idempotency - deploy same version again")
+    print_info("Calling deploy() again with the same version should do nothing")
+
+    result2 = algorand.app_deployer.deploy(
+        AppDeployParams(
+            metadata=AppDeploymentMetaData(
+                name=app_name,
+                version="1.0.0",  # Same version
+                updatable=True,
+                deletable=True,
+            ),
+            create_params=AppCreateParams(
+                sender=deployer.addr,
+                approval_program=get_versioned_approval_program(1),  # Same code
+                clear_state_program=CLEAR_STATE_PROGRAM,
+                schema={
+                    "global_ints": 2,
+                    "global_byte_slices": 0,
+                    "local_ints": 0,
+                    "local_byte_slices": 0,
+                },
+            ),
+            update_params=AppUpdateParams(
+                sender=deployer.addr,
+                app_id=0,
+                approval_program="",
+                clear_state_program="",
+            ),
+            delete_params=AppDeleteParams(
+                sender=deployer.addr,
+                app_id=0,
+            ),
+        )
+    )
+
+    print_info("")
+    print_info("Idempotent deployment result:")
+    print_info(f"  Operation performed: {result2.operation_performed}")
+    print_info(f"  App ID: {result2.app.app_id} (same as before)")
+    print_info(f"  Version: {result2.app.version}")
+    if result2.operation_performed == OperationPerformed.Nothing:
+        print_info("  Note: No transaction was sent - app is unchanged")
+
+    print_success("Idempotency verified - no action taken for same version")
+
+    # Step 4: Demonstrate on_update: 'update'
+    print_step(4, "Demonstrate on_update: 'update' - update existing app")
+    print_info('Deploying version 2.0.0 with on_update="update" to update the existing app')
+
+    result3 = algorand.app_deployer.deploy(
+        AppDeployParams(
+            metadata=AppDeploymentMetaData(
+                name=app_name,
+                version="2.0.0",  # New version
+                updatable=True,
+                deletable=True,
+            ),
+            create_params=AppCreateParams(
+                sender=deployer.addr,
+                approval_program=get_versioned_approval_program(2),  # Updated code
+                clear_state_program=CLEAR_STATE_PROGRAM,
+                schema={
+                    "global_ints": 2,
+                    "global_byte_slices": 0,
+                    "local_ints": 0,
+                    "local_byte_slices": 0,
+                },
+            ),
+            update_params=AppUpdateParams(
+                sender=deployer.addr,
+                app_id=0,
+                approval_program="",
+                clear_state_program="",
+            ),
+            delete_params=AppDeleteParams(
+                sender=deployer.addr,
+                app_id=0,
+            ),
+            on_update="update",  # Update the existing app
+        )
+    )
+
+    print_info("")
+    print_info("Update deployment result:")
+    print_info(f"  Operation performed: {result3.operation_performed}")
+    print_info(f"  App ID: {result3.app.app_id} (same app, updated in place)")
+    print_info(f"  Version: {result3.app.version}")
+    print_info(f"  Created round: {result3.app.created_round}")
+    print_info(f"  Updated round: {result3.app.updated_round}")
+    if result3.update_result and result3.update_result.tx_ids:
+        print_info(f"  Transaction ID: {result3.update_result.tx_ids[0]}")
+
+    # Verify the global state was preserved but version updated
+    global_state = algorand.app.get_global_state(result3.app.app_id)
+    print_info("")
+    print_info("Global state after update:")
+    version_entry = global_state.get("version")
+    version_value = version_entry.value if version_entry else "N/A"
+    counter_entry = global_state.get("counter")
+    counter_value = counter_entry.value if counter_entry else "N/A"
+    print_info(f"  version: {version_value} (from TEAL)")
+    print_info(f"  counter: {counter_value} (preserved)")
+
+    print_success("App updated in place with new code")
+
+    # Step 5: Demonstrate on_update: 'fail'
+    print_step(5, "Demonstrate on_update: 'fail' - fails if update detected")
+    print_info('Trying to deploy version 3.0.0 with on_update="fail" should throw an error')
+
+    try:
+        algorand.app_deployer.deploy(
+            AppDeployParams(
+                metadata=AppDeploymentMetaData(
+                    name=app_name,
+                    version="3.0.0",  # New version
+                    updatable=True,
+                    deletable=True,
+                ),
+                create_params=AppCreateParams(
+                    sender=deployer.addr,
+                    approval_program=get_versioned_approval_program(3),
+                    clear_state_program=CLEAR_STATE_PROGRAM,
+                    schema={
+                        "global_ints": 2,
+                        "global_byte_slices": 0,
+                        "local_ints": 0,
+                        "local_byte_slices": 0,
+                    },
+                ),
+                update_params=AppUpdateParams(
+                    sender=deployer.addr,
+                    app_id=0,
+                    approval_program="",
+                    clear_state_program="",
+                ),
+                delete_params=AppDeleteParams(
+                    sender=deployer.addr,
+                    app_id=0,
+                ),
+                on_update="fail",  # Fail if update detected
+            )
+        )
+        print_error("Expected an error but deployment succeeded")
+    except Exception as e:
+        print_info("")
+        print_info("Expected error caught:")
+        print_info(f"  {e}")
+        print_success('on_update="fail" correctly prevents updates')
+
+    # Step 6: Demonstrate on_update: 'replace'
+    print_step(6, "Demonstrate on_update: 'replace' - delete and recreate app")
+    print_info('Deploying version 3.0.0 with on_update="replace" deletes old app and creates new one')
+
+    old_app_id = result3.app.app_id
+
+    result4 = algorand.app_deployer.deploy(
+        AppDeployParams(
+            metadata=AppDeploymentMetaData(
+                name=app_name,
+                version="3.0.0",
+                updatable=True,
+                deletable=True,
+            ),
+            create_params=AppCreateParams(
+                sender=deployer.addr,
+                approval_program=get_versioned_approval_program(3),
+                clear_state_program=CLEAR_STATE_PROGRAM,
+                schema={
+                    "global_ints": 2,
+                    "global_byte_slices": 0,
+                    "local_ints": 0,
+                    "local_byte_slices": 0,
+                },
+            ),
+            update_params=AppUpdateParams(
+                sender=deployer.addr,
+                app_id=0,
+                approval_program="",
+                clear_state_program="",
+            ),
+            delete_params=AppDeleteParams(
+                sender=deployer.addr,
+                app_id=0,
+            ),
+            on_update="replace",  # Delete old and create new
+        )
+    )
+
+    print_info("")
+    print_info("Replace deployment result:")
+    print_info(f"  Operation performed: {result4.operation_performed}")
+    print_info(f"  Old App ID: {old_app_id} (deleted)")
+    print_info(f"  New App ID: {result4.app.app_id}")
+    print_info(f"  App Address: {shorten_address(str(result4.app.app_address))}")
+    print_info(f"  Version: {result4.app.version}")
+    if result4.operation_performed == OperationPerformed.Replace and result4.delete_result:
+        print_info(f"  Delete transaction confirmed: round {result4.delete_result.confirmation.confirmed_round}")
+
+    print_success("Old app deleted and new app created")
+
+    # Step 7: Demonstrate on_schema_break: 'replace'
+    print_step(7, "Demonstrate on_schema_break: 'replace' - handle schema changes")
+    print_info("Deploying version 4.0.0 with increased schema (more global ints)")
+    print_info("Schema changes cannot be done via update, so replace is required")
+
+    result5 = algorand.app_deployer.deploy(
+        AppDeployParams(
+            metadata=AppDeploymentMetaData(
+                name=app_name,
+                version="4.0.0",
+                updatable=True,
+                deletable=True,
+            ),
+            create_params=AppCreateParams(
+                sender=deployer.addr,
+                approval_program=get_versioned_approval_program(4),
+                clear_state_program=CLEAR_STATE_PROGRAM,
+                schema={
+                    "global_ints": 3,  # Schema break: increased from 2 to 3
+                    "global_byte_slices": 1,  # Schema break: increased from 0 to 1
+                    "local_ints": 0,
+                    "local_byte_slices": 0,
+                },
+            ),
+            update_params=AppUpdateParams(
+                sender=deployer.addr,
+                app_id=0,
+                approval_program="",
+                clear_state_program="",
+            ),
+            delete_params=AppDeleteParams(
+                sender=deployer.addr,
+                app_id=0,
+            ),
+            on_update="update",  # Would normally try to update
+            on_schema_break="replace",  # But schema change forces replace
+        )
+    )
+
+    print_info("")
+    print_info("Schema break deployment result:")
+    print_info(f"  Operation performed: {result5.operation_performed}")
+    print_info(f"  Previous App ID: {result4.app.app_id}")
+    print_info(f"  New App ID: {result5.app.app_id}")
+    print_info(f"  Version: {result5.app.version}")
+
+    # Verify new schema
+    app_info = algorand.app.get_by_id(result5.app.app_id)
+    print_info("")
+    print_info("New app schema:")
+    print_info(f"  global_ints: {app_info.global_ints}")
+    print_info(f"  global_byte_slices: {app_info.global_byte_slices}")
+
+    print_success("Schema break handled with replace strategy")
+
+    # Step 8: Show deployment metadata lookup by name
+    print_step(8, "Show deployment metadata lookup by name")
+    print_info("The app_deployer uses app name for idempotent lookups across deployments")
+
+    # Look up the app by creator
+    creator_apps = algorand.app_deployer.get_creator_apps_by_name(creator_address=deployer.addr)
+
+    print_info("")
+    print_info(f"Apps deployed by {shorten_address(str(deployer.addr))}:")
+    for name, app_meta in creator_apps.apps.items():
+        print_info("")
+        print_info(f'  App Name: "{name}"')
+        print_info(f"    App ID: {app_meta.app_id}")
+        print_info(f"    Version: {app_meta.version}")
+        print_info(f"    Updatable: {app_meta.updatable}")
+        print_info(f"    Deletable: {app_meta.deletable}")
+        print_info(f"    Created Round: {app_meta.created_round}")
+        print_info(f"    Updated Round: {app_meta.updated_round}")
+        print_info(f"    Deleted: {app_meta.deleted}")
+        print_info("    Deploy Metadata:")
+        print_info(f"      Name: {app_meta.deploy_metadata.name}")
+        print_info(f"      Version: {app_meta.deploy_metadata.version}")
+
+    print_success("Deployment metadata retrieved")
+
+    # Step 9: Demonstrate how name enables idempotency
+    print_step(9, "Demonstrate how app name enables idempotent deployments")
+    print_info("Deploy a second app with a different name to show name-based lookup")
+
+    result6 = algorand.app_deployer.deploy(
+        AppDeployParams(
+            metadata=AppDeploymentMetaData(
+                name="AnotherApp",  # Different name
+                version="1.0.0",
+                updatable=False,
+                deletable=False,
+            ),
+            create_params=AppCreateParams(
+                sender=deployer.addr,
+                approval_program=get_versioned_approval_program(100),
+                clear_state_program=CLEAR_STATE_PROGRAM,
+                schema={
+                    "global_ints": 2,  # version, counter
+                    "global_byte_slices": 0,
+                    "local_ints": 0,
+                    "local_byte_slices": 0,
+                },
+            ),
+            update_params=AppUpdateParams(
+                sender=deployer.addr,
+                app_id=0,
+                approval_program="",
+                clear_state_program="",
+            ),
+            delete_params=AppDeleteParams(
+                sender=deployer.addr,
+                app_id=0,
+            ),
+        )
+    )
+
+    print_info("")
+    print_info("Second app deployment:")
+    print_info("  Name: AnotherApp")
+    print_info(f"  App ID: {result6.app.app_id}")
+    print_info(f"  Operation: {result6.operation_performed}")
+
+    # Now list all apps again
+    all_apps = algorand.app_deployer.get_creator_apps_by_name(creator_address=deployer.addr)
+    print_info("")
+    num_apps = len(all_apps.apps)
+    print_info(f"All apps by creator ({num_apps} apps):")
+    for name in all_apps.apps:
+        print_info(f'  - "{name}" (App ID: {all_apps.apps[name].app_id})')
+
+    print_success("Multiple apps tracked by name")
+
+    # Step 10: Summary
+    print_step(10, "Summary - App Deployer API")
+    print_info("The AppDeployer provides idempotent application deployment:")
+    print_info("")
+    print_info("algorand.app_deployer.deploy(AppDeployParams(...)):")
+    print_info("  - Deploys applications with idempotent behavior based on app name")
+    print_info("  - Returns: AppDeployResult with operation_performed (OperationPerformed enum)")
+    print_info("")
+    print_info("Key parameters (all dataclass objects):")
+    print_info("  metadata: AppDeploymentMetaData(name, version, updatable, deletable)")
+    print_info("    - name: Unique identifier for idempotent lookups")
+    print_info("    - version: Semantic version string")
+    print_info("    - updatable/deletable: Deploy-time controls (TMPL_UPDATABLE/TMPL_DELETABLE)")
+    print_info("")
+    print_info("  create_params: AppCreateParams(sender, approval_program, clear_state_program, schema)")
+    print_info("  update_params: AppUpdateParams(sender, app_id=0, ...) - deployer overrides app_id")
+    print_info("  delete_params: AppDeleteParams(sender, app_id=0) - deployer overrides app_id")
+    print_info("")
+    print_info("  on_update: Controls behavior when code changes:")
+    print_info("    'fail' - Throw error (default)")
+    print_info("    'update' - Update app in place (preserves app ID)")
+    print_info("    'replace' - Delete old app, create new one")
+    print_info("    'append' - Create new app, leave old one")
+    print_info("")
+    print_info("  on_schema_break: Controls behavior when schema changes:")
+    print_info("    'fail' - Throw error (default)")
+    print_info("    'replace' - Delete old app, create new one")
+    print_info("    'append' - Create new app, leave old one")
+    print_info("")
+    print_info("Result: AppDeployResult")
+    print_info("  .operation_performed: OperationPerformed enum (Create, Update, Replace, Nothing)")
+    print_info("  .app: ApplicationMetaData (app_id, app_address, name, version, ...)")
+    print_info("  .create_result / .update_result / .delete_result: transaction results")
+    print_info("")
+    print_info("algorand.app_deployer.get_creator_apps_by_name(creator_address=...):")
+    print_info("  - Lists all apps deployed by a creator with their metadata")
+    print_info("  - Used internally for idempotent lookup by name")
+
+    print_success("App Deployer example completed!")
+
+
+if __name__ == "__main__":
+    main()
+
+```
+
+---
+
+### Other examples in Algorand Client
+
+- [Client Instantiation](/docs/algokit-utils/python/latest/examples/algorand-client/01-client-instantiation/)
+- [AlgoAmount Utility](/docs/algokit-utils/python/latest/examples/algorand-client/02-algo-amount/)
+- [Signer Configuration](/docs/algokit-utils/python/latest/examples/algorand-client/03-signer-config/)
+- [Suggested Params Configuration](/docs/algokit-utils/python/latest/examples/algorand-client/04-params-config/)
+- [Account Manager](/docs/algokit-utils/python/latest/examples/algorand-client/05-account-manager/)
+- [Send Payment](/docs/algokit-utils/python/latest/examples/algorand-client/06-send-payment/)
+- [Send Asset Operations](/docs/algokit-utils/python/latest/examples/algorand-client/07-send-asset-ops/)
+- [Send Application Operations](/docs/algokit-utils/python/latest/examples/algorand-client/08-send-app-ops/)
+- [Create Transaction (Unsigned Transactions)](/docs/algokit-utils/python/latest/examples/algorand-client/09-create-transaction/)
+- [Transaction Composer (Atomic Transaction Groups)](/docs/algokit-utils/python/latest/examples/algorand-client/10-transaction-composer/)
+- [Asset Manager](/docs/algokit-utils/python/latest/examples/algorand-client/11-asset-manager/)
+- [App Manager](/docs/algokit-utils/python/latest/examples/algorand-client/12-app-manager/)
+- **App Deployer**
+- [Client Manager](/docs/algokit-utils/python/latest/examples/algorand-client/14-client-manager/)
+- [Error Transformers](/docs/algokit-utils/python/latest/examples/algorand-client/15-error-transformers/)

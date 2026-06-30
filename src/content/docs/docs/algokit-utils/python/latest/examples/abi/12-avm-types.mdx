@@ -1,0 +1,433 @@
+---
+title: 'AVM Type Encoding'
+description: 'This example demonstrates how to work with AVM-specific types:'
+sidebar:
+  order: 12
+---
+
+[← Back to ABI Encoding](/docs/algokit-utils/python/latest/examples/abi/)
+
+## Description
+
+This example demonstrates how to work with AVM-specific types:
+
+- AVMBytes: Raw byte arrays (no length prefix, unlike ABI string/bytes)
+- AVMString: UTF-8 strings (no length prefix, unlike ABI string)
+- AVMUint64: 64-bit unsigned integers (8 bytes, big-endian)
+  AVM types represent how data is stored natively on the AVM stack, while ABI types follow the ARC-4 encoding specification with length prefixes.
+  The Python SDK provides the AVMType enum in algokit_abi.arc56 with values: AVMType.BYTES, AVMType.STRING, AVMType.UINT64
+
+## Prerequisites
+
+No LocalNet required - pure ABI encoding/decoding
+
+## Run This Example
+
+From the repository's `examples` directory:
+
+```bash
+cd examples
+uv run python abi/12_avm_types.py
+```
+
+## Code
+
+[View source on GitHub](https://github.com/algorandfoundation/algokit-utils-py/blob/main/examples/abi/12_avm_types.py)
+
+```python title="12_avm_types.py"
+# ruff: noqa: N999, C901, PLR0912, PLR0915
+"""
+Example: AVM Type Encoding
+
+This example demonstrates how to work with AVM-specific types:
+- AVMBytes: Raw byte arrays (no length prefix, unlike ABI string/bytes)
+- AVMString: UTF-8 strings (no length prefix, unlike ABI string)
+- AVMUint64: 64-bit unsigned integers (8 bytes, big-endian)
+
+AVM types represent how data is stored natively on the AVM stack,
+while ABI types follow the ARC-4 encoding specification with length prefixes.
+
+The Python SDK provides the AVMType enum in algokit_abi.arc56
+with values: AVMType.BYTES, AVMType.STRING, AVMType.UINT64
+
+No LocalNet required - pure ABI encoding/decoding
+"""
+
+from shared import format_hex, print_header, print_info, print_step, print_success
+
+from algokit_abi import abi
+from algokit_abi.arc56 import AVMType
+
+
+def is_avm_type(type_str: str) -> bool:
+    """Check if a type string is an AVM type."""
+    return type_str in (AVMType.BYTES.value, AVMType.STRING.value, AVMType.UINT64.value)
+
+
+def encode_avm_value_raw(avm_type: AVMType, value: str | bytes | int) -> bytes:
+    """
+    Encode a value to raw AVM representation (as conceptualized in ARC-56).
+
+    ARC-56 defines AVM types as having NO length prefixes:
+    - AVMString: Raw UTF-8 bytes (no 2-byte length prefix)
+    - AVMBytes: Raw bytes as-is
+    - AVMUint64: 8-byte big-endian encoding
+
+    Args:
+        avm_type: The AVM type to encode as
+        value: The value to encode
+
+    Returns:
+        Encoded bytes
+    """
+    if avm_type == AVMType.STRING:
+        # Raw UTF-8 bytes - no length prefix
+        if isinstance(value, str):
+            return value.encode("utf-8")
+        return bytes(value) if isinstance(value, bytes) else str(value).encode("utf-8")
+
+    if avm_type == AVMType.BYTES:
+        # Raw bytes as-is
+        if isinstance(value, str):
+            return value.encode("utf-8")
+        if isinstance(value, bytes):
+            return value
+        return bytes(value)
+
+    if avm_type == AVMType.UINT64:
+        # 8-byte big-endian encoding
+        int_value = value if isinstance(value, int) else int(value)
+        return int_value.to_bytes(8, "big")
+
+    raise ValueError(f"Unknown AVM type: {avm_type}")
+
+
+def decode_avm_value(avm_type: AVMType, data: bytes) -> str | bytes | int:
+    """
+    Decode raw AVM bytes to a value.
+
+    Args:
+        avm_type: The AVM type to decode as
+        data: The bytes to decode
+
+    Returns:
+        Decoded value (string, bytes, or int)
+    """
+    if avm_type == AVMType.STRING:
+        return data.decode("utf-8")
+
+    if avm_type == AVMType.BYTES:
+        return data
+
+    if avm_type == AVMType.UINT64:
+        return int.from_bytes(data, "big")
+
+    raise ValueError(f"Unknown AVM type: {avm_type}")
+
+
+def main() -> None:
+    print_header("AVM Type Encoding Example")
+
+    # Step 1: Introduction to AVM Types
+    print_step(1, "Introduction to AVM Types")
+
+    print_info("AVM types represent native Algorand Virtual Machine stack values.")
+    print_info("")
+    print_info("Three AVM types:")
+    print_info("  AVMBytes  - Raw byte array (no length prefix)")
+    print_info("  AVMString - UTF-8 string (no length prefix)")
+    print_info("  AVMUint64 - 64-bit unsigned integer (8 bytes, big-endian)")
+    print_info("")
+    print_info("Key difference from ABI types:")
+    print_info("  ABI string/bytes: 2-byte length prefix + data")
+    print_info("  AVM string/bytes: Raw data only (no prefix)")
+
+    # Step 2: AVMBytes type
+    print_step(2, "AVMBytes - Raw Byte Arrays")
+
+    avm_bytes_type = AVMType.BYTES
+    print_info(f"Type: {avm_bytes_type.value}")
+    print_info(f'is_avm_type("AVMBytes"): {is_avm_type("AVMBytes")}')
+    print_info("")
+
+    # Encode raw bytes
+    raw_bytes = bytes([0x48, 0x65, 0x6C, 0x6C, 0x6F])  # "Hello" in ASCII
+    avm_bytes_encoded = encode_avm_value_raw(AVMType.BYTES, raw_bytes)
+
+    print_info('Encoding raw bytes [0x48, 0x65, 0x6c, 0x6c, 0x6f] ("Hello"):')
+    print_info(f"  Input bytes: {format_hex(raw_bytes)}")
+    print_info(f"  Encoded:     {format_hex(avm_bytes_encoded)}")
+    print_info(f"  Length: {len(avm_bytes_encoded)} bytes")
+    print_info("")
+
+    # Decode back
+    avm_bytes_decoded = decode_avm_value(AVMType.BYTES, avm_bytes_encoded)
+    print_info("Decoding AVMBytes:")
+    print_info(f"  Result type: {type(avm_bytes_decoded).__name__}")
+    print_info(f"  Result: {format_hex(avm_bytes_decoded)}")
+
+    # Step 3: AVMString type
+    print_step(3, "AVMString - UTF-8 Strings (No Length Prefix)")
+
+    avm_string_type = AVMType.STRING
+    print_info(f"Type: {avm_string_type.value}")
+    print_info(f'is_avm_type("AVMString"): {is_avm_type("AVMString")}')
+    print_info("")
+
+    # Encode various strings
+    test_strings = ["Hello", "World!", "Algorand"]
+
+    for s in test_strings:
+        encoded = encode_avm_value_raw(AVMType.STRING, s)
+        print_info(f'"{s}":')
+        print_info(f"  Encoded: {format_hex(encoded)}")
+        print_info(f"  Length: {len(encoded)} bytes")
+
+    print_info("")
+
+    # Decode back
+    encoded_hello = encode_avm_value_raw(AVMType.STRING, "Hello")
+    decoded_hello = decode_avm_value(AVMType.STRING, encoded_hello)
+    print_info("Decoding AVMString:")
+    print_info(f"  Input: {format_hex(encoded_hello)}")
+    print_info(f'  Result: "{decoded_hello}"')
+    print_info(f"  Result type: {type(decoded_hello).__name__}")
+
+    # Step 4: AVMUint64 type
+    print_step(4, "AVMUint64 - 64-bit Unsigned Integers")
+
+    avm_uint64_type = AVMType.UINT64
+    print_info(f"Type: {avm_uint64_type.value}")
+    print_info(f'is_avm_type("AVMUint64"): {is_avm_type("AVMUint64")}')
+    print_info("")
+
+    # Encode various uint64 values
+    test_numbers = [0, 1, 255, 1000, 1000000, 2**32 - 1, 2**64 - 1]
+
+    print_info("Encoding uint64 values (8-byte big-endian):")
+    for num in test_numbers:
+        encoded = encode_avm_value_raw(AVMType.UINT64, num)
+        print_info(f"  {str(num).rjust(20)}: {format_hex(encoded)}")
+
+    print_info("")
+
+    # Decode back
+    encoded_1000 = encode_avm_value_raw(AVMType.UINT64, 1000)
+    decoded_1000 = decode_avm_value(AVMType.UINT64, encoded_1000)
+    print_info("Decoding AVMUint64:")
+    print_info(f"  Input: {format_hex(encoded_1000)}")
+    print_info(f"  Result: {decoded_1000}")
+    print_info(f"  Result type: {type(decoded_1000).__name__}")
+
+    # Step 5: Compare AVM encoding vs ABI encoding
+    print_step(5, "AVM Encoding vs ABI Encoding Comparison")
+
+    print_info("Comparing how the same values encode differently:")
+    print_info("")
+
+    # String comparison
+    test_string = "Hello"
+    avm_string_encoded = encode_avm_value_raw(AVMType.STRING, test_string)
+    abi_string_type = abi.ABIType.from_string("string")
+    abi_string_encoded = abi_string_type.encode(test_string)
+
+    print_info(f'String: "{test_string}"')
+    print_info(f"  AVM encoding: {format_hex(avm_string_encoded)}")
+    print_info(f"    Length: {len(avm_string_encoded)} bytes (raw UTF-8 only)")
+    print_info(f"  ABI encoding: {format_hex(abi_string_encoded)}")
+    print_info(f"    Length: {len(abi_string_encoded)} bytes (2-byte prefix + UTF-8)")
+    length_value = (abi_string_encoded[0] << 8) | abi_string_encoded[1]
+    print_info(f"    First 2 bytes: {format_hex(abi_string_encoded[:2])} = {length_value} (length)")
+    print_info("")
+
+    # Bytes comparison
+    test_bytes_array = bytes([0xDE, 0xAD, 0xBE, 0xEF])
+    avm_bytes_encoded_cmp = encode_avm_value_raw(AVMType.BYTES, test_bytes_array)
+    # ABI has no "bytes" type - closest is byte[] or string; we'll use static byte[4]
+    abi_byte4_type = abi.ABIType.from_string("byte[4]")
+    abi_byte4_encoded = abi_byte4_type.encode(list(test_bytes_array))
+
+    print_info("Bytes: [0xde, 0xad, 0xbe, 0xef]")
+    print_info(f"  AVMBytes encoding: {format_hex(avm_bytes_encoded_cmp)}")
+    print_info(f"    Length: {len(avm_bytes_encoded_cmp)} bytes (raw bytes only)")
+    print_info(f"  ABI byte[4] encoding: {format_hex(abi_byte4_encoded)}")
+    print_info(f"    Length: {len(abi_byte4_encoded)} bytes (static array, no prefix)")
+    print_info("")
+
+    # Uint64 comparison
+    test_uint64 = 1000
+    avm_uint64_encoded = encode_avm_value_raw(AVMType.UINT64, test_uint64)
+    abi_uint64_type = abi.ABIType.from_string("uint64")
+    abi_uint64_encoded = abi_uint64_type.encode(test_uint64)
+
+    print_info(f"Uint64: {test_uint64}")
+    print_info(f"  AVM encoding: {format_hex(avm_uint64_encoded)}")
+    print_info(f"    Length: {len(avm_uint64_encoded)} bytes")
+    print_info(f"  ABI encoding: {format_hex(abi_uint64_encoded)}")
+    print_info(f"    Length: {len(abi_uint64_encoded)} bytes")
+    print_info(f"  Match: {avm_uint64_encoded == abi_uint64_encoded}")
+    print_info("  (uint64 encoding is identical - both are 8 bytes big-endian)")
+
+    # Step 6: is_avm_type helper function
+    print_step(6, "is_avm_type Helper Function")
+
+    print_info("Use is_avm_type() to check if a type string is an AVM type:")
+    print_info("")
+
+    type_checks = [
+        "AVMBytes",
+        "AVMString",
+        "AVMUint64",
+        "uint64",
+        "string",
+        "address",
+        "byte[]",
+        "(uint64,bool)",
+    ]
+
+    for type_str in type_checks:
+        is_avm = is_avm_type(type_str)
+        print_info(f'  is_avm_type("{type_str}"): {is_avm}')
+
+    # Step 7: AVMType enum values
+    print_step(7, "AVMType Enum Values")
+
+    print_info("The AVMType enum provides type-safe AVM type constants:")
+    print_info("")
+
+    print_info(f"  AVMType.BYTES:  value = '{AVMType.BYTES.value}'")
+    print_info(f"  AVMType.STRING: value = '{AVMType.STRING.value}'")
+    print_info(f"  AVMType.UINT64: value = '{AVMType.UINT64.value}'")
+    print_info("")
+    print_info("Access via enum member or string value:")
+    avm_bytes_match = AVMType("AVMBytes") == AVMType.BYTES
+    print_info(f"  AVMType.BYTES == AVMType('AVMBytes'): {avm_bytes_match}")
+
+    # Step 8: When to use AVM types vs ABI types
+    print_step(8, "When to Use AVM Types vs ABI Types")
+
+    print_info("Use AVM types when:")
+    print_info("  - Working with raw AVM stack values (global/local state, box storage)")
+    print_info("  - Reading/writing app state where values have no length prefix")
+    print_info("  - The ARC-56 spec specifies AVMBytes, AVMString, or AVMUint64")
+    print_info("")
+    print_info("Use ABI types when:")
+    print_info("  - Encoding method arguments for ARC-4 ABI method calls")
+    print_info("  - Encoding method return values following ARC-4 specification")
+    print_info('  - The type is an ARC-4 type like "uint64", "string", "address"')
+    print_info("")
+    print_info("Example scenarios:")
+    print_info("  - App global state value stored as uint64 -> AVMUint64")
+    print_info("  - App global state key stored as string -> AVMString")
+    print_info("  - Box content stored as raw bytes -> AVMBytes")
+    print_info('  - ABI method arg of type "string" -> ABIStringType (with length prefix)')
+    print_info('  - ABI method return of type "uint64" -> ABIUintType (same encoding)')
+
+    # Step 9: Practical example - Encoding for app state
+    print_step(9, "Practical Example - Encoding for App State")
+
+    print_info("Simulating app state encoding (as seen in ARC-56 contracts):")
+    print_info("")
+
+    # Simulate a key-value pair in global state
+    state_key = "counter"
+    state_value = 42
+
+    # Keys are typically AVMString (no length prefix in state key)
+    encoded_key = encode_avm_value_raw(AVMType.STRING, state_key)
+    # Values can be AVMUint64 for integer values
+    encoded_value = encode_avm_value_raw(AVMType.UINT64, state_value)
+
+    print_info("Global state entry:")
+    print_info(f'  Key: "{state_key}"')
+    print_info(f"  Key encoded (AVMString): {format_hex(encoded_key)}")
+    print_info(f"  Value: {state_value}")
+    print_info(f"  Value encoded (AVMUint64): {format_hex(encoded_value)}")
+    print_info("")
+
+    # Decode back
+    decoded_key = decode_avm_value(AVMType.STRING, encoded_key)
+    decoded_value = decode_avm_value(AVMType.UINT64, encoded_value)
+
+    print_info("Decoding back:")
+    print_info(f'  Key: "{decoded_key}"')
+    print_info(f"  Value: {decoded_value}")
+
+    # Step 10: Round-trip verification
+    print_step(10, "Round-Trip Verification")
+
+    print_info("Verifying encode/decode round-trips preserve values:")
+    print_info("")
+
+    # AVMString round-trip
+    original_string = "AlgorandFoundation"
+    enc_string = encode_avm_value_raw(AVMType.STRING, original_string)
+    dec_string = decode_avm_value(AVMType.STRING, enc_string)
+    match_string = original_string == dec_string
+    print_info(f'AVMString "{original_string}": {"PASS" if match_string else "FAIL"}')
+
+    # AVMBytes round-trip
+    original_bytes = bytes([1, 2, 3, 4, 5, 6, 7, 8])
+    enc_bytes = encode_avm_value_raw(AVMType.BYTES, original_bytes)
+    dec_bytes = decode_avm_value(AVMType.BYTES, enc_bytes)
+    match_bytes = original_bytes == dec_bytes
+    print_info(f"AVMBytes [1,2,3,4,5,6,7,8]: {'PASS' if match_bytes else 'FAIL'}")
+
+    # AVMUint64 round-trip
+    original_uint64 = 9007199254740991  # Max safe integer
+    enc_uint64 = encode_avm_value_raw(AVMType.UINT64, original_uint64)
+    dec_uint64 = decode_avm_value(AVMType.UINT64, enc_uint64)
+    match_uint64 = original_uint64 == dec_uint64
+    print_info(f"AVMUint64 {original_uint64}: {'PASS' if match_uint64 else 'FAIL'}")
+
+    # Step 11: Summary
+    print_step(11, "Summary")
+
+    print_info("AVM Type Summary:")
+    print_info("")
+    print_info("Types:")
+    print_info("  AVMBytes  - Raw bytes, no length prefix")
+    print_info("  AVMString - UTF-8 string, no length prefix")
+    print_info("  AVMUint64 - 8-byte big-endian unsigned integer")
+    print_info("")
+    print_info("AVMType Enum:")
+    print_info("  AVMType.BYTES  - 'AVMBytes'")
+    print_info("  AVMType.STRING - 'AVMString'")
+    print_info("  AVMType.UINT64 - 'AVMUint64'")
+    print_info("")
+    print_info("Key Differences from ABI:")
+    print_info("  - AVMString has no 2-byte length prefix (ABI string does)")
+    print_info("  - AVMBytes is raw (ABI uses length-prefixed byte arrays)")
+    print_info("  - AVMUint64 encoding is identical to ABI uint64")
+    print_info("")
+    print_info("Use Cases:")
+    print_info("  - AVM types: App state, box storage, raw stack values")
+    print_info("  - ABI types: Method calls, ARC-4 encoded arguments/returns")
+
+    print_success("AVM Type Encoding example completed successfully!")
+
+
+if __name__ == "__main__":
+    main()
+
+```
+
+---
+
+### Other examples in ABI Encoding
+
+- [ABI Type Parsing](/docs/algokit-utils/python/latest/examples/abi/01-type-parsing/)
+- [ABI Primitive Types](/docs/algokit-utils/python/latest/examples/abi/02-primitive-types/)
+- [ABI Address Type](/docs/algokit-utils/python/latest/examples/abi/03-address-type/)
+- [ABI String Type](/docs/algokit-utils/python/latest/examples/abi/04-string-type/)
+- [ABI Static Array Type](/docs/algokit-utils/python/latest/examples/abi/05-static-array/)
+- [ABI Dynamic Array Type](/docs/algokit-utils/python/latest/examples/abi/06-dynamic-array/)
+- [ABI Tuple Type](/docs/algokit-utils/python/latest/examples/abi/07-tuple-type/)
+- [ABI Struct Type](/docs/algokit-utils/python/latest/examples/abi/08-struct-type/)
+- [ABI Struct and Tuple Conversion](/docs/algokit-utils/python/latest/examples/abi/09-struct-tuple-conversion/)
+- [ABI Bool Array Packing](/docs/algokit-utils/python/latest/examples/abi/10-bool-packing/)
+- [ABI Method](/docs/algokit-utils/python/latest/examples/abi/11-abi-method/)
+- **AVM Type Encoding**
+- [Type Guards](/docs/algokit-utils/python/latest/examples/abi/13-type-guards/)
+- [ABI Complex Nested Types](/docs/algokit-utils/python/latest/examples/abi/14-complex-nested/)
+- [ARC-56 Storage Helpers](/docs/algokit-utils/python/latest/examples/abi/15-arc56-storage/)

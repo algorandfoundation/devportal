@@ -1,5 +1,7 @@
 ---
 title: AlgorandSubscriber
+sidebar:
+  label: Subsciber
 ---
 
 `AlgorandSubscriber` is a class that allows you to easily subscribe to the Algorand Blockchain, define a series of events that you are interested in, and react to those events.

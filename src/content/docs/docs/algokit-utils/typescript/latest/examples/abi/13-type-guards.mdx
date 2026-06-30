@@ -1,0 +1,383 @@
+---
+title: 'Type Guards'
+description: 'This example demonstrates how to use type guard functions to check argument and type categories in the ABI system:'
+sidebar:
+  order: 13
+---
+
+[← Back to ABI Encoding](/docs/algokit-utils/typescript/latest/examples/abi/)
+
+## Description
+
+This example demonstrates how to use type guard functions to check argument and type categories in the ABI system:
+
+- argTypeIsTransaction(): Check if type is a transaction type (txn, pay, keyreg, acfg, axfer, afrz, appl)
+- argTypeIsReference(): Check if type is a reference type (account, asset, application)
+- argTypeIsAbiType(): Check if type is a standard ABI type (not transaction or reference)
+- isAVMType(): Check if type is an AVM-specific type (AVMBytes, AVMString, AVMUint64)
+  These guards are essential for:
+- Method argument handling and routing
+- TypeScript type narrowing for safer code
+- Determining how to encode/decode values based on type category
+
+## Prerequisites
+
+- No LocalNet required
+
+## Run This Example
+
+From the repository root:
+
+```bash
+cd examples
+npm run example abi/13-type-guards.ts
+```
+
+## Code
+
+[View source on GitHub](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/examples/abi/13-type-guards.ts)
+
+```typescript title="13-type-guards.ts"
+/**
+ * Example: Type Guards
+ *
+ * This example demonstrates how to use type guard functions to check
+ * argument and type categories in the ABI system:
+ *
+ * - argTypeIsTransaction(): Check if type is a transaction type (txn, pay, keyreg, acfg, axfer, afrz, appl)
+ * - argTypeIsReference(): Check if type is a reference type (account, asset, application)
+ * - argTypeIsAbiType(): Check if type is a standard ABI type (not transaction or reference)
+ * - isAVMType(): Check if type is an AVM-specific type (AVMBytes, AVMString, AVMUint64)
+ *
+ * These guards are essential for:
+ * - Method argument handling and routing
+ * - TypeScript type narrowing for safer code
+ * - Determining how to encode/decode values based on type category
+ *
+ * Prerequisites:
+ * - No LocalNet required
+ */
+
+import type { ABIMethodArgType } from '@algorandfoundation/algokit-utils/abi';
+import {
+  ABIMethod,
+  ABIReferenceType,
+  ABITransactionType,
+  ABIType,
+  argTypeIsAbiType,
+  argTypeIsReference,
+  argTypeIsTransaction,
+  isAVMType,
+} from '@algorandfoundation/algokit-utils/abi';
+import { printHeader, printInfo, printStep, printSuccess } from '../shared/utils.js';
+
+function main() {
+  printHeader('Type Guards Example');
+
+  // Step 1: Introduction to type categories
+  printStep(1, 'Introduction to Type Categories');
+
+  printInfo('In ABI method calls, arguments can be categorized into:');
+  printInfo('');
+  printInfo('1. Transaction types: Represent transaction arguments');
+  printInfo('   txn, pay, keyreg, acfg, axfer, afrz, appl');
+  printInfo('');
+  printInfo('2. Reference types: Represent references to on-chain entities');
+  printInfo('   account, asset, application');
+  printInfo('');
+  printInfo('3. ABI types: Standard ARC-4 encoded types');
+  printInfo('   uint64, string, address, (tuple), arrays, etc.');
+  printInfo('');
+  printInfo('4. AVM types: Native AVM stack value types');
+  printInfo('   AVMBytes, AVMString, AVMUint64');
+
+  // Step 2: argTypeIsTransaction() - Check for transaction types
+  printStep(2, 'argTypeIsTransaction() - Check for Transaction Types');
+
+  printInfo('Transaction types identify arguments that must be transactions:');
+  printInfo('');
+
+  const transactionTypes = [
+    'txn', // Any transaction
+    'pay', // Payment transaction
+    'keyreg', // Key registration
+    'acfg', // Asset configuration
+    'axfer', // Asset transfer
+    'afrz', // Asset freeze
+    'appl', // Application call
+  ];
+
+  for (const type of transactionTypes) {
+    const result = argTypeIsTransaction(type as ABIMethodArgType);
+    printInfo(`  argTypeIsTransaction("${type}"): ${result}`);
+  }
+
+  printInfo('');
+  printInfo('Non-transaction types:');
+  const nonTransactionTypes = ['uint64', 'string', 'account', 'asset', 'application'];
+  for (const type of nonTransactionTypes) {
+    const result = argTypeIsTransaction(type as ABIMethodArgType);
+    printInfo(`  argTypeIsTransaction("${type}"): ${result}`);
+  }
+
+  // Step 3: argTypeIsReference() - Check for reference types
+  printStep(3, 'argTypeIsReference() - Check for Reference Types');
+
+  printInfo('Reference types identify foreign references in method calls:');
+  printInfo('');
+
+  const referenceTypes = [
+    'account', // Account reference (goes in accounts array)
+    'asset', // Asset reference (goes in foreign assets)
+    'application', // Application reference (goes in foreign apps)
+  ];
+
+  for (const type of referenceTypes) {
+    const result = argTypeIsReference(type as ABIMethodArgType);
+    printInfo(`  argTypeIsReference("${type}"): ${result}`);
+  }
+
+  printInfo('');
+  printInfo('Non-reference types:');
+  const nonReferenceTypes = ['txn', 'pay', 'uint64', 'address', 'string'];
+  for (const type of nonReferenceTypes) {
+    const result = argTypeIsReference(type as ABIMethodArgType);
+    printInfo(`  argTypeIsReference("${type}"): ${result}`);
+  }
+
+  // Step 4: argTypeIsAbiType() - Check for standard ABI types
+  printStep(4, 'argTypeIsAbiType() - Check for Standard ABI Types');
+
+  printInfo('ABI types are standard ARC-4 encoded types (not txn or reference):');
+  printInfo('');
+
+  const allTypes = [
+    'uint64',
+    'string',
+    'address',
+    'bool',
+    'byte',
+    'byte[32]',
+    'uint64[]',
+    '(uint64,bool)',
+    'txn',
+    'pay',
+    'account',
+    'asset',
+    'application',
+  ];
+
+  for (const type of allTypes) {
+    // For ABI types, we need the actual ABIType object or string
+    const isAbi = argTypeIsAbiType(type as ABIMethodArgType);
+    printInfo(`  argTypeIsAbiType("${type}"): ${isAbi}`);
+  }
+
+  printInfo('');
+  printInfo('Note: argTypeIsAbiType returns true when NOT a transaction AND NOT a reference');
+
+  // Step 5: isAVMType() - Check for AVM-specific types
+  printStep(5, 'isAVMType() - Check for AVM-Specific Types');
+
+  printInfo('AVM types represent native Algorand Virtual Machine stack values:');
+  printInfo('');
+
+  const avmTypes = ['AVMBytes', 'AVMString', 'AVMUint64'];
+
+  for (const type of avmTypes) {
+    const result = isAVMType(type);
+    printInfo(`  isAVMType("${type}"): ${result}`);
+  }
+
+  printInfo('');
+  printInfo('Non-AVM types:');
+  const nonAvmTypes = ['uint64', 'string', 'address', 'bytes', 'txn', 'account'];
+  for (const type of nonAvmTypes) {
+    const result = isAVMType(type);
+    printInfo(`  isAVMType("${type}"): ${result}`);
+  }
+
+  // Step 6: TypeScript type narrowing with guards
+  printStep(6, 'TypeScript Type Narrowing with Guards');
+
+  printInfo('Type guards enable TypeScript type narrowing for safer code:');
+  printInfo('');
+
+  // Demonstrate with an ABIMethodArgType
+  function demonstrateTypeNarrowing(argType: ABIMethodArgType): void {
+    if (argTypeIsTransaction(argType)) {
+      // TypeScript knows argType is ABITransactionType here
+      printInfo(`    Transaction type detected: ${argType}`);
+      printInfo(`    This arg requires a transaction to be passed`);
+    } else if (argTypeIsReference(argType)) {
+      // TypeScript knows argType is ABIReferenceType here
+      printInfo(`    Reference type detected: ${argType}`);
+      printInfo(`    This arg will use foreign array indices`);
+    } else {
+      // TypeScript knows argType is ABIType here
+      printInfo(`    ABI type detected: ${argType.toString()}`);
+      printInfo(`    This arg will be ARC-4 encoded`);
+    }
+  }
+
+  printInfo('Testing type narrowing with "pay":');
+  demonstrateTypeNarrowing('pay' as ABIMethodArgType);
+
+  printInfo('');
+  printInfo('Testing type narrowing with "asset":');
+  demonstrateTypeNarrowing('asset' as ABIMethodArgType);
+
+  printInfo('');
+  printInfo('Testing type narrowing with ABIType.from("uint64"):');
+  demonstrateTypeNarrowing(ABIType.from('uint64'));
+
+  // Step 7: Practical example - Method argument handling
+  printStep(7, 'Practical Example - Method Argument Handling');
+
+  printInfo('Consider a method: "swap(asset,asset,pay,uint64)uint64"');
+  printInfo('');
+
+  // Parse the method
+  const swapMethod = ABIMethod.fromSignature('swap(asset,asset,pay,uint64)uint64');
+
+  printInfo(`Method name: ${swapMethod.name}`);
+  printInfo(`Number of args: ${swapMethod.args.length}`);
+  printInfo('');
+
+  // Analyze each argument
+  swapMethod.args.forEach((arg, index) => {
+    const argType = arg.type;
+    let category: string;
+    let handling: string;
+
+    if (argTypeIsTransaction(argType)) {
+      category = 'Transaction';
+      handling = 'Pass a transaction object';
+    } else if (argTypeIsReference(argType)) {
+      category = 'Reference';
+      handling = 'Will be added to foreign arrays, arg receives index';
+    } else {
+      category = 'ABI';
+      handling = 'Will be ARC-4 encoded';
+    }
+
+    const typeStr = argTypeIsAbiType(argType) ? argType.toString() : argType;
+    printInfo(`  Arg ${index}: type="${typeStr}"`);
+    printInfo(`    Category: ${category}`);
+    printInfo(`    Handling: ${handling}`);
+    printInfo('');
+  });
+
+  // Step 8: All type strings test matrix
+  printStep(8, 'Complete Type String Test Matrix');
+
+  printInfo('Testing all type guard combinations:');
+  printInfo('');
+
+  const testTypes = [
+    'txn',
+    'pay',
+    'keyreg',
+    'acfg',
+    'axfer',
+    'afrz',
+    'appl',
+    'account',
+    'asset',
+    'application',
+    'uint64',
+    'string',
+    'address',
+    'bool',
+    'AVMBytes',
+    'AVMString',
+    'AVMUint64',
+  ];
+
+  printInfo('  Type            | isTxn | isRef | isAbi | isAVM');
+  printInfo('  ----------------+-------+-------+-------+------');
+
+  for (const type of testTypes) {
+    const isTxn = argTypeIsTransaction(type as ABIMethodArgType);
+    const isRef = argTypeIsReference(type as ABIMethodArgType);
+    const isAbi = argTypeIsAbiType(type as ABIMethodArgType);
+    const isAvm = isAVMType(type);
+
+    const padType = type.padEnd(16);
+    const padTxn = String(isTxn).padEnd(5);
+    const padRef = String(isRef).padEnd(5);
+    const padAbi = String(isAbi).padEnd(5);
+
+    printInfo(`  ${padType}| ${padTxn} | ${padRef} | ${padAbi} | ${isAvm}`);
+  }
+
+  // Step 9: Enum values demonstration
+  printStep(9, 'Using ABITransactionType and ABIReferenceType Enums');
+
+  printInfo('The library provides enums for type safety:');
+  printInfo('');
+
+  printInfo('ABITransactionType enum:');
+  printInfo(`  Txn:           "${ABITransactionType.Txn}"`);
+  printInfo(`  Payment:       "${ABITransactionType.Payment}"`);
+  printInfo(`  KeyRegistration: "${ABITransactionType.KeyRegistration}"`);
+  printInfo(`  AssetConfig:   "${ABITransactionType.AssetConfig}"`);
+  printInfo(`  AssetTransfer: "${ABITransactionType.AssetTransfer}"`);
+  printInfo(`  AssetFreeze:   "${ABITransactionType.AssetFreeze}"`);
+  printInfo(`  AppCall:       "${ABITransactionType.AppCall}"`);
+  printInfo('');
+
+  printInfo('ABIReferenceType enum:');
+  printInfo(`  Account:     "${ABIReferenceType.Account}"`);
+  printInfo(`  Asset:       "${ABIReferenceType.Asset}"`);
+  printInfo(`  Application: "${ABIReferenceType.Application}"`);
+
+  // Step 10: Summary
+  printStep(10, 'Summary');
+
+  printInfo('Type Guard Summary:');
+  printInfo('');
+  printInfo('Functions:');
+  printInfo(
+    '  argTypeIsTransaction(type) - Returns true for txn, pay, keyreg, acfg, axfer, afrz, appl',
+  );
+  printInfo('  argTypeIsReference(type)   - Returns true for account, asset, application');
+  printInfo('  argTypeIsAbiType(type)     - Returns true if NOT transaction AND NOT reference');
+  printInfo('  isAVMType(type)            - Returns true for AVMBytes, AVMString, AVMUint64');
+  printInfo('');
+  printInfo('Use Cases:');
+  printInfo('  - Routing method arguments to appropriate handling logic');
+  printInfo('  - TypeScript type narrowing for safe property access');
+  printInfo('  - Determining encoding/decoding strategy based on type category');
+  printInfo('  - Validating method signatures and argument types');
+  printInfo('');
+  printInfo('Key Insight:');
+  printInfo('  The three arg type guards partition ABIMethodArgType:');
+  printInfo('  - Every ABIMethodArgType is exactly one of: Transaction, Reference, or ABI type');
+  printInfo('  - isAVMType is orthogonal - it checks for AVM-specific storage types');
+
+  printSuccess('Type Guards example completed successfully!');
+}
+
+main();
+```
+
+---
+
+### Other examples in ABI Encoding
+
+- [ABI Type Parsing](/docs/algokit-utils/typescript/latest/examples/abi/01-type-parsing/)
+- [ABI Primitive Types](/docs/algokit-utils/typescript/latest/examples/abi/02-primitive-types/)
+- [ABI Address Type](/docs/algokit-utils/typescript/latest/examples/abi/03-address-type/)
+- [ABI String Type](/docs/algokit-utils/typescript/latest/examples/abi/04-string-type/)
+- [ABI Static Array Type](/docs/algokit-utils/typescript/latest/examples/abi/05-static-array/)
+- [ABI Dynamic Array Type](/docs/algokit-utils/typescript/latest/examples/abi/06-dynamic-array/)
+- [ABI Tuple Type](/docs/algokit-utils/typescript/latest/examples/abi/07-tuple-type/)
+- [ABI Struct Type](/docs/algokit-utils/typescript/latest/examples/abi/08-struct-type/)
+- [ABI Struct and Tuple Conversion](/docs/algokit-utils/typescript/latest/examples/abi/09-struct-tuple-conversion/)
+- [ABI Bool Array Packing](/docs/algokit-utils/typescript/latest/examples/abi/10-bool-packing/)
+- [ABI Method](/docs/algokit-utils/typescript/latest/examples/abi/11-abi-method/)
+- [AVM Type Encoding](/docs/algokit-utils/typescript/latest/examples/abi/12-avm-types/)
+- **Type Guards**
+- [ABI Complex Nested Types](/docs/algokit-utils/typescript/latest/examples/abi/14-complex-nested/)
+- [ARC-56 Storage Helpers](/docs/algokit-utils/typescript/latest/examples/abi/15-arc56-storage/)

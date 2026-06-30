@@ -1,0 +1,544 @@
+---
+title: 'Multisig Program Signing (Delegated Multisig Logic Signatures) with KMD'
+description: 'This example demonstrates how to sign programs with multisig using the KMD sign_multisig_program() method. It shows:'
+sidebar:
+  order: 13
+---
+
+[← Back to KMD Client](/docs/algokit-utils/python/latest/examples/kmd-client/)
+
+## Description
+
+This example demonstrates how to sign programs with multisig using the KMD sign_multisig_program() method. It shows:
+
+- Creating a 2-of-3 multisig account
+- Creating a simple TEAL program (logic signature)
+- Compiling the TEAL program using algod teal_compile
+- Signing the program with the first participant (partial signature)
+- Signing the program with the second participant (completing the multisig)
+- Understanding delegated multisig logic signatures
+  What is Multisig Program Signing? Multisig program signing creates a "delegated multisig logic signature". This combines two powerful concepts: 1. Multisig: Requiring multiple parties to approve 2. Delegated Logic Signatures: Authorizing a program to act on behalf of an account
+  With a delegated multisig lsig:
+- The multisig account authorizes a program to sign transactions
+- Multiple parties must sign the program (meeting the threshold)
+- Once signed, the program can authorize transactions within its logic
+- No further interaction needed from the multisig participants
+  Use cases for delegated multisig logic signatures:
+- Multi-party controlled recurring payments
+- Joint account automation (e.g., business partners authorizing limit)
+- Escrow with automated release conditions
+- DAO treasury with programmatic spending rules
+  Prerequisites:
+  Covered operations:
+- sign_multisig_program() - Sign a compiled TEAL program with a multisig participant
+
+## Prerequisites
+
+- LocalNet running (via `algokit localnet start`)
+
+## Run This Example
+
+From the repository's `examples` directory:
+
+```bash
+cd examples
+uv run python kmd_client/13_multisig_program_signing.py
+```
+
+## Code
+
+[View source on GitHub](https://github.com/algorandfoundation/algokit-utils-py/blob/main/examples/kmd_client/13_multisig_program_signing.py)
+
+```python title="13_multisig_program_signing.py"
+# ruff: noqa: N999, C901, PLR0912, PLR0915
+"""
+Example: Multisig Program Signing (Delegated Multisig Logic Signatures) with KMD
+
+This example demonstrates how to sign programs with multisig using the KMD
+sign_multisig_program() method. It shows:
+  - Creating a 2-of-3 multisig account
+  - Creating a simple TEAL program (logic signature)
+  - Compiling the TEAL program using algod teal_compile
+  - Signing the program with the first participant (partial signature)
+  - Signing the program with the second participant (completing the multisig)
+  - Understanding delegated multisig logic signatures
+
+What is Multisig Program Signing?
+Multisig program signing creates a "delegated multisig logic signature".
+This combines two powerful concepts:
+  1. Multisig: Requiring multiple parties to approve
+  2. Delegated Logic Signatures: Authorizing a program to act on behalf of an account
+
+With a delegated multisig lsig:
+  - The multisig account authorizes a program to sign transactions
+  - Multiple parties must sign the program (meeting the threshold)
+  - Once signed, the program can authorize transactions within its logic
+  - No further interaction needed from the multisig participants
+
+Use cases for delegated multisig logic signatures:
+  - Multi-party controlled recurring payments
+  - Joint account automation (e.g., business partners authorizing limit)
+  - Escrow with automated release conditions
+  - DAO treasury with programmatic spending rules
+
+Prerequisites:
+- LocalNet running (via `algokit localnet start`)
+
+Covered operations:
+- sign_multisig_program() - Sign a compiled TEAL program with a multisig participant
+"""
+
+import base64
+import sys
+
+import msgpack
+from shared import (
+    cleanup_test_wallet,
+    create_algod_client,
+    create_kmd_client,
+    create_test_wallet,
+    load_teal_source,
+    print_error,
+    print_header,
+    print_info,
+    print_step,
+    print_success,
+    shorten_address,
+)
+
+from algokit_common import address_from_public_key, public_key_from_address
+from algokit_kmd_client.models import (
+    GenerateKeyRequest,
+    ImportMultisigRequest,
+    MultisigSig,
+    MultisigSubsig,
+    SignProgramMultisigRequest,
+)
+from algokit_transact import LogicSigAccount
+from algokit_transact.signing.types import MultisigSignature, MultisigSubsignature
+
+
+def format_bytes_for_display(data: bytes, show_first: int = 8, show_last: int = 8) -> str:
+    """Format a byte array for display, showing first and last few bytes."""
+    hex_str = data.hex()
+    if len(data) <= show_first + show_last:
+        return hex_str
+    first_bytes = hex_str[: show_first * 2]
+    last_bytes = hex_str[-(show_last * 2) :]
+    return f"{first_bytes}...{last_bytes}"
+
+
+def decode_kmd_multisig_response(multisig_bytes: bytes) -> dict:
+    """
+    Decode the KMD multisig response bytes into a MultisigSig structure.
+
+    The KMD API returns msgpack-encoded MultisigSig with wire keys:
+    - 'subsig' -> subsignatures array
+    - 'thr' -> threshold
+    - 'v' -> version
+    Each subsig has:
+    - 'pk' -> publicKey
+    - 's' -> signature (optional)
+    """
+    decoded = msgpack.unpackb(multisig_bytes, strict_map_key=False)
+
+    subsig_array = decoded.get(b"subsig", [])
+    threshold = decoded.get(b"thr", 0)
+    version = decoded.get(b"v", 0)
+
+    subsignatures = []
+    for subsig in subsig_array:
+        public_key = subsig.get(b"pk")
+        signature = subsig.get(b"s")
+        subsignatures.append({"public_key": public_key, "signature": signature})
+
+    return {"subsignatures": subsignatures, "threshold": threshold, "version": version}
+
+
+def kmd_multisig_to_transact_multisig(kmd_msig: dict) -> MultisigSignature:
+    """Convert a KMD MultisigSig to the transact MultisigSignature format."""
+    return MultisigSignature(
+        version=kmd_msig["version"],
+        threshold=kmd_msig["threshold"],
+        subsigs=[
+            MultisigSubsignature(public_key=subsig["public_key"], sig=subsig["signature"])
+            for subsig in kmd_msig["subsignatures"]
+        ],
+    )
+
+
+def count_signatures(msig: dict) -> int:
+    """Count the number of signatures in a KMD MultisigSig."""
+    return sum(1 for subsig in msig["subsignatures"] if subsig["signature"] is not None)
+
+
+def main() -> None:
+    print_header("KMD Multisig Program Signing Example")
+
+    kmd = create_kmd_client()
+    algod = create_algod_client()
+    wallet_handle_token = ""
+    wallet_password = "test-password"
+
+    try:
+        # =========================================================================
+        # Step 1: Create a Test Wallet
+        # =========================================================================
+        print_step(1, "Creating a test wallet for multisig program signing")
+
+        test_wallet = create_test_wallet(kmd, wallet_password)
+        wallet_handle_token = test_wallet["wallet_handle_token"]
+
+        print_success(f"Test wallet created: {test_wallet['wallet_name']}")
+        print_info(f"Wallet ID: {test_wallet['wallet_id']}")
+
+        # =========================================================================
+        # Step 2: Generate 3 Keys for Multisig Participants
+        # =========================================================================
+        print_step(2, "Generating 3 keys to use as multisig participants")
+
+        participant_addresses: list[str] = []
+        public_keys: list[bytes] = []
+        num_participants = 3
+
+        for i in range(1, num_participants + 1):
+            generate_key_response = kmd.generate_key(
+                GenerateKeyRequest(
+                    wallet_handle_token=wallet_handle_token,
+                )
+            )
+            address = generate_key_response.address
+            participant_addresses.append(address)
+            pk = public_key_from_address(address)
+            public_keys.append(pk)
+            print_info(f"Participant {i}: {shorten_address(address)}")
+
+        print_success(f"Generated {num_participants} participant keys")
+
+        # =========================================================================
+        # Step 3: Create a 2-of-3 Multisig Account
+        # =========================================================================
+        print_step(3, "Creating a 2-of-3 multisig account")
+
+        threshold = 2  # Minimum signatures required
+        multisig_version = 1  # Multisig format version
+
+        import_multisig_response = kmd.import_multisig(
+            ImportMultisigRequest(
+                multisig_version=multisig_version,
+                public_keys=public_keys,
+                threshold=threshold,
+                wallet_handle_token=wallet_handle_token,
+            )
+        )
+        multisig_address = import_multisig_response.address
+
+        print_success("Multisig account created!")
+        print_info(f"Multisig Address: {multisig_address}")
+        print_info(f"Threshold: {threshold}-of-{num_participants}")
+        print_info("")
+        print_info("This multisig address will be used as the delegator for the logic signature.")
+
+        # =========================================================================
+        # Step 4: Create a Simple TEAL Program
+        # =========================================================================
+        print_step(4, "Creating a simple TEAL program")
+
+        # Load TEAL logic signature from shared artifacts
+        # This program approves payment transactions up to 1 ALGO
+        # In production, you'd have more sophisticated logic
+        teal_source = load_teal_source("delegated-payment-limit.teal")
+
+        print_info("TEAL Program Source:")
+        print_info("")
+        for line in teal_source.split("\n"):
+            print_info(f"    {line}")
+        print_info("")
+        print_info("This program approves payment transactions up to 1 ALGO.")
+        print_info("When signed by a multisig account, it creates a 'delegated multisig lsig'.")
+
+        # =========================================================================
+        # Step 5: Compile the TEAL Program
+        # =========================================================================
+        print_step(5, "Compiling the TEAL program using algod teal_compile")
+
+        compile_result = algod.teal_compile(teal_source)
+
+        # Decode base64 result to bytes
+        program_bytes = base64.b64decode(compile_result.result)
+
+        print_success("TEAL program compiled successfully!")
+        print_info("")
+        print_info("Compilation Result:")
+        print_info(f"  Hash (program address): {compile_result.hash_}")
+        print_info(f"  Compiled size:          {len(program_bytes)} bytes")
+        print_info(f"  Compiled bytes:         {format_bytes_for_display(program_bytes)}")
+
+        # =========================================================================
+        # Step 6: Sign with the First Participant (Partial Signature)
+        # =========================================================================
+        print_step(6, "Signing the program with the first participant")
+
+        print_info(f"First signer: {shorten_address(participant_addresses[0])}")
+        print_info("")
+
+        first_result = kmd.sign_multisig_program(
+            SignProgramMultisigRequest(
+                address=multisig_address,
+                program=program_bytes,
+                public_key=public_keys[0],
+                wallet_handle_token=wallet_handle_token,
+                wallet_password=wallet_password,
+            )
+        )
+        first_sign_result = first_result.multisig
+
+        print_success("First signature obtained!")
+        print_info("")
+        print_info("sign_multisig_program() response fields:")
+        print_info(f"  multisig: bytes ({len(first_sign_result)} bytes)")
+        print_info("")
+
+        # Decode and display the partial multisig signature
+        partial_kmd_multisig = decode_kmd_multisig_response(first_sign_result)
+        sig_count_1 = count_signatures(partial_kmd_multisig)
+
+        print_info("Partial Multisig Signature:")
+        print_info(f"  version:   {partial_kmd_multisig['version']}")
+        print_info(f"  threshold: {partial_kmd_multisig['threshold']}")
+        print_info(f"  subsigs:   {len(partial_kmd_multisig['subsignatures'])} participants")
+        print_info(f"  Signatures collected: {sig_count_1} of {threshold} required")
+        print_info("")
+        print_info("Subsignature details:")
+        for i, subsig in enumerate(partial_kmd_multisig["subsignatures"]):
+            has_sig = subsig["signature"] is not None
+            status = "SIGNED" if has_sig else "pending"
+            addr = address_from_public_key(subsig["public_key"])
+            print_info(f"  {i + 1}. {shorten_address(addr)} - {status}")
+
+        print_info("")
+        print_info("Note: With only 1 signature, the multisig lsig is not yet valid.")
+        print_info(f"      We need {threshold} signatures ({threshold - sig_count_1} more required).")
+
+        # =========================================================================
+        # Step 7: Sign with the Second Participant (Complete the Multisig)
+        # =========================================================================
+        print_step(7, "Signing the program with the second participant")
+
+        print_info(f"Second signer: {shorten_address(participant_addresses[1])}")
+        print_info("")
+        print_info("Passing the partial multisig from Step 6 to collect the second signature...")
+        print_info("")
+
+        # Convert decoded dict to MultisigSig for passing back to KMD
+        partial_msig_obj = MultisigSig(
+            version=partial_kmd_multisig["version"],
+            threshold=partial_kmd_multisig["threshold"],
+            subsignatures=[
+                MultisigSubsig(public_key=s["public_key"], signature=s["signature"])
+                for s in partial_kmd_multisig["subsignatures"]
+            ],
+        )
+
+        second_result = kmd.sign_multisig_program(
+            SignProgramMultisigRequest(
+                address=multisig_address,
+                program=program_bytes,
+                public_key=public_keys[1],
+                wallet_handle_token=wallet_handle_token,
+                wallet_password=wallet_password,
+                partial_multisig=partial_msig_obj,
+            )
+        )
+        second_sign_result = second_result.multisig
+
+        print_success("Second signature obtained!")
+        print_info("")
+
+        # Decode and display the completed multisig signature
+        completed_kmd_multisig = decode_kmd_multisig_response(second_sign_result)
+        sig_count_2 = count_signatures(completed_kmd_multisig)
+
+        print_info("Completed Multisig Signature:")
+        print_info(f"  version:   {completed_kmd_multisig['version']}")
+        print_info(f"  threshold: {completed_kmd_multisig['threshold']}")
+        print_info(f"  Signatures collected: {sig_count_2} of {threshold} required")
+        print_info("")
+        print_info("Subsignature details:")
+        for i, subsig in enumerate(completed_kmd_multisig["subsignatures"]):
+            has_sig = subsig["signature"] is not None
+            status = "SIGNED" if has_sig else "pending"
+            addr = address_from_public_key(subsig["public_key"])
+            print_info(f"  {i + 1}. {shorten_address(addr)} - {status}")
+
+        print_info("")
+        print_success(f"Threshold met! {sig_count_2} >= {threshold} signatures collected.")
+        print_info("The delegated multisig logic signature is now fully authorized.")
+
+        # =========================================================================
+        # Step 8: Create a LogicSigAccount with the Multisig Signature
+        # =========================================================================
+        print_step(8, "Creating a LogicSigAccount with the multisig signature")
+
+        print_info("A delegated multisig LogicSigAccount combines:")
+        print_info("  1. The compiled program (logic)")
+        print_info("  2. The multisig signature (delegation proof from multiple parties)")
+        print_info("  3. The multisig delegator address")
+        print_info("")
+
+        # Get the program address (hash of "Program" + logic)
+        non_delegated_lsig = LogicSigAccount(logic=program_bytes)
+        program_address = non_delegated_lsig.address
+
+        # Create a LogicSigAccount for delegation
+        completed_multisig = kmd_multisig_to_transact_multisig(completed_kmd_multisig)
+        lsig_account = LogicSigAccount(logic=program_bytes, _address=multisig_address, msig=completed_multisig)
+
+        print_success("LogicSigAccount created with multisig signature!")
+        print_info("")
+        print_info("LogicSigAccount properties:")
+        print_info(f"  Program address:   {shorten_address(program_address)}")
+        print_info(f"  Delegator address: {shorten_address(multisig_address)} (multisig)")
+        print_info(f"  Has msig:          {lsig_account.msig is not None}")
+        print_info(f"  Logic size:        {len(lsig_account.logic)} bytes")
+        print_info("")
+
+        # Show the distinction between program address and delegator
+        print_info("Important distinction:")
+        print_info(f"  - Program address: {shorten_address(program_address)}")
+        print_info("    Hash of the logic - this is the 'contract account' in non-delegated mode")
+        print_info("")
+        print_info(f"  - lsig_account.addr: {shorten_address(lsig_account.addr)}")
+        print_info("    This is the DELEGATOR - the multisig account authorizing the program")
+        print_info("")
+        print_info("When using this delegated multisig lsig, transactions will be authorized")
+        print_info(f"as if signed by the multisig account {shorten_address(multisig_address)}.")
+
+        # =========================================================================
+        # Step 9: Explain How Delegated Multisig Logic Signatures Work
+        # =========================================================================
+        print_step(9, "Understanding delegated multisig logic signatures")
+
+        print_info("Delegated Multisig Logic Signatures combine two concepts:")
+        print_info("")
+        print_info("1. MULTISIG AUTHORIZATION:")
+        print_info("   - Multiple parties (2-of-3 in this example) must approve")
+        print_info("   - Each party signs the program bytes with their key")
+        print_info("   - Signatures are collected via partial_multisig parameter")
+        print_info("   - Once threshold is met, the authorization is complete")
+        print_info("")
+        print_info("2. DELEGATED LOGIC SIGNATURE:")
+        print_info("   - The program defines the rules for transactions")
+        print_info("   - The multisig signature authorizes the program")
+        print_info("   - Anyone with the lsig can submit transactions (if program approves)")
+        print_info("   - No further interaction from the multisig signers needed")
+        print_info("")
+        print_info("Key differences from regular multisig transactions:")
+        print_info("   - Multisig Txn: Signers approve EACH transaction")
+        print_info("   - Multisig Lsig: Signers approve the PROGRAM once, then")
+        print_info("                   the program approves transactions automatically")
+        print_info("")
+        print_info("Example workflow for using the delegated multisig lsig:")
+        print_info("")
+        print_info("  1. Create a Transaction with sender = multisig address")
+        print_info("")
+        print_info("  2. Use the LogicSigAccount.signer to sign:")
+        print_info("")
+        print_info("     signed_txns = lsig_account.signer([txn], [0])")
+        print_info("")
+        print_info("  3. The signed transaction includes:")
+        print_info("     - lsig.logic:  The compiled TEAL program")
+        print_info("     - lsig.msig:   The multisig delegation signature")
+        print_info("")
+        print_info("  4. When submitted, the network validates:")
+        print_info("     - The multisig signature is valid (threshold met)")
+        print_info("     - The program logic approves the transaction")
+
+        # =========================================================================
+        # Cleanup
+        # =========================================================================
+        print_step(10, "Cleaning up test wallet")
+
+        cleanup_test_wallet(kmd, wallet_handle_token)
+        wallet_handle_token = ""  # Mark as cleaned up
+
+        print_success("Test wallet handle released")
+
+        # =========================================================================
+        # Summary
+        # =========================================================================
+        print_header("Summary")
+        print_info("This example demonstrated multisig program signing with KMD:")
+        print_info("")
+        print_info("  sign_multisig_program() - Sign a TEAL program with multisig")
+        print_info("     Parameters:")
+        print_info("       - wallet_handle_token: The wallet session token")
+        print_info("       - wallet_password:     The wallet password")
+        print_info("       - address:             The multisig account address (delegator)")
+        print_info("       - program:             The compiled TEAL program bytes")
+        print_info("       - public_key:          The public key of the signer (must be in wallet)")
+        print_info("       - partial_multisig:    (optional) Existing partial signature to add to")
+        print_info("     Returns:")
+        print_info("       - multisig: bytes (msgpack-encoded MultisigSig)")
+        print_info("")
+        print_info("Multisig program signing workflow:")
+        print_info("  1. Create a multisig account with import_multisig()")
+        print_info("  2. Write a TEAL program with the desired authorization logic")
+        print_info("  3. Compile the program using algod.teal_compile()")
+        print_info("  4. Sign with first participant using sign_multisig_program()")
+        print_info("  5. Sign with additional participants, passing partial_multisig")
+        print_info("  6. Once threshold is met, create LogicSigAccount with msig")
+        print_info("  7. Use LogicSigAccount.signer to sign authorized transactions")
+        print_info("")
+        print_info("Key points:")
+        print_info("  - Each participant signs the PROGRAM (not transactions)")
+        print_info("  - The partial_multisig parameter chains signatures together")
+        print_info("  - The response contains msgpack-encoded MultisigSignature")
+        print_info("  - Unlike sign_multisig_transaction, program signing is done ONCE")
+        print_info("  - The resulting lsig can sign unlimited transactions (per program logic)")
+        print_info("")
+        print_info("Security considerations:")
+        print_info("  - Write program logic carefully - it controls your multisig account!")
+        print_info("  - Multiple parties review and sign the program code")
+        print_info("  - Consider time bounds, amount limits, and recipient restrictions")
+        print_info("  - The delegated lsig grants ongoing authorization until program expires")
+        print_info("")
+        print_info("Note: The test wallet remains in KMD (wallets cannot be deleted via API).")
+    except Exception as e:
+        print_error(f"Error: {e}")
+        print_info("")
+        print_info("Troubleshooting:")
+        print_info("  - Ensure LocalNet is running: algokit localnet start")
+        print_info("  - If LocalNet issues occur: algokit localnet reset")
+        print_info("  - Check that KMD is accessible on port 4002")
+        print_info("  - Check that Algod is accessible on port 4001")
+
+        # Cleanup on error
+        if wallet_handle_token:
+            cleanup_test_wallet(kmd, wallet_handle_token)
+
+        sys.exit(1)
+
+
+if __name__ == "__main__":
+    main()
+
+```
+
+---
+
+### Other examples in KMD Client
+
+- [KMD Version Information](/docs/algokit-utils/python/latest/examples/kmd-client/01-version/)
+- [Wallet Creation and Listing](/docs/algokit-utils/python/latest/examples/kmd-client/02-wallet-management/)
+- [Wallet Session Management](/docs/algokit-utils/python/latest/examples/kmd-client/03-wallet-sessions/)
+- [Key Generation](/docs/algokit-utils/python/latest/examples/kmd-client/04-key-generation/)
+- [Key Import and Export](/docs/algokit-utils/python/latest/examples/kmd-client/05-key-import-export/)
+- [Key Listing and Deletion](/docs/algokit-utils/python/latest/examples/kmd-client/06-key-listing-deletion/)
+- [Master Key Export](/docs/algokit-utils/python/latest/examples/kmd-client/07-master-key-export/)
+- [Multisig Account Setup](/docs/algokit-utils/python/latest/examples/kmd-client/08-multisig-setup/)
+- [Multisig Account Management](/docs/algokit-utils/python/latest/examples/kmd-client/09-multisig-management/)
+- [Transaction Signing with KMD](/docs/algokit-utils/python/latest/examples/kmd-client/10-transaction-signing/)
+- [Multisig Transaction Signing with KMD](/docs/algokit-utils/python/latest/examples/kmd-client/11-multisig-signing/)
+- [Program Signing (Delegated Logic Signatures) with KMD](/docs/algokit-utils/python/latest/examples/kmd-client/12-program-signing/)
+- **Multisig Program Signing (Delegated Multisig Logic Signatures) with KMD**

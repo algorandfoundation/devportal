@@ -1,0 +1,240 @@
+---
+title: 'Array Utilities'
+description: 'This example demonstrates the array utility functions for comparing and concatenating byte arrays:'
+sidebar:
+  order: 3
+---
+
+[← Back to Common Utilities](/docs/algokit-utils/typescript/latest/examples/common/)
+
+## Description
+
+This example demonstrates the array utility functions for comparing and concatenating byte arrays:
+
+- arrayEqual() for comparing two arrays element-by-element
+- concatArrays() for joining multiple Uint8Arrays into a new array
+
+## Prerequisites
+
+- No LocalNet required
+
+## Run This Example
+
+From the repository root:
+
+```bash
+cd examples
+npm run example common/03-array-utilities.ts
+```
+
+## Code
+
+[View source on GitHub](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/examples/common/03-array-utilities.ts)
+
+```typescript title="03-array-utilities.ts"
+/**
+ * Example: Array Utilities
+ *
+ * This example demonstrates the array utility functions for comparing and
+ * concatenating byte arrays:
+ * - arrayEqual() for comparing two arrays element-by-element
+ * - concatArrays() for joining multiple Uint8Arrays into a new array
+ *
+ * Prerequisites:
+ * - No LocalNet required
+ */
+
+import { arrayEqual, concatArrays } from '@algorandfoundation/algokit-utils/common';
+import { formatBytes, printHeader, printInfo, printStep, printSuccess } from '../shared/utils.js';
+
+function main() {
+  printHeader('Array Utilities Example');
+
+  // Step 1: arrayEqual() - Comparing Equal Arrays
+  printStep(1, 'arrayEqual() - Comparing Equal Arrays');
+
+  const arr1 = new Uint8Array([1, 2, 3, 4, 5]);
+  const arr2 = new Uint8Array([1, 2, 3, 4, 5]);
+
+  printInfo(`Array 1: ${formatBytes(arr1)}`);
+  printInfo(`Array 2: ${formatBytes(arr2)}`);
+  printInfo(`arrayEqual(arr1, arr2): ${arrayEqual(arr1, arr2)}`);
+  printInfo(`Arrays with identical content return true`);
+
+  // Step 2: arrayEqual() - Different Length Arrays
+  printStep(2, 'arrayEqual() - Different Length Arrays');
+
+  const shortArr = new Uint8Array([1, 2, 3]);
+  const longArr = new Uint8Array([1, 2, 3, 4, 5]);
+
+  printInfo(`Short array (length ${shortArr.length}): ${formatBytes(shortArr)}`);
+  printInfo(`Long array (length ${longArr.length}): ${formatBytes(longArr)}`);
+  printInfo(`arrayEqual(shortArr, longArr): ${arrayEqual(shortArr, longArr)}`);
+  printInfo(`Different lengths return false (fast check before element comparison)`);
+
+  // Step 3: arrayEqual() - Same Length, Different Content
+  printStep(3, 'arrayEqual() - Same Length, Different Content');
+
+  const arrA = new Uint8Array([1, 2, 3, 4, 5]);
+  const arrB = new Uint8Array([1, 2, 99, 4, 5]); // Different value at index 2
+
+  printInfo(`Array A: ${formatBytes(arrA)}`);
+  printInfo(`Array B: ${formatBytes(arrB)}`);
+  printInfo(`arrayEqual(arrA, arrB): ${arrayEqual(arrA, arrB)}`);
+  printInfo(`Same length but different content at index 2 returns false`);
+
+  // Step 4: arrayEqual() - Edge Cases
+  printStep(4, 'arrayEqual() - Edge Cases');
+
+  // Empty arrays
+  const empty1 = new Uint8Array([]);
+  const empty2 = new Uint8Array([]);
+  printInfo(`Empty arrays: arrayEqual([], []): ${arrayEqual(empty1, empty2)}`);
+
+  // Single element
+  const single1 = new Uint8Array([42]);
+  const single2 = new Uint8Array([42]);
+  printInfo(`Single element: arrayEqual([42], [42]): ${arrayEqual(single1, single2)}`);
+
+  // Same reference
+  const sameRef = new Uint8Array([1, 2, 3]);
+  printInfo(`Same reference: arrayEqual(arr, arr): ${arrayEqual(sameRef, sameRef)}`);
+
+  // Step 5: concatArrays() - Joining Multiple Arrays
+  printStep(5, 'concatArrays() - Joining Multiple Arrays');
+
+  const first = new Uint8Array([1, 2, 3]);
+  const second = new Uint8Array([4, 5, 6]);
+  const third = new Uint8Array([7, 8, 9]);
+
+  printInfo(`First array: ${formatBytes(first)}`);
+  printInfo(`Second array: ${formatBytes(second)}`);
+  printInfo(`Third array: ${formatBytes(third)}`);
+
+  const concatenated = concatArrays(first, second, third);
+  printInfo(`\nconcatArrays(first, second, third):`);
+  printInfo(`Result: ${formatBytes(concatenated)}`);
+  printInfo(`Result length: ${concatenated.length} bytes`);
+
+  // Step 6: concatArrays() - Different Sized Arrays
+  printStep(6, 'concatArrays() - Different Sized Arrays');
+
+  const tiny = new Uint8Array([1]);
+  const small = new Uint8Array([2, 3]);
+  const medium = new Uint8Array([4, 5, 6, 7]);
+  const large = new Uint8Array([8, 9, 10, 11, 12, 13, 14, 15]);
+
+  printInfo(`Tiny (1 byte): ${formatBytes(tiny)}`);
+  printInfo(`Small (2 bytes): ${formatBytes(small)}`);
+  printInfo(`Medium (4 bytes): ${formatBytes(medium)}`);
+  printInfo(`Large (8 bytes): ${formatBytes(large)}`);
+
+  const combined = concatArrays(tiny, small, medium, large);
+  printInfo(`\nconcatArrays(tiny, small, medium, large):`);
+  printInfo(`Result: ${formatBytes(combined)}`);
+  printInfo(`Result length: ${combined.length} bytes (1 + 2 + 4 + 8 = 15)`);
+
+  // Step 7: concatArrays() Returns New Array (Doesn't Modify Inputs)
+  printStep(7, 'concatArrays() - Returns New Array (Non-Mutating)');
+
+  const original1 = new Uint8Array([10, 20, 30]);
+  const original2 = new Uint8Array([40, 50, 60]);
+
+  printInfo(`Before concat:`);
+  printInfo(`  original1: ${formatBytes(original1)}`);
+  printInfo(`  original2: ${formatBytes(original2)}`);
+
+  const result = concatArrays(original1, original2);
+
+  printInfo(`\nAfter concat:`);
+  printInfo(`  original1: ${formatBytes(original1)} (unchanged)`);
+  printInfo(`  original2: ${formatBytes(original2)} (unchanged)`);
+  printInfo(`  result: ${formatBytes(result)} (new array)`);
+
+  // Prove they are different objects
+  printInfo(`\nVerifying result is a new array:`);
+  printInfo(`  result === original1: ${result === original1}`);
+  printInfo(`  result === original2: ${result === original2}`);
+
+  // Modify result and show originals are unaffected
+  result[0] = 99;
+  printInfo(`\nAfter modifying result[0] = 99:`);
+  printInfo(`  result: ${formatBytes(result)}`);
+  printInfo(`  original1: ${formatBytes(original1)} (still unchanged)`);
+
+  // Step 8: concatArrays() - Edge Cases
+  printStep(8, 'concatArrays() - Edge Cases');
+
+  // Single array
+  const singleInput = new Uint8Array([1, 2, 3]);
+  const singleResult = concatArrays(singleInput);
+  printInfo(`Single input: concatArrays([1,2,3]) = ${formatBytes(singleResult)}`);
+  printInfo(`  Is new array: ${singleResult !== singleInput}`);
+
+  // Empty arrays
+  const emptyResult = concatArrays(new Uint8Array([]), new Uint8Array([1, 2]), new Uint8Array([]));
+  printInfo(`With empty arrays: concatArrays([], [1,2], []) = ${formatBytes(emptyResult)}`);
+
+  // No arguments
+  const noArgs = concatArrays();
+  printInfo(`No arguments: concatArrays() = ${formatBytes(noArgs)} (empty array)`);
+
+  // Step 9: Practical Use Cases
+  printStep(9, 'Practical Use Cases');
+
+  printInfo('Common scenarios for array utilities:');
+
+  printInfo('\n1. Comparing cryptographic hashes:');
+  const hash1 = new Uint8Array([0xab, 0xcd, 0xef, 0x12]);
+  const hash2 = new Uint8Array([0xab, 0xcd, 0xef, 0x12]);
+  printInfo(`   hash1 === hash2 (reference): ${hash1 === hash2}`);
+  printInfo(`   arrayEqual(hash1, hash2) (content): ${arrayEqual(hash1, hash2)}`);
+
+  printInfo('\n2. Building transaction data:');
+  const prefix = new Uint8Array([0x54, 0x58]); // "TX"
+  const txData = new Uint8Array([0x01, 0x02, 0x03]);
+  const prefixedTx = concatArrays(prefix, txData);
+  printInfo(`   Prefix + TxData: ${formatBytes(prefixedTx)}`);
+
+  printInfo('\n3. Concatenating signature components:');
+  const r = new Uint8Array([0x30, 0x31, 0x32, 0x33]); // r component
+  const s = new Uint8Array([0x40, 0x41, 0x42, 0x43]); // s component
+  const signature = concatArrays(r, s);
+  printInfo(`   r + s = ${formatBytes(signature)}`);
+
+  // Step 10: Summary
+  printStep(10, 'Summary');
+
+  printInfo('Array Comparison:');
+  printInfo('  - arrayEqual(a, b) - Compare two arrays element-by-element');
+  printInfo('  - Returns false immediately if lengths differ (efficient)');
+  printInfo('  - Works with any ArrayLike<T> type');
+
+  printInfo('\nArray Concatenation:');
+  printInfo('  - concatArrays(...arrays) - Join multiple Uint8Arrays');
+  printInfo('  - Returns a new Uint8Array (non-mutating)');
+  printInfo('  - Works with any ArrayLike<number> type');
+  printInfo('  - Handles empty arrays and single inputs gracefully');
+
+  printSuccess('Array Utilities example completed successfully!');
+}
+
+main();
+```
+
+---
+
+### Other examples in Common Utilities
+
+- [Address Basics](/docs/algokit-utils/typescript/latest/examples/common/01-address-basics/)
+- [Address Encoding](/docs/algokit-utils/typescript/latest/examples/common/02-address-encoding/)
+- **Array Utilities**
+- [Constants Reference](/docs/algokit-utils/typescript/latest/examples/common/04-constants/)
+- [Crypto Hash (SHA-512/256)](/docs/algokit-utils/typescript/latest/examples/common/05-crypto-hash/)
+- [Logger Type](/docs/algokit-utils/typescript/latest/examples/common/06-logger/)
+- [JSON BigInt](/docs/algokit-utils/typescript/latest/examples/common/07-json-bigint/)
+- [MessagePack](/docs/algokit-utils/typescript/latest/examples/common/08-msgpack/)
+- [Primitive Codecs](/docs/algokit-utils/typescript/latest/examples/common/09-primitive-codecs/)
+- [Composite Codecs](/docs/algokit-utils/typescript/latest/examples/common/10-composite-codecs/)
+- [Model Codecs](/docs/algokit-utils/typescript/latest/examples/common/11-model-codecs/)
+- [Sourcemap](/docs/algokit-utils/typescript/latest/examples/common/12-sourcemap/)

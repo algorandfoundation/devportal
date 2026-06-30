@@ -1,0 +1,522 @@
+---
+title: 'ARC-56 Storage Helpers'
+description: 'This example demonstrates how to use ARC-56 storage helpers to inspect contract state key definitions and maps from an ARC-56 contract specification:'
+sidebar:
+  order: 15
+---
+
+[← Back to ABI Encoding](/docs/algokit-utils/typescript/latest/examples/abi/)
+
+## Description
+
+This example demonstrates how to use ARC-56 storage helpers to inspect contract state key definitions and maps from an ARC-56 contract specification:
+Storage Key Functions:
+
+- getGlobalABIStorageKeys(): Get all global state key definitions
+- getLocalABIStorageKeys(): Get all local state key definitions
+- getBoxABIStorageKeys(): Get all box key definitions
+  Storage Map Functions:
+- getBoxABIStorageMaps(): Get box map definitions
+  ABIStorageKey properties:
+- key: Base64-encoded key bytes
+- keyType: The type of the key (ABIType or AVMType)
+- valueType: The type of the value (ABIType or AVMType)
+- desc?: Optional description
+  ABIStorageMap properties:
+- keyType: The type of keys in the map
+- valueType: The type of values in the map
+- desc?: Optional description
+- prefix?: Base64-encoded prefix for map keys
+  The example also deploys a contract to LocalNet and reads actual state values.
+
+## Prerequisites
+
+- LocalNet running (via `algokit localnet start`)
+
+## Run This Example
+
+From the repository root:
+
+```bash
+cd examples
+npm run example abi/15-arc56-storage.ts
+```
+
+## Code
+
+[View source on GitHub](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/examples/abi/15-arc56-storage.ts)
+
+```typescript title="15-arc56-storage.ts"
+/**
+ * Example: ARC-56 Storage Helpers
+ *
+ * This example demonstrates how to use ARC-56 storage helpers to inspect
+ * contract state key definitions and maps from an ARC-56 contract specification:
+ *
+ * Storage Key Functions:
+ * - getGlobalABIStorageKeys(): Get all global state key definitions
+ * - getLocalABIStorageKeys(): Get all local state key definitions
+ * - getBoxABIStorageKeys(): Get all box key definitions
+ *
+ * Storage Map Functions:
+ * - getBoxABIStorageMaps(): Get box map definitions
+ *
+ * ABIStorageKey properties:
+ * - key: Base64-encoded key bytes
+ * - keyType: The type of the key (ABIType or AVMType)
+ * - valueType: The type of the value (ABIType or AVMType)
+ * - desc?: Optional description
+ *
+ * ABIStorageMap properties:
+ * - keyType: The type of keys in the map
+ * - valueType: The type of values in the map
+ * - desc?: Optional description
+ * - prefix?: Base64-encoded prefix for map keys
+ *
+ * The example also deploys a contract to LocalNet and reads actual state values.
+ *
+ * Prerequisites:
+ * - LocalNet running (via `algokit localnet start`)
+ */
+
+import { AlgorandClient, algo } from '@algorandfoundation/algokit-utils';
+import type {
+  ABIStorageKey,
+  ABIStorageMap,
+  Arc56Contract,
+} from '@algorandfoundation/algokit-utils/abi';
+import {
+  ABIType,
+  decodeAVMValue,
+  getBoxABIStorageKeys,
+  getBoxABIStorageMaps,
+  getGlobalABIStorageKeys,
+  getLocalABIStorageKeys,
+  isAVMType,
+} from '@algorandfoundation/algokit-utils/abi';
+import { readFileSync } from 'fs';
+import { join } from 'path';
+import {
+  formatBytes,
+  formatHex,
+  printHeader,
+  printInfo,
+  printStep,
+  printSuccess,
+} from '../shared/utils.js';
+
+// tsx provides __dirname in CJS-compatibility mode
+declare const __dirname: string;
+
+/**
+ * Formats a storage key type for display (either ABI type or AVM type)
+ */
+function formatKeyOrValueType(type: ABIType | string): string {
+  if (typeof type === 'string') {
+    return type; // AVM type (e.g., "AVMUint64", "AVMString", "AVMBytes")
+  }
+  return type.toString(); // ABI type
+}
+
+/**
+ * Displays ABIStorageKey properties
+ */
+function displayStorageKey(name: string, storageKey: ABIStorageKey): void {
+  printInfo(`  ${name}:`);
+  printInfo(`    key (base64): ${storageKey.key}`);
+  printInfo(`    key (decoded): "${Buffer.from(storageKey.key, 'base64').toString('utf-8')}"`);
+  printInfo(`    keyType: ${formatKeyOrValueType(storageKey.keyType)}`);
+  printInfo(`    valueType: ${formatKeyOrValueType(storageKey.valueType)}`);
+  if (storageKey.desc) {
+    printInfo(`    desc: ${storageKey.desc}`);
+  }
+}
+
+/**
+ * Displays ABIStorageMap properties
+ */
+function displayStorageMap(name: string, storageMap: ABIStorageMap): void {
+  printInfo(`  ${name}:`);
+  printInfo(`    keyType: ${formatKeyOrValueType(storageMap.keyType)}`);
+  printInfo(`    valueType: ${formatKeyOrValueType(storageMap.valueType)}`);
+  if (storageMap.desc) {
+    printInfo(`    desc: ${storageMap.desc}`);
+  }
+  if (storageMap.prefix !== undefined) {
+    printInfo(`    prefix (base64): "${storageMap.prefix}"`);
+    if (storageMap.prefix) {
+      printInfo(
+        `    prefix (decoded): "${Buffer.from(storageMap.prefix, 'base64').toString('utf-8')}"`,
+      );
+    }
+  }
+}
+
+/**
+ * Decodes a raw state value using the storage key's valueType
+ */
+function decodeStateValue(storageKey: ABIStorageKey, rawBytes: Uint8Array | undefined): string {
+  // Handle undefined or empty bytes
+  if (!rawBytes || rawBytes.length === 0) {
+    return '(empty)';
+  }
+
+  const valueType = storageKey.valueType;
+  try {
+    if (typeof valueType === 'string' && isAVMType(valueType)) {
+      // AVM type
+      const decoded = decodeAVMValue(valueType, rawBytes);
+      if (decoded instanceof Uint8Array) {
+        return formatHex(decoded);
+      }
+      return String(decoded);
+    } else if (valueType instanceof ABIType) {
+      // ABI type
+      const decoded = valueType.decode(rawBytes);
+      if (decoded instanceof Uint8Array) {
+        return formatHex(decoded);
+      }
+      return JSON.stringify(decoded);
+    }
+  } catch {
+    // If decoding fails, fall through to raw bytes display
+  }
+  return formatBytes(rawBytes);
+}
+
+async function main() {
+  printHeader('ARC-56 Storage Helpers Example');
+
+  // Step 1: Load ARC-56 contract specification
+  printStep(1, 'Load ARC-56 Contract Specification');
+
+  // Load the application.json (ARC-56 format with TEAL source) from tests/example-contracts/state
+  const arc56Path = join(
+    __dirname,
+    '..',
+    '..',
+    '..',
+    'tests',
+    'example-contracts',
+    'state',
+    'application.json',
+  );
+  const arc56Content = readFileSync(arc56Path, 'utf-8');
+  const appSpec: Arc56Contract = JSON.parse(arc56Content);
+
+  printInfo(`Loaded contract: ${appSpec.name}`);
+  printInfo(`ARC standards supported: ${appSpec.arcs.join(', ')}`);
+  printInfo('');
+  printInfo('State schema:');
+  printInfo(
+    `  Global: ${appSpec.state.schema.global.ints} ints, ${appSpec.state.schema.global.bytes} bytes`,
+  );
+  printInfo(
+    `  Local: ${appSpec.state.schema.local.ints} ints, ${appSpec.state.schema.local.bytes} bytes`,
+  );
+
+  // Step 2: Demonstrate getGlobalABIStorageKeys()
+  printStep(2, 'Get Global State Key Definitions');
+
+  printInfo('Using getGlobalABIStorageKeys() to get all global state keys:');
+  printInfo('');
+
+  const globalKeys = getGlobalABIStorageKeys(appSpec);
+  const globalKeyNames = Object.keys(globalKeys);
+
+  printInfo(`Found ${globalKeyNames.length} global state keys:`);
+  printInfo('');
+
+  for (const name of globalKeyNames) {
+    displayStorageKey(name, globalKeys[name]);
+    printInfo('');
+  }
+
+  // Step 3: Demonstrate getLocalABIStorageKeys()
+  printStep(3, 'Get Local State Key Definitions');
+
+  printInfo('Using getLocalABIStorageKeys() to get all local state keys:');
+  printInfo('');
+
+  const localKeys = getLocalABIStorageKeys(appSpec);
+  const localKeyNames = Object.keys(localKeys);
+
+  printInfo(`Found ${localKeyNames.length} local state keys:`);
+  printInfo('');
+
+  for (const name of localKeyNames) {
+    displayStorageKey(name, localKeys[name]);
+    printInfo('');
+  }
+
+  // Step 4: Demonstrate getBoxABIStorageKeys()
+  printStep(4, 'Get Box Key Definitions');
+
+  printInfo('Using getBoxABIStorageKeys() to get all box storage keys:');
+  printInfo('');
+
+  const boxKeys = getBoxABIStorageKeys(appSpec);
+  const boxKeyNames = Object.keys(boxKeys);
+
+  if (boxKeyNames.length === 0) {
+    printInfo('No box storage keys defined in this contract.');
+  } else {
+    printInfo(`Found ${boxKeyNames.length} box storage keys:`);
+    printInfo('');
+    for (const name of boxKeyNames) {
+      displayStorageKey(name, boxKeys[name]);
+      printInfo('');
+    }
+  }
+
+  // Step 5: Demonstrate getBoxABIStorageMaps()
+  printStep(5, 'Get Box Map Definitions');
+
+  printInfo('Using getBoxABIStorageMaps() to get box map definitions:');
+  printInfo('');
+
+  const boxMaps = getBoxABIStorageMaps(appSpec);
+  const boxMapNames = Object.keys(boxMaps);
+
+  if (boxMapNames.length === 0) {
+    printInfo('No box maps defined in this contract.');
+  } else {
+    printInfo(`Found ${boxMapNames.length} box maps:`);
+    printInfo('');
+    for (const name of boxMapNames) {
+      displayStorageMap(name, boxMaps[name]);
+      printInfo('');
+    }
+  }
+
+  // Step 6: Deploy contract and read actual state values
+  printStep(6, 'Deploy Contract and Read Actual State Values');
+
+  printInfo('Connecting to LocalNet and deploying State contract...');
+  printInfo('');
+
+  const algorand = AlgorandClient.defaultLocalNet();
+  const deployer = await algorand.account.kmd.getLocalNetDispenserAccount();
+
+  // Register the deployer's signer with AlgorandClient
+  algorand.setSignerFromAccount(deployer);
+
+  // Create app factory from spec (use deployer as default sender with its signer)
+  const factory = algorand.client.getAppFactory({
+    appSpec,
+    defaultSender: deployer,
+  });
+
+  // Deploy the app with template parameters
+  const { result, appClient } = await factory.deploy({
+    deployTimeParams: { VALUE: 1 },
+  });
+  const appId = result.appId;
+  printInfo(`Contract deployed with App ID: ${appId}`);
+  printInfo('');
+
+  // Set some global state values using the set_global method
+  // Method signature: set_global(uint64,uint64,string,byte[4])void
+  printInfo('Setting global state values...');
+  await appClient.send.call({
+    method: 'set_global',
+    args: [100n, 200n, 'hello', new Uint8Array([0x41, 0x42, 0x43, 0x44])], // int1, int2, bytes1, bytes2
+  });
+  printInfo('Global state values set successfully.');
+  printInfo('');
+
+  // Read global state using app client
+  printInfo('Reading global state and decoding using storage key types:');
+  printInfo('');
+
+  const globalState = await appClient.getGlobalState();
+
+  for (const name of globalKeyNames) {
+    const storageKey = globalKeys[name];
+    const stateEntry = Object.values(globalState).find(entry => entry.keyBase64 === storageKey.key);
+
+    if (stateEntry) {
+      // State can be either uint64 (value is bigint) or bytes (value is string with valueRaw)
+      const hasRawValue = 'valueRaw' in stateEntry;
+      printInfo(`  ${name}:`);
+      if (hasRawValue) {
+        const rawValue = (stateEntry as { valueRaw: Uint8Array }).valueRaw;
+        printInfo(`    Raw value: ${rawValue ? formatBytes(rawValue) : '(empty)'}`);
+        printInfo(
+          `    Decoded (${formatKeyOrValueType(storageKey.valueType)}): ${decodeStateValue(storageKey, rawValue)}`,
+        );
+      } else {
+        // For uint64 values, the state stores value directly as bigint
+        const value = (stateEntry as { value: bigint }).value;
+        printInfo(`    Value (uint64): ${value}`);
+      }
+    } else {
+      printInfo(`  ${name}: (not set)`);
+    }
+  }
+
+  // Step 7: Opt-in and set local state
+  printStep(7, 'Opt-in and Set Local State');
+
+  printInfo('Opting in to the contract...');
+  try {
+    await appClient.send.optIn({ method: 'opt_in' });
+    printInfo('Opted in successfully.');
+  } catch (e) {
+    if (String(e).includes('already opted in')) {
+      printInfo('Already opted in - skipping.');
+    } else {
+      throw e;
+    }
+  }
+  printInfo('');
+
+  // Method signature: set_local(uint64,uint64,string,byte[4])void
+  printInfo('Setting local state values...');
+  await appClient.send.call({
+    method: 'set_local',
+    args: [10n, 20n, 'local', new Uint8Array([0x4c, 0x4f, 0x43, 0x41])], // int1, int2, bytes1, bytes2
+  });
+  printInfo('Local state values set successfully.');
+  printInfo('');
+
+  // Read local state
+  printInfo('Reading local state and decoding using storage key types:');
+  printInfo('');
+
+  const localState = await appClient.getLocalState(deployer.addr);
+
+  for (const name of localKeyNames) {
+    const storageKey = localKeys[name];
+    const stateEntry = Object.values(localState).find(entry => entry.keyBase64 === storageKey.key);
+
+    if (stateEntry) {
+      // State can be either uint64 (value is bigint) or bytes (value is string with valueRaw)
+      const hasRawValue = 'valueRaw' in stateEntry;
+      printInfo(`  ${name}:`);
+      if (hasRawValue) {
+        const rawValue = (stateEntry as { valueRaw: Uint8Array }).valueRaw;
+        printInfo(`    Raw value: ${rawValue ? formatBytes(rawValue) : '(empty)'}`);
+        printInfo(
+          `    Decoded (${formatKeyOrValueType(storageKey.valueType)}): ${decodeStateValue(storageKey, rawValue)}`,
+        );
+      } else {
+        // For uint64 values, the state stores value directly as bigint
+        const value = (stateEntry as { value: bigint }).value;
+        printInfo(`    Value (uint64): ${value}`);
+      }
+    } else {
+      printInfo(`  ${name}: (not set)`);
+    }
+  }
+
+  // Step 8: Set and read box storage map
+  printStep(8, 'Set and Read Box Storage Map');
+
+  if (boxMapNames.length > 0) {
+    try {
+      printInfo('Setting a box map entry...');
+
+      // Fund the app for minimum balance requirement for box storage
+      await algorand.send.payment({
+        sender: deployer,
+        receiver: appClient.appAddress,
+        amount: algo(1), // 1 ALGO for box storage minimum balance
+      });
+
+      // Set a box using the set_box method
+      // Method signature: set_box(byte[4],string)void
+      await appClient.send.call({
+        method: 'set_box',
+        args: [new Uint8Array([0x62, 0x6f, 0x78, 0x31]), 'Box content here!'], // name, value
+        boxReferences: [{ appId: 0n, name: new Uint8Array([0x62, 0x6f, 0x78, 0x31]) }],
+      });
+      printInfo('Box value set successfully.');
+      printInfo('');
+
+      // Read the box value
+      const boxMap = boxMaps[boxMapNames[0]];
+      printInfo(`Reading box map '${boxMapNames[0]}':`);
+      printInfo(`  Key type: ${formatKeyOrValueType(boxMap.keyType)}`);
+      printInfo(`  Value type: ${formatKeyOrValueType(boxMap.valueType)}`);
+
+      const boxValue = await appClient.getBoxValue(new Uint8Array([0x62, 0x6f, 0x78, 0x31]));
+      printInfo(`  Raw box value: ${formatBytes(boxValue)}`);
+
+      // Decode the box value using the valueType from the storage map
+      const valueType = boxMap.valueType;
+      if (typeof valueType !== 'string') {
+        const decoded = valueType.decode(boxValue);
+        printInfo(`  Decoded value: "${decoded}"`);
+      }
+    } catch (e) {
+      printInfo(
+        `Box storage demo skipped due to error: ${e instanceof Error ? e.message : String(e)}`,
+      );
+      printInfo(
+        '(This can happen if LocalNet state is stale - try running "algokit localnet reset")',
+      );
+    }
+  } else {
+    printInfo('No box maps to demonstrate.');
+  }
+
+  // Step 9: Summary
+  printStep(9, 'Summary');
+
+  printInfo('ARC-56 Storage Helper Functions:');
+  printInfo('');
+  printInfo('Storage Key Functions:');
+  printInfo('  getGlobalABIStorageKeys(contract) - Get all global state keys');
+  printInfo('  getLocalABIStorageKeys(contract)  - Get all local state keys');
+  printInfo('  getBoxABIStorageKeys(contract)    - Get all box storage keys');
+  printInfo('');
+  printInfo('Storage Map Functions:');
+  printInfo('  getBoxABIStorageMaps(contract)    - Get all box maps');
+  printInfo('');
+  printInfo('ABIStorageKey Properties:');
+  printInfo('  key       - Base64-encoded key bytes');
+  printInfo('  keyType   - Type of the key (ABIType or AVMType)');
+  printInfo('  valueType - Type of the value (ABIType or AVMType)');
+  printInfo('  desc      - Optional description');
+  printInfo('');
+  printInfo('ABIStorageMap Properties:');
+  printInfo('  keyType   - Type of keys in the map');
+  printInfo('  valueType - Type of values in the map');
+  printInfo('  desc      - Optional description');
+  printInfo('  prefix    - Base64-encoded prefix for map keys');
+  printInfo('');
+  printInfo('Use Cases:');
+  printInfo('  - Inspect contract state schema from ARC-56 spec');
+  printInfo('  - Decode raw state bytes using typed definitions');
+  printInfo('  - Build generic contract explorers/tools');
+  printInfo('  - Validate state key/value types at runtime');
+
+  printSuccess('ARC-56 Storage Helpers example completed successfully!');
+}
+
+main().catch(error => {
+  console.error('Error:', error);
+  process.exit(1);
+});
+```
+
+---
+
+### Other examples in ABI Encoding
+
+- [ABI Type Parsing](/docs/algokit-utils/typescript/latest/examples/abi/01-type-parsing/)
+- [ABI Primitive Types](/docs/algokit-utils/typescript/latest/examples/abi/02-primitive-types/)
+- [ABI Address Type](/docs/algokit-utils/typescript/latest/examples/abi/03-address-type/)
+- [ABI String Type](/docs/algokit-utils/typescript/latest/examples/abi/04-string-type/)
+- [ABI Static Array Type](/docs/algokit-utils/typescript/latest/examples/abi/05-static-array/)
+- [ABI Dynamic Array Type](/docs/algokit-utils/typescript/latest/examples/abi/06-dynamic-array/)
+- [ABI Tuple Type](/docs/algokit-utils/typescript/latest/examples/abi/07-tuple-type/)
+- [ABI Struct Type](/docs/algokit-utils/typescript/latest/examples/abi/08-struct-type/)
+- [ABI Struct and Tuple Conversion](/docs/algokit-utils/typescript/latest/examples/abi/09-struct-tuple-conversion/)
+- [ABI Bool Array Packing](/docs/algokit-utils/typescript/latest/examples/abi/10-bool-packing/)
+- [ABI Method](/docs/algokit-utils/typescript/latest/examples/abi/11-abi-method/)
+- [AVM Type Encoding](/docs/algokit-utils/typescript/latest/examples/abi/12-avm-types/)
+- [Type Guards](/docs/algokit-utils/typescript/latest/examples/abi/13-type-guards/)
+- [ABI Complex Nested Types](/docs/algokit-utils/typescript/latest/examples/abi/14-complex-nested/)
+- **ARC-56 Storage Helpers**

@@ -1,0 +1,421 @@
+---
+title: 'Asset Clawback'
+description: 'This example demonstrates how to clawback assets from an account using the clawback address and the transact package: 1. Create an asset with clawback address set 2. Transfer assets to a target account 3. Clawback assets from target account using asset_sender field 4. Verify target account balance decreased 5. Verify clawback receiver received the assets'
+sidebar:
+  order: 6
+---
+
+[← Back to Transactions](/docs/algokit-utils/python/latest/examples/transact/)
+
+## Description
+
+This example demonstrates how to clawback assets from an account using the clawback address and the transact package: 1. Create an asset with clawback address set 2. Transfer assets to a target account 3. Clawback assets from target account using asset_sender field 4. Verify target account balance decreased 5. Verify clawback receiver received the assets
+Uses AssetTransferTransactionFields with the asset_sender field for clawback operations.
+Prerequisites:
+
+## Prerequisites
+
+- LocalNet running (via `algokit localnet start`)
+
+## Run This Example
+
+From the repository's `examples` directory:
+
+```bash
+cd examples
+uv run python transact/06_asset_clawback.py
+```
+
+## Code
+
+[View source on GitHub](https://github.com/algorandfoundation/algokit-utils-py/blob/main/examples/transact/06_asset_clawback.py)
+
+```python title="06_asset_clawback.py"
+# ruff: noqa: N999, C901, PLR0912, PLR0915, PLR2004
+"""
+Example: Asset Clawback
+
+This example demonstrates how to clawback assets from an account using
+the clawback address and the transact package:
+1. Create an asset with clawback address set
+2. Transfer assets to a target account
+3. Clawback assets from target account using asset_sender field
+4. Verify target account balance decreased
+5. Verify clawback receiver received the assets
+
+Uses AssetTransferTransactionFields with the asset_sender field for clawback operations.
+
+Prerequisites:
+- LocalNet running (via `algokit localnet start`)
+"""
+
+from shared import (
+    create_algod_client,
+    print_error,
+    print_header,
+    print_info,
+    print_step,
+    print_success,
+    shorten_address,
+    wait_for_confirmation,
+)
+
+from algokit_transact import (
+    AssetConfigTransactionFields,
+    AssetTransferTransactionFields,
+    PaymentTransactionFields,
+    Transaction,
+    TransactionType,
+    assign_fee,
+)
+from algokit_utils import AlgorandClient
+
+
+def main() -> None:
+    print_header("Asset Clawback Example")
+
+    # Step 1: Initialize clients
+    print_step(1, "Initialize Algod Client")
+    algod = create_algod_client()
+    algorand = AlgorandClient.default_localnet()
+
+    try:
+        algod.status()
+        print_info("Connected to LocalNet Algod")
+    except Exception as e:
+        print_error(f"Failed to connect to LocalNet: {e}")
+        print_info("Make sure LocalNet is running (e.g., algokit localnet start)")
+        return
+
+    # Step 2: Get clawback manager account from KMD
+    print_step(2, "Get Clawback Manager Account from KMD")
+    clawback_manager = algorand.account.localnet_dispenser()
+    print_info(f"Clawback manager address: {shorten_address(clawback_manager.addr)}")
+
+    # Step 3: Get suggested transaction parameters
+    print_step(3, "Get Suggested Transaction Parameters")
+    suggested_params = algod.suggested_params()
+    print_info(f"First valid round: {suggested_params.first_valid}")
+    print_info(f"Last valid round: {suggested_params.last_valid}")
+    print_info(f"Min fee: {suggested_params.min_fee} microALGO")
+
+    # Step 4: Generate and fund target account (will have assets clawed back)
+    print_step(4, "Generate and Fund Target Account")
+    target = algorand.account.random()
+    print_info(f"Target address: {shorten_address(target.addr)}")
+
+    # Fund the target with enough ALGO to cover opt-in transaction fee
+    funding_amount = 1_000_000  # 1 ALGO in microALGO
+
+    fund_target_tx_without_fee = Transaction(
+        transaction_type=TransactionType.Payment,
+        sender=clawback_manager.addr,
+        first_valid=suggested_params.first_valid,
+        last_valid=suggested_params.last_valid,
+        genesis_hash=suggested_params.genesis_hash,
+        genesis_id=suggested_params.genesis_id,
+        payment=PaymentTransactionFields(
+            receiver=target.addr,
+            amount=funding_amount,
+        ),
+    )
+
+    fund_target_tx = assign_fee(
+        fund_target_tx_without_fee,
+        fee_per_byte=suggested_params.fee,
+        min_fee=suggested_params.min_fee,
+    )
+
+    signed_fund_target_tx = clawback_manager.signer([fund_target_tx], [0])
+    algod.send_raw_transaction(signed_fund_target_tx[0])
+    wait_for_confirmation(algod, fund_target_tx.tx_id())
+    print_info("Funded target with 1 ALGO for transaction fees")
+
+    # Step 5: Generate and fund clawback receiver account (will receive clawed back assets)
+    print_step(5, "Generate and Fund Clawback Receiver Account")
+    clawback_receiver = algorand.account.random()
+    print_info(f"Clawback receiver address: {shorten_address(clawback_receiver.addr)}")
+
+    fund_receiver_suggested_params = algod.suggested_params()
+
+    fund_receiver_tx_without_fee = Transaction(
+        transaction_type=TransactionType.Payment,
+        sender=clawback_manager.addr,
+        first_valid=fund_receiver_suggested_params.first_valid,
+        last_valid=fund_receiver_suggested_params.last_valid,
+        genesis_hash=fund_receiver_suggested_params.genesis_hash,
+        genesis_id=fund_receiver_suggested_params.genesis_id,
+        payment=PaymentTransactionFields(
+            receiver=clawback_receiver.addr,
+            amount=funding_amount,
+        ),
+    )
+
+    fund_receiver_tx = assign_fee(
+        fund_receiver_tx_without_fee,
+        fee_per_byte=fund_receiver_suggested_params.fee,
+        min_fee=fund_receiver_suggested_params.min_fee,
+    )
+
+    signed_fund_receiver_tx = clawback_manager.signer([fund_receiver_tx], [0])
+    algod.send_raw_transaction(signed_fund_receiver_tx[0])
+    wait_for_confirmation(algod, fund_receiver_tx.tx_id())
+    print_info("Funded clawback receiver with 1 ALGO for transaction fees")
+
+    # Step 6: Create an asset with clawback address set
+    print_step(6, "Create Asset with Clawback Address Set")
+
+    asset_total = 10_000_000_000  # 10,000 units with 6 decimals
+    asset_decimals = 6
+    asset_name = "Clawbackable Token"
+    asset_unit_name = "CLW"
+
+    create_suggested_params = algod.suggested_params()
+
+    print_info(f"Creating asset: {asset_name} ({asset_unit_name})")
+    print_info(f"Clawback address set to: {shorten_address(clawback_manager.addr)}")
+
+    create_asset_tx_without_fee = Transaction(
+        transaction_type=TransactionType.AssetConfig,
+        sender=clawback_manager.addr,
+        first_valid=create_suggested_params.first_valid,
+        last_valid=create_suggested_params.last_valid,
+        genesis_hash=create_suggested_params.genesis_hash,
+        genesis_id=create_suggested_params.genesis_id,
+        asset_config=AssetConfigTransactionFields(
+            asset_id=0,  # 0 indicates asset creation
+            total=asset_total,
+            decimals=asset_decimals,
+            default_frozen=False,
+            asset_name=asset_name,
+            unit_name=asset_unit_name,
+            url="https://example.com/clawbackable-token",
+            manager=clawback_manager.addr,
+            reserve=clawback_manager.addr,
+            freeze=clawback_manager.addr,
+            clawback=clawback_manager.addr,  # IMPORTANT: Set clawback address to enable clawback
+        ),
+    )
+
+    create_asset_tx = assign_fee(
+        create_asset_tx_without_fee,
+        fee_per_byte=create_suggested_params.fee,
+        min_fee=create_suggested_params.min_fee,
+    )
+
+    signed_create_tx = clawback_manager.signer([create_asset_tx], [0])
+    algod.send_raw_transaction(signed_create_tx[0])
+
+    create_pending_info = wait_for_confirmation(algod, create_asset_tx.tx_id())
+    asset_id = create_pending_info.asset_id
+    if not asset_id:
+        raise ValueError("Asset ID not found in pending transaction response")
+    print_info(f"Asset created with ID: {asset_id}")
+    print_success(f"Asset {asset_name} (ID: {asset_id}) created with clawback capability!")
+
+    # Step 7: Target opts into the asset
+    print_step(7, "Target Opts Into the Asset")
+
+    opt_in_target_suggested_params = algod.suggested_params()
+
+    opt_in_target_tx_without_fee = Transaction(
+        transaction_type=TransactionType.AssetTransfer,
+        sender=target.addr,
+        first_valid=opt_in_target_suggested_params.first_valid,
+        last_valid=opt_in_target_suggested_params.last_valid,
+        genesis_hash=opt_in_target_suggested_params.genesis_hash,
+        genesis_id=opt_in_target_suggested_params.genesis_id,
+        asset_transfer=AssetTransferTransactionFields(
+            asset_id=asset_id,
+            receiver=target.addr,
+            amount=0,  # 0 amount for opt-in
+        ),
+    )
+
+    opt_in_target_tx = assign_fee(
+        opt_in_target_tx_without_fee,
+        fee_per_byte=opt_in_target_suggested_params.fee,
+        min_fee=opt_in_target_suggested_params.min_fee,
+    )
+
+    signed_opt_in_target_tx = target.signer([opt_in_target_tx], [0])
+    algod.send_raw_transaction(signed_opt_in_target_tx[0])
+    wait_for_confirmation(algod, opt_in_target_tx.tx_id())
+    print_info("Target opted into the asset")
+    print_success("Target successfully opted into the asset!")
+
+    # Step 8: Clawback receiver opts into the asset
+    print_step(8, "Clawback Receiver Opts Into the Asset")
+
+    opt_in_receiver_suggested_params = algod.suggested_params()
+
+    opt_in_receiver_tx_without_fee = Transaction(
+        transaction_type=TransactionType.AssetTransfer,
+        sender=clawback_receiver.addr,
+        first_valid=opt_in_receiver_suggested_params.first_valid,
+        last_valid=opt_in_receiver_suggested_params.last_valid,
+        genesis_hash=opt_in_receiver_suggested_params.genesis_hash,
+        genesis_id=opt_in_receiver_suggested_params.genesis_id,
+        asset_transfer=AssetTransferTransactionFields(
+            asset_id=asset_id,
+            receiver=clawback_receiver.addr,
+            amount=0,  # 0 amount for opt-in
+        ),
+    )
+
+    opt_in_receiver_tx = assign_fee(
+        opt_in_receiver_tx_without_fee,
+        fee_per_byte=opt_in_receiver_suggested_params.fee,
+        min_fee=opt_in_receiver_suggested_params.min_fee,
+    )
+
+    signed_opt_in_receiver_tx = clawback_receiver.signer([opt_in_receiver_tx], [0])
+    algod.send_raw_transaction(signed_opt_in_receiver_tx[0])
+    wait_for_confirmation(algod, opt_in_receiver_tx.tx_id())
+    print_info("Clawback receiver opted into the asset")
+    print_success("Clawback receiver successfully opted into the asset!")
+
+    # Step 9: Transfer assets from creator to target
+    print_step(9, "Transfer Assets to Target")
+
+    transfer_amount = 1_000_000_000  # 1,000 units
+    display_transfer = transfer_amount / (10**asset_decimals)
+    print_info(f"Transferring {display_transfer:,.0f} {asset_unit_name} to target")
+
+    transfer_suggested_params = algod.suggested_params()
+
+    transfer_tx_without_fee = Transaction(
+        transaction_type=TransactionType.AssetTransfer,
+        sender=clawback_manager.addr,
+        first_valid=transfer_suggested_params.first_valid,
+        last_valid=transfer_suggested_params.last_valid,
+        genesis_hash=transfer_suggested_params.genesis_hash,
+        genesis_id=transfer_suggested_params.genesis_id,
+        asset_transfer=AssetTransferTransactionFields(
+            asset_id=asset_id,
+            receiver=target.addr,
+            amount=transfer_amount,
+        ),
+    )
+
+    transfer_tx = assign_fee(
+        transfer_tx_without_fee,
+        fee_per_byte=transfer_suggested_params.fee,
+        min_fee=transfer_suggested_params.min_fee,
+    )
+
+    signed_transfer_tx = clawback_manager.signer([transfer_tx], [0])
+    algod.send_raw_transaction(signed_transfer_tx[0])
+    wait_for_confirmation(algod, transfer_tx.tx_id())
+
+    # Verify target's balance before clawback
+    target_asset_info_before = algod.account_asset_information(target.addr, asset_id)
+    target_balance_before = target_asset_info_before.asset_holding.amount
+    display_before = target_balance_before / (10**asset_decimals)
+    print_info(f"Target balance before clawback: {target_balance_before} ({display_before:,.0f} {asset_unit_name})")
+    print_success(f"Transferred {display_transfer:,.0f} {asset_unit_name} to target!")
+
+    # Step 10: Clawback assets from target to clawback receiver
+    print_step(10, "Clawback Assets Using asset_sender Field")
+    print_info("Demonstrating clawback: clawback address takes assets from target and sends to receiver")
+    print_info("Key: Use asset_sender field to specify the account to clawback FROM")
+
+    clawback_amount = 500_000_000  # 500 units (half of what target holds)
+    display_clawback = clawback_amount / (10**asset_decimals)
+    print_info(f"Clawback amount: {display_clawback:,.0f} {asset_unit_name}")
+
+    clawback_suggested_params = algod.suggested_params()
+
+    # IMPORTANT: For clawback, use asset_sender to specify WHO we're taking assets FROM
+    clawback_tx_without_fee = Transaction(
+        transaction_type=TransactionType.AssetTransfer,
+        sender=clawback_manager.addr,  # Transaction sender is the clawback address
+        first_valid=clawback_suggested_params.first_valid,
+        last_valid=clawback_suggested_params.last_valid,
+        genesis_hash=clawback_suggested_params.genesis_hash,
+        genesis_id=clawback_suggested_params.genesis_id,
+        asset_transfer=AssetTransferTransactionFields(
+            asset_id=asset_id,
+            receiver=clawback_receiver.addr,  # Assets go TO clawback receiver
+            amount=clawback_amount,
+            asset_sender=target.addr,  # CLAWBACK: Taking assets FROM target account
+        ),
+    )
+
+    clawback_tx = assign_fee(
+        clawback_tx_without_fee,
+        fee_per_byte=clawback_suggested_params.fee,
+        min_fee=clawback_suggested_params.min_fee,
+    )
+
+    # Only the clawback address needs to sign (not the target)
+    signed_clawback_tx = clawback_manager.signer([clawback_tx], [0])
+    algod.send_raw_transaction(signed_clawback_tx[0])
+    wait_for_confirmation(algod, clawback_tx.tx_id())
+
+    print_success("Clawback transaction confirmed!")
+
+    # Step 11: Verify target account balance decreased
+    print_step(11, "Verify Target Account Balance Decreased")
+
+    target_asset_info_after = algod.account_asset_information(target.addr, asset_id)
+    target_balance_after = target_asset_info_after.asset_holding.amount
+    expected_target_balance = target_balance_before - clawback_amount
+
+    display_before = target_balance_before / (10**asset_decimals)
+    display_after = target_balance_after / (10**asset_decimals)
+    display_expected = expected_target_balance / (10**asset_decimals)
+    print_info(f"Target balance before: {display_before:,.0f} {asset_unit_name}")
+    print_info(f"Target balance after: {display_after:,.0f} {asset_unit_name}")
+    print_info(f"Expected balance: {display_expected:,.0f} {asset_unit_name}")
+
+    if target_balance_after != expected_target_balance:
+        raise ValueError(f"Target balance mismatch: expected {expected_target_balance}, got {target_balance_after}")
+    print_success(f"Target balance correctly decreased by {display_clawback:,.0f} {asset_unit_name}!")
+
+    # Step 12: Verify clawback receiver received the assets
+    print_step(12, "Verify Clawback Receiver Received the Assets")
+
+    receiver_asset_info = algod.account_asset_information(clawback_receiver.addr, asset_id)
+    receiver_balance = receiver_asset_info.asset_holding.amount
+
+    display_receiver = receiver_balance / (10**asset_decimals)
+    print_info(f"Clawback receiver balance: {display_receiver:,.0f} {asset_unit_name}")
+
+    if receiver_balance != clawback_amount:
+        raise ValueError(f"Receiver balance mismatch: expected {clawback_amount}, got {receiver_balance}")
+    print_success(f"Clawback receiver correctly received {display_clawback:,.0f} {asset_unit_name}!")
+
+    # Summary
+    print_success("Asset clawback example completed successfully!")
+    print_info("Summary:")
+    print_info(f"  - Created asset {asset_name} (ID: {asset_id}) with clawback address")
+    print_info(f"  - Transferred {display_transfer:,.0f} {asset_unit_name} to target")
+    print_info(f"  - Clawed back {display_clawback:,.0f} {asset_unit_name} from target to receiver")
+    print_info(f"  - Target final balance: {display_after:,.0f} {asset_unit_name}")
+    print_info(f"  - Receiver final balance: {display_receiver:,.0f} {asset_unit_name}")
+
+
+if __name__ == "__main__":
+    main()
+
+```
+
+---
+
+### Other examples in Transactions
+
+- [Payment Transaction](/docs/algokit-utils/python/latest/examples/transact/01-payment-transaction/)
+- [Payment with Close](/docs/algokit-utils/python/latest/examples/transact/02-payment-close/)
+- [Asset Create](/docs/algokit-utils/python/latest/examples/transact/03-asset-create/)
+- [Asset Transfer](/docs/algokit-utils/python/latest/examples/transact/04-asset-transfer/)
+- [Asset Freeze](/docs/algokit-utils/python/latest/examples/transact/05-asset-freeze/)
+- **Asset Clawback**
+- [Atomic Transaction Group](/docs/algokit-utils/python/latest/examples/transact/07-atomic-group/)
+- [Atomic Swap](/docs/algokit-utils/python/latest/examples/transact/08-atomic-swap/)
+- [Single Signature](/docs/algokit-utils/python/latest/examples/transact/09-single-sig/)
+- [Multisig](/docs/algokit-utils/python/latest/examples/transact/10-multisig/)
+- [Logic Signature](/docs/algokit-utils/python/latest/examples/transact/11-logic-sig/)
+- [Fee Calculation](/docs/algokit-utils/python/latest/examples/transact/12-fee-calculation/)
+- [Encoding/Decoding](/docs/algokit-utils/python/latest/examples/transact/13-encoding-decoding/)
+- [Application Call](/docs/algokit-utils/python/latest/examples/transact/14-app-call/)

@@ -1,0 +1,12 @@
+diff --git a/libs/remark.ts b/libs/remark.ts
+index b16f7223c12ccbe090292b812ec637f19b7e526a..8c543e11571b4a9d88d7a21b17248d0885ab4c56 100644
+--- a/libs/remark.ts
++++ b/libs/remark.ts
+@@ -219,7 +219,6 @@ function normalizeId(base: string, srcDir: URL, filePath: string) {
+     .replace(/(^|[/\\])index$/, '')
+     .replace(/[/\\]?$/, '/')
+     .split(/[/\\]/)
+-    .map((segment) => slug(segment))
+     .join('/')
+ 
+   if (base !== '/') {

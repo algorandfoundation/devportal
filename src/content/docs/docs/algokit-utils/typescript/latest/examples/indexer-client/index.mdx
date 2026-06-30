@@ -1,0 +1,211 @@
+---
+title: 'Indexer Client'
+description: 'Blockchain data queries using the IndexerClient.'
+sidebar:
+  label: 'Indexer Client'
+  order: 0
+---
+
+[← Back to Examples Overview](/docs/algokit-utils/typescript/latest/examples/)
+
+Blockchain data queries using the IndexerClient.
+
+## Examples (16)
+
+<table>
+  <thead>
+    <tr>
+      <th>Example</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <a href='01-health-check/'>Indexer Health Check</a>
+      </td>
+      <td>
+        <p>
+          This example demonstrates how to check indexer health status using the IndexerClient
+          healthCheck() method.
+        </p>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <a href='02-account-lookup/'>Account Lookup</a>
+      </td>
+      <td>
+        <p>
+          This example demonstrates how to lookup account information using the IndexerClient
+          lookupAccountById() and searchForAccounts() methods.
+        </p>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <a href='03-account-assets/'>Account Assets</a>
+      </td>
+      <td>
+        <p>
+          This example demonstrates how to query account asset holdings using the IndexerClient
+          lookupAccountAssets() and lookupAccountCreatedAssets() methods.
+        </p>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <a href='04-account-applications/'>Account Applications</a>
+      </td>
+      <td>
+        <p>
+          This example demonstrates how to query account application relationships using the
+          IndexerClient lookupAccountCreatedApplications() and lookupAccountAppLocalStates()
+          methods.
+        </p>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <a href='05-account-transactions/'>Account Transactions</a>
+      </td>
+      <td>
+        <p>
+          This example demonstrates how to query an account's transaction history using the
+          IndexerClient lookupAccountTransactions() method.
+        </p>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <a href='06-transaction-lookup/'>Transaction Lookup</a>
+      </td>
+      <td>
+        <p>
+          This example demonstrates how to lookup a single transaction by ID using the IndexerClient
+          lookupTransactionById() method.
+        </p>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <a href='07-transaction-search/'>Transaction Search</a>
+      </td>
+      <td>
+        <p>
+          This example demonstrates how to search for transactions with various filters using the
+          IndexerClient searchForTransactions() method.
+        </p>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <a href='08-asset-lookup/'>Asset Lookup</a>
+      </td>
+      <td>
+        <p>
+          This example demonstrates how to lookup and search for assets using the IndexerClient
+          lookupAssetById() and searchForAssets() methods.
+        </p>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <a href='09-asset-balances/'>Asset Balances</a>
+      </td>
+      <td>
+        <p>
+          This example demonstrates how to lookup all holders of an asset using the IndexerClient
+          lookupAssetBalances() method.
+        </p>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <a href='10-asset-transactions/'>Asset Transactions</a>
+      </td>
+      <td>
+        <p>
+          This example demonstrates how to lookup transactions for a specific asset using the
+          IndexerClient lookupAssetTransactions() method.
+        </p>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <a href='11-application-lookup/'>Application Lookup</a>
+      </td>
+      <td>
+        <p>
+          This example demonstrates how to lookup and search for applications using the
+          IndexerClient lookupApplicationById() and searchForApplications() methods.
+        </p>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <a href='12-application-logs/'>Application Logs Lookup</a>
+      </td>
+      <td>
+        <p>
+          This example demonstrates how to lookup application logs using the IndexerClient
+          lookupApplicationLogsById() method.
+        </p>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <a href='13-application-boxes/'>Application Boxes Lookup</a>
+      </td>
+      <td>
+        <p>
+          This example demonstrates how to query application boxes using the IndexerClient
+          searchForApplicationBoxes() and lookupApplicationBoxByIdAndName() methods.
+        </p>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <a href='14-block-lookup/'>Block Lookup</a>
+      </td>
+      <td>
+        <p>
+          This example demonstrates how to lookup block information using the IndexerClient
+          lookupBlock() method.
+        </p>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <a href='15-block-headers/'>Block Headers Search</a>
+      </td>
+      <td>
+        <p>
+          This example demonstrates how to search for block headers using the IndexerClient
+          searchForBlockHeaders() method.
+        </p>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <a href='16-pagination/'>Pagination</a>
+      </td>
+      <td>
+        <p>
+          This example demonstrates how to properly handle pagination across multiple indexer
+          endpoints using limit and next parameters. It includes a generic pagination helper
+          function and shows iteration through all pages of results.
+        </p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+## Quick Start
+
+Run any example from the repository's `examples` directory:
+
+```bash
+cd examples
+npm run example indexer_client/01-*.ts
+```

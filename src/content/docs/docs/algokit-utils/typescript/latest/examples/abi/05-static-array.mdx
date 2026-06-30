@@ -1,0 +1,338 @@
+---
+title: 'ABI Static Array Type'
+description: 'This example demonstrates how to encode and decode fixed-length arrays using ABIArrayStaticType:'
+sidebar:
+  order: 5
+---
+
+[← Back to ABI Encoding](/docs/algokit-utils/typescript/latest/examples/abi/)
+
+## Description
+
+This example demonstrates how to encode and decode fixed-length arrays using ABIArrayStaticType:
+
+- byte[32]: Fixed 32 bytes, common for hashes and cryptographic data
+- uint64[3]: Fixed array of 3 unsigned 64-bit integers
+- address[2]: Fixed array of 2 Algorand addresses
+  Key characteristics of static arrays:
+- Fixed length known at compile time
+- No length prefix in encoding (unlike dynamic arrays)
+- Elements are encoded consecutively
+- Encoded length = elementSize \* arrayLength
+
+## Prerequisites
+
+- No LocalNet required
+
+## Run This Example
+
+From the repository root:
+
+```bash
+cd examples
+npm run example abi/05-static-array.ts
+```
+
+## Code
+
+[View source on GitHub](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/examples/abi/05-static-array.ts)
+
+```typescript title="05-static-array.ts"
+/**
+ * Example: ABI Static Array Type
+ *
+ * This example demonstrates how to encode and decode fixed-length arrays using ABIArrayStaticType:
+ * - byte[32]: Fixed 32 bytes, common for hashes and cryptographic data
+ * - uint64[3]: Fixed array of 3 unsigned 64-bit integers
+ * - address[2]: Fixed array of 2 Algorand addresses
+ *
+ * Key characteristics of static arrays:
+ * - Fixed length known at compile time
+ * - No length prefix in encoding (unlike dynamic arrays)
+ * - Elements are encoded consecutively
+ * - Encoded length = elementSize * arrayLength
+ *
+ * Prerequisites:
+ * - No LocalNet required
+ */
+
+import { Address } from '@algorandfoundation/algokit-utils';
+import {
+  ABIAddressType,
+  ABIArrayStaticType,
+  ABIByteType,
+  ABIType,
+  ABIUintType,
+} from '@algorandfoundation/algokit-utils/abi';
+import {
+  formatBytes,
+  formatHex,
+  printHeader,
+  printInfo,
+  printStep,
+  printSuccess,
+} from '../shared/utils.js';
+
+function main() {
+  printHeader('ABI Static Array Type Example');
+
+  // Step 1: Create ABIArrayStaticType and inspect properties
+  printStep(1, 'ABIArrayStaticType Properties');
+
+  const byte32Type = ABIType.from('byte[32]') as ABIArrayStaticType;
+  const uint64x3Type = ABIType.from('uint64[3]') as ABIArrayStaticType;
+  const address2Type = ABIType.from('address[2]') as ABIArrayStaticType;
+
+  printInfo('byte[32]:');
+  printInfo(`  toString(): ${byte32Type.toString()}`);
+  printInfo(`  childType: ${byte32Type.childType.toString()}`);
+  printInfo(`  length: ${byte32Type.length}`);
+  printInfo(`  byteLen(): ${byte32Type.byteLen()}`);
+  printInfo(`  isDynamic(): ${byte32Type.isDynamic()}`);
+
+  printInfo('\nuint64[3]:');
+  printInfo(`  toString(): ${uint64x3Type.toString()}`);
+  printInfo(`  childType: ${uint64x3Type.childType.toString()}`);
+  printInfo(`  length: ${uint64x3Type.length}`);
+  printInfo(`  byteLen(): ${uint64x3Type.byteLen()}`);
+  printInfo(`  isDynamic(): ${uint64x3Type.isDynamic()}`);
+
+  printInfo('\naddress[2]:');
+  printInfo(`  toString(): ${address2Type.toString()}`);
+  printInfo(`  childType: ${address2Type.childType.toString()}`);
+  printInfo(`  length: ${address2Type.length}`);
+  printInfo(`  byteLen(): ${address2Type.byteLen()}`);
+  printInfo(`  isDynamic(): ${address2Type.isDynamic()}`);
+
+  // Step 2: byte[32] encoding - common for hashes
+  printStep(2, 'byte[32] Encoding - Common for Hashes');
+
+  // Simulate a SHA-256 hash (32 bytes)
+  const hashBytes = new Uint8Array(32);
+  for (let i = 0; i < 32; i++) {
+    hashBytes[i] = i * 8; // 0x00, 0x08, 0x10, 0x18, ...
+  }
+
+  // Encode as array of individual byte values
+  const hashValues: number[] = Array.from(hashBytes);
+
+  const hashEncoded = byte32Type.encode(hashValues);
+  printInfo(`Input: array of 32 byte values`);
+  printInfo(`  Values: [${hashValues.slice(0, 8).join(', ')}, ...]`);
+  printInfo(`Encoded: ${formatHex(hashEncoded)}`);
+  printInfo(`Encoded length: ${hashEncoded.length} bytes`);
+
+  // Verify encoded length = elementSize * arrayLength
+  const byteSize = new ABIByteType().byteLen();
+  const expectedByte32Len = byteSize * 32;
+  printInfo(`Expected length (1 byte * 32): ${expectedByte32Len} bytes`);
+  printInfo(`Length matches: ${hashEncoded.length === expectedByte32Len}`);
+
+  // Decode back
+  const hashDecoded = byte32Type.decode(hashEncoded) as number[];
+  printInfo(`Decoded: [${hashDecoded.slice(0, 8).join(', ')}, ...]`);
+  printInfo(`Round-trip verified: ${hashDecoded.every((v, i) => v === hashValues[i])}`);
+
+  // Step 3: uint64[3] encoding - fixed array of integers
+  printStep(3, 'uint64[3] Encoding - Fixed Array of Integers');
+
+  const uint64Values = [1000n, 2000n, 3000n];
+
+  const uint64x3Encoded = uint64x3Type.encode(uint64Values);
+  printInfo(`Input: [${uint64Values.join(', ')}]`);
+  printInfo(`Encoded: ${formatHex(uint64x3Encoded)}`);
+  printInfo(`Encoded length: ${uint64x3Encoded.length} bytes`);
+
+  // Verify encoded length = elementSize * arrayLength
+  const uint64Size = new ABIUintType(64).byteLen();
+  const expectedUint64x3Len = uint64Size * 3;
+  printInfo(`Expected length (8 bytes * 3): ${expectedUint64x3Len} bytes`);
+  printInfo(`Length matches: ${uint64x3Encoded.length === expectedUint64x3Len}`);
+
+  // Decode back
+  const uint64Decoded = uint64x3Type.decode(uint64x3Encoded) as bigint[];
+  printInfo(`Decoded: [${uint64Decoded.join(', ')}]`);
+  printInfo(`Round-trip verified: ${uint64Decoded.every((v, i) => v === uint64Values[i])}`);
+
+  // Step 4: address[2] encoding - fixed array of addresses
+  printStep(4, 'address[2] Encoding - Fixed Array of Addresses');
+
+  // Create two sample addresses from public keys
+  const pubKey1 = new Uint8Array(32).fill(0xaa);
+  const pubKey2 = new Uint8Array(32).fill(0xbb);
+
+  const addr1 = new Address(pubKey1);
+  const addr2 = new Address(pubKey2);
+
+  const addressValues = [addr1.toString(), addr2.toString()];
+
+  const address2Encoded = address2Type.encode(addressValues);
+  printInfo(`Input addresses:`);
+  printInfo(`  [0]: ${addressValues[0]}`);
+  printInfo(`  [1]: ${addressValues[1]}`);
+  printInfo(`Encoded: ${formatBytes(address2Encoded, 16)}`);
+  printInfo(`Encoded length: ${address2Encoded.length} bytes`);
+
+  // Verify encoded length = elementSize * arrayLength
+  const addressSize = new ABIAddressType().byteLen();
+  const expectedAddress2Len = addressSize * 2;
+  printInfo(`Expected length (32 bytes * 2): ${expectedAddress2Len} bytes`);
+  printInfo(`Length matches: ${address2Encoded.length === expectedAddress2Len}`);
+
+  // Decode back
+  const addressDecoded = address2Type.decode(address2Encoded) as string[];
+  printInfo(`Decoded:`);
+  printInfo(`  [0]: ${addressDecoded[0]}`);
+  printInfo(`  [1]: ${addressDecoded[1]}`);
+  printInfo(`Round-trip verified: ${addressDecoded.every((v, i) => v === addressValues[i])}`);
+
+  // Step 5: Demonstrate no length prefix
+  printStep(5, 'Static Arrays Have No Length Prefix');
+
+  printInfo('Static arrays encode directly WITHOUT a length prefix:');
+  printInfo('  - The length is known from the type definition');
+  printInfo('  - All bytes are element data, none for length');
+
+  // Show contrast with what a dynamic array would look like
+  const singleUint64 = new ABIUintType(64);
+  const value1000 = singleUint64.encode(1000n);
+  const value2000 = singleUint64.encode(2000n);
+  const value3000 = singleUint64.encode(3000n);
+
+  printInfo('\nCompare single uint64 encodings:');
+  printInfo(`  1000n: ${formatHex(value1000)} (8 bytes)`);
+  printInfo(`  2000n: ${formatHex(value2000)} (8 bytes)`);
+  printInfo(`  3000n: ${formatHex(value3000)} (8 bytes)`);
+
+  printInfo('\nuint64[3] encoding is just these concatenated (no prefix):');
+  printInfo(`  ${formatHex(uint64x3Encoded)} (24 bytes)`);
+
+  // Verify the encoding is just concatenated elements
+  const concatenated = new Uint8Array([...value1000, ...value2000, ...value3000]);
+  const matchesConcatenated = uint64x3Encoded.every((v, i) => v === concatenated[i]);
+  printInfo(`Matches concatenation: ${matchesConcatenated}`);
+
+  // Step 6: Elements encoded consecutively
+  printStep(6, 'Elements Are Encoded Consecutively');
+
+  printInfo('Each element occupies a fixed position:');
+  printInfo(`  Element 0: bytes 0-7   (${formatHex(uint64x3Encoded.slice(0, 8))})`);
+  printInfo(`  Element 1: bytes 8-15  (${formatHex(uint64x3Encoded.slice(8, 16))})`);
+  printInfo(`  Element 2: bytes 16-23 (${formatHex(uint64x3Encoded.slice(16, 24))})`);
+
+  printInfo('\nFor address[2]:');
+  printInfo(`  Element 0: bytes 0-31  (first 32 bytes = address 1)`);
+  printInfo(`  Element 1: bytes 32-63 (next 32 bytes = address 2)`);
+
+  // Extract individual elements from the encoded address array
+  const extractedAddr1 = new ABIAddressType().decode(address2Encoded.slice(0, 32));
+  const extractedAddr2 = new ABIAddressType().decode(address2Encoded.slice(32, 64));
+
+  printInfo(`\nExtracted from encoded bytes:`);
+  printInfo(`  bytes[0:32] decoded: ${extractedAddr1}`);
+  printInfo(`  bytes[32:64] decoded: ${extractedAddr2}`);
+  printInfo(
+    `  Matches originals: ${extractedAddr1 === addressValues[0] && extractedAddr2 === addressValues[1]}`,
+  );
+
+  // Step 7: Verify encoded length formula
+  printStep(7, 'Encoded Length Formula: elementSize * arrayLength');
+
+  // Note: bool arrays have special packing - 8 bools fit in 1 byte
+  // So we exclude bool from the simple formula test
+  const testCases = [
+    { type: 'byte[16]', elementSize: 1, arrayLength: 16 },
+    { type: 'byte[32]', elementSize: 1, arrayLength: 32 },
+    { type: 'byte[64]', elementSize: 1, arrayLength: 64 },
+    { type: 'uint8[10]', elementSize: 1, arrayLength: 10 },
+    { type: 'uint16[5]', elementSize: 2, arrayLength: 5 },
+    { type: 'uint32[4]', elementSize: 4, arrayLength: 4 },
+    { type: 'uint64[3]', elementSize: 8, arrayLength: 3 },
+    { type: 'uint128[2]', elementSize: 16, arrayLength: 2 },
+    { type: 'uint256[2]', elementSize: 32, arrayLength: 2 },
+    { type: 'address[3]', elementSize: 32, arrayLength: 3 },
+  ];
+
+  printInfo('Type          | Element Size | Array Length | Expected | Actual');
+  printInfo('--------------|--------------|--------------|----------|-------');
+
+  for (const tc of testCases) {
+    const parsedType = ABIType.from(tc.type) as ABIArrayStaticType;
+    const expectedLen = tc.elementSize * tc.arrayLength;
+    const actualLen = parsedType.byteLen();
+    const match = expectedLen === actualLen ? 'OK' : 'MISMATCH';
+
+    printInfo(
+      `${tc.type.padEnd(13)} | ${String(tc.elementSize).padEnd(12)} | ${String(tc.arrayLength).padEnd(12)} | ${String(expectedLen).padEnd(8)} | ${actualLen} ${match}`,
+    );
+  }
+
+  // Step 8: Creating ABIArrayStaticType programmatically
+  printStep(8, 'Creating ABIArrayStaticType Programmatically');
+
+  // You can also create static array types directly with new
+  const customArrayType = new ABIArrayStaticType(new ABIUintType(32), 5);
+
+  printInfo('Created with: new ABIArrayStaticType(new ABIUintType(32), 5)');
+  printInfo(`  toString(): ${customArrayType.toString()}`);
+  printInfo(`  childType: ${customArrayType.childType.toString()}`);
+  printInfo(`  length: ${customArrayType.length}`);
+  printInfo(`  byteLen(): ${customArrayType.byteLen()}`);
+
+  // Encode and decode with custom type
+  // Note: encode accepts numbers or bigints, decode returns bigints for uint types
+  const customValues = [100, 200, 300, 400, 500];
+  const customEncoded = customArrayType.encode(customValues);
+  const customDecoded = customArrayType.decode(customEncoded) as bigint[];
+
+  printInfo(`\nEncode [${customValues.join(', ')}]:`);
+  printInfo(`  Encoded: ${formatHex(customEncoded)}`);
+  printInfo(`  Decoded: [${customDecoded.join(', ')}]`);
+  printInfo(
+    `  Round-trip verified: ${customDecoded.every((v, i) => BigInt(v) === BigInt(customValues[i]))}`,
+  );
+
+  // Step 9: Summary
+  printStep(9, 'Summary');
+
+  printInfo('ABIArrayStaticType key properties:');
+  printInfo('  - childType: The type of each element');
+  printInfo('  - length: Fixed number of elements');
+  printInfo('  - byteLen(): Returns elementSize * length');
+  printInfo('  - isDynamic(): Always returns false');
+
+  printInfo('\nStatic array encoding characteristics:');
+  printInfo('  - No length prefix (length is in the type)');
+  printInfo('  - Elements encoded consecutively');
+  printInfo('  - Fixed encoded size = elementSize * arrayLength');
+  printInfo('  - Common uses: byte[32] for hashes, address[N] for multi-sig');
+
+  printInfo('\nCreating static array types:');
+  printInfo('  - ABIType.from("byte[32]") - parse from string');
+  printInfo('  - new ABIArrayStaticType(childType, length) - programmatic');
+
+  printSuccess('ABI Static Array Type example completed successfully!');
+}
+
+main();
+```
+
+---
+
+### Other examples in ABI Encoding
+
+- [ABI Type Parsing](/docs/algokit-utils/typescript/latest/examples/abi/01-type-parsing/)
+- [ABI Primitive Types](/docs/algokit-utils/typescript/latest/examples/abi/02-primitive-types/)
+- [ABI Address Type](/docs/algokit-utils/typescript/latest/examples/abi/03-address-type/)
+- [ABI String Type](/docs/algokit-utils/typescript/latest/examples/abi/04-string-type/)
+- **ABI Static Array Type**
+- [ABI Dynamic Array Type](/docs/algokit-utils/typescript/latest/examples/abi/06-dynamic-array/)
+- [ABI Tuple Type](/docs/algokit-utils/typescript/latest/examples/abi/07-tuple-type/)
+- [ABI Struct Type](/docs/algokit-utils/typescript/latest/examples/abi/08-struct-type/)
+- [ABI Struct and Tuple Conversion](/docs/algokit-utils/typescript/latest/examples/abi/09-struct-tuple-conversion/)
+- [ABI Bool Array Packing](/docs/algokit-utils/typescript/latest/examples/abi/10-bool-packing/)
+- [ABI Method](/docs/algokit-utils/typescript/latest/examples/abi/11-abi-method/)
+- [AVM Type Encoding](/docs/algokit-utils/typescript/latest/examples/abi/12-avm-types/)
+- [Type Guards](/docs/algokit-utils/typescript/latest/examples/abi/13-type-guards/)
+- [ABI Complex Nested Types](/docs/algokit-utils/typescript/latest/examples/abi/14-complex-nested/)
+- [ARC-56 Storage Helpers](/docs/algokit-utils/typescript/latest/examples/abi/15-arc56-storage/)

@@ -1,0 +1,48 @@
+---
+/**
+ * LibraryIndex — Data-driven card grid for the /docs/ landing page.
+ *
+ * Renders LibraryLinkCard components grouped by category, pulling
+ * all data from the config system. Adding a new library config
+ * automatically adds a card here.
+ */
+import type { LibraryCategory } from '../config/libraries.ts';
+import { getLibrariesByCategory, categoryLabels } from '../config/libraries.ts';
+import LibraryLinkCard from './LibraryLinkCard.astro';
+
+const categories = getLibrariesByCategory();
+const categoryOrder: readonly LibraryCategory[] = [
+  'sdk',
+  'cli',
+  'language',
+  'tool',
+  'api',
+];
+---
+
+{
+  categoryOrder.map(cat => {
+    const libs = categories[cat];
+    if (!libs?.length) return null;
+    return (
+      <section>
+        <h2>{categoryLabels[cat]}</h2>
+        <div class='library-cards not-content'>
+          {libs.map(lib => (
+            <LibraryLinkCard lib={lib} />
+          ))}
+        </div>
+      </section>
+    );
+  })
+}
+
+<style>
+  .library-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    align-items: start;
+    gap: 1rem;
+    margin: 1rem 0;
+  }
+</style>

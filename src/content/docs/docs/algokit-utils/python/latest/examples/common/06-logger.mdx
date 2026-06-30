@@ -1,0 +1,481 @@
+---
+title: 'Example'
+description: 'Logger Type Example'
+sidebar:
+  order: 6
+---
+
+[← Back to Common Utilities](/docs/algokit-utils/python/latest/examples/common/)
+
+## Description
+
+Logger Type Example
+This example demonstrates the Logger protocol/interface for consistent logging across the AlgoKit Utils SDK.
+Topics covered:
+
+- Logger protocol definition with all log levels
+- Console-based Logger implementation
+- No-op (silent) logger for production
+- Custom formatting logger
+- Compatibility with common logging patterns
+
+## Prerequisites
+
+No LocalNet required - pure type/interface example
+
+## Run This Example
+
+From the repository's `examples` directory:
+
+```bash
+cd examples
+uv run python common/06_logger.py
+```
+
+## Code
+
+[View source on GitHub](https://github.com/algorandfoundation/algokit-utils-py/blob/main/examples/common/06_logger.py)
+
+```python title="06_logger.py"
+# ruff: noqa: N999, C901, PLR0912, PLR0915, PLE1205
+"""
+Logger Type Example
+
+This example demonstrates the Logger protocol/interface for consistent logging
+across the AlgoKit Utils SDK.
+
+Topics covered:
+- Logger protocol definition with all log levels
+- Console-based Logger implementation
+- No-op (silent) logger for production
+- Custom formatting logger
+- Compatibility with common logging patterns
+
+No LocalNet required - pure type/interface example
+"""
+
+import logging
+from datetime import datetime, timezone
+from typing import Any, Protocol
+
+from shared import (
+    print_header,
+    print_info,
+    print_step,
+    print_success,
+)
+
+# ============================================================================
+# Logger Protocol Definition
+# ============================================================================
+
+
+class Logger(Protocol):
+    """
+    Protocol defining the standard logging interface.
+
+    This protocol matches the Logger type from the TypeScript SDK,
+    providing a consistent interface across both SDKs.
+    """
+
+    def error(self, message: str, *args: Any, **kwargs: Any) -> None:
+        """Log an error message."""
+        ...
+
+    def warn(self, message: str, *args: Any, **kwargs: Any) -> None:
+        """Log a warning message."""
+        ...
+
+    def info(self, message: str, *args: Any, **kwargs: Any) -> None:
+        """Log an informational message."""
+        ...
+
+    def verbose(self, message: str, *args: Any, **kwargs: Any) -> None:
+        """Log a verbose/trace message."""
+        ...
+
+    def debug(self, message: str, *args: Any, **kwargs: Any) -> None:
+        """Log a debug message."""
+        ...
+
+
+# ============================================================================
+# Logger Implementations
+# ============================================================================
+
+
+class ConsoleLogger:
+    """Console-based Logger implementation using print statements."""
+
+    def error(self, message: str, *args: Any, **kwargs: Any) -> None:
+        """Log an error message."""
+        self._log("ERROR", message, args, kwargs)
+
+    def warn(self, message: str, *args: Any, **kwargs: Any) -> None:
+        """Log a warning message."""
+        self._log("WARN ", message, args, kwargs)
+
+    def info(self, message: str, *args: Any, **kwargs: Any) -> None:
+        """Log an informational message."""
+        self._log("INFO ", message, args, kwargs)
+
+    def verbose(self, message: str, *args: Any, **kwargs: Any) -> None:
+        """Log a verbose/trace message."""
+        self._log("VERB ", message, args, kwargs)
+
+    def debug(self, message: str, *args: Any, **kwargs: Any) -> None:
+        """Log a debug message."""
+        self._log("DEBUG", message, args, kwargs)
+
+    def _log(self, level: str, message: str, args: tuple, kwargs: dict) -> None:
+        """Internal logging helper."""
+        extra = ""
+        if args:
+            extra = f" {args}"
+        if kwargs:
+            extra += f" {kwargs}"
+        print(f"[{level}] {message}{extra}")  # noqa: T201
+
+
+class NullLogger:
+    """No-op (silent) logger that discards all messages."""
+
+    def error(self, message: str, *args: Any, **kwargs: Any) -> None:
+        """Discard error message."""
+
+    def warn(self, message: str, *args: Any, **kwargs: Any) -> None:
+        """Discard warning message."""
+
+    def info(self, message: str, *args: Any, **kwargs: Any) -> None:
+        """Discard informational message."""
+
+    def verbose(self, message: str, *args: Any, **kwargs: Any) -> None:
+        """Discard verbose message."""
+
+    def debug(self, message: str, *args: Any, **kwargs: Any) -> None:
+        """Discard debug message."""
+
+
+class TimestampLogger:
+    """Logger with custom formatting including timestamp and prefix."""
+
+    def __init__(self, prefix: str) -> None:
+        """Initialize with a prefix for all log messages."""
+        self.prefix = prefix
+
+    def _format_message(self, level: str, message: str) -> str:
+        """Format a message with timestamp and prefix."""
+        timestamp = datetime.now(timezone.utc).isoformat()
+        return f"{timestamp} [{self.prefix}] {level:<7} {message}"
+
+    def error(self, message: str, *args: Any, **kwargs: Any) -> None:
+        """Log an error message."""
+        print(self._format_message("ERROR", message), args if args else "", kwargs if kwargs else "")  # noqa: T201
+
+    def warn(self, message: str, *args: Any, **kwargs: Any) -> None:
+        """Log a warning message."""
+        print(self._format_message("WARN", message), args if args else "", kwargs if kwargs else "")  # noqa: T201
+
+    def info(self, message: str, *args: Any, **kwargs: Any) -> None:
+        """Log an informational message."""
+        print(self._format_message("INFO", message), args if args else "", kwargs if kwargs else "")  # noqa: T201
+
+    def verbose(self, message: str, *args: Any, **kwargs: Any) -> None:
+        """Log a verbose message."""
+        print(self._format_message("VERBOSE", message), args if args else "", kwargs if kwargs else "")  # noqa: T201
+
+    def debug(self, message: str, *args: Any, **kwargs: Any) -> None:
+        """Log a debug message."""
+        print(self._format_message("DEBUG", message), args if args else "", kwargs if kwargs else "")  # noqa: T201
+
+
+# Log level priority for filtering
+LOG_LEVEL_PRIORITY = {
+    "error": 0,
+    "warn": 1,
+    "info": 2,
+    "verbose": 3,
+    "debug": 4,
+}
+
+
+class FilteredLogger:
+    """Logger that filters messages based on minimum log level."""
+
+    def __init__(self, min_level: str) -> None:
+        """Initialize with minimum log level to display."""
+        self.min_priority = LOG_LEVEL_PRIORITY.get(min_level, 4)
+
+    def _should_log(self, level: str) -> bool:
+        """Check if a message at this level should be logged."""
+        return LOG_LEVEL_PRIORITY.get(level, 4) <= self.min_priority
+
+    def error(self, message: str, *args: Any, **kwargs: Any) -> None:
+        """Log an error message if level permits."""
+        if self._should_log("error"):
+            print(f"[ERROR] {message}", args if args else "", kwargs if kwargs else "")  # noqa: T201
+
+    def warn(self, message: str, *args: Any, **kwargs: Any) -> None:
+        """Log a warning message if level permits."""
+        if self._should_log("warn"):
+            print(f"[WARN]  {message}", args if args else "", kwargs if kwargs else "")  # noqa: T201
+
+    def info(self, message: str, *args: Any, **kwargs: Any) -> None:
+        """Log an informational message if level permits."""
+        if self._should_log("info"):
+            print(f"[INFO]  {message}", args if args else "", kwargs if kwargs else "")  # noqa: T201
+
+    def verbose(self, message: str, *args: Any, **kwargs: Any) -> None:
+        """Log a verbose message if level permits."""
+        if self._should_log("verbose"):
+            print(f"[VERB]  {message}", args if args else "", kwargs if kwargs else "")  # noqa: T201
+
+    def debug(self, message: str, *args: Any, **kwargs: Any) -> None:
+        """Log a debug message if level permits."""
+        if self._should_log("debug"):
+            print(f"[DEBUG] {message}", args if args else "", kwargs if kwargs else "")  # noqa: T201
+
+
+class PythonLoggingAdapter:
+    """Adapter that wraps Python's standard logging module."""
+
+    def __init__(self, name: str = "algokit") -> None:
+        """Initialize with a logger name."""
+        self.logger = logging.getLogger(name)
+
+    def error(self, message: str, *args: Any, **kwargs: Any) -> None:
+        """Log an error message."""
+        self.logger.error(message, *args, **kwargs)
+
+    def warn(self, message: str, *args: Any, **kwargs: Any) -> None:
+        """Log a warning message."""
+        self.logger.warning(message, *args, **kwargs)
+
+    def info(self, message: str, *args: Any, **kwargs: Any) -> None:
+        """Log an informational message."""
+        self.logger.info(message, *args, **kwargs)
+
+    def verbose(self, message: str, *args: Any, **kwargs: Any) -> None:
+        """Log a verbose message (maps to DEBUG in standard logging)."""
+        self.logger.debug(message, *args, **kwargs)
+
+    def debug(self, message: str, *args: Any, **kwargs: Any) -> None:
+        """Log a debug message."""
+        self.logger.debug(message, *args, **kwargs)
+
+
+# ============================================================================
+# Main Example
+# ============================================================================
+
+
+def main() -> None:
+    print_header("Logger Type Example")
+
+    # ============================================================================
+    # Step 1: Logger Protocol Definition
+    # ============================================================================
+    print_step(1, "Logger Protocol Definition")
+
+    print_info("The Logger protocol defines a standard logging interface:")
+    print_info("")
+    print_info("  class Logger(Protocol):")
+    print_info("      def error(message: str, *args, **kwargs) -> None")
+    print_info("      def warn(message: str, *args, **kwargs) -> None")
+    print_info("      def info(message: str, *args, **kwargs) -> None")
+    print_info("      def verbose(message: str, *args, **kwargs) -> None")
+    print_info("      def debug(message: str, *args, **kwargs) -> None")
+    print_info("")
+    print_info("Log levels (from most to least severe):")
+    print_info("  1. error   - Critical errors that need immediate attention")
+    print_info("  2. warn    - Warning conditions that should be reviewed")
+    print_info("  3. info    - Informational messages for normal operations")
+    print_info("  4. verbose - Detailed tracing for troubleshooting")
+    print_info("  5. debug   - Developer debugging information")
+    print_success("Logger protocol provides 5 standard log levels")
+
+    # ============================================================================
+    # Step 2: Console-based Logger Implementation
+    # ============================================================================
+    print_step(2, "Console-based Logger Implementation")
+
+    console_logger = ConsoleLogger()
+
+    print_info("Created a console-based Logger implementation")
+    print_info("Demonstrating each log level:")
+    print_info("")
+
+    console_logger.error("Database connection failed", {"code": "ECONNREFUSED", "port": 5432})
+    console_logger.warn("API rate limit approaching", {"current": 95, "limit": 100})
+    console_logger.info("Transaction submitted", {"txId": "ABC123..."})
+    console_logger.verbose("Processing block", {"round": 12345, "txCount": 7})
+    console_logger.debug("Raw response payload", {"bytes": 1024})
+
+    print_info("")
+    print_success("All 5 log levels demonstrated")
+
+    # ============================================================================
+    # Step 3: No-op (Silent) Logger
+    # ============================================================================
+    print_step(3, "No-op (Silent) Logger")
+
+    null_logger = NullLogger()
+
+    print_info("Created a no-op (silent) logger")
+    print_info("Silent loggers are useful for:")
+    print_info("  - Production environments where logging is disabled")
+    print_info("  - Unit tests where log output is not wanted")
+    print_info("  - Default parameter values when no logger is provided")
+    print_info("")
+    print_info("Calling silent logger (no output expected):")
+    null_logger.error("This error will not be logged")
+    null_logger.warn("This warning will not be logged")
+    null_logger.info("This info will not be logged")
+    null_logger.verbose("This verbose message will not be logged")
+    null_logger.debug("This debug message will not be logged")
+    print_success("No-op logger created - produces no output")
+
+    # ============================================================================
+    # Step 4: Custom Formatting Logger
+    # ============================================================================
+    print_step(4, "Custom Formatting Logger")
+
+    app_logger = TimestampLogger("MyApp")
+
+    print_info("Created a logger with custom formatting:")
+    print_info("  - ISO timestamp prefix")
+    print_info("  - Application name prefix")
+    print_info("  - Padded log level for alignment")
+    print_info("")
+    print_info("Demonstrating custom formatted output:")
+    print_info("")
+
+    app_logger.info("Application started")
+    app_logger.debug("Configuration loaded", {"env": "development"})
+    app_logger.warn("Deprecated API endpoint called")
+
+    print_info("")
+    print_success("Custom formatting logger created and demonstrated")
+
+    # ============================================================================
+    # Step 5: Level-filtered Logger
+    # ============================================================================
+    print_step(5, "Level-filtered Logger")
+
+    print_info("Created a level-filtered logger factory")
+    print_info("Filter levels control which messages are logged:")
+    print_info('  - "error"   -> only errors')
+    print_info('  - "warn"    -> errors + warnings')
+    print_info('  - "info"    -> errors + warnings + info')
+    print_info('  - "verbose" -> all except debug')
+    print_info('  - "debug"   -> all messages')
+    print_info("")
+
+    print_info('Testing with min_level="warn" (only error and warn):')
+    warn_logger = FilteredLogger("warn")
+    print_info("")
+    warn_logger.error("This error IS logged")
+    warn_logger.warn("This warning IS logged")
+    warn_logger.info("This info is NOT logged")
+    warn_logger.debug("This debug is NOT logged")
+
+    print_info("")
+    print_success("Level-filtered logger demonstrated")
+
+    # ============================================================================
+    # Step 6: Logger Interface Compatibility
+    # ============================================================================
+    print_step(6, "Logger Interface Compatibility")
+
+    print_info("The Logger protocol is compatible with common logging approaches:")
+    print_info("")
+    print_info("  1. Python's logging module:")
+    print_info('     adapter = PythonLoggingAdapter("myapp")')
+    print_info("     # Maps verbose() to debug() level")
+    print_info("")
+    print_info("  2. Custom implementations - as shown in this example")
+    print_info("     ConsoleLogger, TimestampLogger, FilteredLogger")
+    print_info("")
+    print_info("  3. Third-party loggers (structlog, loguru, etc.)")
+    print_info("     Can be adapted to match the Logger protocol")
+    print_info("")
+
+    # Demonstrate Python logging adapter
+    print_info("Demonstrating PythonLoggingAdapter:")
+    # Configure basic logging for demo
+    logging.basicConfig(level=logging.DEBUG, format="%(levelname)s:%(name)s:%(message)s")
+    python_logger = PythonLoggingAdapter("demo")
+    print_info("")
+    python_logger.info("Using Python standard logging")
+    python_logger.debug("This maps to DEBUG level")
+
+    print_info("")
+    print_success("Logger protocol compatible with Python logging ecosystem")
+
+    # ============================================================================
+    # Step 7: Using Logger in Functions
+    # ============================================================================
+    print_step(7, "Using Logger in Functions")
+
+    def simulate_transaction(tx_id: str, logger: Logger | None = None) -> None:
+        """Simulate a transaction with optional logging."""
+        # Use null logger if none provided
+        log: Logger = logger if logger is not None else NullLogger()
+
+        log.info(f"Starting transaction: {tx_id}")
+        log.debug("Validating transaction parameters")
+        log.verbose("Serializing transaction data")
+        log.info(f"Transaction {tx_id} completed successfully")
+
+    print_info("Created a function that accepts Logger as optional parameter")
+    print_info("When no logger is provided, it defaults to NullLogger (silent)")
+    print_info("")
+
+    print_info("Calling with no logger (silent):")
+    simulate_transaction("TX-001")
+    print_info("  (no output produced)")
+    print_info("")
+
+    print_info("Calling with console_logger:")
+    print_info("")
+    simulate_transaction("TX-002", console_logger)
+
+    print_info("")
+    print_success("Logger can be used as optional dependency injection")
+
+    # ============================================================================
+    # Summary
+    # ============================================================================
+    print_step(8, "Summary")
+
+    print_info("Logger protocol provides:")
+    print_info("  - 5 standard log levels (error, warn, info, verbose, debug)")
+    print_info("  - Support for additional parameters (*args, **kwargs)")
+    print_info("  - Compatibility with Python's logging module")
+    print_info("  - Easy to implement custom formatters and filters")
+    print_info("  - No-op logger for disabling output")
+    print_info("")
+    print_success("Logger Type Example completed!")
+
+
+if __name__ == "__main__":
+    main()
+
+```
+
+---
+
+### Other examples in Common Utilities
+
+- [Address Basics](/docs/algokit-utils/python/latest/examples/common/01-address-basics/)
+- [Address Encoding](/docs/algokit-utils/python/latest/examples/common/02-address-encoding/)
+- [Array Utilities](/docs/algokit-utils/python/latest/examples/common/03-array-utilities/)
+- [Constants Reference](/docs/algokit-utils/python/latest/examples/common/04-constants/)
+- [Crypto Hash (SHA-512/256)](/docs/algokit-utils/python/latest/examples/common/05-crypto-hash/)
+- **Example**
+- [JSON BigInt Support](/docs/algokit-utils/python/latest/examples/common/07-json-bigint/)
+- [MessagePack Encoding](/docs/algokit-utils/python/latest/examples/common/08-msgpack/)
+- [Primitive Serde (Serialization/Deserialization)](/docs/algokit-utils/python/latest/examples/common/09-primitive-codecs/)
+- [Composite Serde (Serialization/Deserialization)](/docs/algokit-utils/python/latest/examples/common/10-composite-codecs/)
+- [Model Serde (Object Model Serialization)](/docs/algokit-utils/python/latest/examples/common/11-model-codecs/)
+- [Sourcemap for TEAL Debugging](/docs/algokit-utils/python/latest/examples/common/12-sourcemap/)

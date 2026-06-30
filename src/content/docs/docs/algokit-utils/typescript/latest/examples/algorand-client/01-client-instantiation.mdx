@@ -1,0 +1,344 @@
+---
+title: 'Client Instantiation'
+description: 'This example demonstrates the different ways to create an AlgorandClient instance:'
+sidebar:
+  order: 1
+---
+
+[← Back to Algorand Client](/docs/algokit-utils/typescript/latest/examples/algorand-client/)
+
+## Description
+
+This example demonstrates the different ways to create an AlgorandClient instance:
+
+- AlgorandClient.defaultLocalNet() for local development
+- AlgorandClient.testNet() for TestNet connection
+- AlgorandClient.mainNet() for MainNet connection
+- AlgorandClient.fromEnvironment() reading from environment variables
+- AlgorandClient.fromConfig() with explicit AlgoConfig object
+- AlgorandClient.fromClients() with pre-configured algod/indexer/kmd clients
+- Verifying connection by calling algod.status()
+
+## Prerequisites
+
+- LocalNet running (via `algokit localnet start`)
+
+## Run This Example
+
+From the repository root:
+
+```bash
+cd examples
+npm run example algorand_client/01-client-instantiation.ts
+```
+
+## Code
+
+[View source on GitHub](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/examples/algorand_client/01-client-instantiation.ts)
+
+```typescript title="01-client-instantiation.ts"
+/**
+ * Example: Client Instantiation
+ *
+ * This example demonstrates the different ways to create an AlgorandClient instance:
+ * - AlgorandClient.defaultLocalNet() for local development
+ * - AlgorandClient.testNet() for TestNet connection
+ * - AlgorandClient.mainNet() for MainNet connection
+ * - AlgorandClient.fromEnvironment() reading from environment variables
+ * - AlgorandClient.fromConfig() with explicit AlgoConfig object
+ * - AlgorandClient.fromClients() with pre-configured algod/indexer/kmd clients
+ * - Verifying connection by calling algod.status()
+ *
+ * Prerequisites:
+ * - LocalNet running (via `algokit localnet start`)
+ */
+
+import { AlgorandClient } from '@algorandfoundation/algokit-utils';
+import { AlgodClient } from '@algorandfoundation/algokit-utils/algod-client';
+import { IndexerClient } from '@algorandfoundation/algokit-utils/indexer-client';
+import { KmdClient } from '@algorandfoundation/algokit-utils/kmd-client';
+import type {
+  AlgoClientConfig,
+  AlgoConfig,
+} from '@algorandfoundation/algokit-utils/types/network-client';
+import { ALGOD_CONFIG, INDEXER_CONFIG, KMD_CONFIG } from '../shared/constants.js';
+import { printError, printHeader, printInfo, printStep, printSuccess } from '../shared/utils.js';
+
+async function main() {
+  printHeader('AlgorandClient Instantiation Example');
+
+  // Step 1: AlgorandClient.defaultLocalNet()
+  printStep(1, 'Create client using defaultLocalNet()');
+  printInfo('AlgorandClient.defaultLocalNet() creates a client pointing at default LocalNet ports');
+  printInfo('  - Algod: http://localhost:4001');
+  printInfo('  - Indexer: http://localhost:8980');
+  printInfo('  - KMD: http://localhost:4002');
+
+  const localNetClient = AlgorandClient.defaultLocalNet();
+  printSuccess('Created AlgorandClient for LocalNet');
+
+  // Verify connection works
+  try {
+    const status = await localNetClient.client.algod.status();
+    printSuccess(`Connected to LocalNet - Last round: ${status.lastRound}`);
+  } catch (error) {
+    printError(
+      `Failed to connect to LocalNet: ${error instanceof Error ? error.message : String(error)}`,
+    );
+    printInfo('Make sure LocalNet is running (e.g., algokit localnet start)');
+    return;
+  }
+
+  // Step 2: AlgorandClient.testNet()
+  printStep(2, 'Create client using testNet()');
+  printInfo('AlgorandClient.testNet() creates a client pointing at TestNet using AlgoNode');
+  printInfo('  - Algod: https://testnet-api.algonode.cloud');
+  printInfo('  - Indexer: https://testnet-idx.algonode.cloud');
+  printInfo('  - KMD: not available on public networks');
+
+  const testNetClient = AlgorandClient.testNet();
+  printSuccess('Created AlgorandClient for TestNet');
+
+  // Verify TestNet connection
+  try {
+    const testNetStatus = await testNetClient.client.algod.status();
+    printSuccess(`Connected to TestNet - Last round: ${testNetStatus.lastRound}`);
+  } catch (error) {
+    printError(
+      `Failed to connect to TestNet: ${error instanceof Error ? error.message : String(error)}`,
+    );
+  }
+
+  // Step 3: AlgorandClient.mainNet()
+  printStep(3, 'Create client using mainNet()');
+  printInfo('AlgorandClient.mainNet() creates a client pointing at MainNet using AlgoNode');
+  printInfo('  - Algod: https://mainnet-api.algonode.cloud');
+  printInfo('  - Indexer: https://mainnet-idx.algonode.cloud');
+  printInfo('  - KMD: not available on public networks');
+
+  const mainNetClient = AlgorandClient.mainNet();
+  printSuccess('Created AlgorandClient for MainNet');
+
+  // Verify MainNet connection
+  try {
+    const mainNetStatus = await mainNetClient.client.algod.status();
+    printSuccess(`Connected to MainNet - Last round: ${mainNetStatus.lastRound}`);
+  } catch (error) {
+    printError(
+      `Failed to connect to MainNet: ${error instanceof Error ? error.message : String(error)}`,
+    );
+  }
+
+  // Step 4: AlgorandClient.fromEnvironment()
+  printStep(4, 'Create client using fromEnvironment()');
+  printInfo('AlgorandClient.fromEnvironment() reads configuration from environment variables:');
+  printInfo('  - ALGOD_SERVER, ALGOD_PORT, ALGOD_TOKEN (for Algod)');
+  printInfo('  - INDEXER_SERVER, INDEXER_PORT, INDEXER_TOKEN (for Indexer)');
+  printInfo('  - KMD_PORT (for KMD, uses ALGOD_SERVER as base)');
+  printInfo('If environment variables are not set, defaults to LocalNet configuration');
+
+  // Display current environment variable status
+  printInfo('\nCurrent environment variable status:');
+  printInfo(
+    `  ALGOD_SERVER: ${process.env.ALGOD_SERVER ?? '(not set - will use LocalNet default)'}`,
+  );
+  printInfo(`  ALGOD_PORT: ${process.env.ALGOD_PORT ?? '(not set - will use default)'}`);
+  printInfo(`  ALGOD_TOKEN: ${process.env.ALGOD_TOKEN ? '(set)' : '(not set - will use default)'}`);
+  printInfo(
+    `  INDEXER_SERVER: ${process.env.INDEXER_SERVER ?? '(not set - will use LocalNet default)'}`,
+  );
+  printInfo(`  INDEXER_PORT: ${process.env.INDEXER_PORT ?? '(not set - will use default)'}`);
+  printInfo(
+    `  INDEXER_TOKEN: ${process.env.INDEXER_TOKEN ? '(set)' : '(not set - will use default)'}`,
+  );
+
+  const envClient = AlgorandClient.fromEnvironment();
+  printSuccess('Created AlgorandClient from environment');
+
+  // Verify connection (should work since it falls back to LocalNet)
+  try {
+    const envStatus = await envClient.client.algod.status();
+    printSuccess(`Connected via fromEnvironment() - Last round: ${envStatus.lastRound}`);
+  } catch (error) {
+    printError(`Failed to connect: ${error instanceof Error ? error.message : String(error)}`);
+  }
+
+  // Step 5: AlgorandClient.fromConfig()
+  printStep(5, 'Create client using fromConfig()');
+  printInfo('AlgorandClient.fromConfig() accepts an explicit AlgoConfig object');
+  printInfo('This gives you full control over the client configuration');
+
+  const customConfig: AlgoConfig = {
+    algodConfig: {
+      server: ALGOD_CONFIG.server,
+      port: ALGOD_CONFIG.port,
+      token: ALGOD_CONFIG.token,
+    },
+    indexerConfig: {
+      server: INDEXER_CONFIG.server,
+      port: INDEXER_CONFIG.port,
+      token: INDEXER_CONFIG.token,
+    },
+    kmdConfig: {
+      server: KMD_CONFIG.server,
+      port: KMD_CONFIG.port,
+      token: KMD_CONFIG.token,
+    },
+  };
+
+  printInfo('\nUsing custom configuration:');
+  printInfo(
+    `  algodConfig: { server: '${customConfig.algodConfig.server}', port: ${customConfig.algodConfig.port} }`,
+  );
+  printInfo(
+    `  indexerConfig: { server: '${customConfig.indexerConfig?.server}', port: ${customConfig.indexerConfig?.port} }`,
+  );
+  printInfo(
+    `  kmdConfig: { server: '${customConfig.kmdConfig?.server}', port: ${customConfig.kmdConfig?.port} }`,
+  );
+
+  const configClient = AlgorandClient.fromConfig(customConfig);
+  printSuccess('Created AlgorandClient from config');
+
+  // Verify connection
+  try {
+    const configStatus = await configClient.client.algod.status();
+    printSuccess(`Connected via fromConfig() - Last round: ${configStatus.lastRound}`);
+  } catch (error) {
+    printError(`Failed to connect: ${error instanceof Error ? error.message : String(error)}`);
+  }
+
+  // Step 6: AlgorandClient.fromClients()
+  printStep(6, 'Create client using fromClients()');
+  printInfo('AlgorandClient.fromClients() accepts pre-configured client instances');
+  printInfo('Useful when you need custom client configuration or already have clients');
+
+  // Create individual clients
+  const algodClient = new AlgodClient({
+    baseUrl: ALGOD_CONFIG.server,
+    port: ALGOD_CONFIG.port,
+    token: ALGOD_CONFIG.token as string,
+  });
+
+  const indexerClient = new IndexerClient({
+    baseUrl: INDEXER_CONFIG.server,
+    port: INDEXER_CONFIG.port,
+    token: INDEXER_CONFIG.token as string,
+  });
+
+  const kmdClient = new KmdClient({
+    baseUrl: KMD_CONFIG.server,
+    port: KMD_CONFIG.port,
+    token: KMD_CONFIG.token as string,
+  });
+
+  printInfo('\nCreated individual clients:');
+  printInfo('  - AlgodClient');
+  printInfo('  - IndexerClient');
+  printInfo('  - KmdClient');
+
+  const clientsClient = AlgorandClient.fromClients({
+    algod: algodClient,
+    indexer: indexerClient,
+    kmd: kmdClient,
+  });
+  printSuccess('Created AlgorandClient from pre-configured clients');
+
+  // Verify connection
+  try {
+    const clientsStatus = await clientsClient.client.algod.status();
+    printSuccess(`Connected via fromClients() - Last round: ${clientsStatus.lastRound}`);
+  } catch (error) {
+    printError(`Failed to connect: ${error instanceof Error ? error.message : String(error)}`);
+  }
+
+  // Step 7: Verify connection with detailed status
+  printStep(7, 'Verify Connection - Detailed Status');
+  printInfo('Using algod.status() to verify the connection and get network details');
+
+  try {
+    const detailedStatus = await localNetClient.client.algod.status();
+    printInfo('\nNetwork Status:');
+    printInfo(`  Last round: ${detailedStatus.lastRound}`);
+    printInfo(`  Last version: ${detailedStatus.lastVersion}`);
+    printInfo(`  Next version: ${detailedStatus.nextVersion}`);
+    printInfo(`  Next version round: ${detailedStatus.nextVersionRound}`);
+    printInfo(`  Next version supported: ${detailedStatus.nextVersionSupported}`);
+    printInfo(`  Time since last round (ns): ${detailedStatus.timeSinceLastRound}`);
+    printInfo(`  Catchup time (ns): ${detailedStatus.catchupTime}`);
+    printInfo(`  Stopped at unsupported round: ${detailedStatus.stoppedAtUnsupportedRound}`);
+    printSuccess('Connection verified successfully!');
+  } catch (error) {
+    printError(
+      `Failed to get detailed status: ${error instanceof Error ? error.message : String(error)}`,
+    );
+  }
+
+  // Step 8: Error handling example
+  printStep(8, 'Error Handling Example');
+  printInfo('Demonstrating graceful error handling with an invalid configuration');
+
+  const invalidConfig: AlgoClientConfig = {
+    server: 'http://invalid-server',
+    port: 9999,
+    token: 'invalid-token',
+  };
+
+  const invalidClient = AlgorandClient.fromConfig({
+    algodConfig: invalidConfig,
+  });
+
+  try {
+    await invalidClient.client.algod.status();
+    printInfo('Unexpectedly connected to invalid server');
+  } catch (error) {
+    printSuccess('Caught expected error when connecting to invalid server');
+    printInfo(`Error type: ${error instanceof Error ? error.constructor.name : typeof error}`);
+    printInfo(`Error message: ${error instanceof Error ? error.message : String(error)}`);
+  }
+
+  // Summary
+  printStep(9, 'Summary');
+  printInfo('AlgorandClient factory methods:');
+  printInfo('  1. defaultLocalNet() - Quick setup for local development');
+  printInfo('  2. testNet() - Connect to TestNet via AlgoNode');
+  printInfo('  3. mainNet() - Connect to MainNet via AlgoNode');
+  printInfo('  4. fromEnvironment() - Read config from environment variables');
+  printInfo('  5. fromConfig() - Use explicit AlgoConfig object');
+  printInfo('  6. fromClients() - Use pre-configured client instances');
+  printInfo('');
+  printInfo('Best practices:');
+  printInfo('  - Use defaultLocalNet() for development and testing');
+  printInfo('  - Use fromEnvironment() for deployment flexibility');
+  printInfo('  - Always handle connection errors gracefully');
+  printInfo('  - Verify connection with algod.status() before proceeding');
+
+  printSuccess('AlgorandClient Instantiation example completed!');
+}
+
+main().catch(error => {
+  printError(`Unhandled error: ${error instanceof Error ? error.message : String(error)}`);
+  process.exit(1);
+});
+```
+
+---
+
+### Other examples in Algorand Client
+
+- **Client Instantiation**
+- [AlgoAmount Utility](/docs/algokit-utils/typescript/latest/examples/algorand-client/02-algo-amount/)
+- [Signer Configuration](/docs/algokit-utils/typescript/latest/examples/algorand-client/03-signer-config/)
+- [Suggested Params Configuration](/docs/algokit-utils/typescript/latest/examples/algorand-client/04-params-config/)
+- [Account Manager](/docs/algokit-utils/typescript/latest/examples/algorand-client/05-account-manager/)
+- [Send Payment](/docs/algokit-utils/typescript/latest/examples/algorand-client/06-send-payment/)
+- [Send Asset Operations](/docs/algokit-utils/typescript/latest/examples/algorand-client/07-send-asset-ops/)
+- [Send Application Operations](/docs/algokit-utils/typescript/latest/examples/algorand-client/08-send-app-ops/)
+- [Create Transaction (Unsigned Transactions)](/docs/algokit-utils/typescript/latest/examples/algorand-client/09-create-transaction/)
+- [Transaction Composer (Atomic Transaction Groups)](/docs/algokit-utils/typescript/latest/examples/algorand-client/10-transaction-composer/)
+- [Asset Manager](/docs/algokit-utils/typescript/latest/examples/algorand-client/11-asset-manager/)
+- [App Manager](/docs/algokit-utils/typescript/latest/examples/algorand-client/12-app-manager/)
+- [App Deployer](/docs/algokit-utils/typescript/latest/examples/algorand-client/13-app-deployer/)
+- [Client Manager](/docs/algokit-utils/typescript/latest/examples/algorand-client/14-client-manager/)
+- [Error Transformers](/docs/algokit-utils/typescript/latest/examples/algorand-client/15-error-transformers/)
+- [Transaction Leases](/docs/algokit-utils/typescript/latest/examples/algorand-client/16-leases/)

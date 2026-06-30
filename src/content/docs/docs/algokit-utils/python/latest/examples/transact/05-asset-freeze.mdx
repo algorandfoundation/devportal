@@ -1,0 +1,448 @@
+---
+title: 'Asset Freeze'
+description: "This example demonstrates how to freeze and unfreeze asset holdings using the transact package: 1. Create an asset with freeze address set 2. Transfer assets to another account 3. Freeze the account's asset holdings (prevent transfers) 4. Verify frozen account cannot transfer 5. Unfreeze the account's asset holdings 6. Verify account can transfer after unfreeze"
+sidebar:
+  order: 5
+---
+
+[← Back to Transactions](/docs/algokit-utils/python/latest/examples/transact/)
+
+## Description
+
+This example demonstrates how to freeze and unfreeze asset holdings using the transact package: 1. Create an asset with freeze address set 2. Transfer assets to another account 3. Freeze the account's asset holdings (prevent transfers) 4. Verify frozen account cannot transfer 5. Unfreeze the account's asset holdings 6. Verify account can transfer after unfreeze
+Uses AssetFreezeTransactionFields with TransactionType.AssetFreeze.
+Prerequisites:
+
+## Prerequisites
+
+- LocalNet running (via `algokit localnet start`)
+
+## Run This Example
+
+From the repository's `examples` directory:
+
+```bash
+cd examples
+uv run python transact/05_asset_freeze.py
+```
+
+## Code
+
+[View source on GitHub](https://github.com/algorandfoundation/algokit-utils-py/blob/main/examples/transact/05_asset_freeze.py)
+
+```python title="05_asset_freeze.py"
+# ruff: noqa: N999, C901, PLR0912, PLR0915, PLR2004
+"""
+Example: Asset Freeze
+
+This example demonstrates how to freeze and unfreeze asset holdings using
+the transact package:
+1. Create an asset with freeze address set
+2. Transfer assets to another account
+3. Freeze the account's asset holdings (prevent transfers)
+4. Verify frozen account cannot transfer
+5. Unfreeze the account's asset holdings
+6. Verify account can transfer after unfreeze
+
+Uses AssetFreezeTransactionFields with TransactionType.AssetFreeze.
+
+Prerequisites:
+- LocalNet running (via `algokit localnet start`)
+"""
+
+from shared import (
+    create_algod_client,
+    print_error,
+    print_header,
+    print_info,
+    print_step,
+    print_success,
+    shorten_address,
+    wait_for_confirmation,
+)
+
+from algokit_transact import (
+    AssetConfigTransactionFields,
+    AssetFreezeTransactionFields,
+    AssetTransferTransactionFields,
+    PaymentTransactionFields,
+    Transaction,
+    TransactionType,
+    assign_fee,
+)
+from algokit_utils import AlgorandClient
+
+
+def main() -> None:
+    print_header("Asset Freeze Example")
+
+    # Step 1: Initialize clients
+    print_step(1, "Initialize Algod Client")
+    algod = create_algod_client()
+    algorand = AlgorandClient.default_localnet()
+
+    try:
+        algod.status()
+        print_info("Connected to LocalNet Algod")
+    except Exception as e:
+        print_error(f"Failed to connect to LocalNet: {e}")
+        print_info("Make sure LocalNet is running (e.g., algokit localnet start)")
+        return
+
+    # Step 2: Get freeze manager account from KMD
+    print_step(2, "Get Freeze Manager Account from KMD")
+    freeze_manager = algorand.account.localnet_dispenser()
+    print_info(f"Freeze manager address: {shorten_address(freeze_manager.addr)}")
+
+    # Step 3: Get suggested transaction parameters
+    print_step(3, "Get Suggested Transaction Parameters")
+    suggested_params = algod.suggested_params()
+    print_info(f"First valid round: {suggested_params.first_valid}")
+    print_info(f"Last valid round: {suggested_params.last_valid}")
+    print_info(f"Min fee: {suggested_params.min_fee} microALGO")
+
+    # Step 4: Generate and fund holder account
+    print_step(4, "Generate and Fund Holder Account")
+    holder = algorand.account.random()
+    print_info(f"Holder address: {shorten_address(holder.addr)}")
+
+    # Fund the holder with enough ALGO to cover transaction fees
+    funding_amount = 1_000_000  # 1 ALGO in microALGO
+
+    fund_tx_without_fee = Transaction(
+        transaction_type=TransactionType.Payment,
+        sender=freeze_manager.addr,
+        first_valid=suggested_params.first_valid,
+        last_valid=suggested_params.last_valid,
+        genesis_hash=suggested_params.genesis_hash,
+        genesis_id=suggested_params.genesis_id,
+        payment=PaymentTransactionFields(
+            receiver=holder.addr,
+            amount=funding_amount,
+        ),
+    )
+
+    fund_tx = assign_fee(
+        fund_tx_without_fee,
+        fee_per_byte=suggested_params.fee,
+        min_fee=suggested_params.min_fee,
+    )
+
+    signed_fund_tx = freeze_manager.signer([fund_tx], [0])
+    algod.send_raw_transaction(signed_fund_tx[0])
+    wait_for_confirmation(algod, fund_tx.tx_id())
+    print_info("Funded holder with 1 ALGO for transaction fees")
+
+    # Step 5: Create an asset with freeze address set
+    print_step(5, "Create Asset with Freeze Address Set")
+
+    asset_total = 10_000_000_000  # 10,000 units with 6 decimals
+    asset_decimals = 6
+    asset_name = "Freezable Token"
+    asset_unit_name = "FRZ"
+
+    print_info(f"Creating asset: {asset_name} ({asset_unit_name})")
+    print_info(f"Freeze address set to: {shorten_address(freeze_manager.addr)}")
+
+    create_asset_tx_without_fee = Transaction(
+        transaction_type=TransactionType.AssetConfig,
+        sender=freeze_manager.addr,
+        first_valid=suggested_params.first_valid,
+        last_valid=suggested_params.last_valid,
+        genesis_hash=suggested_params.genesis_hash,
+        genesis_id=suggested_params.genesis_id,
+        asset_config=AssetConfigTransactionFields(
+            asset_id=0,  # 0 indicates asset creation
+            total=asset_total,
+            decimals=asset_decimals,
+            default_frozen=False,
+            asset_name=asset_name,
+            unit_name=asset_unit_name,
+            url="https://example.com/freezable-token",
+            manager=freeze_manager.addr,
+            reserve=freeze_manager.addr,
+            freeze=freeze_manager.addr,  # IMPORTANT: Set freeze address to enable freezing
+            clawback=freeze_manager.addr,
+        ),
+    )
+
+    create_asset_tx = assign_fee(
+        create_asset_tx_without_fee,
+        fee_per_byte=suggested_params.fee,
+        min_fee=suggested_params.min_fee,
+    )
+
+    signed_create_tx = freeze_manager.signer([create_asset_tx], [0])
+    algod.send_raw_transaction(signed_create_tx[0])
+
+    create_pending_info = wait_for_confirmation(algod, create_asset_tx.tx_id())
+    asset_id = create_pending_info.asset_id
+    if not asset_id:
+        raise ValueError("Asset ID not found in pending transaction response")
+    print_info(f"Asset created with ID: {asset_id}")
+    print_success(f"Asset {asset_name} (ID: {asset_id}) created with freeze capability!")
+
+    # Step 6: Holder opts into the asset
+    print_step(6, "Holder Opts Into the Asset")
+
+    opt_in_suggested_params = algod.suggested_params()
+
+    opt_in_tx_without_fee = Transaction(
+        transaction_type=TransactionType.AssetTransfer,
+        sender=holder.addr,
+        first_valid=opt_in_suggested_params.first_valid,
+        last_valid=opt_in_suggested_params.last_valid,
+        genesis_hash=opt_in_suggested_params.genesis_hash,
+        genesis_id=opt_in_suggested_params.genesis_id,
+        asset_transfer=AssetTransferTransactionFields(
+            asset_id=asset_id,
+            receiver=holder.addr,
+            amount=0,  # 0 amount for opt-in
+        ),
+    )
+
+    opt_in_tx = assign_fee(
+        opt_in_tx_without_fee,
+        fee_per_byte=opt_in_suggested_params.fee,
+        min_fee=opt_in_suggested_params.min_fee,
+    )
+
+    signed_opt_in_tx = holder.signer([opt_in_tx], [0])
+    algod.send_raw_transaction(signed_opt_in_tx[0])
+    wait_for_confirmation(algod, opt_in_tx.tx_id())
+    print_info("Holder opted into the asset")
+    print_success("Holder successfully opted into the asset!")
+
+    # Step 7: Transfer assets from creator to holder
+    print_step(7, "Transfer Assets to Holder")
+
+    transfer_amount = 1_000_000_000  # 1,000 units
+    display_transfer = transfer_amount / (10**asset_decimals)
+    print_info(f"Transferring {display_transfer:,.0f} {asset_unit_name} to holder")
+
+    transfer_suggested_params = algod.suggested_params()
+
+    transfer_tx_without_fee = Transaction(
+        transaction_type=TransactionType.AssetTransfer,
+        sender=freeze_manager.addr,
+        first_valid=transfer_suggested_params.first_valid,
+        last_valid=transfer_suggested_params.last_valid,
+        genesis_hash=transfer_suggested_params.genesis_hash,
+        genesis_id=transfer_suggested_params.genesis_id,
+        asset_transfer=AssetTransferTransactionFields(
+            asset_id=asset_id,
+            receiver=holder.addr,
+            amount=transfer_amount,
+        ),
+    )
+
+    transfer_tx = assign_fee(
+        transfer_tx_without_fee,
+        fee_per_byte=transfer_suggested_params.fee,
+        min_fee=transfer_suggested_params.min_fee,
+    )
+
+    signed_transfer_tx = freeze_manager.signer([transfer_tx], [0])
+    algod.send_raw_transaction(signed_transfer_tx[0])
+    wait_for_confirmation(algod, transfer_tx.tx_id())
+
+    # Verify holder's balance
+    holder_asset_info = algod.account_asset_information(holder.addr, asset_id)
+    holder_balance = holder_asset_info.asset_holding.amount
+    holder_frozen = holder_asset_info.asset_holding.is_frozen
+    display_holder_balance = holder_balance / (10**asset_decimals)
+    print_info(f"Holder balance: {holder_balance} ({display_holder_balance:,.0f} {asset_unit_name})")
+    print_info(f"Holder frozen status: {holder_frozen}")
+    print_success(f"Transferred {display_transfer:,.0f} {asset_unit_name} to holder!")
+
+    # Step 8: Freeze the holder's account
+    print_step(8, "Freeze Holder Account (TransactionType.AssetFreeze)")
+    print_info("Using AssetFreezeTransactionFields with asset_id, freeze_target, and frozen=True")
+
+    freeze_suggested_params = algod.suggested_params()
+
+    freeze_tx_without_fee = Transaction(
+        transaction_type=TransactionType.AssetFreeze,
+        sender=freeze_manager.addr,  # Must be the freeze address of the asset
+        first_valid=freeze_suggested_params.first_valid,
+        last_valid=freeze_suggested_params.last_valid,
+        genesis_hash=freeze_suggested_params.genesis_hash,
+        genesis_id=freeze_suggested_params.genesis_id,
+        asset_freeze=AssetFreezeTransactionFields(
+            asset_id=asset_id,
+            freeze_target=holder.addr,
+            frozen=True,  # Freeze the account
+        ),
+    )
+
+    freeze_tx = assign_fee(
+        freeze_tx_without_fee,
+        fee_per_byte=freeze_suggested_params.fee,
+        min_fee=freeze_suggested_params.min_fee,
+    )
+
+    signed_freeze_tx = freeze_manager.signer([freeze_tx], [0])
+    algod.send_raw_transaction(signed_freeze_tx[0])
+    wait_for_confirmation(algod, freeze_tx.tx_id())
+
+    # Verify frozen status
+    holder_asset_info_after_freeze = algod.account_asset_information(holder.addr, asset_id)
+    is_frozen = holder_asset_info_after_freeze.asset_holding.is_frozen
+    print_info(f"Holder frozen status after freeze: {is_frozen}")
+
+    if not is_frozen:
+        raise ValueError("Account should be frozen but is not")
+    print_success("Holder account successfully frozen!")
+
+    # Step 9: Verify frozen account cannot transfer
+    print_step(9, "Verify Frozen Account Cannot Transfer")
+    print_info("Attempting to transfer assets from frozen account (should fail)...")
+
+    failed_transfer_suggested_params = algod.suggested_params()
+
+    failed_transfer_tx_without_fee = Transaction(
+        transaction_type=TransactionType.AssetTransfer,
+        sender=holder.addr,  # Frozen account trying to send
+        first_valid=failed_transfer_suggested_params.first_valid,
+        last_valid=failed_transfer_suggested_params.last_valid,
+        genesis_hash=failed_transfer_suggested_params.genesis_hash,
+        genesis_id=failed_transfer_suggested_params.genesis_id,
+        asset_transfer=AssetTransferTransactionFields(
+            asset_id=asset_id,
+            receiver=freeze_manager.addr,  # Try to send back to creator
+            amount=100_000_000,  # 100 units
+        ),
+    )
+
+    failed_transfer_tx = assign_fee(
+        failed_transfer_tx_without_fee,
+        fee_per_byte=failed_transfer_suggested_params.fee,
+        min_fee=failed_transfer_suggested_params.min_fee,
+    )
+
+    signed_failed_transfer_tx = holder.signer([failed_transfer_tx], [0])
+
+    try:
+        algod.send_raw_transaction(signed_failed_transfer_tx[0])
+        wait_for_confirmation(algod, failed_transfer_tx.tx_id())
+        raise ValueError("Transfer should have failed for frozen account")
+    except Exception as error:
+        error_message = str(error)
+        if "frozen" in error_message.lower() or "rejected" in error_message.lower():
+            print_info(f"Transfer correctly rejected: {error_message[:100]}...")
+            print_success("Verified: Frozen account cannot transfer assets!")
+        elif "Transfer should have failed" in error_message:
+            raise
+        else:
+            print_info(f"Transfer rejected with error: {error_message[:100]}...")
+            print_success("Verified: Frozen account cannot transfer assets!")
+
+    # Step 10: Unfreeze the holder's account
+    print_step(10, "Unfreeze Holder Account")
+    print_info("Using AssetFreezeTransactionFields with frozen=False")
+
+    unfreeze_suggested_params = algod.suggested_params()
+
+    unfreeze_tx_without_fee = Transaction(
+        transaction_type=TransactionType.AssetFreeze,
+        sender=freeze_manager.addr,
+        first_valid=unfreeze_suggested_params.first_valid,
+        last_valid=unfreeze_suggested_params.last_valid,
+        genesis_hash=unfreeze_suggested_params.genesis_hash,
+        genesis_id=unfreeze_suggested_params.genesis_id,
+        asset_freeze=AssetFreezeTransactionFields(
+            asset_id=asset_id,
+            freeze_target=holder.addr,
+            frozen=False,  # Unfreeze the account
+        ),
+    )
+
+    unfreeze_tx = assign_fee(
+        unfreeze_tx_without_fee,
+        fee_per_byte=unfreeze_suggested_params.fee,
+        min_fee=unfreeze_suggested_params.min_fee,
+    )
+
+    signed_unfreeze_tx = freeze_manager.signer([unfreeze_tx], [0])
+    algod.send_raw_transaction(signed_unfreeze_tx[0])
+    wait_for_confirmation(algod, unfreeze_tx.tx_id())
+
+    # Verify unfrozen status
+    holder_asset_info_after_unfreeze = algod.account_asset_information(holder.addr, asset_id)
+    is_frozen_after_unfreeze = holder_asset_info_after_unfreeze.asset_holding.is_frozen
+    print_info(f"Holder frozen status after unfreeze: {is_frozen_after_unfreeze}")
+
+    if is_frozen_after_unfreeze:
+        raise ValueError("Account should be unfrozen but is still frozen")
+    print_success("Holder account successfully unfrozen!")
+
+    # Step 11: Verify account can transfer after unfreeze
+    print_step(11, "Verify Account Can Transfer After Unfreeze")
+
+    success_transfer_amount = 100_000_000  # 100 units
+    display_success_transfer = success_transfer_amount / (10**asset_decimals)
+    print_info(f"Attempting to transfer {display_success_transfer:,.0f} {asset_unit_name} from unfrozen account...")
+
+    success_transfer_suggested_params = algod.suggested_params()
+
+    success_transfer_tx_without_fee = Transaction(
+        transaction_type=TransactionType.AssetTransfer,
+        sender=holder.addr,
+        first_valid=success_transfer_suggested_params.first_valid,
+        last_valid=success_transfer_suggested_params.last_valid,
+        genesis_hash=success_transfer_suggested_params.genesis_hash,
+        genesis_id=success_transfer_suggested_params.genesis_id,
+        asset_transfer=AssetTransferTransactionFields(
+            asset_id=asset_id,
+            receiver=freeze_manager.addr,
+            amount=success_transfer_amount,
+        ),
+    )
+
+    success_transfer_tx = assign_fee(
+        success_transfer_tx_without_fee,
+        fee_per_byte=success_transfer_suggested_params.fee,
+        min_fee=success_transfer_suggested_params.min_fee,
+    )
+
+    signed_success_transfer_tx = holder.signer([success_transfer_tx], [0])
+    algod.send_raw_transaction(signed_success_transfer_tx[0])
+    wait_for_confirmation(algod, success_transfer_tx.tx_id())
+
+    # Verify balances after transfer
+    holder_final_asset_info = algod.account_asset_information(holder.addr, asset_id)
+    holder_final_balance = holder_final_asset_info.asset_holding.amount
+    expected_holder_balance = transfer_amount - success_transfer_amount
+    display_holder_final = holder_final_balance / (10**asset_decimals)
+    print_info(f"Holder final balance: {holder_final_balance} ({display_holder_final:,.0f} {asset_unit_name})")
+
+    if holder_final_balance != expected_holder_balance:
+        raise ValueError(f"Holder balance mismatch: expected {expected_holder_balance}, got {holder_final_balance}")
+
+    print_success("Transfer successful! Unfrozen account can transfer assets.")
+    print_success("Asset freeze example completed successfully!")
+
+
+if __name__ == "__main__":
+    main()
+
+```
+
+---
+
+### Other examples in Transactions
+
+- [Payment Transaction](/docs/algokit-utils/python/latest/examples/transact/01-payment-transaction/)
+- [Payment with Close](/docs/algokit-utils/python/latest/examples/transact/02-payment-close/)
+- [Asset Create](/docs/algokit-utils/python/latest/examples/transact/03-asset-create/)
+- [Asset Transfer](/docs/algokit-utils/python/latest/examples/transact/04-asset-transfer/)
+- **Asset Freeze**
+- [Asset Clawback](/docs/algokit-utils/python/latest/examples/transact/06-asset-clawback/)
+- [Atomic Transaction Group](/docs/algokit-utils/python/latest/examples/transact/07-atomic-group/)
+- [Atomic Swap](/docs/algokit-utils/python/latest/examples/transact/08-atomic-swap/)
+- [Single Signature](/docs/algokit-utils/python/latest/examples/transact/09-single-sig/)
+- [Multisig](/docs/algokit-utils/python/latest/examples/transact/10-multisig/)
+- [Logic Signature](/docs/algokit-utils/python/latest/examples/transact/11-logic-sig/)
+- [Fee Calculation](/docs/algokit-utils/python/latest/examples/transact/12-fee-calculation/)
+- [Encoding/Decoding](/docs/algokit-utils/python/latest/examples/transact/13-encoding-decoding/)
+- [Application Call](/docs/algokit-utils/python/latest/examples/transact/14-app-call/)

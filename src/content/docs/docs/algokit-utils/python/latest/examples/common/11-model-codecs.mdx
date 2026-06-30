@@ -1,0 +1,548 @@
+---
+title: 'Model Serde (Object Model Serialization)'
+description: 'This example demonstrates how to use dataclass-based serialization for complex object structures with field metadata in Python.'
+sidebar:
+  order: 11
+---
+
+[← Back to Common Utilities](/docs/algokit-utils/python/latest/examples/common/)
+
+## Description
+
+This example demonstrates how to use dataclass-based serialization for complex object structures with field metadata in Python.
+Note: Unlike the TypeScript SDK which uses ObjectModelCodec, PrimitiveModelCodec, and ArrayModelCodec classes, the Python SDK uses dataclasses with field metadata helpers. This is a more Pythonic approach that achieves the same goals.
+Topics covered:
+
+- Defining dataclasses with field metadata using wire()
+- Encoding format options: to_wire() produces dict for JSON or msgpack
+- Handling optional fields with omit_if_none
+- Field renaming with wire key aliases
+- Nested dataclasses
+- Round-trip encoding with to_wire() and from_wire()
+- Default values and omission rules
+
+## Prerequisites
+
+No LocalNet required - pure serde functions
+
+## Run This Example
+
+From the repository's `examples` directory:
+
+```bash
+cd examples
+uv run python common/11_model_codecs.py
+```
+
+## Code
+
+[View source on GitHub](https://github.com/algorandfoundation/algokit-utils-py/blob/main/examples/common/11_model_codecs.py)
+
+```python title="11_model_codecs.py"
+# ruff: noqa: N999, C901, PLR0912, PLR0915
+"""
+Example: Model Serde (Object Model Serialization)
+
+This example demonstrates how to use dataclass-based serialization for complex
+object structures with field metadata in Python.
+
+Note: Unlike the TypeScript SDK which uses ObjectModelCodec, PrimitiveModelCodec,
+and ArrayModelCodec classes, the Python SDK uses dataclasses with field metadata
+helpers. This is a more Pythonic approach that achieves the same goals.
+
+Topics covered:
+- Defining dataclasses with field metadata using wire()
+- Encoding format options: to_wire() produces dict for JSON or msgpack
+- Handling optional fields with omit_if_none
+- Field renaming with wire key aliases
+- Nested dataclasses
+- Round-trip encoding with to_wire() and from_wire()
+- Default values and omission rules
+
+No LocalNet required - pure serde functions
+"""
+
+from dataclasses import dataclass, field
+
+from shared import (
+    format_hex,
+    print_header,
+    print_info,
+    print_step,
+    print_success,
+)
+
+from algokit_common import (
+    ZERO_ADDRESS,
+    addr,
+    address_from_public_key,
+    from_wire,
+    nested,
+    to_wire,
+    wire,
+)
+from algokit_transact.codec.msgpack import decode_msgpack, encode_msgpack
+
+
+def main() -> None:
+    print_header("Model Serde Example")
+
+    # Step 1: Introduction to Model Serde
+    print_step(1, "Introduction to Model Serde")
+
+    print_info("Model serde provides structured serialization for domain objects.")
+    print_info("")
+    print_info("TypeScript approach:")
+    print_info("  - ObjectModelCodec with FieldMetadata definitions")
+    print_info("  - Explicit encode/decode methods")
+    print_info("  - PrimitiveModelCodec, ArrayModelCodec wrappers")
+    print_info("")
+    print_info("Python approach:")
+    print_info("  - Standard dataclasses with field metadata")
+    print_info("  - wire() helper for field configuration")
+    print_info("  - to_wire() / from_wire() for serialization")
+    print_info("")
+    print_info("Key features:")
+    print_info("  - Wire key aliases (property name -> wire format key)")
+    print_info("  - Optional fields (omit when None or default)")
+    print_info("  - Nested objects (dataclass containing dataclass)")
+    print_info("  - Custom encode/decode functions")
+    print_info("")
+    print_success("Dataclass-based model serde provides structured serialization")
+
+    # Step 2: Basic Dataclass with wire() Metadata
+    print_step(2, "Basic Dataclass with wire() Metadata")
+
+    print_info("wire() defines how each field is encoded/decoded:")
+    print_info("")
+    print_info("  wire(alias,                  # Wire format key name")
+    print_info("       encode=...,             # Custom encoder function")
+    print_info("       decode=...,             # Custom decoder function")
+    print_info("       omit_if_none=True,      # Omit if value is None")
+    print_info("       keep_zero=False,        # Keep 0 values (don't omit)")
+    print_info("       keep_false=False,       # Keep False values")
+    print_info("       required=False)         # Error if missing on decode")
+    print_info("")
+
+    @dataclass
+    class Person:
+        name: str = field(default="", metadata=wire("n"))
+        age: int | None = field(default=None, metadata=wire("a"))
+        email: str | None = field(default=None, metadata=wire("e"))
+
+    # Create a person
+    alice = Person(name="Alice", age=30, email="alice@example.com")
+
+    print_info("Person dataclass: name, age?, email?")
+    print_info(f"  Original: name={alice.name}, age={alice.age}, email={alice.email}")
+    print_info("")
+
+    wire_data = to_wire(alice)
+    print_info(f"  Wire format: {wire_data}")
+    print_info("  Note: 'name' -> 'n', 'age' -> 'a', 'email' -> 'e'")
+    print_info("")
+
+    decoded_alice = from_wire(Person, wire_data)
+    print_info(f"  Decoded: name={decoded_alice.name}, age={decoded_alice.age}, email={decoded_alice.email}")
+
+    print_success("Dataclass fields mapped to wire keys via wire() metadata")
+
+    # Step 3: Handling Optional Fields
+    print_step(3, "Handling Optional Fields")
+
+    print_info("Optional fields are omitted when None or at default values:")
+    print_info("")
+
+    # Person with only required fields
+    bob = Person(name="Bob")
+    print_info(f"  Person with optional fields missing: name={bob.name}, age={bob.age}, email={bob.email}")
+
+    bob_wire = to_wire(bob)
+    print_info(f"  Wire format: {bob_wire}")
+    print_info("  Note: age and email not included (None values omitted)")
+    print_info("")
+
+    bob_decoded = from_wire(Person, bob_wire)
+    print_info(f"  Decoded: name={bob_decoded.name}, age={bob_decoded.age}, email={bob_decoded.email}")
+    print_info("")
+
+    # Person with default-like values
+    @dataclass
+    class PersonWithDefaults:
+        name: str = field(default="", metadata=wire("n"))
+        age: int = field(default=0, metadata=wire("a"))
+        active: bool = field(default=False, metadata=wire("x"))
+
+    charlie = PersonWithDefaults(name="", age=0, active=False)
+    print_info(f"  Person with all defaults: name='{charlie.name}', age={charlie.age}, active={charlie.active}")
+
+    charlie_wire = to_wire(charlie)
+    print_info(f"  Wire format: {charlie_wire}")
+    print_info("  Note: Empty dict - all fields at defaults are omitted")
+    print_info("")
+
+    charlie_decoded = from_wire(PersonWithDefaults, charlie_wire)
+    print_info(f"  Decoded: name='{charlie_decoded.name}', age={charlie_decoded.age}, active={charlie_decoded.active}")
+
+    print_success("Optional fields are omitted when empty or at default values")
+
+    # Step 4: Keeping Zero/False Values
+    print_step(4, "Keeping Zero/False Values")
+
+    print_info("Use keep_zero=True and keep_false=True to preserve default values:")
+    print_info("")
+
+    @dataclass
+    class ExplicitDefaults:
+        name: str = field(default="", metadata=wire("n"))
+        count: int = field(default=0, metadata=wire("c", keep_zero=True))
+        active: bool = field(default=False, metadata=wire("a", keep_false=True))
+
+    explicit = ExplicitDefaults(name="test", count=0, active=False)
+    print_info(f"  Original: name={explicit.name}, count={explicit.count}, active={explicit.active}")
+
+    explicit_wire = to_wire(explicit)
+    print_info(f"  Wire format: {explicit_wire}")
+    print_info("  Note: 'count' and 'active' preserved due to keep_zero/keep_false")
+    print_info("")
+
+    explicit_decoded = from_wire(ExplicitDefaults, explicit_wire)
+    decoded_name = explicit_decoded.name
+    decoded_count = explicit_decoded.count
+    decoded_active = explicit_decoded.active
+    print_info(f"  Decoded: name={decoded_name}, count={decoded_count}, active={decoded_active}")
+
+    print_success("keep_zero and keep_false preserve default values in wire format")
+
+    # Step 5: Address Fields with addr() Helper
+    print_step(5, "Address Fields with addr() Helper")
+
+    print_info("Use addr() helper for Algorand address fields:")
+    print_info("")
+
+    @dataclass
+    class AssetInfo:
+        asset_id: int = field(default=0, metadata=wire("aid", keep_zero=True))
+        name: str = field(default="", metadata=wire("nm"))
+        creator: str = field(default=ZERO_ADDRESS, metadata=addr("cr"))
+        metadata_bytes: bytes = field(default=b"", metadata=wire("md"))
+
+    # Create an asset
+    creator_pk = bytes(range(32))
+    creator_addr = address_from_public_key(creator_pk)
+
+    asset = AssetInfo(
+        asset_id=12345,
+        name="Test Asset",
+        creator=creator_addr,
+        metadata_bytes=bytes([0x01, 0x02, 0x03]),
+    )
+
+    print_info(f"  asset_id: {asset.asset_id}")
+    print_info(f"  name: {asset.name}")
+    print_info(f"  creator: {asset.creator[:20]}...")
+    print_info(f"  metadata: {format_hex(asset.metadata_bytes)}")
+    print_info("")
+
+    asset_wire = to_wire(asset)
+    print_info("Wire format:")
+    for key, value in asset_wire.items():
+        if isinstance(value, bytes):
+            print_info(f"  {key}: {format_hex(value[:8])}... ({len(value)} bytes)")
+        else:
+            print_info(f"  {key}: {value}")
+    print_info("")
+
+    asset_decoded = from_wire(AssetInfo, asset_wire)
+    print_info("Decoded:")
+    print_info(f"  asset_id: {asset_decoded.asset_id}")
+    print_info(f"  name: {asset_decoded.name}")
+    print_info(f"  creator: {asset_decoded.creator[:20]}...")
+    print_info("")
+
+    if asset_decoded.creator == asset.creator:
+        print_success("Address fields round-trip correctly via addr() helper")
+
+    # Step 6: Nested Dataclasses
+    print_step(6, "Nested Dataclasses")
+
+    print_info("Dataclasses can contain other dataclasses using nested():")
+    print_info("")
+
+    @dataclass
+    class PostalAddress:
+        street: str = field(default="", metadata=wire("st"))
+        city: str = field(default="", metadata=wire("ct"))
+        postcode: int = field(default=0, metadata=wire("pc", keep_zero=True))
+        country: str | None = field(default=None, metadata=wire("co"))
+
+    @dataclass
+    class Company:
+        name: str = field(default="", metadata=wire("n"))
+        headquarters: PostalAddress | None = field(default=None, metadata=nested("hq", PostalAddress))
+        founded: int | None = field(default=None, metadata=wire("f"))
+
+    # Create a company with nested address
+    algorand = Company(
+        name="Algorand Foundation",
+        headquarters=PostalAddress(
+            street="1 Innovation Drive",
+            city="Boston",
+            postcode=12345,
+            country="USA",
+        ),
+        founded=2017,
+    )
+
+    print_info("Company with nested PostalAddress:")
+    print_info(f"  name: {algorand.name}")
+    print_info(f"  headquarters.street: {algorand.headquarters.street}")  # type: ignore[union-attr]
+    print_info(f"  headquarters.city: {algorand.headquarters.city}")  # type: ignore[union-attr]
+    print_info(f"  headquarters.postcode: {algorand.headquarters.postcode}")  # type: ignore[union-attr]
+    print_info(f"  headquarters.country: {algorand.headquarters.country}")  # type: ignore[union-attr]
+    print_info(f"  founded: {algorand.founded}")
+    print_info("")
+
+    company_wire = to_wire(algorand)
+    print_info(f"Wire format: {company_wire}")
+    print_info("  Note: 'headquarters' encoded as 'hq', nested fields also renamed")
+    print_info("")
+
+    company_decoded = from_wire(Company, company_wire)
+    print_info("Decoded:")
+    print_info(f"  name: {company_decoded.name}")
+    print_info(f"  headquarters.street: {company_decoded.headquarters.street}")  # type: ignore[union-attr]
+    print_info(f"  headquarters.city: {company_decoded.headquarters.city}")  # type: ignore[union-attr]
+    print_info(f"  founded: {company_decoded.founded}")
+
+    print_success("Nested dataclasses preserve structure through encoding")
+
+    # Step 7: Field Renaming with Wire Keys
+    print_step(7, "Field Renaming with Wire Keys")
+
+    print_info("Wire key aliases map property names to different wire format keys:")
+    print_info("")
+    print_info("  Benefits:")
+    print_info("    - Reduce payload size (shorter keys)")
+    print_info("    - Match external API specifications")
+    print_info("    - Maintain backwards compatibility")
+    print_info("")
+
+    @dataclass
+    class TransactionInfo:
+        transaction_id: str = field(default="", metadata=wire("txid"))
+        sender_address: str = field(default="", metadata=wire("snd"))
+        receiver_address: str = field(default="", metadata=wire("rcv"))
+        amount_in_micro_algos: int = field(default=0, metadata=wire("amt", keep_zero=True))
+        note_field: str | None = field(default=None, metadata=wire("note"))
+
+    txn = TransactionInfo(
+        transaction_id="ABC123...",
+        sender_address="SENDER...",
+        receiver_address="RECEIVER...",
+        amount_in_micro_algos=1000000,
+        note_field="Payment",
+    )
+
+    print_info("Property name -> wire key mapping:")
+    print_info("  transaction_id       -> txid")
+    print_info("  sender_address       -> snd")
+    print_info("  receiver_address     -> rcv")
+    print_info("  amount_in_micro_algos -> amt")
+    print_info("  note_field           -> note")
+    print_info("")
+
+    txn_wire = to_wire(txn)
+    print_info(f"Wire format: {txn_wire}")
+    print_info("")
+
+    # Size comparison
+    verbose_keys = (
+        '{"transaction_id":"ABC123...","sender_address":"SENDER...",'
+        '"receiver_address":"RECEIVER...","amount_in_micro_algos":1000000,"note_field":"Payment"}'
+    )
+    short_keys = '{"txid":"ABC123...","snd":"SENDER...","rcv":"RECEIVER...","amt":1000000,"note":"Payment"}'
+
+    print_info("Size comparison:")
+    print_info(f"  Without wire key renaming: {len(verbose_keys)} bytes")
+    print_info(f"  With wire key renaming:    {len(short_keys)} bytes")
+    savings = len(verbose_keys) - len(short_keys)
+    savings_pct = round((1 - len(short_keys) / len(verbose_keys)) * 100)
+    print_info(f"  Savings: {savings} bytes ({savings_pct}%)")
+
+    print_success("Wire key renaming reduces payload size")
+
+    # Step 8: MessagePack Integration
+    print_step(8, "MessagePack Integration")
+
+    print_info("to_wire() output can be directly encoded with msgpack:")
+    print_info("")
+
+    simple = Person(name="Test", age=25, email="test@example.com")
+
+    # to_wire -> msgpack encode -> msgpack decode -> from_wire
+    wire_dict = to_wire(simple)
+    msgpack_bytes = encode_msgpack(wire_dict)
+    decoded_dict = decode_msgpack(msgpack_bytes)
+    restored = from_wire(Person, decoded_dict)  # type: ignore[arg-type]
+
+    print_info(f"  Original: name={simple.name}, age={simple.age}, email={simple.email}")
+    print_info(f"  Wire dict: {wire_dict}")
+    print_info(f"  Msgpack bytes: {len(msgpack_bytes)} bytes")
+    print_info(f"  Decoded dict: {decoded_dict}")
+    print_info(f"  Restored: name={restored.name}, age={restored.age}, email={restored.email}")
+    print_info("")
+
+    match = restored.name == simple.name and restored.age == simple.age and restored.email == simple.email
+    if match:
+        print_success("Full round-trip: dataclass -> wire -> msgpack -> wire -> dataclass")
+
+    # Step 9: Default Values
+    print_step(9, "Default Values")
+
+    print_info("Dataclass defaults mirror TypeScript ObjectModelCodec.defaultValue():")
+    print_info("")
+
+    @dataclass
+    class DefaultExample:
+        name: str = field(default="", metadata=wire("n"))
+        count: int = field(default=0, metadata=wire("c"))
+        active: bool = field(default=False, metadata=wire("a"))
+        tags: list[str] = field(default_factory=list, metadata=wire("t"))
+
+    default_obj = DefaultExample()
+    d_name = default_obj.name
+    d_count = default_obj.count
+    d_active = default_obj.active
+    d_tags = default_obj.tags
+    print_info(f"  Default object: name='{d_name}', count={d_count}, active={d_active}, tags={d_tags}")
+    print_info("")
+
+    default_wire = to_wire(default_obj)
+    print_info(f"  Wire format: {default_wire}")
+    print_info("  Note: Empty dict because all fields are at defaults")
+    print_info("")
+
+    decoded_default = from_wire(DefaultExample, default_wire)
+    dd_name = decoded_default.name
+    dd_count = decoded_default.count
+    dd_active = decoded_default.active
+    dd_tags = decoded_default.tags
+    print_info(f"  Decoded: name='{dd_name}', count={dd_count}, active={dd_active}, tags={dd_tags}")
+
+    print_success("Dataclass defaults provide consistent initialization")
+
+    # Step 10: Round-Trip Verification
+    print_step(10, "Round-Trip Verification")
+
+    print_info("Verifying round-trip for model codecs:")
+    print_info("")
+
+    # Test various dataclass scenarios
+    results = []
+
+    # Person with all fields
+    p1 = Person(name="Test", age=25, email="test@example.com")
+    p1_rt = from_wire(Person, to_wire(p1))
+    results.append(("Person (all fields)", p1.name == p1_rt.name and p1.age == p1_rt.age and p1.email == p1_rt.email))
+
+    # Person with optional fields missing
+    p2 = Person(name="Bob")
+    p2_rt = from_wire(Person, to_wire(p2))
+    results.append(("Person (name only)", p2.name == p2_rt.name and p2.age == p2_rt.age and p2.email == p2_rt.email))
+
+    # AssetInfo with address
+    a1 = AssetInfo(asset_id=999, name="Test Asset", creator=creator_addr, metadata_bytes=b"\x01\x02\x03")
+    a1_rt = from_wire(AssetInfo, to_wire(a1))
+    a1_match = a1.asset_id == a1_rt.asset_id and a1.name == a1_rt.name and a1.creator == a1_rt.creator
+    results.append(("AssetInfo", a1_match))
+
+    # Nested Company
+    c1 = Company(
+        name="Test Corp",
+        headquarters=PostalAddress(street="123 Main", city="Anytown", postcode=99999),
+        founded=2020,
+    )
+    c1_rt = from_wire(Company, to_wire(c1))
+    results.append(
+        (
+            "Company (nested)",
+            c1.name == c1_rt.name
+            and c1.headquarters.street == c1_rt.headquarters.street  # type: ignore[union-attr]
+            and c1.headquarters.city == c1_rt.headquarters.city  # type: ignore[union-attr]
+            and c1.founded == c1_rt.founded,
+        )
+    )
+
+    # ExplicitDefaults
+    e1 = ExplicitDefaults(name="test", count=0, active=False)
+    e1_rt = from_wire(ExplicitDefaults, to_wire(e1))
+    e1_match = e1.name == e1_rt.name and e1.count == e1_rt.count and e1.active == e1_rt.active
+    results.append(("ExplicitDefaults", e1_match))
+
+    all_passed = True
+    for name, passed in results:
+        status = "PASS" if passed else "FAIL"
+        print_info(f"  [{status}] {name}")
+        if not passed:
+            all_passed = False
+
+    print_info("")
+    if all_passed:
+        print_success("All round-trip verifications passed!")
+
+    # Step 11: Summary
+    print_step(11, "Summary")
+
+    print_info("Python model serde (vs TypeScript ObjectModelCodec):")
+    print_info("")
+    print_info("  Dataclass definition:")
+    print_info("    - @dataclass decorator for model classes")
+    print_info("    - field(default=..., metadata=wire(...)) for fields")
+    print_info("    - Native Python types (str, int, bool, bytes, list, dict)")
+    print_info("")
+    print_info("  Field metadata helpers:")
+    print_info("    - wire(alias, ...)    Basic field configuration")
+    print_info("    - addr(alias, ...)    Address string <-> bytes")
+    print_info("    - nested(alias, cls)  Nested dataclass")
+    print_info("    - flatten(cls, ...)   Merge nested fields into parent")
+    print_info("")
+    print_info("  Serialization functions:")
+    print_info("    - to_wire(obj)        Dataclass -> wire dict")
+    print_info("    - from_wire(cls, d)   Wire dict -> dataclass")
+    print_info("")
+    print_info("  Key options:")
+    print_info("    - omit_if_none=True   Omit None values")
+    print_info("    - keep_zero=False     Keep 0 values")
+    print_info("    - keep_false=False    Keep False values")
+    print_info("    - required=False      Error if missing")
+    print_info("")
+    print_info("  TypeScript comparison:")
+    print_info("    - TS: ObjectModelCodec, FieldMetadata, encode/decode methods")
+    print_info("    - Python: @dataclass, wire() metadata, to_wire/from_wire")
+    print_info("    - Python approach is more idiomatic and simpler")
+    print_info("")
+    print_success("Model Serde Example completed!")
+
+
+if __name__ == "__main__":
+    main()
+
+```
+
+---
+
+### Other examples in Common Utilities
+
+- [Address Basics](/docs/algokit-utils/python/latest/examples/common/01-address-basics/)
+- [Address Encoding](/docs/algokit-utils/python/latest/examples/common/02-address-encoding/)
+- [Array Utilities](/docs/algokit-utils/python/latest/examples/common/03-array-utilities/)
+- [Constants Reference](/docs/algokit-utils/python/latest/examples/common/04-constants/)
+- [Crypto Hash (SHA-512/256)](/docs/algokit-utils/python/latest/examples/common/05-crypto-hash/)
+- [Example](/docs/algokit-utils/python/latest/examples/common/06-logger/)
+- [JSON BigInt Support](/docs/algokit-utils/python/latest/examples/common/07-json-bigint/)
+- [MessagePack Encoding](/docs/algokit-utils/python/latest/examples/common/08-msgpack/)
+- [Primitive Serde (Serialization/Deserialization)](/docs/algokit-utils/python/latest/examples/common/09-primitive-codecs/)
+- [Composite Serde (Serialization/Deserialization)](/docs/algokit-utils/python/latest/examples/common/10-composite-codecs/)
+- **Model Serde (Object Model Serialization)**
+- [Sourcemap for TEAL Debugging](/docs/algokit-utils/python/latest/examples/common/12-sourcemap/)

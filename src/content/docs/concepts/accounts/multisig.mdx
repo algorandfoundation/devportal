@@ -1,5 +1,5 @@
 ---
-title: Multisignature Accounts
+title: Multi-Signature Accounts
 ---
 
 import { Code } from '@astrojs/starlight/components';
@@ -7,9 +7,9 @@ import { Tabs, TabItem } from '@astrojs/starlight/components';
 import { LinkCard } from '@astrojs/starlight/components';
 import RemoteCode from '/src/components/RemoteCode.astro';
 
-Multisignature accounts are a powerful, natively-supported security and governance feature on Algorand that require multiple parties to approve transactions. Think of a multisignature account as a secure vault with multiple keyholes, where a predetermined number of keys must be used together to open it.
+Multi-signature accounts are a powerful, natively-supported security and governance feature on Algorand that require multiple parties to approve transactions. Think of a multi-signature account as a secure vault with multiple keyholes, where a predetermined number of keys must be used together to open it.
 
-For example, a multisignature account might be configured so that any 2 out of 3 designated signers must approve before funds can be transferred. This creates a balance between security and operational flexibility that's valuable in many scenarios:
+For example, a multi-signature account might be configured so that any 2 out of 3 designated signers must approve before funds can be transferred. This creates a balance between security and operational flexibility that's valuable in many scenarios:
 
 - **Treasury management** for organizations where multiple board members must approve expenditures
 - **Shared accounts** between business partners who want mutual consent for transactions
@@ -20,23 +20,24 @@ For example, a multisignature account might be configured so that any 2 out of 3
 
 ## Multisigs on Algorand
 
-Technically, a multisignature account on Algorand is a logical representation of an ordered set of addresses with a _threshold_ and _version_. The threshold determines how many signatures are required to authorize any transaction from this account (such as 2-of-3 or 3-of-5), while the version specifies the multisignature protocol being used.
+Technically, a multi-signature account on Algorand is a logical representation of an ordered set of addresses with a _threshold_ and _version_. The threshold determines how many signatures are required to authorize any transaction from this account (such as 2-of-3 or 3-of-5), while the version specifies the multi-signature protocol being used.
 
-Multisignature accounts are **native to the protocol**, not smart contracts. The address is deterministically derived from the ordered list of participant accounts, threshold, and version, and signature validation is enforced at the consensus layer.
+Multi-signature accounts are **native to the protocol**, not smart contracts. The address is deterministically derived from the ordered list of participant accounts, threshold, and version, and signature validation is enforced at the consensus layer.
 
 This has important implications:
 
-- **No deployment required:** Multisig accounts exist as soon as they are computed
+- **No deployment required:** Multisig accounts exist as soon as they are funded
 - **No contract risk surface:** No contract logic to audit, upgrade, or trust
 - **Protocol-level enforcement:** Signature rules are enforced by consensus
 - **Lower operational overhead:** No dependency on third-party contract implementations
 
 Some important characteristics to understand:
 
-- The order of addresses matters when creating the multisignature account. Using `[A, B, C]` creates a different address than `[B, A, C]`.
+- The order of addresses matters when creating the multi-signature account. Using `[A, B, C]` creates a different address than `[B, A, C]`.
 - The order of signatures does not matter when signing a transaction.
-- Multisignature accounts cannot include other multisignature accounts as participants.
-- You must [send Algos](/concepts/accounts/funding) to the multisignature address to initialize its state on the ledger.
+- Multi-signature accounts cannot include other multi-signature accounts as participants.
+- You must [send Algos](/concepts/accounts/funding) to the multi-signature address to initialize its state on the ledger.
+- Rekeying an account whose address is part of a multisig does NOT affect what key needs to sign for it. The key for account `A` will always need to sign for address `A` in multisig `[A, B, C]`, even if account `A` is rekeyed to `D`. However, the multisig account could be rekeyed to `[D, B, C]` if desired.
 
 ---
 
@@ -54,7 +55,7 @@ Some important characteristics to understand:
 
 ## Weighted Signers in Multisig Accounts
 
-Algorand multisignature accounts support **weighted participation** by allowing the same address to appear multiple times in the signer list.
+Algorand multi-signature accounts support **weighted participation** by allowing the same address to appear multiple times in the signer list.
 
 Because a multisig address is derived from an **ordered list of addresses**, each occurrence of an address is treated as an independent signer slot. This means you can effectively assign more “weight” to a specific participant by including their address multiple times.
 
@@ -70,21 +71,20 @@ In this configuration:
 
 This leads to the following behavior:
 
-- `A` alone can satisfy the threshold (by providing signatures for both of its slots)
-- `B` or `C` cannot execute a transaction alone
-- `A + B`, `A + C` and `B + C` can execute a transaction
+- `A` alone can satisfy the threshold
+- `B + C` can satisfy the threshold
 
 ### Single-Signer Execution in a Multisig
 
 In cases where a single address has enough weight to meet the threshold on its own, the transaction can be, constructed, signed, and submitted all by that single participant, without coordinating with others.
 
-Even though only one party was involved, the transaction will still appear on-chain as a **multisignature transaction**, since it is authorized under the multisig account configuration.
+Even though only one party was involved, the transaction will still appear on-chain as a **multi-signature transaction**, since it is authorized under the multisig account configuration.
 
 This is expected behavior and reflects that the **threshold was satisfied**, not necessarily that multiple unique participants were involved.
 
-## How to Generate a Multisignature Account
+## How to Generate a Multi-Signature Account
 
-The examples below demonstrate how to create a multisignature account that requires 2 signatures from 3 possible signers:
+The examples below demonstrate how to create a multi-signature account that requires 2 signatures from 3 possible signers:
 
 <Tabs syncKey='lang'>
   <TabItem label='Utils (TypeScript)' icon='seti:typescript'>
@@ -92,7 +92,7 @@ The examples below demonstrate how to create a multisignature account that requi
       src='https://raw.githubusercontent.com/algorandfoundation/devportal-code-examples/refs/heads/main/projects/typescript-examples/algokit-utils-ts/accounts/multisignature-accounts.ts'
       snippet='MULTISIG_ACCOUNT'
       lang='ts'
-      title='Multisignature Account'
+      title='Multi-Signature Account'
       frame='none'
     />
   </TabItem>
@@ -101,7 +101,7 @@ The examples below demonstrate how to create a multisignature account that requi
       src='https://raw.githubusercontent.com/algorandfoundation/devportal-code-examples/refs/heads/main/projects/python-examples/algokit_utils_py_examples/accounts/multisignature_accounts.py'
       snippet='MULTISIG_ACCOUNT'
       lang='py'
-      title='Multisignature Account'
+      title='Multi-Signature Account'
       frame='none'
     />
   </TabItem>
@@ -136,15 +136,15 @@ This is the real friction point of multisig systems—not the cryptography, but 
 
 There are three common approaches:
 
-- **Manual coordination:** Passing unsigned and partially signed transactions between participants
-- **Backend-assisted coordination:** A centralized service aggregates and distributes signatures
+- **Manual coordination:** Passing transactions and signatures between participants via off-chain messaging (e.g. email)
+- **Backend-assisted coordination:** A centralized service aggregates and distributes transactions and signatures
 - **On-chain coordination (ARC-55):** A standardized contract-based coordination layer
 
 ---
 
 ## ARC-55: On-Chain Coordination Layer
 
-ARC-55 is an Algorand Request for Comments that defines a standard for using on-chain smart contracts to coordinate multisig transaction signing, eliminating the friction of off-chain coordination between signers.
+ARC-55 is a specification for using on-chain smart contracts to coordinate multisig transaction signing, eliminating the friction and centralization of off-chain coordination between signers.
 
 With ARC-55, pending transactions and their collected signatures are stored directly on-chain in a smart contract, giving every authorized signer a shared, trustless source of truth.
 
@@ -154,7 +154,7 @@ You can find full ARC-55 details here:
 
 ### How ARC-55 Works
 
-An ARC-55-compliant smart contract is deployed once per multisig group. The admin sets up the contract with the threshold and signer addresses. From there, the workflow is fully on-chain:
+An ARC-55-compliant smart contract is deployed once per multisig account. The admin sets up the contract with the threshold and signer addresses. From there, the workflow is fully on-chain:
 
 - A signer generates a new transaction group nonce using `arc55_newTransactionGroup()`
 - Any authorized signer adds the transaction(s) to sign using `arc55_addTransaction()`
@@ -174,7 +174,7 @@ An ARC-55-compliant smart contract is deployed once per multisig group. The admi
 
 ### Positioning
 
-It’s important to understand that ARC-55 does not replace native multisignature accounts.
+It’s important to understand that ARC-55 does not replace native multi-signature accounts.
 
 Instead, it sits alongside them as a coordination layer:
 
@@ -182,6 +182,6 @@ Instead, it sits alongside them as a coordination layer:
 
 - ARC-55 (application layer): Defines how signers coordinate and exchange signatures
 
-You still end up submitting a standard multisignature transaction to the network. ARC-55 simply facilitates the process of getting there.
+Since ARC-55 is a standard, it provides multisig interoperability between wallets that implement it. A standard multi-signature transaction is still submitted to the network, ARC-55 simply facilitates the process of constucting it.
 
 ---

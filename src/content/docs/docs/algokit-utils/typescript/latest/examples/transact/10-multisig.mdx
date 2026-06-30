@@ -1,0 +1,331 @@
+---
+title: 'Multisig'
+description: 'This example demonstrates how to create and use a 2-of-3 multisig account.'
+sidebar:
+  order: 10
+---
+
+[← Back to Transactions](/docs/algokit-utils/typescript/latest/examples/transact/)
+
+## Description
+
+This example demonstrates how to create and use a 2-of-3 multisig account.
+Key concepts:
+
+- Creating a MultisigAccount with version, threshold, and addresses
+- Deriving the multisig address from the participant addresses
+- Signing transactions with a subset of participants (2 of 3)
+- Demonstrating that insufficient signatures (1 of 3) will fail
+
+## Prerequisites
+
+- LocalNet running (via `algokit localnet start`)
+
+## Run This Example
+
+From the repository root:
+
+```bash
+cd examples
+npm run example transact/10-multisig.ts
+```
+
+## Code
+
+[View source on GitHub](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/examples/transact/10-multisig.ts)
+
+```typescript title="10-multisig.ts"
+/**
+ * Example: Multisig
+ *
+ * This example demonstrates how to create and use a 2-of-3 multisig account.
+ *
+ * Key concepts:
+ * - Creating a MultisigAccount with version, threshold, and addresses
+ * - Deriving the multisig address from the participant addresses
+ * - Signing transactions with a subset of participants (2 of 3)
+ * - Demonstrating that insufficient signatures (1 of 3) will fail
+ *
+ * Prerequisites:
+ * - LocalNet running (via `algokit localnet start`)
+ */
+
+import { AlgorandClient } from '@algorandfoundation/algokit-utils';
+import {
+  assignFee,
+  MultisigAccount,
+  Transaction,
+  TransactionType,
+  type MultisigMetadata,
+  type PaymentTransactionFields,
+} from '@algorandfoundation/algokit-utils/transact';
+import {
+  createAlgodClient,
+  formatAlgo,
+  getAccountBalance,
+  printHeader,
+  printInfo,
+  printStep,
+  printSuccess,
+  shortenAddress,
+  waitForConfirmation,
+} from '../shared/utils.js';
+
+/**
+ * Gets a funded account from LocalNet's KMD wallet
+ */
+async function getLocalNetFundedAccount(algorand: AlgorandClient) {
+  return await algorand.account.kmd.getLocalNetDispenserAccount();
+}
+
+async function main() {
+  printHeader('Multisig Example (2-of-3)');
+
+  // Step 1: Initialize clients
+  printStep(1, 'Initialize Algod Client');
+  const algod = createAlgodClient();
+  const algorand = AlgorandClient.defaultLocalNet();
+  printInfo('Connected to LocalNet Algod');
+
+  // Step 2: Create 3 individual accounts using AlgorandClient helper
+  printStep(2, 'Create 3 Individual Accounts');
+  const account1 = algorand.account.random();
+  const account2 = algorand.account.random();
+  const account3 = algorand.account.random();
+
+  printInfo(`Account 1: ${shortenAddress(account1.addr.toString())}`);
+  printInfo(`Account 2: ${shortenAddress(account2.addr.toString())}`);
+  printInfo(`Account 3: ${shortenAddress(account3.addr.toString())}`);
+
+  // Step 3: Create MultisigAccount with version=1, threshold=2, and all 3 addresses
+  printStep(3, 'Create MultisigAccount (2-of-3)');
+
+  // The multisig parameters:
+  // - version: 1 (standard multisig version)
+  // - threshold: 2 (minimum signatures required)
+  // - addrs: list of participant addresses (order matters!)
+  const multisigParams: MultisigMetadata = {
+    version: 1,
+    threshold: 2,
+    addrs: [account1.addr, account2.addr, account3.addr],
+  };
+
+  // Create the MultisigAccount with 2 sub-signers (accounts 1 and 2)
+  // These are the accounts that will provide signatures
+  const multisigWith2Signers = new MultisigAccount(multisigParams, [account1, account2]);
+
+  printInfo(`Multisig version: ${multisigParams.version}`);
+  printInfo(`Multisig threshold: ${multisigParams.threshold}`);
+  printInfo(`Number of participants: ${multisigParams.addrs.length}`);
+
+  // Step 4: Show the derived multisig address
+  printStep(4, 'Show Derived Multisig Address');
+
+  // The multisig address is deterministically derived from:
+  // Hash("MultisigAddr" || version || threshold || pk1 || pk2 || pk3)
+  const multisigAddress = multisigWith2Signers.addr;
+  printInfo(`Multisig address: ${multisigAddress.toString()}`);
+  printInfo('');
+  printInfo('The multisig address is derived by hashing:');
+  printInfo('  "MultisigAddr" prefix + version + threshold + all public keys');
+  printInfo('  Order of public keys matters - different order = different address!');
+
+  // Step 5: Fund the multisig address
+  printStep(5, 'Fund the Multisig Address');
+
+  const dispenser = await getLocalNetFundedAccount(algorand);
+  const fundingAmount = 5_000_000n; // 5 ALGO
+
+  const suggestedParams = await algod.suggestedParams();
+
+  const fundTx = new Transaction({
+    type: TransactionType.Payment,
+    sender: dispenser.addr,
+    firstValid: suggestedParams.firstValid,
+    lastValid: suggestedParams.lastValid,
+    genesisHash: suggestedParams.genesisHash,
+    genesisId: suggestedParams.genesisId,
+    payment: {
+      receiver: multisigAddress,
+      amount: fundingAmount,
+    },
+  });
+
+  const fundTxWithFee = assignFee(fundTx, {
+    feePerByte: suggestedParams.fee,
+    minFee: suggestedParams.minFee,
+  });
+
+  const signedFundTx = await dispenser.signer([fundTxWithFee], [0]);
+  await algod.sendRawTransaction(signedFundTx);
+  await waitForConfirmation(algod, fundTxWithFee.txId());
+
+  const multisigBalance = await getAccountBalance(algorand, multisigAddress.toString());
+  printInfo(`Funded multisig with ${formatAlgo(fundingAmount)}`);
+  printInfo(`Multisig balance: ${formatAlgo(multisigBalance.microAlgo)}`);
+
+  // Step 6: Create a payment transaction from the multisig
+  printStep(6, 'Create Payment Transaction from Multisig');
+
+  const receiver = algorand.account.random();
+  const paymentAmount = 1_000_000n; // 1 ALGO
+
+  const payParams = await algod.suggestedParams();
+
+  const paymentFields: PaymentTransactionFields = {
+    receiver: receiver.addr,
+    amount: paymentAmount,
+  };
+
+  const paymentTx = new Transaction({
+    type: TransactionType.Payment,
+    sender: multisigAddress, // The sender is the multisig address
+    firstValid: payParams.firstValid,
+    lastValid: payParams.lastValid,
+    genesisHash: payParams.genesisHash,
+    genesisId: payParams.genesisId,
+    payment: paymentFields,
+  });
+
+  const paymentTxWithFee = assignFee(paymentTx, {
+    feePerByte: payParams.fee,
+    minFee: payParams.minFee,
+  });
+
+  printInfo(`Payment amount: ${formatAlgo(paymentAmount)}`);
+  printInfo(`Sender (multisig): ${shortenAddress(multisigAddress.toString())}`);
+  printInfo(`Receiver: ${shortenAddress(receiver.addr.toString())}`);
+  printInfo(`Transaction ID: ${paymentTxWithFee.txId()}`);
+
+  // Step 7: Sign with 2 of the 3 accounts using MultisigAccount.signer
+  printStep(7, 'Sign with 2 of 3 Accounts');
+
+  printInfo('Signing with accounts 1 and 2 (meeting 2-of-3 threshold)...');
+  printInfo('');
+  printInfo('How multisig signing works:');
+  printInfo('  1. Each sub-signer signs the transaction individually');
+  printInfo('  2. Signatures are collected into a MultisigSignature structure');
+  printInfo('  3. The structure includes version, threshold, and all subsigs');
+  printInfo('  4. Subsigs contain public key + signature (or undefined if not signed)');
+  printInfo('');
+
+  // The MultisigAccount.signer automatically collects signatures from all sub-signers
+  const signedTxns = await multisigWith2Signers.signer([paymentTxWithFee], [0]);
+
+  printInfo(`Signed transaction size: ${signedTxns[0].length} bytes`);
+  printSuccess('Transaction signed by accounts 1 and 2!');
+
+  // Step 8: Submit and verify the transaction succeeds
+  printStep(8, 'Submit and Verify Transaction');
+
+  await algod.sendRawTransaction(signedTxns);
+  printInfo('Transaction submitted to network...');
+
+  const pendingInfo = await waitForConfirmation(algod, paymentTxWithFee.txId());
+  printInfo(`Transaction confirmed in round: ${pendingInfo.confirmedRound}`);
+
+  // Verify balances
+  const multisigBalanceAfter = await getAccountBalance(algorand, multisigAddress.toString());
+  let receiverBalance: bigint;
+  try {
+    const info = await getAccountBalance(algorand, receiver.addr.toString());
+    receiverBalance = info.microAlgo;
+  } catch {
+    receiverBalance = 0n;
+  }
+
+  printInfo(`Multisig balance after: ${formatAlgo(multisigBalanceAfter.microAlgo)}`);
+  printInfo(`Receiver balance: ${formatAlgo(receiverBalance)}`);
+
+  if (receiverBalance === paymentAmount) {
+    printSuccess('Receiver received the payment!');
+  }
+
+  // Step 9: Demonstrate that 1 signature is insufficient
+  printStep(9, 'Demonstrate Insufficient Signatures (1 of 3)');
+
+  printInfo('Creating a MultisigAccount with only 1 sub-signer (account 3)...');
+  printInfo('');
+
+  // Create a MultisigAccount with only 1 signer - below the threshold
+  const multisigWith1Signer = new MultisigAccount(multisigParams, [account3]);
+
+  // Create another payment transaction
+  const insufficientParams = await algod.suggestedParams();
+
+  const insufficientTx = new Transaction({
+    type: TransactionType.Payment,
+    sender: multisigAddress,
+    firstValid: insufficientParams.firstValid,
+    lastValid: insufficientParams.lastValid,
+    genesisHash: insufficientParams.genesisHash,
+    genesisId: insufficientParams.genesisId,
+    payment: {
+      receiver: receiver.addr,
+      amount: 500_000n, // 0.5 ALGO
+    },
+  });
+
+  const insufficientTxWithFee = assignFee(insufficientTx, {
+    feePerByte: insufficientParams.fee,
+    minFee: insufficientParams.minFee,
+  });
+
+  printInfo('Signing with only account 3 (not meeting 2-of-3 threshold)...');
+
+  // Sign with only 1 account
+  const insufficientSignedTxns = await multisigWith1Signer.signer([insufficientTxWithFee], [0]);
+
+  // Try to submit - this should fail
+  try {
+    await algod.sendRawTransaction(insufficientSignedTxns);
+    printInfo('ERROR: Transaction should have been rejected!');
+  } catch (error) {
+    const errorMessage = error instanceof Error ? error.message : String(error);
+    printInfo(`Transaction rejected as expected!`);
+    printInfo(
+      `Reason: ${errorMessage.includes('multisig') ? 'Insufficient signatures for multisig' : errorMessage.slice(0, 100)}...`,
+    );
+    printSuccess('Demonstrated that 1 signature is insufficient for 2-of-3 multisig!');
+  }
+
+  // Summary
+  printInfo('');
+  printInfo('Summary - Multisig Key Points:');
+  printInfo('  - MultisigAccount wraps multiple signers with a threshold');
+  printInfo('  - version=1 is the standard multisig version');
+  printInfo('  - threshold specifies minimum signatures required');
+  printInfo('  - The multisig address is deterministically derived from params');
+  printInfo('  - Order of addresses matters for address derivation');
+  printInfo('  - Transactions require at least threshold signatures to succeed');
+  printInfo(
+    `  - This example used ${multisigParams.threshold}-of-${multisigParams.addrs.length} multisig`,
+  );
+
+  printSuccess('Multisig example completed!');
+}
+
+main().catch(error => {
+  console.error('Error:', error);
+  process.exit(1);
+});
+```
+
+---
+
+### Other examples in Transactions
+
+- [Payment Transaction](/docs/algokit-utils/typescript/latest/examples/transact/01-payment-transaction/)
+- [Payment with Close](/docs/algokit-utils/typescript/latest/examples/transact/02-payment-close/)
+- [Asset Create](/docs/algokit-utils/typescript/latest/examples/transact/03-asset-create/)
+- [Asset Transfer](/docs/algokit-utils/typescript/latest/examples/transact/04-asset-transfer/)
+- [Asset Freeze](/docs/algokit-utils/typescript/latest/examples/transact/05-asset-freeze/)
+- [Asset Clawback](/docs/algokit-utils/typescript/latest/examples/transact/06-asset-clawback/)
+- [Atomic Transaction Group](/docs/algokit-utils/typescript/latest/examples/transact/07-atomic-group/)
+- [Atomic Swap](/docs/algokit-utils/typescript/latest/examples/transact/08-atomic-swap/)
+- [Single Signature](/docs/algokit-utils/typescript/latest/examples/transact/09-single-sig/)
+- **Multisig**
+- [Logic Signature](/docs/algokit-utils/typescript/latest/examples/transact/11-logic-sig/)
+- [Fee Calculation](/docs/algokit-utils/typescript/latest/examples/transact/12-fee-calculation/)
+- [Encoding/Decoding](/docs/algokit-utils/typescript/latest/examples/transact/13-encoding-decoding/)
+- [Application Call](/docs/algokit-utils/typescript/latest/examples/transact/14-app-call/)
