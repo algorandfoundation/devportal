@@ -271,7 +271,7 @@ pnpm add -D typescript @types/node tsx
 #### Install dependencies
 
 ```bash
-pnpm add @x402/core @x402/avm @x402/hono hono @hono/node-server dotenv
+pnpm add @x402/core @x402/avm @x402/hono @x402-avm/extensions hono @hono/node-server dotenv
 ```
 
 #### Server config
@@ -295,14 +295,18 @@ Create `index.ts` at the project root. The `paymentMiddleware` function intercep
 
 The `accepts` array defines what the server will accept as payment. Each entry specifies the scheme, price, network, and recipient. The `network` value `algorand:SGO1GKSzyE7IEPItTxCByw9x8FmnrCDexi9/cOUJOiI=` is the [CAIP-2](https://github.com/ChainAgnostic/CAIPs/blob/main/CAIPs/caip-2.md) identifier for Algorand TestNet — this tells clients which chain to submit payment on.
 
+This server also includes bazaar discovery metadata, which helps clients discover paid x402 resources by describing each route's method, price, response type, and example output in the `402 Payment Required` response. If you use the hosted GoPlausible facilitator and settle a real TestNet payment, you can view the activity in the [facilitator dashboard](https://facilitator.goplausible.xyz/dashboard).
+
 ```typescript
 import { config } from 'dotenv';
 import { Hono } from 'hono';
 import { serve } from '@hono/node-server';
-import { paymentMiddleware } from '@x402/hono';
-import { x402ResourceServer, HTTPFacilitatorClient } from '@x402/core/server';
+import { paymentMiddleware, x402ResourceServer } from '@x402/hono';
+import { HTTPFacilitatorClient } from '@x402/core/server';
+import type { ResourceServerExtension } from '@x402/core/types';
 import { ExactAvmScheme } from '@x402/avm/exact/server';
 import { ALGORAND_TESTNET_CAIP2, USDC_TESTNET_ASA_ID } from '@x402/avm';
+import { declareDiscoveryExtension, bazaarResourceServerExtension } from '@x402-avm/extensions';
 
 config();
 
@@ -322,6 +326,22 @@ const server = new x402ResourceServer(facilitatorClient);
 const avmServerScheme = new ExactAvmScheme();
 server.register(ALGORAND_TESTNET_CAIP2, avmServerScheme);
 
+// Register the bazaar discovery extension
+server.registerExtension(bazaarResourceServerExtension as unknown as ResourceServerExtension);
+
+// Define discovery metadata for the protected route
+const weatherDiscovery = declareDiscoveryExtension({
+  output: {
+    example: {
+      report: {
+        weather: 'sunny',
+        temperature: 70,
+        timestamp: new Date().toISOString(),
+      },
+    },
+  },
+});
+
 const app = new Hono();
 
 // Protected Route Middleware
@@ -339,6 +359,8 @@ app.use(
           },
         ],
         description: 'Weather data access',
+        mimeType: 'application/json',
+        extensions: weatherDiscovery,
       },
     },
     server,
@@ -402,17 +424,17 @@ pnpm tsx index.ts
 You should get the weather JSON after payment settles. The output will look similar to the [Part 1 output](#add-x402-payment-support), with your local server's transaction details.
 
 :::note
-Optional: To run your own facilitator later, see [self-hosted facilitator (Express)](https://github.com/algorand-devrel/x402-demo/tree/main/facilitator/basic) and [`index.ts`](https://github.com/algorand-devrel/x402-demo/blob/main/facilitator/basic/index.ts).
+The local `402 Payment Required` response includes bazaar metadata, and a settled TestNet payment can appear in the hosted facilitator dashboard even when the resource URL is `localhost`. For a resource that other clients and agents can reliably call, deploy the resource server to a public URL.
 :::
 
 ### Next steps
 
-You now have a working x402 payment flow on Algorand TestNet. From here you can add more paid routes, adjust pricing, or deploy your own facilitator for full control over payment settlement.
+You now have a working x402 payment flow on Algorand TestNet. From here you can add more paid routes, adjust pricing, deploy your resource server publicly for bazaar discovery, or explore the demo repo for a custom facilitator.
 
 <LinkCard
-  title='x402-demo (examples)'
-  href='https://github.com/algorand-devrel/x402-demo'
-  description='Full example code for client, server, and facilitator'
+  title='x402-demo (examples & basic demo)'
+  href='https://github.com/algorandfoundation/x402-demo'
+  description='Examples for the client, server, bazaar integration, basic demo, and custom facilitator'
 />
 <LinkCard
   title='x402 on Algorand'
