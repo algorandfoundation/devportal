@@ -15,8 +15,13 @@ Handlebars.registerHelper('valueList', (arr) => {
   return new Handlebars.SafeString(html);
 });
 
-// 0x?? bytecode
-Handlebars.registerHelper('bytecode', (n) => `0x${Number(n ?? 0).toString(16).padStart(2, '0')}`);
+// 0x?? bytecode. Some opcodes (v13+) are multi-byte and arrive as an array,
+// e.g. [212, 1] -> `0xd4 0x01`.
+Handlebars.registerHelper('bytecode', (n) => {
+  const toHex = (b) => `0x${Number(b).toString(16).padStart(2, '0')}`;
+  if (Array.isArray(n)) return n.map(toHex).join(' ');
+  return toHex(n ?? 0);
+});
 
 // Groups as backticked, comma-separated list
 Handlebars.registerHelper('groupList', (arr) => {
@@ -114,10 +119,21 @@ async function main() {
 
   const template = Handlebars.compile(tplSrc, { noEscape: true });
   const data = JSON.parse(dataSrc);
-  const opcodes = data.Ops;
+
+  // Dataset version comes from go-algorand master; LatestReleasedVersion is the
+  // highest AVM version in the latest stable release (written by update-opcodes.ts).
+  // Any opcode introduced beyond it is not yet live on a released network.
+  const datasetVersion = data.Version;
+  const latestReleasedVersion = data.LatestReleasedVersion ?? datasetVersion;
+  const hasUnreleased = datasetVersion > latestReleasedVersion;
+
+  const opcodes = data.Ops.map((op) => ({
+    ...op,
+    Unreleased: op.IntroducedVersion > latestReleasedVersion,
+  }));
   opcodes.sort((a, b) => a.Name.localeCompare(b.Name));
 
-  const page = template({ opcodes });
+  const page = template({ opcodes, datasetVersion, latestReleasedVersion, hasUnreleased });
 
   await mkdir(dirname(outPath), { recursive: true });
   await writeFile(outPath, page.endsWith('\n') ? page : page + '\n', 'utf8');

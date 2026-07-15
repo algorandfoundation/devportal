@@ -4,6 +4,13 @@ tableOfContents: false
 ---
 
 import OpcodeFilters from '../../../../components/OpcodeFilters.astro';
+import { Aside } from '@astrojs/starlight/components';
+
+{{#if hasUnreleased}}
+<Aside type="caution" title="Includes unreleased opcodes">
+This reference tracks the latest AVM opcodes from `go-algorand` (**v{{datasetVersion}}**). The latest live network release is **AVM v{{latestReleasedVersion}}** — opcodes introduced after **v{{latestReleasedVersion}}** are marked <strong>⚠ Not yet live</strong> below and are not yet available on a released network. Use the <strong>Availability</strong> filter to view opcodes by version.
+</Aside>
+{{/if}}
 
 <OpcodeFilters />
 
@@ -12,14 +19,15 @@ import OpcodeFilters from '../../../../components/OpcodeFilters.astro';
 <div class="opcode-section"
      data-name="{{Name}}"
      data-version="v{{IntroducedVersion}}"
-     data-groups="{{csv Groups}}">
+     data-groups="{{csv Groups}}"
+     data-unreleased="{{#if Unreleased}}true{{else}}false{{/if}}">
 
-    ### {{{headingText Name}}}
+    ### {{{headingText Name}}}{{#if Unreleased}} <span class="opcode-unreleased" title="Not yet available on a released network">⚠ Not yet live</span>{{/if}}
     - **Bytecode:** `{{bytecode Opcode}}`
     - **Stack Input:** `{{{valueList Args}}}`
     - **Stack Output:** `{{{valueList Returns}}}`
     - **Size:** {{Size}}
-    - **Availability:** v{{IntroducedVersion}}
+    - **Availability:** v{{IntroducedVersion}}{{#if Unreleased}} — ⚠ not yet live{{/if}}
     - **Cost:** {{DocCost}}
     {{#if Doc}}
     - **Description:** {{{mdxParagraphs Doc}}}
