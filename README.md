@@ -258,21 +258,11 @@ The project uses `@algorandfoundation/astro-github-loader` to import documentati
 
 ### TEAL Opcode Reference
 
-The [AVM Opcodes](https://dev.algorand.co/reference/algorand-teal/opcodes) reference page is generated from the TEAL language specification published in [algorand/go-algorand](https://github.com/algorand/go-algorand/tree/master/data/transactions/logic).
+The [AVM Opcodes](https://dev.algorand.co/reference/algorand-teal/opcodes) reference is sourced from the TEAL language spec in [algorand/go-algorand](https://github.com/algorand/go-algorand/tree/master/data/transactions/logic) (`master`). Opcodes for an AVM version newer than the latest live release are marked **⚠ Not yet live**.
 
-**How it works — two steps, deliberately separate:**
-
-1. **Fetch** (`pnpm run update:opcodes`) — a _content_ step that hits the network. It fetches the newest `langspec_vN.json` from go-algorand `master` (the source of truth, so new opcodes appear as soon as they merge), resolves the latest **stable release** to record which AVM version is actually live, writes both into `opcodes.json`, and re-renders the page. It changes committed files, so it is **never** part of the build.
-2. **Render** (`pnpm run generate-opcode-list`) — a deterministic, network-free step that turns `opcodes.json` into `opcodes.mdx` via `templates/opcodes.md.hbs`. It runs automatically in `predev`/`prebuild`, so the page always reflects the committed dataset.
-
-Because the dataset tracks `master`, the page can include opcodes for an AVM version that is **not yet live** on a released network. The renderer flags every opcode whose `IntroducedVersion` is newer than the latest release with a **⚠ Not yet live** marker and shows a callout at the top of the page. Readers use the **Availability** filter to view opcodes by version.
-
-**Staying current:** `pnpm run check:opcodes` runs (non-blocking) during `prebuild`. When go-algorand ships a newer opcode version — or the current one becomes live — your next `pnpm run build` prints a warning telling you to refresh.
-
-**Refreshing the reference** — two options:
-
-- **Locally:** on a dedicated branch, run `pnpm run update:opcodes`, review the diff, and open a PR.
-- **Via GitHub Actions (recommended):** trigger the **Update Opcodes** workflow (Actions tab → _Update Opcodes_ → _Run workflow_). It runs the update on a clean checkout and opens a reviewable PR assigned to `devrel`, keeping the change isolated from feature work. It is **manual-only** (no cron) — opcodes change infrequently, and the build warning is the prompt to run it. An optional `ref` input lets you pull from a branch, tag, or SHA other than `master`.
+- `opcodes.json` is the dataset; `opcodes.mdx` is rendered from it (auto, in `prebuild`).
+- `check:opcodes` runs during `prebuild` and prints a non-blocking warning when the dataset is out of date.
+- To refresh, run **Actions → Update Opcodes → Run workflow** (opens a `devrel`-reviewed PR), or run `pnpm run update:opcodes` locally on a dedicated branch.
 
 ## Contributing
 
