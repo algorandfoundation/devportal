@@ -65,7 +65,7 @@ To implement payment transactions in your code, you can use the following exampl
 
 ### Close an Account
 
-In normal operation, an account holder can transfer their spendable balance to another account by sending a standard payment transaction, without using the `close` field. Only a payment that reduces the balance to exactly zero removes the account from the ledger. Any other amount leaves it with less than a full transfer completed. This option requires calculating the exact remaining balance at submission time.
+In normal operation, an account holder can transfer their spendable balance to another account by sending a standard payment transaction, without using the `close` field. For example, if account A has a balance of 1 Algo, A could send a normal payment of 0.999 Algo (balance minus the 0.001 Algo fee) to account B, with no `close` field set. Only a payment that reduces the balance to exactly zero removes the account from the ledger. Any other amount leaves it with less than a full transfer completed. This option requires calculating the exact remaining balance at submission time.
 
 The `close` field, also known as `CloseRemainderTo`, provides a reliable mechanism for emptying and closing an account. Rather than requiring the sender to calculate an exact amount, `close` transfers any remaining balance, after the transaction amount and fee are deducted, to the designated close-to account and removes the account from the ledger. To successfully close an account, it must first no longer hold any assets or application state that contribute to its minimum balance requirement.
 
