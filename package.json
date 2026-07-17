@@ -15,7 +15,7 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "_section:utils": "====================== Helper Scripts ======================",
-    "generate-opcode-list": "npx tsx scripts/generate-opcode-list.js",
+    "generate-opcode-list": "npx tsx scripts/generate-opcode-list.ts",
     "update:opcodes": "npx tsx scripts/update-opcodes.ts",
     "update:opcodes:dry-run": "npx tsx scripts/update-opcodes.ts --dry-run",
     "check:opcodes": "npx tsx scripts/update-opcodes.ts --check",

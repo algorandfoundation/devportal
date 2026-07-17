@@ -30,7 +30,7 @@
 
 import { readFile, writeFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
-import { render } from './generate-opcode-list.js';
+import { render } from './generate-opcode-list';
 
 const DATA_PATH = resolve('src/content/docs/reference/algorand-teal/opcodes.json');
 const LOGIC_DIR = 'data/transactions/logic';

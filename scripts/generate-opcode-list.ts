@@ -3,6 +3,19 @@ import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import Handlebars from 'handlebars';
 
+// Shape of opcodes.json. Only the fields this script reads are typed; the rest
+// pass through to the Handlebars template untouched.
+interface OpcodeEntry {
+  Name: string;
+  [key: string]: unknown;
+}
+
+interface OpcodeData {
+  Version: number;
+  LatestReleasedVersion?: number;
+  Ops: OpcodeEntry[];
+}
+
 /* ───────── helpers ───────── */
 
 function htmlEscape(s = '') {
@@ -19,7 +32,7 @@ Handlebars.registerHelper('valueList', (arr) => {
 // 0x?? bytecode. Some opcodes (v13+) are multi-byte and arrive as an array,
 // e.g. [212, 1] -> `0xd4 0x01`.
 Handlebars.registerHelper('bytecode', (n) => {
-  const toHex = (b) => `0x${Number(b).toString(16).padStart(2, '0')}`;
+  const toHex = (b: number) => `0x${Number(b).toString(16).padStart(2, '0')}`;
   if (Array.isArray(n)) return n.map(toHex).join(' ');
   return toHex(n ?? 0);
 });
@@ -96,7 +109,7 @@ Handlebars.registerHelper('metaTag', (name, introducedVersion, groups) => {
 
 // Escape for MDX text (&, <, >, {, }) and return **Markdown** paragraphs (no <p> tags)
 Handlebars.registerHelper('mdxParagraphs', (s = '') => {
-  const mdxEscape = (str) =>
+  const mdxEscape = (str: string) =>
     String(str)
       .replace(/&/g, '&amp;')
       .replace(/</g, '&lt;')
@@ -124,7 +137,7 @@ export async function render() {
   const [tplSrc, dataSrc] = await Promise.all([readFile(templatePath, 'utf8'), readFile(dataPath, 'utf8')]);
 
   const template = Handlebars.compile(tplSrc, { noEscape: true });
-  const data = JSON.parse(dataSrc);
+  const data = JSON.parse(dataSrc) as OpcodeData;
 
   // Dataset version comes from go-algorand master; LatestReleasedVersion is the
   // highest AVM version in the latest stable release (written by update-opcodes.ts).
