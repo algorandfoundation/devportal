@@ -100,6 +100,15 @@ const { currentVersion } = Astro.props;
         grpSel.append(o);
       });
 
+    // Default the Availability filter to the current released version so the
+    // page reflects what's live on MainNet by default; newer (unreleased)
+    // opcodes are opt-in via the dropdown. Falls back to "All" if unknown.
+    const defaultVersion =
+      currentVersion && [...versions].some(v => verNum(v) === currentVersion)
+        ? `v${currentVersion}`
+        : '';
+    verSel.value = defaultVersion;
+
     function previousH3(el) {
       let n = el.previousElementSibling;
       while (n && n.tagName !== 'H3') n = n.previousElementSibling;
@@ -145,7 +154,7 @@ const { currentVersion } = Astro.props;
     grpSel.addEventListener('change', applyFilters);
     resetBtn.addEventListener('click', () => {
       nameInput.value = '';
-      verSel.value = '';
+      verSel.value = defaultVersion;
       grpSel.value = '';
       applyFilters();
     });
