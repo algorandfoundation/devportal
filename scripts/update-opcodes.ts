@@ -30,10 +30,9 @@
 
 import { readFile, writeFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
-import { execFileSync } from 'node:child_process';
+import { render } from './generate-opcode-list.js';
 
 const DATA_PATH = resolve('src/content/docs/reference/algorand-teal/opcodes.json');
-const GENERATE_SCRIPT = resolve('scripts/generate-opcode-list.js');
 const LOGIC_DIR = 'data/transactions/logic';
 
 /** Default dataset source: bleeding-edge, includes not-yet-released opcodes. */
@@ -194,7 +193,7 @@ async function runUpdate(ref: string, dryRun: boolean) {
   await writeFile(DATA_PATH, nextRaw, 'utf8');
   console.log(`[update-opcodes] Wrote opcodes.json (dataset v${spec.Version}, released v${released}).`);
   console.log('[update-opcodes] Regenerating opcodes.mdx…');
-  execFileSync('npx', ['tsx', GENERATE_SCRIPT], { stdio: 'inherit' });
+  await render();
   console.log('[update-opcodes] Done.');
 }
 

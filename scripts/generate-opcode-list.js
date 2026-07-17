@@ -1,5 +1,6 @@
 import { readFile, writeFile, mkdir } from 'node:fs/promises';
 import { dirname, resolve } from 'node:path';
+import { fileURLToPath } from 'node:url';
 import Handlebars from 'handlebars';
 
 /* ───────── helpers ───────── */
@@ -108,9 +109,14 @@ Handlebars.registerHelper('mdxParagraphs', (s = '') => {
   return new Handlebars.SafeString(out);
 });
 
-/* ───────── main ───────── */
+/* ───────── render ───────── */
 
-async function main() {
+/**
+ * Render `opcodes.mdx` from the committed `opcodes.json` dataset.
+ * Exported so `update-opcodes.ts` can regenerate the page in-process after a
+ * fetch, and also run standalone (predev/prebuild).
+ */
+export async function render() {
   const templatePath = resolve('templates/opcodes.md.hbs');
   const dataPath = resolve('src/content/docs/reference/algorand-teal/opcodes.json');
   const outPath = 'src/content/docs/reference/algorand-teal/opcodes.mdx';
@@ -135,7 +141,10 @@ async function main() {
   console.log('Wrote', outPath);
 }
 
-main().catch((err) => {
-  console.error('[generate-opcode-list] Failed:', err);
-  process.exit(1);
-});
+// Run only when invoked directly (not when imported by update-opcodes.ts).
+if (process.argv[1] && fileURLToPath(import.meta.url) === resolve(process.argv[1])) {
+  render().catch((err) => {
+    console.error('[generate-opcode-list] Failed:', err);
+    process.exit(1);
+  });
+}
