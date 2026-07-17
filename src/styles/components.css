@@ -215,20 +215,6 @@ div.opcode-section table td {
   margin-top: 0.5rem;
 }
 
-/* Marker for opcodes not yet in a live network release (AVM version newer
-   than the latest go-algorand release). Rendered by generate-opcode-list. */
-.opcode-unreleased {
-  display: inline-block;
-  margin-left: 0.5rem;
-  padding: 0.05rem 0.4rem;
-  border-radius: 0.25rem;
-  font-size: 0.7rem;
-  font-weight: 600;
-  vertical-align: middle;
-  color: var(--sl-color-orange-high, #b45309);
-  background: var(--sl-color-orange-low, rgba(180, 83, 9, 0.12));
-}
-
 /* ---- Library pages ---- */
 /* Hide Starlight's mobile sidebar toggle on library pages —
    replaced by the HeaderMenu hamburger. Uses :has() so it's

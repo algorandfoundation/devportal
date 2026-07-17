@@ -4,20 +4,16 @@ tableOfContents: false
 ---
 
 import OpcodeFilters from '../../../../components/OpcodeFilters.astro';
-import { Aside } from '@astrojs/starlight/components';
 
-<Aside type="caution" title="Includes unreleased opcodes">
-This reference tracks the latest AVM opcodes from `go-algorand` (**v13**). The latest live network release is **AVM v12** — opcodes introduced after **v12** are marked <strong>⚠ Not yet live</strong> below and are not yet available on a released network. Use the <strong>Availability</strong> filter to view opcodes by version.
-</Aside>
+This page documents the current state of the AVM and may include opcode versions that have not yet been approved and adopted by all node operators.
 
-<OpcodeFilters />
+<OpcodeFilters currentVersion="12" />
 
 
 <div class="opcode-section"
      data-name="-"
      data-version="v1"
-     data-groups="Arithmetic"
-     data-unreleased="false">
+     data-groups="Arithmetic">
 
     ### -
     - **Bytecode:** `0x09`
@@ -38,8 +34,7 @@ This reference tracks the latest AVM opcodes from `go-algorand` (**v13**). The l
 <div class="opcode-section"
      data-name="!"
      data-version="v1"
-     data-groups="Arithmetic"
-     data-unreleased="false">
+     data-groups="Arithmetic">
 
     ### !
     - **Bytecode:** `0x14`
@@ -60,8 +55,7 @@ This reference tracks the latest AVM opcodes from `go-algorand` (**v13**). The l
 <div class="opcode-section"
      data-name="!="
      data-version="v1"
-     data-groups="Arithmetic"
-     data-unreleased="false">
+     data-groups="Arithmetic">
 
     ### !=
     - **Bytecode:** `0x13`
@@ -82,8 +76,7 @@ This reference tracks the latest AVM opcodes from `go-algorand` (**v13**). The l
 <div class="opcode-section"
      data-name="*"
      data-version="v1"
-     data-groups="Arithmetic"
-     data-unreleased="false">
+     data-groups="Arithmetic">
 
     ### *
     - **Bytecode:** `0x0b`
@@ -106,8 +99,7 @@ This reference tracks the latest AVM opcodes from `go-algorand` (**v13**). The l
 <div class="opcode-section"
      data-name="/"
      data-version="v1"
-     data-groups="Arithmetic"
-     data-unreleased="false">
+     data-groups="Arithmetic">
 
     ### /
     - **Bytecode:** `0x0a`
@@ -130,8 +122,7 @@ This reference tracks the latest AVM opcodes from `go-algorand` (**v13**). The l
 <div class="opcode-section"
      data-name="&"
      data-version="v1"
-     data-groups="Arithmetic"
-     data-unreleased="false">
+     data-groups="Arithmetic">
 
     ### &amp;
     - **Bytecode:** `0x1a`
@@ -152,8 +143,7 @@ This reference tracks the latest AVM opcodes from `go-algorand` (**v13**). The l
 <div class="opcode-section"
      data-name="&&"
      data-version="v1"
-     data-groups="Arithmetic"
-     data-unreleased="false">
+     data-groups="Arithmetic">
 
     ### &amp;&amp;
     - **Bytecode:** `0x10`
@@ -174,8 +164,7 @@ This reference tracks the latest AVM opcodes from `go-algorand` (**v13**). The l
 <div class="opcode-section"
      data-name="%"
      data-version="v1"
-     data-groups="Arithmetic"
-     data-unreleased="false">
+     data-groups="Arithmetic">
 
     ### %
     - **Bytecode:** `0x18`
@@ -196,8 +185,7 @@ This reference tracks the latest AVM opcodes from `go-algorand` (**v13**). The l
 <div class="opcode-section"
      data-name="^"
      data-version="v1"
-     data-groups="Arithmetic"
-     data-unreleased="false">
+     data-groups="Arithmetic">
 
     ### ^
     - **Bytecode:** `0x1b`
@@ -218,8 +206,7 @@ This reference tracks the latest AVM opcodes from `go-algorand` (**v13**). The l
 <div class="opcode-section"
      data-name="+"
      data-version="v1"
-     data-groups="Arithmetic"
-     data-unreleased="false">
+     data-groups="Arithmetic">
 
     ### +
     - **Bytecode:** `0x08`
@@ -242,8 +229,7 @@ This reference tracks the latest AVM opcodes from `go-algorand` (**v13**). The l
 <div class="opcode-section"
      data-name="<"
      data-version="v1"
-     data-groups="Arithmetic"
-     data-unreleased="false">
+     data-groups="Arithmetic">
 
     ### &lt;
     - **Bytecode:** `0x0c`
@@ -264,8 +250,7 @@ This reference tracks the latest AVM opcodes from `go-algorand` (**v13**). The l
 <div class="opcode-section"
      data-name="<="
      data-version="v1"
-     data-groups="Arithmetic"
-     data-unreleased="false">
+     data-groups="Arithmetic">
 
     ### &lt;=
     - **Bytecode:** `0x0e`
@@ -286,8 +271,7 @@ This reference tracks the latest AVM opcodes from `go-algorand` (**v13**). The l
 <div class="opcode-section"
      data-name="=="
      data-version="v1"
-     data-groups="Arithmetic"
-     data-unreleased="false">
+     data-groups="Arithmetic">
 
     ### ==
     - **Bytecode:** `0x12`
@@ -308,8 +292,7 @@ This reference tracks the latest AVM opcodes from `go-algorand` (**v13**). The l
 <div class="opcode-section"
      data-name=">"
      data-version="v1"
-     data-groups="Arithmetic"
-     data-unreleased="false">
+     data-groups="Arithmetic">
 
     ### &gt;
     - **Bytecode:** `0x0d`
@@ -330,8 +313,7 @@ This reference tracks the latest AVM opcodes from `go-algorand` (**v13**). The l
 <div class="opcode-section"
      data-name=">="
      data-version="v1"
-     data-groups="Arithmetic"
-     data-unreleased="false">
+     data-groups="Arithmetic">
 
     ### &gt;=
     - **Bytecode:** `0x0f`
@@ -352,8 +334,7 @@ This reference tracks the latest AVM opcodes from `go-algorand` (**v13**). The l
 <div class="opcode-section"
      data-name="|"
      data-version="v1"
-     data-groups="Arithmetic"
-     data-unreleased="false">
+     data-groups="Arithmetic">
 
     ### |
     - **Bytecode:** `0x19`
@@ -374,8 +355,7 @@ This reference tracks the latest AVM opcodes from `go-algorand` (**v13**). The l
 <div class="opcode-section"
      data-name="||"
      data-version="v1"
-     data-groups="Arithmetic"
-     data-unreleased="false">
+     data-groups="Arithmetic">
 
     ### ||
     - **Bytecode:** `0x11`
@@ -396,8 +376,7 @@ This reference tracks the latest AVM opcodes from `go-algorand` (**v13**). The l
 <div class="opcode-section"
      data-name="~"
      data-version="v1"
-     data-groups="Arithmetic"
-     data-unreleased="false">
+     data-groups="Arithmetic">
 
     ### ~
     - **Bytecode:** `0x1c`
@@ -418,8 +397,7 @@ This reference tracks the latest AVM opcodes from `go-algorand` (**v13**). The l
 <div class="opcode-section"
      data-name="acct_params_get"
      data-version="v6"
-     data-groups="Account Access"
-     data-unreleased="false">
+     data-groups="Account Access">
 
     ### acct_params_get
     - **Bytecode:** `0x73`
@@ -450,8 +428,7 @@ This reference tracks the latest AVM opcodes from `go-algorand` (**v13**). The l
 <div class="opcode-section"
      data-name="addw"
      data-version="v2"
-     data-groups="Arithmetic"
-     data-unreleased="false">
+     data-groups="Arithmetic">
 
     ### addw
     - **Bytecode:** `0x1e`
@@ -472,15 +449,14 @@ This reference tracks the latest AVM opcodes from `go-algorand` (**v13**). The l
 <div class="opcode-section"
      data-name="app_box_create"
      data-version="v13"
-     data-groups="Box Access"
-     data-unreleased="true">
+     data-groups="Box Access">
 
-    ### app_box_create <span class="opcode-unreleased" title="Not yet available on a released network">⚠ Not yet live</span>
+    ### app_box_create
     - **Bytecode:** `0xd4 0x01`
     - **Stack Input:** `uint64,boxName,uint64`
     - **Stack Output:** `bool`
     - **Size:** 2
-    - **Availability:** v13 — ⚠ not yet live
+    - **Availability:** v13
     - **Cost:** 1
     - **Description:** create a box named B, of length C, for app A. Fail if the name B is empty or C exceeds 32,768. Returns 0 if B already existed, else 1
     - **Groups:** `Box Access`
@@ -496,15 +472,14 @@ This reference tracks the latest AVM opcodes from `go-algorand` (**v13**). The l
 <div class="opcode-section"
      data-name="app_box_del"
      data-version="v13"
-     data-groups="Box Access"
-     data-unreleased="true">
+     data-groups="Box Access">
 
-    ### app_box_del <span class="opcode-unreleased" title="Not yet available on a released network">⚠ Not yet live</span>
+    ### app_box_del
     - **Bytecode:** `0xd4 0x04`
     - **Stack Input:** `uint64,boxName`
     - **Stack Output:** `bool`
     - **Size:** 2
-    - **Availability:** v13 — ⚠ not yet live
+    - **Availability:** v13
     - **Cost:** 1
     - **Description:** delete box named B of app A if it exists. Return 1 if B existed, 0 otherwise
     - **Groups:** `Box Access`
@@ -518,15 +493,14 @@ This reference tracks the latest AVM opcodes from `go-algorand` (**v13**). The l
 <div class="opcode-section"
      data-name="app_box_extract"
      data-version="v13"
-     data-groups="Box Access"
-     data-unreleased="true">
+     data-groups="Box Access">
 
-    ### app_box_extract <span class="opcode-unreleased" title="Not yet available on a released network">⚠ Not yet live</span>
+    ### app_box_extract
     - **Bytecode:** `0xd4 0x02`
     - **Stack Input:** `uint64,boxName,uint64,uint64`
     - **Stack Output:** `[]byte`
     - **Size:** 2
-    - **Availability:** v13 — ⚠ not yet live
+    - **Availability:** v13
     - **Cost:** 1
     - **Description:** read D bytes from box B of app A, starting at offset C. Fail if box B does not exist, or the byte range is outside B's size.
     - **Groups:** `Box Access`
@@ -540,15 +514,14 @@ This reference tracks the latest AVM opcodes from `go-algorand` (**v13**). The l
 <div class="opcode-section"
      data-name="app_box_get"
      data-version="v13"
-     data-groups="Box Access"
-     data-unreleased="true">
+     data-groups="Box Access">
 
-    ### app_box_get <span class="opcode-unreleased" title="Not yet available on a released network">⚠ Not yet live</span>
+    ### app_box_get
     - **Bytecode:** `0xd4 0x06`
     - **Stack Input:** `uint64,boxName`
     - **Stack Output:** `[]byte,bool`
     - **Size:** 2
-    - **Availability:** v13 — ⚠ not yet live
+    - **Availability:** v13
     - **Cost:** 1
     - **Description:** X is the contents of box B of app A if B exists, else ''. Y is 1 if B exists, else 0.
     - **Groups:** `Box Access`
@@ -564,15 +537,14 @@ This reference tracks the latest AVM opcodes from `go-algorand` (**v13**). The l
 <div class="opcode-section"
      data-name="app_box_len"
      data-version="v13"
-     data-groups="Box Access"
-     data-unreleased="true">
+     data-groups="Box Access">
 
-    ### app_box_len <span class="opcode-unreleased" title="Not yet available on a released network">⚠ Not yet live</span>
+    ### app_box_len
     - **Bytecode:** `0xd4 0x05`
     - **Stack Input:** `uint64,boxName`
     - **Stack Output:** `uint64,bool`
     - **Size:** 2
-    - **Availability:** v13 — ⚠ not yet live
+    - **Availability:** v13
     - **Cost:** 1
     - **Description:** X is the length of box B of app A if B exists, else 0. Y is 1 if B exists, else 0.
     - **Groups:** `Box Access`
@@ -586,15 +558,14 @@ This reference tracks the latest AVM opcodes from `go-algorand` (**v13**). The l
 <div class="opcode-section"
      data-name="app_box_put"
      data-version="v13"
-     data-groups="Box Access"
-     data-unreleased="true">
+     data-groups="Box Access">
 
-    ### app_box_put <span class="opcode-unreleased" title="Not yet available on a released network">⚠ Not yet live</span>
+    ### app_box_put
     - **Bytecode:** `0xd4 0x07`
     - **Stack Input:** `uint64,boxName,[]byte`
     - **Stack Output:** `-`
     - **Size:** 2
-    - **Availability:** v13 — ⚠ not yet live
+    - **Availability:** v13
     - **Cost:** 1
     - **Description:** replaces the contents of box B of app A with byte-array C. Fails if B exists and len(C) != len(box B). Creates B if it does not exist
     - **Groups:** `Box Access`
@@ -610,15 +581,14 @@ This reference tracks the latest AVM opcodes from `go-algorand` (**v13**). The l
 <div class="opcode-section"
      data-name="app_box_replace"
      data-version="v13"
-     data-groups="Box Access"
-     data-unreleased="true">
+     data-groups="Box Access">
 
-    ### app_box_replace <span class="opcode-unreleased" title="Not yet available on a released network">⚠ Not yet live</span>
+    ### app_box_replace
     - **Bytecode:** `0xd4 0x03`
     - **Stack Input:** `uint64,boxName,uint64,[]byte`
     - **Stack Output:** `-`
     - **Size:** 2
-    - **Availability:** v13 — ⚠ not yet live
+    - **Availability:** v13
     - **Cost:** 1
     - **Description:** write byte-array D into box B of app A, starting at offset C. Fail if box B does not exist, or the byte range is outside B's size.
     - **Groups:** `Box Access`
@@ -632,15 +602,14 @@ This reference tracks the latest AVM opcodes from `go-algorand` (**v13**). The l
 <div class="opcode-section"
      data-name="app_box_resize"
      data-version="v13"
-     data-groups="Box Access"
-     data-unreleased="true">
+     data-groups="Box Access">
 
-    ### app_box_resize <span class="opcode-unreleased" title="Not yet available on a released network">⚠ Not yet live</span>
+    ### app_box_resize
     - **Bytecode:** `0xd4 0x09`
     - **Stack Input:** `uint64,boxName,uint64`
     - **Stack Output:** `-`
     - **Size:** 2
-    - **Availability:** v13 — ⚠ not yet live
+    - **Availability:** v13
     - **Cost:** 1
     - **Description:** change the size of box named B of app A to be of length C, adding zero bytes to end or removing bytes from the end, as needed. Fail if the name B is empty, B is not an existing box, or C exceeds 32,768.
     - **Groups:** `Box Access`
@@ -654,15 +623,14 @@ This reference tracks the latest AVM opcodes from `go-algorand` (**v13**). The l
 <div class="opcode-section"
      data-name="app_box_splice"
      data-version="v13"
-     data-groups="Box Access"
-     data-unreleased="true">
+     data-groups="Box Access">
 
-    ### app_box_splice <span class="opcode-unreleased" title="Not yet available on a released network">⚠ Not yet live</span>
+    ### app_box_splice
     - **Bytecode:** `0xd4 0x08`
     - **Stack Input:** `uint64,boxName,uint64,uint64,[]byte`
     - **Stack Output:** `-`
     - **Size:** 2
-    - **Availability:** v13 — ⚠ not yet live
+    - **Availability:** v13
     - **Cost:** 1
     - **Description:** set box B of app A to contain its previous bytes up to index C, followed by E, followed by the original bytes of B that began at index C+D.
     - **Groups:** `Box Access`
@@ -678,8 +646,7 @@ This reference tracks the latest AVM opcodes from `go-algorand` (**v13**). The l
 <div class="opcode-section"
      data-name="app_global_del"
      data-version="v2"
-     data-groups="Application Access"
-     data-unreleased="false">
+     data-groups="Application Access">
 
     ### app_global_del
     - **Bytecode:** `0x69`
@@ -704,8 +671,7 @@ Deleting a key which is already absent has no effect on the application global s
 <div class="opcode-section"
      data-name="app_global_get"
      data-version="v2"
-     data-groups="Application Access"
-     data-unreleased="false">
+     data-groups="Application Access">
 
     ### app_global_get
     - **Bytecode:** `0x64`
@@ -728,8 +694,7 @@ Deleting a key which is already absent has no effect on the application global s
 <div class="opcode-section"
      data-name="app_global_get_ex"
      data-version="v2"
-     data-groups="Application Access"
-     data-unreleased="false">
+     data-groups="Application Access">
 
     ### app_global_get_ex
     - **Bytecode:** `0x65`
@@ -752,8 +717,7 @@ Deleting a key which is already absent has no effect on the application global s
 <div class="opcode-section"
      data-name="app_global_put"
      data-version="v2"
-     data-groups="Application Access"
-     data-unreleased="false">
+     data-groups="Application Access">
 
     ### app_global_put
     - **Bytecode:** `0x67`
@@ -774,8 +738,7 @@ Deleting a key which is already absent has no effect on the application global s
 <div class="opcode-section"
      data-name="app_local_del"
      data-version="v2"
-     data-groups="Application Access"
-     data-unreleased="false">
+     data-groups="Application Access">
 
     ### app_local_del
     - **Bytecode:** `0x68`
@@ -800,8 +763,7 @@ Deleting a key which is already absent has no effect on the application local st
 <div class="opcode-section"
      data-name="app_local_get"
      data-version="v2"
-     data-groups="Application Access"
-     data-unreleased="false">
+     data-groups="Application Access">
 
     ### app_local_get
     - **Bytecode:** `0x62`
@@ -824,8 +786,7 @@ Deleting a key which is already absent has no effect on the application local st
 <div class="opcode-section"
      data-name="app_local_get_ex"
      data-version="v2"
-     data-groups="Application Access"
-     data-unreleased="false">
+     data-groups="Application Access">
 
     ### app_local_get_ex
     - **Bytecode:** `0x63`
@@ -848,8 +809,7 @@ Deleting a key which is already absent has no effect on the application local st
 <div class="opcode-section"
      data-name="app_local_put"
      data-version="v2"
-     data-groups="Application Access"
-     data-unreleased="false">
+     data-groups="Application Access">
 
     ### app_local_put
     - **Bytecode:** `0x66`
@@ -872,8 +832,7 @@ Deleting a key which is already absent has no effect on the application local st
 <div class="opcode-section"
      data-name="app_opted_in"
      data-version="v2"
-     data-groups="Application Access"
-     data-unreleased="false">
+     data-groups="Application Access">
 
     ### app_opted_in
     - **Bytecode:** `0x61`
@@ -896,8 +855,7 @@ Deleting a key which is already absent has no effect on the application local st
 <div class="opcode-section"
      data-name="app_params_get"
      data-version="v5"
-     data-groups="Application Access"
-     data-unreleased="false">
+     data-groups="Application Access">
 
     ### app_params_get
     - **Bytecode:** `0x72`
@@ -930,15 +888,14 @@ Deleting a key which is already absent has no effect on the application local st
 <div class="opcode-section"
      data-name="app_params_set"
      data-version="v13"
-     data-groups="Application Access"
-     data-unreleased="true">
+     data-groups="Application Access">
 
-    ### app_params_set <span class="opcode-unreleased" title="Not yet available on a released network">⚠ Not yet live</span>
+    ### app_params_set
     - **Bytecode:** `0x76`
     - **Stack Input:** `uint64`
     - **Stack Output:** `-`
     - **Size:** 2
-    - **Availability:** v13 — ⚠ not yet live
+    - **Availability:** v13
     - **Cost:** 1
     - **Description:** set field F of the current app to A
     - **Groups:** `Application Access`
@@ -962,8 +919,7 @@ Deleting a key which is already absent has no effect on the application local st
 <div class="opcode-section"
      data-name="arg"
      data-version="v1"
-     data-groups="Loading Values"
-     data-unreleased="false">
+     data-groups="Loading Values">
 
     ### arg
     - **Bytecode:** `0x2c`
@@ -989,8 +945,7 @@ Deleting a key which is already absent has no effect on the application local st
 <div class="opcode-section"
      data-name="arg_0"
      data-version="v1"
-     data-groups="Loading Values"
-     data-unreleased="false">
+     data-groups="Loading Values">
 
     ### arg_0
     - **Bytecode:** `0x2d`
@@ -1011,8 +966,7 @@ Deleting a key which is already absent has no effect on the application local st
 <div class="opcode-section"
      data-name="arg_1"
      data-version="v1"
-     data-groups="Loading Values"
-     data-unreleased="false">
+     data-groups="Loading Values">
 
     ### arg_1
     - **Bytecode:** `0x2e`
@@ -1033,8 +987,7 @@ Deleting a key which is already absent has no effect on the application local st
 <div class="opcode-section"
      data-name="arg_2"
      data-version="v1"
-     data-groups="Loading Values"
-     data-unreleased="false">
+     data-groups="Loading Values">
 
     ### arg_2
     - **Bytecode:** `0x2f`
@@ -1055,8 +1008,7 @@ Deleting a key which is already absent has no effect on the application local st
 <div class="opcode-section"
      data-name="arg_3"
      data-version="v1"
-     data-groups="Loading Values"
-     data-unreleased="false">
+     data-groups="Loading Values">
 
     ### arg_3
     - **Bytecode:** `0x30`
@@ -1077,8 +1029,7 @@ Deleting a key which is already absent has no effect on the application local st
 <div class="opcode-section"
      data-name="args"
      data-version="v5"
-     data-groups="Loading Values"
-     data-unreleased="false">
+     data-groups="Loading Values">
 
     ### args
     - **Bytecode:** `0xc3`
@@ -1099,8 +1050,7 @@ Deleting a key which is already absent has no effect on the application local st
 <div class="opcode-section"
      data-name="assert"
      data-version="v3"
-     data-groups="Flow Control"
-     data-unreleased="false">
+     data-groups="Flow Control">
 
     ### assert
     - **Bytecode:** `0x44`
@@ -1121,8 +1071,7 @@ Deleting a key which is already absent has no effect on the application local st
 <div class="opcode-section"
      data-name="asset_holding_get"
      data-version="v2"
-     data-groups="Asset Access"
-     data-unreleased="false">
+     data-groups="Asset Access">
 
     ### asset_holding_get
     - **Bytecode:** `0x70`
@@ -1155,8 +1104,7 @@ Deleting a key which is already absent has no effect on the application local st
 <div class="opcode-section"
      data-name="asset_params_get"
      data-version="v2"
-     data-groups="Asset Access"
-     data-unreleased="false">
+     data-groups="Asset Access">
 
     ### asset_params_get
     - **Bytecode:** `0x71`
@@ -1189,8 +1137,7 @@ Deleting a key which is already absent has no effect on the application local st
 <div class="opcode-section"
      data-name="b"
      data-version="v2"
-     data-groups="Flow Control"
-     data-unreleased="false">
+     data-groups="Flow Control">
 
     ### b
     - **Bytecode:** `0x42`
@@ -1218,8 +1165,7 @@ Deleting a key which is already absent has no effect on the application local st
 <div class="opcode-section"
      data-name="b-"
      data-version="v4"
-     data-groups="Byte Array Arithmetic"
-     data-unreleased="false">
+     data-groups="Byte Array Arithmetic">
 
     ### b-
     - **Bytecode:** `0xa1`
@@ -1240,8 +1186,7 @@ Deleting a key which is already absent has no effect on the application local st
 <div class="opcode-section"
      data-name="b!="
      data-version="v4"
-     data-groups="Byte Array Arithmetic"
-     data-unreleased="false">
+     data-groups="Byte Array Arithmetic">
 
     ### b!=
     - **Bytecode:** `0xa9`
@@ -1262,8 +1207,7 @@ Deleting a key which is already absent has no effect on the application local st
 <div class="opcode-section"
      data-name="b*"
      data-version="v4"
-     data-groups="Byte Array Arithmetic"
-     data-unreleased="false">
+     data-groups="Byte Array Arithmetic">
 
     ### b*
     - **Bytecode:** `0xa3`
@@ -1284,8 +1228,7 @@ Deleting a key which is already absent has no effect on the application local st
 <div class="opcode-section"
      data-name="b/"
      data-version="v4"
-     data-groups="Byte Array Arithmetic"
-     data-unreleased="false">
+     data-groups="Byte Array Arithmetic">
 
     ### b/
     - **Bytecode:** `0xa2`
@@ -1306,8 +1249,7 @@ Deleting a key which is already absent has no effect on the application local st
 <div class="opcode-section"
      data-name="b&"
      data-version="v4"
-     data-groups="Byte Array Logic"
-     data-unreleased="false">
+     data-groups="Byte Array Logic">
 
     ### b&amp;
     - **Bytecode:** `0xac`
@@ -1328,8 +1270,7 @@ Deleting a key which is already absent has no effect on the application local st
 <div class="opcode-section"
      data-name="b%"
      data-version="v4"
-     data-groups="Byte Array Arithmetic"
-     data-unreleased="false">
+     data-groups="Byte Array Arithmetic">
 
     ### b%
     - **Bytecode:** `0xaa`
@@ -1350,8 +1291,7 @@ Deleting a key which is already absent has no effect on the application local st
 <div class="opcode-section"
      data-name="b^"
      data-version="v4"
-     data-groups="Byte Array Logic"
-     data-unreleased="false">
+     data-groups="Byte Array Logic">
 
     ### b^
     - **Bytecode:** `0xad`
@@ -1372,8 +1312,7 @@ Deleting a key which is already absent has no effect on the application local st
 <div class="opcode-section"
      data-name="b+"
      data-version="v4"
-     data-groups="Byte Array Arithmetic"
-     data-unreleased="false">
+     data-groups="Byte Array Arithmetic">
 
     ### b+
     - **Bytecode:** `0xa0`
@@ -1394,8 +1333,7 @@ Deleting a key which is already absent has no effect on the application local st
 <div class="opcode-section"
      data-name="b<"
      data-version="v4"
-     data-groups="Byte Array Arithmetic"
-     data-unreleased="false">
+     data-groups="Byte Array Arithmetic">
 
     ### b&lt;
     - **Bytecode:** `0xa4`
@@ -1416,8 +1354,7 @@ Deleting a key which is already absent has no effect on the application local st
 <div class="opcode-section"
      data-name="b<="
      data-version="v4"
-     data-groups="Byte Array Arithmetic"
-     data-unreleased="false">
+     data-groups="Byte Array Arithmetic">
 
     ### b&lt;=
     - **Bytecode:** `0xa6`
@@ -1438,8 +1375,7 @@ Deleting a key which is already absent has no effect on the application local st
 <div class="opcode-section"
      data-name="b=="
      data-version="v4"
-     data-groups="Byte Array Arithmetic"
-     data-unreleased="false">
+     data-groups="Byte Array Arithmetic">
 
     ### b==
     - **Bytecode:** `0xa8`
@@ -1460,8 +1396,7 @@ Deleting a key which is already absent has no effect on the application local st
 <div class="opcode-section"
      data-name="b>"
      data-version="v4"
-     data-groups="Byte Array Arithmetic"
-     data-unreleased="false">
+     data-groups="Byte Array Arithmetic">
 
     ### b&gt;
     - **Bytecode:** `0xa5`
@@ -1482,8 +1417,7 @@ Deleting a key which is already absent has no effect on the application local st
 <div class="opcode-section"
      data-name="b>="
      data-version="v4"
-     data-groups="Byte Array Arithmetic"
-     data-unreleased="false">
+     data-groups="Byte Array Arithmetic">
 
     ### b&gt;=
     - **Bytecode:** `0xa7`
@@ -1504,8 +1438,7 @@ Deleting a key which is already absent has no effect on the application local st
 <div class="opcode-section"
      data-name="b|"
      data-version="v4"
-     data-groups="Byte Array Logic"
-     data-unreleased="false">
+     data-groups="Byte Array Logic">
 
     ### b|
     - **Bytecode:** `0xab`
@@ -1526,8 +1459,7 @@ Deleting a key which is already absent has no effect on the application local st
 <div class="opcode-section"
      data-name="b~"
      data-version="v4"
-     data-groups="Byte Array Logic"
-     data-unreleased="false">
+     data-groups="Byte Array Logic">
 
     ### b~
     - **Bytecode:** `0xae`
@@ -1548,8 +1480,7 @@ Deleting a key which is already absent has no effect on the application local st
 <div class="opcode-section"
      data-name="balance"
      data-version="v2"
-     data-groups="Account Access"
-     data-unreleased="false">
+     data-groups="Account Access">
 
     ### balance
     - **Bytecode:** `0x60`
@@ -1572,8 +1503,7 @@ Deleting a key which is already absent has no effect on the application local st
 <div class="opcode-section"
      data-name="base64_decode"
      data-version="v7"
-     data-groups="Byte Array Manipulation"
-     data-unreleased="false">
+     data-groups="Byte Array Manipulation">
 
     ### base64_decode
     - **Bytecode:** `0x5e`
@@ -1608,8 +1538,7 @@ Deleting a key which is already absent has no effect on the application local st
 <div class="opcode-section"
      data-name="bitlen"
      data-version="v4"
-     data-groups="Arithmetic"
-     data-unreleased="false">
+     data-groups="Arithmetic">
 
     ### bitlen
     - **Bytecode:** `0x93`
@@ -1632,8 +1561,7 @@ Deleting a key which is already absent has no effect on the application local st
 <div class="opcode-section"
      data-name="block"
      data-version="v7"
-     data-groups="Block Access"
-     data-unreleased="false">
+     data-groups="Block Access">
 
     ### block
     - **Bytecode:** `0xd1`
@@ -1664,8 +1592,7 @@ Deleting a key which is already absent has no effect on the application local st
 <div class="opcode-section"
      data-name="bnz"
      data-version="v1"
-     data-groups="Flow Control"
-     data-unreleased="false">
+     data-groups="Flow Control">
 
     ### bnz
     - **Bytecode:** `0x40`
@@ -1695,8 +1622,7 @@ At v2 it became allowed to branch to the end of the program exactly after the la
 <div class="opcode-section"
      data-name="box_create"
      data-version="v8"
-     data-groups="Box Access"
-     data-unreleased="false">
+     data-groups="Box Access">
 
     ### box_create
     - **Bytecode:** `0xb9`
@@ -1719,8 +1645,7 @@ At v2 it became allowed to branch to the end of the program exactly after the la
 <div class="opcode-section"
      data-name="box_del"
      data-version="v8"
-     data-groups="Box Access"
-     data-unreleased="false">
+     data-groups="Box Access">
 
     ### box_del
     - **Bytecode:** `0xbc`
@@ -1741,8 +1666,7 @@ At v2 it became allowed to branch to the end of the program exactly after the la
 <div class="opcode-section"
      data-name="box_extract"
      data-version="v8"
-     data-groups="Box Access"
-     data-unreleased="false">
+     data-groups="Box Access">
 
     ### box_extract
     - **Bytecode:** `0xba`
@@ -1763,8 +1687,7 @@ At v2 it became allowed to branch to the end of the program exactly after the la
 <div class="opcode-section"
      data-name="box_get"
      data-version="v8"
-     data-groups="Box Access"
-     data-unreleased="false">
+     data-groups="Box Access">
 
     ### box_get
     - **Bytecode:** `0xbe`
@@ -1787,8 +1710,7 @@ At v2 it became allowed to branch to the end of the program exactly after the la
 <div class="opcode-section"
      data-name="box_len"
      data-version="v8"
-     data-groups="Box Access"
-     data-unreleased="false">
+     data-groups="Box Access">
 
     ### box_len
     - **Bytecode:** `0xbd`
@@ -1809,8 +1731,7 @@ At v2 it became allowed to branch to the end of the program exactly after the la
 <div class="opcode-section"
      data-name="box_put"
      data-version="v8"
-     data-groups="Box Access"
-     data-unreleased="false">
+     data-groups="Box Access">
 
     ### box_put
     - **Bytecode:** `0xbf`
@@ -1833,8 +1754,7 @@ At v2 it became allowed to branch to the end of the program exactly after the la
 <div class="opcode-section"
      data-name="box_replace"
      data-version="v8"
-     data-groups="Box Access"
-     data-unreleased="false">
+     data-groups="Box Access">
 
     ### box_replace
     - **Bytecode:** `0xbb`
@@ -1855,8 +1775,7 @@ At v2 it became allowed to branch to the end of the program exactly after the la
 <div class="opcode-section"
      data-name="box_resize"
      data-version="v10"
-     data-groups="Box Access"
-     data-unreleased="false">
+     data-groups="Box Access">
 
     ### box_resize
     - **Bytecode:** `0xd3`
@@ -1877,8 +1796,7 @@ At v2 it became allowed to branch to the end of the program exactly after the la
 <div class="opcode-section"
      data-name="box_splice"
      data-version="v10"
-     data-groups="Box Access"
-     data-unreleased="false">
+     data-groups="Box Access">
 
     ### box_splice
     - **Bytecode:** `0xd2`
@@ -1901,8 +1819,7 @@ At v2 it became allowed to branch to the end of the program exactly after the la
 <div class="opcode-section"
      data-name="bsqrt"
      data-version="v6"
-     data-groups="Byte Array Arithmetic"
-     data-unreleased="false">
+     data-groups="Byte Array Arithmetic">
 
     ### bsqrt
     - **Bytecode:** `0x96`
@@ -1923,8 +1840,7 @@ At v2 it became allowed to branch to the end of the program exactly after the la
 <div class="opcode-section"
      data-name="btoi"
      data-version="v1"
-     data-groups="Arithmetic"
-     data-unreleased="false">
+     data-groups="Arithmetic">
 
     ### btoi
     - **Bytecode:** `0x17`
@@ -1947,8 +1863,7 @@ At v2 it became allowed to branch to the end of the program exactly after the la
 <div class="opcode-section"
      data-name="bury"
      data-version="v8"
-     data-groups="Flow Control"
-     data-unreleased="false">
+     data-groups="Flow Control">
 
     ### bury
     - **Bytecode:** `0x45`
@@ -1974,8 +1889,7 @@ At v2 it became allowed to branch to the end of the program exactly after the la
 <div class="opcode-section"
      data-name="bytec"
      data-version="v1"
-     data-groups="Loading Values"
-     data-unreleased="false">
+     data-groups="Loading Values">
 
     ### bytec
     - **Bytecode:** `0x27`
@@ -2001,8 +1915,7 @@ At v2 it became allowed to branch to the end of the program exactly after the la
 <div class="opcode-section"
      data-name="bytec_0"
      data-version="v1"
-     data-groups="Loading Values"
-     data-unreleased="false">
+     data-groups="Loading Values">
 
     ### bytec_0
     - **Bytecode:** `0x28`
@@ -2023,8 +1936,7 @@ At v2 it became allowed to branch to the end of the program exactly after the la
 <div class="opcode-section"
      data-name="bytec_1"
      data-version="v1"
-     data-groups="Loading Values"
-     data-unreleased="false">
+     data-groups="Loading Values">
 
     ### bytec_1
     - **Bytecode:** `0x29`
@@ -2045,8 +1957,7 @@ At v2 it became allowed to branch to the end of the program exactly after the la
 <div class="opcode-section"
      data-name="bytec_2"
      data-version="v1"
-     data-groups="Loading Values"
-     data-unreleased="false">
+     data-groups="Loading Values">
 
     ### bytec_2
     - **Bytecode:** `0x2a`
@@ -2067,8 +1978,7 @@ At v2 it became allowed to branch to the end of the program exactly after the la
 <div class="opcode-section"
      data-name="bytec_3"
      data-version="v1"
-     data-groups="Loading Values"
-     data-unreleased="false">
+     data-groups="Loading Values">
 
     ### bytec_3
     - **Bytecode:** `0x2b`
@@ -2089,8 +1999,7 @@ At v2 it became allowed to branch to the end of the program exactly after the la
 <div class="opcode-section"
      data-name="bytecblock"
      data-version="v1"
-     data-groups="Loading Values"
-     data-unreleased="false">
+     data-groups="Loading Values">
 
     ### bytecblock
     - **Bytecode:** `0x26`
@@ -2118,8 +2027,7 @@ At v2 it became allowed to branch to the end of the program exactly after the la
 <div class="opcode-section"
      data-name="bz"
      data-version="v2"
-     data-groups="Flow Control"
-     data-unreleased="false">
+     data-groups="Flow Control">
 
     ### bz
     - **Bytecode:** `0x41`
@@ -2147,8 +2055,7 @@ At v2 it became allowed to branch to the end of the program exactly after the la
 <div class="opcode-section"
      data-name="bzero"
      data-version="v4"
-     data-groups="Loading Values"
-     data-unreleased="false">
+     data-groups="Loading Values">
 
     ### bzero
     - **Bytecode:** `0xaf`
@@ -2169,8 +2076,7 @@ At v2 it became allowed to branch to the end of the program exactly after the la
 <div class="opcode-section"
      data-name="callsub"
      data-version="v4"
-     data-groups="Flow Control"
-     data-unreleased="false">
+     data-groups="Flow Control">
 
     ### callsub
     - **Bytecode:** `0x88`
@@ -2198,8 +2104,7 @@ At v2 it became allowed to branch to the end of the program exactly after the la
 <div class="opcode-section"
      data-name="concat"
      data-version="v2"
-     data-groups="Byte Array Manipulation"
-     data-unreleased="false">
+     data-groups="Byte Array Manipulation">
 
     ### concat
     - **Bytecode:** `0x50`
@@ -2222,8 +2127,7 @@ At v2 it became allowed to branch to the end of the program exactly after the la
 <div class="opcode-section"
      data-name="cover"
      data-version="v5"
-     data-groups="Flow Control"
-     data-unreleased="false">
+     data-groups="Flow Control">
 
     ### cover
     - **Bytecode:** `0x4e`
@@ -2249,8 +2153,7 @@ At v2 it became allowed to branch to the end of the program exactly after the la
 <div class="opcode-section"
      data-name="dig"
      data-version="v3"
-     data-groups="Flow Control"
-     data-unreleased="false">
+     data-groups="Flow Control">
 
     ### dig
     - **Bytecode:** `0x4b`
@@ -2276,8 +2179,7 @@ At v2 it became allowed to branch to the end of the program exactly after the la
 <div class="opcode-section"
      data-name="divmodw"
      data-version="v4"
-     data-groups="Arithmetic"
-     data-unreleased="false">
+     data-groups="Arithmetic">
 
     ### divmodw
     - **Bytecode:** `0x1f`
@@ -2300,8 +2202,7 @@ At v2 it became allowed to branch to the end of the program exactly after the la
 <div class="opcode-section"
      data-name="divw"
      data-version="v6"
-     data-groups="Arithmetic"
-     data-unreleased="false">
+     data-groups="Arithmetic">
 
     ### divw
     - **Bytecode:** `0x97`
@@ -2324,8 +2225,7 @@ At v2 it became allowed to branch to the end of the program exactly after the la
 <div class="opcode-section"
      data-name="dup"
      data-version="v1"
-     data-groups="Flow Control"
-     data-unreleased="false">
+     data-groups="Flow Control">
 
     ### dup
     - **Bytecode:** `0x49`
@@ -2346,8 +2246,7 @@ At v2 it became allowed to branch to the end of the program exactly after the la
 <div class="opcode-section"
      data-name="dup2"
      data-version="v2"
-     data-groups="Flow Control"
-     data-unreleased="false">
+     data-groups="Flow Control">
 
     ### dup2
     - **Bytecode:** `0x4a`
@@ -2368,8 +2267,7 @@ At v2 it became allowed to branch to the end of the program exactly after the la
 <div class="opcode-section"
      data-name="dupn"
      data-version="v8"
-     data-groups="Flow Control"
-     data-unreleased="false">
+     data-groups="Flow Control">
 
     ### dupn
     - **Bytecode:** `0x47`
@@ -2395,8 +2293,7 @@ At v2 it became allowed to branch to the end of the program exactly after the la
 <div class="opcode-section"
      data-name="ec_add"
      data-version="v10"
-     data-groups="Cryptography"
-     data-unreleased="false">
+     data-groups="Cryptography">
 
     ### ec_add
     - **Bytecode:** `0xe0`
@@ -2428,8 +2325,7 @@ Fails if A or B is not in G.<br />A and/or B are allowed to be the point at infi
 <div class="opcode-section"
      data-name="ec_map_to"
      data-version="v10"
-     data-groups="Cryptography"
-     data-unreleased="false">
+     data-groups="Cryptography">
 
     ### ec_map_to
     - **Bytecode:** `0xe5`
@@ -2457,8 +2353,7 @@ Fails if A or B is not in G.<br />A and/or B are allowed to be the point at infi
 <div class="opcode-section"
      data-name="ec_multi_scalar_mul"
      data-version="v10"
-     data-groups="Cryptography"
-     data-unreleased="false">
+     data-groups="Cryptography">
 
     ### ec_multi_scalar_mul
     - **Bytecode:** `0xe3`
@@ -2486,8 +2381,7 @@ Fails if A or B is not in G.<br />A and/or B are allowed to be the point at infi
 <div class="opcode-section"
      data-name="ec_pairing_check"
      data-version="v10"
-     data-groups="Cryptography"
-     data-unreleased="false">
+     data-groups="Cryptography">
 
     ### ec_pairing_check
     - **Bytecode:** `0xe2`
@@ -2515,8 +2409,7 @@ Fails if A or B is not in G.<br />A and/or B are allowed to be the point at infi
 <div class="opcode-section"
      data-name="ec_scalar_mul"
      data-version="v10"
-     data-groups="Cryptography"
-     data-unreleased="false">
+     data-groups="Cryptography">
 
     ### ec_scalar_mul
     - **Bytecode:** `0xe1`
@@ -2544,8 +2437,7 @@ Fails if A or B is not in G.<br />A and/or B are allowed to be the point at infi
 <div class="opcode-section"
      data-name="ec_subgroup_check"
      data-version="v10"
-     data-groups="Cryptography"
-     data-unreleased="false">
+     data-groups="Cryptography">
 
     ### ec_subgroup_check
     - **Bytecode:** `0xe4`
@@ -2571,8 +2463,7 @@ Fails if A or B is not in G.<br />A and/or B are allowed to be the point at infi
 <div class="opcode-section"
      data-name="ecdsa_pk_decompress"
      data-version="v5"
-     data-groups="Cryptography"
-     data-unreleased="false">
+     data-groups="Cryptography">
 
     ### ecdsa_pk_decompress
     - **Bytecode:** `0x06`
@@ -2605,8 +2496,7 @@ Fails if A or B is not in G.<br />A and/or B are allowed to be the point at infi
 <div class="opcode-section"
      data-name="ecdsa_pk_recover"
      data-version="v5"
-     data-groups="Cryptography"
-     data-unreleased="false">
+     data-groups="Cryptography">
 
     ### ecdsa_pk_recover
     - **Bytecode:** `0x07`
@@ -2639,8 +2529,7 @@ Fails if A or B is not in G.<br />A and/or B are allowed to be the point at infi
 <div class="opcode-section"
      data-name="ecdsa_verify"
      data-version="v5"
-     data-groups="Cryptography"
-     data-unreleased="false">
+     data-groups="Cryptography">
 
     ### ecdsa_verify
     - **Bytecode:** `0x05`
@@ -2673,8 +2562,7 @@ Fails if A or B is not in G.<br />A and/or B are allowed to be the point at infi
 <div class="opcode-section"
      data-name="ed25519verify"
      data-version="v1"
-     data-groups="Cryptography"
-     data-unreleased="false">
+     data-groups="Cryptography">
 
     ### ed25519verify
     - **Bytecode:** `0x04`
@@ -2697,8 +2585,7 @@ Fails if A or B is not in G.<br />A and/or B are allowed to be the point at infi
 <div class="opcode-section"
      data-name="ed25519verify_bare"
      data-version="v7"
-     data-groups="Cryptography"
-     data-unreleased="false">
+     data-groups="Cryptography">
 
     ### ed25519verify_bare
     - **Bytecode:** `0x84`
@@ -2719,8 +2606,7 @@ Fails if A or B is not in G.<br />A and/or B are allowed to be the point at infi
 <div class="opcode-section"
      data-name="err"
      data-version="v1"
-     data-groups="Flow Control"
-     data-unreleased="false">
+     data-groups="Flow Control">
 
     ### err
     - **Bytecode:** `0x00`
@@ -2741,8 +2627,7 @@ Fails if A or B is not in G.<br />A and/or B are allowed to be the point at infi
 <div class="opcode-section"
      data-name="exp"
      data-version="v4"
-     data-groups="Arithmetic"
-     data-unreleased="false">
+     data-groups="Arithmetic">
 
     ### exp
     - **Bytecode:** `0x94`
@@ -2763,8 +2648,7 @@ Fails if A or B is not in G.<br />A and/or B are allowed to be the point at infi
 <div class="opcode-section"
      data-name="expw"
      data-version="v4"
-     data-groups="Arithmetic"
-     data-unreleased="false">
+     data-groups="Arithmetic">
 
     ### expw
     - **Bytecode:** `0x95`
@@ -2785,8 +2669,7 @@ Fails if A or B is not in G.<br />A and/or B are allowed to be the point at infi
 <div class="opcode-section"
      data-name="extract"
      data-version="v5"
-     data-groups="Byte Array Manipulation"
-     data-unreleased="false">
+     data-groups="Byte Array Manipulation">
 
     ### extract
     - **Bytecode:** `0x57`
@@ -2812,8 +2695,7 @@ Fails if A or B is not in G.<br />A and/or B are allowed to be the point at infi
 <div class="opcode-section"
      data-name="extract_uint16"
      data-version="v5"
-     data-groups="Byte Array Manipulation"
-     data-unreleased="false">
+     data-groups="Byte Array Manipulation">
 
     ### extract_uint16
     - **Bytecode:** `0x59`
@@ -2834,8 +2716,7 @@ Fails if A or B is not in G.<br />A and/or B are allowed to be the point at infi
 <div class="opcode-section"
      data-name="extract_uint32"
      data-version="v5"
-     data-groups="Byte Array Manipulation"
-     data-unreleased="false">
+     data-groups="Byte Array Manipulation">
 
     ### extract_uint32
     - **Bytecode:** `0x5a`
@@ -2856,8 +2737,7 @@ Fails if A or B is not in G.<br />A and/or B are allowed to be the point at infi
 <div class="opcode-section"
      data-name="extract_uint64"
      data-version="v5"
-     data-groups="Byte Array Manipulation"
-     data-unreleased="false">
+     data-groups="Byte Array Manipulation">
 
     ### extract_uint64
     - **Bytecode:** `0x5b`
@@ -2878,8 +2758,7 @@ Fails if A or B is not in G.<br />A and/or B are allowed to be the point at infi
 <div class="opcode-section"
      data-name="extract3"
      data-version="v5"
-     data-groups="Byte Array Manipulation"
-     data-unreleased="false">
+     data-groups="Byte Array Manipulation">
 
     ### extract3
     - **Bytecode:** `0x58`
@@ -2900,8 +2779,7 @@ Fails if A or B is not in G.<br />A and/or B are allowed to be the point at infi
 <div class="opcode-section"
      data-name="falcon_verify"
      data-version="v12"
-     data-groups="Cryptography"
-     data-unreleased="false">
+     data-groups="Cryptography">
 
     ### falcon_verify
     - **Bytecode:** `0x85`
@@ -2924,8 +2802,7 @@ Fails if A or B is not in G.<br />A and/or B are allowed to be the point at infi
 <div class="opcode-section"
      data-name="frame_bury"
      data-version="v8"
-     data-groups="Flow Control"
-     data-unreleased="false">
+     data-groups="Flow Control">
 
     ### frame_bury
     - **Bytecode:** `0x8c`
@@ -2951,8 +2828,7 @@ Fails if A or B is not in G.<br />A and/or B are allowed to be the point at infi
 <div class="opcode-section"
      data-name="frame_dig"
      data-version="v8"
-     data-groups="Flow Control"
-     data-unreleased="false">
+     data-groups="Flow Control">
 
     ### frame_dig
     - **Bytecode:** `0x8b`
@@ -2978,8 +2854,7 @@ Fails if A or B is not in G.<br />A and/or B are allowed to be the point at infi
 <div class="opcode-section"
      data-name="gaid"
      data-version="v4"
-     data-groups="Loading Values"
-     data-unreleased="false">
+     data-groups="Loading Values">
 
     ### gaid
     - **Bytecode:** `0x3c`
@@ -3007,8 +2882,7 @@ Fails if A or B is not in G.<br />A and/or B are allowed to be the point at infi
 <div class="opcode-section"
      data-name="gaids"
      data-version="v4"
-     data-groups="Loading Values"
-     data-unreleased="false">
+     data-groups="Loading Values">
 
     ### gaids
     - **Bytecode:** `0x3d`
@@ -3031,8 +2905,7 @@ Fails if A or B is not in G.<br />A and/or B are allowed to be the point at infi
 <div class="opcode-section"
      data-name="getbit"
      data-version="v3"
-     data-groups="Byte Array Manipulation"
-     data-unreleased="false">
+     data-groups="Byte Array Manipulation">
 
     ### getbit
     - **Bytecode:** `0x53`
@@ -3055,8 +2928,7 @@ Fails if A or B is not in G.<br />A and/or B are allowed to be the point at infi
 <div class="opcode-section"
      data-name="getbyte"
      data-version="v3"
-     data-groups="Byte Array Manipulation"
-     data-unreleased="false">
+     data-groups="Byte Array Manipulation">
 
     ### getbyte
     - **Bytecode:** `0x55`
@@ -3077,8 +2949,7 @@ Fails if A or B is not in G.<br />A and/or B are allowed to be the point at infi
 <div class="opcode-section"
      data-name="gitxn"
      data-version="v6"
-     data-groups="Inner Transactions"
-     data-unreleased="false">
+     data-groups="Inner Transactions">
 
     ### gitxn
     - **Bytecode:** `0xb7`
@@ -3109,8 +2980,7 @@ Fails if A or B is not in G.<br />A and/or B are allowed to be the point at infi
 <div class="opcode-section"
      data-name="gitxna"
      data-version="v6"
-     data-groups="Inner Transactions"
-     data-unreleased="false">
+     data-groups="Inner Transactions">
 
     ### gitxna
     - **Bytecode:** `0xb8`
@@ -3141,8 +3011,7 @@ Fails if A or B is not in G.<br />A and/or B are allowed to be the point at infi
 <div class="opcode-section"
      data-name="gitxnas"
      data-version="v6"
-     data-groups="Inner Transactions"
-     data-unreleased="false">
+     data-groups="Inner Transactions">
 
     ### gitxnas
     - **Bytecode:** `0xc6`
@@ -3168,8 +3037,7 @@ Fails if A or B is not in G.<br />A and/or B are allowed to be the point at infi
 <div class="opcode-section"
      data-name="gload"
      data-version="v4"
-     data-groups="Loading Values"
-     data-unreleased="false">
+     data-groups="Loading Values">
 
     ### gload
     - **Bytecode:** `0x3a`
@@ -3197,8 +3065,7 @@ Fails if A or B is not in G.<br />A and/or B are allowed to be the point at infi
 <div class="opcode-section"
      data-name="gloads"
      data-version="v4"
-     data-groups="Loading Values"
-     data-unreleased="false">
+     data-groups="Loading Values">
 
     ### gloads
     - **Bytecode:** `0x3b`
@@ -3226,8 +3093,7 @@ Fails if A or B is not in G.<br />A and/or B are allowed to be the point at infi
 <div class="opcode-section"
      data-name="gloadss"
      data-version="v6"
-     data-groups="Loading Values"
-     data-unreleased="false">
+     data-groups="Loading Values">
 
     ### gloadss
     - **Bytecode:** `0xc4`
@@ -3248,8 +3114,7 @@ Fails if A or B is not in G.<br />A and/or B are allowed to be the point at infi
 <div class="opcode-section"
      data-name="global"
      data-version="v1"
-     data-groups="Loading Values"
-     data-unreleased="false">
+     data-groups="Loading Values">
 
     ### global
     - **Bytecode:** `0x32`
@@ -3280,8 +3145,7 @@ Fails if A or B is not in G.<br />A and/or B are allowed to be the point at infi
 <div class="opcode-section"
      data-name="gtxn"
      data-version="v1"
-     data-groups="Loading Values"
-     data-unreleased="false">
+     data-groups="Loading Values">
 
     ### gtxn
     - **Bytecode:** `0x33`
@@ -3314,8 +3178,7 @@ Fails if A or B is not in G.<br />A and/or B are allowed to be the point at infi
 <div class="opcode-section"
      data-name="gtxna"
      data-version="v2"
-     data-groups="Loading Values"
-     data-unreleased="false">
+     data-groups="Loading Values">
 
     ### gtxna
     - **Bytecode:** `0x37`
@@ -3346,8 +3209,7 @@ Fails if A or B is not in G.<br />A and/or B are allowed to be the point at infi
 <div class="opcode-section"
      data-name="gtxnas"
      data-version="v5"
-     data-groups="Loading Values"
-     data-unreleased="false">
+     data-groups="Loading Values">
 
     ### gtxnas
     - **Bytecode:** `0xc1`
@@ -3378,8 +3240,7 @@ Fails if A or B is not in G.<br />A and/or B are allowed to be the point at infi
 <div class="opcode-section"
      data-name="gtxns"
      data-version="v3"
-     data-groups="Loading Values"
-     data-unreleased="false">
+     data-groups="Loading Values">
 
     ### gtxns
     - **Bytecode:** `0x38`
@@ -3412,8 +3273,7 @@ Fails if A or B is not in G.<br />A and/or B are allowed to be the point at infi
 <div class="opcode-section"
      data-name="gtxnsa"
      data-version="v3"
-     data-groups="Loading Values"
-     data-unreleased="false">
+     data-groups="Loading Values">
 
     ### gtxnsa
     - **Bytecode:** `0x39`
@@ -3444,8 +3304,7 @@ Fails if A or B is not in G.<br />A and/or B are allowed to be the point at infi
 <div class="opcode-section"
      data-name="gtxnsas"
      data-version="v5"
-     data-groups="Loading Values"
-     data-unreleased="false">
+     data-groups="Loading Values">
 
     ### gtxnsas
     - **Bytecode:** `0xc2`
@@ -3476,8 +3335,7 @@ Fails if A or B is not in G.<br />A and/or B are allowed to be the point at infi
 <div class="opcode-section"
      data-name="intc"
      data-version="v1"
-     data-groups="Loading Values"
-     data-unreleased="false">
+     data-groups="Loading Values">
 
     ### intc
     - **Bytecode:** `0x21`
@@ -3503,8 +3361,7 @@ Fails if A or B is not in G.<br />A and/or B are allowed to be the point at infi
 <div class="opcode-section"
      data-name="intc_0"
      data-version="v1"
-     data-groups="Loading Values"
-     data-unreleased="false">
+     data-groups="Loading Values">
 
     ### intc_0
     - **Bytecode:** `0x22`
@@ -3525,8 +3382,7 @@ Fails if A or B is not in G.<br />A and/or B are allowed to be the point at infi
 <div class="opcode-section"
      data-name="intc_1"
      data-version="v1"
-     data-groups="Loading Values"
-     data-unreleased="false">
+     data-groups="Loading Values">
 
     ### intc_1
     - **Bytecode:** `0x23`
@@ -3547,8 +3403,7 @@ Fails if A or B is not in G.<br />A and/or B are allowed to be the point at infi
 <div class="opcode-section"
      data-name="intc_2"
      data-version="v1"
-     data-groups="Loading Values"
-     data-unreleased="false">
+     data-groups="Loading Values">
 
     ### intc_2
     - **Bytecode:** `0x24`
@@ -3569,8 +3424,7 @@ Fails if A or B is not in G.<br />A and/or B are allowed to be the point at infi
 <div class="opcode-section"
      data-name="intc_3"
      data-version="v1"
-     data-groups="Loading Values"
-     data-unreleased="false">
+     data-groups="Loading Values">
 
     ### intc_3
     - **Bytecode:** `0x25`
@@ -3591,8 +3445,7 @@ Fails if A or B is not in G.<br />A and/or B are allowed to be the point at infi
 <div class="opcode-section"
      data-name="intcblock"
      data-version="v1"
-     data-groups="Loading Values"
-     data-unreleased="false">
+     data-groups="Loading Values">
 
     ### intcblock
     - **Bytecode:** `0x20`
@@ -3620,8 +3473,7 @@ Fails if A or B is not in G.<br />A and/or B are allowed to be the point at infi
 <div class="opcode-section"
      data-name="itob"
      data-version="v1"
-     data-groups="Arithmetic"
-     data-unreleased="false">
+     data-groups="Arithmetic">
 
     ### itob
     - **Bytecode:** `0x16`
@@ -3642,8 +3494,7 @@ Fails if A or B is not in G.<br />A and/or B are allowed to be the point at infi
 <div class="opcode-section"
      data-name="itxn"
      data-version="v5"
-     data-groups="Inner Transactions"
-     data-unreleased="false">
+     data-groups="Inner Transactions">
 
     ### itxn
     - **Bytecode:** `0xb4`
@@ -3674,8 +3525,7 @@ Fails if A or B is not in G.<br />A and/or B are allowed to be the point at infi
 <div class="opcode-section"
      data-name="itxn_begin"
      data-version="v5"
-     data-groups="Inner Transactions"
-     data-unreleased="false">
+     data-groups="Inner Transactions">
 
     ### itxn_begin
     - **Bytecode:** `0xb1`
@@ -3698,8 +3548,7 @@ Fails if A or B is not in G.<br />A and/or B are allowed to be the point at infi
 <div class="opcode-section"
      data-name="itxn_field"
      data-version="v5"
-     data-groups="Inner Transactions"
-     data-unreleased="false">
+     data-groups="Inner Transactions">
 
     ### itxn_field
     - **Bytecode:** `0xb2`
@@ -3732,8 +3581,7 @@ Fails if A or B is not in G.<br />A and/or B are allowed to be the point at infi
 <div class="opcode-section"
      data-name="itxn_next"
      data-version="v6"
-     data-groups="Inner Transactions"
-     data-unreleased="false">
+     data-groups="Inner Transactions">
 
     ### itxn_next
     - **Bytecode:** `0xb6`
@@ -3756,8 +3604,7 @@ Fails if A or B is not in G.<br />A and/or B are allowed to be the point at infi
 <div class="opcode-section"
      data-name="itxn_submit"
      data-version="v5"
-     data-groups="Inner Transactions"
-     data-unreleased="false">
+     data-groups="Inner Transactions">
 
     ### itxn_submit
     - **Bytecode:** `0xb3`
@@ -3780,8 +3627,7 @@ Fails if A or B is not in G.<br />A and/or B are allowed to be the point at infi
 <div class="opcode-section"
      data-name="itxna"
      data-version="v5"
-     data-groups="Inner Transactions"
-     data-unreleased="false">
+     data-groups="Inner Transactions">
 
     ### itxna
     - **Bytecode:** `0xb5`
@@ -3812,8 +3658,7 @@ Fails if A or B is not in G.<br />A and/or B are allowed to be the point at infi
 <div class="opcode-section"
      data-name="itxnas"
      data-version="v6"
-     data-groups="Inner Transactions"
-     data-unreleased="false">
+     data-groups="Inner Transactions">
 
     ### itxnas
     - **Bytecode:** `0xc5`
@@ -3839,8 +3684,7 @@ Fails if A or B is not in G.<br />A and/or B are allowed to be the point at infi
 <div class="opcode-section"
      data-name="json_ref"
      data-version="v7"
-     data-groups="Byte Array Manipulation"
-     data-unreleased="false">
+     data-groups="Byte Array Manipulation">
 
     ### json_ref
     - **Bytecode:** `0x5f`
@@ -3875,8 +3719,7 @@ Almost all smart contracts should use simpler and smaller methods (such as the [
 <div class="opcode-section"
      data-name="keccak256"
      data-version="v1"
-     data-groups="Cryptography"
-     data-unreleased="false">
+     data-groups="Cryptography">
 
     ### keccak256
     - **Bytecode:** `0x02`
@@ -3897,8 +3740,7 @@ Almost all smart contracts should use simpler and smaller methods (such as the [
 <div class="opcode-section"
      data-name="len"
      data-version="v1"
-     data-groups="Byte Array Manipulation"
-     data-unreleased="false">
+     data-groups="Byte Array Manipulation">
 
     ### len
     - **Bytecode:** `0x15`
@@ -3919,8 +3761,7 @@ Almost all smart contracts should use simpler and smaller methods (such as the [
 <div class="opcode-section"
      data-name="load"
      data-version="v1"
-     data-groups="Loading Values"
-     data-unreleased="false">
+     data-groups="Loading Values">
 
     ### load
     - **Bytecode:** `0x34`
@@ -3946,8 +3787,7 @@ Almost all smart contracts should use simpler and smaller methods (such as the [
 <div class="opcode-section"
      data-name="loads"
      data-version="v5"
-     data-groups="Loading Values"
-     data-unreleased="false">
+     data-groups="Loading Values">
 
     ### loads
     - **Bytecode:** `0x3e`
@@ -3968,8 +3808,7 @@ Almost all smart contracts should use simpler and smaller methods (such as the [
 <div class="opcode-section"
      data-name="log"
      data-version="v5"
-     data-groups="Block Access"
-     data-unreleased="false">
+     data-groups="Block Access">
 
     ### log
     - **Bytecode:** `0xb0`
@@ -3992,8 +3831,7 @@ Almost all smart contracts should use simpler and smaller methods (such as the [
 <div class="opcode-section"
      data-name="match"
      data-version="v8"
-     data-groups="Flow Control"
-     data-unreleased="false">
+     data-groups="Flow Control">
 
     ### match
     - **Bytecode:** `0x8e`
@@ -4021,8 +3859,7 @@ Almost all smart contracts should use simpler and smaller methods (such as the [
 <div class="opcode-section"
      data-name="mimc"
      data-version="v11"
-     data-groups="Cryptography"
-     data-unreleased="false">
+     data-groups="Cryptography">
 
     ### mimc
     - **Bytecode:** `0xe6`
@@ -4052,8 +3889,7 @@ MiMC hashes field elements, not arbitrary byte strings; reducing external inputs
 <div class="opcode-section"
      data-name="min_balance"
      data-version="v3"
-     data-groups="Account Access"
-     data-unreleased="false">
+     data-groups="Account Access">
 
     ### min_balance
     - **Bytecode:** `0x78`
@@ -4076,8 +3912,7 @@ MiMC hashes field elements, not arbitrary byte strings; reducing external inputs
 <div class="opcode-section"
      data-name="mulw"
      data-version="v1"
-     data-groups="Arithmetic"
-     data-unreleased="false">
+     data-groups="Arithmetic">
 
     ### mulw
     - **Bytecode:** `0x1d`
@@ -4098,8 +3933,7 @@ MiMC hashes field elements, not arbitrary byte strings; reducing external inputs
 <div class="opcode-section"
      data-name="online_stake"
      data-version="v11"
-     data-groups="Block Access"
-     data-unreleased="false">
+     data-groups="Block Access">
 
     ### online_stake
     - **Bytecode:** `0x75`
@@ -4120,8 +3954,7 @@ MiMC hashes field elements, not arbitrary byte strings; reducing external inputs
 <div class="opcode-section"
      data-name="pop"
      data-version="v1"
-     data-groups="Flow Control"
-     data-unreleased="false">
+     data-groups="Flow Control">
 
     ### pop
     - **Bytecode:** `0x48`
@@ -4142,8 +3975,7 @@ MiMC hashes field elements, not arbitrary byte strings; reducing external inputs
 <div class="opcode-section"
      data-name="popn"
      data-version="v8"
-     data-groups="Flow Control"
-     data-unreleased="false">
+     data-groups="Flow Control">
 
     ### popn
     - **Bytecode:** `0x46`
@@ -4169,15 +4001,14 @@ MiMC hashes field elements, not arbitrary byte strings; reducing external inputs
 <div class="opcode-section"
      data-name="poseidon2"
      data-version="v13"
-     data-groups="Cryptography"
-     data-unreleased="true">
+     data-groups="Cryptography">
 
-    ### poseidon2 <span class="opcode-unreleased" title="Not yet available on a released network">⚠ Not yet live</span>
+    ### poseidon2
     - **Bytecode:** `0xe7`
     - **Stack Input:** `[]byte`
     - **Stack Output:** `[32]byte`
     - **Size:** 2
-    - **Availability:** v13 — ⚠ not yet live
+    - **Availability:** v13
     - **Cost:** BN254t2=7 + 350 per 32 bytes of A; BLS12_381t2=7 + 350 per 32 bytes of A
     - **Description:** Poseidon2 hash of scalars A, using curve and parameters specified by configuration C
     - **Groups:** `Cryptography`
@@ -4200,8 +4031,7 @@ Poseidon2 hashes field elements, not arbitrary byte strings; reducing external i
 <div class="opcode-section"
      data-name="proto"
      data-version="v8"
-     data-groups="Flow Control"
-     data-unreleased="false">
+     data-groups="Flow Control">
 
     ### proto
     - **Bytecode:** `0x8a`
@@ -4229,8 +4059,7 @@ Poseidon2 hashes field elements, not arbitrary byte strings; reducing external i
 <div class="opcode-section"
      data-name="pushbytes"
      data-version="v3"
-     data-groups="Loading Values"
-     data-unreleased="false">
+     data-groups="Loading Values">
 
     ### pushbytes
     - **Bytecode:** `0x80`
@@ -4258,8 +4087,7 @@ Poseidon2 hashes field elements, not arbitrary byte strings; reducing external i
 <div class="opcode-section"
      data-name="pushbytess"
      data-version="v8"
-     data-groups="Loading Values"
-     data-unreleased="false">
+     data-groups="Loading Values">
 
     ### pushbytess
     - **Bytecode:** `0x82`
@@ -4287,8 +4115,7 @@ Poseidon2 hashes field elements, not arbitrary byte strings; reducing external i
 <div class="opcode-section"
      data-name="pushint"
      data-version="v3"
-     data-groups="Loading Values"
-     data-unreleased="false">
+     data-groups="Loading Values">
 
     ### pushint
     - **Bytecode:** `0x81`
@@ -4316,8 +4143,7 @@ Poseidon2 hashes field elements, not arbitrary byte strings; reducing external i
 <div class="opcode-section"
      data-name="pushints"
      data-version="v8"
-     data-groups="Loading Values"
-     data-unreleased="false">
+     data-groups="Loading Values">
 
     ### pushints
     - **Bytecode:** `0x83`
@@ -4345,8 +4171,7 @@ Poseidon2 hashes field elements, not arbitrary byte strings; reducing external i
 <div class="opcode-section"
      data-name="replace2"
      data-version="v7"
-     data-groups="Byte Array Manipulation"
-     data-unreleased="false">
+     data-groups="Byte Array Manipulation">
 
     ### replace2
     - **Bytecode:** `0x5c`
@@ -4372,8 +4197,7 @@ Poseidon2 hashes field elements, not arbitrary byte strings; reducing external i
 <div class="opcode-section"
      data-name="replace3"
      data-version="v7"
-     data-groups="Byte Array Manipulation"
-     data-unreleased="false">
+     data-groups="Byte Array Manipulation">
 
     ### replace3
     - **Bytecode:** `0x5d`
@@ -4394,8 +4218,7 @@ Poseidon2 hashes field elements, not arbitrary byte strings; reducing external i
 <div class="opcode-section"
      data-name="retsub"
      data-version="v4"
-     data-groups="Flow Control"
-     data-unreleased="false">
+     data-groups="Flow Control">
 
     ### retsub
     - **Bytecode:** `0x89`
@@ -4418,8 +4241,7 @@ Poseidon2 hashes field elements, not arbitrary byte strings; reducing external i
 <div class="opcode-section"
      data-name="return"
      data-version="v2"
-     data-groups="Flow Control"
-     data-unreleased="false">
+     data-groups="Flow Control">
 
     ### return
     - **Bytecode:** `0x43`
@@ -4440,8 +4262,7 @@ Poseidon2 hashes field elements, not arbitrary byte strings; reducing external i
 <div class="opcode-section"
      data-name="select"
      data-version="v3"
-     data-groups="Flow Control"
-     data-unreleased="false">
+     data-groups="Flow Control">
 
     ### select
     - **Bytecode:** `0x4d`
@@ -4462,8 +4283,7 @@ Poseidon2 hashes field elements, not arbitrary byte strings; reducing external i
 <div class="opcode-section"
      data-name="setbit"
      data-version="v3"
-     data-groups="Byte Array Manipulation"
-     data-unreleased="false">
+     data-groups="Byte Array Manipulation">
 
     ### setbit
     - **Bytecode:** `0x54`
@@ -4486,8 +4306,7 @@ Poseidon2 hashes field elements, not arbitrary byte strings; reducing external i
 <div class="opcode-section"
      data-name="setbyte"
      data-version="v3"
-     data-groups="Byte Array Manipulation"
-     data-unreleased="false">
+     data-groups="Byte Array Manipulation">
 
     ### setbyte
     - **Bytecode:** `0x56`
@@ -4508,8 +4327,7 @@ Poseidon2 hashes field elements, not arbitrary byte strings; reducing external i
 <div class="opcode-section"
      data-name="sha256"
      data-version="v1"
-     data-groups="Cryptography"
-     data-unreleased="false">
+     data-groups="Cryptography">
 
     ### sha256
     - **Bytecode:** `0x01`
@@ -4530,8 +4348,7 @@ Poseidon2 hashes field elements, not arbitrary byte strings; reducing external i
 <div class="opcode-section"
      data-name="sha3_256"
      data-version="v7"
-     data-groups="Cryptography"
-     data-unreleased="false">
+     data-groups="Cryptography">
 
     ### sha3_256
     - **Bytecode:** `0x98`
@@ -4552,15 +4369,14 @@ Poseidon2 hashes field elements, not arbitrary byte strings; reducing external i
 <div class="opcode-section"
      data-name="sha512"
      data-version="v13"
-     data-groups="Cryptography"
-     data-unreleased="true">
+     data-groups="Cryptography">
 
-    ### sha512 <span class="opcode-unreleased" title="Not yet available on a released network">⚠ Not yet live</span>
+    ### sha512
     - **Bytecode:** `0x87`
     - **Stack Input:** `[]byte`
     - **Stack Output:** `[64]byte`
     - **Size:** 1
-    - **Availability:** v13 — ⚠ not yet live
+    - **Availability:** v13
     - **Cost:** 15 + 32 per 2 bytes of A
     - **Description:** SHA512 of value A, yields [64]byte
     - **Groups:** `Cryptography`
@@ -4574,8 +4390,7 @@ Poseidon2 hashes field elements, not arbitrary byte strings; reducing external i
 <div class="opcode-section"
      data-name="sha512_256"
      data-version="v1"
-     data-groups="Cryptography"
-     data-unreleased="false">
+     data-groups="Cryptography">
 
     ### sha512_256
     - **Bytecode:** `0x03`
@@ -4596,8 +4411,7 @@ Poseidon2 hashes field elements, not arbitrary byte strings; reducing external i
 <div class="opcode-section"
      data-name="shl"
      data-version="v4"
-     data-groups="Arithmetic"
-     data-unreleased="false">
+     data-groups="Arithmetic">
 
     ### shl
     - **Bytecode:** `0x90`
@@ -4618,8 +4432,7 @@ Poseidon2 hashes field elements, not arbitrary byte strings; reducing external i
 <div class="opcode-section"
      data-name="shr"
      data-version="v4"
-     data-groups="Arithmetic"
-     data-unreleased="false">
+     data-groups="Arithmetic">
 
     ### shr
     - **Bytecode:** `0x91`
@@ -4640,8 +4453,7 @@ Poseidon2 hashes field elements, not arbitrary byte strings; reducing external i
 <div class="opcode-section"
      data-name="sqrt"
      data-version="v4"
-     data-groups="Arithmetic"
-     data-unreleased="false">
+     data-groups="Arithmetic">
 
     ### sqrt
     - **Bytecode:** `0x92`
@@ -4662,8 +4474,7 @@ Poseidon2 hashes field elements, not arbitrary byte strings; reducing external i
 <div class="opcode-section"
      data-name="store"
      data-version="v1"
-     data-groups="Loading Values"
-     data-unreleased="false">
+     data-groups="Loading Values">
 
     ### store
     - **Bytecode:** `0x35`
@@ -4689,8 +4500,7 @@ Poseidon2 hashes field elements, not arbitrary byte strings; reducing external i
 <div class="opcode-section"
      data-name="stores"
      data-version="v5"
-     data-groups="Loading Values"
-     data-unreleased="false">
+     data-groups="Loading Values">
 
     ### stores
     - **Bytecode:** `0x3f`
@@ -4711,8 +4521,7 @@ Poseidon2 hashes field elements, not arbitrary byte strings; reducing external i
 <div class="opcode-section"
      data-name="substring"
      data-version="v2"
-     data-groups="Byte Array Manipulation"
-     data-unreleased="false">
+     data-groups="Byte Array Manipulation">
 
     ### substring
     - **Bytecode:** `0x51`
@@ -4738,8 +4547,7 @@ Poseidon2 hashes field elements, not arbitrary byte strings; reducing external i
 <div class="opcode-section"
      data-name="substring3"
      data-version="v2"
-     data-groups="Byte Array Manipulation"
-     data-unreleased="false">
+     data-groups="Byte Array Manipulation">
 
     ### substring3
     - **Bytecode:** `0x52`
@@ -4760,15 +4568,14 @@ Poseidon2 hashes field elements, not arbitrary byte strings; reducing external i
 <div class="opcode-section"
      data-name="sumhash512"
      data-version="v13"
-     data-groups="Cryptography"
-     data-unreleased="true">
+     data-groups="Cryptography">
 
-    ### sumhash512 <span class="opcode-unreleased" title="Not yet available on a released network">⚠ Not yet live</span>
+    ### sumhash512
     - **Bytecode:** `0x86`
     - **Stack Input:** `[]byte`
     - **Stack Output:** `[64]byte`
     - **Size:** 1
-    - **Availability:** v13 — ⚠ not yet live
+    - **Availability:** v13
     - **Cost:** 150 + 7 per 4 bytes of A
     - **Description:** sumhash512 of value A, yields [64]byte
     - **Groups:** `Cryptography`
@@ -4782,8 +4589,7 @@ Poseidon2 hashes field elements, not arbitrary byte strings; reducing external i
 <div class="opcode-section"
      data-name="swap"
      data-version="v3"
-     data-groups="Flow Control"
-     data-unreleased="false">
+     data-groups="Flow Control">
 
     ### swap
     - **Bytecode:** `0x4c`
@@ -4804,8 +4610,7 @@ Poseidon2 hashes field elements, not arbitrary byte strings; reducing external i
 <div class="opcode-section"
      data-name="switch"
      data-version="v8"
-     data-groups="Flow Control"
-     data-unreleased="false">
+     data-groups="Flow Control">
 
     ### switch
     - **Bytecode:** `0x8d`
@@ -4831,8 +4636,7 @@ Poseidon2 hashes field elements, not arbitrary byte strings; reducing external i
 <div class="opcode-section"
      data-name="txn"
      data-version="v1"
-     data-groups="Loading Values"
-     data-unreleased="false">
+     data-groups="Loading Values">
 
     ### txn
     - **Bytecode:** `0x31`
@@ -4863,8 +4667,7 @@ Poseidon2 hashes field elements, not arbitrary byte strings; reducing external i
 <div class="opcode-section"
      data-name="txna"
      data-version="v2"
-     data-groups="Loading Values"
-     data-unreleased="false">
+     data-groups="Loading Values">
 
     ### txna
     - **Bytecode:** `0x36`
@@ -4895,8 +4698,7 @@ Poseidon2 hashes field elements, not arbitrary byte strings; reducing external i
 <div class="opcode-section"
      data-name="txnas"
      data-version="v5"
-     data-groups="Loading Values"
-     data-unreleased="false">
+     data-groups="Loading Values">
 
     ### txnas
     - **Bytecode:** `0xc0`
@@ -4927,8 +4729,7 @@ Poseidon2 hashes field elements, not arbitrary byte strings; reducing external i
 <div class="opcode-section"
      data-name="uncover"
      data-version="v5"
-     data-groups="Flow Control"
-     data-unreleased="false">
+     data-groups="Flow Control">
 
     ### uncover
     - **Bytecode:** `0x4f`
@@ -4954,8 +4755,7 @@ Poseidon2 hashes field elements, not arbitrary byte strings; reducing external i
 <div class="opcode-section"
      data-name="voter_params_get"
      data-version="v11"
-     data-groups="Account Access"
-     data-unreleased="false">
+     data-groups="Account Access">
 
     ### voter_params_get
     - **Bytecode:** `0x74`
@@ -4981,8 +4781,7 @@ Poseidon2 hashes field elements, not arbitrary byte strings; reducing external i
 <div class="opcode-section"
      data-name="vrf_verify"
      data-version="v7"
-     data-groups="Cryptography"
-     data-unreleased="false">
+     data-groups="Cryptography">
 
     ### vrf_verify
     - **Bytecode:** `0xd0`

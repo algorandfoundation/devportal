@@ -122,18 +122,13 @@ async function main() {
 
   // Dataset version comes from go-algorand master; LatestReleasedVersion is the
   // highest AVM version in the latest stable release (written by update-opcodes.ts).
-  // Any opcode introduced beyond it is not yet live on a released network.
   const datasetVersion = data.Version;
   const latestReleasedVersion = data.LatestReleasedVersion ?? datasetVersion;
-  const hasUnreleased = datasetVersion > latestReleasedVersion;
 
-  const opcodes = data.Ops.map((op) => ({
-    ...op,
-    Unreleased: op.IntroducedVersion > latestReleasedVersion,
-  }));
+  const opcodes = data.Ops;
   opcodes.sort((a, b) => a.Name.localeCompare(b.Name));
 
-  const page = template({ opcodes, datasetVersion, latestReleasedVersion, hasUnreleased });
+  const page = template({ opcodes, datasetVersion, latestReleasedVersion });
 
   await mkdir(dirname(outPath), { recursive: true });
   await writeFile(outPath, page.endsWith('\n') ? page : page + '\n', 'utf8');
