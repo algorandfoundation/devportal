@@ -29,10 +29,7 @@ const { currentVersion } = Astro.props;
   </label>
   <div style='align-self:end;display:flex;align-items:center;gap:.75rem'>
     <button id='f-reset' type='button'>Reset</button>
-    <span
-      id='f-count'
-      aria-live='polite'
-      style='color:var(--sl-color-gray-3)'
+    <span id='f-count' aria-live='polite' style='color:var(--sl-color-gray-3)'
     ></span>
   </div>
 </div>
@@ -125,7 +122,8 @@ const { currentVersion } = Astro.props;
         const nameOk =
           !name || (sec.dataset.name || '').toLowerCase().includes(name);
         // Cumulative: show opcodes available in the selected version or earlier.
-        const vOk = selectedVer === null || verNum(sec.dataset.version) <= selectedVer;
+        const vOk =
+          selectedVer === null || verNum(sec.dataset.version) <= selectedVer;
         const gOk =
           !g ||
           (sec.dataset.groups || '')
