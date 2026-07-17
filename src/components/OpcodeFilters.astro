@@ -27,7 +27,14 @@ const { currentVersion } = Astro.props;
     <span style='font-weight:600'>Group</span>
     <select id='f-group'><option value=''>All</option></select>
   </label>
-  <button id='f-reset' type='button'>Reset</button>
+  <div style='align-self:end;display:flex;align-items:center;gap:.75rem'>
+    <button id='f-reset' type='button'>Reset</button>
+    <span
+      id='f-count'
+      aria-live='polite'
+      style='color:var(--sl-color-gray-3)'
+    ></span>
+  </div>
 </div>
 
 <script is:inline>
@@ -41,6 +48,7 @@ const { currentVersion } = Astro.props;
     const verSel = $('#f-version');
     const grpSel = $('#f-group');
     const resetBtn = $('#f-reset');
+    const countEl = $('#f-count');
 
     // Guard: this script runs on every page, but only the opcode page
     // has these elements. Exit early on all other pages.
@@ -103,6 +111,7 @@ const { currentVersion } = Astro.props;
       const v = verSel.value;
       const selectedVer = v ? verNum(v) : null;
       const g = grpSel.value;
+      let shown = 0;
       for (const sec of sections) {
         const nameOk =
           !name || (sec.dataset.name || '').toLowerCase().includes(name);
@@ -115,6 +124,7 @@ const { currentVersion } = Astro.props;
             .map(s => s.trim())
             .includes(g);
         const show = nameOk && vOk && gOk;
+        if (show) shown++;
 
         // toggle the content container
         sec.hidden = !show;
@@ -122,6 +132,11 @@ const { currentVersion } = Astro.props;
         // toggle the heading just before the container
         const h2 = previousH3(sec);
         if (h2) h2.hidden = !show;
+      }
+
+      // Live count so it's clear the filters changed what's displayed.
+      if (countEl) {
+        countEl.textContent = `Showing ${shown} of ${sections.length} opcodes`;
       }
     }
 
