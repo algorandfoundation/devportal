@@ -31,6 +31,7 @@ A hash function maps data of arbitrary size to fixed-size values. The following 
 - `keccak256`
 - `sha512_256`
 - `mimc`
+- `poseidon2`
 - `vFuture: sumhash512`
 
 Note that `sha512_256` is _not_ the same as `sha512(x) % 2^256`.
@@ -38,6 +39,8 @@ Note that `sha512_256` is _not_ the same as `sha512(x) % 2^256`.
 MiMC is a ZK-friendly hash function enjoying popularity for ZK-SNARK applications. Note that it is not designed to be used in general applications, but rather in ZK-related applications - hence the increased cost compared to the other hash functions.
 
 MiMC will result in a minimal circuit size compared to SHA-2 or SHA-3 hash functions, making generating ZK-SNARKs cheaper. It also comes in two flavors: BN254 and BLS12_381.
+
+Poseidon2 is currently the most popular ZK-friendly hash function and is used by production proving systems such as SP1, RISC Zero, and Plonky3. Compared to MiMC it is more efficient, resulting in lower opcode costs on-chain and smaller circuits off-chain. Like MiMC, it is intended for ZK-related applications rather than general use, and it comes in two flavors: BN254 and BLS12_381.
 
 SumHash512 strives to strike a balance between ZK and non-ZK friendliness. It is currently seeing use in State Proofs, namely in constructing the VoterCommitment, a Merkle tree commitment committing to the top stakers.
 

@@ -516,6 +516,7 @@ these results may contain leading zero bytes.
 | `ec_subgroup_check g`   | 1 if A is in the main prime-order subgroup of G (including the point at infinity) else 0. Program fails if A is not in G at all.                  |
 | `ec_map_to g`           | maps field element A to group G                                                                                                                   |
 | `mimc c`                | MiMC hash of scalars A, using curve and parameters specified by configuration C                                                                   |
+| `poseidon2 c`           | Poseidon2 hash of scalars A, using curve and parameters specified by configuration C                                                              |
 
 ### Loading Values
 
