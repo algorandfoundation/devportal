@@ -30,10 +30,13 @@ A hash function maps data of arbitrary size to fixed-size values. The following 
 - `sha256`
 - `keccak256`
 - `sha512_256`
+- `sha512`
 - `mimc`
 - `vFuture: sumhash512`
 
 Note that `sha512_256` is _not_ the same as `sha512(x) % 2^256`.
+
+SHA512 produces the full 64-byte digest, offering a higher security level than the 32-byte `sha512_256`. Its cost scales with the length of the input.
 
 MiMC is a ZK-friendly hash function enjoying popularity for ZK-SNARK applications. Note that it is not designed to be used in general applications, but rather in ZK-related applications - hence the increased cost compared to the other hash functions.
 
