@@ -2312,6 +2312,11 @@ The point at infinity is encoded as `(X,Y) = (0,0)`.<br />Groups G1 and G2 are d
 
 Fails if A or B is not in G.<br />A and/or B are allowed to be the point at infinity.<br />Does _not_ check if A and B are in the main prime-order subgroup.
 
+    <span class="opcode-detail-caption">Field Reference</span>
+    <table>
+  <thead><tr><th>Index</th><th>Name</th><th>Type</th></tr></thead>
+  <tbody><tr><td>0</td><td>BN254g1</td><td>-</td></tr><tr><td>1</td><td>BN254g2</td><td>-</td></tr><tr><td>2</td><td>BLS12_381g1</td><td>-</td></tr><tr><td>3</td><td>BLS12_381g2</td><td>-</td></tr></tbody>
+</table>
 
     <span class="opcode-detail-caption">Immediate Parameters</span>
     <table>
@@ -2340,6 +2345,11 @@ Fails if A or B is not in G.<br />A and/or B are allowed to be the point at infi
     <span class="opcode-detail-caption">Notes</span>
     BN254 points are mapped by the SVDW map. BLS12-381 points are mapped by the SSWU map.<br />G1 element inputs are base field elements and G2 element inputs are quadratic field elements, with nearly the same encoding rules (for field elements) as defined in `ec_add`. There is one difference of encoding rule: G1 element inputs do not need to be 0-padded if they fit in less than 32 bytes for BN254 and less than 48 bytes for BLS12-381. (As usual, the empty byte array represents 0.) G2 elements inputs need to be always have the required size.
 
+    <span class="opcode-detail-caption">Field Reference</span>
+    <table>
+  <thead><tr><th>Index</th><th>Name</th><th>Type</th></tr></thead>
+  <tbody><tr><td>0</td><td>BN254g1</td><td>-</td></tr><tr><td>1</td><td>BN254g2</td><td>-</td></tr><tr><td>2</td><td>BLS12_381g1</td><td>-</td></tr><tr><td>3</td><td>BLS12_381g2</td><td>-</td></tr></tbody>
+</table>
 
     <span class="opcode-detail-caption">Immediate Parameters</span>
     <table>
@@ -2368,6 +2378,11 @@ Fails if A or B is not in G.<br />A and/or B are allowed to be the point at infi
     <span class="opcode-detail-caption">Notes</span>
     A is a list of concatenated points, encoded and checked as described in `ec_add`. B is a list of concatenated scalars which, unlike ec_scalar_mul, must all be exactly 32 bytes long.<br />The name `ec_multi_scalar_mul` was chosen to reflect common usage, but a more consistent name would be `ec_multi_scalar_mul`. AVM values are limited to 4096 bytes, so `ec_multi_scalar_mul` is limited by the size of the points in the group being operated upon.
 
+    <span class="opcode-detail-caption">Field Reference</span>
+    <table>
+  <thead><tr><th>Index</th><th>Name</th><th>Type</th></tr></thead>
+  <tbody><tr><td>0</td><td>BN254g1</td><td>-</td></tr><tr><td>1</td><td>BN254g2</td><td>-</td></tr><tr><td>2</td><td>BLS12_381g1</td><td>-</td></tr><tr><td>3</td><td>BLS12_381g2</td><td>-</td></tr></tbody>
+</table>
 
     <span class="opcode-detail-caption">Immediate Parameters</span>
     <table>
@@ -2396,6 +2411,11 @@ Fails if A or B is not in G.<br />A and/or B are allowed to be the point at infi
     <span class="opcode-detail-caption">Notes</span>
     A and B are concatenated points, encoded and checked as described in `ec_add`. A contains points of the group G, B contains points of the associated group (G2 if G is G1, and vice versa). Fails if A and B have a different number of points, or if any point is not in its described group or outside the main prime-order subgroup - a stronger condition than other opcodes. AVM values are limited to 4096 bytes, so `ec_pairing_check` is limited by the size of the points in the groups being operated upon.
 
+    <span class="opcode-detail-caption">Field Reference</span>
+    <table>
+  <thead><tr><th>Index</th><th>Name</th><th>Type</th></tr></thead>
+  <tbody><tr><td>0</td><td>BN254g1</td><td>-</td></tr><tr><td>1</td><td>BN254g2</td><td>-</td></tr><tr><td>2</td><td>BLS12_381g1</td><td>-</td></tr><tr><td>3</td><td>BLS12_381g2</td><td>-</td></tr></tbody>
+</table>
 
     <span class="opcode-detail-caption">Immediate Parameters</span>
     <table>
@@ -2424,6 +2444,11 @@ Fails if A or B is not in G.<br />A and/or B are allowed to be the point at infi
     <span class="opcode-detail-caption">Notes</span>
     A is a curve point encoded and checked as described in `ec_add`. Scalar B is interpreted as a big-endian unsigned integer. Fails if B exceeds 32 bytes.
 
+    <span class="opcode-detail-caption">Field Reference</span>
+    <table>
+  <thead><tr><th>Index</th><th>Name</th><th>Type</th></tr></thead>
+  <tbody><tr><td>0</td><td>BN254g1</td><td>-</td></tr><tr><td>1</td><td>BN254g2</td><td>-</td></tr><tr><td>2</td><td>BLS12_381g1</td><td>-</td></tr><tr><td>3</td><td>BLS12_381g2</td><td>-</td></tr></tbody>
+</table>
 
     <span class="opcode-detail-caption">Immediate Parameters</span>
     <table>
@@ -2450,6 +2475,11 @@ Fails if A or B is not in G.<br />A and/or B are allowed to be the point at infi
     - **Groups:** `Cryptography`
 
 
+    <span class="opcode-detail-caption">Field Reference</span>
+    <table>
+  <thead><tr><th>Index</th><th>Name</th><th>Type</th></tr></thead>
+  <tbody><tr><td>0</td><td>BN254g1</td><td>-</td></tr><tr><td>1</td><td>BN254g2</td><td>-</td></tr><tr><td>2</td><td>BLS12_381g1</td><td>-</td></tr><tr><td>3</td><td>BLS12_381g2</td><td>-</td></tr></tbody>
+</table>
 
     <span class="opcode-detail-caption">Immediate Parameters</span>
     <table>
@@ -3872,10 +3902,15 @@ Almost all smart contracts should use simpler and smaller methods (such as the [
     - **Groups:** `Cryptography`
 
     <span class="opcode-detail-caption">Notes</span>
-    A is a list of concatenated 32 byte big-endian unsigned integer scalars.  Fail if A's length is not a multiple of 32 or any element exceeds the curve modulus.
+    A is a non-empty list of concatenated 32 byte big-endian unsigned integer scalars.  Fail if A's length is not a multiple of 32 or any element is greater than or equal to the scalar field modulus.
 
-MiMC hashes field elements, not arbitrary byte strings; reducing external inputs modulo the curve modulus makes congruent inputs hash identically. MiMC is thus not a general purpose hash function, but meant to be used in zero knowledge applications to match a zk-circuit implementation.
+MiMC hashes field elements, not arbitrary byte strings; reducing external inputs modulo the scalar field modulus makes congruent inputs hash identically. MiMC is thus not a general purpose hash function, but meant to be used in zero knowledge applications to match a zk-circuit implementation.
 
+    <span class="opcode-detail-caption">Field Reference</span>
+    <table>
+  <thead><tr><th>Index</th><th>Name</th><th>Type</th></tr></thead>
+  <tbody><tr><td>0</td><td>BN254Mp110</td><td>-</td></tr><tr><td>1</td><td>BLS12_381Mp111</td><td>-</td></tr></tbody>
+</table>
 
     <span class="opcode-detail-caption">Immediate Parameters</span>
     <table>
@@ -4014,10 +4049,15 @@ MiMC hashes field elements, not arbitrary byte strings; reducing external inputs
     - **Groups:** `Cryptography`
 
     <span class="opcode-detail-caption">Notes</span>
-    A is a list of concatenated 32 byte big-endian unsigned integer scalars. Fail if A's length is not a multiple of 32 or any element exceeds the curve modulus.
+    A is a non-empty list of concatenated 32 byte big-endian unsigned integer scalars. Fail if A's length is not a multiple of 32 or any element is greater than or equal to the scalar field modulus.
 
-Poseidon2 hashes field elements, not arbitrary byte strings; reducing external inputs modulo the curve modulus makes congruent inputs hash identically. Poseidon2 is thus not a general purpose hash function, but meant to be used in zero knowledge applications to match a zk-circuit implementation.
+Poseidon2 hashes field elements, not arbitrary byte strings; reducing external inputs modulo the scalar field modulus makes congruent inputs hash identically. Poseidon2 is thus not a general purpose hash function, but meant to be used in zero knowledge applications to match a zk-circuit implementation.
 
+    <span class="opcode-detail-caption">Field Reference</span>
+    <table>
+  <thead><tr><th>Index</th><th>Name</th><th>Type</th></tr></thead>
+  <tbody><tr><td>0</td><td>BN254t2</td><td>-</td></tr><tr><td>1</td><td>BLS12_381t2</td><td>-</td></tr></tbody>
+</table>
 
     <span class="opcode-detail-caption">Immediate Parameters</span>
     <table>
@@ -4377,7 +4417,7 @@ Poseidon2 hashes field elements, not arbitrary byte strings; reducing external i
     - **Stack Output:** `[64]byte`
     - **Size:** 1
     - **Availability:** v13
-    - **Cost:** 15 + 32 per 2 bytes of A
+    - **Cost:** 15 + 2 per 32 bytes of A
     - **Description:** SHA512 of value A, yields [64]byte
     - **Groups:** `Cryptography`
 
@@ -4558,27 +4598,6 @@ Poseidon2 hashes field elements, not arbitrary byte strings; reducing external i
     - **Cost:** 1
     - **Description:** A range of bytes from A starting at B up to but not including C. If C &lt; B, or either is larger than the array length, the program fails
     - **Groups:** `Byte Array Manipulation`
-
-
-
-
-</div>
-
-
-<div class="opcode-section"
-     data-name="sumhash512"
-     data-version="v13"
-     data-groups="Cryptography">
-
-    ### sumhash512
-    - **Bytecode:** `0x86`
-    - **Stack Input:** `[]byte`
-    - **Stack Output:** `[64]byte`
-    - **Size:** 1
-    - **Availability:** v13
-    - **Cost:** 150 + 7 per 4 bytes of A
-    - **Description:** sumhash512 of value A, yields [64]byte
-    - **Groups:** `Cryptography`
 
 
 
@@ -4768,6 +4787,11 @@ Poseidon2 hashes field elements, not arbitrary byte strings; reducing external i
     - **Groups:** `Account Access`
 
 
+    <span class="opcode-detail-caption">Field Reference</span>
+    <table>
+  <thead><tr><th>Index</th><th>Name</th><th>Type</th></tr></thead>
+  <tbody><tr><td>0</td><td>VoterBalance</td><td>uint64</td></tr><tr><td>1</td><td>VoterIncentiveEligible</td><td>bool</td></tr></tbody>
+</table>
 
     <span class="opcode-detail-caption">Immediate Parameters</span>
     <table>

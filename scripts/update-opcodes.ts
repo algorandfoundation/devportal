@@ -98,15 +98,33 @@ async function highestVersionAtOrBelow(ref: string, ceiling: number): Promise<nu
   throw new Error(`No langspec found at or below v${ceiling} on ref "${ref}".`);
 }
 
-async function fetchLangspec(ref: string, version: number): Promise<LangSpec> {
+async function fetchLangspec(ref: string, version: number): Promise<{ raw: string; spec: LangSpec }> {
   const url = langspecUrl(ref, version);
   const res = await fetchWithTimeout(url);
   if (!res.ok) throw new Error(`Failed to fetch ${url}: HTTP ${res.status} ${res.statusText}`);
-  const spec = (await res.json()) as LangSpec;
+  // Keep the raw response text: writing it verbatim preserves go-algorand's exact
+  // formatting — Go's `<`/`>`/`&` escaping and, crucially, integer
+  // literals like the uint64 max (18446744073709551615) that a JSON.parse →
+  // JSON.stringify round-trip would corrupt (values above 2^53 lose precision).
+  const raw = await res.text();
+  const spec = JSON.parse(raw) as LangSpec;
   if (typeof spec.Version !== 'number' || !Array.isArray(spec.Ops)) {
     throw new Error(`Unexpected langspec schema at ${url} (missing Version/Ops)`);
   }
-  return spec;
+  return { raw, spec };
+}
+
+/**
+ * Add our `LatestReleasedVersion` field to the raw langspec text without
+ * re-serializing it (which would corrupt big integers and Go's escaping).
+ * Inserts it as the first key, matching the upstream `{\n  "..."` layout.
+ */
+function injectLatestReleasedVersion(rawSpec: string, released: number): string {
+  const injected = rawSpec.replace(/^\{\n/, `{\n  "LatestReleasedVersion": ${released},\n`);
+  if (injected === rawSpec) {
+    throw new Error('Could not inject LatestReleasedVersion — unexpected langspec formatting.');
+  }
+  return injected;
 }
 
 /**
@@ -171,12 +189,11 @@ async function runUpdate(ref: string, dryRun: boolean) {
   console.log(`[update-opcodes] Source: go-algorand ref "${ref}"`);
 
   const masterVersion = await highestVersion(ref, current.version);
-  const spec = await fetchLangspec(ref, masterVersion);
+  const { raw, spec } = await fetchLangspec(ref, masterVersion);
   const released = await latestReleasedVersion(masterVersion);
   console.log(`[update-opcodes] Latest available: v${spec.Version} (${spec.Ops.length} ops); latest release: v${released}`);
 
-  const next: LangSpec = { ...spec, LatestReleasedVersion: released };
-  const nextRaw = JSON.stringify(next, null, 2) + '\n';
+  const nextRaw = injectLatestReleasedVersion(raw, released);
 
   if (nextRaw === current.raw) {
     console.log('[update-opcodes] Dataset already up to date — nothing to do.');
