@@ -132,8 +132,15 @@ function injectLatestReleasedVersion(rawSpec: string, released: number): string 
  * excludes prereleases and drafts, so no tag-name parsing is needed.
  */
 async function latestReleaseTag(): Promise<string> {
+  // Authenticate when a token is available. Unauthenticated api.github.com is
+  // limited to 60 req/hr per IP, which shared CI runners often exhaust; a token
+  // raises that to 5000/hr so the check/update stays reliable in CI.
+  const headers: Record<string, string> = { Accept: 'application/vnd.github+json' };
+  const token = process.env.GITHUB_TOKEN || process.env.GH_TOKEN;
+  if (token) headers.Authorization = `Bearer ${token}`;
+
   const res = await fetchWithTimeout('https://api.github.com/repos/algorand/go-algorand/releases/latest', {
-    headers: { Accept: 'application/vnd.github+json' },
+    headers,
   });
   if (!res.ok) throw new Error(`Could not resolve latest go-algorand release: HTTP ${res.status} ${res.statusText}`);
   const { tag_name } = (await res.json()) as { tag_name?: string };

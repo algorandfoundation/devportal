@@ -75,6 +75,10 @@ jobs:
           pnpm run update:opcodes
         env:
           GO_ALGORAND_REF: ${{ github.event.inputs.ref }}
+          # Rate-limit relief for the PUBLIC go-algorand release lookup only.
+          # Uses the built-in token (least privilege) — the PAT's scopes aren't
+          # needed here; the PAT is reserved for checkout + create-PR.
+          GITHUB_TOKEN: ${{ github.token }}
 
       - name: Check for Changes
         id: git-check
