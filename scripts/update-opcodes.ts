@@ -92,7 +92,10 @@ async function highestVersion(ref: string, start: number): Promise<number> {
     if (await versionExists(ref, v)) highest = v;
     else if (highest) break; // first gap after a hit — we've passed the newest
   }
-  if (!highest) throw new Error(`No langspec found from v${start} upward on ref "${ref}".`);
+  // `start` is the committed dataset version; an older `--ref` may not ship it
+  // at all, leaving `highest` at 0. Probe downward instead of failing so older
+  // refs resolve to their own newest version.
+  if (!highest) return highestVersionAtOrBelow(ref, start);
   return highest;
 }
 
