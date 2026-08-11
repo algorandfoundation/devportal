@@ -225,7 +225,7 @@ When creating a box, the key name must be in the box ref array.
 ### Reading
 
 Boxes can be manipulated by the smart contract that owns them. The SDKs and goal cmd tool allow any box to be read off-chain, and box contents are never confidential; the restriction governs only which applications may read or manipulate a box on-chain.
-App a is the  app that can read the contents of its boxes on-chain. Since AVM v13, app a can permit any application to read its boxes on-chain by setting the `AppForeignBoxReads` parameter; see [Family Box Access](#family-box-access). Recall that anybody can read everything from off-chain using the algod or indexer APIs.
+App a can read the contents of its boxes on-chain. Since AVM v13, app a can permit any application to read its boxes on-chain by setting the `AppForeignBoxReads` parameter; see [Family Box Access](#family-box-access). Recall that anybody can read everything from off-chain using the algod or indexer APIs.
 To read box b from app a, the app call must include b in its boxes array.
 Read budget: Each box reference in the boxes array allows an app call to access 1K bytes of box state - 1K of "box read budget". To read a box larger than 1K, multiple box references must be put in the boxes arrays.
 The box read budget is shared across the transaction group.
