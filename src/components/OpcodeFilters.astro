@@ -79,13 +79,28 @@ const { currentVersion } = Astro.props;
         .filter(Boolean))
         groups.add(g);
     }
+    // The default Availability filter — and the "(current)" label — track the
+    // highest opcode version at or below the latest live release. Selecting the
+    // highest released-or-earlier version (rather than an exact match on the
+    // release version) keeps the default on a released view even when the
+    // current release introduced no new opcodes. It falls back to "All" only
+    // when the release version is unknown or the dataset has no released
+    // opcodes at all. Using an actual option value (not a reconstructed
+    // `v${n}`) means assigning it to verSel.value can never silently fail open.
+    const defaultVersion = (() => {
+      if (!currentVersion) return '';
+      const releasedOrEarlier = [...versions]
+        .filter(v => verNum(v) <= currentVersion)
+        .sort((a, b) => verNum(a) - verNum(b));
+      return releasedOrEarlier.at(-1) || '';
+    })();
+
     [...versions]
       .sort((a, b) => verNum(a) - verNum(b))
       .forEach(v => {
         const o = document.createElement('option');
         o.value = v;
-        o.textContent =
-          currentVersion && verNum(v) === currentVersion ? `${v} (current)` : v;
+        o.textContent = v === defaultVersion ? `${v} (current)` : v;
         verSel.append(o);
       });
     [...groups]
@@ -97,13 +112,8 @@ const { currentVersion } = Astro.props;
         grpSel.append(o);
       });
 
-    // Default the Availability filter to the current released version so the
-    // page reflects what's live on MainNet by default; newer (unreleased)
-    // opcodes are opt-in via the dropdown. Falls back to "All" if unknown.
-    const defaultVersion =
-      currentVersion && [...versions].some(v => verNum(v) === currentVersion)
-        ? `v${currentVersion}`
-        : '';
+    // Reflect what's live on MainNet by default; newer (unreleased) opcodes are
+    // opt-in via the dropdown (see defaultVersion above).
     verSel.value = defaultVersion;
 
     function previousH3(el) {
