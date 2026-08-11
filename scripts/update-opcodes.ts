@@ -76,7 +76,12 @@ function langspecUrl(ref: string, version: number) {
 /** Whether `langspec_vN.json` exists at `ref` (cheap HEAD probe). */
 async function versionExists(ref: string, version: number): Promise<boolean> {
   const res = await fetchWithTimeout(langspecUrl(ref, version), { method: 'HEAD' });
-  return res.ok;
+  if (res.ok) return true;
+  // Only a genuine 404 means "this version doesn't exist". A transient 403/429/
+  // 500 (rate limit, outage) must not be read as absence — that would silently
+  // resolve a too-low version and hide live opcodes. Fail loud instead.
+  if (res.status === 404) return false;
+  throw new Error(`Probe for ${langspecUrl(ref, version)} failed: HTTP ${res.status} ${res.statusText}`);
 }
 
 /** Highest `langspec_vN.json` at `ref`, probing upward from `start`. */
