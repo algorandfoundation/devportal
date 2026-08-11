@@ -136,7 +136,11 @@ The size of a Logic Signature is defined as the length of its bytecode
 plus the length of all its Args. The sum of the sizes of all Smart
 Signatures in a group must not exceed 1000 bytes times the number of
 transactions in the group (1000 bytes is defined in consensus parameter
-`LogicSigMaxSize`).
+`LogicSigMaxSize`). A single Logic Signature's program may exceed this
+pool, up to 16,000 bytes, by paying an
+[additional fee](/concepts/transactions/fees#larger-transactions) per
+byte; Args are never charged and are limited to 1000 bytes per Logic
+Signature unless covered by the group's size pool.
 
 Each opcode has an associated cost, usually 1, but a few slow operations
 have higher costs. Prior to v4, the program's cost was estimated as the

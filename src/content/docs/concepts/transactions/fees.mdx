@@ -1,5 +1,6 @@
 ---
 title: Transaction Fees
+description: Explains how transaction fees are calculated on Algorand, including the minimum fee, congestion-based fees, fee pooling, surcharges for larger transactions, and inner transaction fees.
 sidebar:
   label: Fees
 ---
@@ -171,6 +172,25 @@ Below is an example of setting a pooled fee on an atomic group of two transactio
     />
   </TabItem>
 </Tabs>
+
+## Larger Transactions
+
+Certain transaction fields can exceed their standard size limits when the transaction pays an additional fee. Each byte over the standard limit adds a surcharge of 0.0001 of the minimum fee (0.1 microAlgo, consensus parameter `PerByteTxnSurcharge`) to the required fee for the transaction, so 1,000 extra bytes add 100 microAlgo, a tenth of the minimum fee. Like any other fee, the surcharge can be covered by another transaction in the same atomic group through fee pooling.
+
+The following limits can be exceeded by paying the surcharge:
+
+| Field                            | Standard Limit                           | Absolute Maximum                     | Consensus Parameter              |
+| -------------------------------- | ---------------------------------------- | ------------------------------------ | -------------------------------- |
+| Note                             | 1,024 bytes                              | 4,096 bytes                          | `MaxAbsoluteTxnNoteBytes`        |
+| Application arguments (combined) | 2,048 bytes                              | 16,384 bytes                         | `MaxAbsoluteTotalArgLen`         |
+| Extra program pages              | 3 pages                                  | 7 pages                              | `MaxAbsoluteExtraProgramPages`   |
+| Logic signature program          | 1,000 bytes per transaction in the group | 16,000 bytes in a single transaction | `MaxAbsoluteLogicSigProgramSize` |
+
+Individual application arguments are limited to 4,096 bytes, and the argument count remains capped at 16.
+
+Logic signature arguments are never charged. Arguments can be modified after signing by anyone holding the signed transaction, so the required fee cannot depend on them. Each logic signature can carry up to 1,000 bytes of arguments without charge; larger arguments must fit within the group's ordinary logic signature size pool.
+
+The surcharge buys size only. It does not increase the opcode budget or grant additional resource references. Large application programs also count against the group's box read and write budgets; when a call fails for this reason, the algod `simulate` endpoint reports the additional empty box references required.
 
 ## Inner Transaction Fees
 
