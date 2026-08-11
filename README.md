@@ -258,7 +258,7 @@ The project uses `@algorandfoundation/astro-github-loader` to import documentati
 
 ### TEAL Opcode Reference
 
-The [AVM Opcodes](https://dev.algorand.co/reference/algorand-teal/opcodes) reference is sourced from the TEAL language spec in [algorand/go-algorand](https://github.com/algorand/go-algorand/tree/master/data/transactions/logic) (`master`). Opcodes for an AVM version newer than the latest live release are marked **⚠ Not yet live**.
+The [AVM Opcodes](https://dev.algorand.co/reference/algorand-teal/opcodes) reference is sourced from the TEAL language spec in [algorand/go-algorand](https://github.com/algorand/go-algorand/tree/master/data/transactions/logic) (`master`). The page's version filter defaults to the latest live release, so opcodes for a newer, not-yet-released AVM version are hidden until the reader opts in by widening the filter.
 
 - `opcodes.json` is the dataset; `opcodes.mdx` is rendered from it (auto, in `prebuild`).
 - `check:opcodes` runs during `prebuild` and prints a non-blocking warning when the dataset is out of date.

@@ -119,7 +119,7 @@ jobs:
             ### Review Checklist
             - [ ] `opcodes.json` version / released version look correct
             - [ ] New or changed opcodes render correctly on the reference page
-            - [ ] "Not yet live" markers appear only on unreleased opcodes
+            - [ ] Version filter defaults to the latest live release (unreleased opcodes hidden by default)
             - [ ] Preview deploy renders without errors
 
             ---

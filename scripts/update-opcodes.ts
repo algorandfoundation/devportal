@@ -5,10 +5,11 @@
  *
  * Source of truth is the go-algorand `master` branch, so the docs list every
  * opcode as soon as it lands — including opcodes for an AVM version that is not
- * yet in a live network release. To let the page flag those, the script also
- * resolves the latest *stable release* and records the highest AVM version that
- * release ships as `LatestReleasedVersion`. The renderer marks any opcode whose
- * `IntroducedVersion` exceeds it as "not yet live".
+ * yet in a live network release. To let the page hide those by default, the
+ * script also resolves the latest *stable release* and records the highest AVM
+ * version that release ships as `LatestReleasedVersion`. The page's version
+ * filter defaults to that version, so opcodes with a higher `IntroducedVersion`
+ * are hidden until the reader opts in by widening the filter.
  *
  * This is a *content* step, not a build step: it changes committed source and
  * must never mutate files inside `prebuild`/`predev`. Use `--check` there
