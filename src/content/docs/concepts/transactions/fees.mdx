@@ -179,12 +179,12 @@ Certain transaction fields can exceed their standard size limits when the transa
 
 The following limits can be exceeded by paying the surcharge:
 
-| Field                            | Standard Limit                           | Absolute Maximum                     | Absolute Maximum Parameter       |
-| -------------------------------- | ---------------------------------------- | ------------------------------------ | -------------------------------- |
-| Note                             | 1,024 bytes                              | 4,096 bytes                          | `MaxAbsoluteTxnNoteBytes`        |
-| Application arguments (combined) | 2,048 bytes                              | 16,384 bytes                         | `MaxAbsoluteTotalArgLen`         |
-| Extra program pages              | 3 pages                                  | 7 pages                              | `MaxAbsoluteExtraProgramPages`   |
-| Logic signature program          | 1,000 bytes per transaction in the group | 16,000 bytes in a single transaction | `MaxAbsoluteLogicSigProgramSize` |
+| Field                            | Standard Limit                                       | Absolute Maximum                     | Absolute Maximum Parameter       |
+| -------------------------------- | ---------------------------------------------------- | ------------------------------------ | -------------------------------- |
+| Note                             | 1,024 bytes                                          | 4,096 bytes                          | `MaxAbsoluteTxnNoteBytes`        |
+| Application arguments (combined) | 2,048 bytes                                          | 16,384 bytes                         | `MaxAbsoluteTotalArgLen`         |
+| Extra program pages              | 3 pages                                              | 7 pages                              | `MaxAbsoluteExtraProgramPages`   |
+| Logic signature program          | 1,000 bytes per transaction, pooled across the group | 16,000 bytes in a single transaction | `MaxAbsoluteLogicSigProgramSize` |
 
 Individual application arguments are limited to 4,096 bytes, and the argument count remains capped at 16.
 
