@@ -103,7 +103,7 @@ This approach eliminates the need for opt-in transactions since we're not using 
 
 ### Considerations
 
-- Boxes can be created by an application and only accessed by the application that created it. Keep in mind that the Minimum Balance Requirement (MBR) of the application will be increased depending on its size. This means that a contract that intends to use boxes, must be funded beforehand.
+- Boxes can be created by an application and accessed on-chain by the application that created it. Since AVM v13, an application can opt in to letting other applications read its boxes, or letting applications with the same creator read and write them; see [Family Box Access](/concepts/smart-contracts/storage/box/#family-box-access). Box contents are readable by anyone off-chain in all cases. Keep in mind that the Minimum Balance Requirement (MBR) of the application will be increased depending on its size. This means that a contract that intends to use boxes, must be funded beforehand.
 - The MBR of the application will increase according to the following formula:
 
 ```shell showLineNumbers=false frame=none

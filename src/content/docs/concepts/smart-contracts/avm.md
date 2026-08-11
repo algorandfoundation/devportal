@@ -75,7 +75,7 @@ In order to maintain existing semantics for previously written
 programs, AVM code is versioned. When new opcodes are introduced, or
 behavior is changed, a new version is introduced. Programs carrying
 old versions are executed with their original semantics. In the AVM
-bytecode, the version is an incrementing integer, currently 12, and
+bytecode, the version is an incrementing integer, currently 13, and
 denoted vX throughout this document.
 
 ## Execution Modes
@@ -211,7 +211,9 @@ _available_. These resources are:
 - Locals, which must be available to read a particular address's local
   state for a particular application.
 - Boxes, which must be available to read or write a box, designated
-  by an application and name for the box.
+  by an application and name for the box. In v13 and later, a box
+  owned by another application must also be permitted by that
+  application, in addition to being available. See Box Access.
 
 Resources are _available_ based on the contents of the executing
 transaction and, in later versions, the contents of other transactions
@@ -722,6 +724,21 @@ App fields used in the `app_params_get` opcode.
 | 8     | AppAddress            | address |     | Address for which this application has authority                                |
 | 9     | AppVersion            | uint64  | v12 | Version of the app, incremented each time the approval or clear program changes |
 
+**App Params Set Fields**
+
+In v13 and later, an application may modify some of its own parameters
+with the `app_params_set` opcode. An application may only set these
+fields on itself. Both fields control whether other applications may
+access this application's boxes.
+
+| Name               | Type | In  | Notes                                                                                                                    |
+| ------------------ | ---- | --- | ------------------------------------------------------------------------------------------------------------------------ |
+| AppForeignBoxReads | bool | v13 | When set, any application may read this application's boxes                                                              |
+| AppFamilyBoxAccess | bool | v13 | When set, any application with the same creator address, existing or future, may read and write this application's boxes |
+
+Family membership is resolved at access time from the owner's current
+creator. Both fields are revocable by setting them to 0.
+
 **Account Fields**
 
 Account fields used in the `acct_params_get` opcode.
@@ -791,6 +808,7 @@ Account fields used in the `acct_params_get` opcode.
 | `asset_holding_get f` | X is field F from account A's holding of asset B. Y is 1 if A is opted into B, else 0                                                                                                                                                                                                                                                                                                                                                                         |
 | `asset_params_get f`  | X is field F from asset A. Y is 1 if A exists, else 0                                                                                                                                                                                                                                                                                                                                                                                                         |
 | `app_params_get f`    | X is field F from app A. Y is 1 if A exists, else 0                                                                                                                                                                                                                                                                                                                                                                                                           |
+| `app_params_set f`    | set field F of the currently executing application to A. Fails if F is not a settable field                                                                                                                                                                                                                                                                                                                                                                   |
 | `acct_params_get f`   | X is field F from account A. Y is 1 if A owns positive algos, else 0                                                                                                                                                                                                                                                                                                                                                                                          |
 | `voter_params_get f`  | X is field F from online account A as of the balance round: 320 rounds before the current round. Y is 1 if A had positive algos online in the agreement round, else Y is 0 and X is a type specific zero-value                                                                                                                                                                                                                                                |
 | `online_stake`        | the total online stake in the agreement round                                                                                                                                                                                                                                                                                                                                                                                                                 |
@@ -800,10 +818,49 @@ Account fields used in the `acct_params_get` opcode.
 ### Box Access
 
 Box opcodes that create, delete, or resize boxes affect the minimum
-balance requirement of the calling application's account. The change
-is immediate, and can be observed after exection by using
-`min_balance`. If the account does not possess the new minimum
-balance, the opcode fails.
+balance requirement of the account of the application that _owns_ the
+box, which in v13 and later is not necessarily the calling
+application. The change is immediate, and can be observed after
+exection by using `min_balance`. If the account does not possess the
+new minimum balance, the opcode fails.
+
+By default, an application may only access boxes that it owns. In v13
+and later, an application may permit other applications to access its
+boxes by setting one of two parameters on itself with
+`app_params_set`. `AppForeignBoxReads` permits any application to read
+its boxes, and grants no other access. `AppFamilyBoxAccess` permits
+applications with the same creator address to read and write its
+boxes, including creating, resizing, and deleting them. An application
+can only set these parameters on itself, and the owning application is
+not invoked when a permitted application accesses its boxes.
+
+The `app_box_*` opcodes perform the same operations as their `box_*`
+counterparts, but take an additional argument specifying the
+application that owns the box. They act on the box directly, so no
+inner transaction to the owning application is needed, and that
+application does not have to expose a method for the access. The box
+must still be _available_ in the usual sense, and the owning
+application must have permitted the access; neither condition alone is
+sufficient.
+
+The existing ban on re-entering an application protects that
+application's state while it waits on an inner call: nothing can
+change the state, because nothing can run its code. Family-shared
+boxes break that protection. An application with the same creator is a
+different application, so it is allowed to run, and it can write the
+box.
+
+In v13 and later, any operation except a read therefore fails if a
+foreign application, meaning one with a different creator, sits on the
+call stack between the application performing the operation and an
+earlier application of the same family that has already read or
+written a family-shared box. The foreign application never touches the
+box itself. It matters only because it is untrusted code running
+between two family members.
+
+Reads never fail this check, but they do mark the frame as relying on
+family state, and that mark passes to a calling frame of the same
+family when the frame returns.
 
 All box related opcodes fail immediately if used in a
 ClearStateProgram. This behavior is meant to discourage Smart Contract

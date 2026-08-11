@@ -18,7 +18,7 @@ import RemoteCode from '/src/components/RemoteCode.astro';
 
 Box storage in Algorand is a feature that provides additional on-chain storage options for smart contracts, allowing them to store and manage larger amounts of data beyond the limitations of global and local state. Unlike the fixed sizes of global and local state storages, box storage offers dynamic flexibility for creating, resizing, and deleting storage units
 
-These storage units, called boxes, are key-value storage segments associated with individual applications, each capable of storing upto 32KB (32768 bytes) of data as byte arrays. Boxes are only visible and accessible to the application that created them, ensuring data integrity and security. The app account (the smart contract) is responsible for funding the box storage, and only the creating app can read, write, or delete its boxes on-chain.
+These storage units, called boxes, are key-value storage segments associated with individual applications, each capable of storing upto 32KB (32768 bytes) of data as byte arrays. Boxes are only visible and accessible to the application that created them, ensuring data integrity and security. The app account (the smart contract) is responsible for funding the box storage, and only the creating app can read, write, or delete its boxes on-chain. Starting with AVM v13, an owning application can opt in to sharing its boxes with other applications; see [Family Box Access](#family-box-access).
 
 Both the box key and data are stored as byte arrays, requiring any uint64 variables to be converted before storage. While box storage expands the capabilities of Algorand smart contracts, it does incur additional costs in terms of minimum balance requirements (MBR) to cover the network storage space. The maximum number of box references is currently set to 8, allowing an app to create and reference up to 8 boxes simultaneously. Each box is a fixed-length structure but can be resized using the App.box_resize method or by deleting and recreating the box. Boxes over 1024 bytes require additional references, as each reference has a 1024-byte operational budget. The app account's MBR increases with each additional box and byte in the box's name and allocated size. If an application with outstanding boxes is deleted, the MBR is not recoverable, so it's recommended to delete all box storage and withdraw funds before app deletion.
 
@@ -38,7 +38,7 @@ When interacting with apps via [app call transactions](/concepts/transactions/ov
 
 The box array is an array of pairs: the first element of each pair is an integer specifying the index into the foreign application array, and the second element is the key name of the box to be accessed.
 
-Each entry in the box array allows access to only 1kb of data. For example, if a box is sized to 4kb, the transaction must use four entries in this array. To claim an allotted entry, a corresponding app ID and box name must be added to the box ref array. If you need more than the 1kb associated with that specific box name, you can either specify the box ref entry more than once or, preferably, add "empty" box refs `[0,""]` into the array. If you specify 0 as the app ID, the box ref is for the application being called.
+Each entry in the box array allows access to only 1kb of data. For example, if a box is sized to 4kb, the transaction must use four entries in this array. To claim an allotted entry, a corresponding app ID and box name must be added to the box ref array. If you need more than the 1kb associated with that specific box name, you can either specify the box ref entry more than once or, preferably, add "empty" box refs `[0,""]` into the array. If you specify 0 as the app ID, the box ref is for the application being called. To reference a box owned by a different application, supply that application's ID instead of 0. Note that referencing another application's box makes it available, but does not by itself grant permission to access it; see [Family Box Access](#family-box-access).
 
 For example, suppose the contract needs to read "BoxA" which is 1.5kb, and "Box B" which is 2.5kb. This would require four entries in the box ref array and would look something like:
 
@@ -73,6 +73,99 @@ For example, if a box is created with the name "BoxA" (a 4-byte long key) and wi
 (2500) + (400 * (1024+4)) = 413,700 microAlgos
 ```
 
+The minimum balance requirement always belongs to the application that owns the box, never to the application performing the operation. When a permitted application creates, resizes, or deletes a box owned by another application, it is the owning application's account that is affected. If that account cannot cover the increased requirement, the operation fails.
+
+## Family Box Access
+
+A box can be read or written on-chain by the application that owns it. Starting with AVM v13 (consensus v42), an owning application can relax that restriction for its own boxes by setting one of two parameters with the `app_params_set` opcode:
+
+| Parameter            | Effect                                                                                                                                       |
+| -------------------- | -------------------------------------------------------------------------------------------------------------------------------------------- |
+| `AppForeignBoxReads` | Any application may read the owning application's boxes on-chain.                                                                            |
+| `AppFamilyBoxAccess` | Applications sharing the owning application's creator address may read and write its boxes, including creating, resizing, and deleting them. |
+
+An application's _family_ is the set of applications that share the same creator address. Membership is resolved when the access happens, not when the parameter is set, so the grant extends to every application that creator deploys in the future as well as the ones that exist today.
+
+The two parameters grant different levels of access:
+
+| Operation              | Owning application | Same creator, with `AppFamilyBoxAccess` | Any application, with `AppForeignBoxReads` |
+| ---------------------- | ------------------ | --------------------------------------- | ------------------------------------------ |
+| Read                   | Yes                | Yes                                     | Yes                                        |
+| Write                  | Yes                | Yes                                     | No                                         |
+| Create, resize, delete | Yes                | Yes                                     | No                                         |
+
+There is no parameter that grants write access to applications outside the family. `AppForeignBoxReads` grants reads and nothing else.
+
+An application can only set these parameters on itself. There is no way for one application to open up another application's boxes, and the owning application does not need to be called or otherwise involved when a permitted application accesses its boxes. Both parameters are revocable: setting the field back to 0 with `app_params_set` withdraws the grant.
+
+### Accessing another application's boxes
+
+Each box opcode has an `app_box_*` counterpart that performs the same operation but takes an additional argument identifying the application that owns the box. For example, `box_len` returns the length of a box owned by the currently executing application, while `app_box_len` returns the length of a box owned by the application whose ID is supplied.
+
+Because these opcodes act on the box directly, no inner transaction to the owning application is required. This differs from the usual pattern for reaching another application's state, which requires that application to expose a method and to be called.
+
+The box must still be made available in the usual way, by appearing in the box references (`txn.Boxes`) or access list (`txn.Access`) of some transaction in the group. Availability and permission are separate requirements, and both must be satisfied:
+
+- If the box is available but the owning application has not set the relevant parameter, the access fails.
+- If the owning application has set the parameter but the box is not available, the access fails.
+
+:::caution
+`AppFamilyBoxAccess` grants other applications write access to your application's stored data, lets them delete your boxes, and lets them change your application's minimum balance requirement. Because family membership is evaluated at access time, the grant also covers applications the creator has not deployed yet. Applications in a family share mutable state and must be designed, reviewed, and upgraded together: updating one family member can affect the data and balance of another. Enable it only when you specifically need to distribute logic across multiple applications, such as when working around the program size limit.
+:::
+
+### Re-entrancy and family-shared boxes
+
+The AVM already forbids re-entering an application that is on the call stack. That rule gives every application a useful guarantee: while it is suspended waiting on an inner call, no one can change its state, because no one can run its code.
+
+Family-shared boxes break that guarantee, because a _different_ application can now modify a box the suspended application depends on:
+
+```
+A writes its box "b"                  A now relies on b == "AA"
+  A → X            foreign app (different creator)
+      X → C        family member of A (same creator)
+          C writes A's box "b" → "CC"
+A resumes, still assuming b == "AA"   ← silent corruption
+```
+
+The existing re-entrancy rule does not catch this, because `C` is not `A`; the application was never re-entered. AVM v13 therefore adds a second, box-scoped check:
+
+> An application cannot write a family-shared box when a foreign application sits on the call stack between it and a family application that has already read or written a family-shared box; the write fails.
+
+#### How each operation behaves
+
+Reading a family-shared box marks the current call frame as relying on family state, but does not itself trigger the check. Writing runs the check.
+
+| Operation on a family-shared box | Marks the frame as relying on family state | Runs the re-entrancy check |
+| -------------------------------- | ------------------------------------------ | -------------------------- |
+| Read                             | Yes                                        | No                         |
+| Write, create, resize, delete    | Yes                                        | Yes                        |
+
+The mark is inherited. When a marked frame returns to a caller with the same creator, the caller becomes marked too, so delegating a write to a sibling still counts as relying on family state.
+
+#### What is allowed and what is blocked
+
+In the following, `A` and `C` share a creator address and `X` does not. Box `b` is owned by `A`, which has set `AppFamilyBoxAccess`.
+
+| Sequence                                                      | Verdict | Reasoning                                                                         |
+| ------------------------------------------------------------- | ------- | --------------------------------------------------------------------------------- |
+| `A` writes `b`, then `A → X → C`, and `C` writes `b`          | Blocked | `A`'s write would be clobbered while `A` is suspended                             |
+| `A` reads `b`, then `A → X → C`, and `C` writes `b`           | Blocked | The value `A` read goes stale; reads mark the frame even though they do not check |
+| `A` never touches `b`, then `A → X → C`, `C` writes `b`       | Allowed | No frame on the stack is relying on `b`                                           |
+| `A` writes `b`, then `A → X → C`, and `C` only reads `b`      | Allowed | Reads never trigger the check                                                     |
+| `A` writes `b`, then `A → C` directly, `C` writes `b`         | Allowed | No foreign application separates them                                             |
+| `A` delegates its write to `C`, then `A → X → C` writes again | Blocked | `A` inherited the mark when `C` returned                                          |
+
+#### Why the rule is shaped this way
+
+| Property                                      | What it means for you                                                                                                                                     |
+| --------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| The check fires at the write, not at the call | A foreign application can still call into a family member for read-only queries, so patterns like price oracles and registries keep working               |
+| Reads mark but do not check                   | A stale read is a hazard for the reader alone; it cannot corrupt anyone else's state                                                                      |
+| Direct family calls are unrestricted          | Applications sharing a creator are treated as one co-designed codebase, so coordinating their own writes is the developer's responsibility, not the AVM's |
+| The owning application is checked too         | Once a box is family-shared, the owner is just one writer among several and runs the same check                                                           |
+
+Boxes shared only through `AppForeignBoxReads` are never subject to this check, because read-only access has nothing to clobber.
+
 ## Manipulating Box Storage
 
 Box storage offers several abstractions for efficient data handling:
@@ -91,6 +184,7 @@ Boxes can be any size from 0 to 32K bytes.
 Box names must be at least 1 byte, at most 64 bytes, and unique within app a.
 The app account(the smart contract) is responsible for funding the box storage (with an increase to its minimum balance requirement; see below for details).
 The app call's boxes array must reference a box name and app ID to be allocated.
+If app a has set `AppFamilyBoxAccess`, applications sharing its creator can also allocate boxes in app a using the `app_box_create` opcode. The resulting increase to the minimum balance requirement still falls on app a's account.
 
 Boxes may only be accessed (whether reading or writing) in a Smart Contract's approval program, not in a clear state program.
 
@@ -130,8 +224,8 @@ When creating a box, the key name must be in the box ref array.
 
 ### Reading
 
-Boxes can only be manipulated by the smart contract that owns them. While the SDKs and goal cmd tool allow these boxes to be read off-chain, only the smart contract that owns them can read or manipulate them on-chain.
-App a is the only app that can read the contents of its boxes on-chain. This on-chain privacy is unique to box storage. Recall that anybody can read everything from off-chain using the algod or indexer APIs.
+Boxes can be manipulated by the smart contract that owns them. The SDKs and goal cmd tool allow any box to be read off-chain, and box contents are never confidential; the restriction governs only which applications may read or manipulate a box on-chain.
+App a is the  app that can read the contents of its boxes on-chain. Since AVM v13, app a can permit any application to read its boxes on-chain by setting the `AppForeignBoxReads` parameter; see [Family Box Access](#family-box-access). Recall that anybody can read everything from off-chain using the algod or indexer APIs.
 To read box b from app a, the app call must include b in its boxes array.
 Read budget: Each box reference in the boxes array allows an app call to access 1K bytes of box state - 1K of "box read budget". To read a box larger than 1K, multiple box references must be put in the boxes arrays.
 The box read budget is shared across the transaction group.
@@ -195,7 +289,7 @@ when using either opcode to read the contents of a box, the AVM is limited to re
 
 ### Writing
 
-App A is the only app that can write the contents of its boxes.
+By default, app A is the only app that can write the contents of its boxes. Since AVM v13, app A can permit applications sharing its creator address to write its boxes by setting the `AppFamilyBoxAccess` parameter; see [Family Box Access](#family-box-access).
 As with reading, each box ref in the boxes array allows an app call to write 1kb of box state - 1kb of "box write budget".
 
 The AVM provides two opcodes, box_put and box_replace, to write data to a box. The box_put opcode is described in the previous section. The box_replace opcode takes three parameters: the key name, the starting location and replacement bytes.
@@ -258,7 +352,7 @@ The AVM offers the `box_len` opcode to retrieve the length of a box and verify i
 
 ### Deleting a Box
 
-Only the app that created a box can delete it. If an app is deleted, its boxes are not deleted. The boxes will not be modifiable but can still be queried using the SDKs. The minimum balance will also be locked. (The correct cleanup design is to look up the boxes from off-chain and call the app to delete all its boxes before deleting the app itself.)
+By default, only the app that created a box can delete it. If the owning app has set `AppFamilyBoxAccess`, applications sharing its creator address can delete it as well. If an app is deleted, its boxes are not deleted. The boxes will not be modifiable but can still be queried using the SDKs. The minimum balance will also be locked. (The correct cleanup design is to look up the boxes from off-chain and call the app to delete all its boxes before deleting the app itself.)
 
 The AVM offers the `box_del` opcode to delete a box. This opcode takes the box key name. The opcode returns one unsigned integer (uint64) with a value of 0 or 1. A value of 1 indicates the box existed and was deleted. A value of 0 indicates the box did not exist.
 
@@ -333,6 +427,8 @@ TEAL: Different opcodes can be used
 | box_len     | retrieves the length of box A if A exists, else 0. Y is 1 if A exists, else 0                                                      |
 | box_put     | replaces the contents of box A with byte-array B. It fails if A exists and len(B) != len(box A). It creates A if it does not exist |
 | box_replace | writes byte-array C into box A, starting at offset B. It fails if A does not exist or the byte range is outside A's size           |
+
+Since AVM v13, each box opcode has an `app_box_*` counterpart that performs the same operation on a box owned by another application, taking an additional argument for that application's ID: `app_box_create`, `app_box_del`, `app_box_extract`, `app_box_get`, `app_box_len`, `app_box_put`, `app_box_replace`, `app_box_resize`, and `app_box_splice`. These require the owning application to have permitted the access, as described in [Family Box Access](#family-box-access). For the authoritative opcode signatures, see the [Opcodes List](/reference/algorand-teal/opcodes).
 
 Different functions of the box can be used. The detailed API reference can be found [here](https://algorandfoundation.github.io/puya/api-algopy.html#algopy.Box)
 
