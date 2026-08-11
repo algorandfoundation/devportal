@@ -157,6 +157,37 @@ const { currentVersion } = Astro.props;
       applyFilters();
     });
 
+    // If the page is opened at an anchor for an opcode the default version
+    // filter hides (e.g. /opcodes#app_box_create for an unreleased opcode),
+    // clear the version filter so the target is visible, then scroll to it.
+    // DOM-driven (re-queries + dispatches change) so a single global listener
+    // stays valid across View Transition navigations.
+    function revealHashTarget() {
+      let id;
+      try {
+        id = decodeURIComponent(location.hash.slice(1));
+      } catch {
+        return; // malformed hash (e.g. a stray %) — nothing to reveal
+      }
+      if (!id) return;
+      const target = document.getElementById(id);
+      // The id sits on a heading nested inside .opcode-section; the filter
+      // toggles `hidden` on the section, so check the section, not the heading.
+      const section = target && target.closest('.opcode-section');
+      const sel = document.querySelector('#f-version');
+      if (section && section.hidden && sel && sel.value !== '') {
+        sel.value = '';
+        sel.dispatchEvent(new Event('change'));
+        document.getElementById(id)?.scrollIntoView();
+      }
+    }
+
     applyFilters();
+    revealHashTarget();
+
+    if (!window.__opcodeHashRevealBound) {
+      window.__opcodeHashRevealBound = true;
+      window.addEventListener('hashchange', revealHashTarget);
+    }
   });
 </script>
