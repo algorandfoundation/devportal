@@ -71,7 +71,7 @@ jobs:
       - name: Update opcodes
         id: update
         run: |
-          echo "📥 Updating opcodes from go-algorand ref '${{ github.event.inputs.ref }}'..."
+          echo "📥 Updating opcodes from go-algorand ref '$GO_ALGORAND_REF'..."
           pnpm run update:opcodes
         env:
           GO_ALGORAND_REF: ${{ github.event.inputs.ref }}
@@ -131,16 +131,18 @@ jobs:
 
       - name: Summary
         if: always()
+        env:
+          GO_ALGORAND_REF: ${{ github.event.inputs.ref }}
         run: |
           if [ "${{ steps.git-check.outputs.has_changes }}" = "true" ]; then
             echo "## Opcode Update Summary" >> $GITHUB_STEP_SUMMARY
             echo "" >> $GITHUB_STEP_SUMMARY
-            echo "- **Source ref**: \`${{ github.event.inputs.ref }}\`" >> $GITHUB_STEP_SUMMARY
+            echo "- **Source ref**: \`$GO_ALGORAND_REF\`" >> $GITHUB_STEP_SUMMARY
             echo "- **PR**: #${{ steps.create-pr.outputs.pull-request-number }} (${{ steps.create-pr.outputs.pull-request-url }})" >> $GITHUB_STEP_SUMMARY
             echo "- **Status**: ✅ PR ${{ steps.create-pr.outputs.pull-request-operation }}" >> $GITHUB_STEP_SUMMARY
           else
             echo "## Opcode Update Summary" >> $GITHUB_STEP_SUMMARY
             echo "" >> $GITHUB_STEP_SUMMARY
-            echo "- **Source ref**: \`${{ github.event.inputs.ref }}\`" >> $GITHUB_STEP_SUMMARY
+            echo "- **Source ref**: \`$GO_ALGORAND_REF\`" >> $GITHUB_STEP_SUMMARY
             echo "- **Status**: ℹ️ Already up to date — no PR needed" >> $GITHUB_STEP_SUMMARY
           fi
