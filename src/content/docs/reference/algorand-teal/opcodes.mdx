@@ -11,27 +11,6 @@ This page documents the current state of the AVM and may include opcode versions
 
 
 <div class="opcode-section"
-     data-name="-"
-     data-version="v1"
-     data-groups="Arithmetic">
-
-    ### -
-    - **Bytecode:** `0x09`
-    - **Stack Input:** `uint64,uint64`
-    - **Stack Output:** `uint64`
-    - **Size:** 1
-    - **Availability:** v1
-    - **Cost:** 1
-    - **Description:** A minus B. Fail if B &gt; A.
-    - **Groups:** `Arithmetic`
-
-
-
-
-</div>
-
-
-<div class="opcode-section"
      data-name="!"
      data-version="v1"
      data-groups="Arithmetic">
@@ -74,45 +53,20 @@ This page documents the current state of the AVM and may include opcode versions
 
 
 <div class="opcode-section"
-     data-name="*"
+     data-name="%"
      data-version="v1"
      data-groups="Arithmetic">
 
-    ### *
-    - **Bytecode:** `0x0b`
+    ### %
+    - **Bytecode:** `0x18`
     - **Stack Input:** `uint64,uint64`
     - **Stack Output:** `uint64`
     - **Size:** 1
     - **Availability:** v1
     - **Cost:** 1
-    - **Description:** A times B. Fail on overflow.
+    - **Description:** A modulo B. Fail if B == 0.
     - **Groups:** `Arithmetic`
 
-    <span class="opcode-detail-caption">Notes</span>
-    Overflow is an error condition which halts execution and fails the transaction. Full precision is available from `mulw`.
-
-
-
-</div>
-
-
-<div class="opcode-section"
-     data-name="/"
-     data-version="v1"
-     data-groups="Arithmetic">
-
-    ### /
-    - **Bytecode:** `0x0a`
-    - **Stack Input:** `uint64,uint64`
-    - **Stack Output:** `uint64`
-    - **Size:** 1
-    - **Availability:** v1
-    - **Cost:** 1
-    - **Description:** A divided by B (truncated division). Fail if B == 0.
-    - **Groups:** `Arithmetic`
-
-    <span class="opcode-detail-caption">Notes</span>
-    `divmodw` is available to divide the two-element values produced by `mulw` and `addw`.
 
 
 
@@ -162,41 +116,22 @@ This page documents the current state of the AVM and may include opcode versions
 
 
 <div class="opcode-section"
-     data-name="%"
+     data-name="*"
      data-version="v1"
      data-groups="Arithmetic">
 
-    ### %
-    - **Bytecode:** `0x18`
+    ### *
+    - **Bytecode:** `0x0b`
     - **Stack Input:** `uint64,uint64`
     - **Stack Output:** `uint64`
     - **Size:** 1
     - **Availability:** v1
     - **Cost:** 1
-    - **Description:** A modulo B. Fail if B == 0.
+    - **Description:** A times B. Fail on overflow.
     - **Groups:** `Arithmetic`
 
-
-
-
-</div>
-
-
-<div class="opcode-section"
-     data-name="^"
-     data-version="v1"
-     data-groups="Arithmetic">
-
-    ### ^
-    - **Bytecode:** `0x1b`
-    - **Stack Input:** `uint64,uint64`
-    - **Stack Output:** `uint64`
-    - **Size:** 1
-    - **Availability:** v1
-    - **Cost:** 1
-    - **Description:** A bitwise-xor B
-    - **Groups:** `Arithmetic`
-
+    <span class="opcode-detail-caption">Notes</span>
+    Overflow is an error condition which halts execution and fails the transaction. Full precision is available from `mulw`.
 
 
 
@@ -220,6 +155,50 @@ This page documents the current state of the AVM and may include opcode versions
 
     <span class="opcode-detail-caption">Notes</span>
     Overflow is an error condition which halts execution and fails the transaction. Full precision is available from `addw`.
+
+
+
+</div>
+
+
+<div class="opcode-section"
+     data-name="-"
+     data-version="v1"
+     data-groups="Arithmetic">
+
+    ### -
+    - **Bytecode:** `0x09`
+    - **Stack Input:** `uint64,uint64`
+    - **Stack Output:** `uint64`
+    - **Size:** 1
+    - **Availability:** v1
+    - **Cost:** 1
+    - **Description:** A minus B. Fail if B &gt; A.
+    - **Groups:** `Arithmetic`
+
+
+
+
+</div>
+
+
+<div class="opcode-section"
+     data-name="/"
+     data-version="v1"
+     data-groups="Arithmetic">
+
+    ### /
+    - **Bytecode:** `0x0a`
+    - **Stack Input:** `uint64,uint64`
+    - **Stack Output:** `uint64`
+    - **Size:** 1
+    - **Availability:** v1
+    - **Cost:** 1
+    - **Description:** A divided by B (truncated division). Fail if B == 0.
+    - **Groups:** `Arithmetic`
+
+    <span class="opcode-detail-caption">Notes</span>
+    `divmodw` is available to divide the two-element values produced by `mulw` and `addw`.
 
 
 
@@ -332,60 +311,18 @@ This page documents the current state of the AVM and may include opcode versions
 
 
 <div class="opcode-section"
-     data-name="|"
+     data-name="^"
      data-version="v1"
      data-groups="Arithmetic">
 
-    ### |
-    - **Bytecode:** `0x19`
+    ### ^
+    - **Bytecode:** `0x1b`
     - **Stack Input:** `uint64,uint64`
     - **Stack Output:** `uint64`
     - **Size:** 1
     - **Availability:** v1
     - **Cost:** 1
-    - **Description:** A bitwise-or B
-    - **Groups:** `Arithmetic`
-
-
-
-
-</div>
-
-
-<div class="opcode-section"
-     data-name="||"
-     data-version="v1"
-     data-groups="Arithmetic">
-
-    ### ||
-    - **Bytecode:** `0x11`
-    - **Stack Input:** `uint64,uint64`
-    - **Stack Output:** `bool`
-    - **Size:** 1
-    - **Availability:** v1
-    - **Cost:** 1
-    - **Description:** A is not zero or B is not zero =&gt; &#123;0 or 1&#125;
-    - **Groups:** `Arithmetic`
-
-
-
-
-</div>
-
-
-<div class="opcode-section"
-     data-name="~"
-     data-version="v1"
-     data-groups="Arithmetic">
-
-    ### ~
-    - **Bytecode:** `0x1c`
-    - **Stack Input:** `uint64`
-    - **Stack Output:** `uint64`
-    - **Size:** 1
-    - **Availability:** v1
-    - **Cost:** 1
-    - **Description:** bitwise invert value A
+    - **Description:** A bitwise-xor B
     - **Groups:** `Arithmetic`
 
 
@@ -1163,27 +1100,6 @@ Deleting a key which is already absent has no effect on the application local st
 
 
 <div class="opcode-section"
-     data-name="b-"
-     data-version="v4"
-     data-groups="Byte Array Arithmetic">
-
-    ### b-
-    - **Bytecode:** `0xa1`
-    - **Stack Input:** `bigint,bigint`
-    - **Stack Output:** `bigint`
-    - **Size:** 1
-    - **Availability:** v4
-    - **Cost:** 10
-    - **Description:** A minus B. A and B are interpreted as big-endian unsigned integers. Fail on underflow.
-    - **Groups:** `Byte Array Arithmetic`
-
-
-
-
-</div>
-
-
-<div class="opcode-section"
      data-name="b!="
      data-version="v4"
      data-groups="Byte Array Arithmetic">
@@ -1205,39 +1121,18 @@ Deleting a key which is already absent has no effect on the application local st
 
 
 <div class="opcode-section"
-     data-name="b*"
+     data-name="b%"
      data-version="v4"
      data-groups="Byte Array Arithmetic">
 
-    ### b*
-    - **Bytecode:** `0xa3`
-    - **Stack Input:** `bigint,bigint`
-    - **Stack Output:** `[]byte`
-    - **Size:** 1
-    - **Availability:** v4
-    - **Cost:** 20
-    - **Description:** A times B. A and B are interpreted as big-endian unsigned integers.
-    - **Groups:** `Byte Array Arithmetic`
-
-
-
-
-</div>
-
-
-<div class="opcode-section"
-     data-name="b/"
-     data-version="v4"
-     data-groups="Byte Array Arithmetic">
-
-    ### b/
-    - **Bytecode:** `0xa2`
+    ### b%
+    - **Bytecode:** `0xaa`
     - **Stack Input:** `bigint,bigint`
     - **Stack Output:** `bigint`
     - **Size:** 1
     - **Availability:** v4
     - **Cost:** 20
-    - **Description:** A divided by B (truncated division). A and B are interpreted as big-endian unsigned integers. Fail if B is zero.
+    - **Description:** A modulo B. A and B are interpreted as big-endian unsigned integers. Fail if B is zero.
     - **Groups:** `Byte Array Arithmetic`
 
 
@@ -1268,40 +1163,19 @@ Deleting a key which is already absent has no effect on the application local st
 
 
 <div class="opcode-section"
-     data-name="b%"
+     data-name="b*"
      data-version="v4"
      data-groups="Byte Array Arithmetic">
 
-    ### b%
-    - **Bytecode:** `0xaa`
+    ### b*
+    - **Bytecode:** `0xa3`
     - **Stack Input:** `bigint,bigint`
-    - **Stack Output:** `bigint`
-    - **Size:** 1
-    - **Availability:** v4
-    - **Cost:** 20
-    - **Description:** A modulo B. A and B are interpreted as big-endian unsigned integers. Fail if B is zero.
-    - **Groups:** `Byte Array Arithmetic`
-
-
-
-
-</div>
-
-
-<div class="opcode-section"
-     data-name="b^"
-     data-version="v4"
-     data-groups="Byte Array Logic">
-
-    ### b^
-    - **Bytecode:** `0xad`
-    - **Stack Input:** `[]byte,[]byte`
     - **Stack Output:** `[]byte`
     - **Size:** 1
     - **Availability:** v4
-    - **Cost:** 6
-    - **Description:** A bitwise-xor B. A and B are zero-left extended to the greater of their lengths
-    - **Groups:** `Byte Array Logic`
+    - **Cost:** 20
+    - **Description:** A times B. A and B are interpreted as big-endian unsigned integers.
+    - **Groups:** `Byte Array Arithmetic`
 
 
 
@@ -1322,6 +1196,48 @@ Deleting a key which is already absent has no effect on the application local st
     - **Availability:** v4
     - **Cost:** 10
     - **Description:** A plus B. A and B are interpreted as big-endian unsigned integers
+    - **Groups:** `Byte Array Arithmetic`
+
+
+
+
+</div>
+
+
+<div class="opcode-section"
+     data-name="b-"
+     data-version="v4"
+     data-groups="Byte Array Arithmetic">
+
+    ### b-
+    - **Bytecode:** `0xa1`
+    - **Stack Input:** `bigint,bigint`
+    - **Stack Output:** `bigint`
+    - **Size:** 1
+    - **Availability:** v4
+    - **Cost:** 10
+    - **Description:** A minus B. A and B are interpreted as big-endian unsigned integers. Fail on underflow.
+    - **Groups:** `Byte Array Arithmetic`
+
+
+
+
+</div>
+
+
+<div class="opcode-section"
+     data-name="b/"
+     data-version="v4"
+     data-groups="Byte Array Arithmetic">
+
+    ### b/
+    - **Bytecode:** `0xa2`
+    - **Stack Input:** `bigint,bigint`
+    - **Stack Output:** `bigint`
+    - **Size:** 1
+    - **Availability:** v4
+    - **Cost:** 20
+    - **Description:** A divided by B (truncated division). A and B are interpreted as big-endian unsigned integers. Fail if B is zero.
     - **Groups:** `Byte Array Arithmetic`
 
 
@@ -1436,39 +1352,18 @@ Deleting a key which is already absent has no effect on the application local st
 
 
 <div class="opcode-section"
-     data-name="b|"
+     data-name="b^"
      data-version="v4"
      data-groups="Byte Array Logic">
 
-    ### b|
-    - **Bytecode:** `0xab`
+    ### b^
+    - **Bytecode:** `0xad`
     - **Stack Input:** `[]byte,[]byte`
     - **Stack Output:** `[]byte`
     - **Size:** 1
     - **Availability:** v4
     - **Cost:** 6
-    - **Description:** A bitwise-or B. A and B are zero-left extended to the greater of their lengths
-    - **Groups:** `Byte Array Logic`
-
-
-
-
-</div>
-
-
-<div class="opcode-section"
-     data-name="b~"
-     data-version="v4"
-     data-groups="Byte Array Logic">
-
-    ### b~
-    - **Bytecode:** `0xae`
-    - **Stack Input:** `[]byte`
-    - **Stack Output:** `[]byte`
-    - **Size:** 1
-    - **Availability:** v4
-    - **Cost:** 4
-    - **Description:** A with all bits inverted
+    - **Description:** A bitwise-xor B. A and B are zero-left extended to the greater of their lengths
     - **Groups:** `Byte Array Logic`
 
 
@@ -2066,6 +1961,48 @@ At v2 it became allowed to branch to the end of the program exactly after the la
     - **Cost:** 1
     - **Description:** zero filled byte-array of length A
     - **Groups:** `Loading Values`
+
+
+
+
+</div>
+
+
+<div class="opcode-section"
+     data-name="b|"
+     data-version="v4"
+     data-groups="Byte Array Logic">
+
+    ### b|
+    - **Bytecode:** `0xab`
+    - **Stack Input:** `[]byte,[]byte`
+    - **Stack Output:** `[]byte`
+    - **Size:** 1
+    - **Availability:** v4
+    - **Cost:** 6
+    - **Description:** A bitwise-or B. A and B are zero-left extended to the greater of their lengths
+    - **Groups:** `Byte Array Logic`
+
+
+
+
+</div>
+
+
+<div class="opcode-section"
+     data-name="b~"
+     data-version="v4"
+     data-groups="Byte Array Logic">
+
+    ### b~
+    - **Bytecode:** `0xae`
+    - **Stack Input:** `[]byte`
+    - **Stack Output:** `[]byte`
+    - **Size:** 1
+    - **Availability:** v4
+    - **Cost:** 4
+    - **Description:** A with all bits inverted
+    - **Groups:** `Byte Array Logic`
 
 
 
@@ -2723,6 +2660,27 @@ Fails if A or B is not in G.<br />A and/or B are allowed to be the point at infi
 
 
 <div class="opcode-section"
+     data-name="extract3"
+     data-version="v5"
+     data-groups="Byte Array Manipulation">
+
+    ### extract3
+    - **Bytecode:** `0x58`
+    - **Stack Input:** `[]byte,uint64,uint64`
+    - **Stack Output:** `[]byte`
+    - **Size:** 1
+    - **Availability:** v5
+    - **Cost:** 1
+    - **Description:** A range of bytes from A starting at B up to but not including B+C. If B+C is larger than the array length, the program fails
+    - **Groups:** `Byte Array Manipulation`
+
+
+
+
+</div>
+
+
+<div class="opcode-section"
      data-name="extract_uint16"
      data-version="v5"
      data-groups="Byte Array Manipulation">
@@ -2777,27 +2735,6 @@ Fails if A or B is not in G.<br />A and/or B are allowed to be the point at infi
     - **Availability:** v5
     - **Cost:** 1
     - **Description:** A uint64 formed from a range of big-endian bytes from A starting at B up to but not including B+8. If B+8 is larger than the array length, the program fails
-    - **Groups:** `Byte Array Manipulation`
-
-
-
-
-</div>
-
-
-<div class="opcode-section"
-     data-name="extract3"
-     data-version="v5"
-     data-groups="Byte Array Manipulation">
-
-    ### extract3
-    - **Bytecode:** `0x58`
-    - **Stack Input:** `[]byte,uint64,uint64`
-    - **Stack Output:** `[]byte`
-    - **Size:** 1
-    - **Availability:** v5
-    - **Cost:** 1
-    - **Description:** A range of bytes from A starting at B up to but not including B+C. If B+C is larger than the array length, the program fails
     - **Groups:** `Byte Array Manipulation`
 
 
@@ -4831,6 +4768,69 @@ Poseidon2 hashes field elements, not arbitrary byte strings; reducing external i
   <thead><tr><th>Name</th><th>Encoding</th><th>Description</th></tr></thead>
   <tbody><tr><td>S</td><td>uint8</td><td> parameters index</td></tr></tbody>
 </table>
+
+</div>
+
+
+<div class="opcode-section"
+     data-name="|"
+     data-version="v1"
+     data-groups="Arithmetic">
+
+    ### |
+    - **Bytecode:** `0x19`
+    - **Stack Input:** `uint64,uint64`
+    - **Stack Output:** `uint64`
+    - **Size:** 1
+    - **Availability:** v1
+    - **Cost:** 1
+    - **Description:** A bitwise-or B
+    - **Groups:** `Arithmetic`
+
+
+
+
+</div>
+
+
+<div class="opcode-section"
+     data-name="||"
+     data-version="v1"
+     data-groups="Arithmetic">
+
+    ### ||
+    - **Bytecode:** `0x11`
+    - **Stack Input:** `uint64,uint64`
+    - **Stack Output:** `bool`
+    - **Size:** 1
+    - **Availability:** v1
+    - **Cost:** 1
+    - **Description:** A is not zero or B is not zero =&gt; &#123;0 or 1&#125;
+    - **Groups:** `Arithmetic`
+
+
+
+
+</div>
+
+
+<div class="opcode-section"
+     data-name="~"
+     data-version="v1"
+     data-groups="Arithmetic">
+
+    ### ~
+    - **Bytecode:** `0x1c`
+    - **Stack Input:** `uint64`
+    - **Stack Output:** `uint64`
+    - **Size:** 1
+    - **Availability:** v1
+    - **Cost:** 1
+    - **Description:** bitwise invert value A
+    - **Groups:** `Arithmetic`
+
+
+
 
 </div>
 

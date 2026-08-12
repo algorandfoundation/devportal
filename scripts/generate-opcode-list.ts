@@ -145,7 +145,10 @@ export async function render() {
   const latestReleasedVersion = data.LatestReleasedVersion ?? datasetVersion;
 
   const opcodes = data.Ops;
-  opcodes.sort((a, b) => a.Name.localeCompare(b.Name));
+  // Sort by UTF-16 code unit, not localeCompare: locale collation is ICU-version
+  // dependent, so a CI Node upgrade could silently reorder the entire generated
+  // file. A code-unit comparator is stable across environments.
+  opcodes.sort((a, b) => (a.Name < b.Name ? -1 : a.Name > b.Name ? 1 : 0));
 
   const page = template({ opcodes, datasetVersion, latestReleasedVersion });
 
