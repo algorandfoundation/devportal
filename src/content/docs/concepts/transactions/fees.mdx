@@ -215,3 +215,23 @@ This is the `payment` contract method that will be called and it has one inner p
     />
   </TabItem>
 </Tabs>
+
+## Estimating Fees with Simulate
+
+The algod `simulate` endpoint reports how much a transaction group is required to pay in fees. The response includes the following fields:
+
+- `group-usage`: the fee usage for the transaction group, including all of its inner transactions, expressed in millionths of the minimum fee
+- `fees-paid`: the total fees actually set on a transaction and its inner transactions, in microAlgo
+- `group-fees-paid`: the total fees actually set across the transaction group, in microAlgo
+
+To determine the required fee for a group, simulate it first, then convert the reported usage using the `min-fee` value from the suggested parameters:
+
+```shell showLineNumbers=false frame=none title="Required Group Fee"
+required_group_fee = group_usage * min_fee / 1000000
+```
+
+The result is rounded up to the next microAlgo, once for the whole group rather than per transaction. For example, a `group-usage` of 2,500,000 with a 1,000 microAlgo minimum fee means the group must pay 2,500 microAlgo in total fees.
+
+Because fees are pooled, the full amount can be set on a single transaction in the group. Comparing `group-fees-paid` against the required fee shows whether the fees currently set on the group are sufficient. The reported usage includes any per-byte surcharge paid by [larger transactions](#larger-transactions), the case where this kind of estimation matters most.
+
+A simulation still fails when the fees on the group are too low, and a run that stops early underreports usage because inner transactions that never execute are not counted. Simulate with fees set generously high so the group runs to completion, then use the reported `group-usage` to set the actual fees before submitting.
