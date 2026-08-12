@@ -79,9 +79,10 @@ Before you begin, ensure you have the following installed:
 ├── public/                # Static assets (favicons, etc.)
 ├── scripts/               # Build and utility scripts
 │   ├── clean-docs-import.ts       # Clear imported documentation
-│   ├── generate-opcode-list.js    # Generate Algorand opcodes list
+│   ├── generate-opcode-list.ts    # Render the opcode reference page
 │   ├── manage-sidebar-meta.ts     # Sidebar metadata generator
-│   └── prose-check.ts             # AI-powered prose quality checker
+│   ├── prose-check.ts             # AI-powered prose quality checker
+│   └── update-opcodes.ts          # Sync TEAL opcodes from go-algorand
 ├── src/
 │   ├── assets/            # Images and media files
 │   ├── components/        # Reusable Astro/React components
