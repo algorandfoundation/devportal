@@ -845,17 +845,21 @@ sufficient.
 
 The existing ban on re-entering an application protects that
 application's state while it waits on an inner call: nothing can
-change the state, because nothing can run its code. Family-shared
-boxes break that protection. An application with the same creator is a
-different application, so it is allowed to run, and it can write the
-box.
+change that state, because nothing can run its code. Family box access
+removes that protection, through two independent facts. An application
+with the same creator is a distinct application, so the re-entrancy
+ban does not stop it from running. Separately, if the suspended
+application has set `AppFamilyBoxAccess`, that same-creator
+application may write its boxes. Either fact alone is harmless.
+Together they allow a box to change underneath an application that is
+part-way through its own execution.
 
 In v13 and later, any operation except a read therefore fails if a
-foreign application, meaning one with a different creator, sits on the
-call stack between the application performing the operation and an
+non-family application, meaning one with a different creator, sits on
+the call stack between the application performing the operation and an
 earlier application of the same family that has already read or
-written a family-shared box. The foreign application never touches the
-box itself. It matters only because it is untrusted code running
+written a family-shared box. The non-family application never touches
+the box itself. It matters only because it is untrusted code running
 between two family members.
 
 Reads never fail this check, but they do mark the frame as relying on
