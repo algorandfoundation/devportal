@@ -15,32 +15,43 @@ on:
         required: false
         default: "master"
 
+# Serialize runs: two dispatches would otherwise race to force-push the same
+# chore/update-opcodes branch, producing a failed run or a PR reflecting the
+# wrong run. Queue a second dispatch behind the first instead of cancelling an
+# in-flight refresh.
+concurrency:
+  group: update-opcodes
+  cancel-in-progress: false
+
+# The built-in GITHUB_TOKEN is used only for the public go-algorand release
+# lookup (read-only). Checkout and PR creation use the GitHub App token minted
+# in the first step, so the workflow token needs no write scope.
 permissions:
-  contents: write
-  pull-requests: write
+  contents: read
 
 jobs:
   update-opcodes:
     name: Update Opcodes and Create PR
     runs-on: ubuntu-latest
     timeout-minutes: 15
-    # A PAT (not the default GITHUB_TOKEN) so the opened PR triggers the
-    # normal PR checks (deploy preview, acceptance). Mirrors import-docs.yml.
-    env:
-      AUTOMATION_TOKEN: ${{ secrets.IMPORT_DOCS_TOKEN }}
 
     steps:
-      - name: Validate Automation Token
-        run: |
-          if [ -z "$AUTOMATION_TOKEN" ]; then
-            echo "❌ Missing IMPORT_DOCS_TOKEN secret. Please add a PAT with 'repo' and 'workflow' scopes." >&2
-            exit 1
-          fi
+      # Mint a short-lived installation token from the DevPortal GitHub App
+      # (BOT_ID / BOT_SK), replacing the retired IMPORT_DOCS_TOKEN PAT. Used for
+      # checkout + PR creation so the opened PR triggers the normal PR checks
+      # (deploy preview, acceptance) — the built-in GITHUB_TOKEN cannot trigger
+      # those downstream workflows.
+      - name: Generate GitHub App token
+        uses: actions/create-github-app-token@v1
+        id: app-token
+        with:
+          app-id: ${{ secrets.BOT_ID }}
+          private-key: ${{ secrets.BOT_SK }}
 
       - name: Checkout DevPortal
         uses: actions/checkout@v6
         with:
-          token: ${{ env.AUTOMATION_TOKEN }}
+          token: ${{ steps.app-token.outputs.token }}
           fetch-depth: 0
 
       - name: Setup Node.js
@@ -100,7 +111,7 @@ jobs:
         env:
           HUSKY: "0"
         with:
-          token: ${{ env.AUTOMATION_TOKEN }}
+          token: ${{ steps.app-token.outputs.token }}
           branch: chore/update-opcodes
           commit-message: |
             chore: update TEAL opcode reference
