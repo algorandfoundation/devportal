@@ -20,13 +20,25 @@ Global storage is a feature in Algorand that allows smart contracts to persisten
 ## Manipulating Global State Storage
 
 Smart contracts can create, update, and delete values in global state using TEAL (Transaction Execution Approval Language) opcodes.
-The number of values that can be written is limited by the initial configuration set during smart contract creation.
+The number of values that can be written is limited by the global state schema, which is set when the smart contract is created and can be changed afterwards by an update transaction.
 State is represented as key-value pairs, where keys are stored as byte slices (byte-array values), and values can be stored as either byte slices or uint64 values.
 TEAL provides several opcodes for facilitating reading and writing to state, including `app_global_put`, `app_global_get`, `app_global_get_ex`.
 
 ### Allocation
 
-Global storage can include between 0 and 64 key/value pairs and a total of 8K of memory to share among them. The amount of global storage is allocated in key/value units and determined at contract creation, which cannot be edited later. The contract creator address is responsible for funding the global storage by an increase to their minimum balance requirement.
+Global storage can include between 0 and 64 key/value pairs and a total of 8K of memory to share among them. The amount of global storage is allocated in key/value units and determined at contract creation, and can be changed afterwards by an update transaction. The contract creator address is responsible for funding the global storage by an increase to their minimum balance requirement, until an update transaction passes that responsibility to another account.
+
+An application call with `OnComplete` set to `UpdateApplication` can carry a new global state schema. The new schema replaces the old one outright, so the update must state the whole schema it intends, not only the part it means to change. A count the update leaves out is applied as zero.
+
+A replacement schema can be larger or smaller than the current one, but not smaller than what the application already stores. An update that would leave fewer entries than are in use fails with `unable to change global schema`, wrapping a count comparison such as `store bytes count 2 exceeds schema bytes count 1`. A smaller schema that still fits the stored entries releases the surplus units and lowers the minimum balance requirement.
+
+The two rules combine in a way worth watching. Take an application created with a schema of `NumUint: 2` that has stored no integer values. Updating it with a schema of `NumByteSlice: 1` alone leaves it with `NumUint: 0`, because the omitted count is applied as zero and the two unused integer units are released. Had the application stored an integer, the same update would instead have failed with `store integer count 1 exceeds schema integer count 0`.
+
+The account that sends a size-changing update becomes the application's size sponsor and takes on the minimum balance requirement for the global storage. The previous sponsor's minimum balance requirement drops by the amount it was carrying. When the sender is the creator, the sponsor is recorded as the zero address, which means the creator carries it. See [Size Changes on Update](/concepts/transactions/reference#size-changes-on-update) for the full set of constraints, including which fields an update must set for it to count as a size change.
+
+:::note
+Changing the global state schema after creation requires the `AppSizeUpdates` consensus parameter, introduced in consensus v42.
+:::
 
 <Tabs syncKey='lang'>
   <TabItem label='Algorand TypeScript' icon='seti:typescript'>
