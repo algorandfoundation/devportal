@@ -19,7 +19,7 @@ Post-quantum signatures are part of the **v42 consensus upgrade**, shipped in [a
 
 Every existing key-based Algorand account is controlled by an Ed25519 key pair. (Smart-contract and logic-signature accounts are controlled by code rather than keys.) Ed25519 is an elliptic-curve scheme, and elliptic-curve cryptography is breakable by a sufficiently large quantum computer running Shor's algorithm. No such computer is known to exist today, but assets secured on a blockchain need to remain secure for decades, and an attacker can record public keys now and attack them later.
 
-Falcon-1024 is based on lattice problems that are believed to resist quantum attack. Falcon was selected by the National Institute of Standards and Technology (NIST) for standardization in 2022 and is being standardized as FN-DSA in FIPS 206, which is in draft at the time of writing. By supporting it natively in the protocol, Algorand lets any account holder move to quantum-resistant security without waiting for a network-wide migration.
+Falcon-1024 is based on lattice problems that are believed to resist quantum attack. Falcon was selected by the National Institute of Standards and Technology (NIST) for standardization in 2022, and a derived scheme, FN-DSA, is being standardized in FIPS 206, which is in draft at the time of writing. Algorand uses a deterministic variant of Falcon, which differs from the draft FN-DSA. By supporting it natively in the protocol, Algorand lets any account holder move to quantum-resistant security without waiting for a network-wide migration.
 
 ## The `pqsig` Signature Category
 
@@ -144,4 +144,4 @@ The `algokey` command-line tool manages post-quantum keys with the `algokey pq` 
 ## Additional Resources
 
 - [Falcon: Fast-Fourier Lattice-Based Compact Signatures over NTRU](https://falcon-sign.info/): the Falcon signature scheme specification
-- [FIPS 206 (Initial Public Draft): FN-DSA](https://csrc.nist.gov/pubs/fips/206/ipd): NIST's draft standard for Falcon
+- [FIPS 206 (Initial Public Draft): FN-DSA](https://csrc.nist.gov/pubs/fips/206/ipd): NIST's draft standard derived from Falcon; Algorand uses a deterministic Falcon variant
