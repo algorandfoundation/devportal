@@ -39,7 +39,7 @@ The `pqsig` field is a scheme-agnostic envelope with four parts:
 - `pk`: the post-quantum public key.
 - `sig`: the signature itself.
 
-The envelope is deliberately generic: the protocol maintains a registry of schemes, each individually gated by [consensus parameters](/concepts/protocol/protocol-parameters) with its own fee contribution. This gives Algorand **cryptographic agility**: future schemes can be added (or, if a scheme is ever weakened, retired) without redesigning the transaction format.
+The envelope is deliberately generic: the protocol maintains a registry of schemes, each individually gated by [consensus parameters](/concepts/protocol/protocol-parameters) with its own fee contribution. This gives Algorand **cryptographic agility**: future schemes can be added, and a scheme that is ever weakened can be retired, without redesigning the transaction format.
 
 ## Addresses
 
@@ -57,7 +57,7 @@ The one-byte salt exists so that key generation can search for an address that i
 
 Two subtleties are worth understanding:
 
-- **The canonical salt is a tooling convention, not a consensus rule.** The protocol verifies a `pqsig` for _any_ salt value, so a single Falcon public key can control up to 256 distinct addresses. Algorand tooling always uses the lowest salt that produces an off-curve address (the _canonical salt_), and you should too, but do not build systems that assume one public key maps to only one address.
+- **The canonical salt is a tooling convention, not a consensus rule.** The protocol verifies a `pqsig` for _any_ salt value, so a single Falcon key pair can control up to 256 distinct addresses. Algorand tooling always uses the lowest salt that produces an off-curve address (the _canonical salt_), and you should too, but do not build systems that assume one public key maps to only one address.
 - **The off-curve check happens at the node's REST boundary, not in consensus.** When you submit a transaction, algod rejects post-quantum addresses that are on-curve as a safety measure. This check can be bypassed with the `skip-pq-address-check` query parameter on the transaction submission endpoints. Consensus itself accepts any salt.
 
 ## Keys and the Master Mnemonic
@@ -125,9 +125,9 @@ A delegated logic signature is honored for **any account whose authorized addres
 
 ## Limitations
 
-- **No post-quantum multisig.** The `msig` category remains Ed25519-only by design. Threshold-style control of a post-quantum account can be achieved with application logic instead.
+- **No post-quantum native multisig.** Multisig accounts remain Ed25519-only by design. Threshold-style control of a post-quantum account can be achieved with logic signatures instead.
 - **Consensus participation is unchanged.** This release does not alter participation keys or key registration; an account rekeyed to a post-quantum address participates in consensus the same way as before.
-- **Wallet and SDK support is rolling out.** Check your wallet's and SDK's release notes for Falcon support before building on it.
+- **Ecosystem support varies.** Not every wallet, SDK, or tool supports post-quantum signing; check your wallet's and SDK's documentation before relying on it.
 
 ## Tooling
 
