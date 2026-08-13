@@ -302,6 +302,7 @@ export default defineConfig({
                 { slug: 'concepts/accounts/funding' },
                 { slug: 'concepts/accounts/keys-signing' },
                 { slug: 'concepts/accounts/rekeying' },
+                { slug: 'concepts/accounts/post-quantum' },
                 { slug: 'concepts/accounts/multisig' },
               ],
             },
