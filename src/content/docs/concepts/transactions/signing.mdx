@@ -46,7 +46,7 @@ This transaction sends 10 Algo from `"EW64GC..."` to `"QC7XT7..."` on TestNet. T
 
 ### How to
 
-The following example will demonstrate how to sign a transaction with an account whiwh originally doesn't have a signer.
+The following example will demonstrate how to sign a transaction with an account which originally doesn't have a signer.
 
 <Tabs syncKey='lang'>
   <TabItem label='TypeScript' icon='seti:typescript'>
@@ -204,3 +204,41 @@ The following code example demonstrates how to execute a transaction signed by a
     />
   </TabItem>
 </Tabs>
+
+## Signing for a Rekeyed Account
+
+Every example above is authorized by the account named in the transaction’s [`snd`](/concepts/transactions/reference#sender) field. When an account has been [rekeyed](/concepts/accounts/rekeying), that is no longer true. The sender’s address stays the same, but the spending key permitted to authorize its transactions belongs to a different address.
+
+A signed transaction records the address that actually authorized it in its own `AuthAddr` field, which appears as [`sgnr`](/concepts/transactions/reference#authaddr) when the transaction is inspected. The signature is then verified against that address rather than against `snd`, so `sgnr` applies to every signature type described above, whether the authorizing address is a single key, a multisignature address, or a logic signature program address.
+
+Here is the single-signature transaction from the top of this page, sent from an account that has been rekeyed to `"LOWE5D..."`:
+
+```json
+{
+  "sgnr": "LOWE5DE25WOXZB643JSNWPE6MGIJNBLRPU2RBAVUNI4ZU22E3N7PHYYHSY",
+  "sig": "6FW6LpoE1YTH8Dw6oXFZrYAtvQez3/l27pJN/hRpHyDxF73o8NGqWVK9pjxFEpZrWbpuRLAbHhFsAjDV46jE0g==",
+  "txn": {
+    "amt": 10000000,
+    "fee": 1000,
+    "fv": 4694301,
+    "gen": "testnet-v1.0",
+    "gh": "SGO1GKSzyE7IEPItTxCByw9x8FmnrCDexi9/cOUJOiI=",
+    "lv": 4695301,
+    "rcv": "QC7XT7QU7X6IHNRJZBR67RBMKCAPH67PCSX4LYH4QKVSQ7DQZ32PG5HSVQ",
+    "snd": "EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4",
+    "type": "pay"
+  }
+}
+```
+
+The `"txn"` body is unchanged, so the 10 Algo still leaves `"EW64GC..."`. What differs is that the signature was produced by the spending key for `"LOWE5D..."` instead of the one for `"EW64GC..."`, and the added `"sgnr"` field names that authorizing address so validators know which key to check.
+
+:::caution
+Populate `sgnr` only when the sender has been rekeyed. When an account authorizes its own transaction, omit `sgnr` rather than setting it to the sender’s own address. As of consensus v42, the network rejects any transaction whose `sgnr` is present and equal to its `snd`. Consensus versions before v42 accepted that redundant value, so tooling that always populates `sgnr` needs to be updated to omit it for accounts that have not been rekeyed.
+:::
+
+<LinkCard
+  title='Rekeying Accounts'
+  href='/concepts/accounts/rekeying'
+  description='Learn how rekeying changes which address may authorize transactions for an account.'
+/>
