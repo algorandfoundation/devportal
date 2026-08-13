@@ -86,13 +86,12 @@ A box can be read or written on-chain by the application that owns it. Starting 
 
 Only family box access involves any notion of a family. Foreign box reads are open to every application, whoever created it.
 
-The two mechanisms grant these levels of access:
+The two mechanisms grant these levels of access, where write covers creating, updating, resizing, and deleting a box:
 
-| Operation              | Owning application | Same creator, with `AppFamilyBoxAccess` | Any application, with `AppForeignBoxReads` |
-| ---------------------- | ------------------ | --------------------------------------- | ------------------------------------------ |
-| Read                   | Yes                | Yes                                     | Yes                                        |
-| Write                  | Yes                | Yes                                     | No                                         |
-| Create, resize, delete | Yes                | Yes                                     | No                                         |
+| Operation | Owning application | Same creator, with `AppFamilyBoxAccess` | Any application, with `AppForeignBoxReads` |
+| --------- | ------------------ | --------------------------------------- | ------------------------------------------ |
+| Read      | Yes                | Yes                                     | Yes                                        |
+| Write     | Yes                | Yes                                     | No                                         |
 
 There is no parameter that grants write access to applications outside the family. `AppForeignBoxReads` grants reads and nothing else.
 
@@ -122,7 +121,7 @@ An application's _family_ is the set of applications that share the same creator
 Setting `AppFamilyBoxAccess` allows any application in the family to read and write the owning application's boxes, including creating, resizing, and deleting them.
 
 :::caution
-`AppFamilyBoxAccess` grants other applications write access to your application's stored data, lets them delete your boxes, and lets them change your application's minimum balance requirement. Because family membership is evaluated at access time, the grant also covers applications the creator has not deployed yet. Applications in a family share mutable state and must be designed, reviewed, and upgraded together: updating one family member can affect the data and balance of another. Enable it only when you specifically need to distribute logic across multiple applications, such as when working around the program size limit.
+`AppFamilyBoxAccess` grants other applications created by the same address write access to the application's box data, lets them resize or delete those boxes, and lets them change the application's minimum balance requirement, as a result. Because family membership is evaluated at access time, the grant also covers applications that the creator has not deployed yet. Applications in a family share mutable box data and must be designed, reviewed, and upgraded together: updating one family member can affect the box data and account balance of another. Enable it only when you specifically need to distribute logic across multiple applications, such as when working around the program size limit.
 :::
 
 ### Re-entrancy in family box access
