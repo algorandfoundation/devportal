@@ -93,6 +93,8 @@ The premium applies whenever a Falcon signature authorizes the transaction: both
 
 Existing Ed25519 accounts do not need to move funds to become quantum-resistant. **Rekeying is the migration path**: generate a post-quantum account, then send a rekey transaction that sets your existing account's authorized address to the new post-quantum address. Your public address stays the same; from that point on, only the Falcon key can authorize its transactions.
 
+Note that a rekey is part of the account's ledger state. If the account is ever closed out, its ledger record, including the authorized address, is deleted; funding the same address again recreates the account under the control of its original Ed25519 key.
+
 Migration is a forward-looking capability rather than a step to take today. No quantum computer capable of threatening Ed25519 is known to exist, and after rekeying, **every** transaction from the account must be Falcon-signed. Wallets, dApps, and tooling may not support post-quantum signing yet, or may assume the 1,000 µAlgo minimum fee rather than the 3,000 µAlgo a Falcon signature requires, so a migrated account can find itself unable to interact with parts of the ecosystem. The protocol support exists now so that the path is proven and ready before it is needed. For most accounts, the right time to rekey is when the quantum threat becomes credible and their tooling supports it.
 
 <LinkCard
