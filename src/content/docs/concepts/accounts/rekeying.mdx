@@ -40,7 +40,6 @@ A signed transaction carries its own, separate authorization field, `AuthAddr`, 
 
 Populate `sgnr` only when the sender has been rekeyed. When an account authorizes its own transaction, omit `sgnr` entirely rather than setting it to the sender’s own address. As of consensus v42, the network rejects any transaction whose `sgnr` is present and equal to its `snd`. Consensus versions before v42 accepted that redundant value, so tooling that always populates `sgnr` needs to be updated to omit it for accounts that have not been rekeyed.
 
-
 Let's consider a scenario where a single-key account with address `A` rekeys to a different single-key account with address `B`. This requires two single key accounts at time t0. The result from time t1 is that transactions for address `A` must be authorized by address `B`.
 
 <Figure src={rekeySingleSingle} alt='Figure: Rekeying to a Single Address' />
