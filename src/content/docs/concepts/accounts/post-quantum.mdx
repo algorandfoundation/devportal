@@ -17,7 +17,7 @@ Post-quantum signatures are part of the **v42 consensus upgrade**, shipped in [a
 
 ## Why Post-Quantum Signatures
 
-Every existing key-based Algorand account is controlled by an Ed25519 key pair; smart-contract and logic-signature accounts are controlled by code rather than keys. Ed25519 is an elliptic-curve scheme, and elliptic-curve cryptography is breakable by a sufficiently large quantum computer running Shor's algorithm. No such computer is known to exist today, but assets secured on a blockchain need to remain secure for decades, and an attacker can record public keys now and attack them later.
+Every Algorand account that is controlled by a key, rather than by smart-contract or logic-signature code, uses an Ed25519 key pair. Ed25519 is an elliptic-curve scheme, and a sufficiently large quantum computer running Shor's algorithm could break it. No such computer is known to exist today, but assets secured on a blockchain need to remain secure for decades, and an attacker can record public keys now and attack them later.
 
 Falcon-1024 is based on lattice problems that are believed to resist quantum attack. Falcon was selected by the National Institute of Standards and Technology (NIST) for standardization in 2022, and a derived scheme, FN-DSA, is being standardized in FIPS 206, which is in draft at the time of writing. Algorand uses a deterministic variant of Falcon, which differs from the draft FN-DSA. By supporting it natively in the protocol, Algorand lets any account holder move to quantum-resistant security without waiting for a network-wide migration.
 
