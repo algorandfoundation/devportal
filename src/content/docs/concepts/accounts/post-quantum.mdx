@@ -7,7 +7,7 @@ sidebar:
 
 import { LinkCard } from '@astrojs/starlight/components';
 
-Algorand supports **post-quantum accounts** secured by **Falcon-1024** signatures, a lattice-based signature scheme designed to resist attacks by quantum computers. Post-quantum accounts work alongside existing Ed25519 accounts. They hold Algos and assets, send transactions, and interact with applications like any other account, but their transactions are authorized by a quantum-resistant signature instead of an elliptic-curve one.
+Algorand supports **post-quantum accounts** secured by **Falcon-1024** signatures, a lattice-based signature scheme designed to resist attacks from quantum computers. Post-quantum accounts work alongside existing Ed25519 accounts. They hold Algos and assets, send transactions, and interact with applications like any other account, but their transactions are authorized by a quantum-resistant signature instead of an elliptic-curve one.
 
 This page explains how post-quantum accounts work at the protocol level: the signature envelope, address derivation, key generation, fees, and how existing accounts can migrate.
 
@@ -17,7 +17,7 @@ Post-quantum signatures are part of the **v42 consensus upgrade**, shipped in [a
 
 ## Why Post-Quantum Signatures
 
-Every existing Algorand account is controlled by an Ed25519 key pair. Ed25519 is an elliptic-curve scheme, and elliptic-curve cryptography is breakable by a sufficiently large quantum computer running Shor's algorithm. No such computer is known to exist today, but assets secured on a blockchain need to remain secure for decades, and an attacker can record public keys now and attack them later.
+Every existing key-based Algorand account is controlled by an Ed25519 key pair. (Smart-contract and logic-signature accounts are controlled by code rather than keys.) Ed25519 is an elliptic-curve scheme, and elliptic-curve cryptography is breakable by a sufficiently large quantum computer running Shor's algorithm. No such computer is known to exist today, but assets secured on a blockchain need to remain secure for decades, and an attacker can record public keys now and attack them later.
 
 Falcon-1024 is based on lattice problems that are believed to resist quantum attack. Falcon was selected by the National Institute of Standards and Technology (NIST) for standardization in 2022 and is being standardized as FN-DSA in FIPS 206, which is in draft at the time of writing. By supporting it natively in the protocol, Algorand lets any account holder move to quantum-resistant security without waiting for a network-wide migration.
 
