@@ -33,6 +33,14 @@ The balance record of every account includes the `auth-addr` field, which, when 
 
 A `standard` account uses its private spending key to authorize from its public address. A `rekeyed` account defines the authorized address that references a distinct `foreign` address and thus requires the private spending key(s) thereof to authorize future transactions.
 
+**There are two different AuthAddr fields**
+The `auth-addr` described above belongs to the account’s balance record, and `goal account dump` displays it as `spend`. The ledger is what writes it: a confirmed `rekey-to` transaction sets or clears it, and closing the account removes it along with the rest of the record.
+
+A signed transaction carries its own, separate authorization field, `AuthAddr`, encoded as [`sgnr`](/concepts/transactions/reference#authaddr). It names the address whose spending key authorized that one transaction, and the signer sets it rather than the ledger.
+
+Populate `sgnr` only when the sender has been rekeyed. When an account authorizes its own transaction, omit `sgnr` entirely rather than setting it to the sender’s own address. As of consensus v42, the network rejects any transaction whose `sgnr` is present and equal to its `snd`. Consensus versions before v42 accepted that redundant value, so tooling that always populates `sgnr` needs to be updated to omit it for accounts that have not been rekeyed.
+
+
 Let's consider a scenario where a single-key account with address `A` rekeys to a different single-key account with address `B`. This requires two single key accounts at time t0. The result from time t1 is that transactions for address `A` must be authorized by address `B`.
 
 <Figure src={rekeySingleSingle} alt='Figure: Rekeying to a Single Address' />
