@@ -70,10 +70,6 @@ seed = SHA512-256("PQK" || scheme || entropy)
 
 Because the scheme identifier is part of the preimage, the **same 25-word mnemonic yields an independent key for each post-quantum scheme**: a Falcon-1024 key today, and independent keys for any future scheme. The mnemonic is therefore a _cross-scheme master secret_: one set of words, independent keys per scheme.
 
-:::caution
-The master mnemonic is displayed **once, at generation time, and is not stored**. Keyfiles store only the scheme-derived key. If you want the ability to derive keys for future schemes from the same secret, you must record the mnemonic when it is shown. Losing it does not lose the account, because the stored Falcon key still signs, but it forecloses future derivations.
-:::
-
 Falcon private keys and signatures are substantially larger than their Ed25519 counterparts (a Falcon-1024 signature is roughly 1.2 KB and the public key about 1.8 KB, versus 64 and 32 bytes), which is why post-quantum transactions carry a fee premium.
 
 ## Fees
@@ -134,6 +130,10 @@ A delegated logic signature is honored for **any account whose authorized addres
 ## Tooling
 
 The `algokey` command-line tool manages post-quantum keys with the `algokey pq` command family: `generate`, `info`, `import`, `sign`, `sign-program`, and `check-address`. It always uses the canonical salt.
+
+:::caution
+`algokey pq generate` displays the master mnemonic **once and does not store it**; the keyfile holds only the scheme-derived Falcon key. Record the mnemonic when it is shown if you want to derive keys for future schemes from the same secret. Losing it does not lose the account, because the stored Falcon key still signs, but it forecloses future derivations.
+:::
 
 <LinkCard
   title='algokey'
