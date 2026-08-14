@@ -30,7 +30,7 @@ import mbr3 from '@images/smart-contract-mbr-1.png';
 | Smart Contracts  | Max size: 2048\*(1+ExtraProgramPages) bytes Components: ApprovalProgram + ClearStateProgram                                                |
 
 :::note
-ExtraProgramPages or Extra App Pages specifies the number of additional pages for each of the application's approval and clear state programs. An ExtraProgramPages of 1 means 2048 more total bytes, or 1024 for each program. This effectively allows the size limit to be increased from 2KB to 8KB. This parameter allows up to 3 additional pages to be requested. However, requesting additional pages will increase the minimum balance requirement for creating the application.
+ExtraProgramPages or Extra App Pages specifies the number of additional pages for each of the application's approval and clear state programs. An ExtraProgramPages of 1 means 2048 more total bytes, or 1024 for each program. This effectively allows the size limit to be increased from 2KB to 8KB. This parameter allows up to 3 additional pages to be requested. Requesting additional pages increases the minimum balance requirement of the account that requests them, by 100,000 microAlgos per page. At creation that is the creator's account. From consensus v42, an update transaction can also change the page count, and the account that sends such an update takes on the requirement for the pages in place of the account that held it before; see [Size Changes on Update](/concepts/transactions/reference#size-changes-on-update).
 :::
 
 ### Application Call Arguments
