@@ -1080,7 +1080,6 @@ Deleting a key which is already absent has no effect on the application local st
     - **Bytecode:** `0x42`
     - **Stack Input:** `-`
     - **Stack Output:** `-`
-    - **Size:** 0
     - **Availability:** v2
     - **Cost:** 1
     - **Description:** branch unconditionally to TARGET
@@ -1493,7 +1492,6 @@ Deleting a key which is already absent has no effect on the application local st
     - **Bytecode:** `0x40`
     - **Stack Input:** `uint64`
     - **Stack Output:** `-`
-    - **Size:** 0
     - **Availability:** v1
     - **Cost:** 1
     - **Description:** branch to TARGET if value A is not zero
@@ -1900,7 +1898,6 @@ At v2 it became allowed to branch to the end of the program exactly after the la
     - **Bytecode:** `0x26`
     - **Stack Input:** `-`
     - **Stack Output:** `-`
-    - **Size:** 0
     - **Availability:** v1
     - **Cost:** 1
     - **Description:** prepare block of byte-array constants for use by bytec
@@ -1928,7 +1925,6 @@ At v2 it became allowed to branch to the end of the program exactly after the la
     - **Bytecode:** `0x41`
     - **Stack Input:** `uint64`
     - **Stack Output:** `-`
-    - **Size:** 0
     - **Availability:** v2
     - **Cost:** 1
     - **Description:** branch to TARGET if value A is zero
@@ -2019,7 +2015,6 @@ At v2 it became allowed to branch to the end of the program exactly after the la
     - **Bytecode:** `0x88`
     - **Stack Input:** `-`
     - **Stack Output:** `-`
-    - **Size:** 0
     - **Availability:** v4
     - **Cost:** 1
     - **Description:** branch unconditionally to TARGET, saving the next instruction on the call stack
@@ -3418,7 +3413,6 @@ Fails if A or B is not in G.<br />A and/or B are allowed to be the point at infi
     - **Bytecode:** `0x20`
     - **Stack Input:** `-`
     - **Stack Output:** `-`
-    - **Size:** 0
     - **Availability:** v1
     - **Cost:** 1
     - **Description:** prepare block of uint64 constants for use by intc
@@ -3804,7 +3798,6 @@ Almost all smart contracts should use simpler and smaller methods (such as the [
     - **Bytecode:** `0x8e`
     - **Stack Input:** `any`
     - **Stack Output:** `-`
-    - **Size:** 0
     - **Availability:** v8
     - **Cost:** 1
     - **Description:** given match cases from A[1] to A[N], branch to the Ith label where A[I] = B. Continue to the following instruction if no matches are found.
@@ -4042,7 +4035,6 @@ Poseidon2 hashes field elements, not arbitrary byte strings; reducing external i
     - **Bytecode:** `0x80`
     - **Stack Input:** `-`
     - **Stack Output:** `[]byte`
-    - **Size:** 0
     - **Availability:** v3
     - **Cost:** 1
     - **Description:** immediate BYTES
@@ -4070,7 +4062,6 @@ Poseidon2 hashes field elements, not arbitrary byte strings; reducing external i
     - **Bytecode:** `0x82`
     - **Stack Input:** `-`
     - **Stack Output:** `-`
-    - **Size:** 0
     - **Availability:** v8
     - **Cost:** 1
     - **Description:** push sequences of immediate byte arrays to stack (first byte array being deepest)
@@ -4098,7 +4089,6 @@ Poseidon2 hashes field elements, not arbitrary byte strings; reducing external i
     - **Bytecode:** `0x81`
     - **Stack Input:** `-`
     - **Stack Output:** `uint64`
-    - **Size:** 0
     - **Availability:** v3
     - **Cost:** 1
     - **Description:** immediate UINT
@@ -4126,7 +4116,6 @@ Poseidon2 hashes field elements, not arbitrary byte strings; reducing external i
     - **Bytecode:** `0x83`
     - **Stack Input:** `-`
     - **Stack Output:** `-`
-    - **Size:** 0
     - **Availability:** v8
     - **Cost:** 1
     - **Description:** push sequence of immediate uints to stack in the order they appear (first uint being deepest)
@@ -4572,7 +4561,6 @@ Poseidon2 hashes field elements, not arbitrary byte strings; reducing external i
     - **Bytecode:** `0x8d`
     - **Stack Input:** `uint64`
     - **Stack Output:** `-`
-    - **Size:** 0
     - **Availability:** v8
     - **Cost:** 1
     - **Description:** branch to the Ath label. Continue at following instruction if index A exceeds the number of labels.
