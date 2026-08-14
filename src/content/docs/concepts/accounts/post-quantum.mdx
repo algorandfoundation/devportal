@@ -51,11 +51,11 @@ address = SHA512-256("PQA" || scheme || salt || public key)
 
 The result is encoded with a checksum into the same 58-character format as every other Algorand address. On-chain, a post-quantum address is indistinguishable from any other address; it acquires meaning only when a transaction proves ownership with a matching `pqsig`.
 
-The hashing step also means a post-quantum address cannot be decoded back to its public key. An Ed25519 address is a direct encoding of the public key, so that key is visible to any would-be attacker from the moment the account exists. A post-quantum address reveals nothing about its key until the account first spends and the public key appears in the transaction's `pqsig` envelope, a potentially useful side effect for accounts that want to keep their key hidden until first spend.
+The hash serves two purposes. First, an Ed25519 address can directly encode its 32-byte public key, but a Falcon-1024 public key is about 1.8 KB, so it must be hashed down to fit the 32-byte address format. Second, hashing with a salt maintains domain separation between signature schemes: a post-quantum address is never a valid Ed25519 public key, regardless of a scheme's key size. The next section explains why this matters.
 
 ### The Salt Byte
 
-The one-byte salt exists so that key generation can search for an address that is **not a valid point on the Ed25519 curve**. An off-curve address can never collide with, or be claimed by, any Ed25519 key pair, which cleanly separates the two account populations.
+The one-byte salt exists so that key generation can search for an address that is **not a valid point on the Ed25519 curve**. A quantum computer can recover the private key behind any Ed25519 public key, so if a post-quantum address were also a valid Ed25519 public key, a quantum attacker could compute the matching private key and spend from the account with an ordinary `sig`. Because an off-curve address can never be claimed by any Ed25519 key pair, this attack is ruled out entirely.
 
 Two subtleties are worth understanding:
 
