@@ -501,6 +501,7 @@ these results may contain leading zero bytes.
 | `sha256`                | SHA256 hash of value A, yields [32]byte                                                                                                           |
 | `keccak256`             | Keccak256 hash of value A, yields [32]byte                                                                                                        |
 | `sha512_256`            | SHA512_256 hash of value A, yields [32]byte                                                                                                       |
+| `sha512`                | SHA512 hash of value A, yields [64]byte                                                                                                           |
 | `sha3_256`              | SHA3_256 hash of value A, yields [32]byte                                                                                                         |
 | `falcon_verify`         | for (data A, compressed-format signature B, pubkey C) verify the signature of data against the pubkey => {0 or 1}                                 |
 | `ed25519verify`         | for (data A, signature B, pubkey C) verify the signature of ("ProgData" \|\| program_hash \|\| data) against the pubkey => {0 or 1}               |
