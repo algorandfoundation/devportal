@@ -214,7 +214,7 @@ A transaction from a [post-quantum account](/concepts/accounts/post-quantum) is 
 - `pk`: the post-quantum public key, which the network hashes together with `sch` and `slt` to confirm it matches the authorizing address.
 - `sig`: the signature over the transaction.
 
-Because post-quantum signatures are substantially larger than Ed25519 signatures, transactions authorized by a `pqsig` pay a higher minimum fee, currently 3,000 microAlgo (0.003 Algo). See [Transaction Fees](/concepts/transactions/fees) for details.
+Because post-quantum signatures are substantially larger than Ed25519 signatures, transactions authorized by a `pqsig` pay a higher minimum fee — the base fee plus a Falcon contribution of 2× the base fee, currently 3,000 microAlgo (0.003 Algo) in total. See [Transaction Fees](/concepts/transactions/fees) for details.
 
 :::note
 Post-quantum signing requires the v42 consensus upgrade (algod v5.0.0) to be in effect on the target network. Wallet and SDK support is rolling out; check your tooling's release notes.
