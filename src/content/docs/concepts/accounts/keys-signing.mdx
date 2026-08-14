@@ -15,7 +15,7 @@ import base64PrivateKey from '@images/account-overview-Base64-Private-Key.png';
 import pubPrivKey from '@images/account-overview-public-private-key.png';
 import pubKeyAlgorandAddr from '@images/account-Overview-Public-Key-Algorand-Address.png';
 
-Algorand uses **Ed25519 elliptic-curve signatures** to ensure high-speed, secure cryptographic operations. Every account in Algorand is built upon a **public/private key pair**, which plays a crucial role in signing and verifying transactions. To simplify key management and enhance security, Algorand provides various tools and transformations to make key handling more accessible to developers and end users.
+Algorand uses **Ed25519 elliptic-curve signatures** to ensure high-speed, secure cryptographic operations. Every account in Algorand is built upon a **public/private key pair**, which plays a crucial role in signing and verifying transactions. (Algorand also supports quantum-resistant **Falcon-1024** accounts, described in [Post-Quantum Accounts](/concepts/accounts/post-quantum); this page covers standard Ed25519 keys.) To simplify key management and enhance security, Algorand provides various tools and transformations to make key handling more accessible to developers and end users.
 
 This guide explores how public and private key pairs are generated and transformed into user-friendly formats like Algorand addresses, base64 private keys, and mnemonics. It also covers various methods for signing transactions, including direct key management through command-line tools like Algokey, programmatic signing using AlgoKit Utils in Python and TypeScript, and wallet-based signing with Pera Wallet integration.
 
