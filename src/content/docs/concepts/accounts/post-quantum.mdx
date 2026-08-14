@@ -34,7 +34,7 @@ A signed Algorand transaction carries exactly one of four signature categories:
 
 The `pqsig` field is a scheme-agnostic envelope with four parts:
 
-- `sch`: the signature scheme identifier. `f1` is Falcon-1024, the only scheme currently enabled. (`f2` is reserved for Falcon-512, which is defined but not enabled.)
+- `sch`: the signature scheme identifier. `f1` is Falcon-1024, the only scheme currently enabled. (`f5` is reserved for Falcon-512, which is defined but not enabled.)
 - `slt`: a one-byte salt used in address derivation (see below).
 - `pk`: the post-quantum public key.
 - `sig`: the signature itself.
