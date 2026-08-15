@@ -577,6 +577,7 @@ export default defineConfig({
               collapsed: true,
               items: [{ slug: 'reference/algorand-teal/opcodes' }],
             },
+            { slug: 'reference/algokey' },
             {
               label: 'REST API',
               collapsed: true,
