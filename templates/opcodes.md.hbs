@@ -7,6 +7,8 @@ import OpcodeFilters from '../../../../components/OpcodeFilters.astro';
 
 This page documents the current state of the AVM and may include AVM versions that have not yet been approved and adopted by all node operators.
 
+The **Size** field lists an opcode's total encoded length in bytes: the opcode itself plus its immediate arguments. It is omitted whenever the langspec reports a size of `0`, which happens for two kinds of opcode. The first is opcodes with variable-length immediates, such as `pushbytes` and `intcblock`, whose length truly depends on their arguments; the second is branch opcodes, such as `bnz` and `callsub`, whose targets are resolved into offsets in a later assembly pass. Opcodes that take an immediate also carry an **Immediate Parameters** note describing what each argument expects.
+
 <OpcodeFilters currentVersion="{{latestReleasedVersion}}" />
 
 {{#each opcodes}}
