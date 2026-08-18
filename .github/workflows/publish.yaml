@@ -42,6 +42,9 @@ jobs:
         run: pnpm run build
         env:
           PUBLIC_GTM_ID: ${{ secrets.PUBLIC_GTM_ID }}
+          # Authenticates the opcode freshness check (check:opcodes) that runs in
+          # prebuild, so it isn't throttled by the unauthenticated API limit.
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Publish to Cloudflare Pages
         id: deploy

@@ -1,6 +1,20 @@
 import { readFile, writeFile, mkdir } from 'node:fs/promises';
 import { dirname, resolve } from 'node:path';
+import { fileURLToPath } from 'node:url';
 import Handlebars from 'handlebars';
+
+// Shape of opcodes.json. Only the fields this script reads are typed; the rest
+// pass through to the Handlebars template untouched.
+interface OpcodeEntry {
+  Name: string;
+  [key: string]: unknown;
+}
+
+interface OpcodeData {
+  Version: number;
+  LatestReleasedVersion?: number;
+  Ops: OpcodeEntry[];
+}
 
 /* ───────── helpers ───────── */
 
@@ -15,8 +29,13 @@ Handlebars.registerHelper('valueList', (arr) => {
   return new Handlebars.SafeString(html);
 });
 
-// 0x?? bytecode
-Handlebars.registerHelper('bytecode', (n) => `0x${Number(n ?? 0).toString(16).padStart(2, '0')}`);
+// 0x?? bytecode. Some opcodes (v13+) are multi-byte and arrive as an array,
+// e.g. [212, 1] -> `0xd4 0x01`.
+Handlebars.registerHelper('bytecode', (n) => {
+  const toHex = (b: number) => `0x${Number(b).toString(16).padStart(2, '0')}`;
+  if (Array.isArray(n)) return n.map(toHex).join(' ');
+  return toHex(n ?? 0);
+});
 
 // Groups as backticked, comma-separated list
 Handlebars.registerHelper('groupList', (arr) => {
@@ -90,7 +109,7 @@ Handlebars.registerHelper('metaTag', (name, introducedVersion, groups) => {
 
 // Escape for MDX text (&, <, >, {, }) and return **Markdown** paragraphs (no <p> tags)
 Handlebars.registerHelper('mdxParagraphs', (s = '') => {
-  const mdxEscape = (str) =>
+  const mdxEscape = (str: string) =>
     String(str)
       .replace(/&/g, '&amp;')
       .replace(/</g, '&lt;')
@@ -103,9 +122,14 @@ Handlebars.registerHelper('mdxParagraphs', (s = '') => {
   return new Handlebars.SafeString(out);
 });
 
-/* ───────── main ───────── */
+/* ───────── render ───────── */
 
-async function main() {
+/**
+ * Render `opcodes.mdx` from the committed `opcodes.json` dataset.
+ * Exported so `update-opcodes.ts` can regenerate the page in-process after a
+ * fetch, and also run standalone (predev/prebuild).
+ */
+export async function render() {
   const templatePath = resolve('templates/opcodes.md.hbs');
   const dataPath = resolve('src/content/docs/reference/algorand-teal/opcodes.json');
   const outPath = 'src/content/docs/reference/algorand-teal/opcodes.mdx';
@@ -113,18 +137,30 @@ async function main() {
   const [tplSrc, dataSrc] = await Promise.all([readFile(templatePath, 'utf8'), readFile(dataPath, 'utf8')]);
 
   const template = Handlebars.compile(tplSrc, { noEscape: true });
-  const data = JSON.parse(dataSrc);
-  const opcodes = data.Ops;
-  opcodes.sort((a, b) => a.Name.localeCompare(b.Name));
+  const data = JSON.parse(dataSrc) as OpcodeData;
 
-  const page = template({ opcodes });
+  // Dataset version comes from go-algorand master; LatestReleasedVersion is the
+  // highest AVM version in the latest stable release (written by update-opcodes.ts).
+  const datasetVersion = data.Version;
+  const latestReleasedVersion = data.LatestReleasedVersion ?? datasetVersion;
+
+  const opcodes = data.Ops;
+  // Sort by UTF-16 code unit, not localeCompare: locale collation is ICU-version
+  // dependent, so a CI Node upgrade could silently reorder the entire generated
+  // file. A code-unit comparator is stable across environments.
+  opcodes.sort((a, b) => (a.Name < b.Name ? -1 : a.Name > b.Name ? 1 : 0));
+
+  const page = template({ opcodes, datasetVersion, latestReleasedVersion });
 
   await mkdir(dirname(outPath), { recursive: true });
   await writeFile(outPath, page.endsWith('\n') ? page : page + '\n', 'utf8');
   console.log('Wrote', outPath);
 }
 
-main().catch((err) => {
-  console.error('[generate-opcode-list] Failed:', err);
-  process.exit(1);
-});
+// Run only when invoked directly (not when imported by update-opcodes.ts).
+if (process.argv[1] && fileURLToPath(import.meta.url) === resolve(process.argv[1])) {
+  render().catch((err) => {
+    console.error('[generate-opcode-list] Failed:', err);
+    process.exit(1);
+  });
+}
