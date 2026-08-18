@@ -9,7 +9,7 @@ This page documents the current state of the AVM and may include AVM versions th
 
 The **Size** field lists an opcode's total encoded length in bytes: the opcode itself plus its immediate arguments. It is omitted whenever the langspec reports a size of `0`, which happens for two kinds of opcode. The first is opcodes with variable-length immediates, such as `pushbytes` and `intcblock`, whose length truly depends on their arguments; the second is branch opcodes, such as `bnz` and `callsub`, whose targets are resolved into offsets in a later assembly pass. Opcodes that take an immediate also carry an **Immediate Parameters** note describing what each argument expects.
 
-<OpcodeFilters currentVersion="13" />
+<OpcodeFilters currentVersion="12" />
 
 
 <div class="opcode-section"
@@ -386,203 +386,6 @@ The **Size** field lists an opcode's total encoded length in bytes: the opcode i
 
 
 <div class="opcode-section"
-     data-name="app_box_create"
-     data-version="v13"
-     data-groups="Box Access">
-
-    ### app_box_create
-    - **Bytecode:** `0xd4 0x01`
-    - **Stack Input:** `uint64,boxName,uint64`
-    - **Stack Output:** `bool`
-    - **Size:** 2
-    - **Availability:** v13
-    - **Cost:** 1
-    - **Description:** create a box named B, of length C, for app A. Fail if the name B is empty or C exceeds 32,768. Returns 0 if B already existed, else 1
-    - **Groups:** `Box Access`
-
-    <span class="opcode-detail-caption">Notes</span>
-    Newly created boxes are filled with 0 bytes. `app_box_create` will fail if the referenced box already exists with a different size. Otherwise, existing boxes are unchanged by `app_box_create`.
-
-
-
-</div>
-
-
-<div class="opcode-section"
-     data-name="app_box_del"
-     data-version="v13"
-     data-groups="Box Access">
-
-    ### app_box_del
-    - **Bytecode:** `0xd4 0x04`
-    - **Stack Input:** `uint64,boxName`
-    - **Stack Output:** `bool`
-    - **Size:** 2
-    - **Availability:** v13
-    - **Cost:** 1
-    - **Description:** delete box named B of app A if it exists. Return 1 if B existed, 0 otherwise
-    - **Groups:** `Box Access`
-
-
-
-
-</div>
-
-
-<div class="opcode-section"
-     data-name="app_box_extract"
-     data-version="v13"
-     data-groups="Box Access">
-
-    ### app_box_extract
-    - **Bytecode:** `0xd4 0x02`
-    - **Stack Input:** `uint64,boxName,uint64,uint64`
-    - **Stack Output:** `[]byte`
-    - **Size:** 2
-    - **Availability:** v13
-    - **Cost:** 1
-    - **Description:** read D bytes from box B of app A, starting at offset C. Fail if box B does not exist, or the byte range is outside B's size.
-    - **Groups:** `Box Access`
-
-
-
-
-</div>
-
-
-<div class="opcode-section"
-     data-name="app_box_get"
-     data-version="v13"
-     data-groups="Box Access">
-
-    ### app_box_get
-    - **Bytecode:** `0xd4 0x06`
-    - **Stack Input:** `uint64,boxName`
-    - **Stack Output:** `[]byte,bool`
-    - **Size:** 2
-    - **Availability:** v13
-    - **Cost:** 1
-    - **Description:** X is the contents of box B of app A if B exists, else ''. Y is 1 if B exists, else 0.
-    - **Groups:** `Box Access`
-
-    <span class="opcode-detail-caption">Notes</span>
-    For boxes that exceed 4,096 bytes, consider `app_box_create`, `app_box_extract`, and `app_box_replace`
-
-
-
-</div>
-
-
-<div class="opcode-section"
-     data-name="app_box_len"
-     data-version="v13"
-     data-groups="Box Access">
-
-    ### app_box_len
-    - **Bytecode:** `0xd4 0x05`
-    - **Stack Input:** `uint64,boxName`
-    - **Stack Output:** `uint64,bool`
-    - **Size:** 2
-    - **Availability:** v13
-    - **Cost:** 1
-    - **Description:** X is the length of box B of app A if B exists, else 0. Y is 1 if B exists, else 0.
-    - **Groups:** `Box Access`
-
-
-
-
-</div>
-
-
-<div class="opcode-section"
-     data-name="app_box_put"
-     data-version="v13"
-     data-groups="Box Access">
-
-    ### app_box_put
-    - **Bytecode:** `0xd4 0x07`
-    - **Stack Input:** `uint64,boxName,[]byte`
-    - **Stack Output:** `-`
-    - **Size:** 2
-    - **Availability:** v13
-    - **Cost:** 1
-    - **Description:** replaces the contents of box B of app A with byte-array C. Fails if B exists and len(C) != len(box B). Creates B if it does not exist
-    - **Groups:** `Box Access`
-
-    <span class="opcode-detail-caption">Notes</span>
-    For boxes that exceed 4,096 bytes, consider `app_box_create`, `app_box_extract`, and `app_box_replace`
-
-
-
-</div>
-
-
-<div class="opcode-section"
-     data-name="app_box_replace"
-     data-version="v13"
-     data-groups="Box Access">
-
-    ### app_box_replace
-    - **Bytecode:** `0xd4 0x03`
-    - **Stack Input:** `uint64,boxName,uint64,[]byte`
-    - **Stack Output:** `-`
-    - **Size:** 2
-    - **Availability:** v13
-    - **Cost:** 1
-    - **Description:** write byte-array D into box B of app A, starting at offset C. Fail if box B does not exist, or the byte range is outside B's size.
-    - **Groups:** `Box Access`
-
-
-
-
-</div>
-
-
-<div class="opcode-section"
-     data-name="app_box_resize"
-     data-version="v13"
-     data-groups="Box Access">
-
-    ### app_box_resize
-    - **Bytecode:** `0xd4 0x09`
-    - **Stack Input:** `uint64,boxName,uint64`
-    - **Stack Output:** `-`
-    - **Size:** 2
-    - **Availability:** v13
-    - **Cost:** 1
-    - **Description:** change the size of box named B of app A to be of length C, adding zero bytes to end or removing bytes from the end, as needed. Fail if the name B is empty, B is not an existing box, or C exceeds 32,768.
-    - **Groups:** `Box Access`
-
-
-
-
-</div>
-
-
-<div class="opcode-section"
-     data-name="app_box_splice"
-     data-version="v13"
-     data-groups="Box Access">
-
-    ### app_box_splice
-    - **Bytecode:** `0xd4 0x08`
-    - **Stack Input:** `uint64,boxName,uint64,uint64,[]byte`
-    - **Stack Output:** `-`
-    - **Size:** 2
-    - **Availability:** v13
-    - **Cost:** 1
-    - **Description:** set box B of app A to contain its previous bytes up to index C, followed by E, followed by the original bytes of B that began at index C+D.
-    - **Groups:** `Box Access`
-
-    <span class="opcode-detail-caption">Notes</span>
-    Boxes are of constant length. If D &lt; len(E), then len(E)-D bytes will be removed from the end. If D &gt; len(E), zero bytes will be appended to the end to reach the box length.
-
-
-
-</div>
-
-
-<div class="opcode-section"
      data-name="app_global_del"
      data-version="v2"
      data-groups="Application Access">
@@ -812,38 +615,7 @@ Deleting a key which is already absent has no effect on the application local st
     <span class="opcode-detail-caption">Field Reference</span>
     <table>
   <thead><tr><th>Index</th><th>Name</th><th>Type</th></tr></thead>
-  <tbody><tr><td>0</td><td>AppApprovalProgram</td><td>[]byte</td></tr><tr><td>1</td><td>AppClearStateProgram</td><td>[]byte</td></tr><tr><td>2</td><td>AppGlobalNumUint</td><td>uint64</td></tr><tr><td>3</td><td>AppGlobalNumByteSlice</td><td>uint64</td></tr><tr><td>4</td><td>AppLocalNumUint</td><td>uint64</td></tr><tr><td>5</td><td>AppLocalNumByteSlice</td><td>uint64</td></tr><tr><td>6</td><td>AppExtraProgramPages</td><td>uint64</td></tr><tr><td>7</td><td>AppCreator</td><td>address</td></tr><tr><td>8</td><td>AppAddress</td><td>address</td></tr><tr><td>9</td><td>AppVersion</td><td>uint64</td></tr><tr><td>10</td><td>AppSizeSponsor</td><td>address</td></tr><tr><td>11</td><td>AppForeignBoxReads</td><td>bool</td></tr><tr><td>12</td><td>AppFamilyBoxAccess</td><td>bool</td></tr></tbody>
-</table>
-
-    <span class="opcode-detail-caption">Immediate Parameters</span>
-    <table>
-  <thead><tr><th>Name</th><th>Encoding</th><th>Description</th></tr></thead>
-  <tbody><tr><td>F</td><td>uint8</td><td>app params field index</td></tr></tbody>
-</table>
-
-</div>
-
-
-<div class="opcode-section"
-     data-name="app_params_set"
-     data-version="v13"
-     data-groups="Application Access">
-
-    ### app_params_set
-    - **Bytecode:** `0x76`
-    - **Stack Input:** `uint64`
-    - **Stack Output:** `-`
-    - **Size:** 2
-    - **Availability:** v13
-    - **Cost:** 1
-    - **Description:** set field F of the current app to A
-    - **Groups:** `Application Access`
-
-
-    <span class="opcode-detail-caption">Field Reference</span>
-    <table>
-  <thead><tr><th>Index</th><th>Name</th><th>Type</th></tr></thead>
-  <tbody><tr><td>0</td><td>AppForeignBoxReads</td><td>bool</td></tr><tr><td>1</td><td>AppFamilyBoxAccess</td><td>bool</td></tr></tbody>
+  <tbody><tr><td>0</td><td>AppApprovalProgram</td><td>[]byte</td></tr><tr><td>1</td><td>AppClearStateProgram</td><td>[]byte</td></tr><tr><td>2</td><td>AppGlobalNumUint</td><td>uint64</td></tr><tr><td>3</td><td>AppGlobalNumByteSlice</td><td>uint64</td></tr><tr><td>4</td><td>AppLocalNumUint</td><td>uint64</td></tr><tr><td>5</td><td>AppLocalNumByteSlice</td><td>uint64</td></tr><tr><td>6</td><td>AppExtraProgramPages</td><td>uint64</td></tr><tr><td>7</td><td>AppCreator</td><td>address</td></tr><tr><td>8</td><td>AppAddress</td><td>address</td></tr><tr><td>9</td><td>AppVersion</td><td>uint64</td></tr></tbody>
 </table>
 
     <span class="opcode-detail-caption">Immediate Parameters</span>
@@ -1082,6 +854,7 @@ Deleting a key which is already absent has no effect on the application local st
     - **Bytecode:** `0x42`
     - **Stack Input:** `-`
     - **Stack Output:** `-`
+    - **Size:** 3
     - **Availability:** v2
     - **Cost:** 1
     - **Description:** branch unconditionally to TARGET
@@ -1473,7 +1246,7 @@ Deleting a key which is already absent has no effect on the application local st
     <span class="opcode-detail-caption">Field Reference</span>
     <table>
   <thead><tr><th>Index</th><th>Name</th><th>Type</th></tr></thead>
-  <tbody><tr><td>0</td><td>BlkSeed</td><td>[32]byte</td></tr><tr><td>1</td><td>BlkTimestamp</td><td>uint64</td></tr><tr><td>2</td><td>BlkProposer</td><td>address</td></tr><tr><td>3</td><td>BlkFeesCollected</td><td>uint64</td></tr><tr><td>4</td><td>BlkBonus</td><td>uint64</td></tr><tr><td>5</td><td>BlkBranch</td><td>[32]byte</td></tr><tr><td>6</td><td>BlkFeeSink</td><td>address</td></tr><tr><td>7</td><td>BlkProtocol</td><td>[]byte</td></tr><tr><td>8</td><td>BlkTxnCounter</td><td>uint64</td></tr><tr><td>9</td><td>BlkProposerPayout</td><td>uint64</td></tr><tr><td>10</td><td>BlkBranch512</td><td>[64]byte</td></tr><tr><td>11</td><td>BlkSha512_256TxnCommitment</td><td>[32]byte</td></tr><tr><td>12</td><td>BlkSha256TxnCommitment</td><td>[32]byte</td></tr><tr><td>13</td><td>BlkSha512TxnCommitment</td><td>[64]byte</td></tr></tbody>
+  <tbody><tr><td>0</td><td>BlkSeed</td><td>[32]byte</td></tr><tr><td>1</td><td>BlkTimestamp</td><td>uint64</td></tr><tr><td>2</td><td>BlkProposer</td><td>address</td></tr><tr><td>3</td><td>BlkFeesCollected</td><td>uint64</td></tr><tr><td>4</td><td>BlkBonus</td><td>uint64</td></tr><tr><td>5</td><td>BlkBranch</td><td>[32]byte</td></tr><tr><td>6</td><td>BlkFeeSink</td><td>address</td></tr><tr><td>7</td><td>BlkProtocol</td><td>[]byte</td></tr><tr><td>8</td><td>BlkTxnCounter</td><td>uint64</td></tr><tr><td>9</td><td>BlkProposerPayout</td><td>uint64</td></tr></tbody>
 </table>
 
     <span class="opcode-detail-caption">Immediate Parameters</span>
@@ -1494,6 +1267,7 @@ Deleting a key which is already absent has no effect on the application local st
     - **Bytecode:** `0x40`
     - **Stack Input:** `uint64`
     - **Stack Output:** `-`
+    - **Size:** 3
     - **Availability:** v1
     - **Cost:** 1
     - **Description:** branch to TARGET if value A is not zero
@@ -1927,6 +1701,7 @@ At v2 it became allowed to branch to the end of the program exactly after the la
     - **Bytecode:** `0x41`
     - **Stack Input:** `uint64`
     - **Stack Output:** `-`
+    - **Size:** 3
     - **Availability:** v2
     - **Cost:** 1
     - **Description:** branch to TARGET if value A is zero
@@ -2017,6 +1792,7 @@ At v2 it became allowed to branch to the end of the program exactly after the la
     - **Bytecode:** `0x88`
     - **Stack Input:** `-`
     - **Stack Output:** `-`
+    - **Size:** 3
     - **Availability:** v4
     - **Cost:** 1
     - **Description:** branch unconditionally to TARGET, saving the next instruction on the call stack
@@ -2246,11 +2022,6 @@ The point at infinity is encoded as `(X,Y) = (0,0)`.<br />Groups G1 and G2 are d
 
 Fails if A or B is not in G.<br />A and/or B are allowed to be the point at infinity.<br />Does _not_ check if A and B are in the main prime-order subgroup.
 
-    <span class="opcode-detail-caption">Field Reference</span>
-    <table>
-  <thead><tr><th>Index</th><th>Name</th><th>Type</th></tr></thead>
-  <tbody><tr><td>0</td><td>BN254g1</td><td>-</td></tr><tr><td>1</td><td>BN254g2</td><td>-</td></tr><tr><td>2</td><td>BLS12_381g1</td><td>-</td></tr><tr><td>3</td><td>BLS12_381g2</td><td>-</td></tr></tbody>
-</table>
 
     <span class="opcode-detail-caption">Immediate Parameters</span>
     <table>
@@ -2279,11 +2050,6 @@ Fails if A or B is not in G.<br />A and/or B are allowed to be the point at infi
     <span class="opcode-detail-caption">Notes</span>
     BN254 points are mapped by the SVDW map. BLS12-381 points are mapped by the SSWU map.<br />G1 element inputs are base field elements and G2 element inputs are quadratic field elements, with nearly the same encoding rules (for field elements) as defined in `ec_add`. There is one difference of encoding rule: G1 element inputs do not need to be 0-padded if they fit in less than 32 bytes for BN254 and less than 48 bytes for BLS12-381. (As usual, the empty byte array represents 0.) G2 elements inputs need to be always have the required size.
 
-    <span class="opcode-detail-caption">Field Reference</span>
-    <table>
-  <thead><tr><th>Index</th><th>Name</th><th>Type</th></tr></thead>
-  <tbody><tr><td>0</td><td>BN254g1</td><td>-</td></tr><tr><td>1</td><td>BN254g2</td><td>-</td></tr><tr><td>2</td><td>BLS12_381g1</td><td>-</td></tr><tr><td>3</td><td>BLS12_381g2</td><td>-</td></tr></tbody>
-</table>
 
     <span class="opcode-detail-caption">Immediate Parameters</span>
     <table>
@@ -2312,11 +2078,6 @@ Fails if A or B is not in G.<br />A and/or B are allowed to be the point at infi
     <span class="opcode-detail-caption">Notes</span>
     A is a list of concatenated points, encoded and checked as described in `ec_add`. B is a list of concatenated scalars which, unlike ec_scalar_mul, must all be exactly 32 bytes long.<br />The name `ec_multi_scalar_mul` was chosen to reflect common usage, but a more consistent name would be `ec_multi_scalar_mul`. AVM values are limited to 4096 bytes, so `ec_multi_scalar_mul` is limited by the size of the points in the group being operated upon.
 
-    <span class="opcode-detail-caption">Field Reference</span>
-    <table>
-  <thead><tr><th>Index</th><th>Name</th><th>Type</th></tr></thead>
-  <tbody><tr><td>0</td><td>BN254g1</td><td>-</td></tr><tr><td>1</td><td>BN254g2</td><td>-</td></tr><tr><td>2</td><td>BLS12_381g1</td><td>-</td></tr><tr><td>3</td><td>BLS12_381g2</td><td>-</td></tr></tbody>
-</table>
 
     <span class="opcode-detail-caption">Immediate Parameters</span>
     <table>
@@ -2345,11 +2106,6 @@ Fails if A or B is not in G.<br />A and/or B are allowed to be the point at infi
     <span class="opcode-detail-caption">Notes</span>
     A and B are concatenated points, encoded and checked as described in `ec_add`. A contains points of the group G, B contains points of the associated group (G2 if G is G1, and vice versa). Fails if A and B have a different number of points, or if any point is not in its described group or outside the main prime-order subgroup - a stronger condition than other opcodes. AVM values are limited to 4096 bytes, so `ec_pairing_check` is limited by the size of the points in the groups being operated upon.
 
-    <span class="opcode-detail-caption">Field Reference</span>
-    <table>
-  <thead><tr><th>Index</th><th>Name</th><th>Type</th></tr></thead>
-  <tbody><tr><td>0</td><td>BN254g1</td><td>-</td></tr><tr><td>1</td><td>BN254g2</td><td>-</td></tr><tr><td>2</td><td>BLS12_381g1</td><td>-</td></tr><tr><td>3</td><td>BLS12_381g2</td><td>-</td></tr></tbody>
-</table>
 
     <span class="opcode-detail-caption">Immediate Parameters</span>
     <table>
@@ -2378,11 +2134,6 @@ Fails if A or B is not in G.<br />A and/or B are allowed to be the point at infi
     <span class="opcode-detail-caption">Notes</span>
     A is a curve point encoded and checked as described in `ec_add`. Scalar B is interpreted as a big-endian unsigned integer. Fails if B exceeds 32 bytes.
 
-    <span class="opcode-detail-caption">Field Reference</span>
-    <table>
-  <thead><tr><th>Index</th><th>Name</th><th>Type</th></tr></thead>
-  <tbody><tr><td>0</td><td>BN254g1</td><td>-</td></tr><tr><td>1</td><td>BN254g2</td><td>-</td></tr><tr><td>2</td><td>BLS12_381g1</td><td>-</td></tr><tr><td>3</td><td>BLS12_381g2</td><td>-</td></tr></tbody>
-</table>
 
     <span class="opcode-detail-caption">Immediate Parameters</span>
     <table>
@@ -2409,11 +2160,6 @@ Fails if A or B is not in G.<br />A and/or B are allowed to be the point at infi
     - **Groups:** `Cryptography`
 
 
-    <span class="opcode-detail-caption">Field Reference</span>
-    <table>
-  <thead><tr><th>Index</th><th>Name</th><th>Type</th></tr></thead>
-  <tbody><tr><td>0</td><td>BN254g1</td><td>-</td></tr><tr><td>1</td><td>BN254g2</td><td>-</td></tr><tr><td>2</td><td>BLS12_381g1</td><td>-</td></tr><tr><td>3</td><td>BLS12_381g2</td><td>-</td></tr></tbody>
-</table>
 
     <span class="opcode-detail-caption">Immediate Parameters</span>
     <table>
@@ -2747,16 +2493,14 @@ Fails if A or B is not in G.<br />A and/or B are allowed to be the point at infi
 
     ### falcon_verify
     - **Bytecode:** `0x85`
-    - **Stack Input:** `[]byte,[]byte,[1793]byte`
+    - **Stack Input:** `[]byte,[1232]byte,[1793]byte`
     - **Stack Output:** `bool`
     - **Size:** 1
     - **Availability:** v12
     - **Cost:** 1700
-    - **Description:** for (data A, deterministic FALCON-1024 compressed-format signature B, pubkey C) verify the signature of data against the pubkey =&gt; &#123;0 or 1&#125;
+    - **Description:** for (data A, compressed-format signature B, pubkey C) verify the signature of data against the pubkey =&gt; &#123;0 or 1&#125;
     - **Groups:** `Cryptography`
 
-    <span class="opcode-detail-caption">Notes</span>
-    Signature B is variable-length, with maximum size 1423 bytes.
 
 
 
@@ -3798,7 +3542,7 @@ Almost all smart contracts should use simpler and smaller methods (such as the [
 
     ### match
     - **Bytecode:** `0x8e`
-    - **Stack Input:** `any`
+    - **Stack Input:** `-`
     - **Stack Output:** `-`
     - **Availability:** v8
     - **Cost:** 1
@@ -3834,15 +3578,10 @@ Almost all smart contracts should use simpler and smaller methods (such as the [
     - **Groups:** `Cryptography`
 
     <span class="opcode-detail-caption">Notes</span>
-    A is a non-empty list of concatenated 32 byte big-endian unsigned integer scalars.  Fail if A's length is not a multiple of 32 or any element is greater than or equal to the scalar field modulus.
+    A is a list of concatenated 32 byte big-endian unsigned integer scalars.  Fail if A's length is not a multiple of 32 or any element exceeds the curve modulus.
 
-MiMC hashes field elements, not arbitrary byte strings; reducing external inputs modulo the scalar field modulus makes congruent inputs hash identically. MiMC is thus not a general purpose hash function, but meant to be used in zero knowledge applications to match a zk-circuit implementation.
+The MiMC hash function has known collisions since any input which is a multiple of the elliptic curve modulus will hash to the same value. MiMC is thus not a general purpose hash function, but meant to be used in zero knowledge applications to match a zk-circuit implementation.
 
-    <span class="opcode-detail-caption">Field Reference</span>
-    <table>
-  <thead><tr><th>Index</th><th>Name</th><th>Type</th></tr></thead>
-  <tbody><tr><td>0</td><td>BN254Mp110</td><td>-</td></tr><tr><td>1</td><td>BLS12_381Mp111</td><td>-</td></tr></tbody>
-</table>
 
     <span class="opcode-detail-caption">Immediate Parameters</span>
     <table>
@@ -3960,41 +3699,6 @@ MiMC hashes field elements, not arbitrary byte strings; reducing external inputs
     <table>
   <thead><tr><th>Name</th><th>Encoding</th><th>Description</th></tr></thead>
   <tbody><tr><td>N</td><td>uint8</td><td>stack depth</td></tr></tbody>
-</table>
-
-</div>
-
-
-<div class="opcode-section"
-     data-name="poseidon2"
-     data-version="v13"
-     data-groups="Cryptography">
-
-    ### poseidon2
-    - **Bytecode:** `0xe7`
-    - **Stack Input:** `[]byte`
-    - **Stack Output:** `[32]byte`
-    - **Size:** 2
-    - **Availability:** v13
-    - **Cost:** BN254t2=7 + 350 per 32 bytes of A; BLS12_381t2=7 + 350 per 32 bytes of A
-    - **Description:** Poseidon2 hash of scalars A, using curve and parameters specified by configuration C
-    - **Groups:** `Cryptography`
-
-    <span class="opcode-detail-caption">Notes</span>
-    A is a non-empty list of concatenated 32 byte big-endian unsigned integer scalars. Fail if A's length is not a multiple of 32 or any element is greater than or equal to the scalar field modulus.
-
-Poseidon2 hashes field elements, not arbitrary byte strings; reducing external inputs modulo the scalar field modulus makes congruent inputs hash identically. Poseidon2 is thus not a general purpose hash function, but meant to be used in zero knowledge applications to match a zk-circuit implementation.
-
-    <span class="opcode-detail-caption">Field Reference</span>
-    <table>
-  <thead><tr><th>Index</th><th>Name</th><th>Type</th></tr></thead>
-  <tbody><tr><td>0</td><td>BN254t2</td><td>-</td></tr><tr><td>1</td><td>BLS12_381t2</td><td>-</td></tr></tbody>
-</table>
-
-    <span class="opcode-detail-caption">Immediate Parameters</span>
-    <table>
-  <thead><tr><th>Name</th><th>Encoding</th><th>Description</th></tr></thead>
-  <tbody><tr><td>C</td><td>uint8</td><td>configuration index</td></tr></tbody>
 </table>
 
 </div>
@@ -4326,27 +4030,6 @@ Poseidon2 hashes field elements, not arbitrary byte strings; reducing external i
     - **Availability:** v7
     - **Cost:** 130
     - **Description:** SHA3_256 hash of value A, yields [32]byte
-    - **Groups:** `Cryptography`
-
-
-
-
-</div>
-
-
-<div class="opcode-section"
-     data-name="sha512"
-     data-version="v13"
-     data-groups="Cryptography">
-
-    ### sha512
-    - **Bytecode:** `0x87`
-    - **Stack Input:** `[]byte`
-    - **Stack Output:** `[64]byte`
-    - **Size:** 1
-    - **Availability:** v13
-    - **Cost:** 15 + 2 per 32 bytes of A
-    - **Description:** SHA512 of value A, yields [64]byte
     - **Groups:** `Cryptography`
 
 
@@ -4714,11 +4397,6 @@ Poseidon2 hashes field elements, not arbitrary byte strings; reducing external i
     - **Groups:** `Account Access`
 
 
-    <span class="opcode-detail-caption">Field Reference</span>
-    <table>
-  <thead><tr><th>Index</th><th>Name</th><th>Type</th></tr></thead>
-  <tbody><tr><td>0</td><td>VoterBalance</td><td>uint64</td></tr><tr><td>1</td><td>VoterIncentiveEligible</td><td>bool</td></tr></tbody>
-</table>
 
     <span class="opcode-detail-caption">Immediate Parameters</span>
     <table>
