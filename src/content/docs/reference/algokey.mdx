@@ -33,6 +33,8 @@ encoded as an integer and can be ignored.
 $ algokey --version
 5497558138880
 5.0.0.stable [rel/stable] (commit #da5946a1)
+go-algorand is licensed with AGPLv3.0
+source code available at https://github.com/algorand/go-algorand
 ```
 
 ## Command Overview
@@ -71,11 +73,19 @@ Standard Accounts, and cannot derive keys from an `xHD` phrase. See
 `sign`, `multisig`, and every `pq` command use `-k`. The long form `--keyfile` is accepted
 everywhere and avoids the inconsistency.
 
-**File permissions.** Private key files are written with mode `0600`. Public key files are written
-with mode `0666`.
+**File permissions.** Ed25519 and post-quantum private key files are written with mode `0600`, as
+is every transaction and logic signature `algokey` writes. Public key files — the address written
+by `--pubkeyfile` — are written with mode `0666`. Participation key databases are created by the
+database layer and follow neither convention.
+
+**Standard input and output.** A filename of `-` means standard input or standard output, but only
+on the flags that support it: every file flag of `pq sign` and `pq sign-program`, the `--keyfile`
+of `pq info`, both file flags of `multisig append-auth-addr`, and `part keyreg --outputFile`.
+Everywhere else — including `algokey sign`, plain `algokey multisig`, and the key files written by
+`generate`, `import`, `pq generate`, and `pq import` — `-` is an ordinary filename.
 
 **Exit codes.** Commands exit `0` on success and `1` on failure, writing the failure message to
-standard error.
+standard error. See [Errors](#errors) for one addition to this.
 
 ## Key Management
 
@@ -98,6 +108,8 @@ Public key: YQLS3TNWOFTEJGIDN54FABOSGHSLFJSSEIF2DBBGYXC3MP7NV3NHEZRKTY
 ### `algokey import`
 
 Recreates an Ed25519 key file from a mnemonic. Surrounding whitespace in the mnemonic is ignored.
+The mnemonic and the derived address are always printed. Because `--keyfile` is optional,
+`algokey import -m "…"` on its own is a mnemonic-to-address lookup that writes nothing.
 
 | Name             | Type   | Required | Description                                        |
 | ---------------- | ------ | -------- | -------------------------------------------------- |
@@ -126,7 +138,13 @@ contain multiple concatenated transactions; each is signed and written to the ou
 
 When the signing key does not match the transaction's sender, `algokey` sets the signed
 transaction's `AuthAddr` to the signing key's address, which is the form required for a rekeyed
-sender. When the key does match the sender, `AuthAddr` is left empty.
+sender. When the key does match the sender, `algokey` does not set `AuthAddr`.
+
+`sign` never clears an authorization field. An `AuthAddr`, `msig`, `lsig`, or `pqsig` already
+present in the input is carried through to the output unchanged and the new `sig` is added
+alongside it — unlike `pq sign --overwrite`, which clears those fields first. A transaction
+carrying two categories of signature is rejected by the network, so the output of
+`algokey multisig append-auth-addr` is not a valid input to `algokey sign`.
 
 | Name             | Type   | Required | Description                                                         |
 | ---------------- | ------ | -------- | ------------------------------------------------------------------- |
@@ -341,13 +359,13 @@ operate on a local participation key database file and require no node.
 
 Generates a participation key valid for a range of rounds. Generation can take several minutes.
 
-| Name         | Type   | Required | Description                                                                          |
-| ------------ | ------ | -------- | ------------------------------------------------------------------------------------ |
-| `--keyfile`  | string | **Yes**  | Path to write the participation key database.                                        |
-| `--first`    | uint64 | **Yes**  | First round the key is valid for.                                                    |
-| `--last`     | uint64 | **Yes**  | Last round the key is valid for. Must be greater than or equal to `--first`.         |
-| `--dilution` | uint64 | No       | Key dilution for two-level keys. Defaults to the square root of the validity window. |
-| `--parent`   | string | No       | Address of the account the key belongs to.                                           |
+| Name         | Type   | Required | Description                                                                                                       |
+| ------------ | ------ | -------- | ----------------------------------------------------------------------------------------------------------------- |
+| `--keyfile`  | string | **Yes**  | Path to write the participation key database.                                                                     |
+| `--first`    | uint64 | **Yes**  | First round the key is valid for.                                                                                 |
+| `--last`     | uint64 | **Yes**  | Last round the key is valid for. Must be greater than or equal to `--first`.                                      |
+| `--dilution` | uint64 | No       | Key dilution for two-level keys. Defaults to `1 + floor(sqrt(last - first))`, so a 1,000-round window gives `32`. |
+| `--parent`   | string | No       | Address of the account the key belongs to.                                                                        |
 
 ### `algokey part info`
 
@@ -370,39 +388,63 @@ Changes the parent account recorded in a participation key database.
 
 Builds a key registration transaction and writes it **unsigned**, ready to be signed by
 `algokey sign` or `algokey pq sign`. Genesis hashes for the supported networks are built in, so no
-node is consulted.
+node is consulted. Setting the `ALGOKEY_GENESIS_HASH` environment variable overrides the built-in
+hash and bypasses the `--network` lookup entirely. It exists for testing, and is the only
+environment variable `algokey` reads.
 
-| Name               | Type   | Required | Description                                                                                                              |
-| ------------------ | ------ | -------- | ------------------------------------------------------------------------------------------------------------------------ |
-| `--firstvalid`     | uint64 | **Yes**  | First round the transaction may be committed.                                                                            |
-| `--network`        | string | **Yes**  | Network whose genesis hash the transaction targets. One of `mainnet`, `testnet`, `betanet`, `devnet`.                    |
-| `--lastvalid`      | uint64 | No       | Last round the transaction may be committed. Defaults to `--firstvalid` plus 1000. The range may not exceed 1000 rounds. |
-| `--fee`            | uint64 | No       | Transaction fee in microAlgos. Default `1000`.                                                                           |
-| `--offline`        | bool   | No       | Builds a transaction taking the account offline. Default `false`.                                                        |
-| `--keyfile`        | string | No       | Participation key database to register. Online registrations only.                                                       |
-| `--account`        | string | No       | Address to take offline. Offline registrations only.                                                                     |
-| `--outputFile, -o` | string | No       | Path to write the transaction, or `-` for standard output.                                                               |
+| Name               | Type   | Required | Description                                                                                                                            |
+| ------------------ | ------ | -------- | -------------------------------------------------------------------------------------------------------------------------------------- |
+| `--firstvalid`     | uint64 | **Yes**  | First round the transaction may be committed. With `--keyfile`, may not be earlier than the participation key's own first valid round. |
+| `--network`        | string | **Yes**  | Network whose genesis hash the transaction targets. One of `mainnet`, `testnet`, `betanet`, `devnet`.                                  |
+| `--lastvalid`      | uint64 | No       | Last round the transaction may be committed. Defaults to `--firstvalid` plus 1000. The range may not exceed 1000 rounds.               |
+| `--fee`            | uint64 | No       | Transaction fee in microAlgos. Default `1000`, which is also an enforced minimum.                                                      |
+| `--offline`        | bool   | No       | Builds a transaction taking the account offline. Default `false`.                                                                      |
+| `--keyfile`        | string | No       | Participation key database to register. Online registrations only.                                                                     |
+| `--account`        | string | No       | Address to take offline. Offline registrations only.                                                                                   |
+| `--outputFile, -o` | string | No       | Path to write the transaction, or `-` for standard output. Defaults to `<keyfile>.tx`.                                                 |
 
 `--keyfile` and `--account` are mutually exclusive: `--keyfile` applies when bringing an account
 online, `--account` when taking one offline.
 
+When `--outputFile` is omitted the transaction is written to `<keyfile>.tx`. Because `--keyfile`
+is not permitted with `--offline`, an offline registration that omits `--outputFile` writes to a
+file named `.tx` in the working directory. An existing output file is never overwritten — the
+command fails rather than replacing it, so re-running it is not idempotent. On success the path
+written is printed to standard output.
+
 ## Errors
 
-All errors are written to standard error with exit code `1`.
+Errors raised by the commands themselves are written to standard error with exit code `1`.
+Flag-validation failures caught by the command-line parser — a missing required flag, an unknown
+flag — are also echoed to standard output.
 
-| Message                                                         | Condition                                               |
-| --------------------------------------------------------------- | ------------------------------------------------------- |
-| `Must specify one of keyfile or mnemonic`                       | `sign` or `multisig` given neither key source           |
-| `Cannot specify both keyfile and mnemonic`                      | `sign` or `multisig` given both key sources             |
-| `must specify --keyfile or --mnemonic`                          | A `pq` command given neither key source                 |
-| `cannot specify both --keyfile and --mnemonic`                  | A `pq` command given both key sources                   |
-| `Key file <path> is <n> bytes, expected a 32-byte Ed25519 seed` | Ed25519 key file is not exactly 32 bytes                |
-| `Cannot recover key seed from mnemonic`                         | Mnemonic fails checksum or word validation              |
-| `pq signature scheme not supported: "<scheme>"`                 | `--scheme` names a scheme other than `falcon-1024`/`f1` |
-| `pq key file is malformed`                                      | PQ key file fails to decode or has wrong key sizes      |
-| `transaction already has a signature`                           | `pq sign` on a signed transaction without `--overwrite` |
-| `<file> looks like TEAL source; compile it first`               | `pq sign-program` given a `.teal` filename              |
-| `program is not compiled bytecode; compile it first`            | `pq sign-program` given all-printable-ASCII input       |
-| `address <address> is not PQ compliant`                         | `pq check-address` given an on-curve address            |
-| `cannot parse address: decoded bad addr: <value>`               | `pq check-address` given a malformed address            |
-| `no transactions found in <file>`                               | `pq sign` given a file containing no transactions       |
+| Message                                                                                                                                    | Condition                                                                  |
+| ------------------------------------------------------------------------------------------------------------------------------------------ | -------------------------------------------------------------------------- |
+| `Must specify one of keyfile or mnemonic`                                                                                                  | `sign` or `multisig` given neither key source                              |
+| `Cannot specify both keyfile and mnemonic`                                                                                                 | `sign` or `multisig` given both key sources                                |
+| `must specify --keyfile or --mnemonic`                                                                                                     | A `pq` command given neither key source                                    |
+| `cannot specify both --keyfile and --mnemonic`                                                                                             | A `pq` command given both key sources                                      |
+| `Key file <path> is <n> bytes, expected a 32-byte Ed25519 seed`                                                                            | Ed25519 key file is not exactly 32 bytes                                   |
+| `Cannot recover key seed from mnemonic: <error>`                                                                                           | Ed25519 mnemonic fails checksum or word validation                         |
+| `cannot recover PQ key entropy from mnemonic: <error>`                                                                                     | A `pq` command given a mnemonic that fails validation                      |
+| `pq signature scheme not supported: "<scheme>"`                                                                                            | `--scheme` names a scheme other than `falcon-1024`/`f1`                    |
+| `pq key file is malformed: <detail>`                                                                                                       | PQ key file fails to decode or has wrong key sizes                         |
+| `pq address salt is not compliant: address <address>`                                                                                      | PQ key file whose stored salt yields an on-curve address                   |
+| `transaction already has a signature`                                                                                                      | `pq sign` on a signed transaction without `--overwrite`                    |
+| `program is empty`                                                                                                                         | `pq sign-program` given an empty program file                              |
+| `<file> looks like TEAL source; compile it first (e.g. goal clerk compile) and don't use the .teal extension`                              | `pq sign-program` given a `.teal` filename                                 |
+| `program is not compiled bytecode; compile it first (e.g. goal clerk compile) and don't use the .teal extension`                           | `pq sign-program` given all-printable-ASCII input                          |
+| `address <address> is not PQ compliant`                                                                                                    | `pq check-address` given an on-curve address                               |
+| `cannot parse address: decoded bad addr: <value>`                                                                                          | `pq check-address` given a malformed address                               |
+| `no transactions found in <file>`                                                                                                          | `pq sign` given a file containing no transactions                          |
+| `Last round <n> < first round <n>`                                                                                                         | `part generate` given `--last` below `--first`                             |
+| `the provided transaction fee (<n>) is too low, the minimum fee is 1000`                                                                   | `part keyreg` given `--fee` below `1000`                                   |
+| `must provide --keyfile when registering participation keys`                                                                               | `part keyreg` without `--offline` and without `--keyfile`                  |
+| `must provide --account when bringing an account offline`                                                                                  | `part keyreg --offline` without `--account`                                |
+| `cannot access keyfile '<path>'`                                                                                                           | `part keyreg --keyfile` naming a file that does not exist                  |
+| `outputFile '<path>' already exists`                                                                                                       | `part keyreg` whose output file is already present                         |
+| `the transaction's firstvalid round (<n>) field should be set greater than or equal to the participation key's first valid round (<n>). …` | `part keyreg --firstvalid` earlier than the key's own first valid round    |
+| `the transaction's specified validity range must be less than or equal to 1000 rounds due to security constraints. …`                      | `part keyreg` whose `--lastvalid` exceeds `--firstvalid` by more than 1000 |
+
+Messages ending in `…` are shown abbreviated; the tool prints a longer explanation. Every other
+message above is verbatim.
