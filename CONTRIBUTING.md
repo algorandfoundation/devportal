@@ -49,6 +49,8 @@ Ensure the following acceptance criteria are met before submitting a PR:
 - Ensure `pnpm run lint` passes
 - Ensure `pnpm run build` passes
 
+> **Troubleshooting:** If `pnpm run build` fails with `Cannot find module .../dist/chunks/*.mjs`, clear stale build artifacts and retry: `rm -rf dist node_modules/.vite .astro`. This is a cached-chunk issue from a previous build, not a problem with your changes.
+
 ### Publishing [TBD]
 
 Production deployment from `main-dist` branch to CloudFlare Pages. PRs can be previewed in CF Pages as well.
