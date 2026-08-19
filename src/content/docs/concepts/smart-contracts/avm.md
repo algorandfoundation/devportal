@@ -75,7 +75,7 @@ In order to maintain existing semantics for previously written
 programs, AVM code is versioned. When new opcodes are introduced, or
 behavior is changed, a new version is introduced. Programs carrying
 old versions are executed with their original semantics. In the AVM
-bytecode, the version is an incrementing integer, currently 12, and
+bytecode, the version is an incrementing integer, currently 13, and
 denoted vX throughout this document.
 
 ## Execution Modes
@@ -501,6 +501,7 @@ these results may contain leading zero bytes.
 | `sha256`                | SHA256 hash of value A, yields [32]byte                                                                                                           |
 | `keccak256`             | Keccak256 hash of value A, yields [32]byte                                                                                                        |
 | `sha512_256`            | SHA512_256 hash of value A, yields [32]byte                                                                                                       |
+| `sha512`                | SHA512 hash of value A, yields [64]byte                                                                                                           |
 | `sha3_256`              | SHA3_256 hash of value A, yields [32]byte                                                                                                         |
 | `falcon_verify`         | for (data A, compressed-format signature B, pubkey C) verify the signature of data against the pubkey => {0 or 1}                                 |
 | `ed25519verify`         | for (data A, signature B, pubkey C) verify the signature of ("ProgData" \|\| program_hash \|\| data) against the pubkey => {0 or 1}               |
@@ -516,6 +517,7 @@ these results may contain leading zero bytes.
 | `ec_subgroup_check g`   | 1 if A is in the main prime-order subgroup of G (including the point at infinity) else 0. Program fails if A is not in G at all.                  |
 | `ec_map_to g`           | maps field element A to group G                                                                                                                   |
 | `mimc c`                | MiMC hash of scalars A, using curve and parameters specified by configuration C                                                                   |
+| `poseidon2 c`           | Poseidon2 hash of scalars A, using curve and parameters specified by configuration C                                                              |
 
 ### Loading Values
 
@@ -709,18 +711,19 @@ Asset fields include `AssetHolding` and `AssetParam` fields that are used in the
 
 App fields used in the `app_params_get` opcode.
 
-| Index | Name                  | Type    | In  | Notes                                                                           |
-| ----- | --------------------- | ------- | --- | ------------------------------------------------------------------------------- |
-| 0     | AppApprovalProgram    | []byte  |     | Bytecode of Approval Program                                                    |
-| 1     | AppClearStateProgram  | []byte  |     | Bytecode of Clear State Program                                                 |
-| 2     | AppGlobalNumUint      | uint64  |     | Number of uint64 values allowed in Global State                                 |
-| 3     | AppGlobalNumByteSlice | uint64  |     | Number of byte array values allowed in Global State                             |
-| 4     | AppLocalNumUint       | uint64  |     | Number of uint64 values allowed in Local State                                  |
-| 5     | AppLocalNumByteSlice  | uint64  |     | Number of byte array values allowed in Local State                              |
-| 6     | AppExtraProgramPages  | uint64  |     | Number of Extra Program Pages of code space                                     |
-| 7     | AppCreator            | address |     | Creator address                                                                 |
-| 8     | AppAddress            | address |     | Address for which this application has authority                                |
-| 9     | AppVersion            | uint64  | v12 | Version of the app, incremented each time the approval or clear program changes |
+| Index | Name                  | Type    | In  | Notes                                                                                                   |
+| ----- | --------------------- | ------- | --- | ------------------------------------------------------------------------------------------------------- |
+| 0     | AppApprovalProgram    | []byte  |     | Bytecode of Approval Program                                                                            |
+| 1     | AppClearStateProgram  | []byte  |     | Bytecode of Clear State Program                                                                         |
+| 2     | AppGlobalNumUint      | uint64  |     | Number of uint64 values allowed in Global State                                                         |
+| 3     | AppGlobalNumByteSlice | uint64  |     | Number of byte array values allowed in Global State                                                     |
+| 4     | AppLocalNumUint       | uint64  |     | Number of uint64 values allowed in Local State                                                          |
+| 5     | AppLocalNumByteSlice  | uint64  |     | Number of byte array values allowed in Local State                                                      |
+| 6     | AppExtraProgramPages  | uint64  |     | Number of Extra Program Pages of code space                                                             |
+| 7     | AppCreator            | address |     | Creator address                                                                                         |
+| 8     | AppAddress            | address |     | Address for which this application has authority                                                        |
+| 9     | AppVersion            | uint64  | v12 | Version of the app, incremented each time the approval or clear program changes                         |
+| 10    | AppSizeSponsor        | address | v13 | If non-zero, this account is responsible for the app's extra pages and global state balance requirement |
 
 **Account Fields**
 

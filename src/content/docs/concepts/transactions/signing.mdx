@@ -11,7 +11,7 @@ This section explains how to authorize transactions on the Algorand Network. Tra
 
 Before a transaction is sent to the network, it must first be authorized by the sender.
 
-There are different transactions signatures to be described in the following sections:
+A signed transaction carries exactly one signature category: a single signature (`sig`), a multisignature (`msig`), a [logic signature](/concepts/smart-contracts/logic-sigs) (`lsig`), or a [post-quantum signature](/concepts/accounts/post-quantum) (`pqsig`). Logic signatures are covered on their own page; the following sections describe the other three:
 
 ## Single Signatures
 
@@ -241,4 +241,25 @@ Populate `sgnr` only when the sender has been rekeyed. When an account authorize
   title='Rekeying Accounts'
   href='/concepts/accounts/rekeying'
   description='Learn how rekeying changes which address may authorize transactions for an account.'
+/>
+
+## Post-Quantum Signatures
+
+A transaction from a [post-quantum account](/concepts/accounts/post-quantum) is authorized by a `pqsig`, a scheme-agnostic envelope carried in place of the `sig`, `msig`, or `lsig` field. The envelope contains four parts:
+
+- `sch`: the signature scheme identifier; `f1` is Falcon-1024, the only scheme currently enabled.
+- `slt`: the one-byte salt used to derive the account's address.
+- `pk`: the post-quantum public key, which the network hashes together with `sch` and `slt` to confirm it matches the authorizing address.
+- `sig`: the signature over the transaction.
+
+Because post-quantum signatures are substantially larger than Ed25519 signatures, transactions authorized by a `pqsig` pay a higher minimum fee, currently 3,000 microAlgo (0.003 Algo). See [Transaction Fees](/concepts/transactions/fees) for details.
+
+:::note
+Post-quantum signing requires the v42 consensus upgrade (algod v5.0.0) to be in effect on the target network. Wallet and SDK support is rolling out; check your tooling's release notes.
+:::
+
+<LinkCard
+  title='Post-Quantum Accounts'
+  href='/concepts/accounts/post-quantum'
+  description='How Falcon-1024 accounts, addresses, keys, and fees work'
 />

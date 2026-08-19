@@ -12,7 +12,14 @@ Blockchains like Algorand are decentralized networks with finite computational r
 
 ## Minimum Fee
 
-The minimum fee for each transaction on Algorand is 1000 microAlgo or 0.001 Algo, and it is **fixed** to this amount when the network is not congested.
+The base minimum fee for each transaction on Algorand is 1,000 microAlgo (0.001 Algo), and it is **fixed** to this amount when the network is not congested.
+
+The signature scheme that authorizes a transaction can add a contribution on top of the base. [Post-quantum signatures](/concepts/accounts/post-quantum) are much larger than Ed25519 signatures, and a Falcon-1024 signature adds a contribution of 2× the base minimum fee:
+
+| Authorized by                                                       | Minimum fee                  |
+| ------------------------------------------------------------------- | ---------------------------- |
+| Ed25519 signature, multisignature, or logic signature               | 1,000 microAlgo (0.001 Algo) |
+| Falcon-1024 signature (including Falcon-delegated logic signatures) | 3,000 microAlgo (0.003 Algo) |
 
 ## Fee Calculation Formula
 

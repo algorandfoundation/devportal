@@ -1,9 +1,13 @@
 ---
 /* Client-side filters for the opcodes list */
+// currentVersion = highest AVM version in the latest live release; the matching
+// Availability option is labelled "(current)".
+const { currentVersion } = Astro.props;
 ---
 
 <div
   class='op-filters'
+  data-current-version={currentVersion ?? ''}
   style='margin:1rem 0;display:flex;gap:.75rem;align-items:end;flex-wrap:wrap'
 >
   <label style='display:grid;gap:.25rem'>
@@ -23,7 +27,11 @@
     <span style='font-weight:600'>Group</span>
     <select id='f-group'><option value=''>All</option></select>
   </label>
-  <button id='f-reset' type='button'>Reset</button>
+  <div style='align-self:end;display:flex;align-items:center;gap:.75rem'>
+    <button id='f-reset' type='button'>Reset</button>
+    <span id='f-count' aria-live='polite' style='color:var(--sl-color-gray-3)'
+    ></span>
+  </div>
 </div>
 
 <script is:inline>
@@ -37,10 +45,19 @@
     const verSel = $('#f-version');
     const grpSel = $('#f-group');
     const resetBtn = $('#f-reset');
+    const countEl = $('#f-count');
 
     // Guard: this script runs on every page, but only the opcode page
     // has these elements. Exit early on all other pages.
     if (!nameInput || !verSel || !grpSel || !resetBtn) return;
+
+    // The latest live AVM release, used to label its option "(current)".
+    const filters = $('.op-filters');
+    const currentVersion =
+      filters && filters.dataset.currentVersion
+        ? parseInt(filters.dataset.currentVersion, 10)
+        : null;
+    const verNum = v => parseInt(String(v).replace(/^v/, ''), 10);
 
     // Each opcode is wrapped in a container with data attributes
     const sections = $$('.opcode-section');
@@ -62,12 +79,28 @@
         .filter(Boolean))
         groups.add(g);
     }
+    // The default Availability filter — and the "(current)" label — track the
+    // highest opcode version at or below the latest live release. Selecting the
+    // highest released-or-earlier version (rather than an exact match on the
+    // release version) keeps the default on a released view even when the
+    // current release introduced no new opcodes. It falls back to "All" only
+    // when the release version is unknown or the dataset has no released
+    // opcodes at all. Using an actual option value (not a reconstructed
+    // `v${n}`) means assigning it to verSel.value can never silently fail open.
+    const defaultVersion = (() => {
+      if (!currentVersion) return '';
+      const releasedOrEarlier = [...versions]
+        .filter(v => verNum(v) <= currentVersion)
+        .sort((a, b) => verNum(a) - verNum(b));
+      return releasedOrEarlier.at(-1) || '';
+    })();
+
     [...versions]
-      .sort((a, b) => parseInt(a.slice(1)) - parseInt(b.slice(1)))
+      .sort((a, b) => verNum(a) - verNum(b))
       .forEach(v => {
         const o = document.createElement('option');
         o.value = v;
-        o.textContent = v;
+        o.textContent = v === defaultVersion ? `${v} (current)` : v;
         verSel.append(o);
       });
     [...groups]
@@ -79,6 +112,10 @@
         grpSel.append(o);
       });
 
+    // Reflect what's live on MainNet by default; newer (unreleased) opcodes are
+    // opt-in via the dropdown (see defaultVersion above).
+    verSel.value = defaultVersion;
+
     function previousH3(el) {
       let n = el.previousElementSibling;
       while (n && n.tagName !== 'H3') n = n.previousElementSibling;
@@ -88,11 +125,15 @@
     function applyFilters() {
       const name = nameInput.value.toLowerCase().trim();
       const v = verSel.value;
+      const selectedVer = v ? verNum(v) : null;
       const g = grpSel.value;
+      let shown = 0;
       for (const sec of sections) {
         const nameOk =
           !name || (sec.dataset.name || '').toLowerCase().includes(name);
-        const vOk = !v || sec.dataset.version === v;
+        // Cumulative: show opcodes available in the selected version or earlier.
+        const vOk =
+          selectedVer === null || verNum(sec.dataset.version) <= selectedVer;
         const gOk =
           !g ||
           (sec.dataset.groups || '')
@@ -100,6 +141,7 @@
             .map(s => s.trim())
             .includes(g);
         const show = nameOk && vOk && gOk;
+        if (show) shown++;
 
         // toggle the content container
         sec.hidden = !show;
@@ -108,6 +150,11 @@
         const h2 = previousH3(sec);
         if (h2) h2.hidden = !show;
       }
+
+      // Live count so it's clear the filters changed what's displayed.
+      if (countEl) {
+        countEl.textContent = `Showing ${shown} of ${sections.length} opcodes`;
+      }
     }
 
     nameInput.addEventListener('input', applyFilters);
@@ -115,11 +162,42 @@
     grpSel.addEventListener('change', applyFilters);
     resetBtn.addEventListener('click', () => {
       nameInput.value = '';
-      verSel.value = '';
+      verSel.value = defaultVersion;
       grpSel.value = '';
       applyFilters();
     });
 
+    // If the page is opened at an anchor for an opcode the default version
+    // filter hides (e.g. /opcodes#app_box_create for an unreleased opcode),
+    // clear the version filter so the target is visible, then scroll to it.
+    // DOM-driven (re-queries + dispatches change) so a single global listener
+    // stays valid across View Transition navigations.
+    function revealHashTarget() {
+      let id;
+      try {
+        id = decodeURIComponent(location.hash.slice(1));
+      } catch {
+        return; // malformed hash (e.g. a stray %) — nothing to reveal
+      }
+      if (!id) return;
+      const target = document.getElementById(id);
+      // The id sits on a heading nested inside .opcode-section; the filter
+      // toggles `hidden` on the section, so check the section, not the heading.
+      const section = target && target.closest('.opcode-section');
+      const sel = document.querySelector('#f-version');
+      if (section && section.hidden && sel && sel.value !== '') {
+        sel.value = '';
+        sel.dispatchEvent(new Event('change'));
+        document.getElementById(id)?.scrollIntoView();
+      }
+    }
+
     applyFilters();
+    revealHashTarget();
+
+    if (!window.__opcodeHashRevealBound) {
+      window.__opcodeHashRevealBound = true;
+      window.addEventListener('hashchange', revealHashTarget);
+    }
   });
 </script>
