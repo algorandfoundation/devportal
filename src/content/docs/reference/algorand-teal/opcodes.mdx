@@ -3771,7 +3771,7 @@ Almost all smart contracts should use simpler and smaller methods (such as the [
 <div class="opcode-section"
      data-name="log"
      data-version="v5"
-     data-groups="Block Access">
+     data-groups="Application Access">
 
     ### log
     - **Bytecode:** `0xb0`
@@ -3781,7 +3781,7 @@ Almost all smart contracts should use simpler and smaller methods (such as the [
     - **Availability:** v5
     - **Cost:** 1
     - **Description:** write A to log state of the current application
-    - **Groups:** `Block Access`
+    - **Groups:** `Application Access`
 
     <span class="opcode-detail-caption">Notes</span>
     `log` fails if called more than MaxLogCalls times in a program, or if the sum of logged bytes exceeds 1024 bytes.
@@ -4823,4 +4823,3 @@ Poseidon2 hashes field elements, not arbitrary byte strings; reducing external i
 
 
 </div>
-
