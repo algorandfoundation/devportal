@@ -1,0 +1,159 @@
+name: Update Opcodes
+
+# Manually-triggered workflow that refreshes the TEAL opcode reference from
+# go-algorand and opens a PR with the result. There is NO cron schedule:
+# opcodes change only a few times a year (with AVM upgrades), so this runs
+# on demand — typically after the local build prints the "Opcode reference is
+# out of date" warning (see `pnpm run check:opcodes`).
+#
+# Trigger it from: Actions tab → "Update Opcodes" → "Run workflow".
+on:
+  workflow_dispatch:
+    inputs:
+      ref:
+        description: "go-algorand ref to pull opcodes from (branch, tag, or SHA)."
+        required: false
+        default: "master"
+
+# Serialize runs: two dispatches would otherwise race to force-push the same
+# chore/update-opcodes branch, producing a failed run or a PR reflecting the
+# wrong run. Queue a second dispatch behind the first instead of cancelling an
+# in-flight refresh.
+concurrency:
+  group: update-opcodes
+  cancel-in-progress: false
+
+# The built-in GITHUB_TOKEN is used only for the public go-algorand release
+# lookup (read-only). Checkout and PR creation use the GitHub App token minted
+# in the first step, so the workflow token needs no write scope.
+permissions:
+  contents: read
+
+jobs:
+  update-opcodes:
+    name: Update Opcodes and Create PR
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      # Mint a short-lived installation token from the DevPortal GitHub App
+      # (BOT_ID / BOT_SK), replacing the retired IMPORT_DOCS_TOKEN PAT. Used for
+      # checkout + PR creation so the opened PR triggers the normal PR checks
+      # (deploy preview, acceptance) — the built-in GITHUB_TOKEN cannot trigger
+      # those downstream workflows.
+      - name: Generate GitHub App token
+        uses: actions/create-github-app-token@v1
+        id: app-token
+        with:
+          app-id: ${{ secrets.BOT_ID }}
+          private-key: ${{ secrets.BOT_SK }}
+
+      - name: Checkout DevPortal
+        uses: actions/checkout@v6
+        with:
+          token: ${{ steps.app-token.outputs.token }}
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: "20"
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10.6.3
+
+      - name: Get pnpm store directory
+        shell: bash
+        run: echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
+
+      - name: Setup pnpm cache
+        uses: actions/cache@v5
+        with:
+          path: ${{ env.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Update opcodes
+        id: update
+        run: |
+          echo "📥 Updating opcodes from go-algorand ref '$GO_ALGORAND_REF'..."
+          pnpm run update:opcodes
+        env:
+          GO_ALGORAND_REF: ${{ github.event.inputs.ref }}
+          # Rate-limit relief for the PUBLIC go-algorand release lookup only.
+          # Uses the built-in token (least privilege) — the PAT's scopes aren't
+          # needed here; the PAT is reserved for checkout + create-PR.
+          GITHUB_TOKEN: ${{ github.token }}
+
+      - name: Check for Changes
+        id: git-check
+        run: |
+          git add -A
+          if git diff --staged --quiet; then
+            echo "has_changes=false" >> $GITHUB_OUTPUT
+            echo "📋 Opcodes already up to date — no changes."
+          else
+            echo "has_changes=true" >> $GITHUB_OUTPUT
+            echo "📝 Opcode changes detected:"
+            git status --short
+          fi
+
+      - name: Create Pull Request
+        if: steps.git-check.outputs.has_changes == 'true'
+        uses: peter-evans/create-pull-request@v8
+        id: create-pr
+        env:
+          HUSKY: "0"
+        with:
+          token: ${{ steps.app-token.outputs.token }}
+          branch: chore/update-opcodes
+          commit-message: |
+            chore: update TEAL opcode reference
+
+            Auto-generated via the Update Opcodes workflow
+            (source ref: ${{ github.event.inputs.ref }}).
+          committer: DevPortal Documentation Bot <action@github.com>
+          delete-branch: true
+          title: "Update TEAL opcode reference"
+          body: |
+            ## ⚙️ Opcode Reference Update
+
+            Refreshed `opcodes.json` from go-algorand (`${{ github.event.inputs.ref }}`)
+            and regenerated `opcodes.mdx`.
+
+            ### Review Checklist
+            - [ ] `opcodes.json` version / released version look correct
+            - [ ] New or changed opcodes render correctly on the reference page
+            - [ ] Version filter defaults to the latest live release (unreleased opcodes hidden by default)
+            - [ ] Preview deploy renders without errors
+
+            ---
+            *Generated by the `update-opcodes.yml` workflow.*
+          labels: |
+            documentation
+            automated
+          team-reviewers: devrel
+
+      - name: Summary
+        if: always()
+        env:
+          GO_ALGORAND_REF: ${{ github.event.inputs.ref }}
+        run: |
+          if [ "${{ steps.git-check.outputs.has_changes }}" = "true" ]; then
+            echo "## Opcode Update Summary" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "- **Source ref**: \`$GO_ALGORAND_REF\`" >> $GITHUB_STEP_SUMMARY
+            echo "- **PR**: #${{ steps.create-pr.outputs.pull-request-number }} (${{ steps.create-pr.outputs.pull-request-url }})" >> $GITHUB_STEP_SUMMARY
+            echo "- **Status**: ✅ PR ${{ steps.create-pr.outputs.pull-request-operation }}" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "## Opcode Update Summary" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "- **Source ref**: \`$GO_ALGORAND_REF\`" >> $GITHUB_STEP_SUMMARY
+            echo "- **Status**: ℹ️ Already up to date — no PR needed" >> $GITHUB_STEP_SUMMARY
+          fi

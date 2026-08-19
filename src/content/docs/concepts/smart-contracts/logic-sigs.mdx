@@ -69,6 +69,10 @@ Logic signatures can also be used to delegate signature authority, which means t
 
 <Figure src={lsigsDiagram3} alt='Figure: TEAL Delegated Signature' />
 
+:::note
+[Post-quantum accounts](/concepts/accounts/post-quantum) can also delegate signature authority, but the signed payload differs from Ed25519 delegation (`"PQProgram" || authorizer address || program` rather than `"Program" || program`), so the scheme-appropriate signing path must be used, for example `algokey pq sign-program`. Transactions authorized by a Falcon-delegated logic signature pay the post-quantum minimum fee of 0.003 Algo. See [Post-Quantum Accounts](/concepts/accounts/post-quantum#delegated-logic-signatures) for details, including a caveat about delegations and rekeyed accounts.
+:::
+
 This contract can:
 
 1. CloseRemainderTo vulnerability: The code doesn't check the CloseRemainderTo field. This allows a transaction to drain the account by closing it to another address.
@@ -139,7 +143,7 @@ The following logic signature ensures the contract will cover the fee for a prio
 - **_Security Considerations_**: Logic signatures do not inherently define how frontends, particularly wallets, should consider them safe. It is recommended that only the signing of audited or otherwise trusted logic signatures be supported. The decision is made solely by the frontends as to which logic signatures they allow to be signed.
 - **_Auditability and Flexibility on Upgrading_**: Logic Signatures are harder to audit than smart contracts in most settings and less flexible than smart contracts. While some simple dApps could be based on Logic Signatures, adding any feature would become problematic, and any upgrade would most likely be impossible.
 - **_Lack of Standardized ABI_**: Unlike smart contracts, Logic Signatures do not have a standardized ABI (Application Binary Interface). Smart contracts have ARC-4.
-- **_Potential for Malicious Use_**: Most wallets do not support signing delegated logic signatures, as this operation is potentially dangerous. A malicious delegated logic signature can remain dormant for years and can allow to siphon out funds from an account much later.
+- **_Potential for Malicious Use_**: Most wallets do not support signing delegated logic signatures, as this operation is potentially dangerous. A malicious delegated logic signature can remain dormant for years and can allow to siphon out funds from an account much later. Note also that a delegation follows the authorized address: a logic signature delegated to address `B` is honored for _any_ account whose authorized address is `B`, including accounts later rekeyed to it. If a delegated program must only ever spend from one specific account, the program itself must check the sender address.
 - **_Non expiration_**: Also, logic signatures don't expire by default. It's always recommended to include an expiration block in the logic to prevent any lsig from being valid indefinitely. This helps mitigate long-term security risks.
 - **_Size and Cost Constraints_**: The standard maximum size of compiled TEAL code combined with arguments is 1000 bytes (consensus parameter LogicSigMaxSize), and the maximum cost of TEAL code is 20000. With an [additional fee](/concepts/transactions/fees#larger-transactions), the program can be up to 16,000 bytes. Arguments are never charged because they can be modified after signing, so the required fee cannot depend on them. Up to 1000 bytes of arguments are allowed per logic signature without group size pooling.
 - **_Public Nature of Code and Arguments_**: The logic signature code, the transaction fields, and the arguments of the logic signature are all public. An attacker can replay a transaction signed by a logic signature. Also, arguments of Logic Signatures are not signed by the sender account and are not part of the computation of the group ID.

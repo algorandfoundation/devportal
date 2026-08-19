@@ -91,7 +91,7 @@ There are different ways you can provide resource references when calling smart 
 
 1. **Automatic Resource Population**: Automatically input resource references in the reference(foreign) arrays with automatic resource population using the AlgoKit Utils library ([TypeScript](https://github.com/algorandfoundation/algokit-utils-ts/blob/40be39f672be19dc244b8e8fb4f5bcbc446d4f50/docs/code/modules/index.md#populateappcallresources) and Python)
    :::note
-   Automatic resource population first sends a dry-run transaction to the Algorand node to determine the necessary resources. Then it
+   Automatic resource population first sends a simulate request to the Algorand node to determine the necessary resources. Then it
    populates the reference arrays with the required resources and sends the actual transaction. Therefore, it sends two requests to algod
    for each transaction. Developers should consider the impact on their app if they require sending a large number of transactions.
    :::

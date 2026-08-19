@@ -302,6 +302,7 @@ export default defineConfig({
                 { slug: 'concepts/accounts/funding' },
                 { slug: 'concepts/accounts/keys-signing' },
                 { slug: 'concepts/accounts/rekeying' },
+                { slug: 'concepts/accounts/post-quantum' },
                 { slug: 'concepts/accounts/multisig' },
               ],
             },
@@ -576,6 +577,7 @@ export default defineConfig({
               collapsed: true,
               items: [{ slug: 'reference/algorand-teal/opcodes' }],
             },
+            { slug: 'reference/algokey' },
             {
               label: 'REST API',
               collapsed: true,

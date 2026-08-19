@@ -1,0 +1,457 @@
+---
+title: AlgoKey
+description: Command reference for algokey, the offline Algorand key utility that generates and imports keys, signs transactions and logic signatures, and manages post-quantum and participation keys without contacting a node.
+---
+
+import { LinkCard } from '@astrojs/starlight/components';
+
+`algokey` is a command-line utility for Algorand key material. It generates and imports keys,
+signs transactions and logic signatures, and manages post-quantum (PQ) and consensus participation
+keys.
+
+`algokey` operates entirely offline. It has no data directory, accepts no `--datadir` flag, reads
+no `ALGORAND_DATA` environment variable, and never opens a network connection. Every command reads
+and writes local files. A node does not need to be installed on the same machine, running, or
+synced.
+
+## Availability
+
+`algokey` is distributed with the Algorand node software and is installed alongside `goal`,
+`algod`, and `kmd`. Installing that software makes `algokey` available; starting a node is not
+required.
+
+<LinkCard
+  title='Manual Node Installation'
+  href='/nodes/installation/manual-installation'
+  description='Install the Algorand software that provides algokey'
+/>
+
+`algokey --version` (`-v`) prints the build version. The first line of its output is the version
+encoded as an integer and can be ignored.
+
+```shell showLineNumbers=false frame=none
+$ algokey --version
+5497558138880
+5.0.0.stable [rel/stable] (commit #da5946a1)
+go-algorand is licensed with AGPLv3.0
+source code available at https://github.com/algorand/go-algorand
+```
+
+## Command Overview
+
+| Command                             | Description                                                     |
+| ----------------------------------- | --------------------------------------------------------------- |
+| `algokey generate`                  | Generates an Ed25519 key                                        |
+| `algokey import`                    | Recreates an Ed25519 key file from a mnemonic                   |
+| `algokey export`                    | Recovers the mnemonic and address from an Ed25519 key file      |
+| `algokey sign`                      | Signs transactions with an Ed25519 key                          |
+| `algokey multisig`                  | Adds a multisig signature to transactions                       |
+| `algokey multisig append-auth-addr` | Adds multisig preimage fields for a rekeyed sender              |
+| `algokey pq generate`               | Generates a post-quantum key                                    |
+| `algokey pq info`                   | Prints scheme, public key, salt, and address from a PQ key file |
+| `algokey pq import`                 | Recreates a PQ key file from a mnemonic                         |
+| `algokey pq sign`                   | Signs transactions with a post-quantum key                      |
+| `algokey pq sign-program`           | Signs a compiled logic signature program with a PQ key          |
+| `algokey pq check-address`          | Reports whether an address is post-quantum compliant            |
+| `algokey part generate`             | Generates a consensus participation key                         |
+| `algokey part info`                 | Prints participation key metadata                               |
+| `algokey part reparent`             | Changes a participation key's parent account                    |
+| `algokey part keyreg`               | Builds an unsigned key registration transaction                 |
+
+## Conventions
+
+**Key sources.** Commands that sign accept a key either as a file (`--keyfile`) or as a mnemonic
+(`--mnemonic`). The two are mutually exclusive; supplying both or neither is an error.
+
+**Mnemonics are 25-word `Algo25` phrases.** Every `algokey` command that reads or prints a mnemonic
+uses the legacy `Algo25` scheme: 24 words encoding a 32-byte seed, plus a 25th checksum word.
+`algokey` does not support the 24-word hierarchical deterministic (`xHD`) scheme now preferred for
+Standard Accounts, and cannot derive keys from an `xHD` phrase. See
+[Account Overview](/concepts/accounts/overview) for the difference.
+
+**Flag shorthands are not uniform.** `generate`, `import`, and `export` use `-f` for `--keyfile`.
+`sign`, `multisig`, and every `pq` command use `-k`. The long form `--keyfile` is accepted
+everywhere and avoids the inconsistency.
+
+**File permissions.** Ed25519 and post-quantum private key files are written with mode `0600`, as
+is every transaction and logic signature `algokey` writes. Public key files — the address written
+by `--pubkeyfile` — are written with mode `0666`. Participation key databases are created by the
+database layer and follow neither convention.
+
+**Standard input and output.** A filename of `-` means standard input or standard output, but only
+on the flags that support it: every file flag of `pq sign` and `pq sign-program`, the `--keyfile`
+of `pq info`, both file flags of `multisig append-auth-addr`, and `part keyreg --outputFile`.
+Everywhere else — including `algokey sign`, plain `algokey multisig`, and the key files written by
+`generate`, `import`, `pq generate`, and `pq import` — `-` is an ordinary filename.
+
+**Exit codes.** Commands exit `0` on success and `1` on failure, writing the failure message to
+standard error. See [Errors](#errors) for one addition to this.
+
+## Key Management
+
+### `algokey generate`
+
+Generates a random Ed25519 key. Prints the mnemonic and address, and optionally writes them to
+files. Writing no files still prints both values.
+
+| Name               | Type   | Required | Description                                                     |
+| ------------------ | ------ | -------- | --------------------------------------------------------------- |
+| `--keyfile, -f`    | string | No       | Path to write the 32-byte private key seed. Omit to print only. |
+| `--pubkeyfile, -p` | string | No       | Path to write the checksummed address, followed by a newline.   |
+
+```shell showLineNumbers=false frame=none
+$ algokey generate
+Private key mnemonic: enforce increase awake [19 omitted] diagram absorb beach
+Public key: YQLS3TNWOFTEJGIDN54FABOSGHSLFJSSEIF2DBBGYXC3MP7NV3NHEZRKTY
+```
+
+### `algokey import`
+
+Recreates an Ed25519 key file from a mnemonic. Surrounding whitespace in the mnemonic is ignored.
+The mnemonic and the derived address are always printed. Because `--keyfile` is optional,
+`algokey import -m "…"` on its own is a mnemonic-to-address lookup that writes nothing.
+
+| Name             | Type   | Required | Description                                        |
+| ---------------- | ------ | -------- | -------------------------------------------------- |
+| `--mnemonic, -m` | string | **Yes**  | The 25-word mnemonic to recover the key seed from. |
+| `--keyfile, -f`  | string | No       | Path to write the recovered private key seed.      |
+
+### `algokey export`
+
+Recovers the mnemonic and address from an Ed25519 key file. This is the inverse of `import`, and
+has no post-quantum equivalent — see [Post-Quantum Keys](#post-quantum-keys).
+
+| Name               | Type   | Required | Description                             |
+| ------------------ | ------ | -------- | --------------------------------------- |
+| `--keyfile, -f`    | string | **Yes**  | Path to the private key file to export. |
+| `--pubkeyfile, -p` | string | No       | Path to write the checksummed address.  |
+
+The key file must be exactly 32 bytes. A file of any other length is rejected rather than
+truncated or padded.
+
+## Transaction Signing
+
+### `algokey sign`
+
+Signs every transaction in a file with an Ed25519 key, producing a `sig` signature. The input may
+contain multiple concatenated transactions; each is signed and written to the output in order.
+
+When the signing key does not match the transaction's sender, `algokey` sets the signed
+transaction's `AuthAddr` to the signing key's address, which is the form required for a rekeyed
+sender. When the key does match the sender, `algokey` does not set `AuthAddr`.
+
+`sign` never clears an authorization field. An `AuthAddr`, `msig`, `lsig`, or `pqsig` already
+present in the input is carried through to the output unchanged and the new `sig` is added
+alongside it — unlike `pq sign --overwrite`, which clears those fields first. A transaction
+carrying two categories of signature is rejected by the network, so the output of
+`algokey multisig append-auth-addr` is not a valid input to `algokey sign`.
+
+| Name             | Type   | Required | Description                                                         |
+| ---------------- | ------ | -------- | ------------------------------------------------------------------- |
+| `--txfile, -t`   | string | **Yes**  | Path to the input transaction file (MessagePack).                   |
+| `--outfile, -o`  | string | **Yes**  | Path to write the signed transactions.                              |
+| `--keyfile, -k`  | string | No       | Path to the private key file. Mutually exclusive with `--mnemonic`. |
+| `--mnemonic, -m` | string | No       | The 25-word mnemonic. Mutually exclusive with `--keyfile`.          |
+
+### `algokey multisig`
+
+Adds one multisig signature to every transaction in a file. The transaction must already carry a
+multisig preimage identifying the participating addresses and threshold; this command contributes a
+single subsignature and does not create the preimage.
+
+| Name             | Type   | Required | Description                                                         |
+| ---------------- | ------ | -------- | ------------------------------------------------------------------- |
+| `--txfile, -t`   | string | **Yes**  | Path to the input transaction file.                                 |
+| `--outfile, -o`  | string | **Yes**  | Path to write the signed transactions.                              |
+| `--keyfile, -k`  | string | No       | Path to the private key file. Mutually exclusive with `--mnemonic`. |
+| `--mnemonic, -m` | string | No       | The 25-word mnemonic. Mutually exclusive with `--keyfile`.          |
+
+### `algokey multisig append-auth-addr`
+
+Adds the multisig preimage and `AuthAddr` fields to a transaction sent from an account that has
+been rekeyed to a multisig account. It writes the fields only; it adds no signature. Unlike the
+other transaction commands, it processes only the **first** transaction in the input file; any
+others are dropped without an error.
+
+| Name            | Type   | Required | Description                                                                                                                       |
+| --------------- | ------ | -------- | --------------------------------------------------------------------------------------------------------------------------------- |
+| `--params, -p`  | string | **Yes**  | Threshold and addresses as one quoted string: `"<threshold> <addr1> <addr2> …"`. Requires a threshold and at least two addresses. |
+| `--txfile, -t`  | string | **Yes**  | Path to the input transaction file.                                                                                               |
+| `--outfile, -o` | string | No       | Path to write the result. If omitted, the input file is modified in place.                                                        |
+
+The derived multisig address must differ from the transaction's sender.
+
+Because only the first transaction is processed, omitting `--outfile` on a file that holds more
+than one transaction overwrites the input in place with just that first transaction and loses the
+rest silently. Pass an explicit `--outfile` whenever the input may contain more than one
+transaction.
+
+## Post-Quantum Keys
+
+These commands manage accounts secured by Falcon-1024 signatures. `algokey` generates
+post-quantum keys, signs transactions and delegated logic signatures with them, and checks address
+compliance.
+
+<LinkCard
+  title='Post-Quantum Accounts'
+  href='/concepts/accounts/post-quantum'
+  description='How Falcon-1024 accounts, addresses, and fees work'
+/>
+
+A post-quantum key file stores the derived Falcon signing keys, never the mnemonic entropy they
+came from. There is therefore **no `algokey pq export`**: the mnemonic is displayed once by
+`pq generate` and cannot be recovered from the key file afterwards.
+
+Losing the mnemonic does not lose the account, because the key file still signs for it. It does
+foreclose recreating the key with `pq import`, and because the scheme identifier is part of the
+derivation, it forecloses producing that mnemonic's key for any other post-quantum scheme.
+
+That derivation is a single domain-separated hash of the mnemonic entropy together with the scheme
+identifier, yielding one key per scheme. It is not hierarchical deterministic derivation: there is
+no key tree, no derivation path, and no relationship to the `xHD` scheme used for Standard
+Accounts.
+
+### `algokey pq generate`
+
+Generates a post-quantum key, writes the key file, and prints the mnemonic followed by the key's
+scheme, public key, address salt, and address.
+
+| Name            | Type   | Required | Description                                                                                                                                  |
+| --------------- | ------ | -------- | -------------------------------------------------------------------------------------------------------------------------------------------- |
+| `--keyfile, -k` | string | **Yes**  | Path to write the private key file.                                                                                                          |
+| `--scheme, -S`  | string | No       | Signature scheme. Accepts `falcon-1024`, matched case-insensitively, or the two-character code `f1`, matched exactly. Default `falcon-1024`. |
+
+```shell showLineNumbers=false frame=none
+$ algokey pq generate -k pq.key
+PQ private key mnemonic: bullet actor evolve [19 omitted] struggle absorb bounce
+Write these words down: they cannot be recovered from the key file.
+PQ scheme: falcon-1024
+PQ public key: CmLGYOTU2/Y0msATCoDwr5hERG9L4gy8ZeQfJLxF5FMkLALSTEwtBOEm…
+PQ address salt: 1
+PQ address: EGGRNA45S7W3FCDQOEX7H64KCECFHIBWO5MB6B724NVPFQNOFPQQLDF3RY
+```
+
+The mnemonic and public key are abbreviated above. The mnemonic is 25 words on a single line, and
+the public key is 2,392 base64 characters encoding 1,793 bytes. The key file is 4,153 bytes.
+
+The address salt is a search result rather than a fixed value. `algokey` selects the lowest salt
+that yields an address off the Ed25519 curve, so a given key may report `0`, `1`, or a higher
+value. The example above required salt `1`, meaning the salt-`0` candidate was a valid curve point.
+
+### `algokey pq info`
+
+Prints the scheme, public key, address salt, and address stored in a post-quantum key file. It
+does not print the mnemonic, which the file does not contain.
+
+| Name            | Type   | Required | Description                           |
+| --------------- | ------ | -------- | ------------------------------------- |
+| `--keyfile, -k` | string | **Yes**  | Path to the private key file to read. |
+
+### `algokey pq import`
+
+Recreates a post-quantum key file from a mnemonic. The scheme identifier is part of the key
+derivation, so the same mnemonic produces a different, independent key under each scheme, and the
+scheme supplied here must match the one used to generate the key.
+
+| Name             | Type   | Required | Description                                   |
+| ---------------- | ------ | -------- | --------------------------------------------- |
+| `--mnemonic, -m` | string | **Yes**  | The 25-word mnemonic.                         |
+| `--keyfile, -k`  | string | **Yes**  | Path to write the recovered private key file. |
+| `--scheme, -S`   | string | No       | Signature scheme. Default `falcon-1024`.      |
+
+Derivation is deterministic: importing the mnemonic from the `pq generate` example above recreates
+a byte-identical key file.
+
+```shell showLineNumbers=false frame=none
+$ algokey pq import -m "bullet actor evolve … absorb bounce" -k restored.key
+PQ scheme: falcon-1024
+PQ address salt: 1
+PQ address: EGGRNA45S7W3FCDQOEX7H64KCECFHIBWO5MB6B724NVPFQNOFPQQLDF3RY
+```
+
+### `algokey pq sign`
+
+Signs every transaction in a file with a post-quantum key, producing a `pqsig` signature. As with
+`algokey sign`, `AuthAddr` is set only when the key's address differs from the sender.
+
+| Name             | Type   | Required | Description                                                         |
+| ---------------- | ------ | -------- | ------------------------------------------------------------------- |
+| `--txfile, -t`   | string | **Yes**  | Path to the input transaction file.                                 |
+| `--outfile, -o`  | string | **Yes**  | Path to write the signed transactions.                              |
+| `--keyfile, -k`  | string | No       | Path to the private key file. Mutually exclusive with `--mnemonic`. |
+| `--mnemonic, -m` | string | No       | The 25-word mnemonic. Mutually exclusive with `--keyfile`.          |
+| `--scheme, -S`   | string | No       | Signature scheme, used with `--mnemonic`. Default `falcon-1024`.    |
+| `--overwrite`    | bool   | No       | Replaces any existing signature. Default `false`.                   |
+
+A transaction that already carries a signature is rejected unless `--overwrite` is supplied.
+`--overwrite` is a replacement rather than a merge: it clears the `sig`, `msig`, `lsig`, and
+`pqsig` fields and the `AuthAddr` field before signing.
+
+A Falcon signature is substantially larger than an Ed25519 one, and its length varies between
+keys and messages. Signing a 112-byte key registration transaction produces an output of
+approximately 3 KB.
+
+```shell showLineNumbers=false frame=none
+$ algokey pq sign -k pq.key -t keyreg.txn -o keyreg.stxn
+$ ls -l keyreg.txn keyreg.stxn
+112   keyreg.txn
+3165  keyreg.stxn
+```
+
+### `algokey pq sign-program`
+
+Signs a compiled logic signature program with a post-quantum key, producing a delegated logic
+signature. The signed payload binds the delegating account's address to the program, which differs
+from Ed25519 delegation.
+
+| Name             | Type   | Required | Description                                                                                        |
+| ---------------- | ------ | -------- | -------------------------------------------------------------------------------------------------- |
+| `--program, -p`  | string | **Yes**  | Path to a **compiled** program. Transaction Execution Approval Language (TEAL) source is rejected. |
+| `--outfile, -o`  | string | **Yes**  | Path to write the logic signature.                                                                 |
+| `--keyfile, -k`  | string | No       | Path to the private key file. Mutually exclusive with `--mnemonic`.                                |
+| `--mnemonic, -m` | string | No       | The 25-word mnemonic. Mutually exclusive with `--keyfile`.                                         |
+| `--scheme, -S`   | string | No       | Signature scheme, used with `--mnemonic`. Default `falcon-1024`.                                   |
+
+The program must be compiled bytecode. `algokey` rejects an input whose filename ends in `.teal`,
+and rejects any input consisting entirely of printable ASCII, since both indicate uncompiled
+source. Compiling requires no node.
+
+```shell showLineNumbers=false frame=none
+$ goal clerk compile approval.teal -o approval.tok
+approval.teal: U3ZXEUNFRSUDPPNFC6U7OBYO4S4AUOEP4RDBI23L2Q5TX3K5LTSVWQOKFM
+$ algokey pq sign-program -k pq.key -p approval.tok -o delegated.lsig
+```
+
+A logic signature carries only one type of delegation signature. A post-quantum delegated logic
+signature therefore cannot also carry a multisig signature; transaction verification rejects a
+logic signature that carries more than one.
+
+### `algokey pq check-address`
+
+Reports whether an address is post-quantum compliant, meaning it does not correspond to a point on
+the Ed25519 curve. Nodes apply this check when a transaction is submitted, so it identifies
+addresses that would be rejected before they are used.
+
+| Name      | Type   | Required | Description                                    |
+| --------- | ------ | -------- | ---------------------------------------------- |
+| `ADDRESS` | string | **Yes**  | Positional. One 58-character Algorand address. |
+
+```shell showLineNumbers=false frame=none
+$ algokey pq check-address \
+    EGGRNA45S7W3FCDQOEX7H64KCECFHIBWO5MB6B724NVPFQNOFPQQLDF3RY
+address EGGRNA45S7W3FCDQOEX7H64KCECFHIBWO5MB6B724NVPFQNOFPQQLDF3RY is PQ
+compliant
+
+$ algokey pq check-address \
+    5476XEHANTSFYJTFDDMGL7OP5OLEPEAS262CUG5QR3IKILKNCAR5YNYJVA
+address 5476XEHANTSFYJTFDDMGL7OP5OLEPEAS262CUG5QR3IKILKNCAR5YNYJVA is not PQ
+compliant
+```
+
+The second address is an ordinary Ed25519 address, which is by definition a curve point and
+therefore never post-quantum compliant.
+
+## Participation Keys
+
+These commands manage the voting keys an account registers to participate in consensus. They
+operate on a local participation key database file and require no node.
+
+<LinkCard
+  title='Participation Key Management'
+  href='/concepts/protocol/partkey-management'
+  description='How participation keys are generated, registered, and renewed'
+/>
+
+### `algokey part generate`
+
+Generates a participation key valid for a range of rounds. Generation can take several minutes.
+
+| Name         | Type   | Required | Description                                                                                                       |
+| ------------ | ------ | -------- | ----------------------------------------------------------------------------------------------------------------- |
+| `--keyfile`  | string | **Yes**  | Path to write the participation key database.                                                                     |
+| `--first`    | uint64 | **Yes**  | First round the key is valid for.                                                                                 |
+| `--last`     | uint64 | **Yes**  | Last round the key is valid for. Must be greater than or equal to `--first`.                                      |
+| `--dilution` | uint64 | No       | Key dilution for two-level keys. Defaults to `1 + floor(sqrt(last - first))`, so a 1,000-round window gives `32`. |
+| `--parent`   | string | No       | Address of the account the key belongs to.                                                                        |
+
+### `algokey part info`
+
+Prints the metadata of a participation key database.
+
+| Name        | Type   | Required | Description                             |
+| ----------- | ------ | -------- | --------------------------------------- |
+| `--keyfile` | string | **Yes**  | Path to the participation key database. |
+
+### `algokey part reparent`
+
+Changes the parent account recorded in a participation key database.
+
+| Name        | Type   | Required | Description                             |
+| ----------- | ------ | -------- | --------------------------------------- |
+| `--keyfile` | string | **Yes**  | Path to the participation key database. |
+| `--parent`  | string | **Yes**  | Address of the new parent account.      |
+
+### `algokey part keyreg`
+
+Builds a key registration transaction and writes it **unsigned**, ready to be signed by
+`algokey sign` or `algokey pq sign`. Genesis hashes for the supported networks are built in, so no
+node is consulted. Setting the `ALGOKEY_GENESIS_HASH` environment variable overrides the built-in
+hash and bypasses the `--network` lookup entirely. It exists for testing, and is the only
+environment variable `algokey` reads.
+
+| Name               | Type   | Required | Description                                                                                                                            |
+| ------------------ | ------ | -------- | -------------------------------------------------------------------------------------------------------------------------------------- |
+| `--firstvalid`     | uint64 | **Yes**  | First round the transaction may be committed. With `--keyfile`, may not be earlier than the participation key's own first valid round. |
+| `--network`        | string | **Yes**  | Network whose genesis hash the transaction targets. One of `mainnet`, `testnet`, `betanet`, `devnet`.                                  |
+| `--lastvalid`      | uint64 | No       | Last round the transaction may be committed. Defaults to `--firstvalid` plus 1000. The range may not exceed 1000 rounds.               |
+| `--fee`            | uint64 | No       | Transaction fee in microAlgos. Default `1000`, which is also an enforced minimum.                                                      |
+| `--offline`        | bool   | No       | Builds a transaction taking the account offline. Default `false`.                                                                      |
+| `--keyfile`        | string | No       | Participation key database to register. Online registrations only.                                                                     |
+| `--account`        | string | No       | Address to take offline. Offline registrations only.                                                                                   |
+| `--outputFile, -o` | string | No       | Path to write the transaction, or `-` for standard output. Defaults to `<keyfile>.tx`.                                                 |
+
+`--keyfile` and `--account` are mutually exclusive: `--keyfile` applies when bringing an account
+online, `--account` when taking one offline.
+
+When `--outputFile` is omitted the transaction is written to `<keyfile>.tx`. Because `--keyfile`
+is not permitted with `--offline`, an offline registration that omits `--outputFile` writes to a
+file named `.tx` in the working directory. An existing output file is never overwritten — the
+command fails rather than replacing it, so re-running it is not idempotent. On success the path
+written is printed to standard output.
+
+## Errors
+
+Errors raised by the commands themselves are written to standard error with exit code `1`.
+Flag-validation failures caught by the command-line parser — a missing required flag, an unknown
+flag — are also echoed to standard output.
+
+| Message                                                                                                                                    | Condition                                                                  |
+| ------------------------------------------------------------------------------------------------------------------------------------------ | -------------------------------------------------------------------------- |
+| `Must specify one of keyfile or mnemonic`                                                                                                  | `sign` or `multisig` given neither key source                              |
+| `Cannot specify both keyfile and mnemonic`                                                                                                 | `sign` or `multisig` given both key sources                                |
+| `must specify --keyfile or --mnemonic`                                                                                                     | A `pq` command given neither key source                                    |
+| `cannot specify both --keyfile and --mnemonic`                                                                                             | A `pq` command given both key sources                                      |
+| `Key file <path> is <n> bytes, expected a 32-byte Ed25519 seed`                                                                            | Ed25519 key file is not exactly 32 bytes                                   |
+| `Cannot recover key seed from mnemonic: <error>`                                                                                           | Ed25519 mnemonic fails checksum or word validation                         |
+| `cannot recover PQ key entropy from mnemonic: <error>`                                                                                     | A `pq` command given a mnemonic that fails validation                      |
+| `pq signature scheme not supported: "<scheme>"`                                                                                            | `--scheme` names a scheme other than `falcon-1024`/`f1`                    |
+| `pq key file is malformed: <detail>`                                                                                                       | PQ key file fails to decode or has wrong key sizes                         |
+| `pq address salt is not compliant: address <address>`                                                                                      | PQ key file whose stored salt yields an on-curve address                   |
+| `transaction already has a signature`                                                                                                      | `pq sign` on a signed transaction without `--overwrite`                    |
+| `program is empty`                                                                                                                         | `pq sign-program` given an empty program file                              |
+| `<file> looks like TEAL source; compile it first (e.g. goal clerk compile) and don't use the .teal extension`                              | `pq sign-program` given a `.teal` filename                                 |
+| `program is not compiled bytecode; compile it first (e.g. goal clerk compile) and don't use the .teal extension`                           | `pq sign-program` given all-printable-ASCII input                          |
+| `address <address> is not PQ compliant`                                                                                                    | `pq check-address` given an on-curve address                               |
+| `cannot parse address: decoded bad addr: <value>`                                                                                          | `pq check-address` given a malformed address                               |
+| `no transactions found in <file>`                                                                                                          | `pq sign` given a file containing no transactions                          |
+| `Last round <n> < first round <n>`                                                                                                         | `part generate` given `--last` below `--first`                             |
+| `the provided transaction fee (<n>) is too low, the minimum fee is 1000`                                                                   | `part keyreg` given `--fee` below `1000`                                   |
+| `must provide --keyfile when registering participation keys`                                                                               | `part keyreg` without `--offline` and without `--keyfile`                  |
+| `must provide --account when bringing an account offline`                                                                                  | `part keyreg --offline` without `--account`                                |
+| `cannot access keyfile '<path>'`                                                                                                           | `part keyreg --keyfile` naming a file that does not exist                  |
+| `outputFile '<path>' already exists`                                                                                                       | `part keyreg` whose output file is already present                         |
+| `the transaction's firstvalid round (<n>) field should be set greater than or equal to the participation key's first valid round (<n>). …` | `part keyreg --firstvalid` earlier than the key's own first valid round    |
+| `the transaction's specified validity range must be less than or equal to 1000 rounds due to security constraints. …`                      | `part keyreg` whose `--lastvalid` exceeds `--firstvalid` by more than 1000 |
+
+Messages ending in `…` are shown abbreviated; the tool prints a longer explanation. Every other
+message above is verbatim.
