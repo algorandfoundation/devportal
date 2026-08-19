@@ -169,7 +169,9 @@ single subsignature and does not create the preimage.
 ### `algokey multisig append-auth-addr`
 
 Adds the multisig preimage and `AuthAddr` fields to a transaction sent from an account that has
-been rekeyed to a multisig account. It writes the fields only; it adds no signature.
+been rekeyed to a multisig account. It writes the fields only; it adds no signature. Unlike the
+other transaction commands, it processes only the **first** transaction in the input file; any
+others are dropped without an error.
 
 | Name            | Type   | Required | Description                                                                                                                       |
 | --------------- | ------ | -------- | --------------------------------------------------------------------------------------------------------------------------------- |
@@ -178,6 +180,11 @@ been rekeyed to a multisig account. It writes the fields only; it adds no signat
 | `--outfile, -o` | string | No       | Path to write the result. If omitted, the input file is modified in place.                                                        |
 
 The derived multisig address must differ from the transaction's sender.
+
+Because only the first transaction is processed, omitting `--outfile` on a file that holds more
+than one transaction overwrites the input in place with just that first transaction and loses the
+rest silently. Pass an explicit `--outfile` whenever the input may contain more than one
+transaction.
 
 ## Post-Quantum Keys
 
