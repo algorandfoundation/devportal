@@ -6052,7 +6052,7 @@
       "DocExtra": "`log` fails if called more than MaxLogCalls times in a program, or if the sum of logged bytes exceeds 1024 bytes.",
       "IntroducedVersion": 5,
       "Groups": [
-        "Block Access"
+        "Application Access"
       ],
       "Modes": 2
     },
