@@ -79,9 +79,10 @@ Before you begin, ensure you have the following installed:
 ├── public/                # Static assets (favicons, etc.)
 ├── scripts/               # Build and utility scripts
 │   ├── clean-docs-import.ts       # Clear imported documentation
-│   ├── generate-opcode-list.js    # Generate Algorand opcodes list
+│   ├── generate-opcode-list.ts    # Render the opcode reference page
 │   ├── manage-sidebar-meta.ts     # Sidebar metadata generator
-│   └── prose-check.ts             # AI-powered prose quality checker
+│   ├── prose-check.ts             # AI-powered prose quality checker
+│   └── update-opcodes.ts          # Sync TEAL opcodes from go-algorand
 ├── src/
 │   ├── assets/            # Images and media files
 │   ├── components/        # Reusable Astro/React components
@@ -155,9 +156,14 @@ All commands are run from the root of the project:
 
 ### Content Generation
 
-| Command                         | Description                             |
-| ------------------------------- | --------------------------------------- |
-| `pnpm run generate-opcode-list` | Generate Algorand opcodes documentation |
+| Command                           | Description                                                                    |
+| --------------------------------- | ------------------------------------------------------------------------------ |
+| `pnpm run generate-opcode-list`   | Render the opcode reference page (`opcodes.mdx`) from `opcodes.json`            |
+| `pnpm run update:opcodes`         | Fetch the latest opcodes from go-algorand, update `opcodes.json`, and re-render |
+| `pnpm run update:opcodes:dry-run` | Preview an opcode update without writing any files                              |
+| `pnpm run check:opcodes`          | Warn (non-blocking) if the committed opcode reference is out of date            |
+
+See [TEAL Opcode Reference](#teal-opcode-reference) for how these fit together.
 
 ### Content Import
 
@@ -250,6 +256,14 @@ Your content here...
 ### Importing External Documentation
 
 The project uses `@algorandfoundation/astro-github-loader` to import documentation from external repositories. Configure imports in `imports/configs/`. See the [documentation](https://github.com/algorandfoundation/astro-github-loader/blob/main/packages/astro-github-loader/README.md) for details on how to configure external documentation imports.
+
+### TEAL Opcode Reference
+
+The [AVM Opcodes](https://dev.algorand.co/reference/algorand-teal/opcodes) reference is sourced from the TEAL language spec in [algorand/go-algorand](https://github.com/algorand/go-algorand/tree/master/data/transactions/logic) (`master`). The page's version filter defaults to the latest live release, so opcodes for a newer, not-yet-released AVM version are hidden until the reader opts in by widening the filter.
+
+- `opcodes.json` is the dataset; `opcodes.mdx` is rendered from it (auto, in `prebuild`).
+- `check:opcodes` runs during `prebuild` and prints a non-blocking warning when the dataset is out of date.
+- To refresh, run **Actions → Update Opcodes → Run workflow** (opens a `devrel`-reviewed PR), or run `pnpm run update:opcodes` locally on a dedicated branch.
 
 ## Contributing
 

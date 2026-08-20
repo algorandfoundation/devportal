@@ -43,6 +43,8 @@ When storing data in Global Storage, keep in mind that depending on the type and
 - 25,000 + 3,500 = 28,500 microAlgo for each UInt in the Global State schema
 - 25,000 + 25,000 = 50,000 microAlgo for each byte slice in the Global State schema
 
+The creator's account must hold a balance covering this MBR. An update transaction that changes the extra program pages or the global state schema makes its sender the application's size sponsor. The sponsor's account is the one whose MBR carries the terms for the extra program pages and the global state schema, and the previous sponsor's MBR is reduced by the terms it had been carrying. The 100,000 microAlgos for the application itself stays with the creator's account in every case, and a size-changing update sent by the creator leaves the creator as the sponsor. See [Size Changes on Update](/concepts/transactions/reference#size-changes-on-update) for the rules those transactions follow.
+
 <LinkCard
   title='Learn more about Global Storage'
   description='Detailed guide on implementing and managing Global Storage in Algorand smart contracts'
