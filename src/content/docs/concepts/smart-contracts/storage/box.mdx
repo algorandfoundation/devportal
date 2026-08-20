@@ -18,7 +18,7 @@ import RemoteCode from '/src/components/RemoteCode.astro';
 
 Box storage in Algorand is a feature that provides additional on-chain storage options for smart contracts, allowing them to store and manage larger amounts of data beyond the limitations of global and local state. Unlike the fixed sizes of global and local state storages, box storage offers dynamic flexibility for creating, resizing, and deleting storage units
 
-These storage units, called boxes, are key-value storage segments associated with individual applications, each capable of storing upto 32KB (32768 bytes) of data as byte arrays. Boxes are only visible and accessible to the application that created them, ensuring data integrity and security. The app account (the smart contract) is responsible for funding the box storage, and only the creating app can read, write, or delete its boxes on-chain. Starting with AVM v13, an owning application can opt in to sharing its boxes with other applications; see [Sharing Boxes Between Applications](#sharing-boxes-between-applications).
+These storage units, called boxes, are key-value storage segments associated with individual applications, each capable of storing up to 32KB (32768 bytes) of data as byte arrays. The app account (the smart contract) is responsible for funding the box storage, and by default only the application that created a box can read, write, or delete it on-chain. Starting with AVM v13, an owning application can opt in to sharing its boxes with other applications; see [Sharing Boxes Between Applications](#sharing-boxes-between-applications).
 
 Both the box key and data are stored as byte arrays, requiring any uint64 variables to be converted before storage. While box storage expands the capabilities of Algorand smart contracts, it does incur additional costs in terms of minimum balance requirements (MBR) to cover the network storage space. The maximum number of box references is currently set to 8, allowing an app to create and reference up to 8 boxes simultaneously. Each box is a fixed-length structure but can be resized using the App.box_resize method or by deleting and recreating the box. Boxes over 1024 bytes require additional references, as each reference has a 1024-byte operational budget. The app account's MBR increases with each additional box and byte in the box's name and allocated size. If an application with outstanding boxes is deleted, the MBR is not recoverable, so it's recommended to delete all box storage and withdraw funds before app deletion.
 
@@ -138,7 +138,7 @@ A writes its box "b"                  A now relies on b == "AA"
 A resumes, still assuming b == "AA"   ← silent corruption
 ```
 
-The existing re-entrancy rule does not catch this, because `C` is not `A`; the application was never re-entered. AVM v13 therefore adds a second, box-scoped check:
+The existing re-entrancy rule does not catch this, because `C` is not `A`; the application was never re-entered. AVM v13 therefore adds a second, family-scoped check:
 
 > An application cannot write a family-shared box when a non-family application sits on the call stack between it and a family application that has already read or written a family-shared box; the write fails.
 
@@ -234,7 +234,7 @@ When creating a box, the key name must be in the box ref array.
 ### Reading
 
 Boxes can be manipulated by the smart contract that owns them. The SDKs and goal cmd tool allow any box to be read off-chain, and box contents are never confidential; the restriction governs only which applications may read or manipulate a box on-chain.
-App a can read the contents of its boxes on-chain. Since AVM v13, app a can permit any application to read its boxes on-chain by setting the `AppForeignBoxReads` parameter; see [Foreign box reads](#foreign-box-reads). Recall that anybody can read everything from off-chain using the algod or indexer APIs.
+App a can read the contents of its boxes on-chain. Since AVM v13, app a can permit other applications to read its boxes on-chain: `AppForeignBoxReads` opens reads to any application, and `AppFamilyBoxAccess` opens reads and writes of boxes to applications sharing a's creator address; see [Sharing Boxes Between Applications](#sharing-boxes-between-applications). Recall that anybody can read everything from off-chain using the algod or indexer APIs.
 To read box b from app a, the app call must include b in its boxes array.
 Read budget: Each box reference in the boxes array allows an app call to access 1K bytes of box state - 1K of "box read budget". To read a box larger than 1K, multiple box references must be put in the boxes arrays.
 The box read budget is shared across the transaction group.
