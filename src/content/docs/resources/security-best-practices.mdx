@@ -10,6 +10,8 @@ tableOfContents:
 
 import { CardGrid, LinkCard, Tabs, TabItem } from '@astrojs/starlight/components';
 
+{/* Code samples are inline for now. Runnable companion examples live at https://github.com/algorand-devrel/Smart-Contract-Security-Best-Practices/tree/main/smart-contract-examples — swap to RemoteCode once they're migrated into devportal-code-examples with snippet markers. */}
+
 Smart contracts on Algorand manage real value and a single vulnerability can result in irreversible loss of funds. Unlike traditional software, deployed contracts are immutable by default and operate in an adversarial environment where every transaction is public and anyone can interact with your program. Therefore, security has to be built in from the start.
 
 This guide is a practical security reference for Algorand developers using **Algorand TypeScript** and **Algorand Python**. It covers the most common vulnerabilities — from access control flaws and unchecked transaction fees to arithmetic overflows and rekeying attacks — with concrete code examples showing both the vulnerable pattern and the secure fix.
@@ -22,7 +24,7 @@ In this guide, **smart contract** is the umbrella term for AVM programs. When co
 This guide covers common vulnerabilities and best practices, but it is not exhaustive. Always have your contracts audited by a professional security firm before deploying to mainnet with real value.
 :::
 
-### How to Read This Guide
+## How to Read This Guide
 
 Each section highlights risks with concrete code examples. Headings are categorized by the nature of the risk:
 
@@ -177,8 +179,6 @@ def safe_payment_sig() -> bool:
 
   </TabItem>
 </Tabs>
-
-{/* TODO(devportal-security-guide): Replace the inline LogicSig security samples in section 1 with devportal-native example references after migrating the corresponding companion examples. */}
 
 This is correct but fragile. Miss any single check and Alice's account is compromised.
 
@@ -499,6 +499,12 @@ class SafePaymentManager(ARC4Contract):
 
 The application account can't be closed, can't be rekeyed, and inner transaction fees default to the minimum. These are all things that LogicSigs must guard against manually and can easily get wrong.
 
+### DON'T: Assume delegated LogicSigs can be revoked
+
+A signed delegated LogicSig is as sensitive as a private key. Anyone who obtains it can submit transactions from the delegator's account. Follow the [security checklist](#do-follow-the-logicsig-security-checklist) to scope it narrowly, and encrypt it at rest.
+
+There is no protocol-level mechanism to revoke a delegated LogicSig. If one is compromised, the **only remedy is to [rekey the account](#6-rekeying--account-draining) immediately**. Rekeying invalidates the original signing key, rendering all previously signed LogicSigs unusable.
+
 ### Key Takeaways
 
 - **Understand which mode you're using:** Contract Account (no key, deterministic address) vs Delegated (signed program, someone else's account) and its implications.
@@ -531,12 +537,6 @@ The application account can't be closed, can't be rekeyed, and inner transaction
     description='See why application-based authorization is usually safer and more composable.'
   />
 </CardGrid>
-
-### DON'T: Assume delegated LogicSigs can be revoked
-
-A signed delegated LogicSig is as sensitive as a private key. Anyone who obtains it can submit transactions from the delegator's account. Follow the [security checklist](#do-follow-the-logicsig-security-checklist) to scope it narrowly, and encrypt it at rest.
-
-There is no protocol-level mechanism to revoke a delegated LogicSig. If one is compromised, the **only remedy is to [rekey the account](#6-rekeying--account-draining) immediately**. Rekeying invalidates the original signing key, rendering all previously signed LogicSigs unusable.
 
 ---
 
@@ -653,8 +653,6 @@ class SecureContract(ARC4Contract):
 
   </TabItem>
 </Tabs>
-
-{/* TODO(devportal-security-guide): Replace the inline creator-only access control samples in section 2 with devportal-native example references after migrating the corresponding companion examples. */}
 
 ### DO: Classify every ABI method as permissionless or permissioned
 
@@ -785,8 +783,6 @@ class SafeTreasuryContract(ARC4Contract):
   </TabItem>
 </Tabs>
 
-{/* TODO(devportal-security-guide): Replace the inline privileged-method authorization samples in section 2 with devportal-native example references after migrating the corresponding companion examples. */}
-
 ### Pattern: Updatable authorization policy without lock-in
 
 If a permission policy can change over time, define **who can change it**, **how it changes**, and **how you recover from mistakes**. A one-step `setAdmin()` can permanently lock the contract if it sets the wrong address. Prefer a two-step handoff where the current admin nominates the next admin and the next admin explicitly accepts the role.
@@ -876,8 +872,6 @@ class RotatingAdminContract(ARC4Contract):
   </TabItem>
 </Tabs>
 
-{/* TODO(devportal-security-guide): Replace the inline rotating-admin samples in section 2 with devportal-native example references after migrating the corresponding companion examples. */}
-
 ### DON'T: Allow deletion while the contract still holds funds
 
 Even with proper access control, deleting a contract while its application account still holds ALGO or ASAs can permanently lock those funds. The application address becomes inaccessible after deletion (unless it was rekeyed beforehand), and any minimum balance locked by boxes is lost forever.
@@ -912,8 +906,6 @@ def delete(self) -> None:
 
   </TabItem>
 </Tabs>
-
-{/* TODO(devportal-security-guide): Replace the inline delete-guard samples in section 2 with devportal-native example references after migrating the corresponding companion examples. */}
 
 ### Pattern: Role-Based Access Control
 
@@ -1046,8 +1038,6 @@ class RoleBasedContract(ARC4Contract):
 
   </TabItem>
 </Tabs>
-
-{/* TODO(devportal-security-guide): Replace the inline role-based access control samples in section 2 with devportal-native example references after migrating the corresponding companion examples. */}
 
 ### Key Takeaways
 
@@ -1224,8 +1214,6 @@ def bounded_fee_sig() -> bool:
   </TabItem>
 </Tabs>
 
-{/* TODO(devportal-security-guide): Replace the inline fee-bounding samples in section 3 with devportal-native example references after migrating the corresponding companion examples. */}
-
 ### DO: Handle network congestion
 
 During network congestion, the minimum fee may not be sufficient for timely inclusion. A LogicSig that hard-caps fees at `Global.minTxnFee` may become temporarily unusable. Off-chain code should:
@@ -1384,11 +1372,9 @@ class SecureDepositContract(ARC4Contract):
   </TabItem>
 </Tabs>
 
-{/* TODO(devportal-security-guide): Replace the inline asset-transfer validation samples in section 4 with devportal-native example references after migrating the corresponding companion examples. */}
-
 ### ARC-4 Input Validation
 
-The **Puya** (Python) and **PuyaTs** (TypeScript) compilers automatically validate [ARC-4](https://dev.algorand.co/arc-standards/arc-0004/) encoding for ABI method arguments by default, but this only checks that the encoding is well-formed. For dynamic types like `string` and `byte[]`, it confirms the length prefix matches the data but does **not** enforce maximum lengths or other application-level constraints. You should still validate dynamic inputs in your contract logic to prevent oversized inputs from consuming opcode budget or storage.
+The **Puya** (Python) and **PuyaTs** (TypeScript) compilers automatically validate [ARC-4](/arc-standards/arc-0004/) encoding for ABI method arguments by default, but this only checks that the encoding is well-formed. For dynamic types like `string` and `byte[]`, it confirms the length prefix matches the data but does **not** enforce maximum lengths or other application-level constraints. You should still validate dynamic inputs in your contract logic to prevent oversized inputs from consuming opcode budget or storage.
 
 :::note
 If you disable per-method validation via `validate_encoding="unsafe_disabled"`, you must validate inputs manually.
@@ -1398,7 +1384,7 @@ If you disable per-method validation via `validate_encoding="unsafe_disabled"`, 
 Typed LogicSig parameters in PuyaPy / PuyaTs now follow the same default encoding-validation model as typed ABI parameters. If you disable LogicSig validation, or if you intentionally read raw `op.arg(...)` values, manual validation becomes your responsibility.
 :::
 
-If you are writing **raw TEAL**, you must manually validate all ABI-decoded inputs. See [Validating ABI Values](https://dev.algorand.co/concepts/smart-contracts/abi/#validating-abi-values) for details.
+If you are writing **raw TEAL**, you must manually validate all ABI-decoded inputs. See [Validating ABI Values](/concepts/smart-contracts/abi/#validating-abi-values) for details.
 
 ### DO: Validate dynamic input lengths
 
@@ -1559,8 +1545,6 @@ class EnumeratedInputContract(ARC4Contract):
   </TabItem>
 </Tabs>
 
-{/* TODO(devportal-security-guide): Replace the inline permissionless-argument validation samples in section 4 with devportal-native example references after migrating the corresponding companion examples. */}
-
 ### Key Takeaways
 
 - Always check `xferAsset` when receiving asset transfers.
@@ -1571,7 +1555,7 @@ class EnumeratedInputContract(ARC4Contract):
 - Validate enumerated arguments against the allowed set and reject everything else.
 - Prefer typed ABI method parameters (`gtxn.PaymentTxn`, `gtxn.AssetTransferTxn`) over raw group indexes.
 - Validate receiver, amount, and type on every transaction you consume.
-- Keep your Puya compiler updated: check the [security bulletins](https://dev.algorand.co/bulletins/).
+- Keep your Puya compiler updated: check the [security bulletins](/bulletins/puya-issues-27-10-2025/).
 - Never trust clear state transactions as part of validation logic.
 
 <CardGrid>
@@ -1582,7 +1566,7 @@ class EnumeratedInputContract(ARC4Contract):
   />
   <LinkCard
     title='ARC-4'
-    href='https://dev.algorand.co/arc-standards/arc-0004/'
+    href='/arc-standards/arc-0004/'
     description='Review the ARC-4 ABI encoding model and parameter conventions.'
   />
   <LinkCard
@@ -1603,7 +1587,7 @@ class EnumeratedInputContract(ARC4Contract):
 
 ### Risk
 
-When creating or reconfiguring an [Algorand Standard Asset (ASA)](/concepts/assets/overview/), four control addresses govern critical capabilities: **manager** (can change all addresses and destroy the asset), **clawback** (can revoke assets from any holder), **freeze** (can freeze any holder's balance), and **reserve** (indicates non-circulating supply; used by [ARC-19](https://dev.algorand.co/arc-standards/arc-0019/) for metadata resolution). Misconfiguring these can lead to permanent loss of control or unauthorized asset seizure.
+When creating or reconfiguring an [Algorand Standard Asset (ASA)](/concepts/assets/overview/), four control addresses govern critical capabilities: **manager** (can change all addresses and destroy the asset), **clawback** (can revoke assets from any holder), **freeze** (can freeze any holder's balance), and **reserve** (indicates non-circulating supply; used by [ARC-19](/arc-standards/arc-0019/) for metadata resolution). Misconfiguring these can lead to permanent loss of control or unauthorized asset seizure.
 
 Setting any control address to empty **permanently and irreversibly** disables that capability. There is no way to restore it. If the manager address is compromised, an attacker gains full reconfiguration power, including granting themselves freeze and clawback.
 
@@ -1775,8 +1759,6 @@ class TokenFactory(ARC4Contract):
   </TabItem>
 </Tabs>
 
-{/* TODO(devportal-security-guide): Replace the inline ASA configuration samples in section 5 with devportal-native example references after migrating the corresponding companion examples. */}
-
 ### Key Takeaways
 
 - Explicitly set ASA control addresses for your use case. Omitting an address in a config transaction permanently clears it.
@@ -1792,7 +1774,7 @@ class TokenFactory(ARC4Contract):
   />
   <LinkCard
     title='ARC-19'
-    href='https://dev.algorand.co/arc-standards/arc-0019/'
+    href='/arc-standards/arc-0019/'
     description='Review reserve-address metadata resolution when designing mutable asset behavior.'
   />
   <LinkCard
@@ -1986,8 +1968,6 @@ def safe_transfer(self, receiver: Account, amount: UInt64) -> None:
 
   </TabItem>
 </Tabs>
-
-{/* TODO(devportal-security-guide): Replace the inline rekeying and close-field samples in section 6 with devportal-native example references after migrating the companion examples. */}
 
 ### Application Account Rekeying
 
@@ -2253,8 +2233,6 @@ Rate limiting mitigates this by capping how much value can flow through a contra
 
 The [Folks Finance RateLimiter](https://github.com/Folks-Finance/algorand-smart-contract-library/blob/main/folks_contracts/library/RateLimiter.py) provides a reference implementation using a **token bucket algorithm** with box storage. Each bucket has a capacity limit and a duration. Capacity refills linearly over time and is consumed by each action. If insufficient capacity remains, the transaction is rejected.
 
-{/* TODO(devportal-security-guide): Replace the inline group-validation and password-reveal samples in section 7 with devportal-native example references after migrating the companion examples. */}
-
 ### Key Takeaways
 
 - Use ABI method parameters for group transaction references instead of hard-coded indexes.
@@ -2270,7 +2248,7 @@ The [Folks Finance RateLimiter](https://github.com/Folks-Finance/algorand-smart-
   />
   <LinkCard
     title='ARC-4'
-    href='https://dev.algorand.co/arc-standards/arc-0004/'
+    href='/arc-standards/arc-0004/'
     description='Review typed transaction parameters and ABI routing conventions used in the safe examples.'
   />
   <LinkCard
@@ -3011,8 +2989,6 @@ class StorageRefundContract(ARC4Contract):
   </TabItem>
 </Tabs>
 
-{/* TODO(devportal-security-guide): Replace the inline state-management samples in section 8 with devportal-native example references after migrating the companion examples. */}
-
 ### Key Takeaways
 
 - Use `BoxMap` instead of `LocalState` for data that must persist regardless of user action.
@@ -3539,8 +3515,6 @@ For any arithmetic-heavy contract (DEX, lending, staking), perform **semi-formal
 3. **Check edge cases**: Zero amounts, maximum values, single-unit remainders.
 4. **Test with boundary values**: `0`, `1`, `2^64 - 1`, `2^64 - 2`.
 
-{/* TODO(devportal-security-guide): Replace the inline arithmetic-safety samples in section 9 with devportal-native example references after migrating the companion examples. */}
-
 ### Key Takeaways
 
 - The AVM panics on overflow/underflow instead of wrapping, so unchecked arithmetic is already fail-safe by default.
@@ -3715,8 +3689,6 @@ If a contract's application address holds ALGO or assets, deleting the contract 
 1. Withdraw all ALGO and assets from the application address.
 2. Delete all boxes (to reclaim MBR).
 3. Then delete the application.
-
-{/* TODO(devportal-security-guide): Replace the inline updatability-deletability samples in section 10 with devportal-native example references after migrating the companion examples. */}
 
 ### Key Takeaways
 
@@ -4138,8 +4110,6 @@ class PausableContract(ARC4Contract):
   </TabItem>
 </Tabs>
 
-{/* TODO(devportal-security-guide): Replace the inline off-chain-operational-security samples in section 15 with devportal-native example references after migrating the companion examples. */}
-
 ### Key Takeaways
 
 - Run your own algod node for mission-critical applications.
@@ -4179,12 +4149,12 @@ class PausableContract(ARC4Contract):
 <CardGrid>
   <LinkCard
     title='Algorand TypeScript'
-    href='/algokit/languages/typescript/'
+    href='/algokit/languages/typescript/language-guide/'
     description='Review the TypeScript language docs and related AlgoKit guidance for smart contract development.'
   />
   <LinkCard
     title='Algorand Python'
-    href='/algokit/languages/python/'
+    href='/algokit/languages/python/language-guide/'
     description='Review the Python language docs and related AlgoKit guidance for smart contract development.'
   />
   <LinkCard
