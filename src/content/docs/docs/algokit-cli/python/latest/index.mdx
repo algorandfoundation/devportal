@@ -1,0 +1,56 @@
+---
+title: AlgoKit CLI
+description: The one-stop shop tool for developers building on the Algorand network
+---
+
+import { Card, CardGrid, Tabs, TabItem } from '@astrojs/starlight/components';
+
+## Installation
+
+<Tabs>
+  <TabItem label='macOS / Linux'>
+    ```bash curl -fsSL https://cli.algokit.io/install.sh | bash ```
+  </TabItem>
+  <TabItem label='Windows'>```powershell irm https://cli.algokit.io/install.ps1 | iex ```</TabItem>
+</Tabs>
+
+> The install script handles installing `uv` and Python automatically. Legacy installation methods via `brew`, `winget`, and `snap` are also available — see the [official installation guide](https://github.com/algorandfoundation/algokit-cli#install).
+
+## Quick Start
+
+```bash
+# Verify installation
+algokit --version
+
+# Create a new project from a template
+algokit init
+
+# Start a local Algorand network
+algokit localnet start
+
+# Explore the network with lora
+algokit explore
+```
+
+## Features
+
+<CardGrid>
+  <Card title='Init' icon='add-document'>
+    Quickly scaffold new Algorand projects from official templates or community templates.
+  </Card>
+  <Card title='LocalNet' icon='laptop'>
+    Spin up a local isolated Algorand network for development and testing.
+  </Card>
+  <Card title='Compile' icon='setting'>
+    Compile Algorand Python and other smart contract languages to AVM bytecode.
+  </Card>
+  <Card title='Deploy' icon='rocket'>
+    Deploy smart contracts to LocalNet, TestNet or MainNet with a single command.
+  </Card>
+  <Card title='Tasks' icon='list-format'>
+    Perform blockchain operations: send, sign, mint, transfer assets and more.
+  </Card>
+  <Card title='Generate' icon='document'>
+    Generate typed clients and other code artifacts for your Algorand project.
+  </Card>
+</CardGrid>

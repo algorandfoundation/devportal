@@ -1,0 +1,414 @@
+---
+title: 'Signer Configuration'
+description: 'This example demonstrates how to configure transaction signers on AlgorandClient:'
+sidebar:
+  order: 3
+---
+
+[← Back to Algorand Client](/docs/algokit-utils/typescript/latest/examples/algorand-client/)
+
+## Description
+
+This example demonstrates how to configure transaction signers on AlgorandClient:
+
+- setDefaultSigner() to set a fallback signer for all transactions
+- setSignerFromAccount() to register a signer from an Account object
+- setSigner() to register a signer for a specific address
+- How signers are automatically used when sending transactions
+- Registering multiple signers for different accounts
+- How the default signer is used when no specific signer is registered
+- getSigner() and getAccount() to retrieve previously registered signers
+
+## Prerequisites
+
+- LocalNet running (via `algokit localnet start`)
+
+## Run This Example
+
+From the repository root:
+
+```bash
+cd examples
+npm run example algorand_client/03-signer-config.ts
+```
+
+## Code
+
+[View source on GitHub](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/examples/algorand_client/03-signer-config.ts)
+
+```typescript title="03-signer-config.ts"
+/**
+ * Example: Signer Configuration
+ *
+ * This example demonstrates how to configure transaction signers on AlgorandClient:
+ * - setDefaultSigner() to set a fallback signer for all transactions
+ * - setSignerFromAccount() to register a signer from an Account object
+ * - setSigner() to register a signer for a specific address
+ * - How signers are automatically used when sending transactions
+ * - Registering multiple signers for different accounts
+ * - How the default signer is used when no specific signer is registered
+ * - getSigner() and getAccount() to retrieve previously registered signers
+ *
+ * Prerequisites:
+ * - LocalNet running (via `algokit localnet start`)
+ */
+
+import { AlgorandClient, algo } from '@algorandfoundation/algokit-utils';
+import {
+  printError,
+  printHeader,
+  printInfo,
+  printStep,
+  printSuccess,
+  shortenAddress,
+} from '../shared/utils.js';
+
+async function main() {
+  printHeader('Signer Configuration Example');
+
+  // Initialize client and verify LocalNet is running
+  const algorand = AlgorandClient.defaultLocalNet();
+
+  try {
+    await algorand.client.algod.status();
+    printSuccess('Connected to LocalNet');
+  } catch (error) {
+    printError(
+      `Failed to connect to LocalNet: ${error instanceof Error ? error.message : String(error)}`,
+    );
+    printInfo('Make sure LocalNet is running (e.g., algokit localnet start)');
+    return;
+  }
+
+  // Step 1: Create random test accounts
+  printStep(1, 'Create random test accounts using algorand.account.random()');
+  printInfo('algorand.account.random() creates a new account with a randomly generated keypair');
+  printInfo('The account is automatically registered with its signer in the AccountManager');
+
+  const account1 = algorand.account.random();
+  const account2 = algorand.account.random();
+  const account3 = algorand.account.random();
+
+  printInfo(`\nCreated accounts:`);
+  printInfo(`  Account 1: ${shortenAddress(account1.addr.toString())}`);
+  printInfo(`  Account 2: ${shortenAddress(account2.addr.toString())}`);
+  printInfo(`  Account 3: ${shortenAddress(account3.addr.toString())}`);
+
+  printSuccess('Created 3 random test accounts');
+
+  // Step 2: Fund the accounts from the dispenser
+  printStep(2, 'Fund accounts from the LocalNet dispenser');
+  printInfo('Using the dispenser account to fund our test accounts');
+
+  const dispenser = await algorand.account.dispenserFromEnvironment();
+  printInfo(`Dispenser address: ${shortenAddress(dispenser.addr.toString())}`);
+
+  // Fund all three accounts
+  const fundAmount = algo(10);
+  printInfo(`\nFunding each account with ${fundAmount.algo} ALGO...`);
+
+  for (const account of [account1, account2, account3]) {
+    await algorand.send.payment({
+      sender: dispenser.addr,
+      receiver: account.addr,
+      amount: fundAmount,
+    });
+  }
+
+  printSuccess('Funded all accounts with 10 ALGO each');
+
+  // Step 3: Demonstrate setSignerFromAccount()
+  printStep(3, 'Demonstrate setSignerFromAccount() - Register signer from an account object');
+  printInfo(
+    'setSignerFromAccount() registers the signer from an account that can sign transactions',
+  );
+  printInfo('This is useful when you have an account object and want to register it for signing');
+
+  // Create a new AlgorandClient to demonstrate registering signers explicitly
+  const algorand2 = AlgorandClient.defaultLocalNet();
+
+  // Register account1's signer
+  printInfo(`\nRegistering signer for Account 1: ${shortenAddress(account1.addr.toString())}`);
+  algorand2.setSignerFromAccount(account1);
+
+  printInfo('Now Account 1 can be used as a sender in transactions');
+
+  // Send a payment from account1 to account2
+  const payment1Result = await algorand2.send.payment({
+    sender: account1.addr,
+    receiver: account2.addr,
+    amount: algo(1),
+  });
+
+  printInfo(`\nPayment transaction sent:`);
+  printInfo(`  From: ${shortenAddress(account1.addr.toString())}`);
+  printInfo(`  To: ${shortenAddress(account2.addr.toString())}`);
+  printInfo(`  Amount: 1 ALGO`);
+  printInfo(`  Transaction ID: ${payment1Result.txIds[0]}`);
+  printInfo(`  Confirmed in round: ${payment1Result.confirmation.confirmedRound}`);
+
+  printSuccess('Successfully sent payment using registered signer');
+
+  // Step 4: Demonstrate setSigner() - Register signer for a specific address
+  printStep(4, 'Demonstrate setSigner() - Register signer for a specific address');
+  printInfo('setSigner(address, signer) registers a TransactionSigner for a specific address');
+  printInfo('This gives you fine-grained control over which signer to use for each address');
+
+  // Create another AlgorandClient to demonstrate setSigner
+  const algorand3 = AlgorandClient.defaultLocalNet();
+
+  // Register account2's signer using setSigner
+  printInfo(`\nRegistering signer for Account 2 using setSigner():`);
+  printInfo(`  Address: ${shortenAddress(account2.addr.toString())}`);
+  algorand3.setSigner(account2.addr, account2.signer);
+
+  // Send a payment from account2 to account3
+  const payment2Result = await algorand3.send.payment({
+    sender: account2.addr,
+    receiver: account3.addr,
+    amount: algo(0.5),
+  });
+
+  printInfo(`\nPayment transaction sent:`);
+  printInfo(`  From: ${shortenAddress(account2.addr.toString())}`);
+  printInfo(`  To: ${shortenAddress(account3.addr.toString())}`);
+  printInfo(`  Amount: 0.5 ALGO`);
+  printInfo(`  Transaction ID: ${payment2Result.txIds[0]}`);
+  printInfo(`  Confirmed in round: ${payment2Result.confirmation.confirmedRound}`);
+
+  printSuccess('Successfully sent payment using setSigner()');
+
+  // Step 5: Demonstrate setDefaultSigner()
+  printStep(5, 'Demonstrate setDefaultSigner() - Set a fallback signer for all transactions');
+  printInfo(
+    'setDefaultSigner() sets a signer that will be used when no specific signer is registered',
+  );
+  printInfo('This is useful when you have a primary account that signs most transactions');
+
+  // Create a new AlgorandClient and set account3 as the default signer
+  const algorand4 = AlgorandClient.defaultLocalNet();
+
+  printInfo(
+    `\nSetting Account 3 as the default signer: ${shortenAddress(account3.addr.toString())}`,
+  );
+  algorand4.setDefaultSigner(account3);
+
+  // Now we can send a transaction from account3 without explicitly registering it
+  // The default signer will be used
+  const payment3Result = await algorand4.send.payment({
+    sender: account3.addr,
+    receiver: account1.addr,
+    amount: algo(0.25),
+  });
+
+  printInfo(`\nPayment transaction sent using default signer:`);
+  printInfo(`  From: ${shortenAddress(account3.addr.toString())}`);
+  printInfo(`  To: ${shortenAddress(account1.addr.toString())}`);
+  printInfo(`  Amount: 0.25 ALGO`);
+  printInfo(`  Transaction ID: ${payment3Result.txIds[0]}`);
+  printInfo(`  Confirmed in round: ${payment3Result.confirmation.confirmedRound}`);
+
+  printSuccess('Successfully sent payment using default signer');
+
+  // Step 6: Demonstrate multiple signers with default fallback
+  printStep(6, 'Demonstrate multiple signers with default fallback');
+  printInfo('You can register multiple signers and have a default as fallback');
+  printInfo('Specific signers take precedence over the default signer');
+
+  // Create a new AlgorandClient with multiple signers
+  const algorand5 = AlgorandClient.defaultLocalNet();
+
+  // Set account1 as the default signer
+  printInfo(`\nSetting up signers:`);
+  printInfo(`  Default signer: Account 1 (${shortenAddress(account1.addr.toString())})`);
+  algorand5.setDefaultSigner(account1);
+
+  // Also register account2's signer explicitly
+  printInfo(`  Registered signer: Account 2 (${shortenAddress(account2.addr.toString())})`);
+  algorand5.setSignerFromAccount(account2);
+
+  // Send from account2 (uses registered signer)
+  printInfo(`\nSending from Account 2 (uses registered signer):`);
+  const payment4Result = await algorand5.send.payment({
+    sender: account2.addr,
+    receiver: account3.addr,
+    amount: algo(0.1),
+  });
+  printInfo(`  Transaction ID: ${payment4Result.txIds[0]}`);
+  printInfo(`  Confirmed in round: ${payment4Result.confirmation.confirmedRound}`);
+
+  // Send from account1 (uses default signer)
+  printInfo(`\nSending from Account 1 (uses default signer):`);
+  const payment5Result = await algorand5.send.payment({
+    sender: account1.addr,
+    receiver: account3.addr,
+    amount: algo(0.1),
+  });
+  printInfo(`  Transaction ID: ${payment5Result.txIds[0]}`);
+  printInfo(`  Confirmed in round: ${payment5Result.confirmation.confirmedRound}`);
+
+  printSuccess('Successfully demonstrated signer priority (specific > default)');
+
+  // Step 7: Error handling - No signer registered
+  printStep(7, 'Error handling - Attempting to send without a registered signer');
+  printInfo('When no signer is registered for an address and no default signer is set,');
+  printInfo('an error will be thrown when trying to send a transaction');
+
+  // Create a new AlgorandClient without any signers
+  const algorand6 = AlgorandClient.defaultLocalNet();
+  const unregisteredAccount = algorand6.account.random();
+
+  printInfo(
+    `\nAttempting to send from unregistered account: ${shortenAddress(unregisteredAccount.addr.toString())}`,
+  );
+  printInfo('(Note: algorand.account.random() automatically registers the signer,');
+  printInfo(' but if we create a fresh client and only have the address, it will fail)');
+
+  // Create yet another client that doesn't have the signer registered
+  const algorand7 = AlgorandClient.defaultLocalNet();
+
+  try {
+    // Try to send from the address without registering a signer
+    await algorand7.send.payment({
+      sender: unregisteredAccount.addr, // This address has no signer in algorand7
+      receiver: account1.addr,
+      amount: algo(0.01),
+    });
+    printInfo('Unexpectedly succeeded');
+  } catch (error) {
+    printSuccess('Caught expected error when no signer is registered');
+    printInfo(`Error message: ${error instanceof Error ? error.message : String(error)}`);
+  }
+
+  // Step 8: Method chaining
+  printStep(8, 'Method chaining - Configure signers fluently');
+  printInfo('All signer methods return the AlgorandClient, allowing method chaining');
+
+  const algorand8 = AlgorandClient.defaultLocalNet()
+    .setDefaultSigner(account1)
+    .setSignerFromAccount(account2)
+    .setSigner(account3.addr, account3.signer);
+
+  printInfo(`\nConfigured AlgorandClient with chained calls:`);
+  printInfo(`  .setDefaultSigner(account1)`);
+  printInfo(`  .setSignerFromAccount(account2)`);
+  printInfo(`  .setSigner(account3.addr, account3.signer)`);
+
+  // Verify all signers work
+  const balances: Record<string, bigint> = {};
+  for (const [name, account] of [
+    ['Account 1', account1],
+    ['Account 2', account2],
+    ['Account 3', account3],
+  ] as const) {
+    const info = await algorand8.account.getInformation(account.addr);
+    balances[name] = info.balance.microAlgo;
+  }
+
+  printInfo(`\nCurrent balances:`);
+  for (const [name, balance] of Object.entries(balances)) {
+    printInfo(`  ${name}: ${(Number(balance) / 1_000_000).toFixed(6)} ALGO`);
+  }
+
+  printSuccess('Successfully configured AlgorandClient with method chaining');
+
+  // Step 9: Retrieve signers and accounts with getSigner() and getAccount()
+  printStep(9, 'Retrieve signers and accounts with getSigner() and getAccount()');
+  printInfo(
+    'algorand.account.getSigner(address) retrieves the TransactionSigner registered for an address',
+  );
+  printInfo(
+    'algorand.account.getAccount(address) retrieves the full AddressWithSigner for an address',
+  );
+
+  // Retrieve the signer for account1 (registered via method chaining in step 8)
+  const retrievedSigner = algorand8.account.getSigner(account1.addr);
+  printInfo(`\nRetrieved signer for Account 1: ${shortenAddress(account1.addr.toString())}`);
+  printSuccess('getSigner() returned a TransactionSigner');
+
+  // Retrieve the full AddressWithSigner for account2
+  const retrievedAccount = algorand8.account.getAccount(account2.addr);
+  printInfo(
+    `\nRetrieved account for Account 2: ${shortenAddress(retrievedAccount.addr.toString())}`,
+  );
+  printSuccess('getAccount() returned AddressWithSigner (addr + signer)');
+
+  // Use the retrieved signer in a transaction via addTransaction
+  const txnWithRetrievedSigner = await algorand8.send.payment({
+    sender: account1.addr,
+    receiver: account2.addr,
+    amount: algo(0.05),
+    signer: retrievedSigner,
+  });
+  printInfo(`\nPayment sent using retrieved signer:`);
+  printInfo(`  Transaction ID: ${txnWithRetrievedSigner.txIds[0]}`);
+  printInfo(`  Confirmed in round: ${txnWithRetrievedSigner.confirmation.confirmedRound}`);
+
+  printSuccess('Successfully retrieved and used signers via getSigner() and getAccount()');
+
+  // Step 10: Summary
+  printStep(10, 'Summary');
+  printInfo('Signer configuration methods:');
+  printInfo('');
+  printInfo('setDefaultSigner(signer):');
+  printInfo('  - Sets a fallback signer for all transactions');
+  printInfo('  - Used when no specific signer is registered for an address');
+  printInfo('  - Accepts TransactionSigner or AddressWithTransactionSigner');
+  printInfo('');
+  printInfo('setSignerFromAccount(account):');
+  printInfo('  - Registers a signer from an account object');
+  printInfo('  - Account must have addr and signer properties');
+  printInfo('  - Supports Account, LogicSigAccount, MultisigAccount, etc.');
+  printInfo('');
+  printInfo('setSigner(address, signer):');
+  printInfo('  - Registers a TransactionSigner for a specific address');
+  printInfo('  - Gives fine-grained control over signing');
+  printInfo('');
+  printInfo('getSigner(address):');
+  printInfo('  - Retrieves the TransactionSigner registered for an address');
+  printInfo('  - Falls back to default signer if no specific signer registered');
+  printInfo('');
+  printInfo('getAccount(address):');
+  printInfo('  - Retrieves the AddressWithSigner for an address');
+  printInfo('  - Returns both the address and its registered signer');
+  printInfo('');
+  printInfo('Signer resolution order:');
+  printInfo('  1. Specific signer registered for the address');
+  printInfo('  2. Default signer (if set)');
+  printInfo('  3. Error thrown if no signer found');
+  printInfo('');
+  printInfo('Best practices:');
+  printInfo('  - Use algorand.account.random() for test accounts (auto-registers signer)');
+  printInfo('  - Set a default signer for your primary signing account');
+  printInfo('  - Register additional signers as needed for multi-account workflows');
+  printInfo('  - Method chaining makes configuration concise and readable');
+
+  printSuccess('Signer Configuration example completed!');
+}
+
+main().catch(error => {
+  printError(`Unhandled error: ${error instanceof Error ? error.message : String(error)}`);
+  process.exit(1);
+});
+```
+
+---
+
+### Other examples in Algorand Client
+
+- [Client Instantiation](/docs/algokit-utils/typescript/latest/examples/algorand-client/01-client-instantiation/)
+- [AlgoAmount Utility](/docs/algokit-utils/typescript/latest/examples/algorand-client/02-algo-amount/)
+- **Signer Configuration**
+- [Suggested Params Configuration](/docs/algokit-utils/typescript/latest/examples/algorand-client/04-params-config/)
+- [Account Manager](/docs/algokit-utils/typescript/latest/examples/algorand-client/05-account-manager/)
+- [Send Payment](/docs/algokit-utils/typescript/latest/examples/algorand-client/06-send-payment/)
+- [Send Asset Operations](/docs/algokit-utils/typescript/latest/examples/algorand-client/07-send-asset-ops/)
+- [Send Application Operations](/docs/algokit-utils/typescript/latest/examples/algorand-client/08-send-app-ops/)
+- [Create Transaction (Unsigned Transactions)](/docs/algokit-utils/typescript/latest/examples/algorand-client/09-create-transaction/)
+- [Transaction Composer (Atomic Transaction Groups)](/docs/algokit-utils/typescript/latest/examples/algorand-client/10-transaction-composer/)
+- [Asset Manager](/docs/algokit-utils/typescript/latest/examples/algorand-client/11-asset-manager/)
+- [App Manager](/docs/algokit-utils/typescript/latest/examples/algorand-client/12-app-manager/)
+- [App Deployer](/docs/algokit-utils/typescript/latest/examples/algorand-client/13-app-deployer/)
+- [Client Manager](/docs/algokit-utils/typescript/latest/examples/algorand-client/14-client-manager/)
+- [Error Transformers](/docs/algokit-utils/typescript/latest/examples/algorand-client/15-error-transformers/)
+- [Transaction Leases](/docs/algokit-utils/typescript/latest/examples/algorand-client/16-leases/)

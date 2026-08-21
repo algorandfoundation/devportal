@@ -1,0 +1,501 @@
+---
+title: 'Asset Manager'
+description: 'This example demonstrates the AssetManager functionality for querying asset information and performing bulk opt-in/opt-out operations:'
+sidebar:
+  order: 11
+---
+
+[← Back to Algorand Client](/docs/algokit-utils/typescript/latest/examples/algorand-client/)
+
+## Description
+
+This example demonstrates the AssetManager functionality for querying asset information and performing bulk opt-in/opt-out operations:
+
+- algorand.asset.getById() to fetch asset information by asset ID
+- algorand.asset.getAccountInformation() to get an account's asset holding
+- algorand.asset.bulkOptIn() to opt into multiple assets at once
+- algorand.asset.bulkOptOut() to opt out of multiple assets at once
+- Efficiency comparison: bulk operations vs individual opt-ins
+- Error handling for non-existent assets and non-opted-in accounts
+
+## Prerequisites
+
+- LocalNet running (via `algokit localnet start`)
+
+## Run This Example
+
+From the repository root:
+
+```bash
+cd examples
+npm run example algorand_client/11-asset-manager.ts
+```
+
+## Code
+
+[View source on GitHub](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/examples/algorand_client/11-asset-manager.ts)
+
+```typescript title="11-asset-manager.ts"
+/**
+ * Example: Asset Manager
+ *
+ * This example demonstrates the AssetManager functionality for querying
+ * asset information and performing bulk opt-in/opt-out operations:
+ * - algorand.asset.getById() to fetch asset information by asset ID
+ * - algorand.asset.getAccountInformation() to get an account's asset holding
+ * - algorand.asset.bulkOptIn() to opt into multiple assets at once
+ * - algorand.asset.bulkOptOut() to opt out of multiple assets at once
+ * - Efficiency comparison: bulk operations vs individual opt-ins
+ * - Error handling for non-existent assets and non-opted-in accounts
+ *
+ * Prerequisites:
+ * - LocalNet running (via `algokit localnet start`)
+ */
+
+import { AlgorandClient, algo } from '@algorandfoundation/algokit-utils';
+import {
+  printError,
+  printHeader,
+  printInfo,
+  printStep,
+  printSuccess,
+  shortenAddress,
+} from '../shared/utils.js';
+
+async function main() {
+  printHeader('Asset Manager Example');
+
+  // Initialize client and verify LocalNet is running
+  const algorand = AlgorandClient.defaultLocalNet();
+
+  try {
+    await algorand.client.algod.status();
+    printSuccess('Connected to LocalNet');
+  } catch (error) {
+    printError(
+      `Failed to connect to LocalNet: ${error instanceof Error ? error.message : String(error)}`,
+    );
+    printInfo('Make sure LocalNet is running (e.g., algokit localnet start)');
+    return;
+  }
+
+  // Step 1: Create and fund test accounts
+  printStep(1, 'Create and fund test accounts');
+  printInfo('Creating accounts for asset manager demonstrations');
+
+  const creator = algorand.account.random();
+  const holder = algorand.account.random();
+
+  printInfo(`\nCreated accounts:`);
+  printInfo(`  Creator: ${shortenAddress(creator.addr.toString())}`);
+  printInfo(`  Holder: ${shortenAddress(holder.addr.toString())}`);
+
+  // Fund accounts
+  await algorand.account.ensureFundedFromEnvironment(creator.addr, algo(20));
+  await algorand.account.ensureFundedFromEnvironment(holder.addr, algo(10));
+
+  printSuccess('Created and funded test accounts');
+
+  // Step 2: Create test assets
+  printStep(2, 'Create test assets');
+  printInfo('Creating multiple assets to demonstrate bulk operations');
+
+  // Create first asset
+  const asset1Result = await algorand.send.assetCreate({
+    sender: creator.addr,
+    total: 1_000_000n,
+    decimals: 2,
+    assetName: 'Asset Manager Token 1',
+    unitName: 'AMT1',
+    url: 'https://example.com/amt1',
+    manager: creator.addr,
+  });
+  const asset1Id = asset1Result.assetId;
+
+  // Create second asset
+  const asset2Result = await algorand.send.assetCreate({
+    sender: creator.addr,
+    total: 500_000n,
+    decimals: 0,
+    assetName: 'Asset Manager Token 2',
+    unitName: 'AMT2',
+    url: 'https://example.com/amt2',
+    manager: creator.addr,
+  });
+  const asset2Id = asset2Result.assetId;
+
+  // Create third asset
+  const asset3Result = await algorand.send.assetCreate({
+    sender: creator.addr,
+    total: 10_000_000n,
+    decimals: 6,
+    assetName: 'Asset Manager Token 3',
+    unitName: 'AMT3',
+    url: 'https://example.com/amt3',
+    manager: creator.addr,
+  });
+  const asset3Id = asset3Result.assetId;
+
+  printInfo(`\nCreated assets:`);
+  printInfo(`  Asset 1 (AMT1): ID ${asset1Id}`);
+  printInfo(`  Asset 2 (AMT2): ID ${asset2Id}`);
+  printInfo(`  Asset 3 (AMT3): ID ${asset3Id}`);
+
+  printSuccess('Test assets created');
+
+  // Step 3: Demonstrate algorand.asset.getById()
+  printStep(3, 'Demonstrate algorand.asset.getById() to fetch asset information');
+  printInfo('Fetching detailed information about an asset by its ID');
+
+  const assetInfo = await algorand.asset.getById(asset1Id);
+
+  printInfo(`\nAsset information for ID ${asset1Id}:`);
+  printInfo(`  Asset ID (index): ${assetInfo.assetId}`);
+  printInfo(`  Name: ${assetInfo.assetName}`);
+  printInfo(`  Unit Name: ${assetInfo.unitName}`);
+  printInfo(`  Total Supply: ${assetInfo.total} (smallest units)`);
+  printInfo(`  Decimals: ${assetInfo.decimals}`);
+  printInfo(`  Creator: ${shortenAddress(assetInfo.creator.toString())}`);
+  printInfo(
+    `  Manager: ${assetInfo.manager ? shortenAddress(assetInfo.manager.toString()) : 'none'}`,
+  );
+  printInfo(
+    `  Reserve: ${assetInfo.reserve ? shortenAddress(assetInfo.reserve.toString()) : 'none'}`,
+  );
+  printInfo(`  Freeze: ${assetInfo.freeze ? shortenAddress(assetInfo.freeze.toString()) : 'none'}`);
+  printInfo(
+    `  Clawback: ${assetInfo.clawback ? shortenAddress(assetInfo.clawback.toString()) : 'none'}`,
+  );
+  printInfo(`  Default Frozen: ${assetInfo.defaultFrozen}`);
+  printInfo(`  URL: ${assetInfo.url ?? 'none'}`);
+
+  // Show all three assets for comparison
+  printInfo(`\nComparing all created assets:`);
+  const asset2Info = await algorand.asset.getById(asset2Id);
+  const asset3Info = await algorand.asset.getById(asset3Id);
+
+  printInfo(`\n  Asset 1: ${assetInfo.assetName} (${assetInfo.unitName})`);
+  printInfo(`    Total: ${assetInfo.total} | Decimals: ${assetInfo.decimals}`);
+  printInfo(`  Asset 2: ${asset2Info.assetName} (${asset2Info.unitName})`);
+  printInfo(`    Total: ${asset2Info.total} | Decimals: ${asset2Info.decimals}`);
+  printInfo(`  Asset 3: ${asset3Info.assetName} (${asset3Info.unitName})`);
+  printInfo(`    Total: ${asset3Info.total} | Decimals: ${asset3Info.decimals}`);
+
+  printSuccess('Asset information retrieved');
+
+  // Step 4: Handle case where asset doesn't exist
+  printStep(4, 'Handle case where asset does not exist');
+  printInfo('Demonstrating error handling for non-existent asset IDs');
+
+  const nonExistentAssetId = 999999999n;
+  printInfo(`\nAttempting to fetch asset with ID ${nonExistentAssetId}...`);
+
+  try {
+    await algorand.asset.getById(nonExistentAssetId);
+    printError('Expected an error but none was thrown!');
+  } catch (error) {
+    const errorMessage = error instanceof Error ? error.message : String(error);
+    printInfo(`  Error caught: Asset not found`);
+    printInfo(`  Error details: ${errorMessage.slice(0, 80)}...`);
+  }
+
+  printSuccess('Non-existent asset handled correctly');
+
+  // Step 5: Demonstrate algorand.asset.bulkOptIn()
+  printStep(5, 'Demonstrate algorand.asset.bulkOptIn() to opt into multiple assets at once');
+  printInfo('Bulk opt-in is more efficient than individual opt-ins');
+  printInfo('Transactions are batched in groups of up to 16');
+
+  const assetIds = [asset1Id, asset2Id, asset3Id];
+  printInfo(`\nOpting holder into ${assetIds.length} assets in a single batch...`);
+
+  const bulkOptInResults = await algorand.asset.bulkOptIn(holder.addr, assetIds, {
+    suppressLog: true, // Suppress SDK logs for cleaner output
+  });
+
+  printInfo(`\nBulk opt-in results:`);
+  for (const result of bulkOptInResults) {
+    printInfo(`  Asset ${result.assetId}: Transaction ${result.transactionId.slice(0, 20)}...`);
+  }
+
+  printInfo(`\nTotal transactions: ${bulkOptInResults.length}`);
+  printInfo(`Efficiency: ${assetIds.length} assets opted in with a single method call`);
+
+  printSuccess('Bulk opt-in completed');
+
+  // Step 6: Demonstrate algorand.asset.getAccountInformation()
+  printStep(6, 'Demonstrate algorand.asset.getAccountInformation() to get account asset holding');
+  printInfo("Fetching holder's asset holding information after opt-in");
+
+  const holdingInfo1 = await algorand.asset.getAccountInformation(holder.addr, asset1Id);
+
+  printInfo(`\nHolder's holding for Asset ${asset1Id}:`);
+  printInfo(`  Asset ID: ${holdingInfo1.assetId}`);
+  printInfo(`  Balance: ${holdingInfo1.balance} (smallest units)`);
+  printInfo(`  Frozen: ${holdingInfo1.frozen}`);
+
+  // Transfer some assets to show non-zero balance
+  printInfo(`\nTransferring assets to holder...`);
+  await algorand.send.assetTransfer({
+    sender: creator.addr,
+    receiver: holder.addr,
+    assetId: asset1Id,
+    amount: 10_000n, // 100 whole tokens (100 * 10^2)
+  });
+  await algorand.send.assetTransfer({
+    sender: creator.addr,
+    receiver: holder.addr,
+    assetId: asset2Id,
+    amount: 500n,
+  });
+
+  // Re-fetch holding info
+  const holdingInfo1Updated = await algorand.asset.getAccountInformation(holder.addr, asset1Id);
+  const holdingInfo2 = await algorand.asset.getAccountInformation(holder.addr, asset2Id);
+  const holdingInfo3 = await algorand.asset.getAccountInformation(holder.addr, asset3Id);
+
+  printInfo(`\nUpdated holder balances:`);
+  printInfo(
+    `  Asset ${asset1Id} (AMT1): ${holdingInfo1Updated.balance} (100 tokens with 2 decimals)`,
+  );
+  printInfo(`  Asset ${asset2Id} (AMT2): ${holdingInfo2.balance} (500 whole units)`);
+  printInfo(`  Asset ${asset3Id} (AMT3): ${holdingInfo3.balance} (no transfers yet)`);
+
+  printSuccess('Account asset information retrieved');
+
+  // Step 7: Handle case where account not opted in
+  printStep(7, 'Handle case where account is not opted in');
+  printInfo('Demonstrating error handling when querying for assets not opted in');
+
+  // Create a new account that hasn't opted in to any assets
+  const nonOptedAccount = algorand.account.random();
+  await algorand.account.ensureFundedFromEnvironment(nonOptedAccount.addr, algo(1));
+
+  printInfo(`\nQuerying asset holding for account that hasn't opted in...`);
+
+  try {
+    await algorand.asset.getAccountInformation(nonOptedAccount.addr, asset1Id);
+    printError('Expected an error but none was thrown!');
+  } catch (error) {
+    const errorMessage = error instanceof Error ? error.message : String(error);
+    printInfo(`  Error caught: Account not opted in to asset`);
+    printInfo(`  Error details: ${errorMessage.slice(0, 80)}...`);
+  }
+
+  printSuccess('Non-opted-in account handled correctly');
+
+  // Step 8: Compare bulk operations vs individual opt-ins
+  printStep(8, 'Show how bulk operations are more efficient than individual opt-ins');
+  printInfo('Comparing the approaches for clarity');
+
+  printInfo(`\nIndividual opt-in approach (NOT RECOMMENDED for multiple assets):`);
+  printInfo(`  // Requires 3 separate transactions and 3 API calls`);
+  printInfo(`  await algorand.send.assetOptIn({ sender, assetId: asset1Id })`);
+  printInfo(`  await algorand.send.assetOptIn({ sender, assetId: asset2Id })`);
+  printInfo(`  await algorand.send.assetOptIn({ sender, assetId: asset3Id })`);
+
+  printInfo(`\nBulk opt-in approach (RECOMMENDED):`);
+  printInfo(`  // Single method call, transactions batched in groups of 16`);
+  printInfo(`  await algorand.asset.bulkOptIn(account, [asset1Id, asset2Id, asset3Id])`);
+
+  printInfo(`\nEfficiency benefits:`);
+  printInfo(`  - Single method call for any number of assets`);
+  printInfo(`  - Automatic batching (up to 16 transactions per group)`);
+  printInfo(`  - Reduced code complexity`);
+  printInfo(`  - Better error handling with clear result mapping`);
+
+  printSuccess('Efficiency comparison demonstrated');
+
+  // Step 9: Prepare for bulk opt-out by transferring assets back
+  printStep(9, 'Prepare for bulk opt-out');
+  printInfo('Before opting out, all asset balances must be zero');
+  printInfo('Transferring all held assets back to creator');
+
+  // Transfer assets back
+  const currentBalance1 = await algorand.asset.getAccountInformation(holder.addr, asset1Id);
+  const currentBalance2 = await algorand.asset.getAccountInformation(holder.addr, asset2Id);
+
+  if (currentBalance1.balance > 0n) {
+    await algorand.send.assetTransfer({
+      sender: holder.addr,
+      receiver: creator.addr,
+      assetId: asset1Id,
+      amount: currentBalance1.balance,
+    });
+    printInfo(
+      `  Transferred ${currentBalance1.balance} units of Asset ${asset1Id} back to creator`,
+    );
+  }
+
+  if (currentBalance2.balance > 0n) {
+    await algorand.send.assetTransfer({
+      sender: holder.addr,
+      receiver: creator.addr,
+      assetId: asset2Id,
+      amount: currentBalance2.balance,
+    });
+    printInfo(
+      `  Transferred ${currentBalance2.balance} units of Asset ${asset2Id} back to creator`,
+    );
+  }
+
+  // Verify zero balances
+  const finalBalance1 = await algorand.asset.getAccountInformation(holder.addr, asset1Id);
+  const finalBalance2 = await algorand.asset.getAccountInformation(holder.addr, asset2Id);
+  const finalBalance3 = await algorand.asset.getAccountInformation(holder.addr, asset3Id);
+
+  printInfo(`\nVerified zero balances:`);
+  printInfo(`  Asset ${asset1Id}: ${finalBalance1.balance}`);
+  printInfo(`  Asset ${asset2Id}: ${finalBalance2.balance}`);
+  printInfo(`  Asset ${asset3Id}: ${finalBalance3.balance}`);
+
+  printSuccess('Ready for bulk opt-out');
+
+  // Step 10: Demonstrate algorand.asset.bulkOptOut()
+  printStep(10, 'Demonstrate algorand.asset.bulkOptOut() to opt out of multiple assets at once');
+  printInfo('Bulk opt-out validates zero balances by default (ensureZeroBalance: true)');
+
+  const optOutAssetIds = [asset1Id, asset2Id, asset3Id];
+  printInfo(`\nOpting holder out of ${optOutAssetIds.length} assets in a single batch...`);
+
+  const bulkOptOutResults = await algorand.asset.bulkOptOut(holder.addr, optOutAssetIds, {
+    ensureZeroBalance: true, // Default - validates balances before opting out
+    suppressLog: true,
+  });
+
+  printInfo(`\nBulk opt-out results:`);
+  for (const result of bulkOptOutResults) {
+    printInfo(`  Asset ${result.assetId}: Transaction ${result.transactionId.slice(0, 20)}...`);
+  }
+
+  printInfo(`\nTotal transactions: ${bulkOptOutResults.length}`);
+  printInfo(`Efficiency: ${optOutAssetIds.length} assets opted out with a single method call`);
+
+  // Verify opt-out
+  printInfo(`\nVerifying holder is no longer opted in...`);
+  for (const assetId of optOutAssetIds) {
+    try {
+      await algorand.asset.getAccountInformation(holder.addr, assetId);
+      printError(`Holder should not be opted in to asset ${assetId}!`);
+    } catch {
+      printInfo(`  Asset ${assetId}: Confirmed not opted in`);
+    }
+  }
+
+  printSuccess('Bulk opt-out completed');
+
+  // Step 11: Demonstrate error handling for bulk opt-out with non-zero balance
+  printStep(11, 'Demonstrate error handling: bulk opt-out with non-zero balance');
+  printInfo('bulkOptOut throws an error if ensureZeroBalance is true and balance is non-zero');
+
+  // First, opt back in to an asset and transfer some tokens
+  await algorand.send.assetOptIn({
+    sender: holder.addr,
+    assetId: asset1Id,
+  });
+  await algorand.send.assetTransfer({
+    sender: creator.addr,
+    receiver: holder.addr,
+    assetId: asset1Id,
+    amount: 100n,
+  });
+
+  printInfo(`\nHolder has balance of 100 for Asset ${asset1Id}`);
+  printInfo(`Attempting bulk opt-out with ensureZeroBalance: true...`);
+
+  try {
+    await algorand.asset.bulkOptOut(holder.addr, [asset1Id], {
+      ensureZeroBalance: true,
+    });
+    printError('Expected an error but none was thrown!');
+  } catch (error) {
+    const errorMessage = error instanceof Error ? error.message : String(error);
+    printInfo(`  Error caught: Non-zero balance prevents opt-out`);
+    printInfo(`  Error details: ${errorMessage.slice(0, 100)}...`);
+  }
+
+  // Clean up - transfer back and opt out
+  await algorand.send.assetTransfer({
+    sender: holder.addr,
+    receiver: creator.addr,
+    assetId: asset1Id,
+    amount: 100n,
+  });
+  await algorand.send.assetOptOut({
+    sender: holder.addr,
+    assetId: asset1Id,
+    creator: creator.addr,
+    ensureZeroBalance: true,
+  });
+
+  printSuccess('Error handling demonstrated');
+
+  // Step 12: Summary
+  printStep(12, 'Summary - Asset Manager API');
+  printInfo('The AssetManager provides efficient asset operations:');
+  printInfo('');
+  printInfo('algorand.asset.getById(assetId):');
+  printInfo('  - Fetches complete asset information by ID');
+  printInfo('  - Returns: AssetInformation object with all asset properties');
+  printInfo('  - Properties: assetId, assetName, unitName, total, decimals,');
+  printInfo('    creator, manager, reserve, freeze, clawback, defaultFrozen, url');
+  printInfo('');
+  printInfo('algorand.asset.getAccountInformation(account, assetId):');
+  printInfo("  - Fetches an account's holding for a specific asset");
+  printInfo('  - Returns: AccountAssetInformation object');
+  printInfo('  - Properties: assetId, balance, frozen');
+  printInfo('  - Throws if account is not opted in to the asset');
+  printInfo('');
+  printInfo('algorand.asset.bulkOptIn(account, assetIds, options?):');
+  printInfo('  - Opts an account into multiple assets at once');
+  printInfo('  - Batches transactions in groups of 16 (max atomic group size)');
+  printInfo('  - Returns: Array of { assetId, transactionId }');
+  printInfo('  - More efficient than individual assetOptIn calls');
+  printInfo('');
+  printInfo('algorand.asset.bulkOptOut(account, assetIds, options?):');
+  printInfo('  - Opts an account out of multiple assets at once');
+  printInfo('  - ensureZeroBalance: true (default) validates balances first');
+  printInfo('  - Batches transactions in groups of 16');
+  printInfo('  - Returns: Array of { assetId, transactionId }');
+  printInfo('  - Automatically fetches asset creators for opt-out transactions');
+  printInfo('');
+  printInfo('Bulk operation benefits:');
+  printInfo('  - Single method call for any number of assets');
+  printInfo('  - Automatic batching for optimal efficiency');
+  printInfo('  - Consistent result format with asset ID to transaction ID mapping');
+  printInfo('  - Built-in validation for safe opt-out operations');
+
+  // Clean up - destroy test assets
+  await algorand.send.assetDestroy({ sender: creator.addr, assetId: asset1Id });
+  await algorand.send.assetDestroy({ sender: creator.addr, assetId: asset2Id });
+  await algorand.send.assetDestroy({ sender: creator.addr, assetId: asset3Id });
+
+  printSuccess('Asset Manager example completed!');
+}
+
+main().catch(error => {
+  printError(`Unhandled error: ${error instanceof Error ? error.message : String(error)}`);
+  process.exit(1);
+});
+```
+
+---
+
+### Other examples in Algorand Client
+
+- [Client Instantiation](/docs/algokit-utils/typescript/latest/examples/algorand-client/01-client-instantiation/)
+- [AlgoAmount Utility](/docs/algokit-utils/typescript/latest/examples/algorand-client/02-algo-amount/)
+- [Signer Configuration](/docs/algokit-utils/typescript/latest/examples/algorand-client/03-signer-config/)
+- [Suggested Params Configuration](/docs/algokit-utils/typescript/latest/examples/algorand-client/04-params-config/)
+- [Account Manager](/docs/algokit-utils/typescript/latest/examples/algorand-client/05-account-manager/)
+- [Send Payment](/docs/algokit-utils/typescript/latest/examples/algorand-client/06-send-payment/)
+- [Send Asset Operations](/docs/algokit-utils/typescript/latest/examples/algorand-client/07-send-asset-ops/)
+- [Send Application Operations](/docs/algokit-utils/typescript/latest/examples/algorand-client/08-send-app-ops/)
+- [Create Transaction (Unsigned Transactions)](/docs/algokit-utils/typescript/latest/examples/algorand-client/09-create-transaction/)
+- [Transaction Composer (Atomic Transaction Groups)](/docs/algokit-utils/typescript/latest/examples/algorand-client/10-transaction-composer/)
+- **Asset Manager**
+- [App Manager](/docs/algokit-utils/typescript/latest/examples/algorand-client/12-app-manager/)
+- [App Deployer](/docs/algokit-utils/typescript/latest/examples/algorand-client/13-app-deployer/)
+- [Client Manager](/docs/algokit-utils/typescript/latest/examples/algorand-client/14-client-manager/)
+- [Error Transformers](/docs/algokit-utils/typescript/latest/examples/algorand-client/15-error-transformers/)
+- [Transaction Leases](/docs/algokit-utils/typescript/latest/examples/algorand-client/16-leases/)

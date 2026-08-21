@@ -1,0 +1,519 @@
+---
+title: 'Account Transactions'
+description: "This example demonstrates how to query an account's transaction history using the IndexerClient lookupAccountTransactions() method."
+sidebar:
+  order: 5
+---
+
+[← Back to Indexer Client](/docs/algokit-utils/typescript/latest/examples/indexer-client/)
+
+## Description
+
+This example demonstrates how to query an account's transaction history using the IndexerClient lookupAccountTransactions() method.
+
+## Prerequisites
+
+- LocalNet running (via `algokit localnet start`)
+
+## Run This Example
+
+From the repository root:
+
+```bash
+cd examples
+npm run example indexer_client/05-account-transactions.ts
+```
+
+## Code
+
+[View source on GitHub](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/examples/indexer_client/05-account-transactions.ts)
+
+```typescript title="05-account-transactions.ts"
+/**
+ * Example: Account Transactions
+ *
+ * This example demonstrates how to query an account's transaction history using
+ * the IndexerClient lookupAccountTransactions() method.
+ *
+ * Prerequisites:
+ * - LocalNet running (via `algokit localnet start`)
+ */
+
+import { algo } from '@algorandfoundation/algokit-utils';
+import {
+  createAlgorandClient,
+  createIndexerClient,
+  formatMicroAlgo,
+  printError,
+  printHeader,
+  printInfo,
+  printStep,
+  printSuccess,
+  shortenAddress,
+} from '../shared/utils.js';
+
+async function main() {
+  printHeader('Account Transactions Example');
+
+  // Create clients
+  const indexer = createIndexerClient();
+  const algorand = createAlgorandClient();
+
+  // =========================================================================
+  // Step 1: Get a funded account from LocalNet
+  // =========================================================================
+  printStep(1, 'Getting a funded account from LocalNet');
+
+  let senderAddress: string;
+  let senderAccount: Awaited<ReturnType<typeof algorand.account.kmd.getLocalNetDispenserAccount>>;
+
+  try {
+    senderAccount = await algorand.account.kmd.getLocalNetDispenserAccount();
+    senderAddress = senderAccount.addr.toString();
+    algorand.setSignerFromAccount(senderAccount);
+    printSuccess(`Using dispenser account: ${shortenAddress(senderAddress)}`);
+  } catch (error) {
+    printError(
+      `Failed to get dispenser account: ${error instanceof Error ? error.message : String(error)}`,
+    );
+    printInfo('');
+    printInfo('Make sure LocalNet is running: algokit localnet start');
+    printInfo('If issues persist, try: algokit localnet reset');
+    return;
+  }
+
+  // =========================================================================
+  // Step 2: Create test transactions for demonstration
+  // =========================================================================
+  printStep(2, 'Creating test transactions for demonstration');
+
+  let receiverAddress: string;
+  let assetId: bigint;
+
+  try {
+    // Create a random receiver account
+    const receiverAccount = algorand.account.random();
+    receiverAddress = receiverAccount.addr.toString();
+    algorand.setSignerFromAccount(receiverAccount);
+    printInfo(`Created receiver account: ${shortenAddress(receiverAddress)}`);
+
+    // Fund the receiver with some initial ALGO
+    printInfo('Sending initial payment to receiver...');
+    await algorand.send.payment({
+      sender: senderAccount.addr,
+      receiver: receiverAccount.addr,
+      amount: algo(10),
+    });
+    printSuccess('Initial payment sent: 10 ALGO');
+
+    // Send a few more payments with different amounts
+    printInfo('Sending additional payments...');
+    await algorand.send.payment({
+      sender: senderAccount.addr,
+      receiver: receiverAccount.addr,
+      amount: algo(5),
+    });
+    printSuccess('Payment sent: 5 ALGO');
+
+    await algorand.send.payment({
+      sender: senderAccount.addr,
+      receiver: receiverAccount.addr,
+      amount: algo(0.5),
+    });
+    printSuccess('Payment sent: 0.5 ALGO');
+
+    // Create an asset
+    printInfo('Creating a test asset...');
+    const assetCreateResult = await algorand.send.assetCreate({
+      sender: senderAccount.addr,
+      total: 1_000_000n,
+      decimals: 6,
+      assetName: 'TestToken',
+      unitName: 'TEST',
+    });
+    assetId = assetCreateResult.assetId;
+    printSuccess(`Created asset: TestToken (ID: ${assetId})`);
+
+    // Opt-in receiver to the asset
+    printInfo('Opting receiver into asset...');
+    await algorand.send.assetOptIn({
+      sender: receiverAccount.addr,
+      assetId: assetId,
+    });
+    printSuccess('Receiver opted into asset');
+
+    // Transfer some assets
+    printInfo('Sending asset transfer...');
+    await algorand.send.assetTransfer({
+      sender: senderAccount.addr,
+      receiver: receiverAccount.addr,
+      assetId: assetId,
+      amount: 100_000n,
+    });
+    printSuccess('Asset transfer sent: 100,000 TestToken (0.1 TEST)');
+
+    // Small delay to allow indexer to catch up
+    printInfo('Waiting for indexer to index transactions...');
+    await new Promise(resolve => setTimeout(resolve, 3000));
+    printInfo('');
+  } catch (error) {
+    printError(
+      `Failed to create test transactions: ${error instanceof Error ? error.message : String(error)}`,
+    );
+    printInfo('');
+    printInfo('If LocalNet errors occur, try: algokit localnet reset');
+    return;
+  }
+
+  // =========================================================================
+  // Step 3: Lookup account transactions with lookupAccountTransactions()
+  // =========================================================================
+  printStep(3, 'Looking up account transactions with lookupAccountTransactions()');
+
+  try {
+    // Note: Results are returned newest to oldest for account transactions
+    const txnsResult = await indexer.lookupAccountTransactions(senderAddress);
+
+    printSuccess(`Found ${txnsResult.transactions.length} transaction(s) for account`);
+    printInfo('Note: Results are returned newest to oldest');
+    printInfo('');
+
+    if (txnsResult.transactions.length > 0) {
+      printInfo('Recent transactions:');
+      for (const tx of txnsResult.transactions.slice(0, 5)) {
+        printInfo(`  Transaction ID: ${tx.id ? shortenAddress(tx.id, 8, 6) : 'N/A'}`);
+        printInfo(`    - txType: ${tx.txType}`);
+        printInfo(`    - sender: ${shortenAddress(tx.sender)}`);
+        printInfo(`    - fee: ${formatMicroAlgo(tx.fee)}`);
+        if (tx.confirmedRound !== undefined) {
+          printInfo(`    - confirmedRound: ${tx.confirmedRound}`);
+        }
+        if (tx.roundTime !== undefined) {
+          const date = new Date(tx.roundTime * 1000);
+          printInfo(`    - roundTime: ${date.toISOString()}`);
+        }
+        // Show payment details if present
+        if (tx.paymentTransaction) {
+          printInfo(`    - receiver: ${shortenAddress(tx.paymentTransaction.receiver)}`);
+          printInfo(`    - amount: ${formatMicroAlgo(tx.paymentTransaction.amount)}`);
+        }
+        // Show asset transfer details if present
+        if (tx.assetTransferTransaction) {
+          printInfo(`    - assetId: ${tx.assetTransferTransaction.assetId}`);
+          printInfo(`    - amount: ${tx.assetTransferTransaction.amount}`);
+          printInfo(`    - receiver: ${shortenAddress(tx.assetTransferTransaction.receiver)}`);
+        }
+        // Show asset config details if present
+        if (tx.assetConfigTransaction) {
+          printInfo(`    - assetId: ${tx.assetConfigTransaction.assetId ?? 'new asset'}`);
+          if (tx.createdAssetId) {
+            printInfo(`    - createdAssetId: ${tx.createdAssetId}`);
+          }
+        }
+        printInfo('');
+      }
+    }
+
+    printInfo(`Query performed at round: ${txnsResult.currentRound}`);
+  } catch (error) {
+    printError(
+      `lookupAccountTransactions failed: ${error instanceof Error ? error.message : String(error)}`,
+    );
+  }
+
+  // =========================================================================
+  // Step 4: Filter by transaction type (pay, axfer, appl)
+  // =========================================================================
+  printStep(4, 'Filtering by transaction type (txType)');
+
+  try {
+    // Filter for payment transactions only
+    printInfo('Querying payment transactions (txType=pay)...');
+    const payTxns = await indexer.lookupAccountTransactions(senderAddress, { txType: 'pay' });
+    printSuccess(`Found ${payTxns.transactions.length} payment transaction(s)`);
+
+    if (payTxns.transactions.length > 0) {
+      for (const tx of payTxns.transactions.slice(0, 3)) {
+        printInfo(
+          `  - ${tx.id ? shortenAddress(tx.id, 8, 6) : 'N/A'}: ${formatMicroAlgo(tx.paymentTransaction?.amount ?? 0n)}`,
+        );
+      }
+    }
+    printInfo('');
+
+    // Filter for asset transfer transactions
+    printInfo('Querying asset transfer transactions (txType=axfer)...');
+    const axferTxns = await indexer.lookupAccountTransactions(senderAddress, { txType: 'axfer' });
+    printSuccess(`Found ${axferTxns.transactions.length} asset transfer transaction(s)`);
+
+    if (axferTxns.transactions.length > 0) {
+      for (const tx of axferTxns.transactions.slice(0, 3)) {
+        printInfo(
+          `  - ${tx.id ? shortenAddress(tx.id, 8, 6) : 'N/A'}: assetId=${tx.assetTransferTransaction?.assetId}, amount=${tx.assetTransferTransaction?.amount}`,
+        );
+      }
+    }
+    printInfo('');
+
+    // Filter for asset config transactions
+    printInfo('Querying asset config transactions (txType=acfg)...');
+    const acfgTxns = await indexer.lookupAccountTransactions(senderAddress, { txType: 'acfg' });
+    printSuccess(`Found ${acfgTxns.transactions.length} asset config transaction(s)`);
+
+    if (acfgTxns.transactions.length > 0) {
+      for (const tx of acfgTxns.transactions.slice(0, 3)) {
+        const assetIdDisplay = tx.createdAssetId ?? tx.assetConfigTransaction?.assetId ?? 'N/A';
+        printInfo(`  - ${tx.id ? shortenAddress(tx.id, 8, 6) : 'N/A'}: assetId=${assetIdDisplay}`);
+      }
+    }
+  } catch (error) {
+    printError(
+      `Transaction type filter failed: ${error instanceof Error ? error.message : String(error)}`,
+    );
+  }
+
+  // =========================================================================
+  // Step 5: Filter by round range (minRound, maxRound)
+  // =========================================================================
+  printStep(5, 'Filtering by round range (minRound, maxRound)');
+
+  try {
+    // Get current round
+    const allTxns = await indexer.lookupAccountTransactions(senderAddress, { limit: 1 });
+    const currentRound = allTxns.currentRound;
+
+    // Filter to recent rounds only (last 100 rounds, but not negative)
+    const minRound = currentRound > 100n ? currentRound - 100n : 0n;
+    printInfo(`Querying transactions from round ${minRound} to ${currentRound}...`);
+
+    const roundFilteredTxns = await indexer.lookupAccountTransactions(senderAddress, {
+      minRound: minRound,
+      maxRound: currentRound,
+    });
+
+    printSuccess(
+      `Found ${roundFilteredTxns.transactions.length} transaction(s) in round range ${minRound}-${currentRound}`,
+    );
+
+    if (roundFilteredTxns.transactions.length > 0) {
+      const rounds = roundFilteredTxns.transactions
+        .map(tx => tx.confirmedRound)
+        .filter(r => r !== undefined);
+      if (rounds.length > 0) {
+        const minFoundRound = rounds.reduce((a, b) => (a! < b! ? a : b));
+        const maxFoundRound = rounds.reduce((a, b) => (a! > b! ? a : b));
+        printInfo(`  Rounds of found transactions: ${minFoundRound} to ${maxFoundRound}`);
+      }
+    }
+  } catch (error) {
+    printError(`Round filter failed: ${error instanceof Error ? error.message : String(error)}`);
+  }
+
+  // =========================================================================
+  // Step 6: Filter by time (beforeTime, afterTime)
+  // =========================================================================
+  printStep(6, 'Filtering by time (beforeTime, afterTime)');
+
+  try {
+    // Get current time and a time window
+    const now = new Date();
+    const oneHourAgo = new Date(now.getTime() - 60 * 60 * 1000); // 1 hour ago
+
+    // Format as RFC 3339 (ISO 8601 format that indexer expects)
+    const afterTimeStr = oneHourAgo.toISOString();
+    const beforeTimeStr = now.toISOString();
+
+    printInfo(`Querying transactions from ${afterTimeStr} to ${beforeTimeStr}...`);
+
+    const timeFilteredTxns = await indexer.lookupAccountTransactions(senderAddress, {
+      afterTime: afterTimeStr,
+      beforeTime: beforeTimeStr,
+    });
+
+    printSuccess(`Found ${timeFilteredTxns.transactions.length} transaction(s) in the last hour`);
+
+    if (timeFilteredTxns.transactions.length > 0) {
+      const times = timeFilteredTxns.transactions
+        .map(tx => tx.roundTime)
+        .filter(t => t !== undefined);
+      if (times.length > 0) {
+        const minTime = Math.min(...(times as number[]));
+        const maxTime = Math.max(...(times as number[]));
+        printInfo(`  Time range of found transactions:`);
+        printInfo(`    - Earliest: ${new Date(minTime * 1000).toISOString()}`);
+        printInfo(`    - Latest: ${new Date(maxTime * 1000).toISOString()}`);
+      }
+    }
+  } catch (error) {
+    printError(`Time filter failed: ${error instanceof Error ? error.message : String(error)}`);
+  }
+
+  // =========================================================================
+  // Step 7: Filter by amount (currencyGreaterThan, currencyLessThan)
+  // =========================================================================
+  printStep(7, 'Filtering by amount (currencyGreaterThan, currencyLessThan)');
+
+  try {
+    // Filter for transactions with amount greater than 1 ALGO (1,000,000 microAlgo)
+    const minAmount = 1_000_000n;
+    printInfo(`Querying transactions with amount > ${formatMicroAlgo(minAmount)}...`);
+
+    const largeAmountTxns = await indexer.lookupAccountTransactions(senderAddress, {
+      currencyGreaterThan: minAmount,
+    });
+
+    printSuccess(
+      `Found ${largeAmountTxns.transactions.length} transaction(s) with amount > 1 ALGO`,
+    );
+
+    if (largeAmountTxns.transactions.length > 0) {
+      for (const tx of largeAmountTxns.transactions.slice(0, 3)) {
+        const amount = tx.paymentTransaction?.amount ?? tx.assetTransferTransaction?.amount ?? 0n;
+        printInfo(
+          `  - ${tx.id ? shortenAddress(tx.id, 8, 6) : 'N/A'}: ${tx.txType}, amount=${amount}`,
+        );
+      }
+    }
+    printInfo('');
+
+    // Filter for transactions with amount less than 5 ALGO (5,000,000 microAlgo)
+    const maxAmount = 5_000_000n;
+    printInfo(`Querying transactions with amount < ${formatMicroAlgo(maxAmount)}...`);
+
+    const smallAmountTxns = await indexer.lookupAccountTransactions(senderAddress, {
+      currencyLessThan: maxAmount,
+    });
+
+    printSuccess(
+      `Found ${smallAmountTxns.transactions.length} transaction(s) with amount < 5 ALGO`,
+    );
+
+    if (smallAmountTxns.transactions.length > 0) {
+      for (const tx of smallAmountTxns.transactions.slice(0, 3)) {
+        const amount = tx.paymentTransaction?.amount ?? tx.assetTransferTransaction?.amount ?? 0n;
+        printInfo(
+          `  - ${tx.id ? shortenAddress(tx.id, 8, 6) : 'N/A'}: ${tx.txType}, amount=${amount}`,
+        );
+      }
+    }
+    printInfo('');
+
+    // Combine both filters to find transactions in a specific range
+    printInfo(
+      `Querying transactions with amount between ${formatMicroAlgo(minAmount)} and ${formatMicroAlgo(maxAmount)}...`,
+    );
+
+    const rangeAmountTxns = await indexer.lookupAccountTransactions(senderAddress, {
+      currencyGreaterThan: minAmount,
+      currencyLessThan: maxAmount,
+    });
+
+    printSuccess(
+      `Found ${rangeAmountTxns.transactions.length} transaction(s) with amount in range 1-5 ALGO`,
+    );
+  } catch (error) {
+    printError(`Amount filter failed: ${error instanceof Error ? error.message : String(error)}`);
+  }
+
+  // =========================================================================
+  // Step 8: Pagination with limit and next
+  // =========================================================================
+  printStep(8, 'Demonstrating pagination with limit and next');
+
+  try {
+    printInfo('Querying transactions with limit=2...');
+    const page1 = await indexer.lookupAccountTransactions(senderAddress, { limit: 2 });
+
+    printInfo(`Page 1: Retrieved ${page1.transactions.length} transaction(s)`);
+    for (const tx of page1.transactions) {
+      printInfo(`  - ${tx.id ? shortenAddress(tx.id, 8, 6) : 'N/A'}: ${tx.txType}`);
+    }
+
+    if (page1.nextToken) {
+      printInfo(`  - Next token available: ${page1.nextToken.substring(0, 20)}...`);
+      printInfo('');
+
+      // Get next page
+      printInfo('Querying next page...');
+      const page2 = await indexer.lookupAccountTransactions(senderAddress, {
+        limit: 2,
+        next: page1.nextToken,
+      });
+
+      printInfo(`Page 2: Retrieved ${page2.transactions.length} transaction(s)`);
+      for (const tx of page2.transactions) {
+        printInfo(`  - ${tx.id ? shortenAddress(tx.id, 8, 6) : 'N/A'}: ${tx.txType}`);
+      }
+
+      if (page2.nextToken) {
+        printInfo(`  - More pages available (nextToken present)`);
+      } else {
+        printInfo(`  - No more pages (no nextToken)`);
+      }
+    } else {
+      printInfo('  - No pagination needed (all results fit in one page)');
+    }
+  } catch (error) {
+    printError(`Pagination demo failed: ${error instanceof Error ? error.message : String(error)}`);
+  }
+
+  // =========================================================================
+  // Summary
+  // =========================================================================
+  printHeader('Summary');
+  printInfo('This example demonstrated:');
+  printInfo('  1. lookupAccountTransactions(address) - Get transaction history for an account');
+  printInfo('  2. Results are returned newest to oldest');
+  printInfo('  3. Filtering by txType (pay, axfer, acfg, appl, etc.)');
+  printInfo('  4. Filtering by round range (minRound, maxRound)');
+  printInfo('  5. Filtering by time (beforeTime, afterTime) using RFC 3339 format');
+  printInfo('  6. Filtering by amount (currencyGreaterThan, currencyLessThan)');
+  printInfo('  7. Pagination using limit and next parameters');
+  printInfo('');
+  printInfo('Key Transaction fields:');
+  printInfo('  - id: Transaction ID (string)');
+  printInfo('  - txType: Transaction type (pay, keyreg, acfg, axfer, afrz, appl, stpf, hb)');
+  printInfo('  - sender: Sender address (string)');
+  printInfo('  - fee: Transaction fee in microAlgos (bigint)');
+  printInfo('  - confirmedRound: Round when confirmed (bigint)');
+  printInfo('  - roundTime: Unix timestamp when confirmed (number)');
+  printInfo('  - paymentTransaction: Payment details (receiver, amount, closeRemainderTo)');
+  printInfo('  - assetTransferTransaction: Asset transfer details (assetId, amount, receiver)');
+  printInfo('  - assetConfigTransaction: Asset config details (assetId, params)');
+  printInfo('  - applicationTransaction: App call details (applicationId, onComplete, etc.)');
+  printInfo('');
+  printInfo('Filter parameters:');
+  printInfo('  - txType: Filter by transaction type');
+  printInfo('  - minRound/maxRound: Filter by round range');
+  printInfo('  - beforeTime/afterTime: Filter by time (RFC 3339 format)');
+  printInfo('  - currencyGreaterThan/currencyLessThan: Filter by amount');
+  printInfo('  - assetId: Filter by specific asset');
+  printInfo('  - limit/next: Pagination controls');
+}
+
+main().catch(error => {
+  console.error('Fatal error:', error);
+  process.exit(1);
+});
+```
+
+---
+
+### Other examples in Indexer Client
+
+- [Indexer Health Check](/docs/algokit-utils/typescript/latest/examples/indexer-client/01-health-check/)
+- [Account Lookup](/docs/algokit-utils/typescript/latest/examples/indexer-client/02-account-lookup/)
+- [Account Assets](/docs/algokit-utils/typescript/latest/examples/indexer-client/03-account-assets/)
+- [Account Applications](/docs/algokit-utils/typescript/latest/examples/indexer-client/04-account-applications/)
+- **Account Transactions**
+- [Transaction Lookup](/docs/algokit-utils/typescript/latest/examples/indexer-client/06-transaction-lookup/)
+- [Transaction Search](/docs/algokit-utils/typescript/latest/examples/indexer-client/07-transaction-search/)
+- [Asset Lookup](/docs/algokit-utils/typescript/latest/examples/indexer-client/08-asset-lookup/)
+- [Asset Balances](/docs/algokit-utils/typescript/latest/examples/indexer-client/09-asset-balances/)
+- [Asset Transactions](/docs/algokit-utils/typescript/latest/examples/indexer-client/10-asset-transactions/)
+- [Application Lookup](/docs/algokit-utils/typescript/latest/examples/indexer-client/11-application-lookup/)
+- [Application Logs Lookup](/docs/algokit-utils/typescript/latest/examples/indexer-client/12-application-logs/)
+- [Application Boxes Lookup](/docs/algokit-utils/typescript/latest/examples/indexer-client/13-application-boxes/)
+- [Block Lookup](/docs/algokit-utils/typescript/latest/examples/indexer-client/14-block-lookup/)
+- [Block Headers Search](/docs/algokit-utils/typescript/latest/examples/indexer-client/15-block-headers/)
+- [Pagination](/docs/algokit-utils/typescript/latest/examples/indexer-client/16-pagination/)

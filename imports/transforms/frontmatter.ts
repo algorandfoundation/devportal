@@ -99,7 +99,7 @@ export function createTitleTransform(options?: {
  * @returns Transform function
  */
 export function createSourceInfoTransform(
-  includeCommitInfo = false,
+  _includeCommitInfo = false,
 ): TransformFunction {
   return (content: string, context): string => {
     const sourceInfo: Partial<StarlightFrontmatter> = {
@@ -180,7 +180,7 @@ export function createDraftTransform(isDraft = true): TransformFunction {
  * @param path - File path
  * @returns Formatted title string
  */
-function deriveTitleFromPath(path: string): string {
+export function deriveTitleFromPath(path: string): string {
   // Remove file extension and directory paths
   const basename =
     path
@@ -208,5 +208,40 @@ export function composeFrontmatterTransforms(
     return transforms.reduce((currentContent, transform) => {
       return transform(currentContent, context);
     }, content);
+  };
+}
+
+// ---------------------------------------------------------------------------
+// Standalone content transforms (no TransformContext required)
+// ---------------------------------------------------------------------------
+
+/** A content transform that operates on file content without loader context. */
+export type ContentTransform = (content: string, filePath: string) => string;
+
+/**
+ * Creates a content transform that removes specified top-level frontmatter keys.
+ *
+ * Useful for stripping upstream-specific frontmatter (e.g. `template: splash`,
+ * `hero`) that shouldn't carry over into the devportal.
+ *
+ * @param keys - Top-level frontmatter keys to remove
+ * @returns Content transform function
+ */
+export function stripFrontmatterKeys(keys: string[]): ContentTransform {
+  return (content: string): string => {
+    const parsed = parseFrontmatter(content);
+    if (!parsed.hasFrontmatter) return content;
+
+    let changed = false;
+    for (const key of keys) {
+      if (key in parsed.data) {
+        delete parsed.data[key];
+        changed = true;
+      }
+    }
+
+    return changed
+      ? combineFrontmatterAndContent(parsed.data, parsed.content)
+      : content;
   };
 }

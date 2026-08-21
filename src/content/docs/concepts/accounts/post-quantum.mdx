@@ -1,0 +1,151 @@
+---
+title: Post-Quantum Accounts
+description: Explains how post-quantum accounts secured by Falcon-1024 signatures work on Algorand, covering the pqsig envelope, address derivation, key generation, fees, and how existing accounts migrate by rekeying.
+sidebar:
+  label: Post-Quantum Accounts
+---
+
+import { LinkCard } from '@astrojs/starlight/components';
+
+Algorand supports **post-quantum accounts** secured by **Falcon-1024** signatures, a lattice-based signature scheme designed to resist attacks from quantum computers. Post-quantum accounts work alongside existing Ed25519 accounts. They hold Algos and assets, send transactions, and interact with applications like any other account, but their transactions are authorized by a quantum-resistant signature instead of an elliptic-curve one.
+
+This page explains how post-quantum accounts work at the protocol level: the signature envelope, address derivation, key generation, fees, and how existing accounts can migrate.
+
+:::note
+Post-quantum signatures are part of the **v42 consensus upgrade**, shipped in [algod v5.0.0](https://github.com/algorand/go-algorand/releases/tag/v5.0.0-stable). All statements on this page describe behavior **after the upgrade takes effect** on a given network. Until then, the network rejects post-quantum signatures.
+:::
+
+## Why Post-Quantum Signatures
+
+Every Algorand account that is controlled by a key, rather than by smart-contract or logic-signature code, uses an Ed25519 key pair. Ed25519 is an elliptic-curve scheme, and a sufficiently large quantum computer running Shor's algorithm could break it. No such computer is known to exist today, but assets secured on a blockchain need to remain secure for decades, and an attacker can record public keys now and attack them later.
+
+Falcon-1024 is based on lattice problems that are believed to resist quantum attack. Falcon was selected by the National Institute of Standards and Technology (NIST) for standardization in 2022, and a derived scheme, FN-DSA, is being standardized in FIPS 206, which is in draft at the time of writing. Algorand uses a deterministic variant of Falcon, which differs from the draft FN-DSA. By supporting it natively in the protocol, Algorand lets any account holder move to quantum-resistant security without waiting for a network-wide migration.
+
+## The `pqsig` Signature Category
+
+A signed Algorand transaction carries exactly one of four signature categories:
+
+| Category         | Field       | Authorized by                         |
+| ---------------- | ----------- | ------------------------------------- |
+| Standard         | `sig`       | A single Ed25519 signature            |
+| Multisig         | `msig`      | A threshold of Ed25519 signatures     |
+| LogicSig         | `lsig`      | A TEAL program (optionally delegated) |
+| **Post-quantum** | **`pqsig`** | **A post-quantum signature**          |
+
+The `pqsig` field is a scheme-agnostic envelope with four parts:
+
+- `sch`: the signature scheme identifier. `f1` is Falcon-1024, the only scheme currently enabled. (`f5` is reserved for Falcon-512, which is defined but not enabled.)
+- `slt`: a one-byte salt used in address derivation (see below).
+- `pk`: the post-quantum public key.
+- `sig`: the signature itself.
+
+The envelope is deliberately generic: the protocol maintains a registry of schemes, each individually gated by [consensus parameters](/concepts/protocol/protocol-parameters) with its own fee contribution. This gives Algorand **cryptographic agility**: future schemes can be added, and a scheme that is ever weakened can be retired, without redesigning the transaction format.
+
+## Addresses
+
+A post-quantum address is derived by hashing the scheme identifier, the salt byte, and the public key:
+
+```txt showLineNumbers=false frame=none
+address = SHA512-256("PQA" || scheme || salt || public key)
+```
+
+The result is encoded with a checksum into the same 58-character format as every other Algorand address. On-chain, a post-quantum address is indistinguishable from any other address; it acquires meaning only when a transaction proves ownership with a matching `pqsig`.
+
+The hash serves two purposes. First, an Ed25519 address can directly encode its 32-byte public key, but a Falcon-1024 public key is about 1.8 KB, so it must be hashed down to fit the 32-byte address format. Second, hashing with a salt maintains domain separation between signature schemes: a post-quantum address is never a valid Ed25519 public key, regardless of a scheme's key size. The next section explains why this matters.
+
+### The Salt Byte
+
+The one-byte salt exists so that key generation can search for an address that is **not a valid point on the Ed25519 curve**. A quantum computer can recover the private key behind any Ed25519 public key, so if a post-quantum address were also a valid Ed25519 public key, a quantum attacker could compute the matching private key and spend from the account with an ordinary `sig`. Because an off-curve address can never be claimed by any Ed25519 key pair, this attack is ruled out entirely.
+
+Two subtleties are worth understanding:
+
+- **The canonical salt is a tooling convention, not a consensus rule.** The protocol verifies a `pqsig` for _any_ salt value, so a single Falcon key pair can control up to 256 distinct addresses. Algorand tooling always uses the lowest salt that produces an off-curve address (the _canonical salt_), and you should too, but do not build systems that assume one public key maps to only one address.
+- **The off-curve check happens at the node's REST boundary, not in consensus.** When you submit a transaction, algod rejects post-quantum addresses that are on-curve as a safety measure. This check can be bypassed with the `skip-pq-address-check` query parameter on the transaction submission endpoints. Consensus itself accepts any salt.
+
+## Keys and the Master Mnemonic
+
+Generating a post-quantum account starts from 256 bits of entropy, represented as a familiar 25-word mnemonic. The scheme-specific seed is derived with domain separation:
+
+```txt showLineNumbers=false frame=none
+seed = SHA512-256("PQK" || scheme || entropy)
+```
+
+Because the scheme identifier is part of the preimage, the **same 25-word mnemonic yields an independent key for each post-quantum scheme**: a Falcon-1024 key today, and independent keys for any future scheme. The mnemonic is therefore a _cross-scheme master secret_: one set of words, independent keys per scheme.
+
+Falcon private keys and signatures are substantially larger than their Ed25519 counterparts (a Falcon-1024 signature is roughly 1.2 KB and the public key about 1.8 KB, versus 64 and 32 bytes), which is why post-quantum transactions carry a fee premium.
+
+## Fees
+
+The minimum fee for a transaction is the sum of a base fee and per-scheme contributions. A Falcon-1024 signature contributes an additional **2× the base fee**, so with the current base fee of 1,000 µAlgo:
+
+| Transaction        | Minimum fee                  |
+| ------------------ | ---------------------------- |
+| Ed25519-signed     | 1,000 µAlgo (0.001 Algo)     |
+| Falcon-1024-signed | **3,000 µAlgo (0.003 Algo)** |
+
+The premium applies whenever a Falcon signature authorizes the transaction: both top-level `pqsig` transactions and logic signatures delegated with a Falcon key. Each scheme in the registry defines its own contribution, so future schemes may price differently.
+
+<LinkCard
+  title='Transaction Fees'
+  href='/concepts/transactions/fees'
+  description='How minimum fees, surcharges, and congestion pricing work'
+/>
+
+## Migrating an Existing Account
+
+Existing Ed25519 accounts do not need to move funds to become quantum-resistant. **Rekeying is the migration path**: generate a post-quantum account, then send a rekey transaction that sets your existing account's authorized address to the new post-quantum address. Your public address stays the same; from that point on, only the Falcon key can authorize its transactions.
+
+Note that a rekey is part of the account's ledger state. If the account is ever closed out, its ledger record, including the authorized address, is deleted; funding the same address again recreates the account under the control of its original Ed25519 key.
+
+Migration is a forward-looking capability rather than a step to take today. No quantum computer capable of threatening Ed25519 is known to exist, and after rekeying, **every** transaction from the account must be Falcon-signed. Wallets, dApps, and tooling may not support post-quantum signing yet, or may assume the 1,000 µAlgo minimum fee rather than the 3,000 µAlgo a Falcon signature requires, so a migrated account can find itself unable to interact with parts of the ecosystem. The protocol support exists now so that the path is proven and ready before it is needed. For most accounts, the right time to rekey is when the quantum threat becomes credible and their tooling supports it.
+
+<LinkCard
+  title='Rekeying Accounts'
+  href='/concepts/accounts/rekeying'
+  description='Change the key that controls an account without changing its address'
+/>
+
+## Delegated Logic Signatures
+
+A post-quantum account can delegate spending authority to a Transaction Execution Approval Language (TEAL) program, just as Ed25519 accounts can. The delegation signature covers a different payload than Ed25519 delegation:
+
+```txt showLineNumbers=false frame=none
+SHA512-256("PQProgram" || authorizer address || program)
+```
+
+Binding the authorizer's address into the signed payload prevents the same delegation from being replayed across the multiple addresses (salts) a single Falcon key can control.
+
+:::caution
+A delegated logic signature is honored for **any account whose authorized address matches the delegator**, including accounts later rekeyed to it. If a delegated program must only ever spend from one specific account, the program itself must check the sender address.
+:::
+
+<LinkCard
+  title='Logic Signatures'
+  href='/concepts/smart-contracts/logic-sigs'
+  description='Delegated and contract logic signatures in depth'
+/>
+
+## Limitations
+
+- **No post-quantum native multisig.** Multisig accounts remain Ed25519-only by design. Threshold-style control of a post-quantum account can be achieved with logic signatures instead.
+- **Consensus participation is unchanged.** This release does not alter participation keys or key registration; an account rekeyed to a post-quantum address participates in consensus the same way as before.
+- **Ecosystem support varies.** Not every wallet, SDK, or tool supports post-quantum signing; check your wallet's and SDK's documentation before relying on it.
+
+## Tooling
+
+The `algokey` command-line tool manages post-quantum keys with the `algokey pq` command family: `generate`, `info`, `import`, `sign`, `sign-program`, and `check-address`. It always uses the canonical salt.
+
+:::caution
+`algokey pq generate` displays the master mnemonic **once and does not store it**; the keyfile holds only the scheme-derived Falcon key. Record the mnemonic when it is shown if you want to derive keys for future schemes from the same secret. Losing it does not lose the account, because the stored Falcon key still signs, but it forecloses future derivations.
+:::
+
+<LinkCard
+  title='AlgoKey'
+  href='/reference/algokey'
+  description='Command-line key management reference'
+/>
+
+## Additional Resources
+
+- [Falcon: Fast-Fourier Lattice-Based Compact Signatures over NTRU](https://falcon-sign.info/): the Falcon signature scheme specification
+- [FIPS 206 (Initial Public Draft): FN-DSA](https://csrc.nist.gov/pubs/fips/206/ipd): NIST's draft standard derived from Falcon; Algorand uses a deterministic Falcon variant

@@ -1,0 +1,353 @@
+---
+title: 'Block Data'
+description: 'This example demonstrates how to retrieve block information using the AlgodClient methods: block(), block_hash(), and block_tx_ids().'
+sidebar:
+  order: 8
+---
+
+[← Back to Algod Client](/docs/algokit-utils/python/latest/examples/algod-client/)
+
+## Description
+
+This example demonstrates how to retrieve block information using the AlgodClient methods: block(), block_hash(), and block_tx_ids().
+Prerequisites:
+
+## Prerequisites
+
+- LocalNet running (via `algokit localnet start`)
+
+## Run This Example
+
+From the repository's `examples` directory:
+
+```bash
+cd examples
+uv run python algod_client/08_block_data.py
+```
+
+## Code
+
+[View source on GitHub](https://github.com/algorandfoundation/algokit-utils-py/blob/main/examples/algod_client/08_block_data.py)
+
+```python title="08_block_data.py"
+# ruff: noqa: N999, C901, PLR0912, PLR0915, PLR2004
+"""
+Example: Block Data
+
+This example demonstrates how to retrieve block information using
+the AlgodClient methods: block(), block_hash(), and block_tx_ids().
+
+Prerequisites:
+- LocalNet running (via `algokit localnet start`)
+"""
+
+from datetime import datetime, timezone
+
+from shared import (
+    create_algod_client,
+    create_algorand_client,
+    format_micro_algo,
+    get_funded_account,
+    print_header,
+    print_info,
+    print_step,
+    print_success,
+    shorten_address,
+)
+
+from algokit_transact import TransactionType
+from algokit_utils import AlgoAmount
+
+
+def format_timestamp(timestamp: int) -> str:
+    """Format a Unix timestamp to a human-readable date string."""
+    dt = datetime.fromtimestamp(timestamp, tz=timezone.utc)
+    return dt.isoformat()
+
+
+def bytes_to_hex(data: bytes) -> str:
+    """Format bytes as a hex string."""
+    return data.hex()
+
+
+def main() -> None:
+    print_header("Block Data Example")
+
+    # Create an Algod client connected to LocalNet
+    algod = create_algod_client()
+    algorand = create_algorand_client()
+
+    # =========================================================================
+    # Step 1: Get the latest round from status()
+    # =========================================================================
+    print_step(1, "Getting current node status to find the latest round")
+
+    node_status = algod.status()
+    latest_round = node_status.last_round
+
+    print_success("Current node status retrieved")
+    print_info(f"  - Latest round: {latest_round}")
+
+    # On LocalNet dev mode, lastRound may be 0 if no transactions have been submitted
+    # Let's submit a transaction to create a block with transactions
+    if latest_round == 0:
+        print_info("Round is 0 (LocalNet dev mode). Submitting a transaction to create a block...")
+
+        sender = get_funded_account(algorand)
+        receiver = algorand.account.random()
+
+        algorand.send.payment(
+            sender=sender.addr,
+            receiver=receiver.addr,
+            amount=AlgoAmount.from_algo(1),  # 1 ALGO
+        )
+
+        # Get updated status
+        updated_status = algod.status()
+        latest_round = updated_status.last_round
+        print_success(f"Transaction submitted. New latest round: {latest_round}")
+
+    # =========================================================================
+    # Step 2: Get full block data with block(round)
+    # =========================================================================
+    print_step(2, f"Getting full block data for round {latest_round} with block()")
+
+    block_response = algod.block(latest_round)
+    block = block_response.block
+
+    print_success("Block data retrieved successfully!")
+    print_info("")
+    print_info("Block Header Fields:")
+    print_info(f"  - Round: {block.header.round}")
+    print_info(f"  - Timestamp: {format_timestamp(block.header.timestamp)} ({block.header.timestamp})")
+
+    if block.header.previous_block_hash:
+        print_info(f"  - Previous Block Hash: {bytes_to_hex(block.header.previous_block_hash)[:16]}...")
+
+    if block.header.seed:
+        print_info(f"  - Seed: {bytes_to_hex(block.header.seed)[:16]}...")
+
+    print_info(f"  - Genesis ID: {block.header.genesis_id}")
+
+    if block.header.genesis_hash:
+        print_info(f"  - Genesis Hash: {bytes_to_hex(block.header.genesis_hash)[:16]}...")
+
+    if block.header.proposer:
+        print_info(f"  - Proposer: {shorten_address(block.header.proposer)}")
+
+    if block.header.fees_collected is not None:
+        print_info(f"  - Fees Collected: {format_micro_algo(block.header.fees_collected)}")
+
+    if block.header.txn_counter is not None:
+        print_info(f"  - Transaction Counter: {block.header.txn_counter}")
+
+    # Display transaction commitment hashes
+    print_info("")
+    print_info("Transaction Commitments:")
+    if block.header.txn_commitments.native_sha512_256_commitment:
+        print_info(f"  - SHA512/256: {bytes_to_hex(block.header.txn_commitments.native_sha512_256_commitment)[:32]}...")
+
+    if block.header.txn_commitments.sha256_commitment:
+        print_info(f"  - SHA256: {bytes_to_hex(block.header.txn_commitments.sha256_commitment)[:32]}...")
+
+    # Display reward state
+    print_info("")
+    print_info("Reward State:")
+    if block.header.reward_state.fee_sink:
+        print_info(f"  - Fee Sink: {shorten_address(block.header.reward_state.fee_sink)}")
+    if block.header.reward_state.rewards_pool:
+        print_info(f"  - Rewards Pool: {shorten_address(block.header.reward_state.rewards_pool)}")
+    print_info(f"  - Rewards Level: {block.header.reward_state.rewards_level}")
+    print_info(f"  - Rewards Rate: {block.header.reward_state.rewards_rate}")
+
+    # Display upgrade state
+    print_info("")
+    print_info("Upgrade State:")
+    if block.header.upgrade_state.current_protocol:
+        print_info(f"  - Current Protocol: {block.header.upgrade_state.current_protocol}")
+    if block.header.upgrade_state.next_protocol:
+        print_info(f"  - Next Protocol: {block.header.upgrade_state.next_protocol}")
+
+    # =========================================================================
+    # Step 3: Explore transactions in the block (payset)
+    # =========================================================================
+    print_step(3, "Exploring transactions in the block (payset)")
+
+    transactions = block.payset or []
+    print_info(f"Number of transactions in block: {len(transactions)}")
+
+    if transactions:
+        print_info("")
+        print_info("Transaction Details:")
+
+        for i, txn_in_block in enumerate(transactions[:5]):
+            # Navigate the nested structure: SignedTxnInBlock -> SignedTxnWithAD -> SignedTransaction -> Transaction
+            signed_txn = txn_in_block.signed_transaction.signed_transaction
+            txn = signed_txn.txn
+
+            print_info("")
+            print_info(f"  Transaction {i + 1}:")
+            print_info(f"    - Type: {txn.transaction_type.value}")
+            print_info(f"    - Sender: {shorten_address(str(txn.sender))}")
+            print_info(f"    - Fee: {format_micro_algo(txn.fee or 0)}")
+            print_info(f"    - First Valid: {txn.first_valid}")
+            print_info(f"    - Last Valid: {txn.last_valid}")
+
+            # Show payment-specific fields
+            if txn.transaction_type == TransactionType.Payment and txn.payment:
+                print_info(f"    - Receiver: {shorten_address(str(txn.payment.receiver))}")
+                print_info(f"    - Amount: {format_micro_algo(txn.payment.amount)}")
+
+            # Show apply data if available
+            apply_data = txn_in_block.signed_transaction.apply_data
+            if apply_data:
+                if apply_data.sender_rewards and apply_data.sender_rewards > 0:
+                    print_info(f"    - Sender Rewards: {format_micro_algo(apply_data.sender_rewards)}")
+                if apply_data.receiver_rewards and apply_data.receiver_rewards > 0:
+                    print_info(f"    - Receiver Rewards: {format_micro_algo(apply_data.receiver_rewards)}")
+
+            # Show hasGenesisId and hasGenesisHash flags
+            has_gen_id = txn_in_block.has_genesis_id if txn_in_block.has_genesis_id is not None else "not set"
+            has_gen_hash = txn_in_block.has_genesis_hash if txn_in_block.has_genesis_hash is not None else "not set"
+            print_info(f"    - Has Genesis ID: {has_gen_id}")
+            print_info(f"    - Has Genesis Hash: {has_gen_hash}")
+
+        if len(transactions) > 5:
+            print_info(f"  ... and {len(transactions) - 5} more transactions")
+    else:
+        print_info("This block contains no transactions.")
+        print_info("On LocalNet in dev mode, blocks are only created when transactions are submitted.")
+
+    # =========================================================================
+    # Step 4: Get block hash with block_hash(round)
+    # =========================================================================
+    print_step(4, f"Getting block hash for round {latest_round} with block_hash()")
+
+    block_hash_response = algod.block_hash(latest_round)
+
+    print_success("Block hash retrieved successfully!")
+    print_info(f"  - Block Hash: {block_hash_response.block_hash}")
+    print_info("The block hash is a base64-encoded SHA256 hash of the block header.")
+    print_info("It uniquely identifies this block and is used for cryptographic verification.")
+
+    # =========================================================================
+    # Step 5: Get transaction IDs in block with block_tx_ids(round)
+    # =========================================================================
+    print_step(5, f"Getting transaction IDs for round {latest_round} with block_tx_ids()")
+
+    block_tx_ids_response = algod.block_tx_ids(latest_round)
+    tx_ids = block_tx_ids_response.block_tx_ids or []
+
+    print_success("Transaction IDs retrieved successfully!")
+    print_info(f"  - Number of transactions: {len(tx_ids)}")
+
+    if tx_ids:
+        print_info("")
+        print_info("Transaction IDs:")
+        for i, tx_id in enumerate(tx_ids[:5]):
+            print_info(f"  {i + 1}. {tx_id}")
+        if len(tx_ids) > 5:
+            print_info(f"  ... and {len(tx_ids) - 5} more")
+        print_info("Transaction IDs can be used with pending_transaction_information() to get details.")
+    else:
+        print_info("This block contains no transactions.")
+
+    # =========================================================================
+    # Step 6: Demonstrate header-only mode
+    # =========================================================================
+    print_step(6, "Getting block header only (without transactions)")
+
+    # Python SDK supports header_only parameter
+    header_only_response = algod.block(latest_round, header_only=True)
+    header_only_block = header_only_response.block
+
+    print_success("Block header retrieved (header-only mode)!")
+    print_info(f"  - Round: {header_only_block.header.round}")
+    print_info(f"  - Timestamp: {format_timestamp(header_only_block.header.timestamp)}")
+    payset_count = len(header_only_block.payset or [])
+    print_info(f"  - Transactions in payset: {payset_count}")
+    print_info("With header_only=True, the payset is empty, reducing response size.")
+    print_info("Use this when you only need block metadata, not transaction details.")
+
+    # =========================================================================
+    # Step 7: Compare blocks across rounds (if multiple rounds exist)
+    # =========================================================================
+    if latest_round > 1:
+        print_step(7, "Comparing blocks across multiple rounds")
+
+        previous_round = latest_round - 1
+        previous_block_response = algod.block(previous_round)
+        previous_block = previous_block_response.block
+
+        print_info("Comparing consecutive blocks:")
+        print_info("")
+        print_info(f"  Round {previous_round}:")
+        print_info(f"    - Timestamp: {format_timestamp(previous_block.header.timestamp)}")
+        print_info(f"    - Transactions: {len(previous_block.payset or [])}")
+        if previous_block.header.txn_commitments.native_sha512_256_commitment:
+            prev_hash = bytes_to_hex(previous_block.header.txn_commitments.native_sha512_256_commitment)
+            print_info(f"    - Block Hash: {prev_hash[:16]}...")
+        print_info("")
+        print_info(f"  Round {latest_round}:")
+        print_info(f"    - Timestamp: {format_timestamp(block.header.timestamp)}")
+        print_info(f"    - Transactions: {len(block.payset or [])}")
+        if block.header.previous_block_hash:
+            print_info(f"    - Previous Block Hash: {bytes_to_hex(block.header.previous_block_hash)[:16]}...")
+
+        print_info("Each block contains the hash of the previous block, forming a chain.")
+
+    # =========================================================================
+    # Summary
+    # =========================================================================
+    print_header("Summary")
+    print_info("This example demonstrated:")
+    print_info("  1. status() - Get the latest round number")
+    print_info("  2. block(round) - Get full block data including header and transactions")
+    print_info("  3. block_hash(round) - Get just the block hash for verification")
+    print_info("  4. block_tx_ids(round) - Get transaction IDs without full transaction data")
+    print_info("  5. block(round, header_only=True) - Get header without transactions")
+    print_info("")
+    print_info("Key block structure:")
+    print_info("  - BlockResponse.block.header - Block metadata (round, timestamp, hashes, etc.)")
+    print_info("  - BlockResponse.block.payset - List of SignedTxnInBlock")
+    print_info("  - BlockHashResponse.block_hash - Base64-encoded block hash")
+    print_info("  - BlockTxidsResponse.block_tx_ids - List of transaction IDs")
+    print_info("")
+    print_info("Important header fields:")
+    print_info("  - header.round: Block number")
+    print_info("  - header.timestamp: Unix timestamp (seconds since epoch)")
+    print_info("  - header.previous_block_hash: Links to prior block (chain integrity)")
+    print_info("  - header.seed: VRF seed for sortition")
+    print_info("  - header.txn_commitments: Merkle root of transactions")
+    print_info("  - header.reward_state: Fee sink, rewards pool, and reward rates")
+    print_info("  - header.upgrade_state: Current and pending protocol versions")
+
+
+if __name__ == "__main__":
+    main()
+
+```
+
+---
+
+### Other examples in Algod Client
+
+- [Node Health and Status](/docs/algokit-utils/python/latest/examples/algod-client/01-node-health-status/)
+- [Version and Genesis Information](/docs/algokit-utils/python/latest/examples/algod-client/02-version-genesis/)
+- [Ledger Supply Information](/docs/algokit-utils/python/latest/examples/algod-client/03-ledger-supply/)
+- [Account Information](/docs/algokit-utils/python/latest/examples/algod-client/04-account-info/)
+- [Transaction Parameters](/docs/algokit-utils/python/latest/examples/algod-client/05-transaction-params/)
+- [Send and Confirm Transaction](/docs/algokit-utils/python/latest/examples/algod-client/06-send-transaction/)
+- [Pending Transactions](/docs/algokit-utils/python/latest/examples/algod-client/07-pending-transactions/)
+- **Block Data**
+- [Asset Information](/docs/algokit-utils/python/latest/examples/algod-client/09-asset-info/)
+- [Application Information](/docs/algokit-utils/python/latest/examples/algod-client/10-application-info/)
+- [Application Boxes](/docs/algokit-utils/python/latest/examples/algod-client/11-application-boxes/)
+- [TEAL Compile and Disassemble](/docs/algokit-utils/python/latest/examples/algod-client/12-teal-compile/)
+- [Transaction Simulation](/docs/algokit-utils/python/latest/examples/algod-client/13-simulation/)
+- [Ledger State Deltas](/docs/algokit-utils/python/latest/examples/algod-client/14-state-deltas/)
+- [Transaction Proof](/docs/algokit-utils/python/latest/examples/algod-client/15-transaction-proof/)
+- [Light Block Header Proof](/docs/algokit-utils/python/latest/examples/algod-client/16-lightblock-proof/)
+- [State Proof](/docs/algokit-utils/python/latest/examples/algod-client/17-state-proof/)
+- [DevMode Timestamp Offset](/docs/algokit-utils/python/latest/examples/algod-client/18-devmode-timestamp/)
+- [Sync Round Management](/docs/algokit-utils/python/latest/examples/algod-client/19-sync-round/)

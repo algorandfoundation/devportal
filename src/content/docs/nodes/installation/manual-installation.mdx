@@ -1,5 +1,7 @@
 ---
 title: Manual Node Installation
+sidebar:
+  label: Manual Installation
 description: Install an Algorand node on your system
 ---
 
@@ -217,7 +219,6 @@ utilities:
 - `catchupsrv`
 - `msgpacktool`
 - `tealcut`
-- `tealdbg`
 
 Installation is straightforward using your system's package manager (`apt` or `yum`). The package
 manager will handle dependencies automatically:
@@ -618,7 +619,7 @@ Get the most recent catchpoint for your network:
    goal node start
    ```
 
-2. Use the catchup command with your network's current catchpoint from from the catchpoint URL:
+2. Use the catchup command with your network's current catchpoint from the catchpoint URL:
 
    ```shell showLineNumbers=false frame=none
    goal node catchup 4420000#Q7T2RRTDIRTYESIXKAAFJYFQWG4A3WRA3JIUZVCJ3F4AQ2G2HZRA

@@ -1,0 +1,361 @@
+---
+title: 'Block Data'
+description: 'This example demonstrates how to retrieve block information using the AlgodClient methods: block(), blockHash(), and blockTxIds().'
+sidebar:
+  order: 8
+---
+
+[← Back to Algod Client](/docs/algokit-utils/typescript/latest/examples/algod-client/)
+
+## Description
+
+This example demonstrates how to retrieve block information using the AlgodClient methods: block(), blockHash(), and blockTxIds().
+
+## Prerequisites
+
+- LocalNet running (via `algokit localnet start`)
+
+## Run This Example
+
+From the repository root:
+
+```bash
+cd examples
+npm run example algod_client/08-block-data.ts
+```
+
+## Code
+
+[View source on GitHub](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/examples/algod_client/08-block-data.ts)
+
+```typescript title="08-block-data.ts"
+/**
+ * Example: Block Data
+ *
+ * This example demonstrates how to retrieve block information using
+ * the AlgodClient methods: block(), blockHash(), and blockTxIds().
+ *
+ * Prerequisites:
+ * - LocalNet running (via `algokit localnet start`)
+ */
+
+import { algo } from '@algorandfoundation/algokit-utils';
+import {
+  createAlgodClient,
+  createAlgorandClient,
+  formatMicroAlgo,
+  getFundedAccount,
+  printHeader,
+  printInfo,
+  printStep,
+  printSuccess,
+  shortenAddress,
+} from '../shared/utils.js';
+
+/**
+ * Format a Unix timestamp to a human-readable date string
+ */
+function formatTimestamp(timestamp: bigint): string {
+  const date = new Date(Number(timestamp) * 1000);
+  return date.toISOString();
+}
+
+/**
+ * Format bytes as a hex string
+ */
+function bytesToHex(bytes: Uint8Array): string {
+  return Buffer.from(bytes).toString('hex');
+}
+
+async function main() {
+  printHeader('Block Data Example');
+
+  // Create an Algod client connected to LocalNet
+  const algod = createAlgodClient();
+  const algorand = createAlgorandClient();
+
+  // =========================================================================
+  // Step 1: Get the latest round from status()
+  // =========================================================================
+  printStep(1, 'Getting current node status to find the latest round');
+
+  const nodeStatus = await algod.status();
+  let latestRound = nodeStatus.lastRound;
+
+  printSuccess(`Current node status retrieved`);
+  printInfo(`  - Latest round: ${latestRound}`);
+
+  // On LocalNet dev mode, lastRound may be 0 if no transactions have been submitted
+  // Let's submit a transaction to create a block with transactions
+  if (latestRound === 0n) {
+    printInfo('Round is 0 (LocalNet dev mode). Submitting a transaction to create a block...');
+
+    const sender = await getFundedAccount(algorand);
+    const receiver = algorand.account.random();
+
+    await algorand.send.payment({
+      sender: sender.addr,
+      receiver: receiver.addr,
+      amount: algo(1), // 1 ALGO
+    });
+
+    // Get updated status
+    const updatedStatus = await algod.status();
+    latestRound = updatedStatus.lastRound;
+    printSuccess(`Transaction submitted. New latest round: ${latestRound}`);
+  }
+
+  // =========================================================================
+  // Step 2: Get full block data with block(round)
+  // =========================================================================
+  printStep(2, `Getting full block data for round ${latestRound} with block()`);
+
+  const blockResponse = await algod.block(latestRound);
+  const block = blockResponse.block;
+
+  printSuccess('Block data retrieved successfully!');
+  printInfo('');
+  printInfo('Block Header Fields:');
+  printInfo(`  - Round: ${block.header.round}`);
+  printInfo(
+    `  - Timestamp: ${formatTimestamp(block.header.timestamp)} (${block.header.timestamp})`,
+  );
+  printInfo(
+    `  - Previous Block Hash: ${bytesToHex(block.header.previousBlockHash).substring(0, 16)}...`,
+  );
+  printInfo(`  - Seed: ${bytesToHex(block.header.seed).substring(0, 16)}...`);
+  printInfo(`  - Genesis ID: ${block.header.genesisId}`);
+  printInfo(`  - Genesis Hash: ${bytesToHex(block.header.genesisHash).substring(0, 16)}...`);
+
+  if (block.header.proposer) {
+    printInfo(`  - Proposer: ${shortenAddress(block.header.proposer.toString())}`);
+  }
+
+  if (block.header.feesCollected !== undefined) {
+    printInfo(`  - Fees Collected: ${formatMicroAlgo(block.header.feesCollected)}`);
+  }
+
+  if (block.header.txnCounter !== undefined) {
+    printInfo(`  - Transaction Counter: ${block.header.txnCounter}`);
+  }
+
+  // Display transaction commitment hashes
+  printInfo('');
+  printInfo('Transaction Commitments:');
+  printInfo(
+    `  - SHA512/256: ${bytesToHex(block.header.txnCommitments.nativeSha512_256Commitment).substring(0, 32)}...`,
+  );
+  if (block.header.txnCommitments.sha256Commitment) {
+    printInfo(
+      `  - SHA256: ${bytesToHex(block.header.txnCommitments.sha256Commitment).substring(0, 32)}...`,
+    );
+  }
+
+  // Display reward state
+  printInfo('');
+  printInfo('Reward State:');
+  printInfo(`  - Fee Sink: ${shortenAddress(block.header.rewardState.feeSink.toString())}`);
+  printInfo(`  - Rewards Pool: ${shortenAddress(block.header.rewardState.rewardsPool.toString())}`);
+  printInfo(`  - Rewards Level: ${block.header.rewardState.rewardsLevel}`);
+  printInfo(`  - Rewards Rate: ${block.header.rewardState.rewardsRate}`);
+
+  // Display upgrade state
+  printInfo('');
+  printInfo('Upgrade State:');
+  printInfo(`  - Current Protocol: ${block.header.upgradeState.currentProtocol}`);
+  if (block.header.upgradeState.nextProtocol) {
+    printInfo(`  - Next Protocol: ${block.header.upgradeState.nextProtocol}`);
+  }
+
+  // =========================================================================
+  // Step 3: Explore transactions in the block (payset)
+  // =========================================================================
+  printStep(3, 'Exploring transactions in the block (payset)');
+
+  const transactions = block.payset;
+  printInfo(`Number of transactions in block: ${transactions.length}`);
+
+  if (transactions.length > 0) {
+    printInfo('');
+    printInfo('Transaction Details:');
+
+    for (let i = 0; i < Math.min(transactions.length, 5); i++) {
+      const txnInBlock = transactions[i];
+      const signedTxn = txnInBlock.signedTxn.signedTxn;
+      const txn = signedTxn.txn;
+
+      printInfo('');
+      printInfo(`  Transaction ${i + 1}:`);
+      printInfo(`    - Type: ${txn.type}`);
+      printInfo(`    - Sender: ${shortenAddress(txn.sender.toString())}`);
+      printInfo(`    - Fee: ${formatMicroAlgo(txn.fee ?? 0n)}`);
+      printInfo(`    - First Valid: ${txn.firstValid}`);
+      printInfo(`    - Last Valid: ${txn.lastValid}`);
+
+      // Show payment-specific fields
+      if (txn.type === 'pay' && txn.payment) {
+        printInfo(`    - Receiver: ${shortenAddress(txn.payment.receiver.toString())}`);
+        printInfo(`    - Amount: ${formatMicroAlgo(txn.payment.amount)}`);
+      }
+
+      // Show apply data if available
+      const applyData = txnInBlock.signedTxn.applyData;
+      if (applyData) {
+        if (applyData.senderRewards !== undefined && applyData.senderRewards > 0n) {
+          printInfo(`    - Sender Rewards: ${formatMicroAlgo(applyData.senderRewards)}`);
+        }
+        if (applyData.receiverRewards !== undefined && applyData.receiverRewards > 0n) {
+          printInfo(`    - Receiver Rewards: ${formatMicroAlgo(applyData.receiverRewards)}`);
+        }
+      }
+
+      // Show hasGenesisId and hasGenesisHash flags
+      printInfo(`    - Has Genesis ID: ${txnInBlock.hasGenesisId ?? 'not set'}`);
+      printInfo(`    - Has Genesis Hash: ${txnInBlock.hasGenesisHash ?? 'not set'}`);
+    }
+
+    if (transactions.length > 5) {
+      printInfo(`  ... and ${transactions.length - 5} more transactions`);
+    }
+  } else {
+    printInfo('This block contains no transactions.');
+    printInfo('On LocalNet in dev mode, blocks are only created when transactions are submitted.');
+  }
+
+  // =========================================================================
+  // Step 4: Get block hash with blockHash(round)
+  // =========================================================================
+  printStep(4, `Getting block hash for round ${latestRound} with blockHash()`);
+
+  const blockHashResponse = await algod.blockHash(latestRound);
+
+  printSuccess('Block hash retrieved successfully!');
+  printInfo(`  - Block Hash: ${blockHashResponse.blockHash}`);
+  printInfo('The block hash is a base64-encoded SHA256 hash of the block header.');
+  printInfo('It uniquely identifies this block and is used for cryptographic verification.');
+
+  // =========================================================================
+  // Step 5: Get transaction IDs in block with blockTxIds(round)
+  // =========================================================================
+  printStep(5, `Getting transaction IDs for round ${latestRound} with blockTxIds()`);
+
+  const blockTxIdsResponse = await algod.blockTxIds(latestRound);
+  const txIds = blockTxIdsResponse.blockTxIds;
+
+  printSuccess(`Transaction IDs retrieved successfully!`);
+  printInfo(`  - Number of transactions: ${txIds.length}`);
+
+  if (txIds.length > 0) {
+    printInfo('');
+    printInfo('Transaction IDs:');
+    for (let i = 0; i < Math.min(txIds.length, 5); i++) {
+      printInfo(`  ${i + 1}. ${txIds[i]}`);
+    }
+    if (txIds.length > 5) {
+      printInfo(`  ... and ${txIds.length - 5} more`);
+    }
+    printInfo('Transaction IDs can be used with pendingTransactionInformation() to get details.');
+  } else {
+    printInfo('This block contains no transactions.');
+  }
+
+  // =========================================================================
+  // Step 6: Demonstrate header-only mode
+  // =========================================================================
+  printStep(6, 'Getting block header only (without transactions)');
+
+  const headerOnlyResponse = await algod.block(latestRound, { headerOnly: true });
+
+  printSuccess('Block header retrieved (header-only mode)!');
+  printInfo(`  - Round: ${headerOnlyResponse.block.header.round}`);
+  printInfo(`  - Timestamp: ${formatTimestamp(headerOnlyResponse.block.header.timestamp)}`);
+  printInfo(`  - Transactions in payset: ${headerOnlyResponse.block.payset.length}`);
+  printInfo('With headerOnly=true, the payset is empty, reducing response size.');
+  printInfo('Use this when you only need block metadata, not transaction details.');
+
+  // =========================================================================
+  // Step 7: Compare blocks across rounds (if multiple rounds exist)
+  // =========================================================================
+  if (latestRound > 1n) {
+    printStep(7, 'Comparing blocks across multiple rounds');
+
+    const previousRound = latestRound - 1n;
+    const previousBlockResponse = await algod.block(previousRound);
+    const previousBlock = previousBlockResponse.block;
+
+    printInfo('Comparing consecutive blocks:');
+    printInfo('');
+    printInfo(`  Round ${previousRound}:`);
+    printInfo(`    - Timestamp: ${formatTimestamp(previousBlock.header.timestamp)}`);
+    printInfo(`    - Transactions: ${previousBlock.payset.length}`);
+    printInfo(
+      `    - Block Hash: ${bytesToHex(previousBlock.header.txnCommitments.nativeSha512_256Commitment).substring(0, 16)}...`,
+    );
+    printInfo('');
+    printInfo(`  Round ${latestRound}:`);
+    printInfo(`    - Timestamp: ${formatTimestamp(block.header.timestamp)}`);
+    printInfo(`    - Transactions: ${block.payset.length}`);
+    printInfo(
+      `    - Previous Block Hash: ${bytesToHex(block.header.previousBlockHash).substring(0, 16)}...`,
+    );
+
+    // Verify chain linkage
+    printInfo('Each block contains the hash of the previous block, forming a chain.');
+  }
+
+  // =========================================================================
+  // Summary
+  // =========================================================================
+  printHeader('Summary');
+  printInfo('This example demonstrated:');
+  printInfo('  1. status() - Get the latest round number');
+  printInfo('  2. block(round) - Get full block data including header and transactions');
+  printInfo('  3. blockHash(round) - Get just the block hash for verification');
+  printInfo('  4. blockTxIds(round) - Get transaction IDs without full transaction data');
+  printInfo('  5. block(round, { headerOnly: true }) - Get header without transactions');
+  printInfo('');
+  printInfo('Key block structure:');
+  printInfo('  - BlockResponse.block.header - Block metadata (round, timestamp, hashes, etc.)');
+  printInfo('  - BlockResponse.block.payset - Array of SignedTxnInBlock');
+  printInfo('  - BlockHashResponse.blockHash - Base64-encoded block hash');
+  printInfo('  - BlockTxidsResponse.blockTxIds - Array of transaction IDs');
+  printInfo('');
+  printInfo('Important header fields:');
+  printInfo('  - round: Block number');
+  printInfo('  - timestamp: Unix timestamp (seconds since epoch)');
+  printInfo('  - previousBlockHash: Links to prior block (chain integrity)');
+  printInfo('  - seed: VRF seed for sortition');
+  printInfo('  - txnCommitments: Merkle root of transactions');
+  printInfo('  - rewardState: Fee sink, rewards pool, and reward rates');
+  printInfo('  - upgradeState: Current and pending protocol versions');
+}
+
+main().catch(error => {
+  console.error('Fatal error:', error);
+  process.exit(1);
+});
+```
+
+---
+
+### Other examples in Algod Client
+
+- [Node Health and Status](/docs/algokit-utils/typescript/latest/examples/algod-client/01-node-health-status/)
+- [Version and Genesis Information](/docs/algokit-utils/typescript/latest/examples/algod-client/02-version-genesis/)
+- [Ledger Supply Information](/docs/algokit-utils/typescript/latest/examples/algod-client/03-ledger-supply/)
+- [Account Information](/docs/algokit-utils/typescript/latest/examples/algod-client/04-account-info/)
+- [Transaction Parameters](/docs/algokit-utils/typescript/latest/examples/algod-client/05-transaction-params/)
+- [Send and Confirm Transaction](/docs/algokit-utils/typescript/latest/examples/algod-client/06-send-transaction/)
+- [Pending Transactions](/docs/algokit-utils/typescript/latest/examples/algod-client/07-pending-transactions/)
+- **Block Data**
+- [Asset Information](/docs/algokit-utils/typescript/latest/examples/algod-client/09-asset-info/)
+- [Application Information](/docs/algokit-utils/typescript/latest/examples/algod-client/10-application-info/)
+- [Application Boxes](/docs/algokit-utils/typescript/latest/examples/algod-client/11-application-boxes/)
+- [TEAL Compile and Disassemble](/docs/algokit-utils/typescript/latest/examples/algod-client/12-teal-compile/)
+- [Transaction Simulation](/docs/algokit-utils/typescript/latest/examples/algod-client/13-simulation/)
+- [Ledger State Deltas](/docs/algokit-utils/typescript/latest/examples/algod-client/14-state-deltas/)
+- [Transaction Proof](/docs/algokit-utils/typescript/latest/examples/algod-client/15-transaction-proof/)
+- [Light Block Header Proof](/docs/algokit-utils/typescript/latest/examples/algod-client/16-lightblock-proof/)
+- [State Proof](/docs/algokit-utils/typescript/latest/examples/algod-client/17-state-proof/)
+- [DevMode Timestamp Offset](/docs/algokit-utils/typescript/latest/examples/algod-client/18-devmode-timestamp/)
+- [Sync Round Management](/docs/algokit-utils/typescript/latest/examples/algod-client/19-sync-round/)

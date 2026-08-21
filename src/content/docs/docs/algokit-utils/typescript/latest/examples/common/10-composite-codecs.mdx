@@ -1,0 +1,755 @@
+---
+title: 'Composite Codecs'
+description: 'This example demonstrates how to use composite codec types for encoding/decoding arrays, maps, and records in wire format (JSON or MessagePack).'
+sidebar:
+  order: 10
+---
+
+[← Back to Common Utilities](/docs/algokit-utils/typescript/latest/examples/common/)
+
+## Description
+
+This example demonstrates how to use composite codec types for encoding/decoding arrays, maps, and records in wire format (JSON or MessagePack).
+Topics covered:
+
+- ArrayCodec for encoding/decoding typed arrays
+- Pre-built array codecs: numberArrayCodec, stringArrayCodec, bigIntArrayCodec,
+  booleanArrayCodec, bytesArrayCodec, addressArrayCodec
+- MapCodec for encoding/decoding Map&lt;K, V&gt; types
+- RecordCodec for encoding/decoding Record&lt;string, V&gt; types
+- Creating custom ArrayCodec with a specific element codec
+- Encoding nested structures (array of arrays, map of arrays)
+- Round-trip verification for each composite codec
+
+## Prerequisites
+
+- No LocalNet required
+
+## Run This Example
+
+From the repository root:
+
+```bash
+cd examples
+npm run example common/10-composite-codecs.ts
+```
+
+## Code
+
+[View source on GitHub](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/examples/common/10-composite-codecs.ts)
+
+```typescript title="10-composite-codecs.ts"
+/**
+ * Example: Composite Codecs
+ *
+ * This example demonstrates how to use composite codec types for encoding/decoding
+ * arrays, maps, and records in wire format (JSON or MessagePack).
+ *
+ * Topics covered:
+ * - ArrayCodec for encoding/decoding typed arrays
+ * - Pre-built array codecs: numberArrayCodec, stringArrayCodec, bigIntArrayCodec,
+ *   booleanArrayCodec, bytesArrayCodec, addressArrayCodec
+ * - MapCodec for encoding/decoding Map<K, V> types
+ * - RecordCodec for encoding/decoding Record<string, V> types
+ * - Creating custom ArrayCodec with a specific element codec
+ * - Encoding nested structures (array of arrays, map of arrays)
+ * - Round-trip verification for each composite codec
+ *
+ * Prerequisites:
+ * - No LocalNet required
+ */
+
+import type { EncodingFormat } from '@algorandfoundation/algokit-utils/common';
+import {
+  // Utilities
+  Address,
+  // Composite codecs
+  ArrayCodec,
+  MapCodec,
+  RecordCodec,
+  addressArrayCodec,
+  addressCodec,
+  arrayEqual,
+  bigIntArrayCodec,
+  bigIntCodec,
+  booleanArrayCodec,
+  bytesArrayCodec,
+  bytesCodec,
+  // Pre-built array codecs
+  numberArrayCodec,
+  // Primitive codecs (for creating custom composites)
+  numberCodec,
+  stringArrayCodec,
+  stringCodec,
+} from '@algorandfoundation/algokit-utils/common';
+import { formatHex, printHeader, printInfo, printStep, printSuccess } from '../shared/utils.js';
+
+// ============================================================================
+// Main Example
+// ============================================================================
+
+printHeader('Composite Codecs Example');
+
+// ============================================================================
+// Step 1: Introduction to Composite Codecs
+// ============================================================================
+printStep(1, 'Introduction to Composite Codecs');
+
+printInfo('Composite codecs build on primitive codecs to handle complex data structures.');
+printInfo('');
+printInfo('Three composite codec types:');
+printInfo('  ArrayCodec<T>     - Encodes/decodes arrays of type T[]');
+printInfo('  MapCodec<K, V>    - Encodes/decodes Map<K, V>');
+printInfo('  RecordCodec<V>    - Encodes/decodes Record<string, V>');
+printInfo('');
+printInfo('Each uses an underlying codec for element encoding/decoding.');
+printInfo('');
+printSuccess('Composite codecs extend primitive codecs for collections');
+
+// ============================================================================
+// Step 2: ArrayCodec - Typed Array Encoding/Decoding
+// ============================================================================
+printStep(2, 'ArrayCodec - Typed Array Encoding/Decoding');
+
+printInfo('ArrayCodec wraps an element codec to encode/decode arrays.');
+printInfo('Creating an ArrayCodec: new ArrayCodec(elementCodec)');
+printInfo('');
+
+// Create a custom ArrayCodec with numberCodec
+const customNumberArray = new ArrayCodec(numberCodec);
+const numbers = [1, 2, 3, 4, 5];
+
+printInfo(`Original array: [${numbers.join(', ')}]`);
+
+const encodedJson = customNumberArray.encode(numbers, 'json');
+const encodedMsgpack = customNumberArray.encode(numbers, 'msgpack');
+const decodedJson = customNumberArray.decode(encodedJson, 'json');
+const decodedMsgpack = customNumberArray.decode(encodedMsgpack, 'msgpack');
+
+printInfo(`JSON:    encoded=[${encodedJson.join(', ')}], decoded=[${decodedJson.join(', ')}]`);
+printInfo(
+  `msgpack: encoded=[${encodedMsgpack.join(', ')}], decoded=[${decodedMsgpack.join(', ')}]`,
+);
+printInfo('');
+
+// Default value
+printInfo(
+  `ArrayCodec default value: [${customNumberArray.defaultValue().join(', ')}] (empty array)`,
+);
+printInfo('');
+printSuccess('ArrayCodec encodes each element using the underlying codec');
+
+// ============================================================================
+// Step 3: Pre-built Array Codecs
+// ============================================================================
+printStep(3, 'Pre-built Array Codecs');
+
+printInfo('algokit-utils provides pre-built array codecs for common types:');
+printInfo('');
+
+// numberArrayCodec
+printInfo('numberArrayCodec - for number arrays:');
+const numberArray = [10, 20, 30, 40];
+const numEncoded = numberArrayCodec.encode(numberArray, 'json');
+const numDecoded = numberArrayCodec.decode(numEncoded, 'json');
+printInfo(`  Original: [${numberArray.join(', ')}]`);
+printInfo(`  Decoded:  [${numDecoded.join(', ')}]`);
+printInfo(`  Match: ${numberArray.every((n, i) => n === numDecoded[i])}`);
+printInfo('');
+
+// stringArrayCodec
+printInfo('stringArrayCodec - for string arrays:');
+const stringArray = ['Alice', 'Bob', 'Charlie'];
+const strEncoded = stringArrayCodec.encode(stringArray, 'json');
+const strDecoded = stringArrayCodec.decode(strEncoded, 'json');
+printInfo(`  Original: ["${stringArray.join('", "')}"]`);
+printInfo(`  Decoded:  ["${strDecoded.join('", "')}"]`);
+printInfo(`  Match: ${stringArray.every((s, i) => s === strDecoded[i])}`);
+printInfo('');
+
+// bigIntArrayCodec
+printInfo('bigIntArrayCodec - for BigInt arrays:');
+const bigIntArray = [100n, 9007199254740993n, 18446744073709551615n];
+const bigEncoded = bigIntArrayCodec.encode(bigIntArray, 'msgpack');
+const bigDecoded = bigIntArrayCodec.decode(bigEncoded, 'msgpack');
+printInfo(`  Original: [${bigIntArray.map(b => `${b}n`).join(', ')}]`);
+printInfo(`  Decoded:  [${bigDecoded.map((b: bigint) => `${b}n`).join(', ')}]`);
+printInfo(`  Match: ${bigIntArray.every((b, i) => b === bigDecoded[i])}`);
+printInfo('');
+
+// booleanArrayCodec
+printInfo('booleanArrayCodec - for boolean arrays:');
+const boolArray = [true, false, true, false];
+const boolEncoded = booleanArrayCodec.encode(boolArray, 'json');
+const boolDecoded = booleanArrayCodec.decode(boolEncoded, 'json');
+printInfo(`  Original: [${boolArray.join(', ')}]`);
+printInfo(`  Decoded:  [${boolDecoded.join(', ')}]`);
+printInfo(`  Match: ${boolArray.every((b, i) => b === boolDecoded[i])}`);
+printInfo('');
+
+// bytesArrayCodec
+printInfo('bytesArrayCodec - for Uint8Array arrays:');
+const bytesArray = [
+  new Uint8Array([1, 2, 3]),
+  new Uint8Array([4, 5, 6]),
+  new Uint8Array([7, 8, 9]),
+];
+const bytesEncoded = bytesArrayCodec.encode(bytesArray, 'json');
+const bytesDecoded = bytesArrayCodec.decode(bytesEncoded, 'json');
+printInfo(`  Original: [${bytesArray.map(formatHex).join(', ')}]`);
+printInfo(`  Decoded:  [${bytesDecoded.map(formatHex).join(', ')}]`);
+printInfo(`  Match: ${bytesArray.every((b, i) => arrayEqual(b, bytesDecoded[i]))}`);
+printInfo('');
+
+// addressArrayCodec
+printInfo('addressArrayCodec - for Address arrays:');
+const addrBytes1 = new Uint8Array(32).fill(1);
+const addrBytes2 = new Uint8Array(32).fill(2);
+const addressArray = [new Address(addrBytes1), new Address(addrBytes2)];
+const addrEncoded = addressArrayCodec.encode(addressArray, 'json');
+const addrDecoded = addressArrayCodec.decode(addrEncoded, 'json');
+printInfo(`  Original: [${addressArray.map(a => `${a.toString().slice(0, 12)}...`).join(', ')}]`);
+printInfo(
+  `  Decoded:  [${addrDecoded.map((a: Address) => `${a.toString().slice(0, 12)}...`).join(', ')}]`,
+);
+printInfo(`  Match: ${addressArray.every((a, i) => a.equals(addrDecoded[i]))}`);
+printInfo('');
+
+printSuccess('Pre-built array codecs available for all primitive types');
+
+// ============================================================================
+// Step 4: MapCodec - Map<K, V> Encoding/Decoding
+// ============================================================================
+printStep(4, 'MapCodec - Map<K, V> Encoding/Decoding');
+
+printInfo('MapCodec handles Maps with various key types.');
+printInfo('Creating a MapCodec: new MapCodec(keyCodec, valueCodec)');
+printInfo('');
+
+// Map with string keys and number values
+printInfo('Map<string, number> example:');
+const stringNumberMap = new MapCodec(stringCodec, numberCodec);
+const strNumMap = new Map<string, number>([
+  ['alice', 100],
+  ['bob', 200],
+  ['charlie', 300],
+]);
+
+printInfo(
+  `  Original: Map { ${Array.from(strNumMap.entries())
+    .map(([k, v]) => `"${k}" => ${v}`)
+    .join(', ')} }`,
+);
+
+const mapEncodedJson = stringNumberMap.encode(strNumMap, 'json');
+const mapDecodedJson = stringNumberMap.decode(mapEncodedJson, 'json');
+printInfo(`  JSON encoded: ${JSON.stringify(mapEncodedJson)}`);
+const mapDecodedJsonEntries = [...mapDecodedJson.entries()];
+printInfo(
+  `  JSON decoded: Map { ${mapDecodedJsonEntries.map(([k, v]) => `"${k}" => ${v}`).join(', ')} }`,
+);
+
+const mapEncodedMsgpack = stringNumberMap.encode(strNumMap, 'msgpack');
+const mapDecodedMsgpack = stringNumberMap.decode(mapEncodedMsgpack, 'msgpack');
+printInfo(`  msgpack encoded: Map (preserved as Map)`);
+const mapDecodedMsgpackEntries = [...mapDecodedMsgpack.entries()];
+printInfo(
+  `  msgpack decoded: Map { ${mapDecodedMsgpackEntries.map(([k, v]) => `"${k}" => ${v}`).join(', ')} }`,
+);
+printInfo('');
+
+// Map with bigint keys
+printInfo('Map<bigint, string> example (bigint keys become strings in JSON):');
+const bigintStringMap = new MapCodec(bigIntCodec, stringCodec);
+const bigStrMap = new Map<bigint, string>([
+  [1n, 'one'],
+  [2n, 'two'],
+  [9007199254740993n, 'large'],
+]);
+
+printInfo(
+  `  Original: Map { ${Array.from(bigStrMap.entries())
+    .map(([k, v]) => `${k}n => "${v}"`)
+    .join(', ')} }`,
+);
+
+const bigMapEncodedJson = bigintStringMap.encode(bigStrMap, 'json');
+const bigMapDecodedJson = bigintStringMap.decode(bigMapEncodedJson, 'json');
+printInfo(`  JSON encoded: ${JSON.stringify(bigMapEncodedJson)} (keys as strings)`);
+const bigMapDecodedEntries = [...bigMapDecodedJson.entries()];
+printInfo(
+  `  JSON decoded: Map { ${bigMapDecodedEntries.map(([k, v]) => `${k}n => "${v}"`).join(', ')} }`,
+);
+printInfo('');
+
+// Default value
+printInfo(`MapCodec default value: Map(${stringNumberMap.defaultValue().size}) (empty map)`);
+printInfo('');
+
+printSuccess('MapCodec supports string and bigint keys in JSON, all types in msgpack');
+
+// ============================================================================
+// Step 5: RecordCodec - Record<string, V> Encoding/Decoding
+// ============================================================================
+printStep(5, 'RecordCodec - Record<string, V> Encoding/Decoding');
+
+printInfo('RecordCodec handles string-keyed objects with homogeneous values.');
+printInfo('Creating a RecordCodec: new RecordCodec(valueCodec)');
+printInfo('');
+
+// Record with number values
+printInfo('Record<string, number> example:');
+const numberRecord = new RecordCodec(numberCodec);
+const scores: Record<string, number> = {
+  alice: 95,
+  bob: 87,
+  charlie: 92,
+};
+
+printInfo(
+  `  Original: { ${Object.entries(scores)
+    .map(([k, v]) => `${k}: ${v}`)
+    .join(', ')} }`,
+);
+
+const recEncodedJson = numberRecord.encode(scores, 'json');
+const recDecodedJson = numberRecord.decode(recEncodedJson, 'json');
+printInfo(`  JSON encoded: ${JSON.stringify(recEncodedJson)}`);
+printInfo(
+  `  JSON decoded: { ${Object.entries(recDecodedJson)
+    .map(([k, v]) => `${k}: ${v}`)
+    .join(', ')} }`,
+);
+
+const recEncodedMsgpack = numberRecord.encode(scores, 'msgpack');
+const recDecodedMsgpack = numberRecord.decode(recEncodedMsgpack, 'msgpack');
+printInfo(
+  `  msgpack encoded/decoded: { ${Object.entries(recDecodedMsgpack)
+    .map(([k, v]) => `${k}: ${v}`)
+    .join(', ')} }`,
+);
+printInfo('');
+
+// Record with string values
+printInfo('Record<string, string> example:');
+const stringRecord = new RecordCodec(stringCodec);
+const metadata: Record<string, string> = {
+  name: 'My App',
+  version: '1.0.0',
+  author: 'Algorand Developer',
+};
+
+printInfo(
+  `  Original: { ${Object.entries(metadata)
+    .map(([k, v]) => `${k}: "${v}"`)
+    .join(', ')} }`,
+);
+
+const metaEncoded = stringRecord.encode(metadata, 'json');
+const metaDecoded = stringRecord.decode(metaEncoded, 'json');
+printInfo(
+  `  Decoded: { ${Object.entries(metaDecoded)
+    .map(([k, v]) => `${k}: "${v}"`)
+    .join(', ')} }`,
+);
+printInfo('');
+
+// Default value
+printInfo(`RecordCodec default value: {} (empty object)`);
+printInfo(
+  `  Object.keys(defaultValue()).length = ${Object.keys(numberRecord.defaultValue()).length}`,
+);
+printInfo('');
+
+printSuccess('RecordCodec simplifies string-keyed object encoding');
+
+// ============================================================================
+// Step 6: Custom ArrayCodec with Specific Element Codec
+// ============================================================================
+printStep(6, 'Custom ArrayCodec with Specific Element Codec');
+
+printInfo('You can create custom ArrayCodecs for any element type.');
+printInfo('');
+
+// Custom codec for arrays of addresses (same as addressArrayCodec)
+printInfo('Creating custom ArrayCodec<Address>:');
+const customAddressArray = new ArrayCodec(addressCodec);
+
+const testAddresses = [Address.zeroAddress(), new Address(new Uint8Array(32).fill(0xab))];
+const customAddrEncoded = customAddressArray.encode(testAddresses, 'json');
+const customAddrDecoded = customAddressArray.decode(customAddrEncoded, 'json');
+
+printInfo(`  Original: [${testAddresses.map(a => `${a.toString().slice(0, 12)}...`).join(', ')}]`);
+printInfo(
+  `  Encoded (JSON): [${(customAddrEncoded as string[]).map(s => `${s.slice(0, 12)}...`).join(', ')}]`,
+);
+printInfo(
+  `  Decoded: [${customAddrDecoded.map((a: Address) => `${a.toString().slice(0, 12)}...`).join(', ')}]`,
+);
+printInfo('');
+
+// Custom codec for arrays of bytes (same as bytesArrayCodec)
+printInfo('Creating custom ArrayCodec<Uint8Array>:');
+const customBytesArray = new ArrayCodec(bytesCodec);
+
+const testBytesArrays = [new Uint8Array([0xde, 0xad]), new Uint8Array([0xbe, 0xef])];
+const customBytesEncoded = customBytesArray.encode(testBytesArrays, 'json');
+const customBytesDecoded = customBytesArray.decode(customBytesEncoded, 'json');
+
+printInfo(`  Original: [${testBytesArrays.map(formatHex).join(', ')}]`);
+printInfo(`  Encoded (JSON): ["${(customBytesEncoded as string[]).join('", "')}"] (base64)`);
+printInfo(`  Decoded: [${customBytesDecoded.map(formatHex).join(', ')}]`);
+printInfo('');
+
+printSuccess('Custom ArrayCodecs can wrap any primitive or composite codec');
+
+// ============================================================================
+// Step 7: Nested Structures - Array of Arrays
+// ============================================================================
+printStep(7, 'Nested Structures - Array of Arrays');
+
+printInfo('Composite codecs can be nested for complex structures.');
+printInfo('');
+
+// Array of number arrays (2D array)
+printInfo('Array of number arrays (2D matrix):');
+const numberArrayCodecInstance = new ArrayCodec(numberCodec);
+const arrayOfNumberArrays = new ArrayCodec(numberArrayCodecInstance);
+
+const matrix = [
+  [1, 2, 3],
+  [4, 5, 6],
+  [7, 8, 9],
+];
+
+printInfo(`  Original matrix:`);
+for (const row of matrix) {
+  printInfo(`    [${row.join(', ')}]`);
+}
+
+const matrixEncoded = arrayOfNumberArrays.encode(matrix, 'json');
+const matrixDecoded = arrayOfNumberArrays.decode(matrixEncoded, 'json');
+
+printInfo(`  Decoded matrix:`);
+for (const row of matrixDecoded) {
+  printInfo(`    [${row.join(', ')}]`);
+}
+
+// Verify match
+const matrixMatch = matrix.every((row, i) => row.every((val, j) => val === matrixDecoded[i][j]));
+printInfo(`  Match: ${matrixMatch}`);
+printInfo('');
+
+// Array of string arrays
+printInfo('Array of string arrays (groups of names):');
+const stringArrayCodecInstance = new ArrayCodec(stringCodec);
+const arrayOfStringArrays = new ArrayCodec(stringArrayCodecInstance);
+
+const groups = [
+  ['Alice', 'Bob'],
+  ['Charlie', 'David', 'Eve'],
+];
+
+printInfo(`  Original: [${groups.map(g => `["${g.join('", "')}"]`).join(', ')}]`);
+
+const groupsEncoded = arrayOfStringArrays.encode(groups, 'json');
+const groupsDecoded = arrayOfStringArrays.decode(groupsEncoded, 'json');
+
+printInfo(
+  `  Decoded:  [${groupsDecoded.map((g: string[]) => `["${g.join('", "')}"]`).join(', ')}]`,
+);
+printInfo('');
+
+printSuccess('Nested ArrayCodecs enable multi-dimensional arrays');
+
+// ============================================================================
+// Step 8: Nested Structures - Map of Arrays
+// ============================================================================
+printStep(8, 'Nested Structures - Map of Arrays');
+
+printInfo('MapCodec can use array codecs as value codecs.');
+printInfo('');
+
+// Map<string, number[]> - users to scores
+printInfo('Map<string, number[]> example (user scores):');
+const mapOfNumberArrays = new MapCodec(stringCodec, numberArrayCodec);
+
+const userScores = new Map<string, number[]>([
+  ['alice', [95, 88, 92]],
+  ['bob', [78, 85, 90]],
+]);
+
+printInfo(`  Original:`);
+for (const [user, scoreList] of userScores) {
+  printInfo(`    "${user}" => [${scoreList.join(', ')}]`);
+}
+
+const userScoresEncodedJson = mapOfNumberArrays.encode(userScores, 'json');
+const userScoresDecodedJson = mapOfNumberArrays.decode(userScoresEncodedJson, 'json');
+
+printInfo(`  JSON encoded: ${JSON.stringify(userScoresEncodedJson)}`);
+printInfo(`  Decoded:`);
+for (const [user, scoreList] of userScoresDecodedJson) {
+  printInfo(`    "${user}" => [${scoreList.join(', ')}]`);
+}
+printInfo('');
+
+// Map<string, string[]> - categories to items
+printInfo('Map<string, string[]> example (category items):');
+const mapOfStringArrays = new MapCodec(stringCodec, stringArrayCodec);
+
+const categories = new Map<string, string[]>([
+  ['fruits', ['apple', 'banana', 'cherry']],
+  ['colors', ['red', 'green', 'blue']],
+]);
+
+printInfo(`  Original:`);
+for (const [cat, items] of categories) {
+  printInfo(`    "${cat}" => ["${items.join('", "')}"]`);
+}
+
+const categoriesEncoded = mapOfStringArrays.encode(categories, 'msgpack');
+const categoriesDecoded = mapOfStringArrays.decode(categoriesEncoded, 'msgpack');
+
+printInfo(`  msgpack Decoded:`);
+for (const [cat, items] of categoriesDecoded) {
+  printInfo(`    "${cat}" => ["${items.join('", "')}"]`);
+}
+printInfo('');
+
+printSuccess('Composite codecs can be combined for complex structures');
+
+// ============================================================================
+// Step 9: Round-Trip Verification for All Composite Codecs
+// ============================================================================
+printStep(9, 'Round-Trip Verification for All Composite Codecs');
+
+printInfo('Verifying decode(encode(value)) === value for all composite codecs:');
+printInfo('');
+
+const roundTrips: Array<{ name: string; value: string; format: EncodingFormat; success: boolean }> =
+  [];
+
+// numberArrayCodec
+const rtNumArray = [1, 2, 3, 4, 5];
+roundTrips.push({
+  name: 'numberArrayCodec',
+  value: `[${rtNumArray.join(', ')}]`,
+  format: 'json',
+  success: rtNumArray.every(
+    (n, i) => n === numberArrayCodec.decode(numberArrayCodec.encode(rtNumArray, 'json'), 'json')[i],
+  ),
+});
+
+// stringArrayCodec
+const rtStrArray = ['a', 'b', 'c'];
+roundTrips.push({
+  name: 'stringArrayCodec',
+  value: `["${rtStrArray.join('", "')}"]`,
+  format: 'json',
+  success: rtStrArray.every(
+    (s, i) => s === stringArrayCodec.decode(stringArrayCodec.encode(rtStrArray, 'json'), 'json')[i],
+  ),
+});
+
+// bigIntArrayCodec
+const rtBigArray = [100n, 200n, 300n];
+roundTrips.push({
+  name: 'bigIntArrayCodec',
+  value: `[${rtBigArray.map(b => `${b}n`).join(', ')}]`,
+  format: 'msgpack',
+  success: rtBigArray.every(
+    (b, i) =>
+      b === bigIntArrayCodec.decode(bigIntArrayCodec.encode(rtBigArray, 'msgpack'), 'msgpack')[i],
+  ),
+});
+
+// booleanArrayCodec
+const rtBoolArray = [true, false, true];
+roundTrips.push({
+  name: 'booleanArrayCodec',
+  value: `[${rtBoolArray.join(', ')}]`,
+  format: 'json',
+  success: rtBoolArray.every(
+    (b, i) =>
+      b === booleanArrayCodec.decode(booleanArrayCodec.encode(rtBoolArray, 'json'), 'json')[i],
+  ),
+});
+
+// bytesArrayCodec
+const rtBytesArray = [new Uint8Array([1, 2]), new Uint8Array([3, 4])];
+const rtBytesDecoded = bytesArrayCodec.decode(bytesArrayCodec.encode(rtBytesArray, 'json'), 'json');
+roundTrips.push({
+  name: 'bytesArrayCodec',
+  value: `[${rtBytesArray.map(formatHex).join(', ')}]`,
+  format: 'json',
+  success: rtBytesArray.every((b, i) => arrayEqual(b, rtBytesDecoded[i])),
+});
+
+// addressArrayCodec
+const rtAddrArray = [Address.zeroAddress(), new Address(new Uint8Array(32).fill(0xff))];
+const rtAddrDecoded = addressArrayCodec.decode(
+  addressArrayCodec.encode(rtAddrArray, 'json'),
+  'json',
+);
+roundTrips.push({
+  name: 'addressArrayCodec',
+  value: `[${rtAddrArray.map(a => `${a.toString().slice(0, 8)}...`).join(', ')}]`,
+  format: 'json',
+  success: rtAddrArray.every((a, i) => a.equals(rtAddrDecoded[i])),
+});
+
+// MapCodec<string, number>
+const rtStrNumMap = new Map<string, number>([
+  ['a', 1],
+  ['b', 2],
+]);
+const strNumMapCodec = new MapCodec(stringCodec, numberCodec);
+const rtStrNumDecoded = strNumMapCodec.decode(strNumMapCodec.encode(rtStrNumMap, 'json'), 'json');
+roundTrips.push({
+  name: 'MapCodec<string, number>',
+  value: 'Map { "a" => 1, "b" => 2 }',
+  format: 'json',
+  success: Array.from(rtStrNumMap.entries()).every(([k, v]) => rtStrNumDecoded.get(k) === v),
+});
+
+// MapCodec<bigint, string>
+const rtBigStrMap = new Map<bigint, string>([
+  [1n, 'one'],
+  [2n, 'two'],
+]);
+const bigStrMapCodec = new MapCodec(bigIntCodec, stringCodec);
+const rtBigStrDecoded = bigStrMapCodec.decode(bigStrMapCodec.encode(rtBigStrMap, 'json'), 'json');
+roundTrips.push({
+  name: 'MapCodec<bigint, string>',
+  value: 'Map { 1n => "one", 2n => "two" }',
+  format: 'json',
+  success: Array.from(rtBigStrMap.entries()).every(([k, v]) => rtBigStrDecoded.get(k) === v),
+});
+
+// RecordCodec<number>
+const rtNumRecord = { a: 1, b: 2, c: 3 };
+const numRecordCodec = new RecordCodec(numberCodec);
+const rtNumRecDecoded = numRecordCodec.decode(numRecordCodec.encode(rtNumRecord, 'json'), 'json');
+roundTrips.push({
+  name: 'RecordCodec<number>',
+  value: '{ a: 1, b: 2, c: 3 }',
+  format: 'json',
+  success: Object.entries(rtNumRecord).every(([k, v]) => rtNumRecDecoded[k] === v),
+});
+
+// RecordCodec<string>
+const rtStrRecord = { name: 'test', type: 'example' };
+const strRecordCodec = new RecordCodec(stringCodec);
+const rtStrRecDecoded = strRecordCodec.decode(strRecordCodec.encode(rtStrRecord, 'json'), 'json');
+roundTrips.push({
+  name: 'RecordCodec<string>',
+  value: '{ name: "test", type: "example" }',
+  format: 'json',
+  success: Object.entries(rtStrRecord).every(([k, v]) => rtStrRecDecoded[k] === v),
+});
+
+// Nested: Array of arrays
+const rtNestedArray = [
+  [1, 2],
+  [3, 4],
+];
+const nestedArrayCodec = new ArrayCodec(new ArrayCodec(numberCodec));
+const rtNestedDecoded = nestedArrayCodec.decode(
+  nestedArrayCodec.encode(rtNestedArray, 'json'),
+  'json',
+);
+roundTrips.push({
+  name: 'ArrayCodec (nested)',
+  value: '[[1, 2], [3, 4]]',
+  format: 'json',
+  success: rtNestedArray.every((row, i) => row.every((val, j) => val === rtNestedDecoded[i][j])),
+});
+
+// Nested: Map of arrays
+const rtMapOfArrays = new Map<string, number[]>([
+  ['x', [1, 2, 3]],
+  ['y', [4, 5, 6]],
+]);
+const mapOfArraysCodec = new MapCodec(stringCodec, numberArrayCodec);
+const rtMapOfArraysDecoded = mapOfArraysCodec.decode(
+  mapOfArraysCodec.encode(rtMapOfArrays, 'json'),
+  'json',
+);
+roundTrips.push({
+  name: 'MapCodec (with array values)',
+  value: 'Map { "x" => [1,2,3], "y" => [4,5,6] }',
+  format: 'json',
+  success: Array.from(rtMapOfArrays.entries()).every(([k, v]) => {
+    const decoded = rtMapOfArraysDecoded.get(k);
+    return decoded && v.every((val, i) => val === decoded[i]);
+  }),
+});
+
+// Display results
+for (const rt of roundTrips) {
+  const status = rt.success ? 'PASS' : 'FAIL';
+  printInfo(`  [${status}] ${rt.name} (${rt.format}): ${rt.value}`);
+}
+
+const allPassed = roundTrips.every(rt => rt.success);
+if (allPassed) {
+  printInfo('');
+  printSuccess('All round-trip verifications passed!');
+}
+
+// ============================================================================
+// Step 10: Summary
+// ============================================================================
+printStep(10, 'Summary');
+
+printInfo('Composite codecs for complex data structures:');
+printInfo('');
+printInfo('  ArrayCodec<T>:');
+printInfo('    - new ArrayCodec(elementCodec)');
+printInfo('    - Encodes/decodes T[] using the element codec');
+printInfo('    - Default value: [] (empty array)');
+printInfo('');
+printInfo('  Pre-built Array Codecs:');
+printInfo('    - numberArrayCodec   - number[]');
+printInfo('    - stringArrayCodec   - string[]');
+printInfo('    - bigIntArrayCodec   - bigint[]');
+printInfo('    - booleanArrayCodec  - boolean[]');
+printInfo('    - bytesArrayCodec    - Uint8Array[]');
+printInfo('    - addressArrayCodec  - Address[]');
+printInfo('');
+printInfo('  MapCodec<K, V>:');
+printInfo('    - new MapCodec(keyCodec, valueCodec)');
+printInfo('    - JSON: string/bigint keys, encoded as object');
+printInfo('    - msgpack: any key type, preserved as Map');
+printInfo('    - Default value: new Map() (empty map)');
+printInfo('');
+printInfo('  RecordCodec<V>:');
+printInfo('    - new RecordCodec(valueCodec)');
+printInfo('    - Encodes/decodes Record<string, V>');
+printInfo('    - Default value: {} (empty object)');
+printInfo('');
+printInfo('  Nesting:');
+printInfo('    - Composite codecs can be nested');
+printInfo('    - ArrayCodec(ArrayCodec(...)) for 2D arrays');
+printInfo('    - MapCodec(keyCodec, ArrayCodec(...)) for map of arrays');
+printInfo('');
+printSuccess('Composite Codecs Example completed!');
+```
+
+---
+
+### Other examples in Common Utilities
+
+- [Address Basics](/docs/algokit-utils/typescript/latest/examples/common/01-address-basics/)
+- [Address Encoding](/docs/algokit-utils/typescript/latest/examples/common/02-address-encoding/)
+- [Array Utilities](/docs/algokit-utils/typescript/latest/examples/common/03-array-utilities/)
+- [Constants Reference](/docs/algokit-utils/typescript/latest/examples/common/04-constants/)
+- [Crypto Hash (SHA-512/256)](/docs/algokit-utils/typescript/latest/examples/common/05-crypto-hash/)
+- [Logger Type](/docs/algokit-utils/typescript/latest/examples/common/06-logger/)
+- [JSON BigInt](/docs/algokit-utils/typescript/latest/examples/common/07-json-bigint/)
+- [MessagePack](/docs/algokit-utils/typescript/latest/examples/common/08-msgpack/)
+- [Primitive Codecs](/docs/algokit-utils/typescript/latest/examples/common/09-primitive-codecs/)
+- **Composite Codecs**
+- [Model Codecs](/docs/algokit-utils/typescript/latest/examples/common/11-model-codecs/)
+- [Sourcemap](/docs/algokit-utils/typescript/latest/examples/common/12-sourcemap/)

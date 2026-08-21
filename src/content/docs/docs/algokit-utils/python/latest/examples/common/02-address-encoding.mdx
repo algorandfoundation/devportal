@@ -1,0 +1,257 @@
+---
+title: 'Address Encoding'
+description: 'This example demonstrates how to encode and decode addresses between different formats and compute application addresses:'
+sidebar:
+  order: 2
+---
+
+[← Back to Common Utilities](/docs/algokit-utils/python/latest/examples/common/)
+
+## Description
+
+This example demonstrates how to encode and decode addresses between different formats and compute application addresses:
+
+- address_from_public_key() to convert 32-byte public key to base32 string
+- public_key_from_address() to convert base32 string to public key bytes
+- get_application_address() to compute an app's escrow address from app ID
+- Round-trip verification: encode(decode(address)) equals original
+- Understanding the relationship between public key bytes and checksum
+
+## Prerequisites
+
+No LocalNet required - pure utility functions
+
+## Run This Example
+
+From the repository's `examples` directory:
+
+```bash
+cd examples
+uv run python common/02_address_encoding.py
+```
+
+## Code
+
+[View source on GitHub](https://github.com/algorandfoundation/algokit-utils-py/blob/main/examples/common/02_address_encoding.py)
+
+```python title="02_address_encoding.py"
+# ruff: noqa: N999, C901, PLR0912, PLR0915
+"""
+Example: Address Encoding
+
+This example demonstrates how to encode and decode addresses between different formats
+and compute application addresses:
+- address_from_public_key() to convert 32-byte public key to base32 string
+- public_key_from_address() to convert base32 string to public key bytes
+- get_application_address() to compute an app's escrow address from app ID
+- Round-trip verification: encode(decode(address)) equals original
+- Understanding the relationship between public key bytes and checksum
+
+No LocalNet required - pure utility functions
+"""
+
+from shared import (
+    format_bytes,
+    format_hex,
+    print_header,
+    print_info,
+    print_step,
+    print_success,
+)
+
+from algokit_common import (
+    CHECKSUM_BYTE_LENGTH,
+    ZERO_ADDRESS,
+    address_from_public_key,
+    get_application_address,
+    public_key_from_address,
+    sha512_256,
+)
+
+
+def get_checksum(public_key: bytes) -> bytes:
+    """Compute the 4-byte checksum for a public key."""
+    return sha512_256(public_key)[-CHECKSUM_BYTE_LENGTH:]
+
+
+def main() -> None:
+    print_header("Address Encoding Example")
+
+    # Step 1: address_from_public_key() - Convert 32-byte public key to base32 string
+    print_step(1, "address_from_public_key() - Public Key to Base32 String")
+
+    # Create a 32-byte public key (bytes 0-31)
+    public_key = bytes(range(32))
+
+    print_info("Input: 32-byte public key")
+    print_info(f"Public key bytes: {format_bytes(public_key, 8)}")
+    print_info(f"Public key (hex): {format_hex(public_key)}")
+
+    encoded_address = address_from_public_key(public_key)
+    print_info("\nOutput: Base32 encoded address")
+    print_info(f"Encoded address: {encoded_address}")
+    print_info(f"Address length: {len(encoded_address)} characters")
+
+    # Step 2: public_key_from_address() - Convert base32 string to public key bytes
+    print_step(2, "public_key_from_address() - Base32 String to Public Key Bytes")
+
+    print_info(f'Input: "{encoded_address}"')
+
+    decoded_public_key = public_key_from_address(encoded_address)
+    print_info("\nOutput: Public key bytes")
+    print_info(f"Type: {type(decoded_public_key).__name__}")
+    print_info(f"Public key length: {len(decoded_public_key)} bytes")
+    print_info(f"Public key bytes: {format_bytes(decoded_public_key, 8)}")
+
+    # Step 3: Round-trip verification
+    print_step(3, "Round-Trip Verification")
+
+    # encode(decode(address)) == address
+    original_address = "AAAQEAYEAUDAOCAJBIFQYDIOB4IBCEQTCQKRMFYYDENBWHA5DYP7MUPJQE"
+    print_info(f"Original address: {original_address}")
+
+    decoded = public_key_from_address(original_address)
+    re_encoded = address_from_public_key(decoded)
+
+    print_info(f"After decode -> encode: {re_encoded}")
+    print_info(f"Round-trip matches: {original_address == re_encoded}")
+
+    # decode(encode(public_key)) == public_key
+    print_info("\nVerifying bytes round-trip:")
+    encoded = address_from_public_key(public_key)
+    decoded_back = public_key_from_address(encoded)
+    bytes_match = public_key == decoded_back
+    print_info(f"Original public key matches decoded: {bytes_match}")
+
+    # Step 4: Public Key Bytes and Checksum Relationship
+    print_step(4, "Public Key Bytes and Checksum Relationship")
+
+    print_info("An Algorand address consists of:")
+    print_info("  - 32 bytes: public key")
+    print_info("  - 4 bytes: checksum (last 4 bytes of SHA512/256 hash of public key)")
+    print_info("  - Encoded together as 58 character base32 string")
+
+    print_info("\nFor our sample address:")
+    print_info(f"  Public key (32 bytes): {format_hex(decoded_public_key)}")
+
+    checksum = get_checksum(decoded_public_key)
+    print_info(f"  Checksum (4 bytes): {format_hex(checksum)}")
+
+    # Show how the checksum is computed
+    print_info("\nThe checksum is computed by:")
+    print_info("  1. Taking SHA512/256 hash of the public key")
+    print_info("  2. Using the last 4 bytes of that hash")
+
+    # Demonstrate with zero address
+    zero_public_key = public_key_from_address(ZERO_ADDRESS)
+    zero_checksum = get_checksum(zero_public_key)
+    print_info("\nZero address example:")
+    print_info(f"  Public key: {format_hex(zero_public_key[:8])}... (all zeros)")
+    print_info(f"  Checksum: {format_hex(zero_checksum)}")
+    print_info(f"  Full address: {ZERO_ADDRESS}")
+
+    # Step 5: get_application_address() - Compute App Escrow Address
+    print_step(5, "get_application_address() - Application Escrow Address")
+
+    print_info("Every application has an escrow address derived from its app ID.")
+    print_info("This address can hold Algos and ASAs for the application.")
+
+    # Compute addresses for some app IDs
+    app_ids = [1, 123, 1234567890]
+
+    for app_id in app_ids:
+        app_address = get_application_address(app_id)
+        app_pk = public_key_from_address(app_address)
+        print_info(f"\nApp ID {app_id}:")
+        print_info(f"  Escrow address: {app_address}")
+        print_info(f"  Public key (first 8 bytes): {format_hex(app_pk[:8])}...")
+
+    print_info("\nThe address is computed by:")
+    print_info('  1. Concatenating "appID" prefix with 8-byte big-endian app ID')
+    print_info("  2. Taking SHA512/256 hash of the result")
+    print_info("  3. Using the 32-byte hash as the public key")
+
+    # Step 6: Working with different address representations
+    print_step(6, "Working with Different Representations")
+
+    print_info("Different ways to work with addresses:")
+    print_info("  - Base32 string: human-readable, used in UIs and APIs")
+    print_info("  - Public key bytes: used for cryptographic operations")
+    print_info("  - Hex string: useful for debugging and logging")
+
+    # From string
+    sample_str = "AAAQEAYEAUDAOCAJBIFQYDIOB4IBCEQTCQKRMFYYDENBWHA5DYP7MUPJQE"
+    from_string_pk = public_key_from_address(sample_str)
+    print_info(f"\nFrom string: {sample_str[:30]}...")
+    print_info(f"  -> public_key_from_address() -> {len(from_string_pk)} bytes")
+
+    # From public key back to string
+    back_to_string = address_from_public_key(from_string_pk)
+    print_info(f"  -> address_from_public_key() -> {back_to_string[:30]}...")
+
+    # All match
+    print_info(f"\nRound-trip verified: {sample_str == back_to_string}")
+
+    # Step 7: Practical Use Cases
+    print_step(7, "Practical Use Cases")
+
+    print_info("Common scenarios for address encoding/decoding:")
+
+    print_info("\n1. Converting wallet public keys to displayable addresses:")
+    wallet_pub_key = bytes([42] * 32)  # Simulated wallet public key
+    wallet_address = address_from_public_key(wallet_pub_key)
+    print_info(f"   Public key -> Address: {wallet_address[:30]}...")
+
+    print_info("\n2. Extracting public key from address for cryptographic operations:")
+    some_address = "AAAQEAYEAUDAOCAJBIFQYDIOB4IBCEQTCQKRMFYYDENBWHA5DYP7MUPJQE"
+    extracted = public_key_from_address(some_address)
+    print_info(f"   Address -> Public key: {format_hex(extracted[:8])}...")
+
+    print_info("\n3. Computing application escrow for sending funds:")
+    my_app_id = 12345
+    escrow = get_application_address(my_app_id)
+    print_info(f"   App {my_app_id} escrow: {escrow[:30]}...")
+
+    print_info("\n4. Normalizing address inputs in functions:")
+    print_info("   def send_payment(to: str) -> None:")
+    print_info("       pk = public_key_from_address(to)  # Validates and extracts")
+    print_info("       # ... rest of implementation")
+
+    # Step 8: Summary
+    print_step(8, "Summary")
+
+    print_info("Encoding/Decoding Functions:")
+    print_info("  - address_from_public_key(pk) - 32-byte bytes -> 58-char base32 string")
+    print_info("  - public_key_from_address(addr) - 58-char base32 string -> 32-byte bytes")
+
+    print_info("\nApplication Address:")
+    print_info("  - get_application_address(app_id) - App ID -> Escrow Address string")
+
+    print_info("\nAddress Structure:")
+    print_info("  - 32 bytes public key + 4 bytes checksum = 36 bytes")
+    print_info("  - Base32 encoded to 58 character string")
+
+    print_success("Address Encoding example completed successfully!")
+
+
+if __name__ == "__main__":
+    main()
+
+```
+
+---
+
+### Other examples in Common Utilities
+
+- [Address Basics](/docs/algokit-utils/python/latest/examples/common/01-address-basics/)
+- **Address Encoding**
+- [Array Utilities](/docs/algokit-utils/python/latest/examples/common/03-array-utilities/)
+- [Constants Reference](/docs/algokit-utils/python/latest/examples/common/04-constants/)
+- [Crypto Hash (SHA-512/256)](/docs/algokit-utils/python/latest/examples/common/05-crypto-hash/)
+- [Example](/docs/algokit-utils/python/latest/examples/common/06-logger/)
+- [JSON BigInt Support](/docs/algokit-utils/python/latest/examples/common/07-json-bigint/)
+- [MessagePack Encoding](/docs/algokit-utils/python/latest/examples/common/08-msgpack/)
+- [Primitive Serde (Serialization/Deserialization)](/docs/algokit-utils/python/latest/examples/common/09-primitive-codecs/)
+- [Composite Serde (Serialization/Deserialization)](/docs/algokit-utils/python/latest/examples/common/10-composite-codecs/)
+- [Model Serde (Object Model Serialization)](/docs/algokit-utils/python/latest/examples/common/11-model-codecs/)
+- [Sourcemap for TEAL Debugging](/docs/algokit-utils/python/latest/examples/common/12-sourcemap/)

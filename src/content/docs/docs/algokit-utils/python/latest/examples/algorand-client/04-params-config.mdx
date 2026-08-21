@@ -1,0 +1,347 @@
+---
+title: 'Suggested Params Configuration'
+description: 'This example demonstrates how to configure suggested transaction parameters:'
+sidebar:
+  order: 4
+---
+
+[← Back to Algorand Client](/docs/algokit-utils/python/latest/examples/algorand-client/)
+
+## Description
+
+This example demonstrates how to configure suggested transaction parameters:
+
+- set_default_validity_window() to set the number of rounds a transaction is valid
+- set_suggested_params_cache_timeout() to set cache duration in milliseconds
+- get_suggested_params() to manually fetch suggested params
+- Performance benefits of caching when sending multiple transactions
+
+## Prerequisites
+
+LocalNet required to fetch suggested params and send transactions
+
+## Run This Example
+
+From the repository's `examples` directory:
+
+```bash
+cd examples
+uv run python algorand_client/04_params_config.py
+```
+
+## Code
+
+[View source on GitHub](https://github.com/algorandfoundation/algokit-utils-py/blob/main/examples/algorand_client/04_params_config.py)
+
+```python title="04_params_config.py"
+# ruff: noqa: N999, C901, PLR0912, PLR0915, PLR2004
+"""
+Example: Suggested Params Configuration
+
+This example demonstrates how to configure suggested transaction parameters:
+- set_default_validity_window() to set the number of rounds a transaction is valid
+- set_suggested_params_cache_timeout() to set cache duration in milliseconds
+- get_suggested_params() to manually fetch suggested params
+- Performance benefits of caching when sending multiple transactions
+
+LocalNet required to fetch suggested params and send transactions
+"""
+
+import time
+
+from shared import (
+    print_error,
+    print_header,
+    print_info,
+    print_step,
+    print_success,
+    shorten_address,
+)
+
+from algokit_utils import AlgoAmount, AlgorandClient, PaymentParams
+
+
+def main() -> None:
+    print_header("Suggested Params Configuration Example")
+
+    # Initialize client and verify LocalNet is running
+    algorand = AlgorandClient.default_localnet()
+
+    try:
+        algorand.client.algod.status()
+        print_success("Connected to LocalNet")
+    except Exception as e:
+        print_error(f"Failed to connect to LocalNet: {e}")
+        print_info("Make sure LocalNet is running (e.g., algokit localnet start)")
+        return
+
+    # Step 1: Understanding suggested params
+    print_step(1, "Understanding suggested params")
+    print_info("Suggested params contain network information needed for transactions:")
+    print_info("  - first_valid: The first round the transaction is valid")
+    print_info("  - last_valid: The last round the transaction is valid (set during tx building)")
+    print_info("  - genesis_hash: The hash of the genesis block")
+    print_info("  - genesis_id: The network identifier (e.g., 'localnet-v1')")
+    print_info("  - fee: The minimum transaction fee")
+    print_info("  - min_fee: The minimum fee per byte")
+
+    params = algorand.get_suggested_params()
+    print_info("")
+    print_info("Current suggested params from LocalNet:")
+    print_info(f"  first_valid: {params.first_valid}")
+    print_info(f"  genesis_id: {params.genesis_id}")
+    print_info(f"  fee: {params.fee} microALGO")
+    print_info(f"  min_fee: {params.min_fee} microALGO")
+
+    print_success("Retrieved suggested params from LocalNet")
+
+    # Step 2: Default validity window behavior
+    print_step(2, "Understand default validity window behavior")
+    print_info("The validity window determines: last_valid = first_valid + validity_window")
+    print_info("Default is 10 rounds, but LocalNet uses 1000 rounds for convenience")
+    print_info("This is set during transaction building, not in suggested params")
+
+    # Create accounts for demonstrating transactions
+    dispenser = algorand.account.localnet_dispenser()
+    sender = algorand.account.random()
+    receiver = algorand.account.random()
+
+    # Fund the sender
+    algorand.send.payment(
+        PaymentParams(
+            sender=dispenser.addr,
+            receiver=sender.addr,
+            amount=AlgoAmount.from_algo(10),
+        )
+    )
+
+    print_info("")
+    print_info(f"Sender: {shorten_address(str(sender.addr))}")
+    print_info(f"Receiver: {shorten_address(str(receiver.addr))}")
+
+    # Send a transaction and inspect its validity window
+    tx_result = algorand.send.payment(
+        PaymentParams(
+            sender=sender.addr,
+            receiver=receiver.addr,
+            amount=AlgoAmount.from_algo(0.1),
+            note=b"Transaction 1",
+        )
+    )
+
+    # Access the transaction directly from the result
+    tx = tx_result.transactions[0]
+    print_info("")
+    print_info("Transaction built with LocalNet default:")
+    print_info(f"  first_valid: {tx.first_valid}")
+    print_info(f"  last_valid: {tx.last_valid}")
+    validity_window = tx.last_valid - tx.first_valid
+    print_info(f"  Validity window: {validity_window} rounds (LocalNet default)")
+
+    print_success("Demonstrated default validity window")
+
+    # Step 3: Set custom validity window
+    print_step(3, "Demonstrate set_default_validity_window()")
+    print_info("Use set_default_validity_window() to override the default validity window")
+    print_info("This affects all transactions built by this client")
+
+    # Create a new client with custom validity window
+    algorand_custom = AlgorandClient.default_localnet().set_default_validity_window(50)
+    algorand_custom.account.set_signer_from_account(sender)
+
+    tx_result_custom = algorand_custom.send.payment(
+        PaymentParams(
+            sender=sender.addr,
+            receiver=receiver.addr,
+            amount=AlgoAmount.from_algo(0.1),
+            note=b"Transaction with custom validity",
+        )
+    )
+
+    # Access the transaction directly from the result
+    tx_custom = tx_result_custom.transactions[0]
+    print_info("")
+    print_info("Transaction built with set_default_validity_window(50):")
+    print_info(f"  first_valid: {tx_custom.first_valid}")
+    print_info(f"  last_valid: {tx_custom.last_valid}")
+    custom_validity = tx_custom.last_valid - tx_custom.first_valid
+    print_info(f"  Validity window: {custom_validity} rounds")
+
+    print_success("Demonstrated custom validity window")
+
+    # Step 4: When to use different validity windows
+    print_step(4, "When to use longer vs shorter validity windows")
+    print_info("")
+    print_info("Shorter validity windows (5-10 rounds):")
+    print_info("  - High-frequency trading applications")
+    print_info("  - When you want quick transaction expiration")
+    print_info("  - Reduces risk of delayed/stale transactions being confirmed")
+    print_info("")
+    print_info("Longer validity windows (100-1000 rounds):")
+    print_info("  - Batch operations with many transactions")
+    print_info("  - When network congestion is expected")
+    print_info("  - When user confirmation takes time")
+    print_info("  - Offline signing scenarios")
+
+    print_success("Explained validity window use cases")
+
+    # Step 5: Suggested params caching basics
+    print_step(5, "Demonstrate get_suggested_params() caching")
+    print_info("get_suggested_params() caches results to avoid repeated network calls")
+    print_info("Default cache timeout is 3 seconds (3000ms)")
+
+    # Create a fresh client to demonstrate caching
+    algorand_cache = AlgorandClient.default_localnet()
+
+    # Demonstrate that the cache is working
+    print_info("")
+    print_info("Fetching params twice in quick succession...")
+    start_time1 = time.time()
+    algorand_cache.get_suggested_params()
+    duration1 = (time.time() - start_time1) * 1000
+
+    start_time2 = time.time()
+    algorand_cache.get_suggested_params()
+    duration2 = (time.time() - start_time2) * 1000
+
+    print_info(f"  First call: ~{duration1:.0f}ms (includes network fetch)")
+    print_info(f"  Second call: ~{duration2:.0f}ms (from cache)")
+
+    print_success("Demonstrated params caching")
+
+    # Step 6: Configure cache timeout
+    print_step(6, "Demonstrate set_suggested_params_cache_timeout()")
+    print_info("Use set_suggested_params_cache_timeout() to set how long params are cached")
+    print_info("Value is in milliseconds")
+
+    # Create a client with longer cache timeout
+    algorand_long_cache = AlgorandClient.default_localnet().set_suggested_params_cache_timeout(60_000)
+    print_info("")
+    print_info("With set_suggested_params_cache_timeout(60_000): 60 second cache")
+    print_info("Good for: High-throughput apps sending many transactions quickly")
+
+    # Create a client with shorter cache timeout
+    algorand_short_cache = AlgorandClient.default_localnet().set_suggested_params_cache_timeout(500)
+    print_info("With set_suggested_params_cache_timeout(500): 0.5 second cache")
+    print_info("Good for: Apps that need the most current round information")
+
+    # Fetch to demonstrate they work
+    algorand_long_cache.get_suggested_params()
+    algorand_short_cache.get_suggested_params()
+
+    print_success("Demonstrated cache timeout configuration")
+
+    # Step 7: Performance benefit with multiple transactions
+    print_step(7, "Show performance benefit of caching with multiple transactions")
+    print_info("When sending many transactions, caching reduces network calls")
+    print_info("Each transaction needs suggested params to set validity window")
+
+    # Send 5 transactions with unique notes and measure time
+    num_transactions = 5
+    print_info("")
+    print_info(f"Sending {num_transactions} transactions with caching enabled (default)...")
+
+    start_with_cache = time.time()
+    for i in range(num_transactions):
+        algorand.send.payment(
+            PaymentParams(
+                sender=sender.addr,
+                receiver=receiver.addr,
+                amount=AlgoAmount.from_algo(0.01),
+                note=f"Performance test transaction {i + 1} at {time.time()}".encode(),
+            )
+        )
+    duration_with_cache = (time.time() - start_with_cache) * 1000
+
+    print_info(f"  Total time: {duration_with_cache:.0f}ms")
+    print_info(f"  Average per transaction: {duration_with_cache / num_transactions:.0f}ms")
+    print_info("  Note: Params are fetched once and cached for subsequent transactions")
+
+    print_success("Demonstrated caching performance benefit")
+
+    # Step 8: Method chaining
+    print_step(8, "Method chaining - Configure params fluently")
+    print_info("All configuration methods return the AlgorandClient for chaining")
+
+    configured_client = (
+        AlgorandClient.default_localnet().set_default_validity_window(25).set_suggested_params_cache_timeout(10_000)
+    )
+    configured_client.account.set_signer_from_account(sender)
+
+    print_info("")
+    print_info("Configured client with:")
+    print_info("  .set_default_validity_window(25)")
+    print_info("  .set_suggested_params_cache_timeout(10_000)")
+    print_info("  .account.set_signer_from_account(sender)")
+
+    # Send a transaction to verify the configuration
+    chained_tx_result = configured_client.send.payment(
+        PaymentParams(
+            sender=sender.addr,
+            receiver=receiver.addr,
+            amount=AlgoAmount.from_algo(0.01),
+            note=b"Chained config test",
+        )
+    )
+
+    # Access the transaction directly from the result
+    chained_tx = chained_tx_result.transactions[0]
+    chained_validity = chained_tx.last_valid - chained_tx.first_valid
+    print_info("")
+    print_info(f"Resulting transaction validity window: {chained_validity} rounds")
+
+    print_success("Demonstrated method chaining")
+
+    # Step 9: Summary
+    print_step(9, "Summary")
+    print_info("Suggested params configuration methods:")
+    print_info("")
+    print_info("get_suggested_params():")
+    print_info("  - Returns cached params or fetches from network")
+    print_info("  - Automatically manages cache expiry")
+    print_info("  - Use for manual param inspection or custom transactions")
+    print_info("")
+    print_info("set_default_validity_window(rounds):")
+    print_info("  - Sets how many rounds a transaction stays valid")
+    print_info("  - Default is 10 rounds (1000 for LocalNet)")
+    print_info("  - Affects last_valid = first_valid + validity_window")
+    print_info("")
+    print_info("set_suggested_params_cache_timeout(milliseconds):")
+    print_info("  - Sets how long params are cached before refresh")
+    print_info("  - Default is 3000ms (3 seconds)")
+    print_info("  - Longer = fewer network calls, possibly stale data")
+    print_info("  - Shorter = more network calls, fresher data")
+    print_info("")
+    print_info("Best practices:")
+    print_info("  - Use default settings for most applications")
+    print_info("  - Increase cache timeout for high-throughput apps")
+    print_info("  - Use shorter validity windows for time-sensitive transactions")
+    print_info("  - Use longer validity windows for batch operations")
+
+    print_success("Suggested Params Configuration example completed!")
+
+
+if __name__ == "__main__":
+    main()
+
+```
+
+---
+
+### Other examples in Algorand Client
+
+- [Client Instantiation](/docs/algokit-utils/python/latest/examples/algorand-client/01-client-instantiation/)
+- [AlgoAmount Utility](/docs/algokit-utils/python/latest/examples/algorand-client/02-algo-amount/)
+- [Signer Configuration](/docs/algokit-utils/python/latest/examples/algorand-client/03-signer-config/)
+- **Suggested Params Configuration**
+- [Account Manager](/docs/algokit-utils/python/latest/examples/algorand-client/05-account-manager/)
+- [Send Payment](/docs/algokit-utils/python/latest/examples/algorand-client/06-send-payment/)
+- [Send Asset Operations](/docs/algokit-utils/python/latest/examples/algorand-client/07-send-asset-ops/)
+- [Send Application Operations](/docs/algokit-utils/python/latest/examples/algorand-client/08-send-app-ops/)
+- [Create Transaction (Unsigned Transactions)](/docs/algokit-utils/python/latest/examples/algorand-client/09-create-transaction/)
+- [Transaction Composer (Atomic Transaction Groups)](/docs/algokit-utils/python/latest/examples/algorand-client/10-transaction-composer/)
+- [Asset Manager](/docs/algokit-utils/python/latest/examples/algorand-client/11-asset-manager/)
+- [App Manager](/docs/algokit-utils/python/latest/examples/algorand-client/12-app-manager/)
+- [App Deployer](/docs/algokit-utils/python/latest/examples/algorand-client/13-app-deployer/)
+- [Client Manager](/docs/algokit-utils/python/latest/examples/algorand-client/14-client-manager/)
+- [Error Transformers](/docs/algokit-utils/python/latest/examples/algorand-client/15-error-transformers/)

@@ -8,9 +8,9 @@ export function generateCommonLinkMappings(): LinkMapping[] {
     // Strip /index.md for Starlight routing (global - applies to all links)
     {
       pattern: /\/index\.md(#.*)?$/,
-      replacement: (match: string, anchor: string) => {
+      replacement: (_match: string, _anchor: string) => {
         // Remove /index.md but preserve anchor
-        return match.replace('/index.md', '');
+        return _match.replace('/index.md', '');
       },
       global: true,
     },
@@ -18,8 +18,8 @@ export function generateCommonLinkMappings(): LinkMapping[] {
     // Handle README.md -> overview (non-global - only unresolved links)
     {
       pattern: /\/README\.md(#.*)?$/,
-      replacement: (match: string, anchor: string) => {
-        return match.replace('/README.md', '/overview');
+      replacement: (_match: string, _anchor: string) => {
+        return _match.replace('/README.md', '/overview');
       },
       global: false,
     },
@@ -31,6 +31,13 @@ export function generateCommonLinkMappings(): LinkMapping[] {
  */
 export function generateStarlightLinkMappings(): LinkMapping[] {
   return [
+    // Strip .md extensions from relative links (Starlight uses extensionless routes)
+    // Example: './subscriber.md' -> './subscriber', 'subscriptions.md#foo' -> 'subscriptions#foo'
+    {
+      pattern: /\.md(#|$)/,
+      replacement: '$1',
+      global: true,
+    },
     // Strip /index.md and /index (Starlight treats these specially)
     // Example: 'modules/index.md#some-anchor' -> 'modules/#some-anchor'
     {
@@ -46,7 +53,7 @@ export function generateStarlightLinkMappings(): LinkMapping[] {
  * @param path - The path to convert
  * @returns Starlight-compatible URL
  */
-function pathToStarlightUrl(path: string): string {
+export function pathToStarlightUrl(path: string): string {
   // Remove .md/.mdx extensions
   let url = path.replace(/\.(md|mdx)$/i, '');
 
@@ -94,7 +101,7 @@ export function generateLinkMappings(
 
       return {
         pattern: new RegExp(`^${sourcePattern}(.+)$`),
-        replacement: (match: string, relativePath: string) => {
+        replacement: (_match: string, relativePath: string) => {
           let finalPath: string;
           if (crossSectionPath) {
             // Cross-section reference with absolute path

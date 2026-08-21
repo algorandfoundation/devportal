@@ -1,0 +1,393 @@
+---
+title: 'Multisig Account Management'
+description: 'This example demonstrates how to manage multisig accounts using KMD:'
+sidebar:
+  order: 9
+---
+
+[← Back to KMD Client](/docs/algokit-utils/python/latest/examples/kmd-client/)
+
+## Description
+
+This example demonstrates how to manage multisig accounts using KMD:
+
+- list_multisig() - List all multisig accounts in a wallet
+- export_multisig() - Get the multisig preimage information
+- delete_multisig() - Remove a multisig account from the wallet
+  Key concepts:
+- Multisig accounts can be listed to see all multisigs in a wallet
+- The multisig preimage contains the original parameters: publicKeys, threshold, version
+- Deleting a multisig only removes it from the wallet, not from the blockchain
+- Funds in a deleted multisig address remain on the blockchain
+  Prerequisites:
+  Covered operations:
+- generate_key() - Generate keys to use as multisig participants
+- import_multisig() - Create a multisig account from public keys
+- list_multisig() - List all multisig accounts in the wallet
+- export_multisig() - Export the multisig preimage (configuration)
+- delete_multisig() - Delete a multisig account from the wallet
+
+## Prerequisites
+
+- LocalNet running (via `algokit localnet start`)
+
+## Run This Example
+
+From the repository's `examples` directory:
+
+```bash
+cd examples
+uv run python kmd_client/09_multisig_management.py
+```
+
+## Code
+
+[View source on GitHub](https://github.com/algorandfoundation/algokit-utils-py/blob/main/examples/kmd_client/09_multisig_management.py)
+
+```python title="09_multisig_management.py"
+# ruff: noqa: N999, C901, PLR0912, PLR0915
+"""
+Example: Multisig Account Management
+
+This example demonstrates how to manage multisig accounts using KMD:
+- list_multisig() - List all multisig accounts in a wallet
+- export_multisig() - Get the multisig preimage information
+- delete_multisig() - Remove a multisig account from the wallet
+
+Key concepts:
+- Multisig accounts can be listed to see all multisigs in a wallet
+- The multisig preimage contains the original parameters: publicKeys, threshold, version
+- Deleting a multisig only removes it from the wallet, not from the blockchain
+- Funds in a deleted multisig address remain on the blockchain
+
+Prerequisites:
+- LocalNet running (via `algokit localnet start`)
+
+Covered operations:
+- generate_key() - Generate keys to use as multisig participants
+- import_multisig() - Create a multisig account from public keys
+- list_multisig() - List all multisig accounts in the wallet
+- export_multisig() - Export the multisig preimage (configuration)
+- delete_multisig() - Delete a multisig account from the wallet
+"""
+
+import sys
+
+from shared import (
+    cleanup_test_wallet,
+    create_kmd_client,
+    create_test_wallet,
+    print_error,
+    print_header,
+    print_info,
+    print_step,
+    print_success,
+)
+
+from algokit_common import public_key_from_address
+from algokit_kmd_client.models import (
+    DeleteMultisigRequest,
+    ExportMultisigRequest,
+    GenerateKeyRequest,
+    ImportMultisigRequest,
+    ListMultisigRequest,
+)
+
+
+def format_bytes_for_display(data: bytes, show_first: int = 4, show_last: int = 4) -> str:
+    """Format a byte array for display, showing first and last few bytes."""
+    hex_str = data.hex()
+    if len(data) <= show_first + show_last:
+        return hex_str
+    first_bytes = hex_str[: show_first * 2]
+    last_bytes = hex_str[-(show_last * 2) :]
+    return f"{first_bytes}...{last_bytes}"
+
+
+def main() -> None:
+    print_header("KMD Multisig Account Management Example")
+
+    kmd = create_kmd_client()
+    wallet_handle_token = ""
+    wallet_password = "test-password"
+
+    try:
+        # =========================================================================
+        # Step 1: Create a Test Wallet
+        # =========================================================================
+        print_step(1, "Creating a test wallet")
+
+        test_wallet = create_test_wallet(kmd, wallet_password)
+        wallet_handle_token = test_wallet["wallet_handle_token"]
+
+        print_success(f"Test wallet created: {test_wallet['wallet_name']}")
+        print_info(f"Wallet ID: {test_wallet['wallet_id']}")
+
+        # =========================================================================
+        # Step 2: Generate 3 Keys for Multisig Participants
+        # =========================================================================
+        print_step(2, "Generating 3 keys to use as multisig participants")
+
+        participant_addresses: list[str] = []
+        num_participants = 3
+
+        for i in range(1, num_participants + 1):
+            address = kmd.generate_key(GenerateKeyRequest(wallet_handle_token=wallet_handle_token)).address
+            participant_addresses.append(address)
+            print_info(f"Participant {i}: {address}")
+
+        print_success(f"Generated {num_participants} participant keys")
+
+        # =========================================================================
+        # Step 3: Create a 2-of-3 Multisig Account
+        # =========================================================================
+        print_step(3, "Creating a 2-of-3 multisig account")
+
+        public_keys: list[bytes] = []
+        for addr in participant_addresses:
+            pk = public_key_from_address(addr)
+            public_keys.append(pk)
+
+        threshold = 2
+        multisig_version = 1
+
+        multisig_address = kmd.import_multisig(
+            ImportMultisigRequest(
+                wallet_handle_token=wallet_handle_token,
+                multisig_version=multisig_version,
+                threshold=threshold,
+                public_keys=public_keys,
+            )
+        ).address
+
+        print_success("Multisig account created!")
+        print_info(f"Multisig address: {multisig_address}")
+        print_info(f"Configuration: {threshold}-of-{num_participants}")
+
+        # =========================================================================
+        # Step 4: List All Multisig Accounts with list_multisig()
+        # =========================================================================
+        print_step(4, "Listing all multisig accounts with list_multisig()")
+
+        list_result = kmd.list_multisig(ListMultisigRequest(wallet_handle_token=wallet_handle_token)).addresses
+
+        print_success(f"Found {len(list_result)} multisig address(es) in wallet")
+        print_info("")
+        print_info("list_multisig() response:")
+        print_info(f"  Returns a list of {len(list_result)} address string(s)")
+        print_info("")
+        print_info("Multisig addresses in wallet:")
+        for i, addr in enumerate(list_result):
+            print_info(f"  {i + 1}. {addr}")
+
+        print_info("")
+        print_info("Note: list_multisig() returns all multisig addresses currently")
+        print_info("imported in the wallet. Each address represents a unique multisig")
+        print_info("configuration (different participants, threshold, or version).")
+
+        # =========================================================================
+        # Step 5: Export Multisig Preimage with export_multisig()
+        # =========================================================================
+        print_step(5, "Exporting multisig preimage with export_multisig()")
+
+        export_result = kmd.export_multisig(
+            ExportMultisigRequest(
+                address=multisig_address,
+                wallet_handle_token=wallet_handle_token,
+            )
+        )
+
+        print_success("Multisig preimage exported successfully!")
+        print_info("")
+        print_info("export_multisig() response fields:")
+        print_info(f"  multisig_version: {export_result.multisig_version}")
+        print_info(f"  threshold:        {export_result.threshold}")
+        print_info(f"  public_keys:      List of {len(export_result.public_keys)} public key(s)")
+        print_info("")
+        print_info("Exported multisig configuration:")
+        print_info(f"  Version:   {export_result.multisig_version}")
+        print_info(f"  Threshold: {export_result.threshold} (minimum signatures required)")
+        print_info("  Public Keys:")
+        for i, pk in enumerate(export_result.public_keys):
+            pk_display = format_bytes_for_display(pk)
+            print_info(f"    {i + 1}. {pk_display} ({len(pk)} bytes)")
+
+        print_info("")
+        print_info("What is the multisig preimage?")
+        print_info("-" * 40)
+        print_info("The preimage contains the original parameters used to create")
+        print_info("the multisig address:")
+        print_info("  - multisig_version: The format version (always 1)")
+        print_info("  - threshold: Minimum signatures required")
+        print_info("  - public_keys: The ordered list of participant public keys")
+        print_info("")
+        print_info("This information is needed to:")
+        print_info("  - Reconstruct the multisig address")
+        print_info("  - Import the multisig into another wallet")
+        print_info("  - Verify the configuration of an existing multisig")
+
+        # =========================================================================
+        # Step 6: Verify Exported Info Matches Original
+        # =========================================================================
+        print_step(6, "Verifying exported info matches original parameters")
+
+        version_matches = export_result.multisig_version == multisig_version
+        threshold_matches = export_result.threshold == threshold
+        key_count_matches = len(export_result.public_keys) == len(public_keys)
+
+        # Check if all public keys match
+        all_keys_match = key_count_matches
+        if key_count_matches:
+            for i, original_key in enumerate(public_keys):
+                exported_key = export_result.public_keys[i]
+                if original_key != exported_key:
+                    all_keys_match = False
+                    break
+
+        print_info("Verification results:")
+        version_str = f"expected: {multisig_version}, got: {export_result.multisig_version}"
+        print_info(f"  Version matches:   {'Yes' if version_matches else 'No'} ({version_str})")
+        threshold_str = f"expected: {threshold}, got: {export_result.threshold}"
+        print_info(f"  Threshold matches: {'Yes' if threshold_matches else 'No'} ({threshold_str})")
+        key_count_str = f"expected: {len(public_keys)}, got: {len(export_result.public_keys)}"
+        print_info(f"  Key count matches: {'Yes' if key_count_matches else 'No'} ({key_count_str})")
+        print_info(f"  All keys match:    {'Yes' if all_keys_match else 'No'}")
+
+        if version_matches and threshold_matches and all_keys_match:
+            print_success("All exported information matches the original parameters!")
+
+        # =========================================================================
+        # Step 7: Delete the Multisig Account with delete_multisig()
+        # =========================================================================
+        print_step(7, "Deleting the multisig account with delete_multisig()")
+
+        print_info(f"Deleting multisig: {multisig_address}")
+
+        kmd.delete_multisig(
+            DeleteMultisigRequest(
+                address=multisig_address,
+                wallet_handle_token=wallet_handle_token,
+                wallet_password=wallet_password,
+            )
+        )
+
+        print_success("Multisig account deleted from wallet!")
+        print_info("")
+        print_info("delete_multisig() parameters:")
+        print_info("  - wallet_handle_token: Session token for the wallet")
+        print_info("  - wallet_password:     Wallet password (required for security)")
+        print_info("  - address:             The multisig address to delete")
+        print_info("")
+        print_info("Important notes about delete_multisig():")
+        print_info("  - Only removes the multisig from the local KMD wallet")
+        print_info("  - Does NOT affect the blockchain account")
+        print_info("  - Any funds at the multisig address remain accessible")
+        print_info("  - To spend funds, re-import the multisig with the same parameters")
+
+        # =========================================================================
+        # Step 8: Verify Deletion by Listing Multisig Accounts Again
+        # =========================================================================
+        print_step(8, "Verifying deletion by listing multisig accounts")
+
+        list_after_delete = kmd.list_multisig(ListMultisigRequest(wallet_handle_token=wallet_handle_token)).addresses
+
+        print_info("Multisig accounts after deletion:")
+        if len(list_after_delete) == 0:
+            print_success("No multisig accounts remaining in wallet")
+        else:
+            print_info(f"Found {len(list_after_delete)} multisig address(es):")
+            for i, addr in enumerate(list_after_delete):
+                print_info(f"  {i + 1}. {addr}")
+
+        # Check if the deleted address is still present
+        deleted_address_still_present = multisig_address in list_after_delete
+
+        if deleted_address_still_present:
+            print_error("The deleted multisig address is still present (unexpected)")
+        else:
+            print_success(f"Confirmed: {multisig_address[:8]}... is no longer in the wallet")
+
+        # =========================================================================
+        # Cleanup
+        # =========================================================================
+        print_step(9, "Cleaning up test wallet")
+
+        cleanup_test_wallet(kmd, wallet_handle_token)
+        wallet_handle_token = ""  # Mark as cleaned up
+
+        print_success("Test wallet handle released")
+
+        # =========================================================================
+        # Summary
+        # =========================================================================
+        print_header("Summary")
+        print_info("This example demonstrated multisig account management in KMD:")
+        print_info("")
+        print_info("  list_multisig()")
+        print_info("    Parameters:")
+        print_info("      - wallet_handle_token: Session token for the wallet")
+        print_info("    Returns:")
+        print_info("      - List of multisig address strings")
+        print_info("")
+        print_info("  export_multisig()")
+        print_info("    Parameters:")
+        print_info("      - wallet_handle_token: Session token for the wallet")
+        print_info("      - address:             The multisig address to export")
+        print_info("    Returns:")
+        print_info("      - multisig_version:    Multisig format version (1)")
+        print_info("      - threshold:           Minimum signatures required")
+        print_info("      - public_keys:         List of participant public keys (bytes)")
+        print_info("")
+        print_info("  delete_multisig()")
+        print_info("    Parameters:")
+        print_info("      - wallet_handle_token: Session token for the wallet")
+        print_info("      - wallet_password:     Wallet password (required)")
+        print_info("      - address:             The multisig address to delete")
+        print_info("    Returns:")
+        print_info("      - None")
+        print_info("")
+        print_info("Key takeaways:")
+        print_info("  - list_multisig() shows all multisig accounts in the wallet")
+        print_info("  - export_multisig() retrieves the original configuration (preimage)")
+        print_info("  - delete_multisig() removes from wallet only, not blockchain")
+        print_info("  - Wallet password is required for delete_multisig() for security")
+        print_info("  - Deleted multisigs can be re-imported with the same parameters")
+        print_info("")
+        print_info("Note: The test wallet remains in KMD (wallets cannot be deleted via API).")
+    except Exception as e:
+        print_error(f"Error: {e}")
+        print_info("")
+        print_info("Troubleshooting:")
+        print_info("  - Ensure LocalNet is running: algokit localnet start")
+        print_info("  - If LocalNet issues occur: algokit localnet reset")
+        print_info("  - Check that KMD is accessible on port 4002")
+
+        # Cleanup on error
+        if wallet_handle_token:
+            cleanup_test_wallet(kmd, wallet_handle_token)
+
+        sys.exit(1)
+
+
+if __name__ == "__main__":
+    main()
+
+```
+
+---
+
+### Other examples in KMD Client
+
+- [KMD Version Information](/docs/algokit-utils/python/latest/examples/kmd-client/01-version/)
+- [Wallet Creation and Listing](/docs/algokit-utils/python/latest/examples/kmd-client/02-wallet-management/)
+- [Wallet Session Management](/docs/algokit-utils/python/latest/examples/kmd-client/03-wallet-sessions/)
+- [Key Generation](/docs/algokit-utils/python/latest/examples/kmd-client/04-key-generation/)
+- [Key Import and Export](/docs/algokit-utils/python/latest/examples/kmd-client/05-key-import-export/)
+- [Key Listing and Deletion](/docs/algokit-utils/python/latest/examples/kmd-client/06-key-listing-deletion/)
+- [Master Key Export](/docs/algokit-utils/python/latest/examples/kmd-client/07-master-key-export/)
+- [Multisig Account Setup](/docs/algokit-utils/python/latest/examples/kmd-client/08-multisig-setup/)
+- **Multisig Account Management**
+- [Transaction Signing with KMD](/docs/algokit-utils/python/latest/examples/kmd-client/10-transaction-signing/)
+- [Multisig Transaction Signing with KMD](/docs/algokit-utils/python/latest/examples/kmd-client/11-multisig-signing/)
+- [Program Signing (Delegated Logic Signatures) with KMD](/docs/algokit-utils/python/latest/examples/kmd-client/12-program-signing/)
+- [Multisig Program Signing (Delegated Multisig Logic Signatures) with KMD](/docs/algokit-utils/python/latest/examples/kmd-client/13-multisig-program-signing/)

@@ -1,5 +1,7 @@
 ---
 title: Rekeying accounts
+sidebar:
+  label: Rekeying Accounts
 ---
 
 import { Image } from 'astro:assets';
@@ -11,25 +13,36 @@ import rekeySingleMulti from '@images/account-rekey-single-multisig.png';
 import rekeySingleSingle from '@images/account-rekey-single-single.png';
 import rekeyStandardAccount from '@images/accounts-rekey-standard-account.png';
 
-Rekeying is a powerful protocol feature that enables an Algorand account holder to maintain a static public address while dynamically rotating the authoritative private spending key(s). This is accomplished by issuing a transaction with the `rekey-to` field set the authorized address field within the account object. Future transaction authorization using the account's public address must be provided by the spending key(s) associated with the authorized address, which may be a single key address, multisignature address, or logic signature program address. Rekeying an account only affects the authorizing address for that account. An account is distinct from an address, so several essential points may not be obvious:
+Rekeying is a powerful protocol feature that enables an Algorand account holder to maintain a static public address while dynamically rotating the authoritative private spending key(s). This is accomplished by issuing a transaction with the `rekey-to` field set the authorized address field within the account object. Future transaction authorization using the account's public address must be provided by the spending key(s) associated with the authorized address, which may be a single key address, multisignature address, logic signature program address, or [post-quantum address](/concepts/accounts/post-quantum). Rekeying an account only affects the authorizing address for that account. An account is distinct from an address, so several essential points may not be obvious:
 
 - If an account is closed (balance to 0), the rekey setting is lost.
 - Rekeys are not recursively resolved. If A is rekeyed to B and B rekeyed to C, B will authorize A's transactions, not C.
 - Rekeying members of a multisignature does not affect the multisignature authorization since it's composed of Addresses, not accounts. If necessary, the multisignature account would need to be rekeyed.
 
-The result of a confirmed `rekey-to` transaction will be the `auth-addr` field of the account object is defined, modified, or removed. Defining or modifying means only the corresponding authorized address's private spending key(s) may authorize future transactions for this public address. Removing the `auth-addr` field is an explicit assignment of the authorized address back to the “addr" field of the account object (observed implicitly because the field is not displayed).
+A confirmed `rekey-to` transaction defines, modifies, or removes the `auth-addr` field of the account object. Defining or modifying means only the corresponding authorized address's private spending key(s) may authorize future transactions for this public address. Rekeying an account back to its own address removes the `auth-addr` field entirely — the protocol never stores an `auth-addr` equal to the account’s own address.
 
-To provide maximum flexibility in key management options, the `auth-addr` may be specified within a `rekey-to` transaction as a distinct foreign address representing a single key address, multisignature address, or logic signature program address. The protocol does not validate control of the required spending key(s) associated with the authorized address defined by `--rekey-to` parameter when the `rekey-to` transaction is sent. This is by design and affords additional privacy features to the new authorized address. It is incumbent upon the user to ensure proper key management practices and `--rekey-to` assignments.
+To provide maximum flexibility in key management options, the `auth-addr` may be specified within a `rekey-to` transaction as a distinct foreign address representing a single key address, multisignature address, logic signature program address, or post-quantum address. The protocol does not validate control of the required spending key(s) associated with the authorized address defined by `--rekey-to` parameter when the `rekey-to` transaction is sent. This is by design and affords additional privacy features to the new authorized address. It is incumbent upon the user to ensure proper key management practices and `--rekey-to` assignments.
 
 :::caution
 Using the `--close-to` parameter on any transaction from a rekeyed account will remove the `auth-addr` field, thus reverting signing authority to the original address. The `--close-to` parameter should be used with caution by keyholder(s) of `auth-addr` as the effects remove their authority to access this account thereafter.
 :::
 
+:::note
+Rekeying is also how an existing account will eventually adopt **quantum-resistant signatures**: rekey to a [post-quantum address](/concepts/accounts/post-quantum) and the account keeps its public address while a Falcon-1024 key authorizes all future transactions. This is a forward-looking capability. Wallets and tooling may not support post-quantum signing yet, so see the migration caveats on the linked page before rekeying a real account.
+:::
+
 ## Authorized Addresses
 
-The balance record of every account includes the `auth-addr` field, which, when populated, defines the required authorized address to be evaluated during transaction validation. Initially, the `auth-addr` field is implicitly set to the account’s `address` field, and the only valid private spending key is created during account generation. The `auth-addr` field is only stored and displayed to conserve resources after the network confirms an authorized `rekey-to` transaction.
+The balance record of every account includes the `auth-addr` field, which, when populated, defines the required authorized address to be evaluated during transaction validation. For a standard (non-rekeyed) account, the `auth-addr` field is empty — signing authority rests with the account’s own address and the private spending key created during account generation. The `auth-addr` field is only stored and displayed after the network confirms an authorized `rekey-to` transaction, and it is never stored equal to the account’s own address.
 
 A `standard` account uses its private spending key to authorize from its public address. A `rekeyed` account defines the authorized address that references a distinct `foreign` address and thus requires the private spending key(s) thereof to authorize future transactions.
+
+**There are two different AuthAddr fields**
+The `auth-addr` described above belongs to the account’s balance record, and `goal account dump` displays it as `spend`. The ledger is what writes it: a confirmed `rekey-to` transaction sets or clears it, and closing the account removes it along with the rest of the record.
+
+A signed transaction carries its own, separate authorization field, `AuthAddr`, encoded as [`sgnr`](/concepts/transactions/reference#authaddr). It names the address whose spending key authorized that one transaction, and the signer sets it rather than the ledger.
+
+Populate `sgnr` only when the sender has been rekeyed. When an account authorizes its own transaction, omit `sgnr` entirely rather than setting it to the sender’s own address. As of consensus v42, the network rejects any transaction whose `sgnr` is present and equal to its `snd`. Consensus versions before v42 accepted that redundant value, so tooling that always populates `sgnr` needs to be updated to omit it for accounts that have not been rekeyed.
 
 Let's consider a scenario where a single-key account with address `A` rekeys to a different single-key account with address `B`. This requires two single key accounts at time t0. The result from time t1 is that transactions for address `A` must be authorized by address `B`.
 

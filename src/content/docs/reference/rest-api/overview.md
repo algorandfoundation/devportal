@@ -1,5 +1,7 @@
 ---
 title: 'Algorand REST APIs'
+sidebar:
+  label: Overview
 ---
 
 ## Algod, Indexer and KMD REST Endpoints

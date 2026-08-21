@@ -1,0 +1,238 @@
+---
+title: 'ABI Address Type'
+description: 'This example demonstrates how to encode and decode Algorand addresses using ABIAddressType:'
+sidebar:
+  order: 3
+---
+
+[← Back to ABI Encoding](/docs/algokit-utils/typescript/latest/examples/abi/)
+
+## Description
+
+This example demonstrates how to encode and decode Algorand addresses using ABIAddressType:
+
+- Encoding address strings (base32 format) to 32 bytes
+- Encoding raw 32-byte public key (Uint8Array)
+- Decoding bytes back to address string
+- Verifying address encoding is exactly 32 bytes (no length prefix)
+- Understanding relationship between Algorand address and public key bytes
+  Algorand addresses are 58 characters in base32 encoding, which includes:
+- 32 bytes of public key
+- 4 bytes of checksum (computed from public key)
+  The ABI encoding is just the raw 32-byte public key without checksum.
+
+## Prerequisites
+
+- No LocalNet required
+
+## Run This Example
+
+From the repository root:
+
+```bash
+cd examples
+npm run example abi/03-address-type.ts
+```
+
+## Code
+
+[View source on GitHub](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/examples/abi/03-address-type.ts)
+
+```typescript title="03-address-type.ts"
+/**
+ * Example: ABI Address Type
+ *
+ * This example demonstrates how to encode and decode Algorand addresses using ABIAddressType:
+ * - Encoding address strings (base32 format) to 32 bytes
+ * - Encoding raw 32-byte public key (Uint8Array)
+ * - Decoding bytes back to address string
+ * - Verifying address encoding is exactly 32 bytes (no length prefix)
+ * - Understanding relationship between Algorand address and public key bytes
+ *
+ * Algorand addresses are 58 characters in base32 encoding, which includes:
+ * - 32 bytes of public key
+ * - 4 bytes of checksum (computed from public key)
+ *
+ * The ABI encoding is just the raw 32-byte public key without checksum.
+ *
+ * Prerequisites:
+ * - No LocalNet required
+ */
+
+import { Address, ALGORAND_ZERO_ADDRESS_STRING } from '@algorandfoundation/algokit-utils';
+import { ABIAddressType } from '@algorandfoundation/algokit-utils/abi';
+import {
+  formatBytes,
+  formatHex,
+  printHeader,
+  printInfo,
+  printStep,
+  printSuccess,
+} from '../shared/utils.js';
+
+function main() {
+  printHeader('ABI Address Type Example');
+
+  // Step 1: Create ABIAddressType and inspect properties
+  printStep(1, 'ABIAddressType Properties');
+
+  const addressType = new ABIAddressType();
+
+  printInfo(`Type name: ${addressType.toString()}`);
+  printInfo(`Byte length: ${addressType.byteLen()} bytes`);
+  printInfo(`Is dynamic: ${addressType.isDynamic()}`);
+
+  // Step 2: Encode a base32 address string to bytes
+  printStep(2, 'Encode Address String (Base32) to Bytes');
+
+  // Example address - the zero address
+  const zeroAddressString = ALGORAND_ZERO_ADDRESS_STRING;
+  printInfo(`Zero address string: ${zeroAddressString}`);
+  printInfo(`Address string length: ${zeroAddressString.length} characters`);
+
+  const zeroEncoded = addressType.encode(zeroAddressString);
+  printInfo(`Encoded bytes: ${formatHex(zeroEncoded)}`);
+  printInfo(`Encoded length: ${zeroEncoded.length} bytes (exactly 32, no length prefix)`);
+
+  // Verify the zero address encodes to all zeros
+  const allZeros = zeroEncoded.every(byte => byte === 0);
+  printInfo(`All bytes are zero: ${allZeros}`);
+
+  // Step 3: Encode another address string
+  printStep(3, 'Encode a Real Address String');
+
+  // Create a sample address from a known public key (32 bytes of incrementing values)
+  const samplePublicKey = new Uint8Array(32);
+  for (let i = 0; i < 32; i++) {
+    samplePublicKey[i] = i;
+  }
+
+  // Create Address object from public key to get base32 string
+  const sampleAddress = new Address(samplePublicKey);
+  const sampleAddressString = sampleAddress.toString();
+
+  printInfo(`Sample address string: ${sampleAddressString}`);
+  printInfo(`Address string length: ${sampleAddressString.length} characters`);
+
+  const sampleEncoded = addressType.encode(sampleAddressString);
+  printInfo(`Encoded bytes: ${formatBytes(sampleEncoded, 16)}`);
+  printInfo(`Encoded as hex: ${formatHex(sampleEncoded)}`);
+  printInfo(`Encoded length: ${sampleEncoded.length} bytes`);
+
+  // Step 4: Encode from raw 32-byte public key (Uint8Array)
+  printStep(4, 'Encode from Raw 32-Byte Public Key');
+
+  // ABIAddressType can also encode directly from a Uint8Array
+  const rawPublicKey = new Uint8Array([
+    0xab, 0xcd, 0xef, 0x01, 0x23, 0x45, 0x67, 0x89, 0xab, 0xcd, 0xef, 0x01, 0x23, 0x45, 0x67, 0x89,
+    0xab, 0xcd, 0xef, 0x01, 0x23, 0x45, 0x67, 0x89, 0xab, 0xcd, 0xef, 0x01, 0x23, 0x45, 0x67, 0x89,
+  ]);
+
+  printInfo(`Raw public key: ${formatHex(rawPublicKey)}`);
+
+  const encodedFromRaw = addressType.encode(rawPublicKey);
+  printInfo(`Encoded from raw: ${formatHex(encodedFromRaw)}`);
+
+  // Verify encoding from raw bytes returns the same bytes
+  const rawBytesMatch = encodedFromRaw.every((byte, index) => byte === rawPublicKey[index]);
+  printInfo(`Raw bytes match encoded: ${rawBytesMatch}`);
+
+  // Step 5: Decode bytes back to address string
+  printStep(5, 'Decode Bytes Back to Address String');
+
+  // Decode the sample encoded bytes back to address string
+  const decodedSampleAddress = addressType.decode(sampleEncoded);
+  printInfo(`Original address: ${sampleAddressString}`);
+  printInfo(`Decoded address:  ${decodedSampleAddress}`);
+  printInfo(`Round-trip verified: ${decodedSampleAddress === sampleAddressString}`);
+
+  // Decode zero address
+  const decodedZeroAddress = addressType.decode(zeroEncoded);
+  printInfo(`\nOriginal zero address: ${zeroAddressString}`);
+  printInfo(`Decoded zero address:  ${decodedZeroAddress}`);
+  printInfo(`Round-trip verified: ${decodedZeroAddress === zeroAddressString}`);
+
+  // Decode the raw public key
+  const decodedFromRawAddress = addressType.decode(encodedFromRaw);
+  printInfo(`\nRaw public key as address: ${decodedFromRawAddress}`);
+
+  // Step 6: Relationship between Algorand address and public key bytes
+  printStep(6, 'Address vs Public Key Relationship');
+
+  printInfo('Algorand address format:');
+  printInfo('  - Base32 encoded string');
+  printInfo('  - 58 characters long');
+  printInfo('  - Contains: 32-byte public key + 4-byte checksum');
+
+  printInfo('\nABI address encoding:');
+  printInfo('  - Just the raw 32-byte public key');
+  printInfo('  - No checksum included');
+  printInfo('  - No length prefix (unlike ABI string type)');
+  printInfo('  - Fixed size, not dynamic');
+
+  // Demonstrate using Address class directly
+  printInfo('\nUsing Address class:');
+  const addr = Address.fromString(sampleAddressString);
+  printInfo(`  Address.fromString('${sampleAddressString.substring(0, 20)}...')`);
+  printInfo(`  .publicKey: ${formatBytes(addr.publicKey, 8)}`);
+  printInfo(`  .toString(): ${addr.toString()}`);
+
+  // Show that ABIAddressType encoding equals Address.publicKey
+  const publicKeyMatches = addr.publicKey.every((byte, index) => byte === sampleEncoded[index]);
+  printInfo(`\nABI encoding equals Address.publicKey: ${publicKeyMatches}`);
+
+  // Step 7: Encoding Address object directly
+  printStep(7, 'Encode Address Object Directly');
+
+  // ABIAddressType can also accept Address objects
+  const addressObject = new Address(rawPublicKey);
+  const encodedFromAddressObject = addressType.encode(addressObject);
+
+  printInfo(`Address object: ${addressObject.toString()}`);
+  printInfo(`Encoded from Address object: ${formatHex(encodedFromAddressObject)}`);
+
+  const addressObjectMatches = encodedFromAddressObject.every(
+    (byte, index) => byte === rawPublicKey[index],
+  );
+  printInfo(`Encoding matches raw public key: ${addressObjectMatches}`);
+
+  // Step 8: Summary - all encoding methods produce 32 bytes
+  printStep(8, 'Summary - All Encoding Methods');
+
+  printInfo('ABIAddressType accepts:');
+  printInfo('  1. Address string (base32 format, 58 chars) -> extracts public key');
+  printInfo('  2. Uint8Array (32 bytes) -> uses directly');
+  printInfo('  3. Address object -> extracts publicKey property');
+
+  printInfo('\nAll methods produce exactly 32 bytes (no length prefix):');
+  printInfo(`  From string:  ${addressType.encode(sampleAddressString).length} bytes`);
+  printInfo(`  From Uint8Array: ${addressType.encode(rawPublicKey).length} bytes`);
+  printInfo(`  From Address: ${addressType.encode(addressObject).length} bytes`);
+
+  printInfo('\nDecode always returns base32 address string (58 chars)');
+
+  printSuccess('ABI Address Type example completed successfully!');
+}
+
+main();
+```
+
+---
+
+### Other examples in ABI Encoding
+
+- [ABI Type Parsing](/docs/algokit-utils/typescript/latest/examples/abi/01-type-parsing/)
+- [ABI Primitive Types](/docs/algokit-utils/typescript/latest/examples/abi/02-primitive-types/)
+- **ABI Address Type**
+- [ABI String Type](/docs/algokit-utils/typescript/latest/examples/abi/04-string-type/)
+- [ABI Static Array Type](/docs/algokit-utils/typescript/latest/examples/abi/05-static-array/)
+- [ABI Dynamic Array Type](/docs/algokit-utils/typescript/latest/examples/abi/06-dynamic-array/)
+- [ABI Tuple Type](/docs/algokit-utils/typescript/latest/examples/abi/07-tuple-type/)
+- [ABI Struct Type](/docs/algokit-utils/typescript/latest/examples/abi/08-struct-type/)
+- [ABI Struct and Tuple Conversion](/docs/algokit-utils/typescript/latest/examples/abi/09-struct-tuple-conversion/)
+- [ABI Bool Array Packing](/docs/algokit-utils/typescript/latest/examples/abi/10-bool-packing/)
+- [ABI Method](/docs/algokit-utils/typescript/latest/examples/abi/11-abi-method/)
+- [AVM Type Encoding](/docs/algokit-utils/typescript/latest/examples/abi/12-avm-types/)
+- [Type Guards](/docs/algokit-utils/typescript/latest/examples/abi/13-type-guards/)
+- [ABI Complex Nested Types](/docs/algokit-utils/typescript/latest/examples/abi/14-complex-nested/)
+- [ARC-56 Storage Helpers](/docs/algokit-utils/typescript/latest/examples/abi/15-arc56-storage/)

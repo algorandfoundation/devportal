@@ -1,0 +1,525 @@
+---
+title: 'Multisig Transaction Signing with KMD'
+description: 'This example demonstrates how to sign multisig transactions using the KMD `signMultisigTransaction()` method. It shows:'
+sidebar:
+  order: 11
+---
+
+[← Back to KMD Client](/docs/algokit-utils/typescript/latest/examples/kmd-client/)
+
+## Description
+
+This example demonstrates how to sign multisig transactions using the KMD `signMultisigTransaction()` method. It shows:
+
+- Creating a multisig account with 2-of-3 threshold
+- Funding the multisig account via the dispenser
+- Creating a payment transaction from the multisig account
+- Signing with the first participant (partial signature)
+- Signing with the second participant (completing the multisig)
+- Submitting the fully signed transaction to the network
+
+## Prerequisites
+
+- LocalNet running (via `algokit localnet start`)
+- Covered operations:
+- signMultisigTransaction() - Sign a multisig transaction with a participant key
+
+## Run This Example
+
+From the repository root:
+
+```bash
+cd examples
+npm run example kmd_client/11-multisig-signing.ts
+```
+
+## Code
+
+[View source on GitHub](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/examples/kmd_client/11-multisig-signing.ts)
+
+```typescript title="11-multisig-signing.ts"
+/**
+ * Example: Multisig Transaction Signing with KMD
+ *
+ * This example demonstrates how to sign multisig transactions using the KMD
+ * `signMultisigTransaction()` method. It shows:
+ *   - Creating a multisig account with 2-of-3 threshold
+ *   - Funding the multisig account via the dispenser
+ *   - Creating a payment transaction from the multisig account
+ *   - Signing with the first participant (partial signature)
+ *   - Signing with the second participant (completing the multisig)
+ *   - Submitting the fully signed transaction to the network
+ *
+ * Prerequisites:
+ * - LocalNet running (via `algokit localnet start`)
+ *
+ * Covered operations:
+ * - signMultisigTransaction() - Sign a multisig transaction with a participant key
+ */
+
+import { Address, algo, encodeAddress } from '@algorandfoundation/algokit-utils';
+import type { MultisigSig } from '@algorandfoundation/algokit-utils/kmd-client';
+import {
+  Transaction,
+  TransactionType,
+  assignFee,
+  encodeSignedTransaction,
+  type MultisigSignature,
+  type SignedTransaction,
+} from '@algorandfoundation/algokit-utils/transact';
+import {
+  cleanupTestWallet,
+  createAlgodClient,
+  createAlgorandClient,
+  createKmdClient,
+  createTestWallet,
+  printError,
+  printHeader,
+  printInfo,
+  printStep,
+  printSuccess,
+  shortenAddress,
+} from '../shared/utils.js';
+// Use algorand-msgpack for decoding the multisig response
+import { IntMode, decode as msgpackDecode } from 'algorand-msgpack';
+
+/**
+ * Format microAlgos to a human-readable string
+ */
+function formatMicroAlgo(microAlgos: bigint): string {
+  const algoValue = Number(microAlgos) / 1_000_000;
+  return `${microAlgos.toLocaleString('en-US')} µALGO (${algoValue.toFixed(6)} ALGO)`;
+}
+
+/**
+ * Decode the KMD multisig response bytes into a MultisigSig structure.
+ * The KMD API returns msgpack-encoded MultisigSig with wire keys:
+ * - 'subsig' -> subsignatures array
+ * - 'thr' -> threshold
+ * - 'v' -> version
+ * Each subsig has:
+ * - 'pk' -> publicKey
+ * - 's' -> signature (optional)
+ */
+function decodeKmdMultisigResponse(multisigBytes: Uint8Array): MultisigSig {
+  const decoded = msgpackDecode(multisigBytes, {
+    intMode: IntMode.AS_ENCODED,
+    useMap: true,
+    rawBinaryStringKeys: true,
+    rawBinaryStringValues: true,
+  }) as Map<Uint8Array, unknown>;
+
+  // Helper to find value by string key in Map with Uint8Array keys
+  const findByKey = (map: Map<Uint8Array, unknown>, key: string): unknown => {
+    const keyBytes = new TextEncoder().encode(key);
+    for (const [k, v] of map) {
+      if (k.length === keyBytes.length && k.every((b, i) => b === keyBytes[i])) {
+        return v;
+      }
+    }
+    return undefined;
+  };
+
+  const subsigArray = findByKey(decoded, 'subsig') as Array<Map<Uint8Array, unknown>>;
+  const threshold = findByKey(decoded, 'thr') as number;
+  const version = findByKey(decoded, 'v') as number;
+
+  const subsignatures = subsigArray.map(subsigMap => {
+    const publicKey = findByKey(subsigMap, 'pk') as Uint8Array;
+    const signature = findByKey(subsigMap, 's') as Uint8Array | undefined;
+    return { publicKey, signature };
+  });
+
+  return { subsignatures, threshold, version };
+}
+
+/**
+ * Convert a KMD MultisigSig to the transact MultisigSignature format
+ */
+function kmdMultisigToTransactMultisig(kmdMsig: MultisigSig): MultisigSignature {
+  return {
+    version: kmdMsig.version,
+    threshold: kmdMsig.threshold,
+    subsigs: kmdMsig.subsignatures.map(subsig => ({
+      publicKey: subsig.publicKey,
+      sig: subsig.signature,
+    })),
+  };
+}
+
+/**
+ * Count the number of signatures in a KMD MultisigSig
+ */
+function countSignatures(msig: MultisigSig): number {
+  return msig.subsignatures.filter(subsig => subsig.signature !== undefined).length;
+}
+
+async function main() {
+  printHeader('KMD Multisig Transaction Signing Example');
+
+  const kmd = createKmdClient();
+  const algod = createAlgodClient();
+  const algorand = createAlgorandClient();
+  let walletHandleToken = '';
+  const walletPassword = 'test-password';
+
+  try {
+    // =========================================================================
+    // Step 1: Create a Test Wallet
+    // =========================================================================
+    printStep(1, 'Creating a test wallet for multisig signing');
+
+    const testWallet = await createTestWallet(kmd, walletPassword);
+    walletHandleToken = testWallet.walletHandleToken;
+
+    printSuccess(`Test wallet created: ${testWallet.walletName}`);
+    printInfo(`Wallet ID: ${testWallet.walletId}`);
+
+    // =========================================================================
+    // Step 2: Generate 3 Keys for Multisig Participants
+    // =========================================================================
+    printStep(2, 'Generating 3 keys to use as multisig participants');
+
+    const participantAddresses: Address[] = [];
+    const publicKeys: Uint8Array[] = [];
+    const numParticipants = 3;
+
+    for (let i = 1; i <= numParticipants; i++) {
+      const result = await kmd.generateKey({ walletHandleToken });
+      participantAddresses.push(result.address);
+      publicKeys.push(result.address.publicKey);
+      printInfo(`Participant ${i}: ${shortenAddress(result.address.toString())}`);
+    }
+
+    printSuccess(`Generated ${numParticipants} participant keys`);
+
+    // =========================================================================
+    // Step 3: Create a 2-of-3 Multisig Account
+    // =========================================================================
+    printStep(3, 'Creating a 2-of-3 multisig account');
+
+    const threshold = 2; // Minimum signatures required
+    const multisigVersion = 1; // Multisig format version
+
+    const multisigResult = await kmd.importMultisig({
+      walletHandleToken,
+      publicKeys,
+      threshold,
+      multisigVersion,
+    });
+
+    const multisigAddress = multisigResult.address;
+
+    printSuccess('Multisig account created!');
+    printInfo(`Multisig Address: ${multisigAddress}`);
+    printInfo(`Threshold: ${threshold}-of-${numParticipants}`);
+
+    // =========================================================================
+    // Step 4: Fund the Multisig Account Using the Dispenser
+    // =========================================================================
+    printStep(4, 'Funding the multisig account using the dispenser');
+
+    const dispenser = await algorand.account.dispenserFromEnvironment();
+    printInfo(`Dispenser address: ${shortenAddress(dispenser.addr.toString())}`);
+
+    // Fund the multisig account with 1 ALGO
+    const fundAmount = algo(1);
+    await algorand.send.payment({
+      sender: dispenser.addr,
+      receiver: multisigAddress,
+      amount: fundAmount,
+    });
+
+    // Verify funding
+    const accountInfo = await algod.accountInformation(multisigAddress.toString());
+    printSuccess(`Multisig funded: ${formatMicroAlgo(accountInfo.amount)}`);
+
+    // =========================================================================
+    // Step 5: Create a Payment Transaction from the Multisig Account
+    // =========================================================================
+    printStep(5, 'Creating a payment transaction from the multisig account');
+
+    const suggestedParams = await algod.suggestedParams();
+
+    printInfo('Suggested Parameters:');
+    printInfo(`  First Valid Round: ${suggestedParams.firstValid.toLocaleString('en-US')}`);
+    printInfo(`  Last Valid Round:  ${suggestedParams.lastValid.toLocaleString('en-US')}`);
+    printInfo(`  Genesis ID:        ${suggestedParams.genesisId}`);
+    printInfo('');
+
+    // Create a payment back to the dispenser
+    const receiverAddress = dispenser.addr;
+    const paymentAmount = 100_000n; // 0.1 ALGO
+
+    const transactionWithoutFee = new Transaction({
+      type: TransactionType.Payment,
+      sender: multisigAddress,
+      firstValid: suggestedParams.firstValid,
+      lastValid: suggestedParams.lastValid,
+      genesisHash: suggestedParams.genesisHash,
+      genesisId: suggestedParams.genesisId,
+      payment: {
+        receiver: receiverAddress,
+        amount: paymentAmount,
+      },
+    });
+
+    // Assign the fee
+    const transaction = assignFee(transactionWithoutFee, {
+      feePerByte: suggestedParams.fee,
+      minFee: suggestedParams.minFee,
+    });
+
+    const txId = transaction.txId();
+
+    printSuccess('Transaction created!');
+    printInfo(`Transaction ID:  ${txId}`);
+    printInfo(`Sender:          ${shortenAddress(multisigAddress.toString())} (multisig)`);
+    printInfo(`Receiver:        ${shortenAddress(receiverAddress.toString())}`);
+    printInfo(`Amount:          ${formatMicroAlgo(paymentAmount)}`);
+    printInfo(`Fee:             ${formatMicroAlgo(transaction.fee ?? 0n)}`);
+
+    // =========================================================================
+    // Step 6: Sign with the First Participant (Partial Signature)
+    // =========================================================================
+    printStep(6, 'Signing with the first participant (partial signature)');
+
+    printInfo(`First signer: ${shortenAddress(participantAddresses[0].toString())}`);
+    printInfo('');
+
+    const firstSignResult = await kmd.signMultisigTransaction({
+      walletHandleToken,
+      transaction,
+      publicKey: publicKeys[0],
+      walletPassword,
+    });
+
+    printSuccess('First signature obtained!');
+    printInfo('');
+    printInfo('SignMultisigResponse fields:');
+    printInfo(`  multisig: Uint8Array (${firstSignResult.multisig.length} bytes)`);
+    printInfo('');
+
+    // Decode and display the partial multisig signature
+    const partialKmdMultisig = decodeKmdMultisigResponse(firstSignResult.multisig);
+    const sigCount1 = countSignatures(partialKmdMultisig);
+
+    printInfo('Partial Multisig Signature:');
+    printInfo(`  version:   ${partialKmdMultisig.version}`);
+    printInfo(`  threshold: ${partialKmdMultisig.threshold}`);
+    printInfo(`  subsigs:   ${partialKmdMultisig.subsignatures.length} participants`);
+    printInfo(`  Signatures collected: ${sigCount1} of ${threshold} required`);
+    printInfo('');
+    printInfo('Subsignature details:');
+    partialKmdMultisig.subsignatures.forEach((subsig, i) => {
+      const hasSig = subsig.signature !== undefined;
+      const status = hasSig ? '✓ SIGNED' : '○ pending';
+      const addr = encodeAddress(subsig.publicKey);
+      printInfo(`  ${i + 1}. ${shortenAddress(addr)} - ${status}`);
+    });
+
+    printInfo('');
+    printInfo('Note: With only 1 signature, the transaction cannot yet be submitted.');
+    printInfo(`      We need ${threshold} signatures (${threshold - sigCount1} more required).`);
+
+    // =========================================================================
+    // Step 7: Sign with the Second Participant (Complete the Multisig)
+    // =========================================================================
+    printStep(7, 'Signing with the second participant (completing the signature)');
+
+    printInfo(`Second signer: ${shortenAddress(participantAddresses[1].toString())}`);
+    printInfo('');
+    printInfo('Passing the partial multisig from Step 6 to collect the second signature...');
+    printInfo('');
+
+    const secondSignResult = await kmd.signMultisigTransaction({
+      walletHandleToken,
+      transaction,
+      publicKey: publicKeys[1],
+      walletPassword,
+      partialMultisig: partialKmdMultisig, // Pass the partial signature from first signer
+    });
+
+    printSuccess('Second signature obtained!');
+    printInfo('');
+
+    // Decode and display the completed multisig signature
+    const completedKmdMultisig = decodeKmdMultisigResponse(secondSignResult.multisig);
+    const sigCount2 = countSignatures(completedKmdMultisig);
+
+    printInfo('Completed Multisig Signature:');
+    printInfo(`  version:   ${completedKmdMultisig.version}`);
+    printInfo(`  threshold: ${completedKmdMultisig.threshold}`);
+    printInfo(`  Signatures collected: ${sigCount2} of ${threshold} required`);
+    printInfo('');
+    printInfo('Subsignature details:');
+    completedKmdMultisig.subsignatures.forEach((subsig, i) => {
+      const hasSig = subsig.signature !== undefined;
+      const status = hasSig ? '✓ SIGNED' : '○ pending';
+      const addr = encodeAddress(subsig.publicKey);
+      printInfo(`  ${i + 1}. ${shortenAddress(addr)} - ${status}`);
+    });
+
+    printInfo('');
+    printSuccess(`Threshold met! ${sigCount2} >= ${threshold} signatures collected.`);
+    printInfo('The transaction is now fully authorized and ready for submission.');
+
+    // =========================================================================
+    // Step 8: Construct and Submit the Signed Transaction
+    // =========================================================================
+    printStep(8, 'Constructing and submitting the multisig-signed transaction');
+
+    // Convert KMD MultisigSig to transact's MultisigSignature for the SignedTransaction
+    const completedMultisig = kmdMultisigToTransactMultisig(completedKmdMultisig);
+
+    // Build the signed transaction with the multisig signature
+    const signedTxn: SignedTransaction = {
+      txn: transaction,
+      msig: completedMultisig,
+    };
+
+    // Encode and submit
+    const encodedSignedTxn = encodeSignedTransaction(signedTxn);
+    printInfo(`Encoded signed transaction: ${encodedSignedTxn.length} bytes`);
+    printInfo('');
+
+    const submitResponse = await algod.sendRawTransaction(encodedSignedTxn);
+
+    printSuccess('Transaction submitted!');
+    printInfo(`Transaction ID: ${submitResponse.txId}`);
+
+    // =========================================================================
+    // Step 9: Wait for Confirmation
+    // =========================================================================
+    printStep(9, 'Waiting for confirmation');
+
+    let confirmedRound: bigint | undefined;
+    const maxWaitRounds = 10;
+    let currentRound = (await algod.status()).lastRound;
+
+    for (let i = 0; i < maxWaitRounds; i++) {
+      const pendingInfo = await algod.pendingTransactionInformation(txId);
+
+      if (pendingInfo.confirmedRound && pendingInfo.confirmedRound > 0n) {
+        confirmedRound = pendingInfo.confirmedRound;
+        break;
+      }
+
+      if (pendingInfo.poolError && pendingInfo.poolError.length > 0) {
+        throw new Error(`Transaction rejected: ${pendingInfo.poolError}`);
+      }
+
+      // Wait for next block
+      await algod.statusAfterBlock(currentRound);
+      currentRound++;
+    }
+
+    if (confirmedRound) {
+      printSuccess(`Transaction confirmed in round ${confirmedRound.toLocaleString('en-US')}`);
+    } else {
+      printError('Transaction not confirmed within expected rounds');
+    }
+
+    // =========================================================================
+    // Step 10: Verify the Transaction
+    // =========================================================================
+    printStep(10, 'Verifying the transaction was successful');
+
+    // Check multisig account balance
+    const multisigInfo = await algod.accountInformation(multisigAddress.toString());
+    const expectedDeduction = paymentAmount + (transaction.fee ?? suggestedParams.minFee);
+    const expectedBalance = fundAmount.microAlgo - expectedDeduction;
+
+    printInfo(`Multisig balance before: ${formatMicroAlgo(fundAmount.microAlgo)}`);
+    printInfo(`Multisig balance after:  ${formatMicroAlgo(multisigInfo.amount)}`);
+    printInfo(`Expected balance:        ~${formatMicroAlgo(expectedBalance)}`);
+    printInfo('');
+
+    if (multisigInfo.amount <= fundAmount.microAlgo - paymentAmount) {
+      printSuccess('Transaction verified! Balance reduced as expected.');
+    }
+
+    // =========================================================================
+    // Cleanup
+    // =========================================================================
+    printStep(11, 'Cleaning up test wallet');
+
+    await cleanupTestWallet(kmd, walletHandleToken);
+    walletHandleToken = ''; // Mark as cleaned up
+
+    printSuccess('Test wallet handle released');
+
+    // =========================================================================
+    // Summary
+    // =========================================================================
+    printHeader('Summary');
+    printInfo('This example demonstrated multisig transaction signing with KMD:');
+    printInfo('');
+    printInfo('  signMultisigTransaction() - Sign a multisig transaction');
+    printInfo('     Parameters:');
+    printInfo('       - walletHandleToken: The wallet session token');
+    printInfo('       - transaction: The Transaction object to sign');
+    printInfo('       - publicKey: The public key of the signer (must be in wallet)');
+    printInfo('       - walletPassword: The wallet password');
+    printInfo('       - partialMultisig: (optional) Existing partial signature to add to');
+    printInfo('     Returns:');
+    printInfo('       - multisig: Uint8Array of the multisig signature (msgpack encoded)');
+    printInfo('');
+    printInfo('Multisig signing workflow:');
+    printInfo('  1. Create a multisig account with importMultisig()');
+    printInfo('  2. Fund the multisig account');
+    printInfo('  3. Create a transaction with the multisig address as sender');
+    printInfo('  4. Sign with first participant (returns partial multisig signature)');
+    printInfo('  5. Sign with additional participants, passing the partial signature');
+    printInfo('  6. Once threshold is met, construct SignedTransaction with msig field');
+    printInfo('  7. Encode and submit the signed transaction');
+    printInfo('');
+    printInfo('Key points:');
+    printInfo('  - Each signer adds their signature to the multisig structure');
+    printInfo('  - The partialMultisig parameter chains signatures together');
+    printInfo('  - The response contains a msgpack-encoded MultisigSignature');
+    printInfo('  - Transaction is valid once threshold signatures are collected');
+    printInfo('  - Any 2 of the 3 participants could have signed (2-of-3 threshold)');
+    printInfo('');
+    printInfo('Note: The test wallet remains in KMD (wallets cannot be deleted via API).');
+  } catch (error) {
+    printError(`Error: ${error instanceof Error ? error.message : String(error)}`);
+    printInfo('');
+    printInfo('Troubleshooting:');
+    printInfo('  - Ensure LocalNet is running: algokit localnet start');
+    printInfo('  - If LocalNet issues occur: algokit localnet reset');
+    printInfo('  - Check that KMD is accessible on port 4002');
+    printInfo('  - Check that Algod is accessible on port 4001');
+
+    // Cleanup on error
+    if (walletHandleToken) {
+      await cleanupTestWallet(kmd, walletHandleToken);
+    }
+
+    process.exit(1);
+  }
+}
+
+main().catch(error => {
+  console.error('Fatal error:', error);
+  process.exit(1);
+});
+```
+
+---
+
+### Other examples in KMD Client
+
+- [KMD Version Information](/docs/algokit-utils/typescript/latest/examples/kmd-client/01-version/)
+- [Wallet Creation and Listing](/docs/algokit-utils/typescript/latest/examples/kmd-client/02-wallet-management/)
+- [Wallet Session Management](/docs/algokit-utils/typescript/latest/examples/kmd-client/03-wallet-sessions/)
+- [Key Generation](/docs/algokit-utils/typescript/latest/examples/kmd-client/04-key-generation/)
+- [Key Import and Export](/docs/algokit-utils/typescript/latest/examples/kmd-client/05-key-import-export/)
+- [Key Listing and Deletion](/docs/algokit-utils/typescript/latest/examples/kmd-client/06-key-listing-deletion/)
+- [Master Key Export](/docs/algokit-utils/typescript/latest/examples/kmd-client/07-master-key-export/)
+- [Multisig Account Setup](/docs/algokit-utils/typescript/latest/examples/kmd-client/08-multisig-setup/)
+- [Multisig Account Management](/docs/algokit-utils/typescript/latest/examples/kmd-client/09-multisig-management/)
+- [Transaction Signing with KMD](/docs/algokit-utils/typescript/latest/examples/kmd-client/10-transaction-signing/)
+- **Multisig Transaction Signing with KMD**
+- [Program Signing (Delegated Logic Signatures) with KMD](/docs/algokit-utils/typescript/latest/examples/kmd-client/12-program-signing/)
+- [Multisig Program Signing (Delegated Multisig Logic Signatures) with KMD](/docs/algokit-utils/typescript/latest/examples/kmd-client/13-multisig-program-signing/)

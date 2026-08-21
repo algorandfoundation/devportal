@@ -1,0 +1,253 @@
+---
+title: 'Wallet Session Management'
+description: 'This example demonstrates how to manage wallet sessions using KMD handle tokens. Handle tokens are used to unlock wallets and perform operations on them. They have an expiration time and should be released when no longer needed.'
+sidebar:
+  order: 3
+---
+
+[← Back to KMD Client](/docs/algokit-utils/typescript/latest/examples/kmd-client/)
+
+## Description
+
+This example demonstrates how to manage wallet sessions using KMD handle tokens. Handle tokens are used to unlock wallets and perform operations on them. They have an expiration time and should be released when no longer needed.
+
+## Prerequisites
+
+- LocalNet running (via `algokit localnet start`)
+- Covered operations:
+- initWalletHandle() - Unlock a wallet and get a handle token
+- walletInfo() - Check token expiration time (tokenExpiresInSeconds)
+- renewWalletHandleToken() - Extend token validity
+- releaseWalletHandleToken() - Invalidate the token
+
+## Run This Example
+
+From the repository root:
+
+```bash
+cd examples
+npm run example kmd_client/03-wallet-sessions.ts
+```
+
+## Code
+
+[View source on GitHub](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/examples/kmd_client/03-wallet-sessions.ts)
+
+```typescript title="03-wallet-sessions.ts"
+/**
+ * Example: Wallet Session Management
+ *
+ * This example demonstrates how to manage wallet sessions using KMD handle tokens.
+ * Handle tokens are used to unlock wallets and perform operations on them.
+ * They have an expiration time and should be released when no longer needed.
+ *
+ * Prerequisites:
+ * - LocalNet running (via `algokit localnet start`)
+ *
+ * Covered operations:
+ * - initWalletHandle() - Unlock a wallet and get a handle token
+ * - walletInfo() - Check token expiration time (tokenExpiresInSeconds)
+ * - renewWalletHandleToken() - Extend token validity
+ * - releaseWalletHandleToken() - Invalidate the token
+ */
+
+import {
+  createKmdClient,
+  printError,
+  printHeader,
+  printInfo,
+  printStep,
+  printSuccess,
+} from '../shared/utils.js';
+
+async function main() {
+  printHeader('KMD Wallet Session Management Example');
+
+  const kmd = createKmdClient();
+  const testWalletName = `session-test-wallet-${Date.now()}`;
+  const testWalletPassword = 'session-test-password';
+  let walletId = '';
+  let walletHandleToken = '';
+
+  try {
+    // =========================================================================
+    // Step 1: Create a Test Wallet
+    // =========================================================================
+    printStep(1, 'Creating a test wallet for session demonstration');
+
+    const createResult = await kmd.createWallet({
+      walletName: testWalletName,
+      walletPassword: testWalletPassword,
+      walletDriverName: 'sqlite',
+    });
+
+    walletId = createResult.wallet.id;
+    printSuccess(`Test wallet created: ${testWalletName}`);
+    printInfo(`Wallet ID: ${walletId}`);
+
+    // =========================================================================
+    // Step 2: Unlock Wallet with initWalletHandle()
+    // =========================================================================
+    printStep(2, 'Unlocking wallet with initWalletHandle()');
+
+    const initResult = await kmd.initWalletHandle({
+      walletId,
+      walletPassword: testWalletPassword,
+    });
+
+    walletHandleToken = initResult.walletHandleToken;
+
+    printSuccess('Wallet unlocked successfully!');
+    printInfo('');
+    printInfo('InitWalletHandleResponse fields:');
+    printInfo(`  walletHandleToken: ${walletHandleToken}`);
+    printInfo('');
+    printInfo('The handle token is used to authenticate operations on this wallet.');
+    printInfo('It has an expiration time and must be renewed or released when done.');
+
+    // =========================================================================
+    // Step 3: Check Token Expiration with walletInfo()
+    // =========================================================================
+    printStep(3, 'Checking token expiration with walletInfo()');
+
+    const infoResult = await kmd.walletInfo({
+      walletHandleToken,
+    });
+
+    printSuccess('Wallet info retrieved!');
+    printInfo('');
+    printInfo('WalletInfoResponse token expiration info:');
+    printInfo(`  walletHandle.expiresSeconds: ${infoResult.walletHandle.expiresSeconds}`);
+    printInfo('');
+    printInfo(`The token will expire in ${infoResult.walletHandle.expiresSeconds} seconds.`);
+    printInfo('After expiration, the token becomes invalid and must be re-initialized.');
+
+    // Store the initial expiration for comparison
+    const initialExpiration = infoResult.walletHandle.expiresSeconds;
+
+    // =========================================================================
+    // Step 4: Renew Token with renewWalletHandleToken()
+    // =========================================================================
+    printStep(4, 'Extending token validity with renewWalletHandleToken()');
+
+    const renewResult = await kmd.renewWalletHandleToken({
+      walletHandleToken,
+    });
+
+    printSuccess('Token renewed successfully!');
+    printInfo('');
+    printInfo('RenewWalletHandleTokenResponse fields:');
+    printInfo(`  walletHandle.expiresSeconds: ${renewResult.walletHandle.expiresSeconds}`);
+    printInfo('');
+    printInfo(`Previous expiration: ${initialExpiration} seconds`);
+    printInfo(`New expiration:      ${renewResult.walletHandle.expiresSeconds} seconds`);
+    printInfo('');
+    printInfo('The token expiration has been reset. Use this to keep sessions alive');
+    printInfo('during long-running operations.');
+
+    // Verify the renewal worked by calling walletInfo again
+    const verifyInfo = await kmd.walletInfo({
+      walletHandleToken,
+    });
+    printInfo('');
+    printInfo(`Verified: token now expires in ${verifyInfo.walletHandle.expiresSeconds} seconds`);
+
+    // =========================================================================
+    // Step 5: Release Token with releaseWalletHandleToken()
+    // =========================================================================
+    printStep(5, 'Invalidating token with releaseWalletHandleToken()');
+
+    await kmd.releaseWalletHandleToken({
+      walletHandleToken,
+    });
+
+    printSuccess('Token released successfully!');
+    printInfo('');
+    printInfo('The wallet handle token has been invalidated.');
+    printInfo('Any subsequent operations using this token will fail.');
+
+    // =========================================================================
+    // Step 6: Verify Token is Invalid
+    // =========================================================================
+    printStep(6, 'Verifying token is no longer valid');
+
+    try {
+      await kmd.walletInfo({
+        walletHandleToken,
+      });
+      printError('Token should have been invalid but operation succeeded!');
+    } catch (error) {
+      printSuccess('Token correctly invalidated!');
+      printInfo('');
+      printInfo('Attempting to use the released token resulted in an error:');
+      printInfo(`  ${error instanceof Error ? error.message : String(error)}`);
+      printInfo('');
+      printInfo('This confirms the token was properly released and is no longer usable.');
+    }
+
+    // Mark as cleaned up since we already released the token
+    walletHandleToken = '';
+
+    // =========================================================================
+    // Summary
+    // =========================================================================
+    printHeader('Summary');
+    printInfo('This example demonstrated wallet session management:');
+    printInfo('');
+    printInfo('  1. initWalletHandle()        - Unlock a wallet and get a handle token');
+    printInfo('  2. walletInfo()              - Check token expiration (expiresSeconds)');
+    printInfo('  3. renewWalletHandleToken()  - Extend token validity before expiration');
+    printInfo('  4. releaseWalletHandleToken()- Invalidate token when done');
+    printInfo('');
+    printInfo('Key concepts:');
+    printInfo('  - Handle tokens authenticate wallet operations');
+    printInfo('  - Tokens expire automatically after a timeout (default: 60 seconds)');
+    printInfo('  - Renew tokens during long operations to prevent expiration');
+    printInfo('  - Always release tokens when done to free resources');
+    printInfo('  - Released tokens cannot be used for any operations');
+    printInfo('');
+    printInfo('Note: The test wallet remains in KMD (wallets cannot be deleted via API).');
+  } catch (error) {
+    printError(`Error: ${error instanceof Error ? error.message : String(error)}`);
+    printInfo('');
+    printInfo('Troubleshooting:');
+    printInfo('  - Ensure LocalNet is running: algokit localnet start');
+    printInfo('  - If LocalNet issues occur: algokit localnet reset');
+    printInfo('  - Check that KMD is accessible on port 4002');
+
+    // Cleanup on error
+    if (walletHandleToken) {
+      try {
+        await kmd.releaseWalletHandleToken({ walletHandleToken });
+      } catch {
+        // Ignore cleanup errors
+      }
+    }
+
+    process.exit(1);
+  }
+}
+
+main().catch(error => {
+  console.error('Fatal error:', error);
+  process.exit(1);
+});
+```
+
+---
+
+### Other examples in KMD Client
+
+- [KMD Version Information](/docs/algokit-utils/typescript/latest/examples/kmd-client/01-version/)
+- [Wallet Creation and Listing](/docs/algokit-utils/typescript/latest/examples/kmd-client/02-wallet-management/)
+- **Wallet Session Management**
+- [Key Generation](/docs/algokit-utils/typescript/latest/examples/kmd-client/04-key-generation/)
+- [Key Import and Export](/docs/algokit-utils/typescript/latest/examples/kmd-client/05-key-import-export/)
+- [Key Listing and Deletion](/docs/algokit-utils/typescript/latest/examples/kmd-client/06-key-listing-deletion/)
+- [Master Key Export](/docs/algokit-utils/typescript/latest/examples/kmd-client/07-master-key-export/)
+- [Multisig Account Setup](/docs/algokit-utils/typescript/latest/examples/kmd-client/08-multisig-setup/)
+- [Multisig Account Management](/docs/algokit-utils/typescript/latest/examples/kmd-client/09-multisig-management/)
+- [Transaction Signing with KMD](/docs/algokit-utils/typescript/latest/examples/kmd-client/10-transaction-signing/)
+- [Multisig Transaction Signing with KMD](/docs/algokit-utils/typescript/latest/examples/kmd-client/11-multisig-signing/)
+- [Program Signing (Delegated Logic Signatures) with KMD](/docs/algokit-utils/typescript/latest/examples/kmd-client/12-program-signing/)
+- [Multisig Program Signing (Delegated Multisig Logic Signatures) with KMD](/docs/algokit-utils/typescript/latest/examples/kmd-client/13-multisig-program-signing/)

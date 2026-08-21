@@ -1,0 +1,444 @@
+---
+title: 'ABI Struct and Tuple Conversion'
+description: 'This example demonstrates how to convert between struct values (named) and tuple values (positional):'
+sidebar:
+  order: 9
+---
+
+[← Back to ABI Encoding](/docs/algokit-utils/python/latest/examples/abi/)
+
+## Description
+
+This example demonstrates how to convert between struct values (named) and tuple values (positional):
+
+- get_tuple_from_struct(): Convert struct dict to tuple
+- get_struct_from_tuple(): Convert tuple back to struct dict
+- Simple struct &#123; name: 'Alice', age: 30n &#125; &lt;-&gt; tuple ('Alice', 30)
+- Nested structs with complex types
+- Verify that struct and tuple encodings produce identical bytes
+  Key concept: Structs and tuples have identical binary encoding in ARC-4. The conversion functions allow you to work with the same data in either format:
+- Struct format: dict with named properties (more readable)
+- Tuple format: tuple with positional elements (matches ABI encoding)
+
+## Prerequisites
+
+No LocalNet required - pure ABI encoding/decoding
+
+## Run This Example
+
+From the repository's `examples` directory:
+
+```bash
+cd examples
+uv run python abi/09_struct_tuple_conversion.py
+```
+
+## Code
+
+[View source on GitHub](https://github.com/algorandfoundation/algokit-utils-py/blob/main/examples/abi/09_struct_tuple_conversion.py)
+
+```python title="09_struct_tuple_conversion.py"
+# ruff: noqa: N999, C901, PLR0912, PLR0915
+"""
+Example: ABI Struct and Tuple Conversion
+
+This example demonstrates how to convert between struct values (named) and tuple values (positional):
+- get_tuple_from_struct(): Convert struct dict to tuple
+- get_struct_from_tuple(): Convert tuple back to struct dict
+- Simple struct { name: 'Alice', age: 30n } <-> tuple ('Alice', 30)
+- Nested structs with complex types
+- Verify that struct and tuple encodings produce identical bytes
+
+Key concept: Structs and tuples have identical binary encoding in ARC-4.
+The conversion functions allow you to work with the same data in either format:
+- Struct format: dict with named properties (more readable)
+- Tuple format: tuple with positional elements (matches ABI encoding)
+
+No LocalNet required - pure ABI encoding/decoding
+"""
+
+from typing import Any
+
+from shared import format_hex, print_header, print_info, print_step, print_success
+
+from algokit_abi import abi
+
+
+def get_tuple_from_struct(struct_type: abi.StructType, struct_value: dict[str, Any]) -> tuple:
+    """Convert struct dict value to tuple value.
+
+    Args:
+        struct_type: The StructType defining the struct fields
+        struct_value: Dict with named field values
+
+    Returns:
+        Tuple with positional values in field order
+    """
+    result = []
+    for field_name, field_type in struct_type.fields.items():
+        field_value = struct_value[field_name]
+        if isinstance(field_type, abi.StructType):
+            # Recursively convert nested structs
+            field_value = get_tuple_from_struct(field_type, field_value)
+        result.append(field_value)
+    return tuple(result)
+
+
+def get_struct_from_tuple(struct_type: abi.StructType, tuple_value: tuple | list) -> dict[str, Any]:
+    """Convert tuple value to struct dict value.
+
+    Args:
+        struct_type: The StructType defining the struct fields
+        tuple_value: Tuple/list with positional values
+
+    Returns:
+        Dict with named field values
+    """
+    result: dict[str, Any] = {}
+    for i, (field_name, field_type) in enumerate(struct_type.fields.items()):
+        field_value = tuple_value[i]
+        if isinstance(field_type, abi.StructType):
+            # Recursively convert nested tuples to structs
+            field_value = get_struct_from_tuple(field_type, field_value)
+        result[field_name] = field_value
+    return result
+
+
+def main() -> None:
+    print_header("ABI Struct and Tuple Conversion Example")
+
+    # Step 1: Simple struct to tuple conversion
+    print_step(1, "Simple Struct to Tuple Conversion")
+
+    # Create a struct type: { name: string, age: uint64 }
+    person_struct = abi.StructType(
+        struct_name="Person",
+        fields={
+            "name": abi.StringType(),
+            "age": abi.UintType(64),
+        },
+    )
+
+    print_info(f"Struct type: {person_struct.struct_name}")
+    print_info(f"ABI representation: {person_struct.name}")
+
+    # Define a struct value
+    struct_value = {"name": "Alice", "age": 30}
+    print_info(f'\nStruct value: {{ name: "{struct_value["name"]}", age: {struct_value["age"]} }}')
+
+    # Convert struct to tuple using get_tuple_from_struct()
+    tuple_value = get_tuple_from_struct(person_struct, struct_value)
+
+    print_info("\nConverted to tuple using get_tuple_from_struct():")
+    print_info(f'  Result: ("{tuple_value[0]}", {tuple_value[1]})')
+    print_info(f'  tuple_value[0]: "{tuple_value[0]}" (name)')
+    print_info(f"  tuple_value[1]: {tuple_value[1]} (age)")
+
+    # Step 2: Tuple to struct conversion
+    print_step(2, "Tuple to Struct Conversion")
+
+    # Start with a tuple value
+    input_tuple = ("Bob", 25)
+    print_info(f'Tuple value: ("{input_tuple[0]}", {input_tuple[1]})')
+
+    # Convert tuple to struct using get_struct_from_tuple()
+    converted_struct = get_struct_from_tuple(person_struct, input_tuple)
+
+    print_info("\nConverted to struct using get_struct_from_tuple():")
+    print_info(f'  Result: {{ name: "{converted_struct["name"]}", age: {converted_struct["age"]} }}')
+    print_info(f'  converted_struct["name"]: "{converted_struct["name"]}"')
+    print_info(f'  converted_struct["age"]: {converted_struct["age"]}')
+
+    # Step 3: Round-trip conversion
+    print_step(3, "Round-trip Conversion")
+
+    original = {"name": "Charlie", "age": 42}
+    print_info(f'Original struct: {{ name: "{original["name"]}", age: {original["age"]} }}')
+
+    # Struct -> Tuple -> Struct
+    as_tuple = get_tuple_from_struct(person_struct, original)
+    print_info(f'After struct -> tuple: ("{as_tuple[0]}", {as_tuple[1]})')
+
+    back_to_struct = get_struct_from_tuple(person_struct, as_tuple)
+    print_info(f'After tuple -> struct: {{ name: "{back_to_struct["name"]}", age: {back_to_struct["age"]} }}')
+
+    round_trip_match = original["name"] == back_to_struct["name"] and original["age"] == back_to_struct["age"]
+    print_info(f"\nRound-trip preserved values: {round_trip_match}")
+
+    # Step 4: Verify identical encoding
+    print_step(4, "Verify Identical Encoding")
+
+    print_info("Both struct and tuple values should encode to identical bytes:")
+
+    # Encode using struct type
+    struct_encoded = person_struct.encode(struct_value)
+    print_info(f"\nStruct encoded: {format_hex(struct_encoded)}")
+
+    # Create equivalent tuple type and encode the tuple value
+    tuple_type = abi.TupleType([abi.StringType(), abi.UintType(64)])
+    tuple_encoded = tuple_type.encode(tuple_value)
+    print_info(f"Tuple encoded:  {format_hex(tuple_encoded)}")
+
+    # Compare encodings
+    encodings_match = struct_encoded == tuple_encoded
+    print_info(f"\nEncodings are identical: {encodings_match}")
+    print_info(f"Total bytes: {len(struct_encoded)}")
+
+    # Step 5: Complex struct with more fields
+    print_step(5, "Complex Struct with More Fields")
+
+    # Create a more complex struct
+    user_struct = abi.StructType(
+        struct_name="User",
+        fields={
+            "id": abi.UintType(64),
+            "username": abi.StringType(),
+            "active": abi.BoolType(),
+            "balance": abi.UintType(256),
+        },
+    )
+
+    user_value = {
+        "id": 12345,
+        "username": "alice_wonder",
+        "active": True,
+        "balance": 1000000000000000000,  # 1 ETH in wei
+    }
+
+    print_info(f"Struct type: {user_struct.struct_name}")
+    print_info("Fields: id (uint64), username (string), active (bool), balance (uint256)")
+    print_info("\nStruct value:")
+    print_info(f"  id: {user_value['id']}")
+    print_info(f'  username: "{user_value["username"]}"')
+    print_info(f"  active: {user_value['active']}")
+    print_info(f"  balance: {user_value['balance']}")
+
+    # Convert to tuple
+    user_tuple = get_tuple_from_struct(user_struct, user_value)
+
+    print_info("\nConverted to tuple:")
+    print_info(f'  ({user_tuple[0]}, "{user_tuple[1]}", {user_tuple[2]}, {user_tuple[3]})')
+
+    # Convert back
+    user_back = get_struct_from_tuple(user_struct, user_tuple)
+
+    print_info("\nConverted back to struct:")
+    print_info(f"  id: {user_back['id']}")
+    print_info(f'  username: "{user_back["username"]}"')
+    print_info(f"  active: {user_back['active']}")
+    print_info(f"  balance: {user_back['balance']}")
+
+    # Verify encoding
+    user_struct_encoded = user_struct.encode(user_value)
+    user_tuple_type = abi.TupleType([abi.UintType(64), abi.StringType(), abi.BoolType(), abi.UintType(256)])
+    user_tuple_encoded = user_tuple_type.encode(user_tuple)
+
+    user_encodings_match = user_struct_encoded == user_tuple_encoded
+    print_info(f"\nStruct and tuple encodings identical: {user_encodings_match}")
+
+    # Step 6: Nested struct conversion
+    print_step(6, "Nested Struct Conversion")
+
+    # Create nested struct types
+    item_struct = abi.StructType(
+        struct_name="Item",
+        fields={
+            "name": abi.StringType(),
+            "price": abi.UintType(64),
+        },
+    )
+
+    order_struct = abi.StructType(
+        struct_name="Order",
+        fields={
+            "orderId": abi.UintType(64),
+            "item": item_struct,
+            "quantity": abi.UintType(32),
+        },
+    )
+
+    order_value = {
+        "orderId": 1001,
+        "item": {
+            "name": "Widget",
+            "price": 2500,
+        },
+        "quantity": 5,
+    }
+
+    print_info("Nested struct type: Order containing Item")
+    print_info("  Order: { orderId: uint64, item: Item, quantity: uint32 }")
+    print_info("  Item: { name: string, price: uint64 }")
+
+    print_info("\nNested struct value:")
+    print_info(f"  orderId: {order_value['orderId']}")
+    print_info(f'  item: {{ name: "{order_value["item"]["name"]}", price: {order_value["item"]["price"]} }}')
+    print_info(f"  quantity: {order_value['quantity']}")
+
+    # Convert nested struct to tuple
+    order_tuple = get_tuple_from_struct(order_struct, order_value)
+
+    print_info("\nConverted to nested tuple using get_tuple_from_struct():")
+    print_info("  Result structure: (orderId, (name, price), quantity)")
+    print_info(f"  order_tuple[0]: {order_tuple[0]} (orderId)")
+    print_info(f'  order_tuple[1]: ("{order_tuple[1][0]}", {order_tuple[1][1]}) (item)')
+    print_info(f"  order_tuple[2]: {order_tuple[2]} (quantity)")
+
+    # Convert back to struct
+    order_back = get_struct_from_tuple(order_struct, order_tuple)
+
+    print_info("\nConverted back to struct using get_struct_from_tuple():")
+    print_info(f"  orderId: {order_back['orderId']}")
+    print_info(f'  item["name"]: "{order_back["item"]["name"]}"')
+    print_info(f'  item["price"]: {order_back["item"]["price"]}')
+    print_info(f"  quantity: {order_back['quantity']}")
+
+    # Verify nested encoding
+    order_struct_encoded = order_struct.encode(order_value)
+    order_tuple_type = abi.TupleType(
+        [abi.UintType(64), abi.TupleType([abi.StringType(), abi.UintType(64)]), abi.UintType(32)]
+    )
+    order_tuple_encoded = order_tuple_type.encode(order_tuple)
+
+    order_encodings_match = order_struct_encoded == order_tuple_encoded
+    print_info(f"\nNested struct and tuple encodings identical: {order_encodings_match}")
+    print_info(f"Total bytes: {len(order_struct_encoded)}")
+
+    # Step 7: Deeply nested struct
+    print_step(7, "Deeply Nested Struct")
+
+    # Create deeply nested struct
+    contact_struct = abi.StructType(
+        struct_name="Contact",
+        fields={
+            "email": abi.StringType(),
+            "phone": abi.StringType(),
+        },
+    )
+
+    employee_struct = abi.StructType(
+        struct_name="Employee",
+        fields={
+            "name": abi.StringType(),
+            "contact": contact_struct,
+        },
+    )
+
+    company_struct = abi.StructType(
+        struct_name="Company",
+        fields={
+            "name": abi.StringType(),
+            "ceo": employee_struct,
+        },
+    )
+
+    company_value = {
+        "name": "TechCorp",
+        "ceo": {
+            "name": "Jane Doe",
+            "contact": {
+                "email": "jane@techcorp.com",
+                "phone": "+1-555-0100",
+            },
+        },
+    }
+
+    print_info("Deeply nested struct: Company -> Employee -> Contact")
+    print_info("\nCompany value:")
+    print_info(f'  name: "{company_value["name"]}"')
+    print_info(f'  ceo["name"]: "{company_value["ceo"]["name"]}"')
+    print_info(f'  ceo["contact"]["email"]: "{company_value["ceo"]["contact"]["email"]}"')
+    print_info(f'  ceo["contact"]["phone"]: "{company_value["ceo"]["contact"]["phone"]}"')
+
+    # Convert to deeply nested tuple
+    company_tuple = get_tuple_from_struct(company_struct, company_value)
+
+    print_info("\nConverted to deeply nested tuple:")
+    print_info("  Structure: (name, (employeeName, (email, phone)))")
+    ceo_tuple = company_tuple[1]
+    contact_tuple = ceo_tuple[1]
+    print_info(f'  company_tuple[0]: "{company_tuple[0]}"')
+    print_info(f'  company_tuple[1][0]: "{ceo_tuple[0]}"')
+    print_info(f'  company_tuple[1][1][0]: "{contact_tuple[0]}"')
+    print_info(f'  company_tuple[1][1][1]: "{contact_tuple[1]}"')
+
+    # Convert back
+    company_back = get_struct_from_tuple(company_struct, company_tuple)
+
+    print_info("\nConverted back to struct:")
+    print_info(f'  name: "{company_back["name"]}"')
+    print_info(f'  ceo["name"]: "{company_back["ceo"]["name"]}"')
+    print_info(f'  ceo["contact"]["email"]: "{company_back["ceo"]["contact"]["email"]}"')
+    print_info(f'  ceo["contact"]["phone"]: "{company_back["ceo"]["contact"]["phone"]}"')
+
+    # Verify deep nesting encoding
+    company_struct_encoded = company_struct.encode(company_value)
+    company_tuple_type = abi.TupleType(
+        [abi.StringType(), abi.TupleType([abi.StringType(), abi.TupleType([abi.StringType(), abi.StringType()])])]
+    )
+    company_tuple_encoded = company_tuple_type.encode(company_tuple)
+
+    company_encodings_match = company_struct_encoded == company_tuple_encoded
+    print_info(f"\nDeeply nested struct and tuple encodings identical: {company_encodings_match}")
+
+    # Step 8: Use cases for conversion functions
+    print_step(8, "Use Cases for Conversion Functions")
+
+    print_info("When to use get_tuple_from_struct():")
+    print_info("  - Converting struct data to pass to tuple-expecting ABI methods")
+    print_info("  - Serializing struct data in a position-based format")
+    print_info("  - Working with libraries that expect tuple format")
+    print_info("  - Building raw transaction arguments")
+
+    print_info("\nWhen to use get_struct_from_tuple():")
+    print_info("  - Converting decoded tuple results to readable struct format")
+    print_info("  - Adding field names to positional data for debugging")
+    print_info("  - Working with APIs that return tuple arrays")
+    print_info("  - Making code more maintainable with named fields")
+
+    # Step 9: Summary
+    print_step(9, "Summary")
+
+    print_info("Conversion functions:")
+    print_info("  - get_tuple_from_struct(struct_type, struct_value) -> tuple")
+    print_info("  - get_struct_from_tuple(struct_type, tuple_value) -> dict")
+
+    print_info("\nKey points:")
+    print_info("  - Structs and tuples are interchangeable at the binary level")
+    print_info("  - Conversion is lossless - round-trip preserves all values")
+    print_info("  - Nested structs convert to nested tuples and vice versa")
+    print_info("  - Field names provide semantic meaning without affecting encoding")
+    print_info("  - Use struct format for readability, tuple format for ABI compatibility")
+
+    print_info("\nBinary equivalence verified:")
+    print_info("  - Simple struct { name, age } = tuple (string, uint64)")
+    print_info("  - Complex struct { id, username, active, balance } = tuple (uint64, string, bool, uint256)")
+    print_info("  - Nested struct Order { Item { ... } } = nested tuple (...)")
+
+    print_success("ABI Struct and Tuple Conversion example completed successfully!")
+
+
+if __name__ == "__main__":
+    main()
+
+```
+
+---
+
+### Other examples in ABI Encoding
+
+- [ABI Type Parsing](/docs/algokit-utils/python/latest/examples/abi/01-type-parsing/)
+- [ABI Primitive Types](/docs/algokit-utils/python/latest/examples/abi/02-primitive-types/)
+- [ABI Address Type](/docs/algokit-utils/python/latest/examples/abi/03-address-type/)
+- [ABI String Type](/docs/algokit-utils/python/latest/examples/abi/04-string-type/)
+- [ABI Static Array Type](/docs/algokit-utils/python/latest/examples/abi/05-static-array/)
+- [ABI Dynamic Array Type](/docs/algokit-utils/python/latest/examples/abi/06-dynamic-array/)
+- [ABI Tuple Type](/docs/algokit-utils/python/latest/examples/abi/07-tuple-type/)
+- [ABI Struct Type](/docs/algokit-utils/python/latest/examples/abi/08-struct-type/)
+- **ABI Struct and Tuple Conversion**
+- [ABI Bool Array Packing](/docs/algokit-utils/python/latest/examples/abi/10-bool-packing/)
+- [ABI Method](/docs/algokit-utils/python/latest/examples/abi/11-abi-method/)
+- [AVM Type Encoding](/docs/algokit-utils/python/latest/examples/abi/12-avm-types/)
+- [Type Guards](/docs/algokit-utils/python/latest/examples/abi/13-type-guards/)
+- [ABI Complex Nested Types](/docs/algokit-utils/python/latest/examples/abi/14-complex-nested/)
+- [ARC-56 Storage Helpers](/docs/algokit-utils/python/latest/examples/abi/15-arc56-storage/)

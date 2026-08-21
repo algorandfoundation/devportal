@@ -71,7 +71,7 @@ export async function getSelectedCode(
  * @param lines - Array of code lines to dedent
  * @returns Dedented code as a single string
  */
-function dedentCode(lines: string[]): string {
+export function dedentCode(lines: string[]): string {
   if (lines.length === 0) return '';
 
   // Find the minimum indentation among non-empty lines

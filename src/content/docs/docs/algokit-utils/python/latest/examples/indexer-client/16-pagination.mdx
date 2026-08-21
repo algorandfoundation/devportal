@@ -1,0 +1,685 @@
+---
+title: 'Pagination'
+description: 'This example demonstrates how to properly handle pagination across multiple indexer endpoints using limit and next parameters. It includes a generic pagination helper function and shows iteration through all pages of results.'
+sidebar:
+  order: 16
+---
+
+[← Back to Indexer Client](/docs/algokit-utils/python/latest/examples/indexer-client/)
+
+## Description
+
+This example demonstrates how to properly handle pagination across multiple indexer endpoints using limit and next parameters. It includes a generic pagination helper function and shows iteration through all pages of results.
+Prerequisites:
+
+## Prerequisites
+
+- LocalNet running (via `algokit localnet start`)
+
+## Run This Example
+
+From the repository's `examples` directory:
+
+```bash
+cd examples
+uv run python indexer_client/16_pagination.py
+```
+
+## Code
+
+[View source on GitHub](https://github.com/algorandfoundation/algokit-utils-py/blob/main/examples/indexer_client/16_pagination.py)
+
+```python title="16_pagination.py"
+# ruff: noqa: N999, C901, PLR0912, PLR0915, PLR2004
+"""
+Example: Pagination
+
+This example demonstrates how to properly handle pagination across multiple
+indexer endpoints using limit and next parameters. It includes a generic
+pagination helper function and shows iteration through all pages of results.
+
+Prerequisites:
+- LocalNet running (via `algokit localnet start`)
+"""
+
+import time
+from collections.abc import Callable
+from dataclasses import dataclass
+
+from shared import (
+    create_algorand_client,
+    create_indexer_client,
+    format_micro_algo,
+    print_error,
+    print_header,
+    print_info,
+    print_step,
+    print_success,
+    shorten_address,
+)
+
+from algokit_utils import AlgoAmount, AssetCreateParams, PaymentParams
+
+# ============================================================================
+# Generic Pagination Helper Function
+# ============================================================================
+
+
+@dataclass
+class PaginationOptions:
+    """Generic pagination options for fetch function."""
+
+    limit: int | None = None
+    next: str | None = None
+
+
+@dataclass
+class PaginatedResponse:
+    """Generic response type for paginated endpoints."""
+
+    items: list
+    next_token: str | None
+    current_round: int
+
+
+@dataclass
+class PaginateAllOptions:
+    """Options for the paginate_all helper."""
+
+    page_size: int = 100
+    max_items: int | None = None
+    on_page: Callable[[list, int], bool | None] | None = None
+    stop_when: Callable[[object, int], bool] | None = None
+
+
+@dataclass
+class PaginateAllResult:
+    """Result from paginate_all helper."""
+
+    items: list
+    total_pages: int
+    stopped_early: bool
+
+
+async def paginate_all(
+    fetch_page: Callable[[PaginationOptions], PaginatedResponse],
+    options: PaginateAllOptions | None = None,
+) -> PaginateAllResult:
+    """
+    Generic pagination helper that iterates through all pages of results.
+
+    This function provides a reusable pattern for paginating through any
+    indexer endpoint that supports limit and next parameters.
+
+    Args:
+        fetch_page: Function that fetches a page of results
+        options: Pagination options including page_size, max_items, callbacks
+
+    Returns:
+        All items collected across all pages
+    """
+    if options is None:
+        options = PaginateAllOptions()
+
+    page_size = options.page_size
+    max_items = options.max_items
+    on_page = options.on_page
+    stop_when = options.stop_when
+
+    all_items: list = []
+    next_token: str | None = None
+    page_number = 0
+    stopped_early = False
+
+    while True:
+        page_number += 1
+
+        # Fetch the next page
+        response = fetch_page(PaginationOptions(limit=page_size, next=next_token))
+
+        # Process items and check for early termination
+        for item in response.items:
+            # Check stop condition
+            if stop_when and stop_when(item, len(all_items)):
+                stopped_early = True
+                break
+
+            all_items.append(item)
+
+            # Check max items limit
+            if max_items and len(all_items) >= max_items:
+                stopped_early = True
+                break
+
+        # Call page callback if provided
+        if on_page:
+            continue_iteration = on_page(response.items, page_number)
+            if continue_iteration is False:
+                stopped_early = True
+                break
+
+        # Check if we should stop
+        if stopped_early:
+            break
+
+        next_token = response.next_token
+        if not next_token:
+            break
+
+    return PaginateAllResult(items=all_items, total_pages=page_number, stopped_early=stopped_early)
+
+
+def main() -> None:
+    print_header("Pagination Example")
+
+    # Create clients
+    indexer = create_indexer_client()
+    algorand = create_algorand_client()
+
+    # =========================================================================
+    # Step 1: Get a funded account and create some test data
+    # =========================================================================
+    print_step(1, "Setting up test data for pagination")
+
+    try:
+        sender_account = algorand.account.localnet_dispenser()
+        algorand.set_signer_from_account(sender_account)
+        sender_address = sender_account.addr
+        print_success(f"Using dispenser account: {shorten_address(sender_address)}")
+
+        # Create several random accounts and send them funds to generate transactions
+        print_info("Creating test transactions for pagination demo...")
+        receiver_accounts: list[str] = []
+
+        for _i in range(5):
+            receiver = algorand.account.random()
+            receiver_accounts.append(receiver.addr)
+
+            algorand.send.payment(
+                PaymentParams(
+                    sender=sender_address,
+                    receiver=receiver.addr,
+                    amount=AlgoAmount.from_algo(1),
+                )
+            )
+
+        print_success(f"Created {len(receiver_accounts)} payment transactions")
+
+        # Create a test asset
+        print_info("Creating test asset...")
+        asset_result = algorand.send.asset_create(
+            AssetCreateParams(
+                sender=sender_address,
+                total=1_000_000,
+                decimals=0,
+                asset_name="PaginationTestToken",
+                unit_name="PAGE",
+            )
+        )
+        print_success(f"Created asset: PaginationTestToken (ID: {asset_result.asset_id})")
+
+        # Wait for indexer to catch up
+        print_info("Waiting for indexer to index transactions...")
+        time.sleep(3)
+        print_info("")
+    except Exception as e:
+        print_error(f"Failed to set up test data: {e}")
+        print_info("")
+        print_info("Make sure LocalNet is running: algokit localnet start")
+        print_info("If issues persist, try: algokit localnet reset")
+        return
+
+    # =========================================================================
+    # Step 2: Demonstrate pagination with search_for_transactions()
+    # =========================================================================
+    print_step(2, "Paginating through search_for_transactions()")
+
+    try:
+        print_info("Manually iterating through transaction pages...")
+        print_info("Settings: page_size=2 (small for demo purposes)")
+        print_info("")
+
+        all_transactions: list = []
+        next_token: str | None = None
+        page_number = 0
+        max_pages = 5
+
+        while page_number < max_pages:
+            page_number += 1
+
+            result = indexer.search_for_transactions(
+                limit=2,
+                next_=next_token,
+            )
+
+            all_transactions.extend(result.transactions or [])
+            print_info(f"  Page {page_number}: Retrieved {len(result.transactions or [])} transaction(s)")
+
+            next_token = result.next_token
+            if not next_token:
+                break
+
+        print_success(f"Total transactions fetched: {len(all_transactions)}")
+        print_info(f"Total pages fetched: {page_number}")
+        print_info("")
+
+        # Display first few transactions
+        if len(all_transactions) > 0:
+            print_info("First 3 transactions:")
+            for tx in all_transactions[:3]:
+                tx_id = tx.id_ if tx.id_ else "N/A"
+                print_info(f"  - {shorten_address(tx_id, 8, 6)}: {tx.tx_type}")
+    except Exception as e:
+        print_error(f"search_for_transactions pagination failed: {e}")
+
+    # =========================================================================
+    # Step 3: Demonstrate pagination with search_for_accounts()
+    # =========================================================================
+    print_step(3, "Paginating through search_for_accounts()")
+
+    try:
+        print_info("Fetching all accounts with balance > 0 using pagination...")
+        print_info("Settings: page_size=3")
+        print_info("")
+
+        all_accounts: list = []
+        next_token = None
+        page_number = 0
+        max_items = 15
+
+        while len(all_accounts) < max_items:
+            page_number += 1
+
+            result = indexer.search_for_accounts(
+                currency_greater_than=0,
+                limit=3,
+                next_=next_token,
+            )
+
+            for account in result.accounts or []:
+                if len(all_accounts) >= max_items:
+                    break
+                all_accounts.append(account)
+
+            print_info(f"  Page {page_number}: Retrieved {len(result.accounts or [])} account(s)")
+
+            next_token = result.next_token
+            if not next_token:
+                break
+
+        print_success(f"Total accounts fetched: {len(all_accounts)}")
+        print_info(f"Total pages fetched: {page_number}")
+        print_info("")
+
+        # Display accounts with their balances
+        if len(all_accounts) > 0:
+            print_info("Accounts found:")
+            for account in all_accounts[:5]:
+                print_info(f"  - {shorten_address(account.address)}: {format_micro_algo(account.amount)}")
+            if len(all_accounts) > 5:
+                print_info(f"  ... and {len(all_accounts) - 5} more")
+    except Exception as e:
+        print_error(f"search_for_accounts pagination failed: {e}")
+
+    # =========================================================================
+    # Step 4: Demonstrate pagination with search_for_assets()
+    # =========================================================================
+    print_step(4, "Paginating through search_for_assets()")
+
+    try:
+        print_info("Fetching all assets using pagination...")
+        print_info("Settings: page_size=2")
+        print_info("")
+
+        all_assets: list = []
+        next_token = None
+        page_number = 0
+        max_items = 10
+
+        while len(all_assets) < max_items:
+            page_number += 1
+
+            result = indexer.search_for_assets(
+                limit=2,
+                next_=next_token,
+            )
+
+            for asset in result.assets or []:
+                if len(all_assets) >= max_items:
+                    break
+                all_assets.append(asset)
+
+            print_info(f"  Page {page_number}: Retrieved {len(result.assets or [])} asset(s)")
+
+            next_token = result.next_token
+            if not next_token:
+                break
+
+        print_success(f"Total assets fetched: {len(all_assets)}")
+        print_info(f"Total pages fetched: {page_number}")
+        print_info("")
+
+        # Display assets
+        if len(all_assets) > 0:
+            print_info("Assets found:")
+            for asset in all_assets[:5]:
+                name = asset.params.name if asset.params.name else "Unnamed"
+                unit_name = asset.params.unit_name if asset.params.unit_name else "N/A"
+                asset_id = asset.id_
+                print_info(f"  - ID {asset_id}: {name} ({unit_name})")
+            if len(all_assets) > 5:
+                print_info(f"  ... and {len(all_assets) - 5} more")
+        else:
+            print_info("No assets found on LocalNet")
+    except Exception as e:
+        print_error(f"search_for_assets pagination failed: {e}")
+
+    # =========================================================================
+    # Step 5: Display total count of items across all pages
+    # =========================================================================
+    print_step(5, "Counting total items across all pages")
+
+    try:
+        print_info("Counting all transactions without fetching full data...")
+        print_info("")
+
+        total_transactions = 0
+        page_count = 0
+        next_token = None
+
+        # Simple counting loop using limit and next
+        while True:
+            page_count += 1
+            result = indexer.search_for_transactions(
+                limit=100,  # Use larger page size for counting
+                next_=next_token,
+            )
+
+            total_transactions += len(result.transactions or [])
+            next_token = result.next_token
+
+            # Safety limit for demo
+            if page_count >= 10:
+                print_info("  (stopping after 10 pages for demo purposes)")
+                break
+
+            if not next_token:
+                break
+
+        print_success(f"Total transactions counted: {total_transactions}")
+        print_info(f"Pages scanned: {page_count}")
+        print_info("")
+
+        # Also count accounts
+        print_info("Counting all accounts...")
+        total_accounts = 0
+        page_count = 0
+        next_token = None
+
+        while True:
+            page_count += 1
+            result = indexer.search_for_accounts(
+                currency_greater_than=0,
+                limit=100,
+                next_=next_token,
+            )
+
+            total_accounts += len(result.accounts or [])
+            next_token = result.next_token
+
+            if page_count >= 10:
+                break
+            if not next_token:
+                break
+
+        print_success(f"Total accounts with balance > 0: {total_accounts}")
+        print_info(f"Pages scanned: {page_count}")
+    except Exception as e:
+        print_error(f"Counting failed: {e}")
+
+    # =========================================================================
+    # Step 6: Demonstrate early termination when a condition is met
+    # =========================================================================
+    print_step(6, "Demonstrating early termination")
+
+    try:
+        print_info("Searching for transactions until we find a payment transaction...")
+        print_info("")
+
+        all_transactions = []
+        next_token = None
+        page_number = 0
+        found_payment = False
+
+        while True:
+            page_number += 1
+            result = indexer.search_for_transactions(
+                limit=5,
+                next_=next_token,
+            )
+
+            print_info(f"  Page {page_number}: Checking {len(result.transactions or [])} transaction(s)...")
+
+            for tx in result.transactions or []:
+                if tx.tx_type == "pay":
+                    tx_id = tx.id_ if tx.id_ else "N/A"
+                    idx = len(all_transactions)
+                    print_info(f"  Found payment transaction at index {idx}: {shorten_address(tx_id, 8, 6)}")
+                    found_payment = True
+                    break
+                all_transactions.append(tx)
+
+            if found_payment:
+                break
+
+            next_token = result.next_token
+            if not next_token:
+                break
+
+        print_success(f"Stopped early: {found_payment}")
+        print_info(f"Total transactions before stopping: {len(all_transactions)}")
+        print_info(f"Pages checked: {page_number}")
+        print_info("")
+
+        # Another example: stop after finding an account with specific balance
+        print_info("Searching for an account with balance > 1000 ALGO...")
+
+        found_whale = False
+        all_accounts = []
+        next_token = None
+
+        while True:
+            result = indexer.search_for_accounts(
+                currency_greater_than=0,
+                limit=5,
+                next_=next_token,
+            )
+
+            for account in result.accounts or []:
+                # Stop when we find an account with > 1000 ALGO (1,000,000,000,000 microAlgos)
+                if account.amount > 1_000_000_000_000:
+                    found_whale = True
+                    print_info(
+                        f"  Found whale account: {shorten_address(account.address)} "
+                        f"with {format_micro_algo(account.amount)}"
+                    )
+                    break
+                all_accounts.append(account)
+
+            if found_whale:
+                break
+
+            next_token = result.next_token
+            if not next_token:
+                break
+
+        if found_whale:
+            print_success("Found an account with > 1000 ALGO!")
+        else:
+            print_info("No account found with > 1000 ALGO (searched all accounts)")
+    except Exception as e:
+        print_error(f"Early termination demo failed: {e}")
+
+    # =========================================================================
+    # Step 7: Handle the case where there are no results
+    # =========================================================================
+    print_step(7, "Handling empty results")
+
+    try:
+        print_info("Searching for assets with a name that does not exist...")
+        print_info("")
+
+        all_assets = []
+        next_token = None
+        page_number = 0
+
+        while True:
+            page_number += 1
+            result = indexer.search_for_assets(
+                name="ThisAssetNameShouldNotExist12345",
+                limit=10,
+                next_=next_token,
+            )
+
+            print_info(f"  Page {page_number}: Retrieved {len(result.assets or [])} item(s)")
+            all_assets.extend(result.assets or [])
+
+            next_token = result.next_token
+            if not next_token:
+                break
+
+        if len(all_assets) == 0:
+            print_success("Correctly handled empty results (no assets found)")
+            print_info(f"Total pages: {page_number}")
+            print_info("Note: Empty results return an empty array, not an error")
+        else:
+            print_info(f"Unexpectedly found {len(all_assets)} asset(s)")
+        print_info("")
+
+        # Also demonstrate with accounts
+        print_info("Searching for accounts with impossibly high balance...")
+
+        all_accounts = []
+        next_token = None
+
+        while True:
+            # Search for accounts with balance > max supply (would never exist)
+            result = indexer.search_for_accounts(
+                currency_greater_than=10_000_000_000_000_000,  # > 10 billion ALGO
+                limit=10,
+                next_=next_token,
+            )
+
+            all_accounts.extend(result.accounts or [])
+
+            next_token = result.next_token
+            if not next_token:
+                break
+
+        if len(all_accounts) == 0:
+            print_success("Correctly handled empty results (no accounts with such high balance)")
+        else:
+            print_info(f"Found {len(all_accounts)} account(s)")
+    except Exception as e:
+        print_error(f"Empty results handling failed: {e}")
+
+    # =========================================================================
+    # Step 8: Manual pagination without helper
+    # =========================================================================
+    print_step(8, "Manual pagination pattern (without helper)")
+
+    try:
+        print_info("Sometimes you may want to control pagination manually...")
+        print_info("")
+
+        # Manual pagination loop
+        all_transactions: list = []
+        next_token: str | None = None
+        page_num = 0
+
+        while True:
+            page_num += 1
+            page = indexer.search_for_transactions(
+                limit=3,
+                next_=next_token,
+            )
+
+            all_transactions.extend(page.transactions or [])
+            next_token = page.next_token
+
+            print_info(
+                f"  Page {page_num}: {len(page.transactions or [])} transactions (total: {len(all_transactions)})"
+            )
+
+            # Limit for demo
+            if page_num >= 3:
+                print_info("  (stopping after 3 pages for demo)")
+                break
+
+            if not next_token:
+                break
+
+        print_success(f"Manual pagination complete: {len(all_transactions)} transactions in {page_num} pages")
+        print_info("")
+
+        print_info("Key pagination fields:")
+        print_info("  - limit: Maximum items per page (request parameter)")
+        print_info("  - next_token: Token from response to fetch next page")
+        print_info("  - When next_token is None/missing, no more pages exist")
+    except Exception as e:
+        print_error(f"Manual pagination failed: {e}")
+
+    # =========================================================================
+    # Summary
+    # =========================================================================
+    print_header("Summary")
+    print_info("This example demonstrated pagination patterns for indexer endpoints:")
+    print_info("")
+    print_info("Pagination basics:")
+    print_info("  - Use `limit` parameter to control page size")
+    print_info("  - Use `next` parameter with `next_token` from response to get next page")
+    print_info("  - When `next_token` is None, there are no more pages")
+    print_info("")
+    print_info("Generic pagination helper (paginate_all):")
+    print_info("  - Reusable across all paginated endpoints")
+    print_info("  - Supports page_size, max_items limits")
+    print_info("  - Supports on_page callback for progress tracking")
+    print_info("  - Supports stop_when condition for early termination")
+    print_info("")
+    print_info("Endpoints demonstrated:")
+    print_info("  - search_for_transactions() - paginate through transactions")
+    print_info("  - search_for_accounts() - paginate through accounts")
+    print_info("  - search_for_assets() - paginate through assets")
+    print_info("")
+    print_info("Best practices:")
+    print_info("  - Use larger page sizes (50-100) for production to reduce API calls")
+    print_info("  - Implement max_items limit to prevent unbounded queries")
+    print_info("  - Use early termination when searching for specific items")
+    print_info("  - Handle empty results gracefully (empty array, not error)")
+
+
+if __name__ == "__main__":
+    main()
+
+```
+
+---
+
+### Other examples in Indexer Client
+
+- [Indexer Health Check](/docs/algokit-utils/python/latest/examples/indexer-client/01-health-check/)
+- [Account Lookup](/docs/algokit-utils/python/latest/examples/indexer-client/02-account-lookup/)
+- [Account Assets](/docs/algokit-utils/python/latest/examples/indexer-client/03-account-assets/)
+- [Account Applications](/docs/algokit-utils/python/latest/examples/indexer-client/04-account-applications/)
+- [Account Transactions](/docs/algokit-utils/python/latest/examples/indexer-client/05-account-transactions/)
+- [Transaction Lookup](/docs/algokit-utils/python/latest/examples/indexer-client/06-transaction-lookup/)
+- [Transaction Search](/docs/algokit-utils/python/latest/examples/indexer-client/07-transaction-search/)
+- [Asset Lookup](/docs/algokit-utils/python/latest/examples/indexer-client/08-asset-lookup/)
+- [Asset Balances](/docs/algokit-utils/python/latest/examples/indexer-client/09-asset-balances/)
+- [Asset Transactions](/docs/algokit-utils/python/latest/examples/indexer-client/10-asset-transactions/)
+- [Application Lookup](/docs/algokit-utils/python/latest/examples/indexer-client/11-application-lookup/)
+- [Application Logs Lookup](/docs/algokit-utils/python/latest/examples/indexer-client/12-application-logs/)
+- [Application Boxes Lookup](/docs/algokit-utils/python/latest/examples/indexer-client/13-application-boxes/)
+- [Block Lookup](/docs/algokit-utils/python/latest/examples/indexer-client/14-block-lookup/)
+- [Block Headers Search](/docs/algokit-utils/python/latest/examples/indexer-client/15-block-headers/)
+- **Pagination**

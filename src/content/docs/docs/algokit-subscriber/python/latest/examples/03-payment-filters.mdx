@@ -1,0 +1,200 @@
+---
+title: 'Payment Filters'
+description: 'Demonstrates payment transaction filters:'
+sidebar:
+  order: 3
+---
+
+[← Back to Examples](/docs/algokit-subscriber/python/latest/examples/)
+
+## Description
+
+Demonstrates payment transaction filters:
+
+- Filter by sender, receiver, amount range, and note prefix
+- Verify each filter matches the expected transactions
+
+## Prerequisites
+
+- LocalNet running (via `algokit localnet start`)
+
+## Run This Example
+
+From the repository's `examples/subscriber` directory:
+
+```bash
+cd examples/subscriber
+uv run python 03_payment_filters.py
+```
+
+## Code
+
+[View source on GitHub](https://github.com/algorandfoundation/algokit-subscriber-py/blob/main/examples/subscriber/03_payment_filters.py)
+
+```python title="03_payment_filters.py"
+"""Example 03: Payment Filters
+
+Demonstrates payment transaction filters:
+- Filter by sender, receiver, amount range, and note prefix
+- Verify each filter matches the expected transactions
+
+Prerequisites:
+- LocalNet running (via `algokit localnet start`)
+"""
+
+from algokit_utils import AlgoAmount, AlgorandClient, PaymentParams
+from shared import (
+    ALGOD_CONFIG,
+    KMD_CONFIG,
+    create_filter_tester,
+    format_micro_algo,
+    print_header,
+    print_info,
+    print_step,
+    print_success,
+    shorten_address,
+)
+
+from algokit_subscriber import SubscribedTransaction
+
+
+def main() -> None:
+    print_header("03 — Payment Filters")
+
+    # Step 1: Connect to LocalNet
+    print_step(1, "Connect to LocalNet")
+    algorand = AlgorandClient.from_config(algod_config=ALGOD_CONFIG, kmd_config=KMD_CONFIG)
+    status = algorand.client.algod.status()
+    print_info(f"Current round: {status.last_round}")
+    print_success("Connected to LocalNet")
+
+    # Step 2: Create and fund 3 accounts (sender, receiver, thirdParty)
+    print_step(2, "Create and fund 3 accounts (sender, receiver, thirdParty)")
+    dispenser = algorand.account.localnet_dispenser().addr
+
+    sender = algorand.account.random().addr
+    receiver = algorand.account.random().addr
+    third_party = algorand.account.random().addr
+
+    for acct in (sender, receiver, third_party):
+        algorand.send.payment(
+            PaymentParams(sender=dispenser, receiver=acct, amount=AlgoAmount(algo=100))
+        )
+    print_info(f"Sender: {shorten_address(sender)}")
+    print_info(f"Receiver: {shorten_address(receiver)}")
+    print_info(f"Third party: {shorten_address(third_party)}")
+    print_success("3 accounts created and funded")
+
+    # Step 3: Send 5 payments with varying parameters
+    print_step(3, "Send 5 payments with varying parameters")
+    payments: list[tuple[str, str, int, str]] = [
+        (sender, receiver, 1_000_000, "invoice-001"),
+        (sender, third_party, 5_000_000, "invoice-002"),
+        (receiver, sender, 2_000_000, "receipt-001"),
+        (third_party, receiver, 3_000_000, "invoice-003"),
+        (sender, receiver, 500_000, "receipt-002"),
+    ]
+
+    first_confirmed_round: int | None = None
+    for i, (s, r, amount, note) in enumerate(payments):
+        result = algorand.send.payment(
+            PaymentParams(
+                sender=s,
+                receiver=r,
+                amount=AlgoAmount(micro_algo=amount),
+                note=note.encode(),
+            )
+        )
+        if first_confirmed_round is None:
+            first_confirmed_round = result.confirmation.confirmed_round
+        print_info(
+            f"Txn {i + 1}: {shorten_address(s)} -> {shorten_address(r)}"
+            f' | {format_micro_algo(amount)} | note: "{note}"'
+        )
+    print_success(f"Sent {len(payments)} payments")
+
+    assert first_confirmed_round is not None
+    watermark_before = first_confirmed_round - 1
+
+    test_filter = create_filter_tester(algorand.client.algod, watermark_before)
+
+    def format_payment(txn: SubscribedTransaction) -> None:
+        amt = txn.payment_transaction.amount if txn.payment_transaction else 0
+        raw_note = txn.note if txn.note else b""
+        note_str = raw_note.decode() if isinstance(raw_note, bytes) else str(raw_note)
+        print_info(f'  Matched: {txn.id_} | amount: {format_micro_algo(amt)} | note: "{note_str}"')
+
+    # Step 4: Filter by sender (sender account only)
+    print_step(4, "Filter: sender = sender account")
+    sender_txns = test_filter(
+        "sender-filter",
+        {"sender": sender},
+        3,
+        "Sender filter matched 3 payments from sender",
+        format_payment,
+    )
+
+    # Step 5: Filter by receiver (receiver account only)
+    print_step(5, "Filter: receiver = receiver account")
+    receiver_txns = test_filter(
+        "receiver-filter",
+        {"receiver": receiver},
+        3,
+        "Receiver filter matched 3 payments to receiver",
+        format_payment,
+    )
+
+    # Step 6: Filter by minAmount/maxAmount range
+    print_step(6, "Filter: min_amount=1000000, max_amount=3000000")
+    range_txns = test_filter(
+        "amount-range",
+        {"min_amount": 1_000_000, "max_amount": 3_000_000},
+        3,
+        "Amount range filter matched 3 payments in [1M, 3M] microAlgo",
+        format_payment,
+    )
+
+    # Step 7: Filter by notePrefix ("invoice")
+    print_step(7, 'Filter: notePrefix = "invoice"')
+    invoice_txns = test_filter(
+        "note-prefix",
+        {"note_prefix": "invoice"},
+        3,
+        'Note prefix filter matched 3 payments with "invoice" prefix',
+        format_payment,
+    )
+
+    # Step 8: Summary
+    print_step(8, "Summary")
+    print_info(f"Sender filter: {len(sender_txns)} matched")
+    print_info(f"Receiver filter: {len(receiver_txns)} matched")
+    print_info(f"Amount [1M,3M] filter: {len(range_txns)} matched")
+    print_info(f'notePrefix="invoice" filter: {len(invoice_txns)} matched')
+
+    print_header("Example complete")
+
+
+if __name__ == "__main__":
+    main()
+
+```
+
+---
+
+### Other examples
+
+- [Basic Poll Once](/docs/algokit-subscriber/python/latest/examples/01-basic-poll-once/)
+- [Continuous Subscriber](/docs/algokit-subscriber/python/latest/examples/02-continuous-subscriber/)
+- **Payment Filters**
+- [Asset Transfer](/docs/algokit-subscriber/python/latest/examples/04-asset-transfer/)
+- [App Call Subscription](/docs/algokit-subscriber/python/latest/examples/05-app-call/)
+- [Multiple Named Filters](/docs/algokit-subscriber/python/latest/examples/06-multiple-filters/)
+- [Balance Change Tracking](/docs/algokit-subscriber/python/latest/examples/07-balance-changes/)
+- [ARC-28 Event Subscription](/docs/algokit-subscriber/python/latest/examples/08-arc28-events/)
+- [Inner Transaction Subscription](/docs/algokit-subscriber/python/latest/examples/09-inner-transactions/)
+- [Batch Handling & Data Mappers](/docs/algokit-subscriber/python/latest/examples/10-batch-and-mappers/)
+- [Watermark Persistence](/docs/algokit-subscriber/python/latest/examples/11-watermark-persistence/)
+- [Sync Behaviours](/docs/algokit-subscriber/python/latest/examples/12-sync-behaviours/)
+- [Custom Filters](/docs/algokit-subscriber/python/latest/examples/13-custom-filters/)
+- [Stateless Subscriptions](/docs/algokit-subscriber/python/latest/examples/14-stateless-subscriptions/)
+- [Lifecycle Hooks & Error Handling](/docs/algokit-subscriber/python/latest/examples/15-lifecycle-hooks/)
