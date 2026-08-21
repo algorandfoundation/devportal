@@ -20,7 +20,7 @@ Box storage in Algorand is a feature that provides additional on-chain storage o
 
 These storage units, called boxes, are key-value storage segments associated with individual applications, each capable of storing up to 32KB (32768 bytes) of data as byte arrays. The app account (the smart contract) is responsible for funding the box storage, and by default only the application that created a box can read, write, or delete it on-chain. Starting with AVM v13, an owning application can opt in to sharing its boxes with other applications; see [Sharing Boxes Between Applications](#sharing-boxes-between-applications).
 
-Both the box key and data are stored as byte arrays, requiring any uint64 variables to be converted before storage. While box storage expands the capabilities of Algorand smart contracts, it does incur additional costs in terms of minimum balance requirements (MBR) to cover the network storage space. The maximum number of box references is currently set to 8, allowing an app to create and reference up to 8 boxes simultaneously. Each box is a fixed-length structure but can be resized using the App.box_resize method or by deleting and recreating the box. Boxes over 2048 bytes require additional references, as each reference has a 2048-byte operational budget. The app account's MBR increases with each additional box and byte in the box's name and allocated size. If an application with outstanding boxes is deleted, the MBR is not recoverable, so it's recommended to delete all box storage and withdraw funds before app deletion.
+Both the box key and data are stored as byte arrays, requiring any uint64 variables to be converted before storage. While box storage expands the capabilities of Algorand smart contracts, it does incur additional costs in terms of minimum balance requirements (MBR) to cover the network storage space. The `txn.Boxes` array holds at most 8 box references, and those 8 are shared with the transaction's account, asset, and application references. A transaction may instead use the mutually exclusive `txn.Access` list, which holds up to 16 references of any kind. Both limits count references rather than boxes, so naming other resources leaves room for fewer boxes. Each box is a fixed-length structure but can be resized using the App.box_resize method or by deleting and recreating the box. Boxes over 2048 bytes require additional references, as each reference has a 2048-byte operational budget. The app account's MBR increases with each additional box and byte in the box's name and allocated size. If an application with outstanding boxes is deleted, the MBR is not recoverable, so it's recommended to delete all box storage and withdraw funds before app deletion.
 
 ## Usage of Boxes
 
@@ -38,19 +38,23 @@ When interacting with apps via [app call transactions](/concepts/transactions/ov
 
 The box array is an array of pairs: the first element of each pair is an integer specifying the index into the foreign application array, and the second element is the key name of the box to be accessed.
 
-Each entry in the box array allows access to only 1kb of data. For example, if a box is sized to 4kb, the transaction must use four entries in this array. To claim an allotted entry, a corresponding app ID and box name must be added to the box ref array. If you need more than the 1kb associated with that specific box name, you can either specify the box ref entry more than once or, preferably, add "empty" box refs `[0,""]` into the array. If you specify 0 as the app ID, the box ref is for the application being called. To reference a box owned by a different application, supply that application's ID instead of 0. Note that referencing another application's box makes it available, but does not by itself grant permission to access it; see [Sharing Boxes Between Applications](#sharing-boxes-between-applications).
+Each entry in the box array allows access to only 2kb of data. For example, if a box is sized to 4kb, the transaction must use two entries in this array. To claim an allotted entry, a corresponding app ID and box name must be added to the box ref array. If you need more than the 2kb associated with that specific box name, you can either specify the box ref entry more than once or, preferably, add "empty" box refs `[0,""]` into the array. Repeating a reference works because references are counted with duplicates while each box's size is counted once, so a second reference to the same box buys 2kb of budget without adding to the bytes to be covered. If you specify 0 as the app ID, the box ref is for the application being called. To reference a box owned by a different application, supply that application's ID instead of 0. Note that referencing another application's box makes it available, but does not by itself grant permission to access it; see [Sharing Boxes Between Applications](#sharing-boxes-between-applications).
 
-For example, suppose the contract needs to read "BoxA" which is 1.5kb, and "Box B" which is 2.5kb. This would require four entries in the box ref array and would look something like:
+For example, suppose the contract needs to read "BoxA" which is 3kb, and "Box B" which is 5kb. The budget is pooled across the references rather than counted per box, so this needs four entries to cover 8kb in total, not the five that rounding each box up on its own would suggest:
 
 ```
 boxes=[[0, "BoxA"],[0,"BoxB"], [0,""],[0,""]]
 ```
 
-The required box I/O budget is based on the sizes of the boxes accessed rather than the amount of data read or written. For example, if a contract accesses "Box A" with a size of 2kb and "Box B" with a size of 10 bytes, this requires both boxes to be in the box reference array and one additional reference ( ceil((2kb + 10b) / 1kb), which can be an "empty" box reference.
+The required box I/O budget is based on the sizes of the boxes accessed rather than the amount of data read or written. For example, if a contract accesses "Box A" with a size of 4kb and "Box B" with a size of 10 bytes, this requires both boxes to be in the box reference array and one additional reference (ceil((4kb + 10b) / 2kb) = 3), which can be an "empty" box reference. "Box A" on its own would fit in two references exactly, so the 10-byte box costs a whole third one: the budget is granted per reference, not per byte. This is also why a small read from a large box can fail: `box_extract` of 10 bytes from a 30kb box still needs 30kb of budget, or fifteen references, because the whole box is counted.
 
-Access budgets are summed across multiple application calls in the same transaction group. For example, in a group of two smart contract calls, there is room for 16 array entries (8 per app call), allowing access to 16kb of data. If an application needs to access a 16kb box named "Box A", it will need to be grouped with one additional application call, and the box reference array for each transaction in the group should look similar to this:
+Boxes are not the only thing that draws on this budget. For each application available to the group, including the applications being called, any program bytes beyond the standard 8kb limit also count against the box I/O budget, on both the read and the write side. Referencing another application's box brings that application into the group as well, so its program bytes count too. Programs can only exceed 8kb from consensus v42 onward, by paying an [additional fee](/concepts/transactions/fees#larger-transactions), so calling or referencing such an application leaves less budget for boxes than the reference count alone suggests.
 
+Box I/O budgets are summed across multiple application calls in the same transaction group. For example, in a group of two smart contract calls using the `txn.Boxes` array, there is room for 16 array entries (8 per app call, provided those calls use no other foreign references, since accounts, assets, and applications draw on the same per-call limit of 8), allowing access to 32kb of data. If an application needs to access a box of the maximum 32kb size named "Box A", it will need to be grouped with one additional application call, and the box reference array for each transaction in the group should look similar to this:
+
+```
 Transaction 0: [0,"Box A"],[0,""],[0,""],[0,""],[0,""],[0,""],[0,""],[0,""] Transaction 1: [0,""],[0,""],[0,""],[0,""],[0,""],[0,""],[0,""],[0,""]
+```
 
 Box refs can be added to the boxes array using `goal` or any SDKs.
 
@@ -73,7 +77,7 @@ For example, if a box is created with the name "BoxA" (a 4-byte long key) and wi
 (2500) + (400 * (1024+4)) = 413,700 microAlgos
 ```
 
-The minimum balance requirement always belongs to the application that owns the box, never to the application performing the operation. When a permitted application creates, resizes, or deletes a box owned by another application, it is the owning application's account that is affected. If that account cannot cover the increased requirement, the operation fails.
+The minimum balance requirement always belongs to the application that owns the box, never to the application performing the operation. When a permitted application creates, resizes, or deletes a box owned by another application, it is the owning application's account that is affected. If that account cannot cover the increased requirement, the operation fails. The box I/O budget works the other way round: the group performing the write must cover the bytes it writes, even though the minimum balance falls on the owning application.
 
 ## Sharing Boxes Between Applications
 
@@ -107,6 +111,8 @@ The box must still be made available in the usual way, by appearing in the box r
 
 - If the box is available but the owning application has not set the relevant parameter, the access fails.
 - If the owning application has set the parameter but the box is not available, the access fails.
+
+Availability is not the same as budget. Another application's box consumes the reading group's box I/O budget exactly as the group's own boxes do, so reading a 32kb box owned by another application needs sixteen references' worth of budget, not one.
 
 ### Foreign box reads
 
@@ -236,9 +242,9 @@ When creating a box, the key name must be in the box ref array.
 Boxes can be manipulated by the smart contract that owns them. The SDKs and goal cmd tool allow any box to be read off-chain, and box contents are never confidential; the restriction governs only which applications may read or manipulate a box on-chain.
 App a can read the contents of its boxes on-chain. Since AVM v13, app a can permit other applications to read its boxes on-chain: `AppForeignBoxReads` opens reads to any application, and `AppFamilyBoxAccess` opens reads and writes of boxes to applications sharing a's creator address; see [Sharing Boxes Between Applications](#sharing-boxes-between-applications). Recall that anybody can read everything from off-chain using the algod or indexer APIs.
 To read box b from app a, the app call must include b in its boxes array.
-Read budget: Each box reference in the boxes array allows an app call to access 1K bytes of box state - 1K of "box read budget". To read a box larger than 1K, multiple box references must be put in the boxes arrays.
+Read budget: Each box reference in the boxes array allows an app call to access 2K bytes of box state - 2K of "box read budget". To read a box larger than 2K, multiple box references must be put in the boxes arrays.
 The box read budget is shared across the transaction group.
-The total box read budget must be larger than the sum of the sizes of all the individual boxes referenced (it is not possible to use this read budget for a part of a box - the whole box is read in).
+The total box read budget must be at least as large as the sum of the sizes of all the individual boxes referenced, plus any program bytes beyond 8kb for the applications available to the group (it is not possible to use this read budget for a part of a box - the whole box is read in).
 Box data is unstructured. This is unique to box storage.
 A box is referenced by including its app ID and box name.
 
@@ -299,7 +305,7 @@ when using either opcode to read the contents of a box, the AVM is limited to re
 ### Writing
 
 By default, app A is the only app that can write the contents of its boxes. Since AVM v13, app A can permit applications sharing its creator address to write its boxes by setting the `AppFamilyBoxAccess` parameter; see [Family box access](#family-box-access).
-As with reading, each box ref in the boxes array allows an app call to write 1kb of box state - 1kb of "box write budget".
+As with reading, each box ref in the boxes array allows an app call to write 2kb of box state - 2kb of "box write budget". Reads and writes draw on the same per-reference allowance, each checked separately. The write budget is charged at the box's full size rather than the number of bytes written, and only once however many times the box is written, so replacing a single byte in a 30kb box costs 30kb of write budget. Deleting a box adds nothing to the write budget, but it must still be referenced to be deleted, so its size counts against the read budget.
 
 The AVM provides two opcodes, box_put and box_replace, to write data to a box. The box_put opcode is described in the previous section. The box_replace opcode takes three parameters: the key name, the starting location and replacement bytes.
 
