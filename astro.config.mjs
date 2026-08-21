@@ -123,8 +123,7 @@ export default defineConfig({
         starlightOpenAPI([
           {
             base: 'reference/rest-api/algod',
-            schema:
-              'https://raw.githubusercontent.com/algorand/go-algorand/refs/heads/master/daemon/algod/api/algod.oas3.yml',
+            schema: './openapi/algod.json',
             sidebar: {
               label: 'algod',
               group: algodAPIDocsSidebarGroup,
@@ -134,8 +133,7 @@ export default defineConfig({
           },
           {
             base: 'reference/rest-api/indexer',
-            schema:
-              'https://raw.githubusercontent.com/algorand/indexer/refs/heads/main/api/indexer.oas3.yml',
+            schema: './openapi/indexer.json',
             sidebar: {
               label: 'indexer',
               group: indexerAPIDocsSidebarGroup,
@@ -145,8 +143,7 @@ export default defineConfig({
           },
           {
             base: 'reference/rest-api/kmd',
-            schema:
-              'https://raw.githubusercontent.com/algorand/go-algorand/ad578576ab5f5bfe58a590164903617ecef379e4/daemon/kmd/api/swagger.json',
+            schema: './openapi/kmd.json',
             sidebar: {
               label: 'kmd',
               group: kmdAPIDocsSidebarGroup,
