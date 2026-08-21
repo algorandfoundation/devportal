@@ -1,0 +1,331 @@
+---
+title: 'ABI Static Array Type'
+description: 'This example demonstrates how to encode and decode fixed-length arrays using StaticArrayType:'
+sidebar:
+  order: 5
+---
+
+[← Back to ABI Encoding](/docs/algokit-utils/python/latest/examples/abi/)
+
+## Description
+
+This example demonstrates how to encode and decode fixed-length arrays using StaticArrayType:
+
+- byte[32]: Fixed 32 bytes, common for hashes and cryptographic data
+- uint64[3]: Fixed array of 3 unsigned 64-bit integers
+- address[2]: Fixed array of 2 Algorand addresses
+  Key characteristics of static arrays:
+- Fixed length known at compile time
+- No length prefix in encoding (unlike dynamic arrays)
+- Elements are encoded consecutively
+- Encoded length = elementSize \* arrayLength
+
+## Prerequisites
+
+No LocalNet required - pure ABI encoding/decoding
+
+## Run This Example
+
+From the repository's `examples` directory:
+
+```bash
+cd examples
+uv run python abi/05_static_array.py
+```
+
+## Code
+
+[View source on GitHub](https://github.com/algorandfoundation/algokit-utils-py/blob/main/examples/abi/05_static_array.py)
+
+```python title="05_static_array.py"
+# ruff: noqa: N999, C901, PLR0915
+"""
+Example: ABI Static Array Type
+
+This example demonstrates how to encode and decode fixed-length arrays using StaticArrayType:
+- byte[32]: Fixed 32 bytes, common for hashes and cryptographic data
+- uint64[3]: Fixed array of 3 unsigned 64-bit integers
+- address[2]: Fixed array of 2 Algorand addresses
+
+Key characteristics of static arrays:
+- Fixed length known at compile time
+- No length prefix in encoding (unlike dynamic arrays)
+- Elements are encoded consecutively
+- Encoded length = elementSize * arrayLength
+
+No LocalNet required - pure ABI encoding/decoding
+"""
+
+from shared import format_bytes, format_hex, print_header, print_info, print_step, print_success
+
+from algokit_abi import abi
+from algokit_common import address_from_public_key
+
+
+def main() -> None:
+    print_header("ABI Static Array Type Example")
+
+    # Step 1: Create StaticArrayType and inspect properties
+    print_step(1, "StaticArrayType Properties")
+
+    byte32_type = abi.ABIType.from_string("byte[32]")
+    uint64x3_type = abi.ABIType.from_string("uint64[3]")
+    address2_type = abi.ABIType.from_string("address[2]")
+
+    print_info("byte[32]:")
+    print_info(f"  str(): {byte32_type}")
+    if isinstance(byte32_type, abi.StaticArrayType):
+        print_info(f"  element: {byte32_type.element}")
+        print_info(f"  size: {byte32_type.size}")
+        print_info(f"  byte_len(): {byte32_type.byte_len()}")
+        print_info(f"  is_dynamic(): {byte32_type.is_dynamic()}")
+
+    print_info("\nuint64[3]:")
+    print_info(f"  str(): {uint64x3_type}")
+    if isinstance(uint64x3_type, abi.StaticArrayType):
+        print_info(f"  element: {uint64x3_type.element}")
+        print_info(f"  size: {uint64x3_type.size}")
+        print_info(f"  byte_len(): {uint64x3_type.byte_len()}")
+        print_info(f"  is_dynamic(): {uint64x3_type.is_dynamic()}")
+
+    print_info("\naddress[2]:")
+    print_info(f"  str(): {address2_type}")
+    if isinstance(address2_type, abi.StaticArrayType):
+        print_info(f"  element: {address2_type.element}")
+        print_info(f"  size: {address2_type.size}")
+        print_info(f"  byte_len(): {address2_type.byte_len()}")
+        print_info(f"  is_dynamic(): {address2_type.is_dynamic()}")
+
+    # Step 2: byte[32] encoding - common for hashes
+    print_step(2, "byte[32] Encoding - Common for Hashes")
+
+    # Simulate a SHA-256 hash (32 bytes)
+    hash_bytes = bytes(i * 8 for i in range(32))  # 0x00, 0x08, 0x10, 0x18, ...
+
+    # Encode as array of individual byte values
+    hash_values = list(hash_bytes)
+
+    if isinstance(byte32_type, abi.StaticArrayType):
+        hash_encoded = byte32_type.encode(hash_values)
+        print_info("Input: array of 32 byte values")
+        print_info(f"  Values: [{', '.join(str(v) for v in hash_values[:8])}, ...]")
+        print_info(f"Encoded: {format_hex(hash_encoded)}")
+        print_info(f"Encoded length: {len(hash_encoded)} bytes")
+
+        # Verify encoded length = elementSize * arrayLength
+        byte_size = abi.ByteType().byte_len()
+        expected_byte32_len = byte_size * 32
+        print_info(f"Expected length (1 byte * 32): {expected_byte32_len} bytes")
+        print_info(f"Length matches: {len(hash_encoded) == expected_byte32_len}")
+
+        # Decode back
+        hash_decoded = byte32_type.decode(hash_encoded)
+        print_info(f"Decoded: {format_bytes(hash_decoded, 8)}")
+        print_info(f"Round-trip verified: {hash_decoded == hash_bytes}")
+
+    # Step 3: uint64[3] encoding - fixed array of integers
+    print_step(3, "uint64[3] Encoding - Fixed Array of Integers")
+
+    uint64_values = [1000, 2000, 3000]
+
+    if isinstance(uint64x3_type, abi.StaticArrayType):
+        uint64x3_encoded = uint64x3_type.encode(uint64_values)
+        print_info(f"Input: {uint64_values}")
+        print_info(f"Encoded: {format_hex(uint64x3_encoded)}")
+        print_info(f"Encoded length: {len(uint64x3_encoded)} bytes")
+
+        # Verify encoded length = elementSize * arrayLength
+        uint64_size = abi.UintType(64).byte_len()
+        expected_uint64x3_len = uint64_size * 3
+        print_info(f"Expected length (8 bytes * 3): {expected_uint64x3_len} bytes")
+        print_info(f"Length matches: {len(uint64x3_encoded) == expected_uint64x3_len}")
+
+        # Decode back
+        uint64_decoded = uint64x3_type.decode(uint64x3_encoded)
+        print_info(f"Decoded: {list(uint64_decoded)}")
+        print_info(f"Round-trip verified: {list(uint64_decoded) == uint64_values}")
+
+    # Step 4: address[2] encoding - fixed array of addresses
+    print_step(4, "address[2] Encoding - Fixed Array of Addresses")
+
+    # Create two sample addresses from public keys
+    pub_key1 = bytes([0xAA] * 32)
+    pub_key2 = bytes([0xBB] * 32)
+
+    addr1 = address_from_public_key(pub_key1)
+    addr2 = address_from_public_key(pub_key2)
+
+    address_values = [addr1, addr2]
+
+    if isinstance(address2_type, abi.StaticArrayType):
+        address2_encoded = address2_type.encode(address_values)
+        print_info("Input addresses:")
+        print_info(f"  [0]: {address_values[0]}")
+        print_info(f"  [1]: {address_values[1]}")
+        print_info(f"Encoded: {format_bytes(address2_encoded, 16)}")
+        print_info(f"Encoded length: {len(address2_encoded)} bytes")
+
+        # Verify encoded length = elementSize * arrayLength
+        address_size = abi.AddressType().byte_len()
+        expected_address2_len = address_size * 2
+        print_info(f"Expected length (32 bytes * 2): {expected_address2_len} bytes")
+        print_info(f"Length matches: {len(address2_encoded) == expected_address2_len}")
+
+        # Decode back
+        address_decoded = address2_type.decode(address2_encoded)
+        print_info("Decoded:")
+        print_info(f"  [0]: {address_decoded[0]}")
+        print_info(f"  [1]: {address_decoded[1]}")
+        print_info(f"Round-trip verified: {list(address_decoded) == address_values}")
+
+    # Step 5: Demonstrate no length prefix
+    print_step(5, "Static Arrays Have No Length Prefix")
+
+    print_info("Static arrays encode directly WITHOUT a length prefix:")
+    print_info("  - The length is known from the type definition")
+    print_info("  - All bytes are element data, none for length")
+
+    # Show contrast with what a dynamic array would look like
+    single_uint64 = abi.UintType(64)
+    value1000 = single_uint64.encode(1000)
+    value2000 = single_uint64.encode(2000)
+    value3000 = single_uint64.encode(3000)
+
+    print_info("\nCompare single uint64 encodings:")
+    print_info(f"  1000: {format_hex(value1000)} (8 bytes)")
+    print_info(f"  2000: {format_hex(value2000)} (8 bytes)")
+    print_info(f"  3000: {format_hex(value3000)} (8 bytes)")
+
+    if isinstance(uint64x3_type, abi.StaticArrayType):
+        print_info("\nuint64[3] encoding is just these concatenated (no prefix):")
+        print_info(f"  {format_hex(uint64x3_encoded)} (24 bytes)")
+
+        # Verify the encoding is just concatenated elements
+        concatenated = value1000 + value2000 + value3000
+        matches_concatenated = uint64x3_encoded == concatenated
+        print_info(f"Matches concatenation: {matches_concatenated}")
+
+    # Step 6: Elements encoded consecutively
+    print_step(6, "Elements Are Encoded Consecutively")
+
+    if isinstance(uint64x3_type, abi.StaticArrayType):
+        print_info("Each element occupies a fixed position:")
+        print_info(f"  Element 0: bytes 0-7   ({format_hex(uint64x3_encoded[0:8])})")
+        print_info(f"  Element 1: bytes 8-15  ({format_hex(uint64x3_encoded[8:16])})")
+        print_info(f"  Element 2: bytes 16-23 ({format_hex(uint64x3_encoded[16:24])})")
+
+    if isinstance(address2_type, abi.StaticArrayType):
+        print_info("\nFor address[2]:")
+        print_info("  Element 0: bytes 0-31  (first 32 bytes = address 1)")
+        print_info("  Element 1: bytes 32-63 (next 32 bytes = address 2)")
+
+        # Extract individual elements from the encoded address array
+        extracted_addr1 = abi.AddressType().decode(address2_encoded[0:32])
+        extracted_addr2 = abi.AddressType().decode(address2_encoded[32:64])
+
+        print_info("\nExtracted from encoded bytes:")
+        print_info(f"  bytes[0:32] decoded: {extracted_addr1}")
+        print_info(f"  bytes[32:64] decoded: {extracted_addr2}")
+        print_info(
+            f"  Matches originals: {extracted_addr1 == address_values[0] and extracted_addr2 == address_values[1]}"
+        )
+
+    # Step 7: Verify encoded length formula
+    print_step(7, "Encoded Length Formula: elementSize * arrayLength")
+
+    # Note: bool arrays have special packing - 8 bools fit in 1 byte
+    # So we exclude bool from the simple formula test
+    test_cases = [
+        ("byte[16]", 1, 16),
+        ("byte[32]", 1, 32),
+        ("byte[64]", 1, 64),
+        ("uint8[10]", 1, 10),
+        ("uint16[5]", 2, 5),
+        ("uint32[4]", 4, 4),
+        ("uint64[3]", 8, 3),
+        ("uint128[2]", 16, 2),
+        ("uint256[2]", 32, 2),
+        ("address[3]", 32, 3),
+    ]
+
+    print_info("Type          | Element Size | Array Length | Expected | Actual")
+    print_info("--------------|--------------|--------------|----------|-------")
+
+    for type_str, element_size, array_length in test_cases:
+        parsed_type = abi.ABIType.from_string(type_str)
+        expected_len = element_size * array_length
+        actual_len = parsed_type.byte_len()
+        match = "OK" if expected_len == actual_len else "MISMATCH"
+
+        print_info(
+            f"{type_str:<13} | {element_size:<12} | {array_length:<12} | {expected_len:<8} | {actual_len} {match}"
+        )
+
+    # Step 8: Creating StaticArrayType programmatically
+    print_step(8, "Creating StaticArrayType Programmatically")
+
+    # You can also create static array types directly with the constructor
+    custom_array_type = abi.StaticArrayType(abi.UintType(32), 5)
+
+    print_info("Created with: StaticArrayType(UintType(32), 5)")
+    print_info(f"  str(): {custom_array_type}")
+    print_info(f"  element: {custom_array_type.element}")
+    print_info(f"  size: {custom_array_type.size}")
+    print_info(f"  byte_len(): {custom_array_type.byte_len()}")
+
+    # Encode and decode with custom type
+    custom_values = [100, 200, 300, 400, 500]
+    custom_encoded = custom_array_type.encode(custom_values)
+    custom_decoded = custom_array_type.decode(custom_encoded)
+
+    print_info(f"\nEncode {custom_values}:")
+    print_info(f"  Encoded: {format_hex(custom_encoded)}")
+    print_info(f"  Decoded: {list(custom_decoded)}")
+    print_info(f"  Round-trip verified: {list(custom_decoded) == custom_values}")
+
+    # Step 9: Summary
+    print_step(9, "Summary")
+
+    print_info("StaticArrayType key properties:")
+    print_info("  - element: The type of each element")
+    print_info("  - size: Fixed number of elements")
+    print_info("  - byte_len(): Returns elementSize * size")
+    print_info("  - is_dynamic(): Always returns False")
+
+    print_info("\nStatic array encoding characteristics:")
+    print_info("  - No length prefix (length is in the type)")
+    print_info("  - Elements encoded consecutively")
+    print_info("  - Fixed encoded size = elementSize * arrayLength")
+    print_info("  - Common uses: byte[32] for hashes, address[N] for multi-sig")
+
+    print_info("\nCreating static array types:")
+    print_info('  - ABIType.from_string("byte[32]") - parse from string')
+    print_info("  - StaticArrayType(element, size) - programmatic")
+
+    print_success("ABI Static Array Type example completed successfully!")
+
+
+if __name__ == "__main__":
+    main()
+
+```
+
+---
+
+### Other examples in ABI Encoding
+
+- [ABI Type Parsing](/docs/algokit-utils/python/latest/examples/abi/01-type-parsing/)
+- [ABI Primitive Types](/docs/algokit-utils/python/latest/examples/abi/02-primitive-types/)
+- [ABI Address Type](/docs/algokit-utils/python/latest/examples/abi/03-address-type/)
+- [ABI String Type](/docs/algokit-utils/python/latest/examples/abi/04-string-type/)
+- **ABI Static Array Type**
+- [ABI Dynamic Array Type](/docs/algokit-utils/python/latest/examples/abi/06-dynamic-array/)
+- [ABI Tuple Type](/docs/algokit-utils/python/latest/examples/abi/07-tuple-type/)
+- [ABI Struct Type](/docs/algokit-utils/python/latest/examples/abi/08-struct-type/)
+- [ABI Struct and Tuple Conversion](/docs/algokit-utils/python/latest/examples/abi/09-struct-tuple-conversion/)
+- [ABI Bool Array Packing](/docs/algokit-utils/python/latest/examples/abi/10-bool-packing/)
+- [ABI Method](/docs/algokit-utils/python/latest/examples/abi/11-abi-method/)
+- [AVM Type Encoding](/docs/algokit-utils/python/latest/examples/abi/12-avm-types/)
+- [Type Guards](/docs/algokit-utils/python/latest/examples/abi/13-type-guards/)
+- [ABI Complex Nested Types](/docs/algokit-utils/python/latest/examples/abi/14-complex-nested/)
+- [ARC-56 Storage Helpers](/docs/algokit-utils/python/latest/examples/abi/15-arc56-storage/)

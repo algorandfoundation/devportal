@@ -1,0 +1,195 @@
+---
+title: 'Ledger Supply Information'
+description: 'This example demonstrates how to retrieve ledger supply information using the AlgodClient method: supply().'
+sidebar:
+  order: 3
+---
+
+[← Back to Algod Client](/docs/algokit-utils/python/latest/examples/algod-client/)
+
+## Description
+
+This example demonstrates how to retrieve ledger supply information using the AlgodClient method: supply().
+Prerequisites:
+
+## Prerequisites
+
+- LocalNet running (via `algokit localnet start`)
+
+## Run This Example
+
+From the repository's `examples` directory:
+
+```bash
+cd examples
+uv run python algod_client/03_ledger_supply.py
+```
+
+## Code
+
+[View source on GitHub](https://github.com/algorandfoundation/algokit-utils-py/blob/main/examples/algod_client/03_ledger_supply.py)
+
+```python title="03_ledger_supply.py"
+# ruff: noqa: N999, C901, PLR0912, PLR0915
+"""
+Example: Ledger Supply Information
+
+This example demonstrates how to retrieve ledger supply information using
+the AlgodClient method: supply().
+
+Prerequisites:
+- LocalNet running (via `algokit localnet start`)
+"""
+
+from shared import (
+    create_algod_client,
+    print_error,
+    print_header,
+    print_info,
+    print_step,
+    print_success,
+)
+
+
+def format_amount(micro_algos: int) -> dict[str, str]:
+    """Format a microAlgos value to both microAlgo and Algo representations."""
+    micro_algo_str = f"{micro_algos:,} uALGO"
+    algo_value = micro_algos / 1_000_000
+    algo_str = f"{algo_value:,.6f} ALGO"
+    return {
+        "micro_algo": micro_algo_str,
+        "algo": algo_str,
+    }
+
+
+def calculate_percentage(part: int, total: int, decimals: int = 2) -> str:
+    """Calculate percentage with specified decimal places."""
+    if total == 0:
+        return "0%"
+    percentage = (part / total) * 100
+    return f"{percentage:.{decimals}f}%"
+
+
+def main() -> None:
+    print_header("Ledger Supply Information Example")
+
+    # Create an Algod client connected to LocalNet
+    algod = create_algod_client()
+
+    # =========================================================================
+    # Step 1: Get Ledger Supply Information
+    # =========================================================================
+    print_step(1, "Getting ledger supply information with supply()")
+
+    try:
+        supply_info = algod.supply()
+
+        print_success("Ledger supply information retrieved successfully!")
+        print_info("")
+
+        # =====================================================================
+        # Step 2: Display Total Money Supply
+        # =====================================================================
+        print_step(2, "Displaying total_money (total Algos in the network)")
+
+        total_formatted = format_amount(supply_info.total_money)
+        print_info("Total money supply in the network:")
+        print_info(f"  - In microAlgos: {total_formatted['micro_algo']}")
+        print_info(f"  - In Algos:      {total_formatted['algo']}")
+        print_info("")
+        print_info("total_money represents the total amount of Algos in circulation")
+
+        # =====================================================================
+        # Step 3: Display Online Money
+        # =====================================================================
+        print_step(3, "Displaying online_money (Algos in online accounts for consensus)")
+
+        online_formatted = format_amount(supply_info.online_money)
+        print_info("Online money (participating in consensus):")
+        print_info(f"  - In microAlgos: {online_formatted['micro_algo']}")
+        print_info(f"  - In Algos:      {online_formatted['algo']}")
+        print_info("")
+        print_info("online_money represents Algos held by accounts that are online and participating in consensus")
+
+        # =====================================================================
+        # Step 4: Calculate and Display Online Percentage
+        # =====================================================================
+        print_step(4, "Calculating percentage of Algos that are online")
+
+        total_money = supply_info.total_money
+        online_money = supply_info.online_money
+
+        online_percentage = calculate_percentage(online_money, total_money)
+        offline_money = total_money - online_money
+        offline_formatted = format_amount(offline_money)
+        offline_percentage = calculate_percentage(offline_money, total_money)
+
+        print_info("Supply distribution:")
+        print_info(f"  - Online:  {online_percentage} ({online_formatted['algo']})")
+        print_info(f"  - Offline: {offline_percentage} ({offline_formatted['algo']})")
+        print_info("")
+
+        print_info("A higher online percentage indicates more stake participating in consensus")
+        print_info("This metric is important for network security and decentralization")
+
+        # =====================================================================
+        # Step 5: Display Current Round
+        # =====================================================================
+        print_step(5, "Displaying the current round")
+
+        print_info(f"Current round: {supply_info.current_round:,}")
+        print_info("")
+        print_info("The supply information is accurate as of this round")
+    except Exception as e:
+        print_error(f"Failed to get ledger supply information: {e}")
+        raise SystemExit(1) from e
+
+    # =========================================================================
+    # Summary
+    # =========================================================================
+    print_header("Summary")
+    print_info("This example demonstrated:")
+    print_info("  1. supply() - Retrieves the ledger supply information")
+    print_info("  2. Displaying total_money in both microAlgos and Algos")
+    print_info("  3. Displaying online_money in both microAlgos and Algos")
+    print_info("  4. Calculating the percentage of Algos participating in consensus")
+    print_info("")
+    print_info("Key supply fields:")
+    print_info("  - total_money: Total Algos in circulation on the network")
+    print_info("  - online_money: Algos in accounts online for consensus")
+    print_info("  - current_round: The round at which this supply info was calculated")
+    print_info("")
+    print_info("Use cases:")
+    print_info("  - Monitor network participation rate")
+    print_info("  - Track total supply for economic analysis")
+    print_info("  - Verify consensus security metrics")
+
+
+if __name__ == "__main__":
+    main()
+
+```
+
+---
+
+### Other examples in Algod Client
+
+- [Node Health and Status](/docs/algokit-utils/python/latest/examples/algod-client/01-node-health-status/)
+- [Version and Genesis Information](/docs/algokit-utils/python/latest/examples/algod-client/02-version-genesis/)
+- **Ledger Supply Information**
+- [Account Information](/docs/algokit-utils/python/latest/examples/algod-client/04-account-info/)
+- [Transaction Parameters](/docs/algokit-utils/python/latest/examples/algod-client/05-transaction-params/)
+- [Send and Confirm Transaction](/docs/algokit-utils/python/latest/examples/algod-client/06-send-transaction/)
+- [Pending Transactions](/docs/algokit-utils/python/latest/examples/algod-client/07-pending-transactions/)
+- [Block Data](/docs/algokit-utils/python/latest/examples/algod-client/08-block-data/)
+- [Asset Information](/docs/algokit-utils/python/latest/examples/algod-client/09-asset-info/)
+- [Application Information](/docs/algokit-utils/python/latest/examples/algod-client/10-application-info/)
+- [Application Boxes](/docs/algokit-utils/python/latest/examples/algod-client/11-application-boxes/)
+- [TEAL Compile and Disassemble](/docs/algokit-utils/python/latest/examples/algod-client/12-teal-compile/)
+- [Transaction Simulation](/docs/algokit-utils/python/latest/examples/algod-client/13-simulation/)
+- [Ledger State Deltas](/docs/algokit-utils/python/latest/examples/algod-client/14-state-deltas/)
+- [Transaction Proof](/docs/algokit-utils/python/latest/examples/algod-client/15-transaction-proof/)
+- [Light Block Header Proof](/docs/algokit-utils/python/latest/examples/algod-client/16-lightblock-proof/)
+- [State Proof](/docs/algokit-utils/python/latest/examples/algod-client/17-state-proof/)
+- [DevMode Timestamp Offset](/docs/algokit-utils/python/latest/examples/algod-client/18-devmode-timestamp/)
+- [Sync Round Management](/docs/algokit-utils/python/latest/examples/algod-client/19-sync-round/)

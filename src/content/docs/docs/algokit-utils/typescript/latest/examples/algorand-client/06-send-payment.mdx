@@ -1,0 +1,405 @@
+---
+title: 'Send Payment'
+description: 'This example demonstrates how to send ALGO payment transactions:'
+sidebar:
+  order: 6
+---
+
+[← Back to Algorand Client](/docs/algokit-utils/typescript/latest/examples/algorand-client/)
+
+## Description
+
+This example demonstrates how to send ALGO payment transactions:
+
+- algorand.send.payment() with basic parameters (sender, receiver, amount)
+- Using AlgoAmount for the amount parameter
+- Payment with note field
+- Payment with closeRemainderTo to close account and send remaining balance
+- Understanding the SendSingleTransactionResult return value
+- Displaying transaction ID and confirmed round
+- Verifying balances before and after payment
+
+## Prerequisites
+
+- LocalNet running (via `algokit localnet start`)
+
+## Run This Example
+
+From the repository root:
+
+```bash
+cd examples
+npm run example algorand_client/06-send-payment.ts
+```
+
+## Code
+
+[View source on GitHub](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/examples/algorand_client/06-send-payment.ts)
+
+```typescript title="06-send-payment.ts"
+/**
+ * Example: Send Payment
+ *
+ * This example demonstrates how to send ALGO payment transactions:
+ * - algorand.send.payment() with basic parameters (sender, receiver, amount)
+ * - Using AlgoAmount for the amount parameter
+ * - Payment with note field
+ * - Payment with closeRemainderTo to close account and send remaining balance
+ * - Understanding the SendSingleTransactionResult return value
+ * - Displaying transaction ID and confirmed round
+ * - Verifying balances before and after payment
+ *
+ * Prerequisites:
+ * - LocalNet running (via `algokit localnet start`)
+ */
+
+import { AlgorandClient, algo, microAlgo } from '@algorandfoundation/algokit-utils';
+import {
+  formatAlgo,
+  printError,
+  printHeader,
+  printInfo,
+  printStep,
+  printSuccess,
+  shortenAddress,
+} from '../shared/utils.js';
+
+async function main() {
+  printHeader('Send Payment Example');
+
+  // Initialize client and verify LocalNet is running
+  const algorand = AlgorandClient.defaultLocalNet();
+
+  try {
+    await algorand.client.algod.status();
+    printSuccess('Connected to LocalNet');
+  } catch (error) {
+    printError(
+      `Failed to connect to LocalNet: ${error instanceof Error ? error.message : String(error)}`,
+    );
+    printInfo('Make sure LocalNet is running (e.g., algokit localnet start)');
+    return;
+  }
+
+  // Step 1: Create and fund test accounts
+  printStep(1, 'Create and fund test accounts using account manager');
+  printInfo('Creating test accounts and funding them from the LocalNet dispenser');
+
+  const sender = algorand.account.random();
+  const receiver = algorand.account.random();
+  const closeToAccount = algorand.account.random();
+
+  printInfo(`\nCreated accounts:`);
+  printInfo(`  Sender: ${shortenAddress(sender.addr.toString())}`);
+  printInfo(`  Receiver: ${shortenAddress(receiver.addr.toString())}`);
+  printInfo(`  CloseToAccount: ${shortenAddress(closeToAccount.addr.toString())}`);
+
+  // Fund the sender account using ensureFundedFromEnvironment
+  const fundResult = await algorand.account.ensureFundedFromEnvironment(sender.addr, algo(20));
+  if (fundResult) {
+    printInfo(`\nFunded sender with: ${formatAlgo(fundResult.amountFunded)}`);
+  }
+
+  // Also fund closeToAccount so it exists on the network
+  await algorand.account.ensureFundedFromEnvironment(closeToAccount.addr, algo(1));
+
+  // Get initial balances
+  const senderInitialInfo = await algorand.account.getInformation(sender.addr);
+  const receiverInitialInfo = await algorand.account.getInformation(receiver.addr);
+
+  printInfo(`\nInitial balances:`);
+  printInfo(`  Sender: ${formatAlgo(senderInitialInfo.balance)}`);
+  printInfo(`  Receiver: ${formatAlgo(receiverInitialInfo.balance)}`);
+
+  printSuccess('Created and funded test accounts');
+
+  // Step 2: Basic payment with algorand.send.payment()
+  printStep(2, 'Basic payment with algorand.send.payment()');
+  printInfo('Sending a simple ALGO payment with sender, receiver, and amount');
+
+  const basicPaymentResult = await algorand.send.payment({
+    sender: sender.addr,
+    receiver: receiver.addr,
+    amount: algo(5), // Using AlgoAmount helper
+  });
+
+  printInfo(`\nBasic payment sent:`);
+  printInfo(`  From: ${shortenAddress(sender.addr.toString())}`);
+  printInfo(`  To: ${shortenAddress(receiver.addr.toString())}`);
+  printInfo(`  Amount: 5 ALGO`);
+
+  // Examine the SendSingleTransactionResult return value
+  printInfo(`\nSendSingleTransactionResult properties:`);
+  printInfo(`  txIds[0]: ${basicPaymentResult.txIds[0]}`);
+  printInfo(`  confirmation.confirmedRound: ${basicPaymentResult.confirmation.confirmedRound}`);
+  printInfo(`  transaction.txId(): ${basicPaymentResult.transaction.txId()}`);
+  printInfo(`  groupId: ${basicPaymentResult.groupId ?? 'undefined (single transaction)'}`);
+  printInfo(`  transactions.length: ${basicPaymentResult.transactions.length}`);
+  printInfo(`  confirmations.length: ${basicPaymentResult.confirmations.length}`);
+
+  printSuccess('Basic payment completed');
+
+  // Step 3: Using AlgoAmount for the amount parameter
+  printStep(3, 'Using AlgoAmount for the amount parameter');
+  printInfo('AlgoAmount provides type-safe handling of ALGO and microALGO values');
+
+  // Different ways to specify amounts
+  const amount1 = algo(1); // 1 ALGO using helper function
+  const amount2 = microAlgo(500_000); // 0.5 ALGO in microALGO
+
+  printInfo(`\nDifferent amount specifications:`);
+  printInfo(`  algo(1) = ${formatAlgo(amount1)} (${amount1.microAlgo} µALGO)`);
+  printInfo(`  microAlgo(500_000) = ${formatAlgo(amount2)} (${amount2.microAlgo} µALGO)`);
+
+  // Send payment with microAlgo amount
+  const microAlgoPaymentResult = await algorand.send.payment({
+    sender: sender.addr,
+    receiver: receiver.addr,
+    amount: microAlgo(250_000), // 0.25 ALGO
+  });
+
+  printInfo(`\nPayment with microAlgo amount:`);
+  printInfo(`  Amount: ${formatAlgo(microAlgo(250_000))} (250,000 µALGO)`);
+  printInfo(`  Transaction ID: ${microAlgoPaymentResult.txIds[0]}`);
+
+  printSuccess('Demonstrated AlgoAmount usage');
+
+  // Step 4: Payment with note field
+  printStep(4, 'Payment with note field');
+  printInfo('Adding arbitrary data to a payment using the note field');
+  printInfo('Notes can be strings, byte arrays, or structured data (JSON)');
+
+  // String note
+  const stringNoteResult = await algorand.send.payment({
+    sender: sender.addr,
+    receiver: receiver.addr,
+    amount: algo(0.1),
+    note: 'Payment for services rendered',
+  });
+
+  printInfo(`\nPayment with string note:`);
+  printInfo(`  Note: "Payment for services rendered"`);
+  printInfo(`  Transaction ID: ${stringNoteResult.txIds[0]}`);
+
+  // JSON note (useful for structured data)
+  const jsonNote = JSON.stringify({
+    type: 'invoice',
+    id: '12345',
+    timestamp: new Date().toISOString(),
+  });
+
+  const jsonNoteResult = await algorand.send.payment({
+    sender: sender.addr,
+    receiver: receiver.addr,
+    amount: algo(0.1),
+    note: jsonNote,
+  });
+
+  printInfo(`\nPayment with JSON note:`);
+  printInfo(`  Note: ${jsonNote}`);
+  printInfo(`  Transaction ID: ${jsonNoteResult.txIds[0]}`);
+
+  // Byte array note
+  const byteNote = new TextEncoder().encode('Binary data note');
+
+  const byteNoteResult = await algorand.send.payment({
+    sender: sender.addr,
+    receiver: receiver.addr,
+    amount: algo(0.1),
+    note: byteNote,
+  });
+
+  printInfo(`\nPayment with byte array note:`);
+  printInfo(`  Note: Uint8Array(${byteNote.length}) - "Binary data note"`);
+  printInfo(`  Transaction ID: ${byteNoteResult.txIds[0]}`);
+
+  printSuccess('Demonstrated payment with notes');
+
+  // Step 5: Verify balances before and after payment
+  printStep(5, 'Verify balances before and after payment using getInformation()');
+  printInfo('Using algorand.account.getInformation() to check account balances');
+
+  // Get current balances
+  const senderBeforeInfo = await algorand.account.getInformation(sender.addr);
+  const receiverBeforeInfo = await algorand.account.getInformation(receiver.addr);
+
+  printInfo(`\nBalances before payment:`);
+  printInfo(`  Sender: ${formatAlgo(senderBeforeInfo.balance)}`);
+  printInfo(`  Receiver: ${formatAlgo(receiverBeforeInfo.balance)}`);
+
+  // Send a precise amount
+  const precisAmount = algo(2);
+  await algorand.send.payment({
+    sender: sender.addr,
+    receiver: receiver.addr,
+    amount: precisAmount,
+  });
+
+  // Get balances after payment
+  const senderAfterInfo = await algorand.account.getInformation(sender.addr);
+  const receiverAfterInfo = await algorand.account.getInformation(receiver.addr);
+
+  printInfo(`\nBalances after sending ${formatAlgo(precisAmount)}:`);
+  printInfo(`  Sender: ${formatAlgo(senderAfterInfo.balance)}`);
+  printInfo(`  Receiver: ${formatAlgo(receiverAfterInfo.balance)}`);
+
+  // Calculate the difference (includes transaction fee)
+  const senderDiff = senderBeforeInfo.balance.microAlgo - senderAfterInfo.balance.microAlgo;
+  const receiverDiff = receiverAfterInfo.balance.microAlgo - receiverBeforeInfo.balance.microAlgo;
+
+  printInfo(`\nBalance changes:`);
+  printInfo(`  Sender lost: ${formatAlgo(senderDiff)} (amount + fee)`);
+  printInfo(`  Receiver gained: ${formatAlgo(receiverDiff)}`);
+  printInfo(`  Transaction fee: ${formatAlgo(senderDiff - receiverDiff)}`);
+
+  printSuccess('Verified balance changes');
+
+  // Step 6: Demonstrate closeRemainderTo to close account
+  printStep(6, 'Demonstrate closeRemainderTo to close account and send remaining balance');
+  printInfo('closeRemainderTo closes the sender account and sends ALL remaining balance');
+  printInfo('WARNING: This permanently closes the account - use with caution!');
+
+  // Create a new account specifically for closing
+  const accountToClose = algorand.account.random();
+  await algorand.account.ensureFundedFromEnvironment(accountToClose.addr, algo(5));
+
+  const accountToCloseInitialInfo = await algorand.account.getInformation(accountToClose.addr);
+  const closeToInitialInfo = await algorand.account.getInformation(closeToAccount.addr);
+
+  printInfo(`\nAccount to close: ${shortenAddress(accountToClose.addr.toString())}`);
+  printInfo(`  Initial balance: ${formatAlgo(accountToCloseInitialInfo.balance)}`);
+  printInfo(`\nClose remainder to: ${shortenAddress(closeToAccount.addr.toString())}`);
+  printInfo(`  Initial balance: ${formatAlgo(closeToInitialInfo.balance)}`);
+
+  // Send a payment with closeRemainderTo
+  // This will:
+  // 1. Send the specified amount to receiver
+  // 2. Send ALL remaining balance to closeRemainderTo address
+  // 3. Close the sender account
+  const closeResult = await algorand.send.payment({
+    sender: accountToClose.addr,
+    receiver: receiver.addr, // Receiver gets the explicit amount
+    amount: algo(1), // Explicit amount to receiver
+    closeRemainderTo: closeToAccount.addr, // Remainder goes here, account closes
+  });
+
+  printInfo(`\nClose account transaction:`);
+  printInfo(`  Transaction ID: ${closeResult.txIds[0]}`);
+  printInfo(`  Confirmed round: ${closeResult.confirmation.confirmedRound}`);
+  printInfo(`  Explicit amount to receiver: ${formatAlgo(algo(1))}`);
+
+  // Verify the close operation
+  const accountToCloseFinalInfo = await algorand.account.getInformation(accountToClose.addr);
+  const receiverFinalInfo = await algorand.account.getInformation(receiver.addr);
+  const closeToFinalInfo = await algorand.account.getInformation(closeToAccount.addr);
+
+  printInfo(`\nAfter closing:`);
+  printInfo(
+    `  Closed account balance: ${formatAlgo(accountToCloseFinalInfo.balance)} (should be 0)`,
+  );
+  printInfo(
+    `  Receiver gained: ${formatAlgo(receiverFinalInfo.balance.microAlgo - receiverBeforeInfo.balance.microAlgo)}`,
+  );
+  printInfo(`  CloseToAccount balance: ${formatAlgo(closeToFinalInfo.balance)}`);
+  printInfo(
+    `  CloseToAccount gained: ${formatAlgo(closeToFinalInfo.balance.microAlgo - closeToInitialInfo.balance.microAlgo)}`,
+  );
+
+  printSuccess('Demonstrated closeRemainderTo');
+
+  // Step 7: Waiting for confirmation
+  printStep(7, 'Understanding transaction confirmation');
+  printInfo('algorand.send.payment() automatically waits for confirmation');
+  printInfo('The result includes confirmation details from the network');
+
+  const confirmationResult = await algorand.send.payment({
+    sender: sender.addr,
+    receiver: receiver.addr,
+    amount: algo(0.5),
+  });
+
+  printInfo(`\nTransaction confirmation details:`);
+  printInfo(`  Transaction ID: ${confirmationResult.txIds[0]}`);
+  printInfo(`  Confirmed round: ${confirmationResult.confirmation.confirmedRound}`);
+  printInfo(`  Pool error: ${confirmationResult.confirmation.poolError ?? 'none'}`);
+
+  // Access the Transaction object
+  printInfo(`\nTransaction object details:`);
+  printInfo(`  txId(): ${confirmationResult.transaction.txId()}`);
+  printInfo(`  type: ${confirmationResult.transaction.type}`);
+  printInfo(`  firstValid: ${confirmationResult.transaction.firstValid}`);
+  printInfo(`  lastValid: ${confirmationResult.transaction.lastValid}`);
+  printInfo(`  fee: ${confirmationResult.transaction.fee} µALGO`);
+
+  printSuccess('Demonstrated transaction confirmation');
+
+  // Step 8: Summary of SendSingleTransactionResult
+  printStep(8, 'Summary - SendSingleTransactionResult properties');
+  printInfo('When you call algorand.send.payment(), you get a SendSingleTransactionResult:');
+  printInfo('');
+  printInfo('Primary transaction properties:');
+  printInfo('  txIds[0]: string - The transaction ID for single transactions');
+  printInfo('  transaction: Transaction - The Transaction object');
+  printInfo('  confirmation: PendingTransactionResponse - Confirmation details');
+  printInfo('');
+  printInfo('Group properties (also present for single transactions):');
+  printInfo('  groupId: string | undefined - The group ID if part of a group');
+  printInfo('  txIds: string[] - Array of transaction IDs');
+  printInfo('  transactions: Transaction[] - Array of Transaction objects');
+  printInfo('  confirmations: PendingTransactionResponse[] - Array of confirmations');
+  printInfo('');
+  printInfo('Useful confirmation properties:');
+  printInfo('  confirmation.confirmedRound - The round the transaction was confirmed');
+  printInfo('  confirmation.poolError - Any error message from the pool');
+  printInfo('  confirmation.closingAmount - Amount sent to closeRemainderTo (if used)');
+  printInfo('');
+  printInfo('Payment parameters:');
+  printInfo('  sender: Address - Who is sending the payment');
+  printInfo('  receiver: Address - Who receives the payment');
+  printInfo('  amount: AlgoAmount - How much to send');
+  printInfo('  note?: string | Uint8Array - Optional note data');
+  printInfo('  closeRemainderTo?: Address - Close account and send remainder here');
+
+  // Final balance summary
+  printStep(9, 'Final balance summary');
+
+  const finalSenderInfo = await algorand.account.getInformation(sender.addr);
+  const finalReceiverInfo = await algorand.account.getInformation(receiver.addr);
+
+  printInfo(`\nFinal balances:`);
+  printInfo(
+    `  Sender: ${formatAlgo(finalSenderInfo.balance)} (started with ${formatAlgo(senderInitialInfo.balance)})`,
+  );
+  printInfo(
+    `  Receiver: ${formatAlgo(finalReceiverInfo.balance)} (started with ${formatAlgo(receiverInitialInfo.balance)})`,
+  );
+
+  printSuccess('Send Payment example completed!');
+}
+
+main().catch(error => {
+  printError(`Unhandled error: ${error instanceof Error ? error.message : String(error)}`);
+  process.exit(1);
+});
+```
+
+---
+
+### Other examples in Algorand Client
+
+- [Client Instantiation](/docs/algokit-utils/typescript/latest/examples/algorand-client/01-client-instantiation/)
+- [AlgoAmount Utility](/docs/algokit-utils/typescript/latest/examples/algorand-client/02-algo-amount/)
+- [Signer Configuration](/docs/algokit-utils/typescript/latest/examples/algorand-client/03-signer-config/)
+- [Suggested Params Configuration](/docs/algokit-utils/typescript/latest/examples/algorand-client/04-params-config/)
+- [Account Manager](/docs/algokit-utils/typescript/latest/examples/algorand-client/05-account-manager/)
+- **Send Payment**
+- [Send Asset Operations](/docs/algokit-utils/typescript/latest/examples/algorand-client/07-send-asset-ops/)
+- [Send Application Operations](/docs/algokit-utils/typescript/latest/examples/algorand-client/08-send-app-ops/)
+- [Create Transaction (Unsigned Transactions)](/docs/algokit-utils/typescript/latest/examples/algorand-client/09-create-transaction/)
+- [Transaction Composer (Atomic Transaction Groups)](/docs/algokit-utils/typescript/latest/examples/algorand-client/10-transaction-composer/)
+- [Asset Manager](/docs/algokit-utils/typescript/latest/examples/algorand-client/11-asset-manager/)
+- [App Manager](/docs/algokit-utils/typescript/latest/examples/algorand-client/12-app-manager/)
+- [App Deployer](/docs/algokit-utils/typescript/latest/examples/algorand-client/13-app-deployer/)
+- [Client Manager](/docs/algokit-utils/typescript/latest/examples/algorand-client/14-client-manager/)
+- [Error Transformers](/docs/algokit-utils/typescript/latest/examples/algorand-client/15-error-transformers/)
+- [Transaction Leases](/docs/algokit-utils/typescript/latest/examples/algorand-client/16-leases/)

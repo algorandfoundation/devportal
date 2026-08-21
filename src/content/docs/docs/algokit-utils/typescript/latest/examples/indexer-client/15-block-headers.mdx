@@ -1,0 +1,515 @@
+---
+title: 'Block Headers Search'
+description: 'This example demonstrates how to search for block headers using the IndexerClient searchForBlockHeaders() method.'
+sidebar:
+  order: 15
+---
+
+[← Back to Indexer Client](/docs/algokit-utils/typescript/latest/examples/indexer-client/)
+
+## Description
+
+This example demonstrates how to search for block headers using the IndexerClient searchForBlockHeaders() method.
+
+## Prerequisites
+
+- LocalNet running (via `algokit localnet start`)
+
+## Run This Example
+
+From the repository root:
+
+```bash
+cd examples
+npm run example indexer_client/15-block-headers.ts
+```
+
+## Code
+
+[View source on GitHub](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/examples/indexer_client/15-block-headers.ts)
+
+```typescript title="15-block-headers.ts"
+/**
+ * Example: Block Headers Search
+ *
+ * This example demonstrates how to search for block headers using
+ * the IndexerClient searchForBlockHeaders() method.
+ *
+ * Prerequisites:
+ * - LocalNet running (via `algokit localnet start`)
+ */
+
+import { algo } from '@algorandfoundation/algokit-utils';
+import {
+  createAlgorandClient,
+  createIndexerClient,
+  printError,
+  printHeader,
+  printInfo,
+  printStep,
+  printSuccess,
+  shortenAddress,
+} from '../shared/utils.js';
+
+/**
+ * Format a Unix timestamp to a human-readable date
+ */
+function formatTimestamp(timestamp: number): string {
+  return new Date(timestamp * 1000).toISOString();
+}
+
+async function main() {
+  printHeader('Block Headers Search Example');
+
+  // Create clients
+  const indexer = createIndexerClient();
+  const algorand = createAlgorandClient();
+
+  // =========================================================================
+  // Step 1: Basic searchForBlockHeaders() call
+  // =========================================================================
+  printStep(1, 'Basic searchForBlockHeaders() call');
+
+  try {
+    // Search for recent block headers with a limit
+    const result = await indexer.searchForBlockHeaders({ limit: 5 });
+
+    printSuccess(`Retrieved ${result.blocks.length} block header(s)`);
+    printInfo(`Current round: ${result.currentRound}`);
+    printInfo('');
+
+    printInfo('Block headers (results are returned in ascending round order):');
+    for (const block of result.blocks) {
+      printInfo(`  Round ${block.round}:`);
+      printInfo(`    Timestamp:  ${block.timestamp} (${formatTimestamp(block.timestamp)})`);
+      if (block.proposer) {
+        printInfo(`    Proposer:   ${shortenAddress(block.proposer.toString())}`);
+      } else {
+        printInfo('    Proposer:   (not available)');
+      }
+    }
+    printInfo('');
+
+    printInfo('Note: Results are returned in ascending round order (oldest first)');
+  } catch (error) {
+    printError(
+      `searchForBlockHeaders failed: ${error instanceof Error ? error.message : String(error)}`,
+    );
+    printInfo('');
+    printInfo('Make sure LocalNet is running: algokit localnet start');
+    printInfo('If issues persist, try: algokit localnet reset');
+    return;
+  }
+
+  // =========================================================================
+  // Step 2: Get the current round to define search ranges
+  // =========================================================================
+  printStep(2, 'Getting current round for search range examples');
+
+  let currentRound: bigint;
+
+  try {
+    const health = await indexer.healthCheck();
+    currentRound = BigInt(health.round);
+    printSuccess(`Current indexer round: ${currentRound}`);
+    printInfo('');
+  } catch (error) {
+    printError(
+      `Failed to get current round: ${error instanceof Error ? error.message : String(error)}`,
+    );
+    return;
+  }
+
+  // =========================================================================
+  // Step 3: Filter by minRound and maxRound
+  // =========================================================================
+  printStep(3, 'Filtering by minRound and maxRound');
+
+  try {
+    // Search for blocks in a specific round range
+    const minRound = currentRound > 10n ? currentRound - 10n : 1n;
+    const maxRound = currentRound - 5n > 0n ? currentRound - 5n : currentRound;
+
+    printInfo(`Searching for blocks between round ${minRound} and ${maxRound}...`);
+
+    const result = await indexer.searchForBlockHeaders({
+      minRound,
+      maxRound,
+      limit: 10,
+    });
+
+    printSuccess(`Found ${result.blocks.length} block(s) in range`);
+    printInfo('');
+
+    if (result.blocks.length > 0) {
+      printInfo('Block rounds found:');
+      for (const block of result.blocks) {
+        printInfo(`  Round ${block.round} - ${formatTimestamp(block.timestamp)}`);
+      }
+    }
+    printInfo('');
+
+    printInfo('minRound and maxRound parameters:');
+    printInfo('  - minRound: Only include blocks at or after this round');
+    printInfo('  - maxRound: Only include blocks at or before this round');
+  } catch (error) {
+    printError(
+      `Round range search failed: ${error instanceof Error ? error.message : String(error)}`,
+    );
+  }
+
+  // =========================================================================
+  // Step 4: Filter by beforeTime and afterTime
+  // =========================================================================
+  printStep(4, 'Filtering by beforeTime and afterTime');
+
+  try {
+    // Get a timestamp from a recent block to use as a reference
+    const recentBlocks = await indexer.searchForBlockHeaders({ limit: 1 });
+
+    if (recentBlocks.blocks.length > 0) {
+      const refTimestamp = recentBlocks.blocks[0].timestamp;
+
+      // Search for blocks in a time window (before the reference time)
+      // Create a time 1 hour before the reference
+      const beforeDate = new Date(refTimestamp * 1000);
+      const afterDate = new Date((refTimestamp - 3600) * 1000); // 1 hour before
+
+      printInfo(`Searching for blocks between:`);
+      printInfo(`  After:  ${afterDate.toISOString()}`);
+      printInfo(`  Before: ${beforeDate.toISOString()}`);
+      printInfo('');
+
+      const result = await indexer.searchForBlockHeaders({
+        afterTime: afterDate.toISOString(),
+        beforeTime: beforeDate.toISOString(),
+        limit: 5,
+      });
+
+      printSuccess(`Found ${result.blocks.length} block(s) in time range`);
+      printInfo('');
+
+      if (result.blocks.length > 0) {
+        printInfo('Blocks found:');
+        for (const block of result.blocks) {
+          printInfo(`  Round ${block.round} - ${formatTimestamp(block.timestamp)}`);
+        }
+      }
+    }
+    printInfo('');
+
+    printInfo('Time filter parameters (RFC 3339 / ISO 8601 format):');
+    printInfo('  - afterTime: Only include blocks created after this timestamp');
+    printInfo('  - beforeTime: Only include blocks created before this timestamp');
+    printInfo('  - Example format: "2026-01-26T10:00:00.000Z"');
+  } catch (error) {
+    printError(
+      `Time range search failed: ${error instanceof Error ? error.message : String(error)}`,
+    );
+  }
+
+  // =========================================================================
+  // Step 5: Create transactions to have blocks with a known proposer
+  // =========================================================================
+  printStep(5, 'Creating transactions to populate blocks with proposer info');
+
+  let proposerAddress: string | undefined;
+
+  try {
+    // Get a funded account
+    const dispenser = await algorand.account.kmd.getLocalNetDispenserAccount();
+    algorand.setSignerFromAccount(dispenser);
+    const dispenserAddress = dispenser.addr.toString();
+    printInfo(`Using dispenser: ${shortenAddress(dispenserAddress)}`);
+
+    // Create a few transactions to generate activity
+    printInfo('Creating 3 payment transactions...');
+    const receiver = algorand.account.random();
+
+    for (let i = 0; i < 3; i++) {
+      await algorand.send.payment({
+        sender: dispenser.addr,
+        receiver: receiver.addr,
+        amount: algo(0.1),
+        note: `Block headers example payment ${i + 1}`,
+      });
+    }
+
+    printSuccess('Created 3 transactions');
+
+    // Wait a moment for indexer to catch up
+    printInfo('Waiting for indexer to index the transactions...');
+    await new Promise(resolve => setTimeout(resolve, 2000));
+
+    // Get recent block headers to find a proposer
+    const recentHeaders = await indexer.searchForBlockHeaders({ limit: 10 });
+
+    // Find a block with a proposer
+    for (const block of recentHeaders.blocks) {
+      if (block.proposer) {
+        proposerAddress = block.proposer.toString();
+        printSuccess(`Found block with proposer: ${shortenAddress(proposerAddress)}`);
+        printInfo(`  Block round: ${block.round}`);
+        break;
+      }
+    }
+
+    if (!proposerAddress) {
+      printInfo('No blocks with proposer info found (proposer may not be set on LocalNet)');
+    }
+    printInfo('');
+  } catch (error) {
+    printError(
+      `Failed to create transactions: ${error instanceof Error ? error.message : String(error)}`,
+    );
+    printInfo('This step requires LocalNet - continuing with other demonstrations...');
+    printInfo('');
+  }
+
+  // =========================================================================
+  // Step 6: Filter by proposers array to find blocks by specific accounts
+  // =========================================================================
+  printStep(6, 'Filtering by proposers array');
+
+  try {
+    if (proposerAddress) {
+      printInfo(`Searching for blocks proposed by: ${shortenAddress(proposerAddress)}`);
+
+      const result = await indexer.searchForBlockHeaders({
+        proposers: [proposerAddress],
+        limit: 5,
+      });
+
+      printSuccess(`Found ${result.blocks.length} block(s) proposed by this account`);
+      printInfo('');
+
+      if (result.blocks.length > 0) {
+        printInfo('Blocks found:');
+        for (const block of result.blocks) {
+          printInfo(
+            `  Round ${block.round} - Proposer: ${block.proposer ? shortenAddress(block.proposer.toString()) : '(unknown)'}`,
+          );
+        }
+      }
+    } else {
+      printInfo('No proposer address available to demonstrate filtering');
+      printInfo('On MainNet/TestNet, you would use a known validator address');
+    }
+    printInfo('');
+
+    printInfo('proposers parameter:');
+    printInfo('  - Array of addresses to filter by block proposer');
+    printInfo('  - Find all blocks proposed by specific validator accounts');
+    printInfo('  - Useful for analyzing validator participation');
+  } catch (error) {
+    printError(
+      `Proposers filter search failed: ${error instanceof Error ? error.message : String(error)}`,
+    );
+  }
+
+  // =========================================================================
+  // Step 7: Demonstrate additional filters (expired and absent)
+  // =========================================================================
+  printStep(7, 'Demonstrating expired and absent participation filters');
+
+  try {
+    printInfo('The searchForBlockHeaders() method also supports:');
+    printInfo('');
+    printInfo('expired parameter:');
+    printInfo('  - Array of addresses to filter by expired participation accounts');
+    printInfo('  - Finds blocks where specified accounts had their participation keys expire');
+    printInfo('');
+    printInfo('absent parameter:');
+    printInfo('  - Array of addresses to filter by absent participation accounts');
+    printInfo('  - Finds blocks where specified accounts were marked absent');
+    printInfo('  - Absent accounts are those that failed to participate in consensus');
+    printInfo('');
+
+    // Try searching with these filters (likely no results on LocalNet)
+    if (proposerAddress) {
+      const expiredResult = await indexer.searchForBlockHeaders({
+        expired: [proposerAddress],
+        limit: 5,
+      });
+      printInfo(
+        `Blocks with expired participation for this address: ${expiredResult.blocks.length}`,
+      );
+
+      const absentResult = await indexer.searchForBlockHeaders({
+        absent: [proposerAddress],
+        limit: 5,
+      });
+      printInfo(`Blocks with absent status for this address: ${absentResult.blocks.length}`);
+    }
+    printInfo('');
+
+    printInfo('Note: On LocalNet, these filters typically return no results');
+    printInfo('as participation tracking is primarily relevant on MainNet/TestNet');
+  } catch (error) {
+    printError(
+      `Participation filter search failed: ${error instanceof Error ? error.message : String(error)}`,
+    );
+  }
+
+  // =========================================================================
+  // Step 8: Demonstrate pagination for fetching multiple block headers
+  // =========================================================================
+  printStep(8, 'Demonstrating pagination');
+
+  try {
+    printInfo('Fetching block headers with pagination (3 per page)...');
+    printInfo('');
+
+    let nextToken: string | undefined;
+    let pageCount = 0;
+    let totalBlocks = 0;
+    const maxPages = 3;
+
+    do {
+      const result = await indexer.searchForBlockHeaders({
+        limit: 3,
+        next: nextToken,
+      });
+
+      pageCount++;
+      totalBlocks += result.blocks.length;
+
+      printInfo(`Page ${pageCount}: Retrieved ${result.blocks.length} block(s)`);
+      for (const block of result.blocks) {
+        printInfo(`  Round ${block.round} - ${formatTimestamp(block.timestamp)}`);
+      }
+
+      nextToken = result.nextToken;
+
+      if (nextToken) {
+        printInfo(`  Next token: ${nextToken.substring(0, 30)}...`);
+      } else {
+        printInfo('  No more pages');
+      }
+      printInfo('');
+    } while (nextToken && pageCount < maxPages);
+
+    printSuccess(`Retrieved ${totalBlocks} total block(s) across ${pageCount} page(s)`);
+    printInfo('');
+
+    printInfo('Pagination parameters:');
+    printInfo('  - limit: Maximum number of results per page');
+    printInfo('  - next: Token from previous response to get next page');
+    printInfo('  - Response includes nextToken if more results are available');
+  } catch (error) {
+    printError(`Pagination demo failed: ${error instanceof Error ? error.message : String(error)}`);
+  }
+
+  // =========================================================================
+  // Step 9: Combining multiple filters
+  // =========================================================================
+  printStep(9, 'Combining multiple filters');
+
+  try {
+    // Combine round range with limit
+    const minRound = currentRound > 20n ? currentRound - 20n : 1n;
+    const maxRound = currentRound;
+
+    printInfo('Combining filters: round range + limit');
+    printInfo(`  minRound: ${minRound}`);
+    printInfo(`  maxRound: ${maxRound}`);
+    printInfo('  limit: 5');
+    printInfo('');
+
+    const result = await indexer.searchForBlockHeaders({
+      minRound,
+      maxRound,
+      limit: 5,
+    });
+
+    printSuccess(`Found ${result.blocks.length} block(s)`);
+    printInfo('');
+
+    if (result.blocks.length > 0) {
+      printInfo('Blocks found:');
+      for (const block of result.blocks) {
+        const proposerStr = block.proposer
+          ? shortenAddress(block.proposer.toString())
+          : '(unknown)';
+        printInfo(`  Round ${block.round} - Proposer: ${proposerStr}`);
+      }
+    }
+    printInfo('');
+
+    printInfo('Multiple filters can be combined:');
+    printInfo('  - Round range (minRound, maxRound) + time range (beforeTime, afterTime)');
+    printInfo('  - Proposers filter + round/time range');
+    printInfo('  - Any combination to narrow down results');
+  } catch (error) {
+    printError(
+      `Combined filters search failed: ${error instanceof Error ? error.message : String(error)}`,
+    );
+  }
+
+  // =========================================================================
+  // Summary
+  // =========================================================================
+  printHeader('Summary');
+  printInfo('This example demonstrated:');
+  printInfo('  1. Basic searchForBlockHeaders() call');
+  printInfo('  2. Getting current round for search ranges');
+  printInfo('  3. Filtering by minRound and maxRound');
+  printInfo('  4. Filtering by beforeTime and afterTime (RFC 3339 format)');
+  printInfo('  5. Creating transactions to populate blocks');
+  printInfo('  6. Filtering by proposers array');
+  printInfo('  7. Additional filters: expired and absent participation');
+  printInfo('  8. Pagination with limit and next parameters');
+  printInfo('  9. Combining multiple filters');
+  printInfo('');
+  printInfo('searchForBlockHeaders() parameters:');
+  printInfo('  - limit: Maximum number of results to return');
+  printInfo('  - next: Pagination token from previous response');
+  printInfo('  - minRound: Only include blocks at or after this round');
+  printInfo('  - maxRound: Only include blocks at or before this round');
+  printInfo('  - beforeTime: Only include blocks created before this timestamp (RFC 3339)');
+  printInfo('  - afterTime: Only include blocks created after this timestamp (RFC 3339)');
+  printInfo('  - proposers: Array of addresses to filter by block proposer');
+  printInfo('  - expired: Array of addresses to filter by expired participation');
+  printInfo('  - absent: Array of addresses to filter by absent participation');
+  printInfo('');
+  printInfo('BlockHeadersResponse fields:');
+  printInfo('  - currentRound: Round at which results were computed (bigint)');
+  printInfo('  - nextToken: Pagination token for next page (optional string)');
+  printInfo('  - blocks: Array of Block objects');
+  printInfo('');
+  printInfo('Key Block header fields:');
+  printInfo('  - round: Block round number (bigint)');
+  printInfo('  - timestamp: Unix timestamp in seconds (number)');
+  printInfo('  - proposer: Block proposer address (optional, newer blocks)');
+  printInfo('  - genesisId: Genesis block identifier (string)');
+  printInfo('  - genesisHash: Hash of genesis block (Uint8Array)');
+  printInfo('');
+  printInfo('Note: Results are returned in ascending round order (oldest first)');
+}
+
+main().catch(error => {
+  console.error('Fatal error:', error);
+  process.exit(1);
+});
+```
+
+---
+
+### Other examples in Indexer Client
+
+- [Indexer Health Check](/docs/algokit-utils/typescript/latest/examples/indexer-client/01-health-check/)
+- [Account Lookup](/docs/algokit-utils/typescript/latest/examples/indexer-client/02-account-lookup/)
+- [Account Assets](/docs/algokit-utils/typescript/latest/examples/indexer-client/03-account-assets/)
+- [Account Applications](/docs/algokit-utils/typescript/latest/examples/indexer-client/04-account-applications/)
+- [Account Transactions](/docs/algokit-utils/typescript/latest/examples/indexer-client/05-account-transactions/)
+- [Transaction Lookup](/docs/algokit-utils/typescript/latest/examples/indexer-client/06-transaction-lookup/)
+- [Transaction Search](/docs/algokit-utils/typescript/latest/examples/indexer-client/07-transaction-search/)
+- [Asset Lookup](/docs/algokit-utils/typescript/latest/examples/indexer-client/08-asset-lookup/)
+- [Asset Balances](/docs/algokit-utils/typescript/latest/examples/indexer-client/09-asset-balances/)
+- [Asset Transactions](/docs/algokit-utils/typescript/latest/examples/indexer-client/10-asset-transactions/)
+- [Application Lookup](/docs/algokit-utils/typescript/latest/examples/indexer-client/11-application-lookup/)
+- [Application Logs Lookup](/docs/algokit-utils/typescript/latest/examples/indexer-client/12-application-logs/)
+- [Application Boxes Lookup](/docs/algokit-utils/typescript/latest/examples/indexer-client/13-application-boxes/)
+- [Block Lookup](/docs/algokit-utils/typescript/latest/examples/indexer-client/14-block-lookup/)
+- **Block Headers Search**
+- [Pagination](/docs/algokit-utils/typescript/latest/examples/indexer-client/16-pagination/)

@@ -1,0 +1,776 @@
+---
+title: 'Model Codecs'
+description: 'This example demonstrates how to use model codecs for encoding/decoding complex object structures with field metadata.'
+sidebar:
+  order: 11
+---
+
+[← Back to Common Utilities](/docs/algokit-utils/typescript/latest/examples/common/)
+
+## Description
+
+This example demonstrates how to use model codecs for encoding/decoding complex object structures with field metadata.
+Topics covered:
+
+- ObjectModelCodec for encoding/decoding typed objects
+- Defining field metadata with FieldMetadata type
+- Encoding format options: 'json' vs 'msgpack'
+- PrimitiveModelCodec for simple value types
+- ArrayModelCodec for array model types
+- Handling optional fields
+- Field renaming with wireKey vs property name
+- Round-trip encoding with ObjectModelCodec
+
+## Prerequisites
+
+- No LocalNet required
+
+## Run This Example
+
+From the repository root:
+
+```bash
+cd examples
+npm run example common/11-model-codecs.ts
+```
+
+## Code
+
+[View source on GitHub](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/examples/common/11-model-codecs.ts)
+
+```typescript title="11-model-codecs.ts"
+/**
+ * Example: Model Codecs
+ *
+ * This example demonstrates how to use model codecs for encoding/decoding
+ * complex object structures with field metadata.
+ *
+ * Topics covered:
+ * - ObjectModelCodec for encoding/decoding typed objects
+ * - Defining field metadata with FieldMetadata type
+ * - Encoding format options: 'json' vs 'msgpack'
+ * - PrimitiveModelCodec for simple value types
+ * - ArrayModelCodec for array model types
+ * - Handling optional fields
+ * - Field renaming with wireKey vs property name
+ * - Round-trip encoding with ObjectModelCodec
+ *
+ * Prerequisites:
+ * - No LocalNet required
+ */
+
+import type {
+  ArrayModelMetadata,
+  EncodingFormat,
+  FieldMetadata,
+  ObjectModelMetadata,
+  PrimitiveModelMetadata,
+} from '@algorandfoundation/algokit-utils/common';
+import {
+  // Utilities
+  Address,
+  addressCodec,
+  // Composite codecs
+  ArrayCodec,
+  arrayEqual,
+  ArrayModelCodec,
+  bigIntCodec,
+  bytesCodec,
+  // Primitive codecs (for field definitions)
+  numberCodec,
+  // Model codecs
+  ObjectModelCodec,
+  PrimitiveModelCodec,
+  stringCodec,
+} from '@algorandfoundation/algokit-utils/common';
+import { formatHex, printHeader, printInfo, printStep, printSuccess } from '../shared/utils.js';
+
+// ============================================================================
+// Main Example
+// ============================================================================
+
+printHeader('Model Codecs Example');
+
+// ============================================================================
+// Step 1: Introduction to Model Codecs
+// ============================================================================
+printStep(1, 'Introduction to Model Codecs');
+
+printInfo('Model codecs provide structured encoding/decoding for complex objects.');
+printInfo('');
+printInfo('Three model codec types:');
+printInfo('  ObjectModelCodec    - Encodes/decodes typed objects with field metadata');
+printInfo('  PrimitiveModelCodec - Wraps primitive codecs with model metadata');
+printInfo('  ArrayModelCodec     - Wraps array codecs with model metadata');
+printInfo('');
+printInfo('Key features:');
+printInfo('  - Field renaming: map property names to wire keys (e.g., "name" -> "n")');
+printInfo('  - Optional fields: fields can be marked optional and omitted when empty');
+printInfo('  - Nested objects: ObjectModelCodec can contain other ObjectModelCodecs');
+printInfo('  - Format support: works with both "json" and "msgpack" formats');
+printInfo('');
+printSuccess('Model codecs provide structured serialization for domain objects');
+
+// ============================================================================
+// Step 2: FieldMetadata Type - Defining Object Fields
+// ============================================================================
+printStep(2, 'FieldMetadata Type - Defining Object Fields');
+
+printInfo('FieldMetadata defines how each field in an object is encoded/decoded.');
+printInfo('');
+printInfo('FieldMetadata interface:');
+printInfo('  {');
+printInfo('    name: string        // Property name in the TypeScript object');
+printInfo('    wireKey?: string    // Key used in wire format (defaults to name)');
+printInfo('    codec: Codec        // Codec for encoding/decoding the field value');
+printInfo('    optional: boolean   // Whether the field can be omitted');
+printInfo('    flattened?: boolean // Merge nested object fields into parent');
+printInfo('  }');
+printInfo('');
+
+// Example field metadata
+const nameField: FieldMetadata = {
+  name: 'name',
+  wireKey: 'n', // Encode as "n" instead of "name"
+  codec: stringCodec,
+  optional: false,
+};
+
+const ageField: FieldMetadata = {
+  name: 'age',
+  wireKey: 'a',
+  codec: numberCodec,
+  optional: true, // Can be omitted if not set
+};
+
+printInfo('Example field definitions:');
+printInfo(`  nameField: { name: "name", wireKey: "n", optional: false }`);
+printInfo(`  ageField: { name: "age", wireKey: "a", optional: true }`);
+printInfo('');
+printSuccess('FieldMetadata controls how individual fields are serialized');
+
+// ============================================================================
+// Step 3: ObjectModelCodec - Basic Usage
+// ============================================================================
+printStep(3, 'ObjectModelCodec - Basic Usage');
+
+printInfo('ObjectModelCodec encodes/decodes typed objects using field metadata.');
+printInfo('');
+
+// Define a simple Person type
+type Person = {
+  name: string;
+  age?: number;
+  email?: string;
+};
+
+// Define metadata for Person
+const personMetadata: ObjectModelMetadata<Person> = {
+  name: 'Person',
+  kind: 'object',
+  fields: [
+    { name: 'name', wireKey: 'n', codec: stringCodec, optional: false },
+    { name: 'age', wireKey: 'a', codec: numberCodec, optional: true },
+    { name: 'email', wireKey: 'e', codec: stringCodec, optional: true },
+  ],
+};
+
+// Create the codec
+const personCodec = new ObjectModelCodec(personMetadata);
+
+// Encode and decode a person
+const alice: Person = { name: 'Alice', age: 30, email: 'alice@example.com' };
+
+printInfo('Person type: { name: string, age?: number, email?: string }');
+printInfo('');
+printInfo(`Original: ${JSON.stringify(alice)}`);
+
+const aliceEncodedJson = personCodec.encode(alice, 'json');
+const aliceEncodedMsgpack = personCodec.encode(alice, 'msgpack');
+
+printInfo(`JSON encoded: ${JSON.stringify(aliceEncodedJson)}`);
+printInfo(`  Note: property "name" encoded as "n", "age" as "a", "email" as "e"`);
+printInfo(`msgpack encoded: ${JSON.stringify(aliceEncodedMsgpack)} (same structure)`);
+
+const aliceDecodedJson = personCodec.decode(aliceEncodedJson, 'json');
+const aliceDecodedMsgpack = personCodec.decode(aliceEncodedMsgpack, 'msgpack');
+
+printInfo(`JSON decoded: ${JSON.stringify(aliceDecodedJson)}`);
+printInfo(`msgpack decoded: ${JSON.stringify(aliceDecodedMsgpack)}`);
+printInfo('');
+printSuccess('ObjectModelCodec handles property renaming via wireKey');
+
+// ============================================================================
+// Step 4: Handling Optional Fields
+// ============================================================================
+printStep(4, 'Handling Optional Fields');
+
+printInfo('Optional fields are omitted when undefined or at default values.');
+printInfo('');
+
+// Person with only required fields
+const bob: Person = { name: 'Bob' };
+
+printInfo(`Person with optional fields missing: ${JSON.stringify(bob)}`);
+
+const bobEncoded = personCodec.encode(bob, 'json');
+printInfo(`Encoded: ${JSON.stringify(bobEncoded)}`);
+printInfo('  Note: age and email are not included in output');
+
+const bobDecoded = personCodec.decode(bobEncoded, 'json');
+printInfo(`Decoded: ${JSON.stringify(bobDecoded)}`);
+printInfo('  Note: decoded object only has "name", optional fields stay undefined');
+printInfo('');
+
+// Person with default values
+const charlie: Person = { name: '', age: 0, email: '' };
+
+printInfo(`Person with all default values: ${JSON.stringify(charlie)}`);
+
+const charlieEncoded = personCodec.encode(charlie, 'json');
+printInfo(`Encoded: ${JSON.stringify(charlieEncoded)}`);
+printInfo('  Note: empty object - all fields at defaults are omitted');
+
+const charlieDecoded = personCodec.decode(charlieEncoded, 'json');
+printInfo(`Decoded: ${JSON.stringify(charlieDecoded)}`);
+printInfo('');
+
+// Default value demonstration
+printInfo(`Codec default value: ${JSON.stringify(personCodec.defaultValue())}`);
+printInfo('  Required fields (name) get their codec default (empty string)');
+printInfo('  Optional fields are not present in the default object');
+printInfo('');
+printSuccess('Optional fields are omitted when empty or at default values');
+
+// ============================================================================
+// Step 5: encodeOptional vs encode
+// ============================================================================
+printStep(5, 'encodeOptional vs encode');
+
+printInfo('encode() always returns a value, encodeOptional() can return undefined.');
+printInfo('');
+
+const allDefaults: Person = { name: '', age: 0, email: '' };
+
+printInfo(`Object with all defaults: ${JSON.stringify(allDefaults)}`);
+
+const encodedAlways = personCodec.encode(allDefaults, 'json');
+const encodedOptional = personCodec.encodeOptional(allDefaults, 'json');
+
+printInfo(`encode():         ${JSON.stringify(encodedAlways)}`);
+printInfo(
+  `encodeOptional(): ${encodedOptional === undefined ? 'undefined' : JSON.stringify(encodedOptional)}`,
+);
+printInfo('');
+printInfo('encodeOptional() is useful for nested objects that should be');
+printInfo('completely omitted when all their fields are at default values.');
+printInfo('');
+printSuccess('encodeOptional() returns undefined for all-default objects');
+
+// ============================================================================
+// Step 6: Encoding Format Options - JSON vs msgpack
+// ============================================================================
+printStep(6, 'Encoding Format Options - JSON vs msgpack');
+
+printInfo('Both formats produce the same logical structure, but differ in output.');
+printInfo('');
+
+// Define a type with bytes for format comparison
+type AssetInfo = {
+  assetId: bigint;
+  name: string;
+  creator: Address;
+  metadata?: Uint8Array;
+};
+
+const assetMetadata: ObjectModelMetadata<AssetInfo> = {
+  name: 'AssetInfo',
+  kind: 'object',
+  fields: [
+    { name: 'assetId', wireKey: 'aid', codec: bigIntCodec, optional: false },
+    { name: 'name', wireKey: 'nm', codec: stringCodec, optional: false },
+    { name: 'creator', wireKey: 'cr', codec: addressCodec, optional: false },
+    { name: 'metadata', wireKey: 'md', codec: bytesCodec, optional: true },
+  ],
+};
+
+const assetCodec = new ObjectModelCodec(assetMetadata);
+
+const testAsset: AssetInfo = {
+  assetId: 12345n,
+  name: 'Test Asset',
+  creator: Address.zeroAddress(),
+  metadata: new Uint8Array([0x01, 0x02, 0x03]),
+};
+
+printInfo(`Original asset: assetId=${testAsset.assetId}n, name="${testAsset.name}"`);
+printInfo(`  creator=${testAsset.creator.toString().slice(0, 12)}...`);
+printInfo(`  metadata=${formatHex(testAsset.metadata!)}`);
+printInfo('');
+
+const assetEncodedJson = assetCodec.encode(testAsset, 'json');
+const assetJsonObj = assetEncodedJson as Record<string, unknown>;
+printInfo(`JSON encoded:`);
+printInfo(
+  `  { aid: "${assetJsonObj.aid}", nm: "${assetJsonObj.nm}", cr: "${String(assetJsonObj.cr).slice(0, 12)}...", md: "${assetJsonObj.md}" }`,
+);
+printInfo('  Note: bigint as string, address as string, bytes as base64');
+printInfo('');
+
+const assetEncodedMsgpack = assetCodec.encode(testAsset, 'msgpack');
+const assetMsgpackObj = assetEncodedMsgpack as Record<string, unknown>;
+printInfo(`msgpack encoded (preserves native types):`);
+printInfo(
+  `  { aid: ${assetMsgpackObj.aid}n, nm: "${assetMsgpackObj.nm}", cr: Address, md: Uint8Array }`,
+);
+printInfo('');
+
+// Decode and verify
+const assetDecodedJson = assetCodec.decode(assetEncodedJson, 'json');
+const assetDecodedMsgpack = assetCodec.decode(assetEncodedMsgpack, 'msgpack');
+
+printInfo(`JSON decoded: assetId=${assetDecodedJson.assetId}n, name="${assetDecodedJson.name}"`);
+printInfo(
+  `msgpack decoded: assetId=${assetDecodedMsgpack.assetId}n, name="${assetDecodedMsgpack.name}"`,
+);
+printInfo('');
+printSuccess('Both formats preserve data with format-appropriate representations');
+
+// ============================================================================
+// Step 7: PrimitiveModelCodec - Wrapping Primitive Types
+// ============================================================================
+printStep(7, 'PrimitiveModelCodec - Wrapping Primitive Types');
+
+printInfo('PrimitiveModelCodec wraps a primitive codec with model metadata.');
+printInfo('Useful for creating named type wrappers around primitive values.');
+printInfo('');
+
+// Define a primitive model for account balance
+const balanceMetadata: PrimitiveModelMetadata = {
+  name: 'Balance',
+  kind: 'primitive',
+  codec: bigIntCodec,
+};
+
+const balanceCodec = new PrimitiveModelCodec<bigint, string | bigint>(balanceMetadata);
+
+// Use the codec
+const balance = 1000000n; // 1 Algo in microAlgos
+
+printInfo(`Balance type wraps bigint with named metadata`);
+printInfo(`  Original: ${balance}n (microAlgos)`);
+
+const balanceEncodedJson = balanceCodec.encode(balance, 'json');
+const balanceEncodedMsgpack = balanceCodec.encode(balance, 'msgpack');
+
+printInfo(`  JSON encoded: "${balanceEncodedJson}" (string representation)`);
+printInfo(`  msgpack encoded: ${balanceEncodedMsgpack}n (bigint preserved)`);
+
+const balanceDecodedJson = balanceCodec.decode(balanceEncodedJson, 'json');
+const balanceDecodedMsgpack = balanceCodec.decode(balanceEncodedMsgpack, 'msgpack');
+
+printInfo(`  JSON decoded: ${balanceDecodedJson}n`);
+printInfo(`  msgpack decoded: ${balanceDecodedMsgpack}n`);
+printInfo('');
+
+// Default value
+printInfo(`  Default value: ${balanceCodec.defaultValue()}n`);
+printInfo('');
+
+// String model example
+const nameModelMetadata: PrimitiveModelMetadata = {
+  name: 'AssetName',
+  kind: 'primitive',
+  codec: stringCodec,
+};
+
+const assetNameCodec = new PrimitiveModelCodec<string>(nameModelMetadata);
+
+printInfo('AssetName type wraps string with named metadata');
+printInfo(`  Default value: "${assetNameCodec.defaultValue()}" (empty string)`);
+printInfo('');
+printSuccess('PrimitiveModelCodec adds type semantics to primitive values');
+
+// ============================================================================
+// Step 8: ArrayModelCodec - Wrapping Array Types
+// ============================================================================
+printStep(8, 'ArrayModelCodec - Wrapping Array Types');
+
+printInfo('ArrayModelCodec wraps an ArrayCodec with model metadata.');
+printInfo('Useful for defining typed array models.');
+printInfo('');
+
+// Define an array model for a list of addresses
+const addressListMetadata: ArrayModelMetadata = {
+  name: 'AddressList',
+  kind: 'array',
+  codec: new ArrayCodec(addressCodec),
+};
+
+const addressListCodec = new ArrayModelCodec<Address[]>(addressListMetadata);
+
+// Use the codec
+const addresses = [
+  Address.zeroAddress(),
+  new Address(new Uint8Array(32).fill(0x11)),
+  new Address(new Uint8Array(32).fill(0x22)),
+];
+
+printInfo('AddressList type wraps Address[] with named metadata');
+printInfo(`  Original: ${addresses.length} addresses`);
+for (const addr of addresses) {
+  printInfo(`    ${addr.toString().slice(0, 20)}...`);
+}
+
+const addrListEncoded = addressListCodec.encode(addresses, 'json');
+printInfo(`  Encoded (${(addrListEncoded as unknown[]).length} elements)`);
+
+const addrListDecoded = addressListCodec.decode(addrListEncoded, 'json');
+printInfo(`  Decoded: ${addrListDecoded.length} addresses`);
+printInfo(`  Match: ${addresses.every((a, i) => a.equals(addrListDecoded[i]))}`);
+printInfo('');
+
+// Number array model
+const scoresMetadata: ArrayModelMetadata = {
+  name: 'ScoreList',
+  kind: 'array',
+  codec: new ArrayCodec(numberCodec),
+};
+
+const scoresCodec = new ArrayModelCodec<number[]>(scoresMetadata);
+
+const scores = [95, 88, 92, 100];
+printInfo('ScoreList type wraps number[] with named metadata');
+printInfo(`  Original: [${scores.join(', ')}]`);
+
+const scoresEncoded = scoresCodec.encode(scores, 'json');
+const scoresDecoded = scoresCodec.decode(scoresEncoded, 'json');
+
+printInfo(`  Decoded: [${scoresDecoded.join(', ')}]`);
+printInfo(`  Default value: [${scoresCodec.defaultValue().join(', ')}] (empty array)`);
+printInfo('');
+printSuccess('ArrayModelCodec adds type semantics to array values');
+
+// ============================================================================
+// Step 9: Nested ObjectModelCodec - Complex Structures
+// ============================================================================
+printStep(9, 'Nested ObjectModelCodec - Complex Structures');
+
+printInfo('ObjectModelCodec can contain other ObjectModelCodecs for nested structures.');
+printInfo('');
+
+// Define Address type (not the Algorand Address class)
+type PostalAddress = {
+  street: string;
+  city: string;
+  postcode: number;
+  country?: string;
+};
+
+const postalAddressMetadata: ObjectModelMetadata<PostalAddress> = {
+  name: 'PostalAddress',
+  kind: 'object',
+  fields: [
+    { name: 'street', wireKey: 'st', codec: stringCodec, optional: false },
+    { name: 'city', wireKey: 'ct', codec: stringCodec, optional: false },
+    { name: 'postcode', wireKey: 'pc', codec: numberCodec, optional: false },
+    { name: 'country', wireKey: 'co', codec: stringCodec, optional: true },
+  ],
+};
+
+const postalAddressCodec = new ObjectModelCodec(postalAddressMetadata);
+
+// Define Company type with nested address
+type Company = {
+  name: string;
+  headquarters: PostalAddress;
+  founded?: number;
+};
+
+const companyMetadata: ObjectModelMetadata<Company> = {
+  name: 'Company',
+  kind: 'object',
+  fields: [
+    { name: 'name', wireKey: 'n', codec: stringCodec, optional: false },
+    { name: 'headquarters', wireKey: 'hq', codec: postalAddressCodec, optional: false },
+    { name: 'founded', wireKey: 'f', codec: numberCodec, optional: true },
+  ],
+};
+
+const companyCodec = new ObjectModelCodec(companyMetadata);
+
+// Create a company with nested address
+const algorand: Company = {
+  name: 'Algorand Foundation',
+  headquarters: {
+    street: '1 Innovation Drive',
+    city: 'Boston',
+    postcode: 12345,
+    country: 'USA',
+  },
+  founded: 2017,
+};
+
+printInfo('Company type with nested PostalAddress:');
+printInfo(
+  `  ${JSON.stringify(algorand, null, 2)
+    .split('\n')
+    .map((l, i) => (i === 0 ? l : `  ${l}`))
+    .join('\n')}`,
+);
+printInfo('');
+
+const companyEncoded = companyCodec.encode(algorand, 'json');
+printInfo(`Encoded with nested wireKeys:`);
+printInfo(`  ${JSON.stringify(companyEncoded)}`);
+printInfo('  Note: "headquarters" encoded as "hq", nested fields also renamed');
+printInfo('');
+
+const companyDecoded = companyCodec.decode(companyEncoded, 'json');
+printInfo(`Decoded:`);
+printInfo(`  name: "${companyDecoded.name}"`);
+printInfo(`  headquarters.street: "${companyDecoded.headquarters.street}"`);
+printInfo(`  headquarters.city: "${companyDecoded.headquarters.city}"`);
+printInfo(`  founded: ${companyDecoded.founded}`);
+printInfo('');
+printSuccess('Nested ObjectModelCodecs preserve structure through encoding');
+
+// ============================================================================
+// Step 10: Field Renaming with wireKey
+// ============================================================================
+printStep(10, 'Field Renaming with wireKey');
+
+printInfo('wireKey allows mapping property names to different wire format keys.');
+printInfo('This is useful for:');
+printInfo('  - Reducing payload size (shorter keys)');
+printInfo('  - Matching external API specifications');
+printInfo('  - Maintaining backwards compatibility');
+printInfo('');
+
+// Define type with verbose property names
+type TransactionInfo = {
+  transactionId: string;
+  senderAddress: string;
+  receiverAddress: string;
+  amountInMicroAlgos: bigint;
+  noteField?: string;
+};
+
+const transactionMetadata: ObjectModelMetadata<TransactionInfo> = {
+  name: 'TransactionInfo',
+  kind: 'object',
+  fields: [
+    { name: 'transactionId', wireKey: 'txid', codec: stringCodec, optional: false },
+    { name: 'senderAddress', wireKey: 'snd', codec: stringCodec, optional: false },
+    { name: 'receiverAddress', wireKey: 'rcv', codec: stringCodec, optional: false },
+    { name: 'amountInMicroAlgos', wireKey: 'amt', codec: bigIntCodec, optional: false },
+    { name: 'noteField', wireKey: 'note', codec: stringCodec, optional: true },
+  ],
+};
+
+const transactionCodec = new ObjectModelCodec(transactionMetadata);
+
+const txn: TransactionInfo = {
+  transactionId: 'ABC123...',
+  senderAddress: 'SENDER...',
+  receiverAddress: 'RECEIVER...',
+  amountInMicroAlgos: 1000000n,
+  noteField: 'Payment',
+};
+
+printInfo('Property name to wireKey mapping:');
+printInfo('  transactionId      -> txid');
+printInfo('  senderAddress      -> snd');
+printInfo('  receiverAddress    -> rcv');
+printInfo('  amountInMicroAlgos -> amt');
+printInfo('  noteField          -> note');
+printInfo('');
+
+printInfo(
+  `Original: { transactionId: "${txn.transactionId}", senderAddress: "${txn.senderAddress}", ... }`,
+);
+
+const txnEncoded = transactionCodec.encode(txn, 'json');
+const txnEncodedObj = txnEncoded as Record<string, unknown>;
+printInfo(
+  `Encoded: { txid: "${txnEncodedObj.txid}", snd: "${txnEncodedObj.snd}", rcv: "${txnEncodedObj.rcv}", amt: "${txnEncodedObj.amt}", note: "${txnEncodedObj.note}" }`,
+);
+printInfo('');
+
+// Size comparison
+const withoutRenaming = `{"transactionId":"${txn.transactionId}","senderAddress":"${txn.senderAddress}","receiverAddress":"${txn.receiverAddress}","amountInMicroAlgos":"${txn.amountInMicroAlgos}","noteField":"${txn.noteField}"}`;
+const withRenaming = `{"txid":"${txnEncodedObj.txid}","snd":"${txnEncodedObj.snd}","rcv":"${txnEncodedObj.rcv}","amt":"${txnEncodedObj.amt}","note":"${txnEncodedObj.note}"}`;
+
+printInfo(`Size comparison:`);
+printInfo(`  Without wireKey renaming: ${withoutRenaming.length} bytes`);
+printInfo(`  With wireKey renaming:    ${withRenaming.length} bytes`);
+printInfo(
+  `  Savings: ${withoutRenaming.length - withRenaming.length} bytes (${Math.round((1 - withRenaming.length / withoutRenaming.length) * 100)}%)`,
+);
+printInfo('');
+printSuccess('wireKey renaming reduces payload size and enables API matching');
+
+// ============================================================================
+// Step 11: Round-Trip Verification
+// ============================================================================
+printStep(11, 'Round-Trip Verification');
+
+printInfo('Verifying decode(encode(value)) === value for model codecs:');
+printInfo('');
+
+const roundTrips: Array<{ name: string; format: EncodingFormat; success: boolean }> = [];
+
+// ObjectModelCodec - Person
+const rtPerson: Person = { name: 'Test', age: 25, email: 'test@example.com' };
+const rtPersonDecoded = personCodec.decode(personCodec.encode(rtPerson, 'json'), 'json');
+roundTrips.push({
+  name: 'ObjectModelCodec<Person>',
+  format: 'json',
+  success:
+    rtPerson.name === rtPersonDecoded.name &&
+    rtPerson.age === rtPersonDecoded.age &&
+    rtPerson.email === rtPersonDecoded.email,
+});
+
+// ObjectModelCodec - AssetInfo
+const rtAsset: AssetInfo = {
+  assetId: 999n,
+  name: 'Round Trip Asset',
+  creator: new Address(new Uint8Array(32).fill(0xaa)),
+  metadata: new Uint8Array([0xde, 0xad, 0xbe, 0xef]),
+};
+const rtAssetDecoded = assetCodec.decode(assetCodec.encode(rtAsset, 'msgpack'), 'msgpack');
+roundTrips.push({
+  name: 'ObjectModelCodec<AssetInfo>',
+  format: 'msgpack',
+  success:
+    rtAsset.assetId === rtAssetDecoded.assetId &&
+    rtAsset.name === rtAssetDecoded.name &&
+    rtAsset.creator.equals(rtAssetDecoded.creator) &&
+    arrayEqual(rtAsset.metadata!, rtAssetDecoded.metadata!),
+});
+
+// ObjectModelCodec - Nested Company
+const rtCompany: Company = {
+  name: 'Test Corp',
+  headquarters: { street: '123 Main', city: 'Anytown', postcode: 99999 },
+  founded: 2020,
+};
+const rtCompanyDecoded = companyCodec.decode(companyCodec.encode(rtCompany, 'json'), 'json');
+roundTrips.push({
+  name: 'ObjectModelCodec<Company> (nested)',
+  format: 'json',
+  success:
+    rtCompany.name === rtCompanyDecoded.name &&
+    rtCompany.headquarters.street === rtCompanyDecoded.headquarters.street &&
+    rtCompany.headquarters.city === rtCompanyDecoded.headquarters.city &&
+    rtCompany.headquarters.postcode === rtCompanyDecoded.headquarters.postcode &&
+    rtCompany.founded === rtCompanyDecoded.founded,
+});
+
+// PrimitiveModelCodec - Balance
+const rtBalance = 5000000n;
+const rtBalanceDecoded = balanceCodec.decode(balanceCodec.encode(rtBalance, 'json'), 'json');
+roundTrips.push({
+  name: 'PrimitiveModelCodec<bigint>',
+  format: 'json',
+  success: rtBalance === rtBalanceDecoded,
+});
+
+// PrimitiveModelCodec - String
+const rtName = 'Test Asset Name';
+const rtNameDecoded = assetNameCodec.decode(assetNameCodec.encode(rtName, 'msgpack'), 'msgpack');
+roundTrips.push({
+  name: 'PrimitiveModelCodec<string>',
+  format: 'msgpack',
+  success: rtName === rtNameDecoded,
+});
+
+// ArrayModelCodec - Address[]
+const rtAddrList = [Address.zeroAddress(), new Address(new Uint8Array(32).fill(0xbb))];
+const rtAddrListDecoded = addressListCodec.decode(
+  addressListCodec.encode(rtAddrList, 'json'),
+  'json',
+);
+roundTrips.push({
+  name: 'ArrayModelCodec<Address[]>',
+  format: 'json',
+  success: rtAddrList.every((a, i) => a.equals(rtAddrListDecoded[i])),
+});
+
+// ArrayModelCodec - number[]
+const rtScores = [100, 90, 80, 70];
+const rtScoresDecoded = scoresCodec.decode(scoresCodec.encode(rtScores, 'msgpack'), 'msgpack');
+roundTrips.push({
+  name: 'ArrayModelCodec<number[]>',
+  format: 'msgpack',
+  success: rtScores.every((s, i) => s === rtScoresDecoded[i]),
+});
+
+// Display results
+for (const rt of roundTrips) {
+  const status = rt.success ? 'PASS' : 'FAIL';
+  printInfo(`  [${status}] ${rt.name} (${rt.format})`);
+}
+
+const allPassed = roundTrips.every(rt => rt.success);
+if (allPassed) {
+  printInfo('');
+  printSuccess('All round-trip verifications passed!');
+}
+
+// ============================================================================
+// Step 12: Summary
+// ============================================================================
+printStep(12, 'Summary');
+
+printInfo('Model codecs for structured object serialization:');
+printInfo('');
+printInfo('  ObjectModelCodec:');
+printInfo('    - new ObjectModelCodec(metadata)');
+printInfo('    - Encodes/decodes typed objects with field metadata');
+printInfo('    - Supports wireKey for field renaming');
+printInfo('    - Handles optional fields and nested objects');
+printInfo('');
+printInfo('  FieldMetadata:');
+printInfo('    - name: property name in TypeScript');
+printInfo('    - wireKey: key in wire format (optional, defaults to name)');
+printInfo('    - codec: how to encode/decode the field value');
+printInfo('    - optional: whether field can be omitted');
+printInfo('');
+printInfo('  PrimitiveModelCodec:');
+printInfo('    - new PrimitiveModelCodec(metadata)');
+printInfo('    - Wraps primitive codec with type semantics');
+printInfo('    - Adds named model for documentation');
+printInfo('');
+printInfo('  ArrayModelCodec:');
+printInfo('    - new ArrayModelCodec(metadata)');
+printInfo('    - Wraps ArrayCodec with type semantics');
+printInfo('    - Adds named model for documentation');
+printInfo('');
+printInfo('  Key Methods:');
+printInfo('    - encode(value, format)         - always returns value');
+printInfo('    - encodeOptional(value, format) - returns undefined for defaults');
+printInfo('    - decode(value, format)         - returns typed object');
+printInfo('    - decodeOptional(value, format) - preserves undefined');
+printInfo('    - defaultValue()                - returns type default');
+printInfo('');
+printSuccess('Model Codecs Example completed!');
+```
+
+---
+
+### Other examples in Common Utilities
+
+- [Address Basics](/docs/algokit-utils/typescript/latest/examples/common/01-address-basics/)
+- [Address Encoding](/docs/algokit-utils/typescript/latest/examples/common/02-address-encoding/)
+- [Array Utilities](/docs/algokit-utils/typescript/latest/examples/common/03-array-utilities/)
+- [Constants Reference](/docs/algokit-utils/typescript/latest/examples/common/04-constants/)
+- [Crypto Hash (SHA-512/256)](/docs/algokit-utils/typescript/latest/examples/common/05-crypto-hash/)
+- [Logger Type](/docs/algokit-utils/typescript/latest/examples/common/06-logger/)
+- [JSON BigInt](/docs/algokit-utils/typescript/latest/examples/common/07-json-bigint/)
+- [MessagePack](/docs/algokit-utils/typescript/latest/examples/common/08-msgpack/)
+- [Primitive Codecs](/docs/algokit-utils/typescript/latest/examples/common/09-primitive-codecs/)
+- [Composite Codecs](/docs/algokit-utils/typescript/latest/examples/common/10-composite-codecs/)
+- **Model Codecs**
+- [Sourcemap](/docs/algokit-utils/typescript/latest/examples/common/12-sourcemap/)

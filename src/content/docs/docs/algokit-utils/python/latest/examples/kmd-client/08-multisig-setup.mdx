@@ -1,0 +1,351 @@
+---
+title: 'Multisig Account Setup'
+description: 'This example demonstrates how to create multisig accounts using the KMD import_multisig() method.'
+sidebar:
+  order: 8
+---
+
+[← Back to KMD Client](/docs/algokit-utils/python/latest/examples/kmd-client/)
+
+## Description
+
+This example demonstrates how to create multisig accounts using the KMD import_multisig() method.
+Key concepts:
+
+- A multisig account requires M-of-N signatures to authorize transactions
+- The threshold (M) is the minimum number of signatures required
+- The public keys (N) are the participants who can sign
+- The multisig version parameter (currently always 1) defines the format
+- The resulting multisig address is deterministically derived from the
+  public keys, threshold, and version
+  Prerequisites:
+  Covered operations:
+- generate_key() - Generate keys to use as multisig participants
+- import_multisig() - Create a multisig account from public keys
+
+## Prerequisites
+
+- LocalNet running (via `algokit localnet start`)
+
+## Run This Example
+
+From the repository's `examples` directory:
+
+```bash
+cd examples
+uv run python kmd_client/08_multisig_setup.py
+```
+
+## Code
+
+[View source on GitHub](https://github.com/algorandfoundation/algokit-utils-py/blob/main/examples/kmd_client/08_multisig_setup.py)
+
+```python title="08_multisig_setup.py"
+# ruff: noqa: N999, C901, PLR0912, PLR0915
+"""
+Example: Multisig Account Setup
+
+This example demonstrates how to create multisig accounts using the KMD
+import_multisig() method.
+
+Key concepts:
+- A multisig account requires M-of-N signatures to authorize transactions
+- The threshold (M) is the minimum number of signatures required
+- The public keys (N) are the participants who can sign
+- The multisig version parameter (currently always 1) defines the format
+- The resulting multisig address is deterministically derived from the
+  public keys, threshold, and version
+
+Prerequisites:
+- LocalNet running (via `algokit localnet start`)
+
+Covered operations:
+- generate_key() - Generate keys to use as multisig participants
+- import_multisig() - Create a multisig account from public keys
+"""
+
+import sys
+
+from shared import (
+    cleanup_test_wallet,
+    create_kmd_client,
+    create_test_wallet,
+    print_error,
+    print_header,
+    print_info,
+    print_step,
+    print_success,
+)
+
+from algokit_common import public_key_from_address
+from algokit_kmd_client.models import GenerateKeyRequest, ImportMultisigRequest, ListMultisigRequest
+
+
+def format_bytes_for_display(data: bytes, show_first: int = 4, show_last: int = 4) -> str:
+    """Format a byte array for display, showing first and last few bytes."""
+    hex_str = data.hex()
+    if len(data) <= show_first + show_last:
+        return hex_str
+    first_bytes = hex_str[: show_first * 2]
+    last_bytes = hex_str[-(show_last * 2) :]
+    return f"{first_bytes}...{last_bytes}"
+
+
+def main() -> None:
+    print_header("KMD Multisig Account Setup Example")
+
+    kmd = create_kmd_client()
+    wallet_handle_token = ""
+    wallet_password = "test-password"
+
+    try:
+        # =========================================================================
+        # Step 1: Create a Test Wallet
+        # =========================================================================
+        print_step(1, "Creating a test wallet")
+
+        test_wallet = create_test_wallet(kmd, wallet_password)
+        wallet_handle_token = test_wallet["wallet_handle_token"]
+
+        print_success(f"Test wallet created: {test_wallet['wallet_name']}")
+        print_info(f"Wallet ID: {test_wallet['wallet_id']}")
+
+        # =========================================================================
+        # Step 2: Generate 3 Keys for Multisig Participants
+        # =========================================================================
+        print_step(2, "Generating 3 keys to use as multisig participants")
+
+        participant_addresses: list[str] = []
+        num_participants = 3
+
+        for i in range(1, num_participants + 1):
+            address = kmd.generate_key(GenerateKeyRequest(wallet_handle_token=wallet_handle_token)).address
+            participant_addresses.append(address)
+            print_info(f"Participant {i}: {address}")
+
+        print_success(f"Generated {num_participants} participant keys")
+        print_info("")
+        print_info("These addresses will be used to create a 2-of-3 multisig account.")
+
+        # =========================================================================
+        # Step 3: Convert Addresses to Public Keys
+        # =========================================================================
+        print_step(3, "Converting addresses to public keys")
+
+        public_keys: list[bytes] = []
+        for addr in participant_addresses:
+            pk = public_key_from_address(addr)
+            public_keys.append(pk)
+
+        print_info("Public keys extracted from addresses:")
+        for i, pk in enumerate(public_keys):
+            pk_display = format_bytes_for_display(pk)
+            print_info(f"  Participant {i + 1}: {pk_display} ({len(pk)} bytes)")
+
+        print_info("")
+        print_info("Note: Each Algorand address encodes a 32-byte public key.")
+        print_info("The address also includes a 4-byte checksum for error detection.")
+
+        # =========================================================================
+        # Step 4: Create the Multisig Account with import_multisig()
+        # =========================================================================
+        print_step(4, "Creating a 2-of-3 multisig account with import_multisig()")
+
+        threshold = 2  # Minimum signatures required
+        multisig_version = 1  # Multisig format version
+
+        multisig_address = kmd.import_multisig(
+            ImportMultisigRequest(
+                wallet_handle_token=wallet_handle_token,
+                multisig_version=multisig_version,
+                threshold=threshold,
+                public_keys=public_keys,
+            )
+        ).address
+
+        print_success("Multisig account created successfully!")
+        print_info("")
+        print_info("import_multisig() response:")
+        print_info(f"  address: {multisig_address}")
+        print_info("")
+        print_info("Parameters used:")
+        print_info(f"  public_keys:       {num_participants} participant keys")
+        print_info(f"  threshold:         {threshold} (minimum signatures required)")
+        print_info(f"  multisig_version:  {multisig_version}")
+
+        # =========================================================================
+        # Step 5: Explain the Threshold Parameter
+        # =========================================================================
+        print_step(5, "Understanding the threshold parameter")
+
+        print_info("")
+        print_info("What is the threshold?")
+        print_info("-" * 40)
+        print_info("")
+        print_info(f"The threshold ({threshold}) is the minimum number of signatures required")
+        print_info("to authorize any transaction from this multisig account.")
+        print_info("")
+        print_info(f"With a {threshold}-of-{num_participants} configuration:")
+        print_info(f"  - {num_participants} participants can potentially sign")
+        print_info(f"  - At least {threshold} signatures are required")
+        msg = f"  - Any {threshold} of the {num_participants} participants can authorize a transaction"
+        print_info(msg)
+        print_info("")
+        print_info("Common use cases:")
+        print_info("  - 2-of-3: Standard security (recover if one key is lost)")
+        print_info("  - 2-of-2: Joint control (both parties must agree)")
+        print_info("  - 3-of-5: Committee/board decisions")
+        print_info("  - 1-of-N: Any participant can act alone (hot wallet backup)")
+
+        # =========================================================================
+        # Step 6: Explain the Multisig Version Parameter
+        # =========================================================================
+        print_step(6, "Understanding the multisig version parameter")
+
+        print_info("")
+        print_info("What is the multisig version?")
+        print_info("-" * 40)
+        print_info("")
+        msg = f"The multisig version ({multisig_version}) specifies the format of the multisig account."
+        print_info(msg)
+        print_info("")
+        print_info("Currently, version 1 is the only supported version on Algorand.")
+        print_info("This parameter exists for future compatibility if the multisig")
+        print_info("format is ever updated.")
+        print_info("")
+        print_info("Always use version 1 unless Algorand documentation specifies otherwise.")
+
+        # =========================================================================
+        # Step 7: Show Relationship Between Keys and Address
+        # =========================================================================
+        print_step(7, "Relationship between public keys and multisig address")
+
+        print_info("")
+        print_info("How is the multisig address derived?")
+        print_info("-" * 40)
+        print_info("")
+        print_info("The multisig address is deterministically computed from:")
+        print_info("  1. The multisig version")
+        print_info("  2. The threshold value")
+        print_info("  3. The ordered list of public keys")
+        print_info("")
+        print_info("Important properties:")
+        print_info("  - Same inputs always produce the same multisig address")
+        print_info("  - Changing the order of public keys changes the address")
+        print_info("  - Changing the threshold changes the address")
+        print_info("  - The address encodes the complete multisig configuration")
+        print_info("")
+        print_info("Multisig address structure:")
+        print_info(f"  {multisig_address}")
+        print_info("")
+        print_info("Participant addresses (order matters!):")
+        for i, addr in enumerate(participant_addresses):
+            print_info(f"  {i + 1}. {addr}")
+
+        # =========================================================================
+        # Step 8: Verify Multisig is Listed
+        # =========================================================================
+        print_step(8, "Verifying the multisig account is in the wallet")
+
+        list_result = kmd.list_multisig(ListMultisigRequest(wallet_handle_token=wallet_handle_token)).addresses
+
+        print_success(f"Wallet contains {len(list_result)} multisig address(es)")
+        print_info("")
+        print_info("Multisig addresses in wallet:")
+        for i, addr in enumerate(list_result):
+            marker = " (our new multisig)" if addr == multisig_address else ""
+            print_info(f"  {i + 1}. {addr}{marker}")
+
+        # =========================================================================
+        # Step 9: Summary of Multisig Operations
+        # =========================================================================
+        print_step(9, "What you can do with the multisig account")
+
+        print_info("")
+        print_info("Now that the multisig is imported, you can:")
+        print_info("")
+        print_info("  1. RECEIVE FUNDS: Send Algo or ASAs to the multisig address")
+        print_info(f"     Address: {multisig_address}")
+        print_info("")
+        print_info("  2. SIGN TRANSACTIONS: Use sign_multisig_transaction() to add")
+        print_info("     signatures from participants whose keys are in this wallet")
+        print_info("")
+        print_info("  3. EXPORT CONFIGURATION: Use export_multisig() to get the")
+        print_info("     full multisig parameters (keys, threshold, version)")
+        print_info("")
+        print_info("  4. DELETE: Use delete_multisig() to remove from the wallet")
+        print_info("     (does not affect the blockchain account or funds)")
+        print_info("")
+        print_info("Note: To fully authorize a transaction, collect signatures from")
+        print_info(f"at least {threshold} participants, then combine and submit.")
+
+        # =========================================================================
+        # Cleanup
+        # =========================================================================
+        print_step(10, "Cleaning up test wallet")
+
+        cleanup_test_wallet(kmd, wallet_handle_token)
+        wallet_handle_token = ""  # Mark as cleaned up
+
+        print_success("Test wallet handle released")
+
+        # =========================================================================
+        # Summary
+        # =========================================================================
+        print_header("Summary")
+        print_info("This example demonstrated multisig account setup in KMD:")
+        print_info("")
+        print_info("  import_multisig()")
+        print_info("    Parameters:")
+        print_info("      - wallet_handle_token: Session token for the wallet")
+        print_info("      - multisig_version:    Format version (always 1)")
+        print_info("      - threshold:           Minimum signatures required (M in M-of-N)")
+        print_info("      - public_keys:         List of participant public keys (bytes)")
+        print_info("    Returns:")
+        print_info("      - address:             The generated multisig address string")
+        print_info("")
+        print_info("Key takeaways:")
+        print_info("  - Multisig requires M-of-N signatures to authorize transactions")
+        print_info("  - The address is derived from version + threshold + ordered keys")
+        print_info("  - Same configuration always produces the same address")
+        print_info("  - Public keys are extracted from addresses using public_key_from_address()")
+        print_info("  - multisig_version should always be 1 (current Algorand standard)")
+        print_info("")
+        print_info("Note: The test wallet remains in KMD (wallets cannot be deleted via API).")
+    except Exception as e:
+        print_error(f"Error: {e}")
+        print_info("")
+        print_info("Troubleshooting:")
+        print_info("  - Ensure LocalNet is running: algokit localnet start")
+        print_info("  - If LocalNet issues occur: algokit localnet reset")
+        print_info("  - Check that KMD is accessible on port 4002")
+
+        # Cleanup on error
+        if wallet_handle_token:
+            cleanup_test_wallet(kmd, wallet_handle_token)
+
+        sys.exit(1)
+
+
+if __name__ == "__main__":
+    main()
+
+```
+
+---
+
+### Other examples in KMD Client
+
+- [KMD Version Information](/docs/algokit-utils/python/latest/examples/kmd-client/01-version/)
+- [Wallet Creation and Listing](/docs/algokit-utils/python/latest/examples/kmd-client/02-wallet-management/)
+- [Wallet Session Management](/docs/algokit-utils/python/latest/examples/kmd-client/03-wallet-sessions/)
+- [Key Generation](/docs/algokit-utils/python/latest/examples/kmd-client/04-key-generation/)
+- [Key Import and Export](/docs/algokit-utils/python/latest/examples/kmd-client/05-key-import-export/)
+- [Key Listing and Deletion](/docs/algokit-utils/python/latest/examples/kmd-client/06-key-listing-deletion/)
+- [Master Key Export](/docs/algokit-utils/python/latest/examples/kmd-client/07-master-key-export/)
+- **Multisig Account Setup**
+- [Multisig Account Management](/docs/algokit-utils/python/latest/examples/kmd-client/09-multisig-management/)
+- [Transaction Signing with KMD](/docs/algokit-utils/python/latest/examples/kmd-client/10-transaction-signing/)
+- [Multisig Transaction Signing with KMD](/docs/algokit-utils/python/latest/examples/kmd-client/11-multisig-signing/)
+- [Program Signing (Delegated Logic Signatures) with KMD](/docs/algokit-utils/python/latest/examples/kmd-client/12-program-signing/)
+- [Multisig Program Signing (Delegated Multisig Logic Signatures) with KMD](/docs/algokit-utils/python/latest/examples/kmd-client/13-multisig-program-signing/)

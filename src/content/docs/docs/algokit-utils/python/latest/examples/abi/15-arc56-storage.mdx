@@ -1,0 +1,429 @@
+---
+title: 'ARC-56 Storage Helpers'
+description: 'This example demonstrates how to use ARC-56 storage helpers to inspect contract state key definitions and maps from an ARC-56 contract specification:'
+sidebar:
+  order: 15
+---
+
+[← Back to ABI Encoding](/docs/algokit-utils/python/latest/examples/abi/)
+
+## Description
+
+This example demonstrates how to use ARC-56 storage helpers to inspect contract state key definitions and maps from an ARC-56 contract specification:
+Storage Key Properties (StorageKey):
+
+- key: Base64-encoded key bytes
+- key_type: The type of the key (ABIType or AVMType)
+- value_type: The type of the value (ABIType or AVMType)
+- desc: Optional description
+  Storage Map Properties (StorageMap):
+- key_type: The type of keys in the map
+- value_type: The type of values in the map
+- desc: Optional description
+- prefix: Base64-encoded prefix for map keys
+  In the Python SDK, access storage definitions via:
+- contract.state.keys.global_state - Global state keys
+- contract.state.keys.local_state - Local state keys
+- contract.state.keys.box - Box storage keys
+- contract.state.maps.global_state - Global state maps
+- contract.state.maps.local_state - Local state maps
+- contract.state.maps.box - Box storage maps
+
+## Prerequisites
+
+No LocalNet required - demonstrates ARC-56 spec parsing
+
+## Run This Example
+
+From the repository's `examples` directory:
+
+```bash
+cd examples
+uv run python abi/15_arc56_storage.py
+```
+
+## Code
+
+[View source on GitHub](https://github.com/algorandfoundation/algokit-utils-py/blob/main/examples/abi/15_arc56_storage.py)
+
+```python title="15_arc56_storage.py"
+# ruff: noqa: N999, C901, PLR0912, PLR0915
+"""
+Example: ARC-56 Storage Helpers
+
+This example demonstrates how to use ARC-56 storage helpers to inspect
+contract state key definitions and maps from an ARC-56 contract specification:
+
+Storage Key Properties (StorageKey):
+- key: Base64-encoded key bytes
+- key_type: The type of the key (ABIType or AVMType)
+- value_type: The type of the value (ABIType or AVMType)
+- desc: Optional description
+
+Storage Map Properties (StorageMap):
+- key_type: The type of keys in the map
+- value_type: The type of values in the map
+- desc: Optional description
+- prefix: Base64-encoded prefix for map keys
+
+In the Python SDK, access storage definitions via:
+- contract.state.keys.global_state - Global state keys
+- contract.state.keys.local_state - Local state keys
+- contract.state.keys.box - Box storage keys
+- contract.state.maps.global_state - Global state maps
+- contract.state.maps.local_state - Local state maps
+- contract.state.maps.box - Box storage maps
+
+No LocalNet required - demonstrates ARC-56 spec parsing
+"""
+
+import base64
+from pathlib import Path
+
+from shared import format_hex, print_header, print_info, print_step, print_success
+
+from algokit_abi import abi
+from algokit_abi.arc56 import Arc56Contract, AVMType, StorageKey, StorageMap
+
+
+def format_key_or_value_type(type_val: abi.ABIType | AVMType) -> str:
+    """Formats a storage key type for display (either ABI type or AVM type)."""
+    if isinstance(type_val, AVMType):
+        return type_val.value  # AVM type (e.g., "AVMUint64", "AVMString", "AVMBytes")
+    return str(type_val)  # ABI type
+
+
+def display_storage_key(name: str, storage_key: StorageKey) -> None:
+    """Displays StorageKey properties."""
+    print_info(f"  {name}:")
+    print_info(f"    key (base64): {storage_key.key}")
+    try:
+        decoded_key = base64.b64decode(storage_key.key).decode("utf-8")
+        print_info(f'    key (decoded): "{decoded_key}"')
+    except (UnicodeDecodeError, ValueError):
+        decoded_bytes = base64.b64decode(storage_key.key)
+        print_info(f"    key (decoded): {format_hex(decoded_bytes)}")
+    print_info(f"    key_type: {format_key_or_value_type(storage_key.key_type)}")
+    print_info(f"    value_type: {format_key_or_value_type(storage_key.value_type)}")
+    if storage_key.desc:
+        print_info(f"    desc: {storage_key.desc}")
+
+
+def display_storage_map(name: str, storage_map: StorageMap) -> None:
+    """Displays StorageMap properties."""
+    print_info(f"  {name}:")
+    print_info(f"    key_type: {format_key_or_value_type(storage_map.key_type)}")
+    print_info(f"    value_type: {format_key_or_value_type(storage_map.value_type)}")
+    if storage_map.desc:
+        print_info(f"    desc: {storage_map.desc}")
+    if storage_map.prefix is not None:
+        print_info(f'    prefix (base64): "{storage_map.prefix}"')
+        if storage_map.prefix:
+            try:
+                decoded_prefix = base64.b64decode(storage_map.prefix).decode("utf-8")
+                print_info(f'    prefix (decoded): "{decoded_prefix}"')
+            except (UnicodeDecodeError, ValueError):
+                decoded_bytes = base64.b64decode(storage_map.prefix)
+                print_info(f"    prefix (decoded): {format_hex(decoded_bytes)}")
+
+
+def main() -> None:
+    print_header("ARC-56 Storage Helpers Example")
+
+    # Step 1: Load ARC-56 contract specification
+    print_step(1, "Load ARC-56 Contract Specification")
+
+    # Load the State.arc56.json from test artifacts
+    arc56_path = Path(__file__).parent.parent.parent / "tests" / "artifacts" / "state_contract" / "State.arc56.json"
+    arc56_content = arc56_path.read_text()
+    app_spec = Arc56Contract.from_json(arc56_content)
+
+    print_info(f"Loaded contract: {app_spec.name}")
+    print_info(f"ARC standards supported: {', '.join(str(arc) for arc in app_spec.arcs)}")
+    print_info("")
+    print_info("State schema:")
+    print_info(
+        f"  Global: {app_spec.state.schema.global_state.ints} ints, {app_spec.state.schema.global_state.bytes} bytes"
+    )
+    print_info(
+        f"  Local: {app_spec.state.schema.local_state.ints} ints, {app_spec.state.schema.local_state.bytes} bytes"
+    )
+
+    # Step 2: Demonstrate accessing global state keys
+    print_step(2, "Get Global State Key Definitions")
+
+    print_info("Accessing contract.state.keys.global_state to get all global state keys:")
+    print_info("")
+
+    global_keys = app_spec.state.keys.global_state
+    global_key_names = list(global_keys.keys())
+
+    print_info(f"Found {len(global_key_names)} global state keys:")
+    print_info("")
+
+    for name in global_key_names:
+        display_storage_key(name, global_keys[name])
+        print_info("")
+
+    # Step 3: Demonstrate accessing local state keys
+    print_step(3, "Get Local State Key Definitions")
+
+    print_info("Accessing contract.state.keys.local_state to get all local state keys:")
+    print_info("")
+
+    local_keys = app_spec.state.keys.local_state
+    local_key_names = list(local_keys.keys())
+
+    print_info(f"Found {len(local_key_names)} local state keys:")
+    print_info("")
+
+    for name in local_key_names:
+        display_storage_key(name, local_keys[name])
+        print_info("")
+
+    # Step 4: Demonstrate accessing box keys
+    print_step(4, "Get Box Key Definitions")
+
+    print_info("Accessing contract.state.keys.box to get all box storage keys:")
+    print_info("")
+
+    box_keys = app_spec.state.keys.box
+    box_key_names = list(box_keys.keys())
+
+    if box_key_names:
+        print_info(f"Found {len(box_key_names)} box storage keys:")
+        print_info("")
+        for name in box_key_names:
+            display_storage_key(name, box_keys[name])
+            print_info("")
+    else:
+        print_info("No box storage keys defined in this contract.")
+
+    # Step 5: Demonstrate accessing box maps
+    print_step(5, "Get Box Map Definitions")
+
+    print_info("Accessing contract.state.maps.box to get box map definitions:")
+    print_info("")
+
+    box_maps = app_spec.state.maps.box
+    box_map_names = list(box_maps.keys())
+
+    if box_map_names:
+        print_info(f"Found {len(box_map_names)} box maps:")
+        print_info("")
+        for name in box_map_names:
+            display_storage_map(name, box_maps[name])
+            print_info("")
+    else:
+        print_info("No box maps defined in this contract.")
+
+    # Step 6: Demonstrate decoding storage keys
+    print_step(6, "Decoding Storage Key Names")
+
+    print_info("Storage keys are stored as base64-encoded bytes.")
+    print_info("Decode them to see the actual key names used in the contract:")
+    print_info("")
+
+    print_info("Global state keys decoded:")
+    for name in global_key_names:
+        key_base64 = global_keys[name].key
+        try:
+            key_decoded = base64.b64decode(key_base64).decode("utf-8")
+            print_info(f"  {name}: '{key_decoded}'")
+        except UnicodeDecodeError:
+            key_bytes = base64.b64decode(key_base64)
+            print_info(f"  {name}: {format_hex(key_bytes)} (binary)")
+
+    print_info("")
+    print_info("Local state keys decoded:")
+    for name in local_key_names:
+        key_base64 = local_keys[name].key
+        try:
+            key_decoded = base64.b64decode(key_base64).decode("utf-8")
+            print_info(f"  {name}: '{key_decoded}'")
+        except UnicodeDecodeError:
+            key_bytes = base64.b64decode(key_base64)
+            print_info(f"  {name}: {format_hex(key_bytes)} (binary)")
+
+    # Step 7: Understanding type categories in storage
+    print_step(7, "Understanding Type Categories in Storage")
+
+    print_info("Storage keys can have AVM types or ABI types for keys and values:")
+    print_info("")
+    print_info("AVM Types (native stack values, no length prefix):")
+    print_info("  - AVMBytes: Raw bytes")
+    print_info("  - AVMString: UTF-8 string")
+    print_info("  - AVMUint64: 64-bit unsigned integer")
+    print_info("")
+    print_info("ABI Types (ARC-4 encoded with potential length prefixes):")
+    print_info("  - string: 2-byte length prefix + UTF-8")
+    print_info("  - uint64: 8 bytes big-endian")
+    print_info("  - (tuple): Head/tail encoding")
+    print_info("  - etc.")
+    print_info("")
+
+    # Analyze types used in this contract
+    print_info("Types used in this contract's storage:")
+    print_info("")
+
+    avm_count = 0
+    abi_count = 0
+
+    for key in global_keys.values():
+        key_is_avm = isinstance(key.key_type, AVMType)
+        val_is_avm = isinstance(key.value_type, AVMType)
+        if key_is_avm:
+            avm_count += 1
+        else:
+            abi_count += 1
+        if val_is_avm:
+            avm_count += 1
+        else:
+            abi_count += 1
+
+    for key in local_keys.values():
+        key_is_avm = isinstance(key.key_type, AVMType)
+        val_is_avm = isinstance(key.value_type, AVMType)
+        if key_is_avm:
+            avm_count += 1
+        else:
+            abi_count += 1
+        if val_is_avm:
+            avm_count += 1
+        else:
+            abi_count += 1
+
+    print_info(f"  AVM type usages: {avm_count}")
+    print_info(f"  ABI type usages: {abi_count}")
+
+    # Step 8: Creating a synthetic example with maps
+    print_step(8, "Working with Storage Maps")
+
+    print_info("Storage maps define key-value relationships with typed keys and values.")
+    print_info("")
+
+    # Create a synthetic example showing what a box map would look like
+    synthetic_spec = {
+        "name": "ExampleWithMaps",
+        "arcs": [4, 56],
+        "methods": [],
+        "state": {
+            "schema": {"global": {"ints": 0, "bytes": 0}, "local": {"ints": 0, "bytes": 0}},
+            "keys": {"global": {}, "local": {}, "box": {}},
+            "maps": {
+                "global": {},
+                "local": {},
+                "box": {
+                    "userBalances": {
+                        "keyType": "address",
+                        "valueType": "uint64",
+                        "prefix": "dXNlcl8=",  # base64("user_")
+                        "desc": "Maps user addresses to their balances",
+                    },
+                    "orderData": {
+                        "keyType": "uint64",
+                        "valueType": "(address,uint64,string)",
+                        "desc": "Maps order IDs to order tuples",
+                    },
+                },
+            },
+        },
+    }
+
+    example_spec = Arc56Contract.from_dict(synthetic_spec)
+
+    print_info(f"Synthetic contract: {example_spec.name}")
+    print_info("")
+    print_info("Box maps defined:")
+    print_info("")
+
+    for name, storage_map in example_spec.state.maps.box.items():
+        display_storage_map(name, storage_map)
+        print_info("")
+
+    # Step 9: Practical use cases
+    print_step(9, "Practical Use Cases")
+
+    print_info("ARC-56 storage inspection enables:")
+    print_info("")
+    print_info("1. Contract State Discovery")
+    print_info("   - List all state keys without reading contract source")
+    print_info("   - Understand data types for proper encoding/decoding")
+    print_info("")
+    print_info("2. Generic Contract Explorers")
+    print_info("   - Build tools that can inspect any ARC-56 contract")
+    print_info("   - Automatically decode state values using type info")
+    print_info("")
+    print_info("3. Runtime Type Validation")
+    print_info("   - Validate state key/value types before transactions")
+    print_info("   - Ensure proper encoding based on AVM vs ABI type")
+    print_info("")
+    print_info("4. Documentation Generation")
+    print_info("   - Auto-generate state documentation from spec")
+    print_info("   - Include type information and descriptions")
+
+    # Step 10: Summary
+    print_step(10, "Summary")
+
+    print_info("ARC-56 Storage Classes:")
+    print_info("")
+    print_info("State (contract.state):")
+    print_info("  keys: Keys - Container for storage key definitions")
+    print_info("  maps: Maps - Container for storage map definitions")
+    print_info("  schema: Schema - State schema (ints/bytes counts)")
+    print_info("")
+    print_info("Keys (contract.state.keys):")
+    print_info("  global_state: dict[str, StorageKey] - Global state keys")
+    print_info("  local_state: dict[str, StorageKey] - Local state keys")
+    print_info("  box: dict[str, StorageKey] - Box storage keys")
+    print_info("")
+    print_info("Maps (contract.state.maps):")
+    print_info("  global_state: dict[str, StorageMap] - Global state maps")
+    print_info("  local_state: dict[str, StorageMap] - Local state maps")
+    print_info("  box: dict[str, StorageMap] - Box storage maps")
+    print_info("")
+    print_info("StorageKey Properties:")
+    print_info("  key       - Base64-encoded key bytes")
+    print_info("  key_type  - Type of the key (ABIType or AVMType)")
+    print_info("  value_type - Type of the value (ABIType or AVMType)")
+    print_info("  desc      - Optional description")
+    print_info("")
+    print_info("StorageMap Properties:")
+    print_info("  key_type   - Type of keys in the map")
+    print_info("  value_type - Type of values in the map")
+    print_info("  desc       - Optional description")
+    print_info("  prefix     - Base64-encoded prefix for map keys")
+    print_info("")
+    print_info("Use Cases:")
+    print_info("  - Inspect contract state schema from ARC-56 spec")
+    print_info("  - Decode raw state bytes using typed definitions")
+    print_info("  - Build generic contract explorers/tools")
+    print_info("  - Validate state key/value types at runtime")
+
+    print_success("ARC-56 Storage Helpers example completed successfully!")
+
+
+if __name__ == "__main__":
+    main()
+
+```
+
+---
+
+### Other examples in ABI Encoding
+
+- [ABI Type Parsing](/docs/algokit-utils/python/latest/examples/abi/01-type-parsing/)
+- [ABI Primitive Types](/docs/algokit-utils/python/latest/examples/abi/02-primitive-types/)
+- [ABI Address Type](/docs/algokit-utils/python/latest/examples/abi/03-address-type/)
+- [ABI String Type](/docs/algokit-utils/python/latest/examples/abi/04-string-type/)
+- [ABI Static Array Type](/docs/algokit-utils/python/latest/examples/abi/05-static-array/)
+- [ABI Dynamic Array Type](/docs/algokit-utils/python/latest/examples/abi/06-dynamic-array/)
+- [ABI Tuple Type](/docs/algokit-utils/python/latest/examples/abi/07-tuple-type/)
+- [ABI Struct Type](/docs/algokit-utils/python/latest/examples/abi/08-struct-type/)
+- [ABI Struct and Tuple Conversion](/docs/algokit-utils/python/latest/examples/abi/09-struct-tuple-conversion/)
+- [ABI Bool Array Packing](/docs/algokit-utils/python/latest/examples/abi/10-bool-packing/)
+- [ABI Method](/docs/algokit-utils/python/latest/examples/abi/11-abi-method/)
+- [AVM Type Encoding](/docs/algokit-utils/python/latest/examples/abi/12-avm-types/)
+- [Type Guards](/docs/algokit-utils/python/latest/examples/abi/13-type-guards/)
+- [ABI Complex Nested Types](/docs/algokit-utils/python/latest/examples/abi/14-complex-nested/)
+- **ARC-56 Storage Helpers**

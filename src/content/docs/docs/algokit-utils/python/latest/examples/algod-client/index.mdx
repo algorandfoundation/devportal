@@ -1,0 +1,398 @@
+---
+title: 'Algod Client'
+description: 'Algorand node operations and queries using the AlgodClient.'
+sidebar:
+  label: 'Algod Client'
+  order: 0
+---
+
+[← Back to Examples Overview](/docs/algokit-utils/python/latest/examples/)
+
+Algorand node operations and queries using the AlgodClient.
+
+## Examples (19)
+
+<table>
+  <thead>
+    <tr>
+      <th>Example</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <a href='01-node-health-status/'>Node Health and Status</a>
+      </td>
+      <td>
+        <p>
+          This example demonstrates how to check node health and status using the AlgodClient
+          methods: health_check(), ready(), status(), and status_after_block().
+        </p>
+        <p>Prerequisites:</p>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <a href='02-version-genesis/'>Version and Genesis Information</a>
+      </td>
+      <td>
+        <p>
+          This example demonstrates how to retrieve node version information and genesis
+          configuration using the AlgodClient methods: versions() and genesis().
+        </p>
+        <p>Prerequisites:</p>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <a href='03-ledger-supply/'>Ledger Supply Information</a>
+      </td>
+      <td>
+        <p>
+          This example demonstrates how to retrieve ledger supply information using the AlgodClient
+          method: supply().
+        </p>
+        <p>Prerequisites:</p>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <a href='04-account-info/'>Account Information</a>
+      </td>
+      <td>
+        <p>
+          This example demonstrates how to retrieve comprehensive account information using the
+          AlgodClient methods: account_information(), account_application_information(), and
+          account_asset_information().
+        </p>
+        <p>Prerequisites:</p>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <a href='05-transaction-params/'>Transaction Parameters</a>
+      </td>
+      <td>
+        <p>
+          This example demonstrates how to get suggested transaction parameters using
+          suggested_params(). These parameters are essential for constructing valid transactions on
+          the Algorand network.
+        </p>
+        <p>Prerequisites:</p>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <a href='06-send-transaction/'>Send and Confirm Transaction</a>
+      </td>
+      <td>
+        <p>
+          This example demonstrates how to send transactions and wait for confirmation using
+          send_raw_transaction() and pending_transaction_information(). It shows the complete
+          lifecycle of submitting a transaction to the Algorand network.
+        </p>
+        <p>Prerequisites:</p>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <a href='07-pending-transactions/'>Pending Transactions</a>
+      </td>
+      <td>
+        <p>
+          This example demonstrates how to query pending transactions in the transaction pool using
+          pending_transactions() and pending_transactions_by_address(). Pending transactions are
+          those that have been submitted but not yet confirmed in a block.
+        </p>
+        <p>Prerequisites:</p>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <a href='08-block-data/'>Block Data</a>
+      </td>
+      <td>
+        <p>
+          This example demonstrates how to retrieve block information using the AlgodClient methods:
+          block(), block_hash(), and block_tx_ids().
+        </p>
+        <p>Prerequisites:</p>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <a href='09-asset-info/'>Asset Information</a>
+      </td>
+      <td>
+        <p>
+          This example demonstrates how to retrieve asset information using the AlgodClient method:
+          asset_by_id()
+        </p>
+        <p>Prerequisites:</p>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <a href='10-application-info/'>Application Information</a>
+      </td>
+      <td>
+        <p>
+          This example demonstrates how to retrieve application information using the AlgodClient
+          method: application_by_id()
+        </p>
+        <p>Prerequisites:</p>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <a href='11-application-boxes/'>Application Boxes</a>
+      </td>
+      <td>
+        <p>
+          This example demonstrates how to query application boxes using the AlgodClient methods:
+          application_boxes() and application_box_by_name()
+        </p>
+        <p>API Patterns:</p>
+        <ul>
+          <li>
+            application_boxes(app_id) returns BoxesResponse with .boxes attribute (list of
+            BoxDescriptor)
+          </li>
+          <li>
+            application_box_by_name(app_id, box_name_bytes) returns Box with .name, .value, .round_
+            attributes
+          </li>
+          <li>BoxDescriptor.name is bytes (not base64)</li>
+          <li>Box.name and Box.value are bytes (not base64)</li>
+          <li>Box.round_ uses underscore to avoid Python reserved keyword</li>
+        </ul>
+        <p>Prerequisites:</p>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <a href='12-teal-compile/'>TEAL Compile and Disassemble</a>
+      </td>
+      <td>
+        <p>
+          This example demonstrates how to compile TEAL source code to bytecode and disassemble
+          bytecode back to TEAL using the AlgodClient methods:
+        </p>
+        <ul>
+          <li>teal_compile(source_bytes, sourcemap?) - Compile TEAL source to bytecode</li>
+          <li>teal_disassemble(bytecode) - Disassemble bytecode back to TEAL</li>
+        </ul>
+        <p>
+          Note: Python SDK takes bytes for teal_compile (use .encode()), while TypeScript takes
+          string. CompileResponse uses attribute access with hash_ (underscore to avoid Python
+          builtin).
+        </p>
+        <p>Prerequisites:</p>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <a href='13-simulation/'>Transaction Simulation</a>
+      </td>
+      <td>
+        <p>
+          This example demonstrates how to simulate transactions before submitting them to the
+          Algorand network. Simulation allows you to:
+        </p>
+        <ul>
+          <li>Preview transaction outcomes without committing to the blockchain</li>
+          <li>Estimate transaction fees</li>
+          <li>Detect potential errors before spending fees</li>
+          <li>Debug smart contract execution</li>
+        </ul>
+        <p>Prerequisites:</p>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <a href='14-state-deltas/'>Ledger State Deltas</a>
+      </td>
+      <td>
+        <p>This example demonstrates how to retrieve ledger state deltas using:</p>
+        <ul>
+          <li>ledger_state_delta(round) - Get state changes for a specific round</li>
+          <li>
+            ledger_state_delta_for_transaction_group(tx_id) - Get deltas for a specific transaction
+            group
+          </li>
+          <li>
+            transaction_group_ledger_state_deltas_for_round(round) - Get all transaction group
+            deltas in a round
+          </li>
+        </ul>
+        <p>
+          State deltas show what changed in the ledger (accounts, balances, apps, assets) between
+          rounds.
+        </p>
+        <p>
+          Note: These endpoints may require node configuration to enable (EnableDeveloperAPI=true).
+        </p>
+        <p>Prerequisites:</p>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <a href='15-transaction-proof/'>Transaction Proof</a>
+      </td>
+      <td>
+        <p>This example demonstrates how to get transaction proofs using:</p>
+        <ul>
+          <li>transaction_proof(round, tx_id) - Get the Merkle proof for a transaction</li>
+        </ul>
+        <p>
+          Transaction proofs are cryptographic proofs that a transaction is included in a specific
+          block. They are used for light client verification, allowing clients to verify transaction
+          inclusion without downloading the entire blockchain.
+        </p>
+        <p>The proof uses a Merkle tree structure where:</p>
+        <ul>
+          <li>Each transaction in a block is a leaf in the tree</li>
+          <li>The root of the tree is committed in the block header</li>
+          <li>The proof provides the sibling hashes needed to reconstruct the root</li>
+        </ul>
+        <p>Prerequisites:</p>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <a href='16-lightblock-proof/'>Light Block Header Proof</a>
+      </td>
+      <td>
+        <p>This example demonstrates how to get light block header proofs using:</p>
+        <ul>
+          <li>light_block_header_proof(round) - Get the proof for a block header</li>
+        </ul>
+        <p>
+          Light block header proofs are part of Algorand's State Proof system, which allows light
+          clients and other blockchains to verify Algorand's blockchain state without needing to
+          sync all blocks or trust intermediaries.
+        </p>
+        <p>Key concepts:</p>
+        <ul>
+          <li>State proofs are generated at regular intervals (every 256 rounds on MainNet)</li>
+          <li>
+            Light block header proofs verify that a block header is part of the state proof interval
+          </li>
+          <li>The proof uses a vector commitment tree (similar to Merkle tree) structure</li>
+          <li>
+            Only blocks within a state proof interval have available light block header proofs
+          </li>
+        </ul>
+        <p>Prerequisites:</p>
+        <p>
+          Note: On LocalNet in dev mode, state proofs may not be generated, so this example
+          demonstrates the API call and handles the expected errors gracefully.
+        </p>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <a href='17-state-proof/'>State Proof</a>
+      </td>
+      <td>
+        <p>This example demonstrates how to get state proofs using:</p>
+        <ul>
+          <li>state_proof(round) - Get the state proof for a specific round</li>
+        </ul>
+        <p>
+          State proofs are cryptographic proofs that attest to the state of the Algorand blockchain.
+          They allow external systems (like bridges, light clients, and other blockchains) to verify
+          Algorand's blockchain state without trusting any intermediary.
+        </p>
+        <p>Key concepts:</p>
+        <ul>
+          <li>State proofs are generated at regular intervals (every 256 rounds on MainNet)</li>
+          <li>Each state proof covers a range of block headers (the interval)</li>
+          <li>State proofs are signed by a supermajority of online stake</li>
+          <li>The proof uses post-quantum secure cryptographic techniques (Falcon signatures)</li>
+        </ul>
+        <p>Prerequisites:</p>
+        <p>
+          Note: On LocalNet in dev mode, state proofs are NOT generated because: 1. Dev mode doesn't
+          run real consensus 2. There are no real participation keys generating state proofs This
+          example demonstrates the API call and handles the expected errors gracefully.
+        </p>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <a href='18-devmode-timestamp/'>DevMode Timestamp Offset</a>
+      </td>
+      <td>
+        <p>This example demonstrates how to manage block timestamp offset in DevMode using:</p>
+        <ul>
+          <li>block_time_stamp_offset() - Get the current timestamp offset</li>
+          <li>set_block_time_stamp_offset(offset) - Set a new timestamp offset</li>
+        </ul>
+        <p>
+          In DevMode, you can control the timestamp of blocks by setting an offset. This is useful
+          for testing time-dependent smart contracts without waiting for real time to pass.
+        </p>
+        <p>Key concepts:</p>
+        <ul>
+          <li>Timestamp offset is in seconds</li>
+          <li>Setting offset to 0 resets to using the real clock</li>
+          <li>New blocks will have timestamps = realTime + offset</li>
+          <li>These endpoints only work on DevMode nodes (LocalNet in dev mode)</li>
+        </ul>
+        <p>Prerequisites:</p>
+        <p>Note: These endpoints return HTTP 404 if not running on a DevMode node.</p>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <a href='19-sync-round/'>Sync Round Management</a>
+      </td>
+      <td>
+        <p>This example demonstrates how to manage the sync round using:</p>
+        <ul>
+          <li>sync_round() - Get the minimum sync round the ledger will cache</li>
+          <li>set_sync_round(round) - Set the minimum sync round</li>
+          <li>unset_sync_round() - Unset/reset the sync round</li>
+        </ul>
+        <p>
+          What is the sync round? The sync round is a configuration that controls the minimum round
+          the node will keep data for. When set, the node will:
+        </p>
+        <ul>
+          <li>Only keep block data from this round onwards</li>
+          <li>Allow old block data to be deleted/pruned</li>
+          <li>Reduce storage requirements for archival data</li>
+        </ul>
+        <p>This is useful for:</p>
+        <ul>
+          <li>Nodes that only need recent data (not full archival history)</li>
+          <li>Indexers that only need data from a specific point forward</li>
+          <li>Applications that don't need ancient historical data</li>
+        </ul>
+        <p>Key concepts:</p>
+        <ul>
+          <li>sync_round() returns GetSyncRoundResponse with round_ attribute</li>
+          <li>set_sync_round(round) sets the minimum round to keep</li>
+          <li>unset_sync_round() removes the sync round restriction</li>
+          <li>Historical data below the sync round may be unavailable</li>
+        </ul>
+        <p>Prerequisites:</p>
+        <p>
+          Note: On some nodes, these endpoints may require admin privileges or return errors if the
+          feature is not supported.
+        </p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+## Quick Start
+
+Run any example from the repository's `examples` directory:
+
+```bash
+cd examples
+uv run python algod_client/01_node_health_status.py
+```

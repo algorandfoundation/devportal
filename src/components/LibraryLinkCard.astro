@@ -1,0 +1,91 @@
+---
+/**
+ * LibraryLinkCard — Reusable card for displaying a library with
+ * logo, description, and LinkChip variant navigation.
+ *
+ * Used on the /docs/ index page and anywhere a library card grid is needed.
+ */
+import type { LibraryConfig } from '../config/libraries';
+import { buildLibraryUrl } from '../config/libraries';
+import { langIcons } from '../config/lang-icons';
+import LinkChip from './LinkChip.astro';
+
+interface Props {
+  lib: LibraryConfig;
+}
+
+const { lib } = Astro.props;
+const logo = lib.logo;
+const defaultVersion = lib.versions[0]?.slug ?? 'latest';
+---
+
+<div class='library-link-card not-content'>
+  {
+    /* Safe: logo is an SVG string from imports/configs/ loaded at build time */
+    logo ? (
+      <span
+        class='library-link-card-logo'
+        role='img'
+        aria-label={lib.label}
+        set:html={logo}
+      />
+    ) : (
+      <strong>{lib.label}</strong>
+    )
+  }
+  <p>{lib.description}</p>
+  {
+    lib.languages.length > 0 && (
+      <div class='library-link-card-chips'>
+        {lib.languages.map(lang => {
+          const icon = langIcons[lang];
+          if (!icon) return null;
+          const variantHref = buildLibraryUrl(lib, lang, defaultVersion);
+          return (
+            <LinkChip
+              href={variantHref}
+              label={lang}
+              icon={icon.svg}
+              accentColor={icon.color}
+            />
+          );
+        })}
+      </div>
+    )
+  }
+</div>
+
+<style>
+  .library-link-card {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    padding: 0.75rem 1rem;
+    border: 1px solid var(--sl-color-gray-5);
+    border-radius: 0.5rem;
+    color: inherit;
+  }
+
+  .library-link-card-logo {
+    display: block;
+    height: 28px;
+    line-height: 0;
+    color: var(--sl-color-white);
+  }
+  .library-link-card-logo :global(svg) {
+    height: 100%;
+    width: auto;
+  }
+
+  .library-link-card p {
+    margin: 0;
+    font-size: 0.875rem;
+    opacity: 0.8;
+  }
+
+  .library-link-card-chips {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.4rem;
+  }
+</style>

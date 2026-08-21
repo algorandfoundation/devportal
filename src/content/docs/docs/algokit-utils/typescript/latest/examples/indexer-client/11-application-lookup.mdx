@@ -1,0 +1,663 @@
+---
+title: 'Application Lookup'
+description: 'This example demonstrates how to lookup and search for applications using the IndexerClient lookupApplicationById() and searchForApplications() methods.'
+sidebar:
+  order: 11
+---
+
+[← Back to Indexer Client](/docs/algokit-utils/typescript/latest/examples/indexer-client/)
+
+## Description
+
+This example demonstrates how to lookup and search for applications using the IndexerClient lookupApplicationById() and searchForApplications() methods.
+
+## Prerequisites
+
+- LocalNet running (via `algokit localnet start`)
+
+## Run This Example
+
+From the repository root:
+
+```bash
+cd examples
+npm run example indexer_client/11-application-lookup.ts
+```
+
+## Code
+
+[View source on GitHub](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/examples/indexer_client/11-application-lookup.ts)
+
+```typescript title="11-application-lookup.ts"
+/**
+ * Example: Application Lookup
+ *
+ * This example demonstrates how to lookup and search for applications using
+ * the IndexerClient lookupApplicationById() and searchForApplications() methods.
+ *
+ * Prerequisites:
+ * - LocalNet running (via `algokit localnet start`)
+ */
+
+import {
+  assignFee,
+  OnApplicationComplete,
+  Transaction,
+  TransactionType,
+  type AppCallTransactionFields,
+} from '@algorandfoundation/algokit-utils/transact';
+import {
+  createAlgodClient,
+  createAlgorandClient,
+  createIndexerClient,
+  printError,
+  printHeader,
+  printInfo,
+  printStep,
+  printSuccess,
+  shortenAddress,
+} from '../shared/utils.js';
+
+/**
+ * Wait for a transaction to be confirmed
+ */
+async function waitForConfirmation(
+  algod: ReturnType<typeof createAlgodClient>,
+  txId: string,
+  maxRounds = 10,
+): Promise<Record<string, unknown>> {
+  let lastRound = (await algod.status()).lastRound;
+  const startRound = lastRound;
+
+  while (lastRound < startRound + BigInt(maxRounds)) {
+    const pendingInfo = await algod.pendingTransactionInformation(txId);
+    if (pendingInfo.confirmedRound && pendingInfo.confirmedRound > 0n) {
+      return pendingInfo as Record<string, unknown>;
+    }
+    lastRound = (await algod.statusAfterBlock(lastRound)).lastRound;
+  }
+
+  throw new Error(`Transaction ${txId} not confirmed after ${maxRounds} rounds`);
+}
+
+async function main() {
+  printHeader('Application Lookup Example');
+
+  // Create clients
+  const indexer = createIndexerClient();
+  const algorand = createAlgorandClient();
+  const algod = createAlgodClient();
+
+  // =========================================================================
+  // Step 1: Get a funded account from LocalNet
+  // =========================================================================
+  printStep(1, 'Getting a funded account from LocalNet');
+
+  let creatorAddress: string;
+  let creatorAccount: Awaited<ReturnType<typeof algorand.account.kmd.getLocalNetDispenserAccount>>;
+
+  try {
+    creatorAccount = await algorand.account.kmd.getLocalNetDispenserAccount();
+    creatorAddress = creatorAccount.addr.toString();
+    printSuccess(`Using dispenser account: ${shortenAddress(creatorAddress)}`);
+  } catch (error) {
+    printError(
+      `Failed to get dispenser account: ${error instanceof Error ? error.message : String(error)}`,
+    );
+    printInfo('');
+    printInfo('Make sure LocalNet is running: algokit localnet start');
+    printInfo('If issues persist, try: algokit localnet reset');
+    return;
+  }
+
+  // =========================================================================
+  // Step 2: Deploy test applications using AlgorandClient
+  // =========================================================================
+  printStep(2, 'Deploying test applications for demonstration');
+
+  let appId1: bigint;
+  let appId2: bigint;
+
+  try {
+    // Simple approval program that stores a counter in global state
+    const approvalSource = `#pragma version 10
+// Simple smart contract for demonstration
+txn ApplicationID
+int 0
+==
+bnz handle_creation
+
+txn OnCompletion
+int NoOp
+==
+bnz handle_noop
+
+txn OnCompletion
+int DeleteApplication
+==
+bnz handle_delete
+
+int 0
+return
+
+handle_creation:
+  byte "counter"
+  int 0
+  app_global_put
+  byte "name"
+  byte "DemoApp"
+  app_global_put
+  int 1
+  return
+
+handle_noop:
+  byte "counter"
+  app_global_get
+  int 1
+  +
+  byte "counter"
+  swap
+  app_global_put
+  int 1
+  return
+
+handle_delete:
+  int 1
+  return
+`;
+
+    const clearSource = `#pragma version 10
+int 1
+return
+`;
+
+    // Compile TEAL programs
+    printInfo('Compiling TEAL programs...');
+    const approvalResult = await algod.tealCompile(approvalSource);
+    const approvalProgram = new Uint8Array(Buffer.from(approvalResult.result, 'base64'));
+
+    const clearResult = await algod.tealCompile(clearSource);
+    const clearStateProgram = new Uint8Array(Buffer.from(clearResult.result, 'base64'));
+
+    printInfo(`Approval program: ${approvalProgram.length} bytes`);
+    printInfo(`Clear state program: ${clearStateProgram.length} bytes`);
+    printInfo('');
+
+    // Create first application
+    printInfo('Creating first test application: DemoApp1...');
+    const suggestedParams = await algod.suggestedParams();
+
+    const appCallFields1: AppCallTransactionFields = {
+      appId: 0n,
+      onComplete: OnApplicationComplete.NoOp,
+      approvalProgram,
+      clearStateProgram,
+      globalStateSchema: { numUints: 1, numByteSlices: 1 },
+      localStateSchema: { numUints: 0, numByteSlices: 0 },
+    };
+
+    const createAppTx1 = new Transaction({
+      type: TransactionType.AppCall,
+      sender: creatorAccount.addr,
+      firstValid: suggestedParams.firstValid,
+      lastValid: suggestedParams.lastValid,
+      genesisHash: suggestedParams.genesisHash,
+      genesisId: suggestedParams.genesisId,
+      appCall: appCallFields1,
+    });
+
+    const createAppTxWithFee1 = assignFee(createAppTx1, {
+      feePerByte: suggestedParams.fee,
+      minFee: suggestedParams.minFee,
+    });
+
+    const signedCreateTx1 = await creatorAccount.signer([createAppTxWithFee1], [0]);
+    await algod.sendRawTransaction(signedCreateTx1);
+    const createPendingInfo1 = await waitForConfirmation(algod, createAppTxWithFee1.txId());
+    appId1 = createPendingInfo1.appId as bigint;
+    printSuccess(`Created DemoApp1 with Application ID: ${appId1}`);
+
+    // Create second application with different schema
+    printInfo('Creating second test application: DemoApp2...');
+    const suggestedParams2 = await algod.suggestedParams();
+
+    const appCallFields2: AppCallTransactionFields = {
+      appId: 0n,
+      onComplete: OnApplicationComplete.NoOp,
+      approvalProgram,
+      clearStateProgram,
+      globalStateSchema: { numUints: 2, numByteSlices: 2 },
+      localStateSchema: { numUints: 1, numByteSlices: 1 },
+    };
+
+    const createAppTx2 = new Transaction({
+      type: TransactionType.AppCall,
+      sender: creatorAccount.addr,
+      firstValid: suggestedParams2.firstValid,
+      lastValid: suggestedParams2.lastValid,
+      genesisHash: suggestedParams2.genesisHash,
+      genesisId: suggestedParams2.genesisId,
+      appCall: appCallFields2,
+    });
+
+    const createAppTxWithFee2 = assignFee(createAppTx2, {
+      feePerByte: suggestedParams2.fee,
+      minFee: suggestedParams2.minFee,
+    });
+
+    const signedCreateTx2 = await creatorAccount.signer([createAppTxWithFee2], [0]);
+    await algod.sendRawTransaction(signedCreateTx2);
+    const createPendingInfo2 = await waitForConfirmation(algod, createAppTxWithFee2.txId());
+    appId2 = createPendingInfo2.appId as bigint;
+    printSuccess(`Created DemoApp2 with Application ID: ${appId2}`);
+
+    // Small delay to allow indexer to catch up
+    printInfo('Waiting for indexer to index applications...');
+    await new Promise(resolve => setTimeout(resolve, 3000));
+    printInfo('');
+  } catch (error) {
+    printError(
+      `Failed to create test applications: ${error instanceof Error ? error.message : String(error)}`,
+    );
+    printInfo('');
+    printInfo('If LocalNet errors occur, try: algokit localnet reset');
+    return;
+  }
+
+  // =========================================================================
+  // Step 3: Lookup application by ID with lookupApplicationById()
+  // =========================================================================
+  printStep(3, 'Looking up application by ID with lookupApplicationById()');
+
+  try {
+    // lookupApplicationById() returns detailed information about a single application
+    const appResult = await indexer.lookupApplicationById(appId1);
+
+    if (appResult.application) {
+      const app = appResult.application;
+      printSuccess(`Found application with ID: ${app.id}`);
+      printInfo('');
+
+      // Display application params
+      printInfo('Application params:');
+      printInfo(`  - id: ${app.id}`);
+      if (app.params.creator) {
+        printInfo(`  - creator: ${shortenAddress(app.params.creator.toString())}`);
+      }
+      if (app.params.approvalProgram) {
+        printInfo(`  - approvalProgram: ${app.params.approvalProgram.length} bytes`);
+      }
+      if (app.params.clearStateProgram) {
+        printInfo(`  - clearStateProgram: ${app.params.clearStateProgram.length} bytes`);
+      }
+      if (app.params.extraProgramPages !== undefined) {
+        printInfo(`  - extraProgramPages: ${app.params.extraProgramPages}`);
+      }
+      if (app.params.version !== undefined) {
+        printInfo(`  - version: ${app.params.version}`);
+      }
+      printInfo('');
+
+      // Display state schema
+      printInfo('State schema:');
+      if (app.params.globalStateSchema) {
+        printInfo(
+          `  - globalStateSchema: ${app.params.globalStateSchema.numUints} uints, ${app.params.globalStateSchema.numByteSlices} byte slices`,
+        );
+      }
+      if (app.params.localStateSchema) {
+        printInfo(
+          `  - localStateSchema: ${app.params.localStateSchema.numUints} uints, ${app.params.localStateSchema.numByteSlices} byte slices`,
+        );
+      }
+      printInfo('');
+
+      // Display global state key-value pairs if present
+      if (app.params.globalState && app.params.globalState.length > 0) {
+        printInfo('Global state key-value pairs:');
+        for (const kv of app.params.globalState) {
+          // Decode the key from bytes to string
+          const keyStr = new TextDecoder().decode(kv.key);
+          // Value type: 1 = bytes, 2 = uint
+          if (kv.value.type === 2) {
+            printInfo(`  - "${keyStr}": ${kv.value.uint} (uint)`);
+          } else {
+            const valueStr = new TextDecoder().decode(kv.value.bytes);
+            printInfo(`  - "${keyStr}": "${valueStr}" (bytes)`);
+          }
+        }
+      } else {
+        printInfo('Global state: (empty or not set)');
+      }
+      printInfo('');
+
+      // Display additional metadata
+      if (app.createdAtRound !== undefined) {
+        printInfo(`Created at round: ${app.createdAtRound}`);
+      }
+      if (app.deleted !== undefined) {
+        printInfo(`Deleted: ${app.deleted}`);
+      }
+      if (app.deletedAtRound !== undefined) {
+        printInfo(`Deleted at round: ${app.deletedAtRound}`);
+      }
+    } else {
+      printInfo('Application not found in response');
+    }
+
+    printInfo(`Query performed at round: ${appResult.currentRound}`);
+  } catch (error) {
+    printError(
+      `lookupApplicationById failed: ${error instanceof Error ? error.message : String(error)}`,
+    );
+  }
+
+  // =========================================================================
+  // Step 4: Lookup second application to compare
+  // =========================================================================
+  printStep(4, 'Looking up second application to compare schemas');
+
+  try {
+    const appResult2 = await indexer.lookupApplicationById(appId2);
+
+    if (appResult2.application) {
+      const app = appResult2.application;
+      printSuccess(`Found application with ID: ${app.id}`);
+      printInfo('');
+
+      printInfo('State schema (different from first app):');
+      if (app.params.globalStateSchema) {
+        printInfo(
+          `  - globalStateSchema: ${app.params.globalStateSchema.numUints} uints, ${app.params.globalStateSchema.numByteSlices} byte slices`,
+        );
+      }
+      if (app.params.localStateSchema) {
+        printInfo(
+          `  - localStateSchema: ${app.params.localStateSchema.numUints} uints, ${app.params.localStateSchema.numByteSlices} byte slices`,
+        );
+      }
+    }
+  } catch (error) {
+    printError(
+      `lookupApplicationById failed: ${error instanceof Error ? error.message : String(error)}`,
+    );
+  }
+
+  // =========================================================================
+  // Step 5: Search for applications with searchForApplications()
+  // =========================================================================
+  printStep(5, 'Searching for applications with searchForApplications()');
+
+  try {
+    // searchForApplications() returns a list of applications matching the criteria
+    const searchResult = await indexer.searchForApplications();
+
+    printSuccess(`Found ${searchResult.applications.length} application(s)`);
+    printInfo('');
+
+    if (searchResult.applications.length > 0) {
+      printInfo('Applications found:');
+      // Show first 5 applications to avoid too much output
+      const appsToShow = searchResult.applications.slice(0, 5);
+      for (const app of appsToShow) {
+        printInfo(`  Application ID: ${app.id}`);
+        if (app.params.creator) {
+          printInfo(`    - creator: ${shortenAddress(app.params.creator.toString())}`);
+        }
+        if (app.deleted) {
+          printInfo(`    - deleted: ${app.deleted}`);
+        }
+        printInfo('');
+      }
+      if (searchResult.applications.length > 5) {
+        printInfo(`  ... and ${searchResult.applications.length - 5} more`);
+      }
+    }
+
+    printInfo(`Query performed at round: ${searchResult.currentRound}`);
+  } catch (error) {
+    printError(
+      `searchForApplications failed: ${error instanceof Error ? error.message : String(error)}`,
+    );
+  }
+
+  // =========================================================================
+  // Step 6: Filter applications by creator address
+  // =========================================================================
+  printStep(6, 'Filtering applications by creator address');
+
+  try {
+    // Filter applications by creator
+    printInfo(`Searching for applications created by: ${shortenAddress(creatorAddress)}`);
+    const filteredResult = await indexer.searchForApplications({
+      creator: creatorAddress,
+    });
+
+    printSuccess(`Found ${filteredResult.applications.length} application(s) by this creator`);
+    printInfo('');
+
+    if (filteredResult.applications.length > 0) {
+      printInfo('Applications by this creator:');
+      for (const app of filteredResult.applications) {
+        printInfo(`  Application ID: ${app.id}`);
+        if (app.params.globalStateSchema) {
+          printInfo(
+            `    - globalStateSchema: ${app.params.globalStateSchema.numUints} uints, ${app.params.globalStateSchema.numByteSlices} byte slices`,
+          );
+        }
+      }
+    }
+  } catch (error) {
+    printError(
+      `searchForApplications by creator failed: ${error instanceof Error ? error.message : String(error)}`,
+    );
+  }
+
+  // =========================================================================
+  // Step 7: Delete an application and demonstrate includeAll parameter
+  // =========================================================================
+  printStep(7, 'Deleting an application to demonstrate includeAll parameter');
+
+  try {
+    // Delete the second application
+    printInfo(`Deleting application ${appId2}...`);
+    const deleteParams = await algod.suggestedParams();
+
+    const deleteFields: AppCallTransactionFields = {
+      appId: appId2,
+      onComplete: OnApplicationComplete.DeleteApplication,
+    };
+
+    const deleteTx = new Transaction({
+      type: TransactionType.AppCall,
+      sender: creatorAccount.addr,
+      firstValid: deleteParams.firstValid,
+      lastValid: deleteParams.lastValid,
+      genesisHash: deleteParams.genesisHash,
+      genesisId: deleteParams.genesisId,
+      appCall: deleteFields,
+    });
+
+    const deleteTxWithFee = assignFee(deleteTx, {
+      feePerByte: deleteParams.fee,
+      minFee: deleteParams.minFee,
+    });
+
+    const signedDeleteTx = await creatorAccount.signer([deleteTxWithFee], [0]);
+    await algod.sendRawTransaction(signedDeleteTx);
+    await waitForConfirmation(algod, deleteTxWithFee.txId());
+    printSuccess(`Deleted application ${appId2}`);
+    printInfo('');
+
+    // Search without includeAll (should not include deleted apps)
+    printInfo('Searching for applications by creator (without includeAll)...');
+    const withoutDeleted = await indexer.searchForApplications({
+      creator: creatorAddress,
+      includeAll: false,
+    });
+    printInfo(`Found ${withoutDeleted.applications.length} application(s) (excludes deleted)`);
+
+    // Search with includeAll to include deleted applications
+    printInfo('Searching for applications by creator (with includeAll: true)...');
+    const withDeleted = await indexer.searchForApplications({
+      creator: creatorAddress,
+      includeAll: true,
+    });
+    printInfo(`Found ${withDeleted.applications.length} application(s) (includes deleted)`);
+    printInfo('');
+
+    // Show deleted application details
+    const deletedApp = withDeleted.applications.find(app => app.id === appId2);
+    if (deletedApp) {
+      printInfo(`Deleted application (ID: ${deletedApp.id}):`);
+      printInfo(`  - deleted: ${deletedApp.deleted}`);
+      if (deletedApp.deletedAtRound !== undefined) {
+        printInfo(`  - deletedAtRound: ${deletedApp.deletedAtRound}`);
+      }
+    }
+  } catch (error) {
+    printError(
+      `Delete/includeAll demo failed: ${error instanceof Error ? error.message : String(error)}`,
+    );
+  }
+
+  // =========================================================================
+  // Step 8: Handle case where application is not found
+  // =========================================================================
+  printStep(8, 'Handling case where application is not found');
+
+  try {
+    // Try to lookup a non-existent application
+    const nonExistentAppId = 999999999n;
+    printInfo(`Attempting to lookup non-existent application ID: ${nonExistentAppId}`);
+
+    const result = await indexer.lookupApplicationById(nonExistentAppId);
+
+    // The response may have application as undefined for non-existent apps
+    if (result.application) {
+      printInfo(`Unexpectedly found application: ${result.application.id}`);
+    } else {
+      printInfo('Application field is undefined in response (application not found)');
+    }
+  } catch (error) {
+    // Some indexers throw an error for non-existent applications
+    printInfo(
+      `Application not found (caught error): ${error instanceof Error ? error.message : String(error)}`,
+    );
+  }
+
+  // =========================================================================
+  // Step 9: Demonstrate pagination with limit and next
+  // =========================================================================
+  printStep(9, 'Demonstrating pagination with limit and next parameters');
+
+  try {
+    // First page with limit
+    printInfo('Fetching first page of applications (limit: 1)...');
+    const page1 = await indexer.searchForApplications({ limit: 1 });
+
+    printInfo(`Page 1: Retrieved ${page1.applications.length} application(s)`);
+    if (page1.applications.length > 0) {
+      printInfo(`  - Application ID: ${page1.applications[0].id}`);
+    }
+
+    // Check if there are more results
+    if (page1.nextToken) {
+      printInfo(`  - Next token available: ${page1.nextToken.substring(0, 20)}...`);
+      printInfo('');
+
+      // Fetch second page using next token
+      printInfo('Fetching second page using next token...');
+      const page2 = await indexer.searchForApplications({
+        limit: 1,
+        next: page1.nextToken,
+      });
+
+      printInfo(`Page 2: Retrieved ${page2.applications.length} application(s)`);
+      if (page2.applications.length > 0) {
+        printInfo(`  - Application ID: ${page2.applications[0].id}`);
+      }
+
+      if (page2.nextToken) {
+        printInfo(`  - More results available (nextToken present)`);
+      } else {
+        printInfo(`  - No more results (no nextToken)`);
+      }
+    } else {
+      printInfo('  - No pagination needed (all results fit in one page)');
+    }
+  } catch (error) {
+    printError(`Pagination demo failed: ${error instanceof Error ? error.message : String(error)}`);
+  }
+
+  // =========================================================================
+  // Summary
+  // =========================================================================
+  printHeader('Summary');
+  printInfo('This example demonstrated:');
+  printInfo('  1. Deploying test applications using TEAL compilation');
+  printInfo('  2. lookupApplicationById(appId) - Get detailed info about a single application');
+  printInfo('  3. Display application params: id, creator, approvalProgram, clearStateProgram');
+  printInfo('  4. Display state schema: globalStateSchema, localStateSchema');
+  printInfo('  5. Display global state key-value pairs');
+  printInfo('  6. searchForApplications() - Search for applications');
+  printInfo('  7. Filtering by creator address');
+  printInfo('  8. Using includeAll to include deleted applications');
+  printInfo('  9. Handling case where application is not found');
+  printInfo('  10. Pagination with limit and next parameters');
+  printInfo('');
+  printInfo('Key lookupApplicationById response fields:');
+  printInfo('  - application: The Application object (may be undefined if not found)');
+  printInfo('  - currentRound: Round at which results were computed');
+  printInfo('');
+  printInfo('Key Application fields:');
+  printInfo('  - id: Application identifier (bigint)');
+  printInfo('  - deleted: Whether app is deleted (boolean, optional)');
+  printInfo('  - createdAtRound: Round when created (bigint, optional)');
+  printInfo('  - deletedAtRound: Round when deleted (bigint, optional)');
+  printInfo('  - params: ApplicationParams object');
+  printInfo('');
+  printInfo('Key ApplicationParams fields:');
+  printInfo('  - creator: Address that created the application');
+  printInfo('  - approvalProgram: TEAL bytecode for approval logic (Uint8Array)');
+  printInfo('  - clearStateProgram: TEAL bytecode for clear state logic (Uint8Array)');
+  printInfo('  - globalStateSchema: {numUints, numByteSlices} for global storage');
+  printInfo('  - localStateSchema: {numUints, numByteSlices} for per-user storage');
+  printInfo('  - globalState: Array of TealKeyValue for current global state');
+  printInfo('  - extraProgramPages: Extra program pages (number, optional)');
+  printInfo('  - version: Number of program updates (number, optional)');
+  printInfo('');
+  printInfo('searchForApplications() filter parameters:');
+  printInfo('  - applicationId: Filter by specific app ID');
+  printInfo('  - creator: Filter by creator address');
+  printInfo('  - includeAll: Include deleted applications (default: false)');
+  printInfo('  - limit: Maximum results per page');
+  printInfo('  - next: Pagination token from previous response');
+}
+
+main().catch(error => {
+  console.error('Fatal error:', error);
+  process.exit(1);
+});
+```
+
+---
+
+### Other examples in Indexer Client
+
+- [Indexer Health Check](/docs/algokit-utils/typescript/latest/examples/indexer-client/01-health-check/)
+- [Account Lookup](/docs/algokit-utils/typescript/latest/examples/indexer-client/02-account-lookup/)
+- [Account Assets](/docs/algokit-utils/typescript/latest/examples/indexer-client/03-account-assets/)
+- [Account Applications](/docs/algokit-utils/typescript/latest/examples/indexer-client/04-account-applications/)
+- [Account Transactions](/docs/algokit-utils/typescript/latest/examples/indexer-client/05-account-transactions/)
+- [Transaction Lookup](/docs/algokit-utils/typescript/latest/examples/indexer-client/06-transaction-lookup/)
+- [Transaction Search](/docs/algokit-utils/typescript/latest/examples/indexer-client/07-transaction-search/)
+- [Asset Lookup](/docs/algokit-utils/typescript/latest/examples/indexer-client/08-asset-lookup/)
+- [Asset Balances](/docs/algokit-utils/typescript/latest/examples/indexer-client/09-asset-balances/)
+- [Asset Transactions](/docs/algokit-utils/typescript/latest/examples/indexer-client/10-asset-transactions/)
+- **Application Lookup**
+- [Application Logs Lookup](/docs/algokit-utils/typescript/latest/examples/indexer-client/12-application-logs/)
+- [Application Boxes Lookup](/docs/algokit-utils/typescript/latest/examples/indexer-client/13-application-boxes/)
+- [Block Lookup](/docs/algokit-utils/typescript/latest/examples/indexer-client/14-block-lookup/)
+- [Block Headers Search](/docs/algokit-utils/typescript/latest/examples/indexer-client/15-block-headers/)
+- [Pagination](/docs/algokit-utils/typescript/latest/examples/indexer-client/16-pagination/)

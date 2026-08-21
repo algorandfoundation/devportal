@@ -1,0 +1,386 @@
+---
+title: 'Type Guards'
+description: 'This example demonstrates how to check argument and type categories in the ABI system:'
+sidebar:
+  order: 13
+---
+
+[← Back to ABI Encoding](/docs/algokit-utils/python/latest/examples/abi/)
+
+## Description
+
+This example demonstrates how to check argument and type categories in the ABI system:
+
+- TransactionType: Check if type is a transaction type (txn, pay, keyreg, acfg, axfer, afrz, appl)
+- ReferenceType: Check if type is a reference type (account, asset, application)
+- ABIType: Standard ABI types (not transaction or reference)
+- AVMType: AVM-specific types (AVMBytes, AVMString, AVMUint64)
+  In Python, use isinstance() checks with TransactionType and ReferenceType enums, and the abi.ABIType base class to determine type categories.
+  These checks are essential for:
+- Method argument handling and routing
+- Type narrowing for safer code
+- Determining how to encode/decode values based on type category
+
+## Prerequisites
+
+No LocalNet required - pure ABI encoding/decoding
+
+## Run This Example
+
+From the repository's `examples` directory:
+
+```bash
+cd examples
+uv run python abi/13_type_guards.py
+```
+
+## Code
+
+[View source on GitHub](https://github.com/algorandfoundation/algokit-utils-py/blob/main/examples/abi/13_type_guards.py)
+
+```python title="13_type_guards.py"
+# ruff: noqa: N999, C901, PLR0912, PLR0915
+"""
+Example: Type Guards
+
+This example demonstrates how to check argument and type categories in the ABI system:
+
+- TransactionType: Check if type is a transaction type (txn, pay, keyreg, acfg, axfer, afrz, appl)
+- ReferenceType: Check if type is a reference type (account, asset, application)
+- ABIType: Standard ABI types (not transaction or reference)
+- AVMType: AVM-specific types (AVMBytes, AVMString, AVMUint64)
+
+In Python, use isinstance() checks with TransactionType and ReferenceType enums,
+and the abi.ABIType base class to determine type categories.
+
+These checks are essential for:
+- Method argument handling and routing
+- Type narrowing for safer code
+- Determining how to encode/decode values based on type category
+
+No LocalNet required - pure ABI encoding/decoding
+"""
+
+from shared import print_header, print_info, print_step, print_success
+
+from algokit_abi import abi
+from algokit_abi.arc56 import AVMType, Method, ReferenceType, TransactionType
+
+
+def is_transaction_type(arg_type: abi.ABIType | ReferenceType | TransactionType) -> bool:
+    """Check if the argument type is a transaction type."""
+    return isinstance(arg_type, TransactionType)
+
+
+def is_reference_type(arg_type: abi.ABIType | ReferenceType | TransactionType) -> bool:
+    """Check if the argument type is a reference type."""
+    return isinstance(arg_type, ReferenceType)
+
+
+def is_abi_type(arg_type: abi.ABIType | ReferenceType | TransactionType) -> bool:
+    """Check if the argument type is a standard ABI type (not transaction or reference)."""
+    return isinstance(arg_type, abi.ABIType)
+
+
+def is_avm_type(type_str: str) -> bool:
+    """Check if a type string is an AVM-specific type."""
+    return type_str in (AVMType.BYTES.value, AVMType.STRING.value, AVMType.UINT64.value)
+
+
+def main() -> None:
+    print_header("Type Guards Example")
+
+    # Step 1: Introduction to type categories
+    print_step(1, "Introduction to Type Categories")
+
+    print_info("In ABI method calls, arguments can be categorized into:")
+    print_info("")
+    print_info("1. Transaction types: Represent transaction arguments")
+    print_info("   txn, pay, keyreg, acfg, axfer, afrz, appl")
+    print_info("")
+    print_info("2. Reference types: Represent references to on-chain entities")
+    print_info("   account, asset, application")
+    print_info("")
+    print_info("3. ABI types: Standard ARC-4 encoded types")
+    print_info("   uint64, string, address, (tuple), arrays, etc.")
+    print_info("")
+    print_info("4. AVM types: Native AVM stack value types")
+    print_info("   AVMBytes, AVMString, AVMUint64")
+
+    # Step 2: Transaction type checking
+    print_step(2, "TransactionType - Check for Transaction Types")
+
+    print_info("Transaction types identify arguments that must be transactions:")
+    print_info("")
+
+    print_info("TransactionType enum values:")
+    for tx_type in TransactionType:
+        print_info(f"  TransactionType.{tx_type.name}: '{tx_type.value}'")
+
+    print_info("")
+
+    # Test with method arguments
+    print_info("Testing isinstance(arg_type, TransactionType):")
+    test_types = [
+        ("TransactionType.ANY", TransactionType.ANY),
+        ("TransactionType.PAY", TransactionType.PAY),
+        ("TransactionType.KEYREG", TransactionType.KEYREG),
+        ("TransactionType.ACFG", TransactionType.ACFG),
+        ("TransactionType.AXFER", TransactionType.AXFER),
+        ("TransactionType.AFRZ", TransactionType.AFRZ),
+        ("TransactionType.APPL", TransactionType.APPL),
+    ]
+
+    for name, tx_type in test_types:
+        result = is_transaction_type(tx_type)
+        print_info(f"  is_transaction_type({name}): {result}")
+
+    # Step 3: Reference type checking
+    print_step(3, "ReferenceType - Check for Reference Types")
+
+    print_info("Reference types identify foreign references in method calls:")
+    print_info("")
+
+    print_info("ReferenceType enum values:")
+    for ref_type in ReferenceType:
+        print_info(f"  ReferenceType.{ref_type.name}: '{ref_type.value}'")
+
+    print_info("")
+
+    print_info("Testing isinstance(arg_type, ReferenceType):")
+    ref_test_types = [
+        ("ReferenceType.ACCOUNT", ReferenceType.ACCOUNT),
+        ("ReferenceType.ASSET", ReferenceType.ASSET),
+        ("ReferenceType.APPLICATION", ReferenceType.APPLICATION),
+    ]
+
+    for name, ref_type in ref_test_types:
+        result = is_reference_type(ref_type)
+        print_info(f"  is_reference_type({name}): {result}")
+
+    # Step 4: ABI type checking
+    print_step(4, "ABIType - Check for Standard ABI Types")
+
+    print_info("ABI types are standard ARC-4 encoded types (not txn or reference):")
+    print_info("")
+
+    # Create various ABI types
+    abi_types = [
+        ("uint64", abi.ABIType.from_string("uint64")),
+        ("string", abi.ABIType.from_string("string")),
+        ("address", abi.ABIType.from_string("address")),
+        ("bool", abi.ABIType.from_string("bool")),
+        ("byte", abi.ABIType.from_string("byte")),
+        ("byte[32]", abi.ABIType.from_string("byte[32]")),
+        ("uint64[]", abi.ABIType.from_string("uint64[]")),
+        ("(uint64,bool)", abi.ABIType.from_string("(uint64,bool)")),
+    ]
+
+    print_info("Testing isinstance(arg_type, abi.ABIType):")
+    for name, abi_type in abi_types:
+        result = is_abi_type(abi_type)
+        print_info(f'  is_abi_type(ABIType.from_string("{name}")): {result}')
+
+    print_info("")
+    print_info("Transaction and reference types are NOT ABITypes:")
+    print_info(f"  is_abi_type(TransactionType.PAY): {is_abi_type(TransactionType.PAY)}")
+    print_info(f"  is_abi_type(ReferenceType.ASSET): {is_abi_type(ReferenceType.ASSET)}")
+
+    # Step 5: AVMType checking
+    print_step(5, "AVMType - Check for AVM-Specific Types")
+
+    print_info("AVM types represent native Algorand Virtual Machine stack values:")
+    print_info("")
+
+    avm_types = ["AVMBytes", "AVMString", "AVMUint64"]
+
+    print_info("Testing is_avm_type():")
+    for avm_type in avm_types:
+        result = is_avm_type(avm_type)
+        print_info(f'  is_avm_type("{avm_type}"): {result}')
+
+    print_info("")
+    print_info("Non-AVM types:")
+    non_avm_types = ["uint64", "string", "address", "bytes", "txn", "account"]
+    for type_str in non_avm_types:
+        result = is_avm_type(type_str)
+        print_info(f'  is_avm_type("{type_str}"): {result}')
+
+    # Step 6: Type narrowing with type guards
+    print_step(6, "Type Narrowing with Type Guards")
+
+    print_info("Type guards enable type narrowing for safer code:")
+    print_info("")
+
+    def demonstrate_type_narrowing(arg_type: abi.ABIType | ReferenceType | TransactionType) -> str:
+        """Demonstrate type narrowing with different argument types."""
+        if is_transaction_type(arg_type):
+            # We know arg_type is TransactionType here
+            return f"Transaction type detected: {arg_type.value}"  # type: ignore[union-attr]
+        if is_reference_type(arg_type):
+            # We know arg_type is ReferenceType here
+            return f"Reference type detected: {arg_type.value}"  # type: ignore[union-attr]
+        # Must be ABIType
+        return f"ABI type detected: {arg_type}"
+
+    print_info('Testing type narrowing with TransactionType.PAY ("pay"):')
+    print_info(f"    {demonstrate_type_narrowing(TransactionType.PAY)}")
+
+    print_info("")
+    print_info('Testing type narrowing with ReferenceType.ASSET ("asset"):')
+    print_info(f"    {demonstrate_type_narrowing(ReferenceType.ASSET)}")
+
+    print_info("")
+    print_info('Testing type narrowing with ABIType.from_string("uint64"):')
+    print_info(f"    {demonstrate_type_narrowing(abi.ABIType.from_string('uint64'))}")
+
+    # Step 7: Practical example - Method argument handling
+    print_step(7, "Practical Example - Method Argument Handling")
+
+    print_info('Consider a method: "swap(asset,asset,pay,uint64)uint64"')
+    print_info("")
+
+    # Parse the method
+    swap_method = Method.from_signature("swap(asset,asset,pay,uint64)uint64")
+
+    print_info(f"Method name: {swap_method.name}")
+    print_info(f"Number of args: {len(swap_method.args)}")
+    print_info("")
+
+    # Analyze each argument
+    for i, arg in enumerate(swap_method.args):
+        arg_type = arg.type
+
+        if is_transaction_type(arg_type):
+            category = "Transaction"
+            handling = "Pass a transaction object"
+        elif is_reference_type(arg_type):
+            category = "Reference"
+            handling = "Will be added to foreign arrays, arg receives index"
+        else:
+            category = "ABI"
+            handling = "Will be ARC-4 encoded"
+
+        print_info(f'  Arg {i}: type="{arg_type}"')
+        print_info(f"    Category: {category}")
+        print_info(f"    Handling: {handling}")
+        print_info("")
+
+    # Step 8: All type strings test matrix
+    print_step(8, "Complete Type String Test Matrix")
+
+    print_info("Testing all type guard combinations:")
+    print_info("")
+
+    # Build test cases with actual type objects
+    test_cases: list[tuple[str, abi.ABIType | ReferenceType | TransactionType, str]] = [
+        ("txn", TransactionType.ANY, "txn"),
+        ("pay", TransactionType.PAY, "pay"),
+        ("keyreg", TransactionType.KEYREG, "keyreg"),
+        ("acfg", TransactionType.ACFG, "acfg"),
+        ("axfer", TransactionType.AXFER, "axfer"),
+        ("afrz", TransactionType.AFRZ, "afrz"),
+        ("appl", TransactionType.APPL, "appl"),
+        ("account", ReferenceType.ACCOUNT, "account"),
+        ("asset", ReferenceType.ASSET, "asset"),
+        ("application", ReferenceType.APPLICATION, "application"),
+        ("uint64", abi.ABIType.from_string("uint64"), "uint64"),
+        ("string", abi.ABIType.from_string("string"), "string"),
+        ("address", abi.ABIType.from_string("address"), "address"),
+        ("bool", abi.ABIType.from_string("bool"), "bool"),
+    ]
+
+    # Also check AVM types as strings
+    avm_string_tests = ["AVMBytes", "AVMString", "AVMUint64"]
+
+    print_info("  Type            | isTxn | isRef | isAbi | isAVM")
+    print_info("  ----------------+-------+-------+-------+------")
+
+    for name, type_obj, _ in test_cases:
+        is_txn = is_transaction_type(type_obj)
+        is_ref = is_reference_type(type_obj)
+        is_abi = is_abi_type(type_obj)
+        is_avm = is_avm_type(name)
+
+        pad_type = name.ljust(16)
+        pad_txn = str(is_txn).ljust(5)
+        pad_ref = str(is_ref).ljust(5)
+        pad_abi = str(is_abi).ljust(5)
+
+        print_info(f"  {pad_type}| {pad_txn} | {pad_ref} | {pad_abi} | {is_avm}")
+
+    for avm_str in avm_string_tests:
+        pad_type = avm_str.ljust(16)
+        # AVM types are string identifiers, not actual type objects
+        print_info(f"  {pad_type}| False | False | False | True")
+
+    # Step 9: Enum values demonstration
+    print_step(9, "Using TransactionType and ReferenceType Enums")
+
+    print_info("The library provides enums for type safety:")
+    print_info("")
+
+    print_info("TransactionType enum:")
+    print_info(f'  ANY:           "{TransactionType.ANY.value}"')
+    print_info(f'  PAY:           "{TransactionType.PAY.value}"')
+    print_info(f'  KEYREG:        "{TransactionType.KEYREG.value}"')
+    print_info(f'  ACFG:          "{TransactionType.ACFG.value}"')
+    print_info(f'  AXFER:         "{TransactionType.AXFER.value}"')
+    print_info(f'  AFRZ:          "{TransactionType.AFRZ.value}"')
+    print_info(f'  APPL:          "{TransactionType.APPL.value}"')
+    print_info("")
+
+    print_info("ReferenceType enum:")
+    print_info(f'  ACCOUNT:     "{ReferenceType.ACCOUNT.value}"')
+    print_info(f'  ASSET:       "{ReferenceType.ASSET.value}"')
+    print_info(f'  APPLICATION: "{ReferenceType.APPLICATION.value}"')
+
+    # Step 10: Summary
+    print_step(10, "Summary")
+
+    print_info("Type Guard Summary:")
+    print_info("")
+    print_info("Functions (using isinstance):")
+    print_info("  isinstance(arg_type, TransactionType) - True for txn, pay, keyreg, etc.")
+    print_info("  isinstance(arg_type, ReferenceType)   - True for account, asset, application")
+    print_info("  isinstance(arg_type, abi.ABIType)     - True for standard ABI types")
+    print_info("  is_avm_type(type_str)                 - True for AVMBytes, AVMString, AVMUint64")
+    print_info("")
+    print_info("Use Cases:")
+    print_info("  - Routing method arguments to appropriate handling logic")
+    print_info("  - Type narrowing for safe property access")
+    print_info("  - Determining encoding/decoding strategy based on type category")
+    print_info("  - Validating method signatures and argument types")
+    print_info("")
+    print_info("Key Insight:")
+    print_info("  The three arg type categories are mutually exclusive:")
+    print_info("  - Every method arg type is exactly one of: Transaction, Reference, or ABI type")
+    print_info("  - AVMType is orthogonal - it checks for AVM-specific storage types (strings)")
+
+    print_success("Type Guards example completed successfully!")
+
+
+if __name__ == "__main__":
+    main()
+
+```
+
+---
+
+### Other examples in ABI Encoding
+
+- [ABI Type Parsing](/docs/algokit-utils/python/latest/examples/abi/01-type-parsing/)
+- [ABI Primitive Types](/docs/algokit-utils/python/latest/examples/abi/02-primitive-types/)
+- [ABI Address Type](/docs/algokit-utils/python/latest/examples/abi/03-address-type/)
+- [ABI String Type](/docs/algokit-utils/python/latest/examples/abi/04-string-type/)
+- [ABI Static Array Type](/docs/algokit-utils/python/latest/examples/abi/05-static-array/)
+- [ABI Dynamic Array Type](/docs/algokit-utils/python/latest/examples/abi/06-dynamic-array/)
+- [ABI Tuple Type](/docs/algokit-utils/python/latest/examples/abi/07-tuple-type/)
+- [ABI Struct Type](/docs/algokit-utils/python/latest/examples/abi/08-struct-type/)
+- [ABI Struct and Tuple Conversion](/docs/algokit-utils/python/latest/examples/abi/09-struct-tuple-conversion/)
+- [ABI Bool Array Packing](/docs/algokit-utils/python/latest/examples/abi/10-bool-packing/)
+- [ABI Method](/docs/algokit-utils/python/latest/examples/abi/11-abi-method/)
+- [AVM Type Encoding](/docs/algokit-utils/python/latest/examples/abi/12-avm-types/)
+- **Type Guards**
+- [ABI Complex Nested Types](/docs/algokit-utils/python/latest/examples/abi/14-complex-nested/)
+- [ARC-56 Storage Helpers](/docs/algokit-utils/python/latest/examples/abi/15-arc56-storage/)

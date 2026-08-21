@@ -1,5 +1,7 @@
 ---
 title: Keys and Signing
+sidebar:
+  label: Keys & Signing
 ---
 
 import { LinkCard } from '@astrojs/starlight/components';
@@ -13,7 +15,7 @@ import base64PrivateKey from '@images/account-overview-Base64-Private-Key.png';
 import pubPrivKey from '@images/account-overview-public-private-key.png';
 import pubKeyAlgorandAddr from '@images/account-Overview-Public-Key-Algorand-Address.png';
 
-Algorand uses **Ed25519 elliptic-curve signatures** to ensure high-speed, secure cryptographic operations. Every account in Algorand is built upon a **public/private key pair**, which plays a crucial role in signing and verifying transactions. To simplify key management and enhance security, Algorand provides various tools and transformations to make key handling more accessible to developers and end users.
+Algorand uses **Ed25519 elliptic-curve signatures** to ensure high-speed, secure cryptographic operations. Every account in Algorand is built upon a **public/private key pair**, which plays a crucial role in signing and verifying transactions. (Algorand also supports quantum-resistant **Falcon-1024** accounts, described in [Post-Quantum Accounts](/concepts/accounts/post-quantum); this page covers standard Ed25519 keys.) To simplify key management and enhance security, Algorand provides various tools and transformations to make key handling more accessible to developers and end users.
 
 This guide explores how public and private key pairs are generated and transformed into user-friendly formats like Algorand addresses, base64 private keys, and mnemonics. It also covers various methods for signing transactions, including direct key management through command-line tools like Algokey, programmatic signing using AlgoKit Utils in Python and TypeScript, and wallet-based signing with Pera Wallet integration.
 
@@ -67,11 +69,7 @@ Algokey is a command-line tool provided by Algorand for managing cryptographic k
 algokey sign -t transaction.txn -k private_key.key -o signed_transaction.stxn
 ```
 
-<LinkCard
-  title='Algokey'
-  href='/nodes/reference/artifacts#algokey'
-  description='Algokey reference'
-/>
+<LinkCard title='AlgoKey' href='/reference/algokey' description='Full algokey command reference' />
 
 ### Using Algokit utils
 
@@ -182,7 +180,7 @@ Create an unsigned payment transaction and manually sign it. The transaction sig
 
 Logic signatures provide a programmable way to authorize transactions on the Algorand blockchain. Instead of relying solely on private key-based signatures, LogicSigs allow transaction approvals based on predefined conditions encoded in TEAL. It allow users to delegate signature authority without exposing their private key. LogicSigs allow fine-grained control over spending by defining transaction rules such as only allowing transfers to specific recipient addresses.
 
-Only use smart signatures when absolutely required. In most cases, it is preferrable to use smart contract escrow accounts over smart signatures as smart signatures require the logic to be supplied for every transaction.
+Only use smart signatures when absolutely required. In most cases, it is preferable to use smart contract escrow accounts over smart signatures as smart signatures require the logic to be supplied for every transaction.
 
 <LinkCard
   title='Logic Signatures'

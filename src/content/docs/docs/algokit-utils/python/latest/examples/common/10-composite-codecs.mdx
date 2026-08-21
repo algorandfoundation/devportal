@@ -1,0 +1,503 @@
+---
+title: 'Composite Serde (Serialization/Deserialization)'
+description: 'This example demonstrates how to serialize/deserialize composite data structures like arrays, maps, and records in Python using the serde utilities.'
+sidebar:
+  order: 10
+---
+
+[← Back to Common Utilities](/docs/algokit-utils/python/latest/examples/common/)
+
+## Description
+
+This example demonstrates how to serialize/deserialize composite data structures like arrays, maps, and records in Python using the serde utilities.
+Note: Unlike the TypeScript SDK which uses explicit ArrayCodec, MapCodec, and RecordCodec classes, the Python SDK handles these natively through:
+
+- Native Python lists for arrays
+- Native Python dicts for records/maps
+- Dataclass fields with serde helpers for structured data
+  Topics covered:
+- Encoding/decoding typed arrays (lists)
+- Encoding/decoding maps (dictionaries)
+- Using bytes_seq(), int_seq(), addr_seq() helpers
+- Nested structures (list of lists, dict of lists)
+- Round-trip verification for composite types
+
+## Prerequisites
+
+No LocalNet required - pure serde functions
+
+## Run This Example
+
+From the repository's `examples` directory:
+
+```bash
+cd examples
+uv run python common/10_composite_codecs.py
+```
+
+## Code
+
+[View source on GitHub](https://github.com/algorandfoundation/algokit-utils-py/blob/main/examples/common/10_composite_codecs.py)
+
+```python title="10_composite_codecs.py"
+# ruff: noqa: N999, C901, PLR0912, PLR0915
+"""
+Example: Composite Serde (Serialization/Deserialization)
+
+This example demonstrates how to serialize/deserialize composite data structures
+like arrays, maps, and records in Python using the serde utilities.
+
+Note: Unlike the TypeScript SDK which uses explicit ArrayCodec, MapCodec, and
+RecordCodec classes, the Python SDK handles these natively through:
+- Native Python lists for arrays
+- Native Python dicts for records/maps
+- Dataclass fields with serde helpers for structured data
+
+Topics covered:
+- Encoding/decoding typed arrays (lists)
+- Encoding/decoding maps (dictionaries)
+- Using bytes_seq(), int_seq(), addr_seq() helpers
+- Nested structures (list of lists, dict of lists)
+- Round-trip verification for composite types
+
+No LocalNet required - pure serde functions
+"""
+
+from dataclasses import dataclass, field
+
+from shared import (
+    format_hex,
+    print_header,
+    print_info,
+    print_step,
+    print_success,
+)
+
+from algokit_common import (
+    addr_seq,
+    address_from_public_key,
+    bytes_seq,
+    from_wire,
+    int_seq,
+    to_wire,
+    wire,
+)
+from algokit_transact.codec.msgpack import decode_msgpack, encode_msgpack
+
+
+def main() -> None:
+    print_header("Composite Serde Example")
+
+    # Step 1: Introduction to Composite Types in Python
+    print_step(1, "Introduction to Composite Types")
+
+    print_info("Python handles composite types natively without explicit codec classes.")
+    print_info("")
+    print_info("TypeScript approach:")
+    print_info("  - ArrayCodec<T> for typed arrays")
+    print_info("  - MapCodec<K, V> for Maps")
+    print_info("  - RecordCodec<V> for Record<string, V>")
+    print_info("")
+    print_info("Python approach:")
+    print_info("  - Native list for arrays")
+    print_info("  - Native dict for maps/records")
+    print_info("  - Dataclass field helpers: bytes_seq(), int_seq(), addr_seq()")
+    print_info("")
+    print_success("Python provides simpler, more natural composite handling")
+
+    # Step 2: Native List (Array) Encoding/Decoding
+    print_step(2, "Native List (Array) Encoding/Decoding")
+
+    print_info("Python lists serialize directly with msgpack:")
+    print_info("")
+
+    # Number arrays
+    numbers = [1, 2, 3, 4, 5]
+    encoded_nums = encode_msgpack({"values": numbers})
+    decoded_nums = decode_msgpack(encoded_nums)
+    decoded_nums_val = decoded_nums["values"] if isinstance(decoded_nums, dict) else []
+    print_info(f"  Number array: {numbers}")
+    print_info(f"  Round-trip:   {decoded_nums_val}")
+    print_info(f"  Match: {list(decoded_nums_val) == numbers}")
+    print_info("")
+
+    # String arrays
+    strings = ["Alice", "Bob", "Charlie"]
+    encoded_strs = encode_msgpack({"values": strings})
+    decoded_strs = decode_msgpack(encoded_strs)
+    decoded_strs_val = decoded_strs["values"] if isinstance(decoded_strs, dict) else []
+    print_info(f"  String array: {strings}")
+    print_info(f"  Round-trip:   {list(decoded_strs_val)}")
+    print_info(f"  Match: {list(decoded_strs_val) == strings}")
+    print_info("")
+
+    # Boolean arrays
+    booleans = [True, False, True, False]
+    encoded_bools = encode_msgpack({"values": booleans})
+    decoded_bools = decode_msgpack(encoded_bools)
+    decoded_bools_val = decoded_bools["values"] if isinstance(decoded_bools, dict) else []
+    print_info(f"  Boolean array: {booleans}")
+    print_info(f"  Round-trip:    {list(decoded_bools_val)}")
+    print_info(f"  Match: {list(decoded_bools_val) == booleans}")
+    print_info("")
+
+    # Large integer arrays
+    big_ints = [100, 9007199254740993, 18446744073709551615]
+    encoded_bigs = encode_msgpack({"values": big_ints})
+    decoded_bigs = decode_msgpack(encoded_bigs)
+    decoded_bigs_val = decoded_bigs["values"] if isinstance(decoded_bigs, dict) else []
+    print_info(f"  Large int array: {big_ints}")
+    print_info(f"  Round-trip:      {list(decoded_bigs_val)}")
+    print_info(f"  Match: {list(decoded_bigs_val) == big_ints}")
+    print_info("")
+
+    print_success("Native lists handle all element types correctly")
+
+    # Step 3: Bytes Arrays with bytes_seq()
+    print_step(3, "Bytes Arrays with bytes_seq()")
+
+    print_info("Use bytes_seq() helper for sequences of byte arrays in dataclasses:")
+    print_info("")
+
+    @dataclass
+    class BytesContainer:
+        items: tuple[bytes, ...] = field(default=(), metadata=bytes_seq("items"))
+
+    bytes_list = [
+        bytes([0x01, 0x02, 0x03]),
+        bytes([0x04, 0x05, 0x06]),
+        bytes([0x07, 0x08, 0x09]),
+    ]
+
+    container = BytesContainer(items=tuple(bytes_list))
+    print_info(f"  Original: [{', '.join(format_hex(b) for b in bytes_list)}]")
+
+    wire_data = to_wire(container)
+    print_info(f"  Wire format: {{'items': [...{len(wire_data.get('items', []))} bytes objects...]}}")
+
+    decoded_container = from_wire(BytesContainer, wire_data)
+    print_info(f"  Decoded: [{', '.join(format_hex(b) for b in decoded_container.items)}]")
+
+    match = list(container.items) == list(decoded_container.items)
+    print_info(f"  Match: {match}")
+    print_info("")
+
+    print_success("bytes_seq() handles byte array sequences correctly")
+
+    # Step 4: Integer Arrays with int_seq()
+    print_step(4, "Integer Arrays with int_seq()")
+
+    print_info("Use int_seq() helper for sequences of integers in dataclasses:")
+    print_info("")
+
+    @dataclass
+    class IntContainer:
+        values: tuple[int, ...] = field(default=(), metadata=int_seq("vals"))
+
+    int_list = [10, 20, 30, 40, 50]
+    int_container = IntContainer(values=tuple(int_list))
+    print_info(f"  Original: {int_list}")
+
+    wire_int = to_wire(int_container)
+    print_info(f"  Wire format: {wire_int}")
+
+    decoded_int_container = from_wire(IntContainer, wire_int)
+    print_info(f"  Decoded: {list(decoded_int_container.values)}")
+
+    match_int = list(int_container.values) == list(decoded_int_container.values)
+    print_info(f"  Match: {match_int}")
+    print_info("")
+
+    print_success("int_seq() handles integer sequences correctly")
+
+    # Step 5: Address Arrays with addr_seq()
+    print_step(5, "Address Arrays with addr_seq()")
+
+    print_info("Use addr_seq() helper for sequences of addresses in dataclasses:")
+    print_info("")
+
+    @dataclass
+    class AddressContainer:
+        addresses: tuple[str, ...] = field(default=(), metadata=addr_seq("addrs"))
+
+    # Create test addresses
+    addr1 = address_from_public_key(bytes([0x11] * 32))
+    addr2 = address_from_public_key(bytes([0x22] * 32))
+    addr3 = address_from_public_key(bytes([0x33] * 32))
+
+    addr_container = AddressContainer(addresses=(addr1, addr2, addr3))
+    print_info(f"  Original: [{addr1[:12]}..., {addr2[:12]}..., {addr3[:12]}...]")
+
+    wire_addr = to_wire(addr_container)
+    print_info(f"  Wire format: {{'addrs': [...{len(wire_addr.get('addrs', []))} pubkeys...]}}")
+
+    decoded_addr_container = from_wire(AddressContainer, wire_addr)
+    print_info(f"  Decoded: [{decoded_addr_container.addresses[0][:12]}..., ...]")
+
+    match_addr = list(addr_container.addresses) == list(decoded_addr_container.addresses)
+    print_info(f"  Match: {match_addr}")
+    print_info("")
+
+    print_success("addr_seq() handles address sequences correctly")
+
+    # Step 6: Native Dict (Map/Record) Encoding/Decoding
+    print_step(6, "Native Dict (Map/Record) Encoding/Decoding")
+
+    print_info("Python dicts serialize directly with msgpack:")
+    print_info("")
+
+    # String -> Number mapping
+    scores = {"alice": 95, "bob": 87, "charlie": 92}
+    encoded_scores = encode_msgpack({"data": scores})
+    decoded_scores = decode_msgpack(encoded_scores)
+    decoded_scores_val = decoded_scores["data"] if isinstance(decoded_scores, dict) else {}
+    print_info(f"  String->Number: {scores}")
+    print_info(f"  Round-trip:     {dict(decoded_scores_val)}")
+    print_info(f"  Match: {dict(decoded_scores_val) == scores}")
+    print_info("")
+
+    # String -> String mapping
+    metadata = {"name": "My App", "version": "1.0.0", "author": "Developer"}
+    encoded_meta = encode_msgpack({"data": metadata})
+    decoded_meta = decode_msgpack(encoded_meta)
+    decoded_meta_val = decoded_meta["data"] if isinstance(decoded_meta, dict) else {}
+    print_info(f"  String->String: {metadata}")
+    print_info(f"  Round-trip:     {dict(decoded_meta_val)}")
+    print_info(f"  Match: {dict(decoded_meta_val) == metadata}")
+    print_info("")
+
+    # Nested dict
+    nested = {"level1": {"level2": {"value": 42}}}
+    encoded_nested = encode_msgpack({"data": nested})
+    decoded_nested = decode_msgpack(encoded_nested)
+    decoded_nested_val = decoded_nested["data"] if isinstance(decoded_nested, dict) else {}
+    print_info(f"  Nested dict: {nested}")
+    print_info(f"  Round-trip:  {dict(decoded_nested_val)}")
+    # Convert recursively for comparison
+    print_info(f"  Match: {decoded_nested_val == nested}")
+    print_info("")
+
+    print_success("Native dicts handle various value types correctly")
+
+    # Step 7: Dict of Arrays
+    print_step(7, "Dict of Arrays")
+
+    print_info("Dicts can contain array values:")
+    print_info("")
+
+    # User scores (string -> list of numbers)
+    user_scores = {
+        "alice": [95, 88, 92],
+        "bob": [78, 85, 90],
+    }
+
+    encoded_user_scores = encode_msgpack({"data": user_scores})
+    decoded_user_scores = decode_msgpack(encoded_user_scores)
+    decoded_user_val = decoded_user_scores["data"] if isinstance(decoded_user_scores, dict) else {}
+
+    print_info("  Dict of number arrays:")
+    for name, score_list in user_scores.items():
+        print_info(f"    {name}: {score_list}")
+    print_info("")
+    print_info("  Round-trip:")
+    for name, score_list in decoded_user_val.items():
+        print_info(f"    {name}: {list(score_list)}")
+    print_info("")
+
+    # Category items (string -> list of strings)
+    categories = {
+        "fruits": ["apple", "banana", "cherry"],
+        "colors": ["red", "green", "blue"],
+    }
+
+    encoded_cats = encode_msgpack({"data": categories})
+    decoded_cats = decode_msgpack(encoded_cats)
+    decoded_cats_val = decoded_cats["data"] if isinstance(decoded_cats, dict) else {}
+
+    print_info("  Dict of string arrays:")
+    for cat, items in categories.items():
+        print_info(f"    {cat}: {items}")
+    print_info("")
+    print_info("  Round-trip:")
+    for cat, items in decoded_cats_val.items():
+        print_info(f"    {cat}: {list(items)}")
+    print_info("")
+
+    print_success("Dict of arrays handled correctly")
+
+    # Step 8: Nested Arrays (2D arrays)
+    print_step(8, "Nested Arrays (2D arrays)")
+
+    print_info("Lists can contain other lists (2D arrays):")
+    print_info("")
+
+    matrix = [
+        [1, 2, 3],
+        [4, 5, 6],
+        [7, 8, 9],
+    ]
+
+    encoded_matrix = encode_msgpack({"data": matrix})
+    decoded_matrix = decode_msgpack(encoded_matrix)
+    decoded_matrix_val = decoded_matrix["data"] if isinstance(decoded_matrix, dict) else []
+
+    print_info("  Original matrix:")
+    for row in matrix:
+        print_info(f"    {row}")
+    print_info("")
+    print_info("  Decoded matrix:")
+    for row in decoded_matrix_val:
+        print_info(f"    {list(row)}")
+    print_info("")
+
+    # Verify match
+    matrix_match = all(list(decoded_matrix_val[i]) == matrix[i] for i in range(len(matrix)))
+    print_info(f"  Match: {matrix_match}")
+    print_info("")
+
+    print_success("Nested arrays (2D) handled correctly")
+
+    # Step 9: Complex Dataclass with Collections
+    print_step(9, "Complex Dataclass with Collections")
+
+    print_info("Dataclasses can combine multiple collection types:")
+    print_info("")
+
+    @dataclass
+    class AppConfig:
+        name: str = field(default="", metadata=wire("n"))
+        enabled_features: tuple[str, ...] = field(default=(), metadata=wire("ef"))
+        settings: dict[str, int] = field(default_factory=dict, metadata=wire("s"))
+        tags: tuple[str, ...] = field(default=(), metadata=wire("t"))
+
+    config = AppConfig(
+        name="MyApp",
+        enabled_features=("auth", "logging", "metrics"),
+        settings={"timeout": 30, "retries": 3, "cache_size": 100},
+        tags=("production", "v1"),
+    )
+
+    print_info(f"  name: {config.name}")
+    print_info(f"  enabled_features: {config.enabled_features}")
+    print_info(f"  settings: {config.settings}")
+    print_info(f"  tags: {config.tags}")
+    print_info("")
+
+    wire_config = to_wire(config)
+    print_info(f"  Wire format: {wire_config}")
+    print_info("")
+
+    decoded_config = from_wire(AppConfig, wire_config)
+    print_info(f"  Decoded name: {decoded_config.name}")
+    print_info(f"  Decoded features: {decoded_config.enabled_features}")
+    print_info(f"  Decoded settings: {decoded_config.settings}")
+    print_info(f"  Decoded tags: {decoded_config.tags}")
+    print_info("")
+
+    config_match = (
+        decoded_config.name == config.name
+        and decoded_config.enabled_features == config.enabled_features
+        and decoded_config.settings == config.settings
+        and decoded_config.tags == config.tags
+    )
+    print_info(f"  Match: {config_match}")
+
+    print_success("Complex dataclass with collections handled correctly")
+
+    # Step 10: Round-Trip Verification Summary
+    print_step(10, "Round-Trip Verification Summary")
+
+    print_info("Verifying round-trip for all composite types:")
+    print_info("")
+
+    test_cases = [
+        ("Number list", [1, 2, 3, 4, 5]),
+        ("String list", ["a", "b", "c"]),
+        ("Boolean list", [True, False, True]),
+        ("Large int list", [100, 200, 18446744073709551615]),
+        ("Empty list", []),
+        ("String->int dict", {"a": 1, "b": 2}),
+        ("String->str dict", {"name": "test", "type": "example"}),
+        ("Empty dict", {}),
+        ("2D array", [[1, 2], [3, 4]]),
+        ("Dict of arrays", {"x": [1, 2, 3], "y": [4, 5, 6]}),
+        ("Nested dict", {"outer": {"inner": "value"}}),
+    ]
+
+    all_passed = True
+    for name, original in test_cases:
+        encoded = encode_msgpack({"v": original})
+        decoded = decode_msgpack(encoded)
+        decoded_val = decoded["v"] if isinstance(decoded, dict) else None
+
+        # Deep comparison for nested structures
+        def deep_equal(a: object, b: object) -> bool:
+            if isinstance(a, list) and isinstance(b, list | tuple):
+                return len(a) == len(b) and all(deep_equal(a[i], b[i]) for i in range(len(a)))
+            if isinstance(a, dict) and isinstance(b, dict):
+                return set(a.keys()) == set(b.keys()) and all(deep_equal(a[k], b[k]) for k in a)
+            return a == b
+
+        passed = deep_equal(original, decoded_val)
+        status = "PASS" if passed else "FAIL"
+        print_info(f"  [{status}] {name}")
+        if not passed:
+            all_passed = False
+            print_info(f"         Original: {original}")
+            print_info(f"         Decoded:  {decoded_val}")
+
+    print_info("")
+    if all_passed:
+        print_success("All round-trip verifications passed!")
+
+    # Step 11: Summary
+    print_step(11, "Summary")
+
+    print_info("Python composite type handling (vs TypeScript codecs):")
+    print_info("")
+    print_info("  Native Python types:")
+    print_info("    - list:  Direct serialization (no ArrayCodec needed)")
+    print_info("    - dict:  Direct serialization (no MapCodec/RecordCodec needed)")
+    print_info("    - tuple: Serializes as array in msgpack")
+    print_info("")
+    print_info("  Dataclass serde helpers:")
+    print_info("    - bytes_seq(alias)  Sequences of byte arrays")
+    print_info("    - int_seq(alias)    Sequences of integers")
+    print_info("    - addr_seq(alias)   Sequences of addresses")
+    print_info("    - wire(alias)       Generic field metadata")
+    print_info("")
+    print_info("  Key features:")
+    print_info("    - Native Python types work directly")
+    print_info("    - No need for explicit codec composition")
+    print_info("    - Nested structures (2D arrays, dict of arrays) work")
+    print_info("    - Round-trip encoding preserves all data")
+    print_info("")
+    print_info("  TypeScript comparison:")
+    print_info("    - TS needs ArrayCodec, MapCodec, RecordCodec")
+    print_info("    - Python uses native types + dataclass helpers")
+    print_info("    - Simpler, more Pythonic approach")
+    print_info("")
+    print_success("Composite Serde Example completed!")
+
+
+if __name__ == "__main__":
+    main()
+
+```
+
+---
+
+### Other examples in Common Utilities
+
+- [Address Basics](/docs/algokit-utils/python/latest/examples/common/01-address-basics/)
+- [Address Encoding](/docs/algokit-utils/python/latest/examples/common/02-address-encoding/)
+- [Array Utilities](/docs/algokit-utils/python/latest/examples/common/03-array-utilities/)
+- [Constants Reference](/docs/algokit-utils/python/latest/examples/common/04-constants/)
+- [Crypto Hash (SHA-512/256)](/docs/algokit-utils/python/latest/examples/common/05-crypto-hash/)
+- [Example](/docs/algokit-utils/python/latest/examples/common/06-logger/)
+- [JSON BigInt Support](/docs/algokit-utils/python/latest/examples/common/07-json-bigint/)
+- [MessagePack Encoding](/docs/algokit-utils/python/latest/examples/common/08-msgpack/)
+- [Primitive Serde (Serialization/Deserialization)](/docs/algokit-utils/python/latest/examples/common/09-primitive-codecs/)
+- **Composite Serde (Serialization/Deserialization)**
+- [Model Serde (Object Model Serialization)](/docs/algokit-utils/python/latest/examples/common/11-model-codecs/)
+- [Sourcemap for TEAL Debugging](/docs/algokit-utils/python/latest/examples/common/12-sourcemap/)

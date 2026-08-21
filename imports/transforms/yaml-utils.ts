@@ -116,7 +116,7 @@ export function deepMerge(
  * @param value - Value to check
  * @returns True if value is a plain object
  */
-function isPlainObject(value: YamlValue): value is Record<string, YamlValue> {
+export function isPlainObject(value: YamlValue): value is Record<string, YamlValue> {
   return (
     value !== null &&
     typeof value === 'object' &&

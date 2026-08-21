@@ -66,7 +66,7 @@ Before you begin, ensure you have the following installed:
 
 ## Project Structure
 
-```
+```text
 .
 ├── .github/
 │   └── workflows/          # CI/CD workflows
@@ -79,9 +79,10 @@ Before you begin, ensure you have the following installed:
 ├── public/                # Static assets (favicons, etc.)
 ├── scripts/               # Build and utility scripts
 │   ├── clean-docs-import.ts       # Clear imported documentation
-│   ├── generate-opcode-list.js    # Generate Algorand opcodes list
-│   ├── manage-sidebar-meta.js     # Sidebar management
-│   └── prose-check.ts             # AI-powered prose quality checker
+│   ├── generate-opcode-list.ts    # Render the opcode reference page
+│   ├── manage-sidebar-meta.ts     # Sidebar metadata generator
+│   ├── prose-check.ts             # AI-powered prose quality checker
+│   └── update-opcodes.ts          # Sync TEAL opcodes from go-algorand
 ├── src/
 │   ├── assets/            # Images and media files
 │   ├── components/        # Reusable Astro/React components
@@ -115,7 +116,7 @@ Before you begin, ensure you have the following installed:
 
 ### Content & Documentation
 
-- **[@larkiny/astro-github-loader](https://www.npmjs.com/package/@larkiny/astro-github-loader)** - Import documentation from GitHub repositories
+- **[@algorandfoundation/astro-github-loader](https://www.npmjs.com/package/@algorandfoundation/astro-github-loader)** - Import documentation from GitHub repositories
 - **[starlight-openapi](https://www.npmjs.com/package/starlight-openapi)** - OpenAPI/Swagger documentation
 - **[starlight-auto-sidebar](https://www.npmjs.com/package/starlight-auto-sidebar)** - Automatic sidebar generation
 - **[astro-d2](https://www.npmjs.com/package/astro-d2)** - D2 diagram integration
@@ -155,13 +156,18 @@ All commands are run from the root of the project:
 
 ### Content Generation
 
-| Command                         | Description                             |
-| ------------------------------- | --------------------------------------- |
-| `pnpm run generate-opcode-list` | Generate Algorand opcodes documentation |
+| Command                           | Description                                                                    |
+| --------------------------------- | ------------------------------------------------------------------------------ |
+| `pnpm run generate-opcode-list`   | Render the opcode reference page (`opcodes.mdx`) from `opcodes.json`            |
+| `pnpm run update:opcodes`         | Fetch the latest opcodes from go-algorand, update `opcodes.json`, and re-render |
+| `pnpm run update:opcodes:dry-run` | Preview an opcode update without writing any files                              |
+| `pnpm run check:opcodes`          | Warn (non-blocking) if the committed opcode reference is out of date            |
+
+See [TEAL Opcode Reference](#teal-opcode-reference) for how these fit together.
 
 ### Content Import
 
-Documentation is imported from external GitHub repositories using `@larkiny/astro-github-loader`. Import configurations are defined in `imports/configs/`.
+Documentation is imported from external GitHub repositories using `@algorandfoundation/astro-github-loader`. Import configurations are defined in `imports/configs/`.
 
 | Command                   | Description                                                         |
 | ------------------------- | ------------------------------------------------------------------- |
@@ -172,7 +178,7 @@ Documentation is imported from external GitHub repositories using `@larkiny/astr
 
 ### Auto-Sidebar Management
 
-The `starlight-auto-sidebar` plugin enables you to customize the order and appearance of auto-generated sidebar entries, including cascading frontmatter configuration to files within a folder. The following commands enable you to quickly generate the `_meta.yml` files from the config defined in `auto-sidebar-config.yml`.
+The `starlight-auto-sidebar` plugin enables you to customize the order and appearance of auto-generated sidebar entries, including cascading frontmatter configuration to files within a folder. The following commands generate `_meta.yml` files from the `sidebarMetadata` configs defined in each library's `imports/configs/{lib}/sidebar.config.ts`.
 
 | Command                      | Description                             |
 | ---------------------------- | --------------------------------------- |
@@ -194,14 +200,20 @@ The `starlight-auto-sidebar` plugin enables you to customize the order and appea
 
 The following environment variables can be configured:
 
-| Variable         | Description                                      | Default |
-| ---------------- | ------------------------------------------------ | ------- |
-| `GITHUB_TOKEN`   | GitHub API token (required for importing docs)   | -       |
-| `IMPORT_GITHUB`  | Enable GitHub content import                     | `false` |
-| `IMPORT_DRY_RUN` | Preview imports without writing files            | `false` |
-| `FORCE_IMPORT`   | Force re-import, ignoring cache                  | `false` |
+| Variable                       | Description                                      | Default    |
+| ------------------------------ | ------------------------------------------------ | ---------- |
+| `GITHUB_TOKEN`                 | GitHub API token (required for importing docs)   | -          |
+| `IMPORT_GITHUB`                | Enable GitHub content import                     | `false`    |
+| `IMPORT_DRY_RUN`               | Preview imports without writing files            | `false`    |
+| `FORCE_IMPORT`                 | Force re-import, ignoring cache                  | `false`    |
+| `OPENAI_API_KEY`               | OpenAI API key for the prose checker             | -          |
+| `PROSE_CHECK_ENABLED`          | Enable AI prose quality checking                 | `false`    |
+| `PROSE_CHECK_MODE`             | Prose checker mode (`warn` or `error`)           | `warn`     |
+| `PROSE_CHECK_MODEL`            | OpenAI model for prose checking                  | `gpt-4o-mini` |
+| `PROSE_CHECK_SENSITIVITY`      | Prose checker sensitivity level                  | `medium`   |
+| `PROSE_CHECK_EXCLUDE`          | Glob pattern for paths to exclude from checking  | `src/content/docs/reference/` |
 
-Set these in your shell or use your preferred environment management tool.
+Set these in a `.env` file in the project root. Run `source .env` before running import commands.
 
 ### Astro Configuration
 
@@ -243,7 +255,15 @@ Your content here...
 
 ### Importing External Documentation
 
-The project uses `@larkiny/astro-github-loader` to import documentation from external repositories. Configure imports in `imports/configs/`. See the package [documentation](https://github.com/larkiny/starlight-github-loader/blob/main/packages/astro-github-loader/README.md) for details on how to configure external documentation imports.
+The project uses `@algorandfoundation/astro-github-loader` to import documentation from external repositories. Configure imports in `imports/configs/`. See the [documentation](https://github.com/algorandfoundation/astro-github-loader/blob/main/packages/astro-github-loader/README.md) for details on how to configure external documentation imports.
+
+### TEAL Opcode Reference
+
+The [AVM Opcodes](https://dev.algorand.co/reference/algorand-teal/opcodes) reference is sourced from the TEAL language spec in [algorand/go-algorand](https://github.com/algorand/go-algorand/tree/master/data/transactions/logic) (`master`). The page's version filter defaults to the latest live release, so opcodes for a newer, not-yet-released AVM version are hidden until the reader opts in by widening the filter.
+
+- `opcodes.json` is the dataset; `opcodes.mdx` is rendered from it (auto, in `prebuild`).
+- `check:opcodes` runs during `prebuild` and prints a non-blocking warning when the dataset is out of date.
+- To refresh, run **Actions → Update Opcodes → Run workflow** (opens a `devrel`-reviewed PR), or run `pnpm run update:opcodes` locally on a dedicated branch.
 
 ## Contributing
 
@@ -267,6 +287,19 @@ This project adheres to the [Contributor Covenant Code of Conduct](code_of_condu
 - [Astro Documentation](https://docs.astro.build)
 - [Algorand Developer Portal](https://dev.algorand.co)
 - [Algorand Foundation](https://algorand.co)
+
+## Deployment
+
+This project is currently served via Cloudflare. In addition to serving statically generated pages of styled HTML, the deployment also leverages their ability to serve pages as markdown upon request by content negotiation headers. This is particularly useful for AI agents with limited context window sizes, as page content rendered as markdown can be 80-98% smaller than the original HTML markup.
+
+This feature is enabled by a rule configured in the Cloudflare dashboard under Rules --> Overview --> rule named "Serve docs to agents as markdown".
+
+One can quickly see the difference in content by requesting a page with/without the `Accept: text/markdown` header.
+
+```bash
+curl https://dev.algorand.co/getting-started/portal-guide/ \
+  -H "Accept: text/markdown" | wc -c
+```
 
 ## License
 

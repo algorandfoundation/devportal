@@ -1,5 +1,7 @@
 ---
 title: On-Chain Storage
+sidebar:
+  label: Overview
 description: Data storage primitives in the Algorand Virtual Machine (AVM)
 ---
 
@@ -41,6 +43,8 @@ When storing data in Global Storage, keep in mind that depending on the type and
 - 25,000 + 3,500 = 28,500 microAlgo for each UInt in the Global State schema
 - 25,000 + 25,000 = 50,000 microAlgo for each byte slice in the Global State schema
 
+The creator's account must hold a balance covering this MBR. An update transaction that changes the extra program pages or the global state schema makes its sender the application's size sponsor. The sponsor's account is the one whose MBR carries the terms for the extra program pages and the global state schema, and the previous sponsor's MBR is reduced by the terms it had been carrying. The 100,000 microAlgos for the application itself stays with the creator's account in every case, and a size-changing update sent by the creator leaves the creator as the sponsor. See [Size Changes on Update](/concepts/transactions/reference#size-changes-on-update) for the rules those transactions follow.
+
 <LinkCard
   title='Learn more about Global Storage'
   description='Detailed guide on implementing and managing Global Storage in Algorand smart contracts'
@@ -49,7 +53,7 @@ When storing data in Global Storage, keep in mind that depending on the type and
 
 ## Local Storage
 
-Local Storage stores data associated directly with an account that has opted-in to the application. This opt-in mechanism is activated through an [opt-in transaction](concepts/transactions/types#application-opt-in-transaction) and allows any account to create a relationship and a storage space with the application for storing data for this specific account.
+Local Storage stores data associated directly with an account that has opted-in to the application. This opt-in mechanism is activated through an [opt-in transaction](/concepts/transactions/types#application-opt-in-transaction) and allows any account to create a relationship and a storage space with the application for storing data for this specific account.
 
 ### Usage example
 
@@ -101,7 +105,7 @@ This approach eliminates the need for opt-in transactions since we're not using 
 
 ### Considerations
 
-- Boxes can be created by an application and only accessed by the application that created it. Keep in mind that the Minimum Balance Requirement (MBR) of the application will be increased depending on its size. This means that a contract that intends to use boxes, must be funded beforehand.
+- Boxes can be created by an application and accessed on-chain by the application that created it. Since AVM v13, an application can opt in to letting other applications read its boxes, or letting applications with the same creator read and write them; see [Sharing Boxes Between Applications](/concepts/smart-contracts/storage/box/#sharing-boxes-between-applications). Box contents are readable by anyone off-chain in all cases. Keep in mind that the Minimum Balance Requirement (MBR) of the application will be increased depending on its size. This means that a contract that intends to use boxes, must be funded beforehand.
 - The MBR of the application will increase according to the following formula:
 
 ```shell showLineNumbers=false frame=none

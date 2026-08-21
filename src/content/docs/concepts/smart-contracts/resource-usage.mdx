@@ -91,7 +91,7 @@ There are different ways you can provide resource references when calling smart 
 
 1. **Automatic Resource Population**: Automatically input resource references in the reference(foreign) arrays with automatic resource population using the AlgoKit Utils library ([TypeScript](https://github.com/algorandfoundation/algokit-utils-ts/blob/40be39f672be19dc244b8e8fb4f5bcbc446d4f50/docs/code/modules/index.md#populateappcallresources) and Python)
    :::note
-   Automatic resource population first sends a dry-run transaction to the Algorand node to determine the necessary resources. Then it
+   Automatic resource population first sends a simulate request to the Algorand node to determine the necessary resources. Then it
    populates the reference arrays with the required resources and sends the actual transaction. Therefore, it sends two requests to algod
    for each transaction. Developers should consider the impact on their app if they require sending a large number of transactions.
    :::
@@ -672,9 +672,11 @@ Starting with AVM v12 in consensus v41, the Access List, `txn.Access` or `al`, p
   - Locals (`l`): References an account's local state for a specific app (account + app ID).
   - Box (`b`): References a box with an app index and box name (e.g., for reading/writing box data).
 
-- **Empty BoxRefs**: Use `{}` for boxes where the App ID is unknown or defaults to the current app.
+- **Empty Entries**: An entirely empty entry, `{}`, names no resource. Its purpose is to add box I/O budget. It also lets an application created earlier in the same group reach one box it could not name in advance, since a new application's ID is not known when the transaction is built; one such access is allowed per empty entry. To reference a box of the currently executing application, use a Box entry with an app index of 0, not an empty entry.
 
 - **Limits**: Up to 16 entries via consensus parameter `MaxAppAccess`, higher than the 8 total for foreign references.
+
+- **Box I/O Budget**: Only Box entries and empty entries add box I/O budget, 2048 bytes each. Address, Asset, App, Holding, and Locals entries occupy a slot without adding any budget. Since every one of the 16 entries may be a Box or empty entry, an access list can reach 32,768 bytes of box I/O budget in a single application call, against 16,384 for the foreign arrays. Note that referencing another application's box costs a slot for that application too, and that slot adds no budget.
 
 - **Cross-Product vs. Explicit Access**: Traditional foreign arrays enable "cross-product" access (e.g., all combinations of listed accounts and assets for holdings). Access Lists require explicit listing of each needed resource (e.g., specify each holding individually), but allow more granular control and higher limits without combinatorial explosion.
 

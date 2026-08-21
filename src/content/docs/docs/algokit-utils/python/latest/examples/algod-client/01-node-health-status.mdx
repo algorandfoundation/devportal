@@ -1,0 +1,202 @@
+---
+title: 'Node Health and Status'
+description: 'This example demonstrates how to check node health and status using the AlgodClient methods: health_check(), ready(), status(), and status_after_block().'
+sidebar:
+  order: 1
+---
+
+[← Back to Algod Client](/docs/algokit-utils/python/latest/examples/algod-client/)
+
+## Description
+
+This example demonstrates how to check node health and status using the AlgodClient methods: health_check(), ready(), status(), and status_after_block().
+Prerequisites:
+
+## Prerequisites
+
+- LocalNet running (via `algokit localnet start`)
+
+## Run This Example
+
+From the repository's `examples` directory:
+
+```bash
+cd examples
+uv run python algod_client/01_node_health_status.py
+```
+
+## Code
+
+[View source on GitHub](https://github.com/algorandfoundation/algokit-utils-py/blob/main/examples/algod_client/01_node_health_status.py)
+
+```python title="01_node_health_status.py"
+# ruff: noqa: N999, C901, PLR0912, PLR0915, PLR2004
+"""
+Example: Node Health and Status
+
+This example demonstrates how to check node health and status using
+the AlgodClient methods: health_check(), ready(), status(), and status_after_block().
+
+Prerequisites:
+- LocalNet running (via `algokit localnet start`)
+"""
+
+from shared import (
+    create_algod_client,
+    print_error,
+    print_header,
+    print_info,
+    print_step,
+    print_success,
+)
+
+
+def format_nanoseconds(ns: int) -> str:
+    """Format a nanoseconds value to a human-readable string."""
+    ms = ns / 1_000_000
+    if ms < 1000:
+        return f"{ms:.2f} ms"
+    seconds = ms / 1000
+    if seconds < 60:
+        return f"{seconds:.2f} seconds"
+    minutes = seconds / 60
+    return f"{minutes:.2f} minutes"
+
+
+def main() -> None:
+    print_header("Node Health and Status Example")
+
+    # Create an Algod client connected to LocalNet
+    algod = create_algod_client()
+
+    # =========================================================================
+    # Step 1: Health Check
+    # =========================================================================
+    print_step(1, "Checking node health with health_check()")
+
+    try:
+        # health_check() returns void if successful, throws an error if unhealthy
+        algod.health_check()
+        print_success("Node is healthy!")
+        print_info("health_check() returns None when the node is healthy")
+        print_info("If the node is unhealthy, it raises an exception")
+    except Exception as e:
+        print_error(f"Node health check failed: {e}")
+
+    # =========================================================================
+    # Step 2: Ready Check
+    # =========================================================================
+    print_step(2, "Checking if node is ready with ready()")
+
+    try:
+        # ready() returns void if the node is ready to accept transactions
+        algod.ready()
+        print_success("Node is ready to accept transactions!")
+        print_info("ready() returns None when the node is ready")
+        print_info("If the node is not ready (e.g., catching up), it raises an exception")
+    except Exception as e:
+        print_error(f"Node ready check failed: {e}")
+
+    # =========================================================================
+    # Step 3: Get Node Status
+    # =========================================================================
+    print_step(3, "Getting current node status with status()")
+
+    try:
+        node_status = algod.status()
+
+        print_success("Node status retrieved successfully!")
+        print_info("")
+        print_info("Key status fields:")
+        print_info(f"  - last-round: {node_status['last-round']}")
+        print_info(f"  - catchup-time: {format_nanoseconds(node_status['catchup-time'])}")
+        print_info(f"  - time-since-last-round: {format_nanoseconds(node_status['time-since-last-round'])}")
+        print_info(f"  - last-version: {node_status['last-version']}")
+        print_info(f"  - stopped-at-unsupported-round: {node_status['stopped-at-unsupported-round']}")
+
+        # Check if node has synced since startup (catchup-time === 0 means synced)
+        has_synced_since_startup = node_status["catchup-time"] == 0
+        print_info(f"  - hasSyncedSinceStartup: {has_synced_since_startup}")
+
+        if "last-catchpoint" in node_status:
+            print_info(f"  - last-catchpoint: {node_status['last-catchpoint']}")
+    except Exception as e:
+        print_error(f"Failed to get node status: {e}")
+
+    # =========================================================================
+    # Step 4: Wait for Block After Round
+    # =========================================================================
+    print_step(4, "Waiting for next block with status_after_block(round)")
+
+    try:
+        import time
+
+        # First, get the current round
+        current_status = algod.status()
+        current_round = current_status["last-round"]
+
+        print_info(f"Current round: {current_round}")
+        print_info(f"Waiting for block after round {current_round}...")
+
+        # Wait for a block after the current round
+        # Note: On LocalNet in dev mode, blocks are produced on-demand,
+        # so this may timeout if no transactions are submitted
+        start_time = time.time()
+        new_status = algod.status_after_block(current_round)
+        elapsed_time = (time.time() - start_time) * 1000
+
+        print_success("New block received!")
+        print_info(f"  - New round: {new_status['last-round']}")
+        print_info(f"  - Wait time: {elapsed_time:.0f} ms")
+        print_info(f"  - time-since-last-round: {format_nanoseconds(new_status['time-since-last-round'])}")
+    except Exception as e:
+        # status_after_block has a 1 minute timeout by default
+        print_error(f"Failed to wait for block: {e}")
+        print_info("Note: On LocalNet in dev mode, blocks are only produced when transactions are submitted")
+        print_info("Try submitting a transaction in another terminal to trigger a new block")
+
+    # =========================================================================
+    # Summary
+    # =========================================================================
+    print_header("Summary")
+    print_info("This example demonstrated:")
+    print_info("  1. health_check() - Checks if the node is healthy (returns None or raises)")
+    print_info("  2. ready() - Checks if the node is ready to accept transactions")
+    print_info("  3. status() - Gets current node status including last-round, catchup-time, etc.")
+    print_info("  4. status_after_block(round) - Waits for a new block after the specified round")
+    print_info("")
+    print_info("Key status fields explained:")
+    print_info("  - last-round: The most recent block the node has seen")
+    print_info("  - catchup-time: Time spent catching up (0 = fully synced)")
+    print_info("  - time-since-last-round: Time elapsed since the last block")
+    print_info("  - stopped-at-unsupported-round: True if node stopped due to unsupported consensus")
+
+
+if __name__ == "__main__":
+    main()
+
+```
+
+---
+
+### Other examples in Algod Client
+
+- **Node Health and Status**
+- [Version and Genesis Information](/docs/algokit-utils/python/latest/examples/algod-client/02-version-genesis/)
+- [Ledger Supply Information](/docs/algokit-utils/python/latest/examples/algod-client/03-ledger-supply/)
+- [Account Information](/docs/algokit-utils/python/latest/examples/algod-client/04-account-info/)
+- [Transaction Parameters](/docs/algokit-utils/python/latest/examples/algod-client/05-transaction-params/)
+- [Send and Confirm Transaction](/docs/algokit-utils/python/latest/examples/algod-client/06-send-transaction/)
+- [Pending Transactions](/docs/algokit-utils/python/latest/examples/algod-client/07-pending-transactions/)
+- [Block Data](/docs/algokit-utils/python/latest/examples/algod-client/08-block-data/)
+- [Asset Information](/docs/algokit-utils/python/latest/examples/algod-client/09-asset-info/)
+- [Application Information](/docs/algokit-utils/python/latest/examples/algod-client/10-application-info/)
+- [Application Boxes](/docs/algokit-utils/python/latest/examples/algod-client/11-application-boxes/)
+- [TEAL Compile and Disassemble](/docs/algokit-utils/python/latest/examples/algod-client/12-teal-compile/)
+- [Transaction Simulation](/docs/algokit-utils/python/latest/examples/algod-client/13-simulation/)
+- [Ledger State Deltas](/docs/algokit-utils/python/latest/examples/algod-client/14-state-deltas/)
+- [Transaction Proof](/docs/algokit-utils/python/latest/examples/algod-client/15-transaction-proof/)
+- [Light Block Header Proof](/docs/algokit-utils/python/latest/examples/algod-client/16-lightblock-proof/)
+- [State Proof](/docs/algokit-utils/python/latest/examples/algod-client/17-state-proof/)
+- [DevMode Timestamp Offset](/docs/algokit-utils/python/latest/examples/algod-client/18-devmode-timestamp/)
+- [Sync Round Management](/docs/algokit-utils/python/latest/examples/algod-client/19-sync-round/)

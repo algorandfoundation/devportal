@@ -1,0 +1,250 @@
+---
+title: 'Crypto Hash (SHA-512/256)'
+description: 'This example demonstrates the sha512_256() function for computing Algorand-compatible SHA-512/256 hashes. This hash algorithm is used throughout Algorand for:'
+sidebar:
+  order: 5
+---
+
+[← Back to Common Utilities](/docs/algokit-utils/python/latest/examples/common/)
+
+## Description
+
+This example demonstrates the sha512_256() function for computing Algorand-compatible SHA-512/256 hashes. This hash algorithm is used throughout Algorand for:
+
+- Transaction IDs
+- Address checksums
+- Application escrow addresses
+- State proof verification
+
+## Prerequisites
+
+No LocalNet required - pure cryptographic function
+
+## Run This Example
+
+From the repository's `examples` directory:
+
+```bash
+cd examples
+uv run python common/05_crypto_hash.py
+```
+
+## Code
+
+[View source on GitHub](https://github.com/algorandfoundation/algokit-utils-py/blob/main/examples/common/05_crypto_hash.py)
+
+```python title="05_crypto_hash.py"
+# ruff: noqa: N999, C901, PLR0912, PLR0915
+"""
+Example: Crypto Hash (SHA-512/256)
+
+This example demonstrates the sha512_256() function for computing Algorand-compatible
+SHA-512/256 hashes. This hash algorithm is used throughout Algorand for:
+- Transaction IDs
+- Address checksums
+- Application escrow addresses
+- State proof verification
+
+No LocalNet required - pure cryptographic function
+"""
+
+from shared import (
+    format_bytes,
+    format_hex,
+    print_header,
+    print_info,
+    print_step,
+    print_success,
+)
+
+from algokit_common import (
+    HASH_BYTES_LENGTH,
+    TRANSACTION_DOMAIN_SEPARATOR,
+    sha512_256,
+)
+
+
+def main() -> None:
+    print_header("Crypto Hash (SHA-512/256) Example")
+
+    # Step 1: Hash a simple message
+    print_step(1, "Hash a Simple Message")
+
+    message = "Hello, Algorand!"
+    message_bytes = message.encode("utf-8")
+    message_hash = sha512_256(message_bytes)
+
+    print_info(f'Input message: "{message}"')
+    print_info(f"Input bytes: {format_bytes(message_bytes)}")
+    print_info(f"Hash output: {format_bytes(message_hash)}")
+    print_info(f"Hash as hex: {format_hex(message_hash)}")
+
+    # Step 2: Hash empty bytes
+    print_step(2, "Hash Empty Bytes")
+
+    empty_bytes = b""
+    empty_hash = sha512_256(empty_bytes)
+
+    print_info("Input: empty byte array (0 bytes)")
+    print_info(f"Hash output: {format_bytes(empty_hash)}")
+    print_info(f"Hash as hex: {format_hex(empty_hash)}")
+    print_info("Note: Even empty input produces a 32-byte hash")
+
+    # Step 3: Verify hash always returns exactly 32 bytes (HASH_BYTES_LENGTH)
+    print_step(3, "Verify Hash Always Returns 32 Bytes")
+
+    print_info(f"HASH_BYTES_LENGTH constant: {HASH_BYTES_LENGTH} bytes")
+
+    # Test with various input sizes
+    test_inputs = [
+        ("empty", b""),
+        ("1 byte", bytes([0x42])),
+        ("32 bytes", bytes([0xAA] * 32)),
+        ("100 bytes", bytes([0xBB] * 100)),
+        ("1000 bytes", bytes([0xCC] * 1000)),
+    ]
+
+    for name, data in test_inputs:
+        input_hash = sha512_256(data)
+        length_match = len(input_hash) == HASH_BYTES_LENGTH
+        checkmark = "OK" if length_match else "FAIL"
+        print_info(f"Input: {name:<12} -> Output: {len(input_hash)} bytes [{checkmark}]")
+
+    print_success(f"All hash outputs are exactly {HASH_BYTES_LENGTH} bytes")
+
+    # Step 4: Hash a transaction-like payload
+    print_step(4, "Hash a Transaction-Like Payload")
+
+    # Algorand transaction hashing uses a domain separator prefix
+    print_info(f"Transaction domain separator: {TRANSACTION_DOMAIN_SEPARATOR!r}")
+
+    # Simulate a minimal transaction-like structure
+    fake_tx_payload = bytes(
+        [
+            0x01,  # version
+            0x00,
+            0x00,
+            0x00,
+            0x00,
+            0x00,
+            0x00,
+            0x00,
+            0x01,  # first valid round (8 bytes)
+            0x00,
+            0x00,
+            0x00,
+            0x00,
+            0x00,
+            0x00,
+            0x00,
+            0x0A,  # last valid round (8 bytes)
+            # ... simplified for demonstration
+        ]
+    )
+
+    # In Algorand, transaction ID = hash(domain_separator + msgpack(transaction))
+    prefixed_payload = TRANSACTION_DOMAIN_SEPARATOR + fake_tx_payload
+
+    tx_like_hash = sha512_256(prefixed_payload)
+
+    print_info(f"Domain separator bytes: {format_bytes(TRANSACTION_DOMAIN_SEPARATOR)}")
+    print_info(f"Payload bytes: {format_bytes(fake_tx_payload)}")
+    print_info(f"Combined (prefixed) bytes: {format_bytes(prefixed_payload)}")
+    print_info(f"Transaction-like hash: {format_hex(tx_like_hash)}")
+
+    # Step 5: Demonstrate hex representation
+    print_step(5, "Hex Representation of Hash Output")
+
+    # Hash a known value for demonstration
+    known_input = bytes([0x00, 0x01, 0x02, 0x03])
+    known_hash = sha512_256(known_input)
+
+    print_info(f"Input bytes: {format_bytes(known_input, 4)}")
+    print_info(f"Hash (raw bytes): {format_bytes(known_hash, 16)}")
+    print_info(f"Hash (full hex):  {format_hex(known_hash)}")
+
+    # Show the hex format breakdown
+    hex_string = known_hash.hex()
+    print_info(f"Hash length: {len(hex_string)} hex characters ({len(hex_string) // 2} bytes)")
+
+    # Step 6: Verify determinism - same input always produces same hash
+    print_step(6, "Verify Determinism")
+
+    deterministic_input = b"Algorand is great!"
+
+    # Hash the same input multiple times
+    hash1 = sha512_256(deterministic_input)
+    hash2 = sha512_256(deterministic_input)
+    hash3 = sha512_256(deterministic_input)
+
+    print_info('"Algorand is great!"')
+    print_info(f"Hash #1: {format_hex(hash1)}")
+    print_info(f"Hash #2: {format_hex(hash2)}")
+    print_info(f"Hash #3: {format_hex(hash3)}")
+
+    all_equal = hash1 == hash2 == hash3
+    checkmark = "Yes [OK]" if all_equal else "No [FAIL]"
+    print_info(f"All hashes equal: {checkmark}")
+
+    if all_equal:
+        print_success("Determinism verified: same input always produces same hash")
+
+    # Step 7: Show that different inputs produce different hashes
+    print_step(7, "Different Inputs Produce Different Hashes")
+
+    input_a = b"input A"
+    input_b = b"input B"
+    input_c = b"input a"  # lowercase 'a' vs uppercase 'A'
+
+    hash_a = sha512_256(input_a)
+    hash_b = sha512_256(input_b)
+    hash_c = sha512_256(input_c)
+
+    print_info(f'"input A" -> {format_hex(hash_a)[:24]}...')
+    print_info(f'"input B" -> {format_hex(hash_b)[:24]}...')
+    print_info(f'"input a" -> {format_hex(hash_c)[:24]}...')
+
+    ab_different = hash_a != hash_b
+    ac_different = hash_a != hash_c
+
+    ab_status = "Different [OK]" if ab_different else "Same [FAIL]"
+    ac_status = "Different [OK]" if ac_different else "Same [FAIL]"
+
+    print_info(f'"input A" vs "input B": {ab_status}')
+    print_info(f'"input A" vs "input a": {ac_status}')
+    print_info("Note: Even a single-bit change produces a completely different hash")
+
+    # Summary
+    print_step(8, "Summary")
+
+    print_info("SHA-512/256 in Algorand:")
+    print_info(f"  - Always produces exactly {HASH_BYTES_LENGTH} bytes (256 bits)")
+    print_info("  - Deterministic: same input always yields same output")
+    print_info("  - Collision-resistant: different inputs produce different outputs")
+    print_info("  - Used for: transaction IDs, address checksums, app addresses")
+    print_info(f"  - Domain separator {TRANSACTION_DOMAIN_SEPARATOR!r} prevents cross-protocol attacks")
+
+    print_success("Crypto Hash example completed successfully!")
+
+
+if __name__ == "__main__":
+    main()
+
+```
+
+---
+
+### Other examples in Common Utilities
+
+- [Address Basics](/docs/algokit-utils/python/latest/examples/common/01-address-basics/)
+- [Address Encoding](/docs/algokit-utils/python/latest/examples/common/02-address-encoding/)
+- [Array Utilities](/docs/algokit-utils/python/latest/examples/common/03-array-utilities/)
+- [Constants Reference](/docs/algokit-utils/python/latest/examples/common/04-constants/)
+- **Crypto Hash (SHA-512/256)**
+- [Example](/docs/algokit-utils/python/latest/examples/common/06-logger/)
+- [JSON BigInt Support](/docs/algokit-utils/python/latest/examples/common/07-json-bigint/)
+- [MessagePack Encoding](/docs/algokit-utils/python/latest/examples/common/08-msgpack/)
+- [Primitive Serde (Serialization/Deserialization)](/docs/algokit-utils/python/latest/examples/common/09-primitive-codecs/)
+- [Composite Serde (Serialization/Deserialization)](/docs/algokit-utils/python/latest/examples/common/10-composite-codecs/)
+- [Model Serde (Object Model Serialization)](/docs/algokit-utils/python/latest/examples/common/11-model-codecs/)
+- [Sourcemap for TEAL Debugging](/docs/algokit-utils/python/latest/examples/common/12-sourcemap/)

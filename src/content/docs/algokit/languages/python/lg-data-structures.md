@@ -13,13 +13,13 @@ Algorand Python 1.0, other than statically sized native Python tuples. However, 
 is not an efficient encoding for mutations, additionally they were restricted in that they could
 only contain other ARC-4 types.
 
-As of Algorand Python 2.7, two new array types were introduced [`algopy.Array`](/reference/algorand-python/api/api-algopy/#algopy.Array), a mutable array type
-that supports statically sized native and ARC-4 elements and [`algopy.ImmutableArray`](/reference/algorand-python/api/api-algopy/#algopy.ImmutableArray) that has
+As of Algorand Python 2.7, two new array types were introduced [`algopy.Array`](/docs/algorand-python/python/latest/api/api-algopy#algopy.Array), a mutable array type
+that supports statically sized native and ARC-4 elements and [`algopy.ImmutableArray`](/docs/algorand-python/python/latest/api/api-algopy#algopy.ImmutableArray) that has
 an immutable API and supports dynamically sized native and ARC-4 elements.
 
 ## Mutability vs Immutability
 
-A value with an immutable type cannot be modified. Some examples are [`UInt64`](/reference/algorand-python/api/api-algopy/#algopy.UInt64), [`Bytes`](/reference/algorand-python/api/api-algopy/#algopy.Bytes), `tuple` and `typing.NamedTuple`.
+A value with an immutable type cannot be modified. Some examples are [`UInt64`](/docs/algorand-python/python/latest/api/api-algopy#algopy.UInt64), [`Bytes`](/docs/algorand-python/python/latest/api/api-algopy#algopy.Bytes), `tuple` and `typing.NamedTuple`.
 
 Aggregate immutable types such as `tuple` or `ImmutableArray` provide a way to produce modified values,
 this is done by returning a copy of the original value with the specified changes applied
@@ -135,14 +135,14 @@ This is a regular python tuple
 - Can contain any type except transactions
 - Members are described by a field name and type
 - Can be immutable if using the `frozen` class option and all members are also immutable
-- Requires [`.copy()`](/reference/algorand-python/api/api-algopy/#algopy.Struct.copy) when mutable and creating additional references
+- Requires [`.copy()`](/docs/algorand-python/python/latest/api/api-algopy#algopy.Struct.copy) when mutable and creating additional references
 - Encoded as a single ARC-4 value on the stack
 
 ### `arc4.Tuple`
 
 - Can only contain other ARC-4 types
 - Can be immutable if all members are also immutable
-- Requires [`.copy()`](/reference/algorand-python/api/api-algopyarc4/#algopy.arc4.Tuple.copy) when mutable and creating additional references
+- Requires [`.copy()`](/docs/algorand-python/python/latest/api/api-algopy.arc4#algopy.arc4.Tuple.copy) when mutable and creating additional references
 - Encoded as a single ARC-4 value on the stack
 
 ### `arc4.Struct`
@@ -150,7 +150,7 @@ This is a regular python tuple
 - Can only contain other ARC-4 types
 - Members are described by a field name and type
 - Can be immutable if using the `frozen` class option and all members are also immutable
-- Requires [`.copy()`](/reference/algorand-python/api/api-algopyarc4/#algopy.arc4.Struct.copy) when mutable and creating additional references
+- Requires [`.copy()`](/docs/algorand-python/python/latest/api/api-algopy.arc4#algopy.arc4.Struct.copy) when mutable and creating additional references
 - Encoded as a single ARC-4 value on the stack
 
 ## Algorand Python array types
@@ -160,13 +160,13 @@ This is a regular python tuple
 - Can contain any type except transactions
 - Can only contain a fixed number of elements
 - Most efficient array type
-- Requires [`.copy()`](/reference/algorand-python/api/api-algopy/#algopy.FixedArray.copy) if making additional references to the array or any mutable elements
+- Requires [`.copy()`](/docs/algorand-python/python/latest/api/api-algopy#algopy.FixedArray.copy) if making additional references to the array or any mutable elements
 
 ### `algopy.Array`
 
 - Can contain any type except transactions
 - Dynamically sized, efficient for reading (when assembled off-chain). Inefficient to manipulate on-chain
-- Requires [`.copy()`](/reference/algorand-python/api/api-algopy/#algopy.Array.copy) if making additional references to the array or any mutable elements
+- Requires [`.copy()`](/docs/algorand-python/python/latest/api/api-algopy#algopy.Array.copy) if making additional references to the array or any mutable elements
 
 ### `algopy.ReferenceArray`
 
@@ -176,7 +176,7 @@ This is a regular python tuple
   program so for this reason this type is limited to immutable elements only
 - May use scratch slots to store the data
 - Cannot be put in storage or used in ABI method signatures
-- An immutable copy can be made for storage or returning from a contract by using the [`freeze`](/reference/algorand-python/api/api-algopy/#algopy.ReferenceArray.freeze) method e.g.
+- An immutable copy can be made for storage or returning from a contract by using the [`freeze`](/docs/algorand-python/python/latest/api/api-algopy#algopy.ReferenceArray.freeze) method e.g.
 
 ```python
 import algopy
@@ -204,7 +204,7 @@ class SomeContract(algopy.arc4.ARC4Contract):
 - Only supports ARC-4 elements
 - Elements often require conversion to native types, use `algopy.Array` / `algopy.FixedArray` to avoid explict conversions
 - Dynamically sized types are efficient for reading, but not writing
-- Requires [`.copy()`](/reference/algorand-python/api/api-algopyarc4/#algopy.arc4.DynamicArray) if making additional references to the array or mutable elements
+- Requires [`.copy()`](/docs/algorand-python/python/latest/api/api-algopy.arc4#algopy.arc4.DynamicArray) if making additional references to the array or mutable elements
 
 ## Tips
 
@@ -213,4 +213,4 @@ class SomeContract(algopy.arc4.ARC4Contract):
 - If a function needs just a few values of a tuple it is more efficient to just pass those members rather than the whole tuple
 - For passing composite values between functions there can be different trade-offs in terms of op budget and program size between a tuple or a struct, if this is a concern then test and confirm which suits your contract the best.
 - All array types except `algopy.ReferenceArray` can be used in storage and ABI methods, and will be viewed externally (i.e. in ARC-56 definitions) as the equivalent ARC-4 encoded type
-- Use [`algopy.ReferenceArray.freeze`](/reference/algorand-python/api/api-algopy/#algopy.ReferenceArray.freeze) to convert the array to an `algopy.ImmutableArray` for storage
+- Use [`algopy.ReferenceArray.freeze`](/docs/algorand-python/python/latest/api/api-algopy#algopy.ReferenceArray.freeze) to convert the array to an `algopy.ImmutableArray` for storage

@@ -1,0 +1,353 @@
+---
+title: 'JSON BigInt Support'
+description: "This example demonstrates how Python handles large integers in JSON, which is simpler than JavaScript due to Python's native arbitrary-precision integers."
+sidebar:
+  order: 7
+---
+
+[← Back to Common Utilities](/docs/algokit-utils/python/latest/examples/common/)
+
+## Description
+
+This example demonstrates how Python handles large integers in JSON, which is simpler than JavaScript due to Python's native arbitrary-precision integers.
+Topics covered:
+
+- Python's int type has unlimited precision (no MAX_SAFE_INTEGER limit)
+- json.dumps() and json.loads() work with large integers natively
+- Round-trip preservation of large numbers
+- Comparison with JavaScript's precision issues
+- Algorand-relevant examples with microAlgo amounts
+- Custom JSON encoders for specific serialization needs
+
+## Prerequisites
+
+No LocalNet required - pure JSON utility functions
+
+## Run This Example
+
+From the repository's `examples` directory:
+
+```bash
+cd examples
+uv run python common/07_json_bigint.py
+```
+
+## Code
+
+[View source on GitHub](https://github.com/algorandfoundation/algokit-utils-py/blob/main/examples/common/07_json_bigint.py)
+
+```python title="07_json_bigint.py"
+# ruff: noqa: N999, C901, PLR0912, PLR0915
+"""
+Example: JSON BigInt Support
+
+This example demonstrates how Python handles large integers in JSON, which is
+simpler than JavaScript due to Python's native arbitrary-precision integers.
+
+Topics covered:
+- Python's int type has unlimited precision (no MAX_SAFE_INTEGER limit)
+- json.dumps() and json.loads() work with large integers natively
+- Round-trip preservation of large numbers
+- Comparison with JavaScript's precision issues
+- Algorand-relevant examples with microAlgo amounts
+- Custom JSON encoders for specific serialization needs
+
+No LocalNet required - pure JSON utility functions
+"""
+
+import json
+import sys
+from decimal import Decimal
+
+from shared import (
+    print_error,
+    print_header,
+    print_info,
+    print_step,
+    print_success,
+)
+
+
+def main() -> None:
+    print_header("JSON BigInt Example")
+
+    # Step 1: Understanding Python's Integer Precision
+    print_step(1, "Python's Unlimited Integer Precision")
+
+    print_info("Unlike JavaScript, Python integers have unlimited precision:")
+    print_info(f"  sys.maxsize = {sys.maxsize:,}")
+    print_info("  (This is just the max value for C-level integers)")
+    print_info("")
+
+    # Python can handle arbitrarily large numbers
+    js_max_safe_integer = 9007199254740991  # 2^53 - 1
+    print_info(f"JavaScript MAX_SAFE_INTEGER: {js_max_safe_integer:,}")
+
+    # Python has no such limit
+    large_number = 99999999999999999999999999999999999999999999999999
+    print_info(f"Python can handle: {large_number:,}")
+    print_info("")
+
+    # Arithmetic works perfectly
+    result = large_number + 1
+    print_info(f"large_number + 1 = {result}")
+    print_success("Python integers have unlimited precision!")
+
+    # Step 2: JSON Parsing - No Precision Loss
+    print_step(2, "JSON Parsing - No Precision Loss")
+
+    print_info("Python's json.loads() preserves large integers:")
+    print_info("")
+
+    # JSON with large numbers
+    large_number_json = '{"amount": 9007199254740993}'
+    parsed = json.loads(large_number_json)
+
+    print_info(f"  Original JSON:  {large_number_json}")
+    print_info(f"  Parsed value:   {parsed['amount']}")
+    print_info(f"  Type:           {type(parsed['amount']).__name__}")
+    print_info("")
+
+    # Verify no precision loss
+    expected_value = 9007199254740993
+    if parsed["amount"] == expected_value:
+        print_success(f"Value preserved: {parsed['amount']} === {expected_value}")
+    else:
+        print_error("Precision was lost!")
+
+    # Step 3: JSON with Various Integer Sizes
+    print_step(3, "JSON with Various Integer Sizes")
+
+    print_info("JSON parsing handles all integer sizes correctly:")
+    print_info("")
+
+    test_cases = [
+        ("Small integer", '{"value": 123456789}'),
+        ("MAX_SAFE_INTEGER", '{"value": 9007199254740991}'),
+        ("MAX_SAFE + 1", '{"value": 9007199254740992}'),
+        ("MAX_SAFE + 2", '{"value": 9007199254740993}'),
+        ("uint64 max", '{"value": 18446744073709551615}'),
+        ("Very large", '{"value": 99999999999999999999}'),
+    ]
+
+    for label, json_str in test_cases:
+        parsed_val = json.loads(json_str)["value"]
+        print_info(f"  {label:20} | {parsed_val:>25}")
+
+    print_info("")
+    print_success("All integer values parsed without precision loss")
+
+    # Step 4: JSON Serialization of Large Integers
+    print_step(4, "JSON Serialization of Large Integers")
+
+    print_info("json.dumps() handles large integers natively:")
+    print_info("")
+
+    obj_with_large_int = {
+        "name": "Large Amount",
+        "value": 18446744073709551615,  # max uint64
+    }
+
+    serialized = json.dumps(obj_with_large_int)
+    print_info(f"  Input:  {obj_with_large_int}")
+    print_info(f"  Output: {serialized}")
+    print_info("")
+
+    # In JavaScript, BigInt would throw an error with JSON.stringify
+    print_info("Unlike JavaScript, Python requires no special handling for large ints")
+    print_success("json.dumps() serializes large integers without error")
+
+    # Step 5: Round-trip Preservation
+    print_step(5, "Round-trip Preservation")
+
+    print_info("Round-trip: json.loads(json.dumps(obj)) preserves large numbers")
+    print_info("")
+
+    original_obj = {
+        "id": 1,
+        "balance": 12345678901234567890,
+        "active": True,
+    }
+
+    print_info(f"  Original: {original_obj}")
+
+    serialized_obj = json.dumps(original_obj)
+    print_info(f"  JSON:     {serialized_obj}")
+
+    round_tripped = json.loads(serialized_obj)
+    print_info(f"  Parsed:   {round_tripped}")
+    print_info("")
+
+    # Verify round-trip
+    all_match = (
+        round_tripped["id"] == original_obj["id"]
+        and round_tripped["balance"] == original_obj["balance"]
+        and round_tripped["active"] == original_obj["active"]
+    )
+
+    if all_match:
+        print_success("Round-trip preserves all values including large numbers")
+    else:
+        print_error("Round-trip failed")
+
+    # Step 6: Algorand-Relevant Examples - MicroAlgo Amounts
+    print_step(6, "Algorand-Relevant Examples - MicroAlgo Amounts")
+
+    print_info("Algorand uses microAlgos (1 Algo = 1,000,000 microAlgos)")
+    print_info("Large Algo balances can be very large in microAlgos")
+    print_info("")
+
+    algo_amounts = {
+        "smallWallet": 1000000000,  # 1,000 Algos
+        "mediumWallet": 100000000000000,  # 100M Algos
+        "largeWallet": 10000000000000000,  # 10B Algos
+    }
+
+    algo_json = json.dumps(algo_amounts)
+    print_info(f"  JSON: {algo_json}")
+    print_info("")
+
+    algo_parsed = json.loads(algo_json)
+    print_info("  Parsed amounts:")
+    print_info(f"    smallWallet:  {algo_parsed['smallWallet']:>20} microAlgos")
+    print_info(f"                  = {algo_parsed['smallWallet'] / 1_000_000:,.0f} Algos")
+    print_info(f"    mediumWallet: {algo_parsed['mediumWallet']:>20} microAlgos")
+    print_info(f"                  = {algo_parsed['mediumWallet'] / 1_000_000:,.0f} Algos")
+    print_info(f"    largeWallet:  {algo_parsed['largeWallet']:>20} microAlgos")
+    print_info(f"                  = {algo_parsed['largeWallet'] / 1_000_000:,.0f} Algos")
+    print_info("")
+
+    # Demonstrate calculation with large integers
+    print_info("  Safe arithmetic with large integers:")
+    large_balance = algo_parsed["largeWallet"]
+    transfer_amount = 5000000000000000  # 5B Algos
+    remaining = large_balance - transfer_amount
+
+    print_info(f"    Balance:   {large_balance:>20} microAlgos")
+    print_info(f"    Transfer:  {transfer_amount:>20} microAlgos")
+    print_info(f"    Remaining: {remaining:>20} microAlgos")
+
+    print_success("Python integers enable safe arithmetic with large Algorand amounts")
+
+    # Step 7: Contrast with JavaScript Precision Issues
+    print_step(7, "JavaScript Precision Issues (for reference)")
+
+    print_info("In JavaScript, numbers > 2^53 - 1 lose precision with JSON.parse:")
+    print_info("")
+
+    # Simulate what happens in JavaScript
+    large_value = 9007199254740993  # MAX_SAFE_INTEGER + 2
+
+    print_info(f"  Original value:     {large_value}")
+    print_info("  In JavaScript:      9007199254740992 (precision lost!)")
+    print_info(f"  In Python:          {large_value} (exact)")
+    print_info("")
+    print_info("  JavaScript native JSON.parse rounds large numbers to")
+    print_info("  the nearest representable IEEE 754 double.")
+    print_info("")
+    print_info("  JavaScript solutions:")
+    print_info("    - Use libraries like json-bigint")
+    print_info("    - Keep large numbers as strings")
+    print_info("    - Use BigInt with custom serialization")
+    print_info("")
+    print_success("Python's native int type avoids JavaScript's precision issues")
+
+    # Step 8: Pretty Printing with json.dumps
+    print_step(8, "Pretty Printing with json.dumps")
+
+    print_info("json.dumps supports optional spacing for readability:")
+    print_info("")
+
+    complex_obj = {
+        "transaction": {
+            "type": "pay",
+            "sender": "ALGORAND...",
+            "receiver": "RECEIVER...",
+            "amount": 18446744073709551615,
+            "fee": 1000,
+        },
+        "timestamp": 1704067200,
+    }
+
+    print_info("Compact output (default):")
+    print_info(f"  {json.dumps(complex_obj)}")
+    print_info("")
+
+    print_info("Pretty output (indent=2):")
+    pretty_json = json.dumps(complex_obj, indent=2)
+    for line in pretty_json.split("\n"):
+        print_info(f"  {line}")
+
+    print_success("json.dumps supports formatting options")
+
+    # Step 9: Custom JSON Encoder for Decimal
+    print_step(9, "Custom JSON Encoder for Decimal")
+
+    print_info("For high-precision decimal numbers, use Decimal with custom encoder:")
+    print_info("")
+
+    class DecimalEncoder(json.JSONEncoder):
+        def default(self, obj: object) -> object:
+            if isinstance(obj, Decimal):
+                return str(obj)
+            return super().default(obj)
+
+    decimal_obj = {
+        "price": Decimal("123.456789012345678901234567890"),
+        "quantity": 1000,
+    }
+
+    print_info(f"  Input:  {decimal_obj}")
+    decimal_json = json.dumps(decimal_obj, cls=DecimalEncoder)
+    print_info(f"  Output: {decimal_json}")
+    print_info("")
+    print_info("  Note: Decimal values are serialized as strings to preserve precision")
+
+    print_success("Custom encoders handle special types like Decimal")
+
+    # Step 10: Summary
+    print_step(10, "Summary")
+
+    print_info("Python vs JavaScript JSON integer handling:")
+    print_info("")
+    print_info("  Python advantages:")
+    print_info("    - Unlimited integer precision (no MAX_SAFE_INTEGER limit)")
+    print_info("    - json.loads() preserves large integers exactly")
+    print_info("    - json.dumps() serializes large integers without error")
+    print_info("    - No special libraries needed for BigInt-like functionality")
+    print_info("    - Arithmetic on large integers works correctly")
+    print_info("")
+    print_info("  JavaScript challenges:")
+    print_info("    - Numbers > 2^53 - 1 lose precision with JSON.parse")
+    print_info("    - JSON.stringify throws error on BigInt values")
+    print_info("    - Requires libraries like json-bigint or custom handling")
+    print_info("")
+    print_info("  For Algorand:")
+    print_info("    - Python handles all microAlgo amounts safely")
+    print_info("    - No special handling needed for large balances")
+    print_info("    - Round-trip JSON serialization preserves precision")
+    print_info("")
+    print_success("JSON BigInt Example completed!")
+
+
+if __name__ == "__main__":
+    main()
+
+```
+
+---
+
+### Other examples in Common Utilities
+
+- [Address Basics](/docs/algokit-utils/python/latest/examples/common/01-address-basics/)
+- [Address Encoding](/docs/algokit-utils/python/latest/examples/common/02-address-encoding/)
+- [Array Utilities](/docs/algokit-utils/python/latest/examples/common/03-array-utilities/)
+- [Constants Reference](/docs/algokit-utils/python/latest/examples/common/04-constants/)
+- [Crypto Hash (SHA-512/256)](/docs/algokit-utils/python/latest/examples/common/05-crypto-hash/)
+- [Example](/docs/algokit-utils/python/latest/examples/common/06-logger/)
+- **JSON BigInt Support**
+- [MessagePack Encoding](/docs/algokit-utils/python/latest/examples/common/08-msgpack/)
+- [Primitive Serde (Serialization/Deserialization)](/docs/algokit-utils/python/latest/examples/common/09-primitive-codecs/)
+- [Composite Serde (Serialization/Deserialization)](/docs/algokit-utils/python/latest/examples/common/10-composite-codecs/)
+- [Model Serde (Object Model Serialization)](/docs/algokit-utils/python/latest/examples/common/11-model-codecs/)
+- [Sourcemap for TEAL Debugging](/docs/algokit-utils/python/latest/examples/common/12-sourcemap/)

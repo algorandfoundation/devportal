@@ -1,0 +1,655 @@
+---
+title: 'Asset Transactions'
+description: 'This example demonstrates how to lookup transactions for a specific asset using the IndexerClient lookup_asset_transactions() method.'
+sidebar:
+  order: 10
+---
+
+[← Back to Indexer Client](/docs/algokit-utils/python/latest/examples/indexer-client/)
+
+## Description
+
+This example demonstrates how to lookup transactions for a specific asset using the IndexerClient lookup_asset_transactions() method.
+Prerequisites:
+
+## Prerequisites
+
+- LocalNet running (via `algokit localnet start`)
+
+## Run This Example
+
+From the repository's `examples` directory:
+
+```bash
+cd examples
+uv run python indexer_client/10_asset_transactions.py
+```
+
+## Code
+
+[View source on GitHub](https://github.com/algorandfoundation/algokit-utils-py/blob/main/examples/indexer_client/10_asset_transactions.py)
+
+```python title="10_asset_transactions.py"
+# ruff: noqa: N999, C901, PLR0912, PLR0915, PLR2004
+"""
+Example: Asset Transactions
+
+This example demonstrates how to lookup transactions for a specific asset using
+the IndexerClient lookup_asset_transactions() method.
+
+Prerequisites:
+- LocalNet running (via `algokit localnet start`)
+"""
+
+import time
+from datetime import datetime, timezone
+
+from shared import (
+    create_algod_client,
+    create_algorand_client,
+    create_indexer_client,
+    create_random_account,
+    print_error,
+    print_header,
+    print_info,
+    print_step,
+    print_success,
+    shorten_address,
+)
+
+from algokit_utils import AssetConfigParams, AssetCreateParams, AssetFreezeParams, AssetOptInParams, AssetTransferParams
+
+
+def main() -> None:
+    print_header("Asset Transactions Example")
+
+    # Create clients
+    indexer = create_indexer_client()
+    algorand = create_algorand_client()
+    algod = create_algod_client()
+
+    # =========================================================================
+    # Step 1: Get a funded account and create additional accounts
+    # =========================================================================
+    print_step(1, "Setting up accounts for demonstration")
+
+    try:
+        # Get the dispenser account as the creator
+        dispenser = algorand.account.localnet_dispenser()
+        algorand.set_signer_from_account(dispenser)
+        creator_address = dispenser.addr
+        print_success(f"Creator account (dispenser): {shorten_address(creator_address)}")
+
+        # Create additional accounts to hold the asset
+        holder_1 = create_random_account(algorand)
+        holder_1_address = holder_1.addr
+        print_success(f"Holder 1: {shorten_address(holder_1_address)}")
+
+        holder_2 = create_random_account(algorand)
+        holder_2_address = holder_2.addr
+        print_success(f"Holder 2: {shorten_address(holder_2_address)}")
+    except Exception as e:
+        print_error(f"Failed to set up accounts: {e}")
+        print_info("")
+        print_info("Make sure LocalNet is running: algokit localnet start")
+        print_info("If issues persist, try: algokit localnet reset")
+        return
+
+    # =========================================================================
+    # Step 2: Create a test asset with freeze address
+    # =========================================================================
+    print_step(2, "Creating a test asset with freeze address")
+
+    try:
+        # Record the starting round for later filtering
+        status = algod.status()
+        start_round = status.last_round
+
+        # Create asset with freeze address to enable freeze transactions
+        print_info("Creating test asset: TxnToken (TXN)...")
+        result = algorand.send.asset_create(
+            AssetCreateParams(
+                sender=creator_address,
+                total=10_000_000,  # 10,000 units with 3 decimals
+                decimals=3,
+                asset_name="TxnToken",
+                unit_name="TXN",
+                url="https://example.com/txntoken",
+                default_frozen=False,
+                manager=creator_address,
+                reserve=creator_address,
+                freeze=creator_address,  # Enable freeze functionality
+                clawback=creator_address,
+            )
+        )
+        asset_id = result.asset_id
+        print_success(f"Created TxnToken with Asset ID: {asset_id}")
+        print_info(f"  - freeze address: {shorten_address(creator_address)} (enables freeze transactions)")
+    except Exception as e:
+        print_error(f"Failed to create test asset: {e}")
+        print_info("")
+        print_info("If LocalNet errors occur, try: algokit localnet reset")
+        return
+
+    # =========================================================================
+    # Step 3: Perform several asset transactions (opt-in, transfer, freeze)
+    # =========================================================================
+    print_step(3, "Performing several asset transactions")
+
+    try:
+        # 1. Holder 1: Opt-in (axfer to self with 0 amount)
+        print_info("Holder 1 opting into asset...")
+        algorand.send.asset_opt_in(
+            AssetOptInParams(
+                sender=holder_1_address,
+                asset_id=asset_id,
+            )
+        )
+        print_success("Holder 1 opted in (axfer)")
+
+        # 2. Transfer to Holder 1
+        print_info("Transferring 1000 TXN to Holder 1...")
+        algorand.send.asset_transfer(
+            AssetTransferParams(
+                sender=creator_address,
+                receiver=holder_1_address,
+                asset_id=asset_id,
+                amount=1_000_000,  # 1000 TXN (with 3 decimals)
+            )
+        )
+        print_success("Transfer to Holder 1 complete (axfer)")
+
+        # 3. Holder 2: Opt-in
+        print_info("Holder 2 opting into asset...")
+        algorand.send.asset_opt_in(
+            AssetOptInParams(
+                sender=holder_2_address,
+                asset_id=asset_id,
+            )
+        )
+        print_success("Holder 2 opted in (axfer)")
+
+        # 4. Transfer to Holder 2
+        print_info("Transferring 500 TXN to Holder 2...")
+        algorand.send.asset_transfer(
+            AssetTransferParams(
+                sender=creator_address,
+                receiver=holder_2_address,
+                asset_id=asset_id,
+                amount=500_000,  # 500 TXN (with 3 decimals)
+            )
+        )
+        print_success("Transfer to Holder 2 complete (axfer)")
+
+        # 5. Freeze Holder 1's account
+        print_info("Freezing Holder 1 account...")
+        algorand.send.asset_freeze(
+            AssetFreezeParams(
+                sender=creator_address,
+                asset_id=asset_id,
+                account=holder_1_address,
+                frozen=True,
+            )
+        )
+        print_success("Holder 1 account frozen (afrz)")
+
+        # 6. Unfreeze Holder 1's account
+        print_info("Unfreezing Holder 1 account...")
+        algorand.send.asset_freeze(
+            AssetFreezeParams(
+                sender=creator_address,
+                asset_id=asset_id,
+                account=holder_1_address,
+                frozen=False,
+            )
+        )
+        print_success("Holder 1 account unfrozen (afrz)")
+
+        # 7. Reconfigure asset (acfg)
+        print_info("Reconfiguring asset (updating manager)...")
+        algorand.send.asset_config(
+            AssetConfigParams(
+                sender=creator_address,
+                asset_id=asset_id,
+                manager=creator_address,
+                reserve=creator_address,
+                freeze=creator_address,
+                clawback=creator_address,
+            )
+        )
+        print_success("Asset reconfigured (acfg)")
+
+        print_info("")
+        print_info("Transaction summary:")
+        print_info("  - 1 asset creation (acfg)")
+        print_info("  - 2 opt-ins (axfer with 0 amount)")
+        print_info("  - 2 transfers (axfer with positive amount)")
+        print_info("  - 2 freeze operations (afrz)")
+        print_info("  - 1 asset reconfiguration (acfg)")
+
+        # Small delay to allow indexer to catch up
+        print_info("")
+        print_info("Waiting for indexer to index transactions...")
+        time.sleep(3)
+    except Exception as e:
+        print_error(f"Failed to create asset transactions: {e}")
+        print_info("")
+        print_info("If LocalNet errors occur, try: algokit localnet reset")
+        return
+
+    # =========================================================================
+    # Step 4: Basic lookup_asset_transactions() - Get all transactions for asset
+    # =========================================================================
+    print_step(4, "Looking up all transactions for asset with lookup_asset_transactions()")
+
+    try:
+        # lookup_asset_transactions() returns all transactions involving an asset
+        # Note: Results are returned oldest to newest
+        txns_result = indexer.lookup_asset_transactions(asset_id)
+
+        print_success(f"Found {len(txns_result.transactions)} transaction(s) for Asset ID {asset_id}")
+        print_info("Note: Results are returned oldest to newest")
+        print_info("")
+
+        if txns_result.transactions:
+            print_info("Asset transactions:")
+            for tx in txns_result.transactions:
+                tx_id_display = shorten_address(tx.id_, 8, 6) if tx.id_ else "N/A"
+                print_info(f"  Transaction: {tx_id_display}")
+                print_info(f"    - tx_type: {tx.tx_type}")
+                print_info(f"    - sender: {shorten_address(tx.sender)}")
+                if tx.confirmed_round is not None:
+                    print_info(f"    - confirmed_round: {tx.confirmed_round}")
+
+                # Show type-specific details
+                if tx.tx_type == "axfer" and tx.asset_transfer_transaction:
+                    print_info(f"    - receiver: {shorten_address(tx.asset_transfer_transaction.receiver)}")
+                    print_info(f"    - amount: {tx.asset_transfer_transaction.amount:,}")
+                elif tx.tx_type == "afrz" and tx.asset_freeze_transaction:
+                    print_info(f"    - frozen_address: {shorten_address(tx.asset_freeze_transaction.address)}")
+                    print_info(f"    - new_freeze_status: {tx.asset_freeze_transaction.new_freeze_status}")
+                elif tx.tx_type == "acfg":
+                    if tx.created_asset_id:
+                        print_info(f"    - created_asset_id: {tx.created_asset_id} (asset creation)")
+                    elif tx.asset_config_transaction:
+                        print_info(f"    - asset_id: {tx.asset_config_transaction.asset_id} (reconfiguration)")
+                print_info("")
+
+        print_info(f"Query performed at round: {txns_result.current_round}")
+    except Exception as e:
+        print_error(f"lookup_asset_transactions failed: {e}")
+
+    # =========================================================================
+    # Step 5: Filter by address and address_role - Sender
+    # =========================================================================
+    print_step(5, "Filtering by address with address_role=sender")
+
+    try:
+        # address_role can be: sender, receiver, freeze-target
+        print_info("Available address_role values: sender, receiver, freeze-target")
+        print_info("")
+
+        print_info(f"Searching for transactions where {shorten_address(creator_address)} is sender...")
+        sender_txns = indexer.lookup_asset_transactions(
+            asset_id,
+            address=creator_address,
+            address_role="sender",
+        )
+
+        print_success(f"Found {len(sender_txns.transactions)} transaction(s) where creator is sender")
+        if sender_txns.transactions:
+            for tx in sender_txns.transactions[:5]:
+                tx_id_display = shorten_address(tx.id_, 8, 6) if tx.id_ else "N/A"
+                print_info(f"  - {tx_id_display}: {tx.tx_type}")
+    except Exception as e:
+        print_error(f"address_role=sender filter failed: {e}")
+
+    # =========================================================================
+    # Step 6: Filter by address and address_role - Receiver
+    # =========================================================================
+    print_step(6, "Filtering by address with address_role=receiver")
+
+    try:
+        print_info(f"Searching for transactions where {shorten_address(holder_1_address)} is receiver...")
+        receiver_txns = indexer.lookup_asset_transactions(
+            asset_id,
+            address=holder_1_address,
+            address_role="receiver",
+        )
+
+        print_success(f"Found {len(receiver_txns.transactions)} transaction(s) where Holder 1 is receiver")
+        if receiver_txns.transactions:
+            for tx in receiver_txns.transactions:
+                tx_id_display = shorten_address(tx.id_, 8, 6) if tx.id_ else "N/A"
+                if tx.asset_transfer_transaction:
+                    print_info(f"  - {tx_id_display}: {tx.tx_type}, amount: {tx.asset_transfer_transaction.amount:,}")
+                else:
+                    print_info(f"  - {tx_id_display}: {tx.tx_type}")
+    except Exception as e:
+        print_error(f"address_role=receiver filter failed: {e}")
+
+    # =========================================================================
+    # Step 7: Filter by address and address_role - Freeze-target
+    # =========================================================================
+    print_step(7, "Filtering by address with address_role=freeze-target")
+
+    try:
+        # freeze-target filters for accounts that were the target of freeze operations
+        print_info(f"Searching for freeze transactions targeting {shorten_address(holder_1_address)}...")
+        freeze_target_txns = indexer.lookup_asset_transactions(
+            asset_id,
+            address=holder_1_address,
+            address_role="freeze-target",
+        )
+
+        print_success(f"Found {len(freeze_target_txns.transactions)} freeze transaction(s) targeting Holder 1")
+        if freeze_target_txns.transactions:
+            for tx in freeze_target_txns.transactions:
+                tx_id_display = shorten_address(tx.id_, 8, 6) if tx.id_ else "N/A"
+                if tx.asset_freeze_transaction:
+                    frozen = tx.asset_freeze_transaction.new_freeze_status
+                    print_info(f"  - {tx_id_display}: {tx.tx_type}, new_freeze_status: {frozen}")
+        print_info("")
+        print_info("Note: freeze-target is specifically for afrz transactions targeting an account")
+    except Exception as e:
+        print_error(f"address_role=freeze-target filter failed: {e}")
+
+    # =========================================================================
+    # Step 8: Filter by tx_type - Asset Transfer (axfer)
+    # =========================================================================
+    print_step(8, "Filtering by tx_type for specific asset operations")
+
+    try:
+        # tx_type values relevant to assets: acfg (config), axfer (transfer), afrz (freeze)
+        print_info("Asset-related tx_type values: acfg (config), axfer (transfer), afrz (freeze)")
+        print_info("")
+
+        # Search for asset transfers only
+        print_info("Searching for asset transfer transactions (tx_type=axfer)...")
+        axfer_txns = indexer.lookup_asset_transactions(asset_id, tx_type="axfer")
+        print_success(f"Found {len(axfer_txns.transactions)} asset transfer transaction(s)")
+        if axfer_txns.transactions:
+            for tx in axfer_txns.transactions[:4]:
+                tx_id_display = shorten_address(tx.id_, 8, 6) if tx.id_ else "N/A"
+                amount = tx.asset_transfer_transaction.amount if tx.asset_transfer_transaction else 0
+                amount_str = "0 (opt-in)" if amount == 0 else f"{amount:,}"
+                print_info(f"  - {tx_id_display}: amount={amount_str}")
+        print_info("")
+
+        # Search for asset freeze transactions
+        print_info("Searching for asset freeze transactions (tx_type=afrz)...")
+        afrz_txns = indexer.lookup_asset_transactions(asset_id, tx_type="afrz")
+        print_success(f"Found {len(afrz_txns.transactions)} asset freeze transaction(s)")
+        if afrz_txns.transactions:
+            for tx in afrz_txns.transactions:
+                tx_id_display = shorten_address(tx.id_, 8, 6) if tx.id_ else "N/A"
+                frozen = tx.asset_freeze_transaction.new_freeze_status if tx.asset_freeze_transaction else False
+                print_info(f"  - {tx_id_display}: frozen={frozen}")
+        print_info("")
+
+        # Search for asset config transactions
+        print_info("Searching for asset config transactions (tx_type=acfg)...")
+        acfg_txns = indexer.lookup_asset_transactions(asset_id, tx_type="acfg")
+        print_success(f"Found {len(acfg_txns.transactions)} asset config transaction(s)")
+        if acfg_txns.transactions:
+            for tx in acfg_txns.transactions:
+                tx_id_display = shorten_address(tx.id_, 8, 6) if tx.id_ else "N/A"
+                if tx.created_asset_id:
+                    print_info(f"  - {tx_id_display}: asset creation")
+                else:
+                    print_info(f"  - {tx_id_display}: asset reconfiguration")
+    except Exception as e:
+        print_error(f"tx_type filter failed: {e}")
+
+    # =========================================================================
+    # Step 9: Filter by round range (min_round, max_round)
+    # =========================================================================
+    print_step(9, "Filtering by round range (min_round, max_round)")
+
+    try:
+        # Get current round
+        latest_txns = indexer.lookup_asset_transactions(asset_id, limit=1)
+        current_round = latest_txns.current_round
+
+        print_info(f"Transactions created starting from round: {start_round}")
+        print_info(f"Current round: {current_round}")
+        print_info("")
+
+        # Filter by round range
+        print_info(f"Searching for transactions from round {start_round} to {current_round}...")
+        round_filtered_txns = indexer.lookup_asset_transactions(
+            asset_id,
+            min_round=start_round,
+            max_round=current_round,
+        )
+
+        print_success(f"Found {len(round_filtered_txns.transactions)} transaction(s) in round range")
+        if round_filtered_txns.transactions:
+            rounds = [tx.confirmed_round for tx in round_filtered_txns.transactions if tx.confirmed_round is not None]
+            if rounds:
+                min_found_round = min(rounds)
+                max_found_round = max(rounds)
+                print_info(f"  Rounds of found transactions: {min_found_round} to {max_found_round}")
+    except Exception as e:
+        print_error(f"round filter failed: {e}")
+
+    # =========================================================================
+    # Step 10: Filter by time range (before_time, after_time)
+    # =========================================================================
+    print_step(10, "Filtering by time range (before_time, after_time)")
+
+    try:
+        # Time filters use RFC 3339 format (ISO 8601, e.g., "2026-01-26T10:00:00.000Z")
+        now = datetime.now(tz=timezone.utc)
+        one_hour_ago = datetime.fromtimestamp(now.timestamp() - 60 * 60, tz=timezone.utc)
+
+        after_time_str = one_hour_ago.isoformat()
+        before_time_str = now.isoformat()
+
+        print_info("Time filters use RFC 3339 format (ISO 8601)")
+        print_info(f"  after_time: {after_time_str}")
+        print_info(f"  before_time: {before_time_str}")
+        print_info("")
+
+        print_info("Searching for transactions in the last hour...")
+        time_filtered_txns = indexer.lookup_asset_transactions(
+            asset_id,
+            after_time=after_time_str,
+            before_time=before_time_str,
+        )
+
+        print_success(f"Found {len(time_filtered_txns.transactions)} transaction(s) in time range")
+        if time_filtered_txns.transactions:
+            times = [tx.round_time for tx in time_filtered_txns.transactions if tx.round_time is not None]
+            if times:
+                min_time = min(times)
+                max_time = max(times)
+                earliest = datetime.fromtimestamp(min_time, tz=timezone.utc).isoformat()
+                latest = datetime.fromtimestamp(max_time, tz=timezone.utc).isoformat()
+                print_info("  Time range of found transactions:")
+                print_info(f"    - Earliest: {earliest}")
+                print_info(f"    - Latest: {latest}")
+    except Exception as e:
+        print_error(f"time filter failed: {e}")
+
+    # =========================================================================
+    # Step 11: Filter by currency amount
+    # =========================================================================
+    print_step(11, "Filtering by currency amount (currency_greater_than, currency_less_than)")
+
+    try:
+        # currency_greater_than/currency_less_than filter by transaction amount
+        print_info("Searching for transfers with amount > 0 (excludes opt-ins)...")
+        non_zero_txns = indexer.lookup_asset_transactions(
+            asset_id,
+            tx_type="axfer",
+            currency_greater_than=0,
+        )
+
+        print_success(f"Found {len(non_zero_txns.transactions)} transfer(s) with amount > 0")
+        if non_zero_txns.transactions:
+            for tx in non_zero_txns.transactions:
+                tx_id_display = shorten_address(tx.id_, 8, 6) if tx.id_ else "N/A"
+                amount = tx.asset_transfer_transaction.amount if tx.asset_transfer_transaction else 0
+                print_info(f"  - {tx_id_display}: amount={amount:,}")
+        print_info("")
+
+        # Filter for large transfers only
+        print_info("Searching for transfers with amount > 500,000 (> 500 TXN)...")
+        large_txns = indexer.lookup_asset_transactions(
+            asset_id,
+            tx_type="axfer",
+            currency_greater_than=500_000,
+        )
+
+        print_success(f"Found {len(large_txns.transactions)} large transfer(s)")
+        if large_txns.transactions:
+            for tx in large_txns.transactions:
+                tx_id_display = shorten_address(tx.id_, 8, 6) if tx.id_ else "N/A"
+                amount = tx.asset_transfer_transaction.amount if tx.asset_transfer_transaction else 0
+                print_info(f"  - {tx_id_display}: amount={amount:,}")
+    except Exception as e:
+        print_error(f"currency filter failed: {e}")
+
+    # =========================================================================
+    # Step 12: Combining multiple filters
+    # =========================================================================
+    print_step(12, "Combining multiple filters")
+
+    try:
+        print_info("You can combine multiple filters to narrow down results.")
+        print_info("")
+
+        # Combine tx_type and address
+        print_info(f"Searching for asset transfers TO {shorten_address(holder_1_address)}...")
+        combined_txns_1 = indexer.lookup_asset_transactions(
+            asset_id,
+            tx_type="axfer",
+            address=holder_1_address,
+            address_role="receiver",
+        )
+        print_success(f"Found {len(combined_txns_1.transactions)} transfer(s) to Holder 1")
+        for tx in combined_txns_1.transactions:
+            tx_id_display = shorten_address(tx.id_, 8, 6) if tx.id_ else "N/A"
+            amount = tx.asset_transfer_transaction.amount if tx.asset_transfer_transaction else 0
+            print_info(f"  - {tx_id_display}: amount={amount:,}")
+        print_info("")
+
+        # Combine round range and tx_type
+        print_info("Searching for freeze transactions in recent rounds...")
+        latest_result = indexer.lookup_asset_transactions(asset_id, limit=1)
+        combined_txns_2 = indexer.lookup_asset_transactions(
+            asset_id,
+            tx_type="afrz",
+            min_round=start_round,
+            max_round=latest_result.current_round,
+        )
+        print_success(f"Found {len(combined_txns_2.transactions)} freeze transaction(s) in recent rounds")
+        for tx in combined_txns_2.transactions:
+            tx_id_display = shorten_address(tx.id_, 8, 6) if tx.id_ else "N/A"
+            frozen = tx.asset_freeze_transaction.new_freeze_status if tx.asset_freeze_transaction else False
+            print_info(f"  - {tx_id_display}: frozen={frozen}, round={tx.confirmed_round}")
+    except Exception as e:
+        print_error(f"combined filters failed: {e}")
+
+    # =========================================================================
+    # Step 13: Pagination with limit and next
+    # =========================================================================
+    print_step(13, "Demonstrating pagination with limit and next")
+
+    try:
+        print_info("Using limit=3 to demonstrate pagination...")
+        page_1 = indexer.lookup_asset_transactions(asset_id, limit=3)
+
+        print_info(f"Page 1: Retrieved {len(page_1.transactions)} transaction(s)")
+        for tx in page_1.transactions:
+            tx_id_display = shorten_address(tx.id_, 8, 6) if tx.id_ else "N/A"
+            print_info(f"  - {tx_id_display}: {tx.tx_type}")
+
+        if page_1.next_token:
+            token_preview = page_1.next_token[:20]
+            print_info(f"  Next token available: {token_preview}...")
+            print_info("")
+
+            print_info("Fetching next page...")
+            page_2 = indexer.lookup_asset_transactions(
+                asset_id,
+                limit=3,
+                next_=page_1.next_token,
+            )
+
+            print_info(f"Page 2: Retrieved {len(page_2.transactions)} transaction(s)")
+            for tx in page_2.transactions:
+                tx_id_display = shorten_address(tx.id_, 8, 6) if tx.id_ else "N/A"
+                print_info(f"  - {tx_id_display}: {tx.tx_type}")
+
+            if page_2.next_token:
+                print_info("  More pages available (next_token present)")
+            else:
+                print_info("  No more pages (no next_token)")
+        else:
+            print_info("  No pagination needed (all results fit in one page)")
+    except Exception as e:
+        print_error(f"pagination failed: {e}")
+
+    # =========================================================================
+    # Summary
+    # =========================================================================
+    print_header("Summary")
+    print_info("This example demonstrated lookup_asset_transactions() with various filters:")
+    print_info("")
+    print_info("Key characteristics:")
+    print_info("  - Results are returned oldest to newest")
+    print_info("  - Returns all transaction types involving the asset (acfg, axfer, afrz)")
+    print_info("")
+    print_info("Transaction types for assets:")
+    print_info("  - acfg: Asset configuration (create, reconfigure, destroy)")
+    print_info("  - axfer: Asset transfer (opt-in with 0 amount, transfers, close-out)")
+    print_info("  - afrz: Asset freeze (freeze/unfreeze account holdings)")
+    print_info("")
+    print_info("Address filtering with address_role:")
+    print_info("  - sender: Transactions where address is the sender")
+    print_info("  - receiver: Transactions where address is the receiver")
+    print_info("  - freeze-target: Freeze transactions targeting the address")
+    print_info("")
+    print_info("Other filter parameters:")
+    print_info("  - tx_type: Filter by transaction type (acfg, axfer, afrz)")
+    print_info("  - min_round/max_round: Filter by round range")
+    print_info("  - before_time/after_time: Filter by time (RFC 3339 format)")
+    print_info("  - currency_greater_than/currency_less_than: Filter by amount")
+    print_info("  - sig_type: Filter by signature type (sig, msig, lsig)")
+    print_info("  - note_prefix: Filter by note prefix")
+    print_info("  - tx_id: Find specific transaction by ID")
+    print_info("  - exclude_close_to: Exclude close-to transactions")
+    print_info("  - rekey_to: Filter for rekey transactions")
+    print_info("")
+    print_info("Pagination:")
+    print_info("  - limit: Maximum number of results per page")
+    print_info("  - next: Token from previous response to get next page")
+
+
+if __name__ == "__main__":
+    main()
+
+```
+
+---
+
+### Other examples in Indexer Client
+
+- [Indexer Health Check](/docs/algokit-utils/python/latest/examples/indexer-client/01-health-check/)
+- [Account Lookup](/docs/algokit-utils/python/latest/examples/indexer-client/02-account-lookup/)
+- [Account Assets](/docs/algokit-utils/python/latest/examples/indexer-client/03-account-assets/)
+- [Account Applications](/docs/algokit-utils/python/latest/examples/indexer-client/04-account-applications/)
+- [Account Transactions](/docs/algokit-utils/python/latest/examples/indexer-client/05-account-transactions/)
+- [Transaction Lookup](/docs/algokit-utils/python/latest/examples/indexer-client/06-transaction-lookup/)
+- [Transaction Search](/docs/algokit-utils/python/latest/examples/indexer-client/07-transaction-search/)
+- [Asset Lookup](/docs/algokit-utils/python/latest/examples/indexer-client/08-asset-lookup/)
+- [Asset Balances](/docs/algokit-utils/python/latest/examples/indexer-client/09-asset-balances/)
+- **Asset Transactions**
+- [Application Lookup](/docs/algokit-utils/python/latest/examples/indexer-client/11-application-lookup/)
+- [Application Logs Lookup](/docs/algokit-utils/python/latest/examples/indexer-client/12-application-logs/)
+- [Application Boxes Lookup](/docs/algokit-utils/python/latest/examples/indexer-client/13-application-boxes/)
+- [Block Lookup](/docs/algokit-utils/python/latest/examples/indexer-client/14-block-lookup/)
+- [Block Headers Search](/docs/algokit-utils/python/latest/examples/indexer-client/15-block-headers/)
+- [Pagination](/docs/algokit-utils/python/latest/examples/indexer-client/16-pagination/)

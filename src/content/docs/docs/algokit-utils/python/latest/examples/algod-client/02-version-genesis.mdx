@@ -1,0 +1,219 @@
+---
+title: 'Version and Genesis Information'
+description: 'This example demonstrates how to retrieve node version information and genesis configuration using the AlgodClient methods: versions() and genesis().'
+sidebar:
+  order: 2
+---
+
+[← Back to Algod Client](/docs/algokit-utils/python/latest/examples/algod-client/)
+
+## Description
+
+This example demonstrates how to retrieve node version information and genesis configuration using the AlgodClient methods: versions() and genesis().
+Prerequisites:
+
+## Prerequisites
+
+- LocalNet running (via `algokit localnet start`)
+
+## Run This Example
+
+From the repository's `examples` directory:
+
+```bash
+cd examples
+uv run python algod_client/02_version_genesis.py
+```
+
+## Code
+
+[View source on GitHub](https://github.com/algorandfoundation/algokit-utils-py/blob/main/examples/algod_client/02_version_genesis.py)
+
+```python title="02_version_genesis.py"
+# ruff: noqa: N999, C901, PLR0912, PLR0915
+"""
+Example: Version and Genesis Information
+
+This example demonstrates how to retrieve node version information and
+genesis configuration using the AlgodClient methods: versions() and genesis().
+
+Prerequisites:
+- LocalNet running (via `algokit localnet start`)
+"""
+
+import base64
+from datetime import UTC, datetime
+
+from shared import (
+    create_algod_client,
+    print_error,
+    print_header,
+    print_info,
+    print_step,
+    print_success,
+)
+
+
+def main() -> None:
+    print_header("Version and Genesis Information Example")
+
+    # Create an Algod client connected to LocalNet
+    algod = create_algod_client()
+
+    # =========================================================================
+    # Step 1: Get Version Information
+    # =========================================================================
+    print_step(1, "Getting algod version information with versions()")
+
+    try:
+        version_info = algod.versions()
+
+        print_success("Version information retrieved successfully!")
+        print_info("")
+        print_info("Build information:")
+        print_info(f"  - major: {version_info['build']['major']}")
+        print_info(f"  - minor: {version_info['build']['minor']}")
+        print_info(f"  - build_number: {version_info['build']['build_number']}")
+        print_info(f"  - commit_hash: {version_info['build']['commit_hash']}")
+        print_info(f"  - branch: {version_info['build']['branch']}")
+        print_info(f"  - channel: {version_info['build']['channel']}")
+
+        print_info("")
+        print_info("Network information:")
+        print_info(f"  - genesis_id: {version_info['genesis_id']}")
+
+        # The genesis_hash_b64 is already a base64 string
+        genesis_hash_b64 = version_info["genesis_hash_b64"]
+        print_info(f"  - genesis_hash (base64): {genesis_hash_b64}")
+
+        print_info("")
+        print_info("Supported API versions:")
+        for v in version_info["versions"]:
+            print_info(f"  - {v}")
+    except Exception as e:
+        print_error(f"Failed to get version information: {e}")
+
+    # =========================================================================
+    # Step 2: Get Genesis Configuration
+    # =========================================================================
+    print_step(2, "Getting genesis configuration with genesis()")
+
+    try:
+        genesis_config = algod.genesis()
+
+        print_success("Genesis configuration retrieved successfully!")
+        print_info("")
+        print_info("Genesis fields:")
+        print_info(f"  - network: {genesis_config['network']}")
+        print_info(f"  - id: {genesis_config['id']}")
+        print_info(f"  - proto (protocol version): {genesis_config['proto']}")
+        print_info(f"  - fees (fee sink address): {genesis_config['fees']}")
+        print_info(f"  - rwd (rewards pool address): {genesis_config['rwd']}")
+
+        if "timestamp" in genesis_config:
+            timestamp = genesis_config["timestamp"]
+            timestamp_date = datetime.fromtimestamp(timestamp, tz=UTC)
+            print_info(f"  - timestamp: {timestamp} ({timestamp_date.isoformat()})")
+
+        if "devmode" in genesis_config:
+            print_info(f"  - devmode: {genesis_config['devmode']}")
+
+        if "comment" in genesis_config:
+            print_info(f"  - comment: {genesis_config['comment']}")
+
+        # Display allocation (genesis accounts) information
+        print_info("")
+        alloc = genesis_config.get("alloc", [])
+        print_info(f"Genesis allocations ({len(alloc)} accounts):")
+
+        # Show first few accounts as examples
+        accounts_to_show = min(3, len(alloc))
+        for i in range(accounts_to_show):
+            account = alloc[i]
+            algo_amount = account["state"]["algo"] / 1_000_000
+            print_info(f"  Account {i + 1}:")
+            print_info(f"    - addr: {account['addr']}")
+            print_info(f"    - comment: {account.get('comment', '')}")
+            print_info(f"    - algo: {algo_amount:,.0f} ALGO ({account['state']['algo']} microALGO)")
+            print_info(f"    - onl (online status): {account['state'].get('onl', 0)}")
+
+        if len(alloc) > accounts_to_show:
+            print_info(f"  ... and {len(alloc) - accounts_to_show} more accounts")
+    except Exception as e:
+        print_error(f"Failed to get genesis configuration: {e}")
+
+    # =========================================================================
+    # Step 3: Decode and Verify Genesis Hash
+    # =========================================================================
+    print_step(3, "Demonstrating genesis hash decoding")
+
+    try:
+        version_info = algod.versions()
+
+        # The genesis_hash_b64 is a base64-encoded string
+        genesis_hash_b64 = version_info["genesis_hash_b64"]
+        hash_bytes = base64.b64decode(genesis_hash_b64)
+
+        print_success("Genesis hash decoded successfully!")
+        print_info("")
+        print_info("Genesis hash representations:")
+        print_info(f"  - Raw bytes length: {len(hash_bytes)} bytes")
+        print_info(f"  - Base64 encoded: {genesis_hash_b64}")
+        print_info(f"  - Hex encoded: {hash_bytes.hex()}")
+
+        print_info("The genesis hash is a SHA512/256 hash (32 bytes) that uniquely identifies the network")
+        print_info("It is used in transaction signing to ensure transactions are bound to a specific network")
+    except Exception as e:
+        print_error(f"Failed to decode genesis hash: {e}")
+
+    # =========================================================================
+    # Summary
+    # =========================================================================
+    print_header("Summary")
+    print_info("This example demonstrated:")
+    print_info("  1. versions() - Retrieves algod version and build information")
+    print_info("  2. genesis() - Retrieves the full genesis configuration")
+    print_info("  3. Decoding the base64 genesis hash")
+    print_info("")
+    print_info("Key version fields:")
+    print_info("  - build.major/minor/build_number: Software version numbers")
+    print_info("  - build.commit_hash: Git commit that built the node")
+    print_info('  - genesis_id: Human-readable network identifier (e.g., "devnet-v1")')
+    print_info("  - genesis_hash: Cryptographic hash uniquely identifying the network")
+    print_info("")
+    print_info("Key genesis fields:")
+    print_info("  - network: The network name")
+    print_info("  - proto: Initial consensus protocol version")
+    print_info("  - alloc: Pre-allocated accounts at network genesis")
+    print_info("  - fees: Address of the fee sink account")
+    print_info("  - rwd: Address of the rewards pool account")
+
+
+if __name__ == "__main__":
+    main()
+
+```
+
+---
+
+### Other examples in Algod Client
+
+- [Node Health and Status](/docs/algokit-utils/python/latest/examples/algod-client/01-node-health-status/)
+- **Version and Genesis Information**
+- [Ledger Supply Information](/docs/algokit-utils/python/latest/examples/algod-client/03-ledger-supply/)
+- [Account Information](/docs/algokit-utils/python/latest/examples/algod-client/04-account-info/)
+- [Transaction Parameters](/docs/algokit-utils/python/latest/examples/algod-client/05-transaction-params/)
+- [Send and Confirm Transaction](/docs/algokit-utils/python/latest/examples/algod-client/06-send-transaction/)
+- [Pending Transactions](/docs/algokit-utils/python/latest/examples/algod-client/07-pending-transactions/)
+- [Block Data](/docs/algokit-utils/python/latest/examples/algod-client/08-block-data/)
+- [Asset Information](/docs/algokit-utils/python/latest/examples/algod-client/09-asset-info/)
+- [Application Information](/docs/algokit-utils/python/latest/examples/algod-client/10-application-info/)
+- [Application Boxes](/docs/algokit-utils/python/latest/examples/algod-client/11-application-boxes/)
+- [TEAL Compile and Disassemble](/docs/algokit-utils/python/latest/examples/algod-client/12-teal-compile/)
+- [Transaction Simulation](/docs/algokit-utils/python/latest/examples/algod-client/13-simulation/)
+- [Ledger State Deltas](/docs/algokit-utils/python/latest/examples/algod-client/14-state-deltas/)
+- [Transaction Proof](/docs/algokit-utils/python/latest/examples/algod-client/15-transaction-proof/)
+- [Light Block Header Proof](/docs/algokit-utils/python/latest/examples/algod-client/16-lightblock-proof/)
+- [State Proof](/docs/algokit-utils/python/latest/examples/algod-client/17-state-proof/)
+- [DevMode Timestamp Offset](/docs/algokit-utils/python/latest/examples/algod-client/18-devmode-timestamp/)
+- [Sync Round Management](/docs/algokit-utils/python/latest/examples/algod-client/19-sync-round/)

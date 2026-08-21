@@ -4,6 +4,15 @@
 import { Code, LinkButton } from '@astrojs/starlight/components';
 import { getSelectedCode } from './RemoteCode';
 
+interface Props {
+  src: string;
+  snippet?: string;
+  lang: string;
+  title?: string;
+  mark?: string;
+  frame?: string;
+}
+
 const { src, snippet, lang, title, mark, frame } = Astro.props;
 const codeResult = await getSelectedCode(src, snippet);
 const githubUrl = `${codeResult.githubUrl}#L${codeResult.line}`;

@@ -1,0 +1,432 @@
+---
+title: 'Primitive Serde (Serialization/Deserialization)'
+description: 'This example demonstrates how to use primitive serialization patterns in Python for encoding/decoding basic values in wire format.'
+sidebar:
+  order: 9
+---
+
+[← Back to Common Utilities](/docs/algokit-utils/python/latest/examples/common/)
+
+## Description
+
+This example demonstrates how to use primitive serialization patterns in Python for encoding/decoding basic values in wire format.
+Note: Unlike the TypeScript SDK which uses explicit codec classes (numberCodec, bigIntCodec, etc.), the Python SDK uses a dataclass-based approach with field metadata helpers. This example shows both native Python serialization and the serde utilities available in algokit_common.
+Topics covered:
+
+- Python's native type handling for serialization
+- Using wire() metadata for dataclass fields
+- Address encoding/decoding with addr() helper
+- Bytes encoding (base64 for JSON, raw for msgpack)
+- Round-trip verification for various types
+- The serde module's to_wire() and from_wire() functions
+
+## Prerequisites
+
+No LocalNet required - pure codec/serde functions
+
+## Run This Example
+
+From the repository's `examples` directory:
+
+```bash
+cd examples
+uv run python common/09_primitive_codecs.py
+```
+
+## Code
+
+[View source on GitHub](https://github.com/algorandfoundation/algokit-utils-py/blob/main/examples/common/09_primitive_codecs.py)
+
+```python title="09_primitive_codecs.py"
+# ruff: noqa: N999, C901, PLR0912, PLR0915
+"""
+Example: Primitive Serde (Serialization/Deserialization)
+
+This example demonstrates how to use primitive serialization patterns in Python
+for encoding/decoding basic values in wire format.
+
+Note: Unlike the TypeScript SDK which uses explicit codec classes (numberCodec,
+bigIntCodec, etc.), the Python SDK uses a dataclass-based approach with field
+metadata helpers. This example shows both native Python serialization and the
+serde utilities available in algokit_common.
+
+Topics covered:
+- Python's native type handling for serialization
+- Using wire() metadata for dataclass fields
+- Address encoding/decoding with addr() helper
+- Bytes encoding (base64 for JSON, raw for msgpack)
+- Round-trip verification for various types
+- The serde module's to_wire() and from_wire() functions
+
+No LocalNet required - pure codec/serde functions
+"""
+
+import base64
+from dataclasses import dataclass, field
+
+from shared import (
+    format_hex,
+    print_header,
+    print_info,
+    print_step,
+    print_success,
+)
+
+from algokit_common import (
+    ZERO_ADDRESS,
+    addr,
+    address_from_public_key,
+    from_wire,
+    public_key_from_address,
+    to_wire,
+    wire,
+)
+from algokit_transact.codec.msgpack import decode_msgpack, encode_msgpack
+
+
+def main() -> None:
+    print_header("Primitive Serde Example")
+
+    # Step 1: Introduction to Python's Approach
+    print_step(1, "Python's Approach to Serialization")
+
+    print_info("Unlike TypeScript, Python handles types natively without explicit codecs.")
+    print_info("")
+    print_info("TypeScript approach:")
+    print_info("  - Explicit codec objects: numberCodec, bigIntCodec, etc.")
+    print_info("  - encode(value, format) / decode(value, format) methods")
+    print_info("")
+    print_info("Python approach:")
+    print_info("  - Native type handling for numbers, strings, booleans")
+    print_info("  - Dataclass field metadata with wire() for custom encoding")
+    print_info("  - Helper functions: addr(), bytes_seq(), int_seq()")
+    print_info("  - to_wire() / from_wire() for dataclass serialization")
+    print_info("")
+    print_success("Python provides simpler, more Pythonic serialization")
+
+    # Step 2: Native Number Handling
+    print_step(2, "Native Number Handling")
+
+    print_info("Python integers have unlimited precision - no special codec needed:")
+    print_info("")
+
+    test_numbers = [0, 42, -100, 9007199254740991, 18446744073709551615]
+
+    for num in test_numbers:
+        # Encode/decode via msgpack
+        encoded = encode_msgpack({"value": num})
+        decoded = decode_msgpack(encoded)
+        decoded_val = decoded["value"] if isinstance(decoded, dict) else None
+
+        print_info(f"  {num:>25}:")
+        print_info(f"    Type: {type(num).__name__}, Round-trip match: {num == decoded_val}")
+
+    print_info("")
+    print_success("Numbers of any size are handled natively in Python")
+
+    # Step 3: Boolean and None Handling
+    print_step(3, "Boolean and None Handling")
+
+    print_info("Booleans and None are handled directly:")
+    print_info("")
+
+    for val in [True, False, None]:
+        encoded = encode_msgpack({"value": val})
+        decoded = decode_msgpack(encoded)
+        decoded_val = decoded["value"] if isinstance(decoded, dict) else "ERROR"
+
+        type_name = type(val).__name__ if val is not None else "NoneType"
+        val_str = "None" if val is None else str(val)
+        match = val is decoded_val or val == decoded_val
+        print_info(f"  {val_str:>10}: Type={type_name}, Round-trip match: {match}")
+
+    print_info("")
+    print_success("Boolean and None values preserved through encoding")
+
+    # Step 4: String Handling
+    print_step(4, "String Handling")
+
+    print_info("UTF-8 strings are handled natively:")
+    print_info("")
+
+    test_strings = ["", "Hello", "Hello, Algorand!", "Unicode: \u00e9\u00e8\u00ea"]
+
+    for string in test_strings:
+        encoded = encode_msgpack({"value": string})
+        decoded = decode_msgpack(encoded)
+        decoded_val = decoded["value"] if isinstance(decoded, dict) else None
+
+        display = "(empty)" if string == "" else f'"{string}"'
+        print_info(f"  {display}:")
+        print_info(f"    Round-trip match: {string == decoded_val}")
+
+    print_info("")
+    print_success("Strings of all types preserved through encoding")
+
+    # Step 5: Bytes Handling
+    print_step(5, "Bytes Handling")
+
+    print_info("Bytes require different handling for JSON vs MessagePack:")
+    print_info("  JSON: base64 encode/decode")
+    print_info("  MessagePack: raw bytes")
+    print_info("")
+
+    test_bytes_list = [
+        bytes([]),
+        bytes([0x01, 0x02, 0x03]),
+        bytes([0xDE, 0xAD, 0xBE, 0xEF]),
+        bytes([0xAB] * 32),  # 32-byte key simulation
+    ]
+
+    for test_bytes in test_bytes_list:
+        # MessagePack encoding
+        encoded = encode_msgpack({"value": test_bytes})
+        decoded = decode_msgpack(encoded)
+        decoded_val = decoded["value"] if isinstance(decoded, dict) else None
+
+        # JSON encoding (base64)
+        b64_encoded = base64.b64encode(test_bytes).decode("utf-8")
+        b64_decoded = base64.b64decode(b64_encoded)
+
+        byte_limit = 8
+        if len(test_bytes) == 0:
+            display = "(empty)"
+        else:
+            suffix = "..." if len(test_bytes) > byte_limit else ""
+            display = f"{format_hex(test_bytes[:byte_limit])}{suffix}"
+        print_info(f"  {display} ({len(test_bytes)} bytes):")
+        print_info(f"    msgpack: Round-trip match: {test_bytes == decoded_val}")
+        print_info(f'    base64:  "{b64_encoded}", Round-trip match: {test_bytes == b64_decoded}')
+
+    print_info("")
+    print_success("Bytes handled correctly in both formats")
+
+    # Step 6: Address Handling with addr() Helper
+    print_step(6, "Address Handling with addr() Helper")
+
+    print_info("Algorand addresses require special handling:")
+    print_info("  - Storage: 32-byte public key")
+    print_info("  - Display: 58-character base32 string")
+    print_info("")
+
+    # Define a dataclass with address field
+    @dataclass
+    class Transfer:
+        sender: str = field(default=ZERO_ADDRESS, metadata=addr("snd"))
+        receiver: str = field(default=ZERO_ADDRESS, metadata=addr("rcv"))
+        amount: int = field(default=0, metadata=wire("amt"))
+
+    # Create a transfer
+    sender_bytes = bytes(range(32))
+    receiver_bytes = bytes(range(32, 64))
+    sender_addr = address_from_public_key(sender_bytes)
+    receiver_addr = address_from_public_key(receiver_bytes)
+
+    transfer = Transfer(sender=sender_addr, receiver=receiver_addr, amount=1000000)
+
+    print_info("Transfer object:")
+    print_info(f"  sender:   {sender_addr[:20]}...")
+    print_info(f"  receiver: {receiver_addr[:20]}...")
+    print_info(f"  amount:   {transfer.amount}")
+    print_info("")
+
+    # Encode to wire format
+    wire_data = to_wire(transfer)
+    print_info("Wire format (to_wire):")
+    for key, value in wire_data.items():
+        if isinstance(value, bytes):
+            print_info(f"  {key}: {format_hex(value[:8])}... (32 bytes)")
+        else:
+            print_info(f"  {key}: {value}")
+    print_info("")
+
+    # Decode back
+    decoded_transfer = from_wire(Transfer, wire_data)
+    print_info("Decoded back (from_wire):")
+    print_info(f"  sender:   {decoded_transfer.sender[:20]}...")
+    print_info(f"  receiver: {decoded_transfer.receiver[:20]}...")
+    print_info(f"  amount:   {decoded_transfer.amount}")
+    print_info("")
+
+    # Verify round-trip
+    matches = (
+        decoded_transfer.sender == transfer.sender
+        and decoded_transfer.receiver == transfer.receiver
+        and decoded_transfer.amount == transfer.amount
+    )
+    if matches:
+        print_success("Address fields round-trip correctly via addr() helper")
+
+    # Step 7: The wire() Metadata Helper
+    print_step(7, "The wire() Metadata Helper")
+
+    print_info("wire() provides fine-grained control over field serialization:")
+    print_info("")
+    print_info("  wire(alias,")
+    print_info("       encode=...,      # Custom encoder function")
+    print_info("       decode=...,      # Custom decoder function")
+    print_info("       omit_if_none=True,")
+    print_info("       keep_zero=False,")
+    print_info("       keep_false=False,")
+    print_info("       required=False)")
+    print_info("")
+
+    @dataclass
+    class Example:
+        name: str = field(default="", metadata=wire("n"))
+        count: int = field(default=0, metadata=wire("c", keep_zero=True))
+        active: bool = field(default=False, metadata=wire("a", keep_false=True))
+
+    # Encode with default values
+    default_obj = Example()
+    default_wire = to_wire(default_obj)
+    print_info(f"Default values: {default_wire}")
+    print_info("  'count' and 'active' preserved due to keep_zero/keep_false=True")
+    print_info("")
+
+    # Encode with non-default values
+    filled_obj = Example(name="test", count=42, active=True)
+    filled_wire = to_wire(filled_obj)
+    print_info(f"Filled values: {filled_wire}")
+    print_info("")
+
+    print_success("wire() provides flexible field serialization control")
+
+    # Step 8: Manual Address Encoding/Decoding
+    print_step(8, "Manual Address Encoding/Decoding")
+
+    print_info("You can also handle addresses manually without dataclasses:")
+    print_info("")
+
+    # Create test address
+    test_pk = bytes(range(32))
+    test_addr = address_from_public_key(test_pk)
+
+    print_info(f"Original address: {test_addr[:20]}...")
+    print_info(f"Original pk:      {format_hex(test_pk[:8])}... ({len(test_pk)} bytes)")
+    print_info("")
+
+    # Encode: address string -> 32-byte public key
+    encoded_pk = public_key_from_address(test_addr)
+    print_info(f"Encoded (pk):     {format_hex(encoded_pk[:8])}... ({len(encoded_pk)} bytes)")
+
+    # Decode: 32-byte public key -> address string
+    decoded_addr = address_from_public_key(encoded_pk)
+    print_info(f"Decoded (addr):   {decoded_addr[:20]}...")
+    print_info("")
+
+    if decoded_addr == test_addr and encoded_pk == test_pk:
+        print_success("Manual address encoding/decoding works correctly")
+
+    # Step 9: Zero Address Handling
+    print_step(9, "Zero Address Handling")
+
+    print_info("The zero address gets special treatment in wire encoding:")
+    print_info(f"  ZERO_ADDRESS = {ZERO_ADDRESS[:20]}...")
+    print_info("")
+
+    @dataclass
+    class ZeroExample:
+        addr: str = field(default=ZERO_ADDRESS, metadata=addr("a"))
+
+    # Zero address - should be omitted in wire format
+    zero_obj = ZeroExample()
+    zero_wire = to_wire(zero_obj)
+    print_info(f"Zero address wire: {zero_wire}")
+    print_info("  Note: 'a' field is omitted because ZERO_ADDRESS is the default")
+    print_info("")
+
+    # Non-zero address - should be included
+    non_zero_obj = ZeroExample(addr=test_addr)
+    non_zero_wire = to_wire(non_zero_obj)
+    addr_val = non_zero_wire.get("a")
+    if isinstance(addr_val, bytes):
+        addr_display = format_hex(addr_val[:8])
+    else:
+        addr_display = str(addr_val)
+    print_info(f"Non-zero address wire: {{'a': {addr_display}...}}")
+    print_info("  Non-zero addresses are included in wire output")
+    print_info("")
+
+    print_success("Zero addresses are handled correctly (omitted when default)")
+
+    # Step 10: Round-Trip Summary
+    print_step(10, "Round-Trip Summary")
+
+    print_info("All primitive types support round-trip encoding:")
+    print_info("")
+
+    results = [
+        ("number (small)", 42),
+        ("number (large)", 18446744073709551615),
+        ("boolean (true)", True),
+        ("boolean (false)", False),
+        ("string", "Algorand"),
+        ("bytes", bytes([1, 2, 3, 4, 5])),
+        ("None", None),
+    ]
+
+    all_passed = True
+    for name, value in results:
+        encoded = encode_msgpack({"v": value})
+        decoded = decode_msgpack(encoded)
+        decoded_val = decoded["v"] if isinstance(decoded, dict) else "ERROR"
+        passed = value == decoded_val or (value is None and decoded_val is None)
+        status = "PASS" if passed else "FAIL"
+        print_info(f"  [{status}] {name}")
+        if not passed:
+            all_passed = False
+
+    print_info("")
+    if all_passed:
+        print_success("All round-trip verifications passed!")
+
+    # Step 11: Summary
+    print_step(11, "Summary")
+
+    print_info("Python serialization approach (vs TypeScript codecs):")
+    print_info("")
+    print_info("  Native Python handling:")
+    print_info("    - int:   Unlimited precision, no special handling")
+    print_info("    - bool:  Native True/False")
+    print_info("    - str:   UTF-8 strings")
+    print_info("    - bytes: Raw in msgpack, base64 in JSON")
+    print_info("    - None:  Null/nil handling")
+    print_info("")
+    print_info("  algokit_common.serde helpers:")
+    print_info("    - wire(alias, ...)     Field metadata for encoding")
+    print_info("    - addr(alias, ...)     Address string <-> bytes")
+    print_info("    - bytes_seq(alias)     Byte array sequences")
+    print_info("    - int_seq(alias)       Integer sequences")
+    print_info("    - to_wire(obj)         Dataclass -> wire dict")
+    print_info("    - from_wire(cls, data) Wire dict -> dataclass")
+    print_info("")
+    print_info("  Key differences from TypeScript:")
+    print_info("    - No explicit codec objects (numberCodec, etc.)")
+    print_info("    - Field metadata on dataclass fields")
+    print_info("    - Simpler, more Pythonic approach")
+    print_info("")
+    print_success("Primitive Serde Example completed!")
+
+
+if __name__ == "__main__":
+    main()
+
+```
+
+---
+
+### Other examples in Common Utilities
+
+- [Address Basics](/docs/algokit-utils/python/latest/examples/common/01-address-basics/)
+- [Address Encoding](/docs/algokit-utils/python/latest/examples/common/02-address-encoding/)
+- [Array Utilities](/docs/algokit-utils/python/latest/examples/common/03-array-utilities/)
+- [Constants Reference](/docs/algokit-utils/python/latest/examples/common/04-constants/)
+- [Crypto Hash (SHA-512/256)](/docs/algokit-utils/python/latest/examples/common/05-crypto-hash/)
+- [Example](/docs/algokit-utils/python/latest/examples/common/06-logger/)
+- [JSON BigInt Support](/docs/algokit-utils/python/latest/examples/common/07-json-bigint/)
+- [MessagePack Encoding](/docs/algokit-utils/python/latest/examples/common/08-msgpack/)
+- **Primitive Serde (Serialization/Deserialization)**
+- [Composite Serde (Serialization/Deserialization)](/docs/algokit-utils/python/latest/examples/common/10-composite-codecs/)
+- [Model Serde (Object Model Serialization)](/docs/algokit-utils/python/latest/examples/common/11-model-codecs/)
+- [Sourcemap for TEAL Debugging](/docs/algokit-utils/python/latest/examples/common/12-sourcemap/)

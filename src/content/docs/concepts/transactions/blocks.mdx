@@ -21,14 +21,14 @@ The block header contains high-level metadata about the block:
 - **Proposer**: The account chosen (via VRF) to propose the block.
 - **Previous Block Hash**: Reference linking this block to its predecessor.
 - **Genesis ID / Hash**: Identifiers anchoring the chain back to its genesis block.
-- [Other Fields](https://github.com/algorandfoundation/specs/blob/master/dev/ledger.md#blocks)
+- **Fees Collected**: Sum of fees paid by the transactions in the block.
+- [Other Fields](#block-fields)
 
 ### Body
 
 The block body contains the transaction sequence that updates both the account state and box state. It includes:
 
 - **Transactions**: All transactions in this round, such as payments, asset transfers, and application calls. This includes any inner transactions that applications generate.
-- **Fees Collected**: Sum of fees for the transactions included.
 
 ## Algorand Block Fundamentals
 
@@ -65,7 +65,7 @@ To retrieve block data programmatically, Algorand provides several REST API endp
 These endpoints allow developers to fetch complete blocks, just headers, or even cryptographic hashes for specific rounds.
 They are essential for inspecting block-level data or verifying state transitions in on-chain applications.
 
-```bash
+```shell
 GET /v2/blocks/{round}: Retrieve a complete block (header + transactions).
 GET /v2/blocks/{round}/header: Fetch just the block header.
 GET /v2/blocks/{round}/hash: Obtain the cryptographic hash of a given block.
@@ -101,6 +101,10 @@ Below are code examples demonstrating how to do this:
   </TabItem>
 </Tabs>
 
+### Smart Contract Access
+
+Smart contracts can read selected header fields from recent blocks directly in the Algorand Virtual Machine (AVM) using the `block` opcode. The opcode fails unless the target round falls between `txn.LastValid-1002` and `txn.FirstValid` (exclusive). Available fields include the seed, timestamp, proposer, fees collected, the hash of the block's predecessor, and the block's transaction commitments in each supported hash function (SHA512_256, SHA256, and SHA512). This allows a smart contract to verify information about a previous block and the transactions it committed to. See the [TEAL Opcodes](/reference/algorand-teal/opcodes) reference for the supported field list and version details.
+
 ## Block Fields
 
 | Field                               | Description                                                                                                                                                                                                                                                                                                                                                                                                    |
@@ -113,11 +117,16 @@ Below are code examples demonstrating how to do this:
 | Reward Updates                      | The block's reward updates, which results in the new reward state. The block also duplicates the reward state of the state it transitions into. The msgpack representation of the components of the reward updates are described in detail below.                                                                                                                                                              |
 | Transaction Sequence                | A cryptographic commitment to the block's transaction sequence, described below, stored under msgpack key `txn`.                                                                                                                                                                                                                                                                                               |
 | Transaction Sequence Hash           | A cryptographic commitment, using SHA256 hash function, to the block's transaction sequence, described below, stored under msgpack key `txn256`.                                                                                                                                                                                                                                                               |
+| Transaction Sequence Hash (SHA512)  | A cryptographic commitment, using SHA512 hash function, to the block's transaction sequence, stored under msgpack key `txn512`.                                                                                                                                                                                                                                                                                |
 | Previous Hash                       | The block's previous hash, which is the cryptographic hash of the previous block in the sequence. (The previous hash of the genesis block is 0.) The previous hash is stored under msgpack key `prev`.                                                                                                                                                                                                         |
+| Previous Hash (SHA512)              | The SHA512 hash of the previous block in the sequence. It is stored under msgpack key `prev512`.                                                                                                                                                                                                                                                                                                               |
 | Transaction Counter                 | The block's transaction counter, which is the total number of transactions issued prior to this block. This count starts from the first block with a protocol version that supported the transaction counter. The counter is stored in msgpack field `tc`.                                                                                                                                                     |
 | Proposer                            | The block's proposer, which is the address of the account that proposed the block. The proposer is stored in msgpack field `prp`.                                                                                                                                                                                                                                                                              |
 | Fees Collected                      | The block's fees collected is the sum of all fees paid by transactions in the block and is stored in msgpack field `fc`.                                                                                                                                                                                                                                                                                       |
 | Bonus Incentive                     | The potential bonus incentive is the amount, in MicroAlgos, that may be paid to the proposer of this block beyond the amount available from fees. It is stored in msgpack field `bi`. It may be set during a consensus upgrade, or else it must be equal to the value from the previous block in most rounds, or be 99% of the previous value (rounded down) if the round of this block is 0 modulo 1,000,000. |
 | Proposer Payout                     | The actual amount that is moved from the $I_f$ to the proposer, and is stored in msgpack field `pp`. If the proposer is not eligible, as described below, the proposer payout must be 0. The proposer payout must not exceed<br/>_ The sum of the bonus incentive and half of the fees collected.<br/>_ The fee sink balance minus 100,000 microAlgos.                                                         |
 | Expired Participation Accounts      | The block's expired participation accounts, which contains an optional list of account addresses. These accounts' participation key expire by the end of the current round, with exact rules below. The list is stored in msgpack key `partupdrmv`.                                                                                                                                                            |
-| Suspended Participation Accounts    | The block's suspended participation accounts, which contains an optional list of account addresses. These accounts are have not recently demonstrated that they available and participating, with exact rules below. The list is stored in msgpack key `partupdabs`.                                                                                                                                           |
+| Suspended Participation Accounts    | The block's suspended participation accounts, which contains an optional list of account addresses. These accounts have not recently demonstrated that they are available and participating, with exact rules below. The list is stored in msgpack key `partupdabs`.                                                                                                                                           |
+| State Proof Tracking                | The block's state proof tracking data, which tracks the status of ongoing state proofs for each state proof type. It is stored under msgpack key `spt`.                                                                                                                                                                                                                                                        |
+| Load                                | The degree to which the block is full, based on the number of bytes in the block compared to the maximum allowed. It is expressed as a fixed-point integer with six digits of precision, where 1,000,000 means a completely full block. It is stored under msgpack key `ld`.                                                                                                                                   |
+| Congestion Tax                      | The fee required, beyond the minimum fee, for normal transactions in this block. It is stored under msgpack key `ct`.                                                                                                                                                                                                                                                                                          |

@@ -30,7 +30,8 @@ This tutorial walks through the protocol by building a working example on Algora
 
 ### Prerequisites
 
-- [Node.js](https://nodejs.org/) (LTS or newer) with npm
+- [Node.js](https://nodejs.org/) (LTS or newer)
+- [pnpm](https://pnpm.io/installation) (package manager)
 
 ### Setup
 
@@ -62,19 +63,19 @@ In this part you'll build a client that sends a request, handles the 402 respons
 ```bash
 mkdir x402-demo-client
 cd x402-demo-client
-npm init -y
+pnpm init
 ```
 
 #### Add TypeScript tooling
 
 ```bash
-npm install -D typescript @types/node tsx
+pnpm add -D typescript @types/node tsx
 ```
 
 #### Install dependencies
 
 ```bash
-npm install @x402/core @x402/fetch @x402/avm @algorandfoundation/algokit-utils@10.0.0-alpha.42 dotenv
+pnpm add @x402/core @x402/fetch @x402/avm @algorandfoundation/algokit-utils@10.0.0-alpha.42 dotenv
 ```
 
 :::note
@@ -132,8 +133,12 @@ main().catch(console.error);
 Run:
 
 ```bash
-npx tsx index.ts
+pnpm tsx index.ts
 ```
+
+:::note
+If pnpm prompts about build scripts, run `pnpm approve-builds` to allow native builds (required for esbuild).
+:::
 
 Expected output (your `payment-required` value will differ):
 
@@ -163,13 +168,14 @@ const url = 'https://x402.goplausible.xyz/examples/weather';
 
 async function main(): Promise<void> {
   const secretKey = await getSecretKeyFromMnemonic(avmMnemonic);
+
   // Create the Algorand signer used to authorize payments.
   const avmSigner = toClientAvmSigner(secretKey);
 
   // Initialize the x402 client.
   const client = new x402Client();
 
-  // Register with network
+  // Register Algorand testnet scheme
   client.register(ALGORAND_TESTNET_CAIP2, new ExactAvmScheme(avmSigner));
 
   console.info(`AVM signer: ${avmSigner.address}`);
@@ -177,27 +183,42 @@ async function main(): Promise<void> {
   // Wrap fetch so 402 responses trigger payment handling automatically.
   const fetchWithPayment = wrapFetchWithPayment(fetch, client);
 
-  const response = await fetchWithPayment(url, { method: 'GET' });
+  // Make request
+  const response = await fetchWithPayment(url, {
+    method: 'GET',
+  });
 
   if (response.ok) {
+    // Read payment settlement headers
     const paymentResponse = new x402HTTPClient(client).getPaymentSettleResponse(name =>
       response.headers.get(name),
     );
-    console.log('\nPayment response:', JSON.stringify(paymentResponse, null, 2));
+
+    console.log('\nPayment response:');
+    console.log(JSON.stringify(paymentResponse, null, 2));
+
+    // Read the resource server response body
+    const data = await response.json();
+
+    console.log('\nWeather response:');
+    console.log(JSON.stringify(data, null, 2));
   } else {
     console.log(`\nNo payment settled (response status: ${response.status})`);
   }
 }
 
 // Build the base64-encoded signing key that x402-avm expects.
-// The format is the 32-byte Ed25519 seed concatenated with the 32-byte public key.
+// Format = 32-byte Ed25519 seed + 32-byte public key
 async function getSecretKeyFromMnemonic(avmMnemonic: string): Promise<string> {
   const seed = seedFromMnemonic(avmMnemonic);
+
   const seedCopy = new Uint8Array(seed);
+
   const wrappedSeed: WrappedEd25519Seed = {
     unwrapEd25519Seed: async () => seed,
     wrapEd25519Seed: async () => {},
   };
+
   const wrappedSecret = await ed25519SigningKeyFromWrappedSecret(wrappedSeed);
 
   return Buffer.concat([Buffer.from(seedCopy), Buffer.from(wrappedSecret.ed25519Pubkey)]).toString(
@@ -214,7 +235,7 @@ main().catch(error => {
 Run the paying client from the project root:
 
 ```bash
-npx tsx index.ts
+pnpm tsx index.ts
 ```
 
 Expected output (addresses and transaction IDs will differ):
@@ -238,19 +259,19 @@ In this part you'll build a resource server that hosts a `/weather` endpoint. It
 ```bash
 mkdir x402-demo-server
 cd x402-demo-server
-npm init -y
+pnpm init
 ```
 
 #### Add TypeScript tooling
 
 ```bash
-npm install -D typescript @types/node tsx
+pnpm add -D typescript @types/node tsx
 ```
 
 #### Install dependencies
 
 ```bash
-npm install @x402/core @x402/avm @x402/hono hono @hono/node-server dotenv
+pnpm add @x402/core @x402/avm @x402/hono @x402-avm/extensions hono @hono/node-server dotenv
 ```
 
 #### Server config
@@ -274,14 +295,18 @@ Create `index.ts` at the project root. The `paymentMiddleware` function intercep
 
 The `accepts` array defines what the server will accept as payment. Each entry specifies the scheme, price, network, and recipient. The `network` value `algorand:SGO1GKSzyE7IEPItTxCByw9x8FmnrCDexi9/cOUJOiI=` is the [CAIP-2](https://github.com/ChainAgnostic/CAIPs/blob/main/CAIPs/caip-2.md) identifier for Algorand TestNet — this tells clients which chain to submit payment on.
 
+This server also includes bazaar discovery metadata, which helps clients discover paid x402 resources by describing each route's method, price, response type, and example output in the `402 Payment Required` response. If you use the hosted GoPlausible facilitator and settle a real TestNet payment, you can view the activity in the [facilitator dashboard](https://facilitator.goplausible.xyz/dashboard).
+
 ```typescript
 import { config } from 'dotenv';
 import { Hono } from 'hono';
 import { serve } from '@hono/node-server';
-import { paymentMiddleware } from '@x402/hono';
-import { x402ResourceServer, HTTPFacilitatorClient } from '@x402/core/server';
+import { paymentMiddleware, x402ResourceServer } from '@x402/hono';
+import { HTTPFacilitatorClient } from '@x402/core/server';
+import type { ResourceServerExtension } from '@x402/core/types';
 import { ExactAvmScheme } from '@x402/avm/exact/server';
 import { ALGORAND_TESTNET_CAIP2, USDC_TESTNET_ASA_ID } from '@x402/avm';
+import { declareDiscoveryExtension, bazaarResourceServerExtension } from '@x402-avm/extensions';
 
 config();
 
@@ -301,6 +326,22 @@ const server = new x402ResourceServer(facilitatorClient);
 const avmServerScheme = new ExactAvmScheme();
 server.register(ALGORAND_TESTNET_CAIP2, avmServerScheme);
 
+// Register the bazaar discovery extension
+server.registerExtension(bazaarResourceServerExtension as unknown as ResourceServerExtension);
+
+// Define discovery metadata for the protected route
+const weatherDiscovery = declareDiscoveryExtension({
+  output: {
+    example: {
+      report: {
+        weather: 'sunny',
+        temperature: 70,
+        timestamp: new Date().toISOString(),
+      },
+    },
+  },
+});
+
 const app = new Hono();
 
 // Protected Route Middleware
@@ -318,6 +359,8 @@ app.use(
           },
         ],
         description: 'Weather data access',
+        mimeType: 'application/json',
+        extensions: weatherDiscovery,
       },
     },
     server,
@@ -351,7 +394,7 @@ In Part 1 you hit a hosted resource server. Now you'll point the client at your 
 From the `x402-demo-server` directory:
 
 ```bash
-npx tsx index.ts
+pnpm tsx index.ts
 ```
 
 Leave it running on `http://localhost:4021`.
@@ -375,23 +418,23 @@ const url = 'http://localhost:4021/weather';
 From the `x402-demo-client` directory:
 
 ```bash
-npx tsx index.ts
+pnpm tsx index.ts
 ```
 
 You should get the weather JSON after payment settles. The output will look similar to the [Part 1 output](#add-x402-payment-support), with your local server's transaction details.
 
 :::note
-Optional: To run your own facilitator later, see [self-hosted facilitator (Express)](https://github.com/algorand-devrel/x402-demo/tree/main/facilitator/basic) and [`index.ts`](https://github.com/algorand-devrel/x402-demo/blob/main/facilitator/basic/index.ts).
+The local `402 Payment Required` response includes bazaar metadata, and a settled TestNet payment can appear in the hosted facilitator dashboard even when the resource URL is `localhost`. For a resource that other clients and agents can reliably call, deploy the resource server to a public URL.
 :::
 
 ### Next steps
 
-You now have a working x402 payment flow on Algorand TestNet. From here you can add more paid routes, adjust pricing, or deploy your own facilitator for full control over payment settlement.
+You now have a working x402 payment flow on Algorand TestNet. From here you can add more paid routes, adjust pricing, deploy your resource server publicly for bazaar discovery, or explore the demo repo for a custom facilitator.
 
 <LinkCard
-  title='x402-demo (examples)'
-  href='https://github.com/algorand-devrel/x402-demo'
-  description='Full example code for client, server, and facilitator'
+  title='x402-demo (examples & basic demo)'
+  href='https://github.com/algorandfoundation/x402-demo'
+  description='Examples for the client, server, bazaar integration, basic demo, and custom facilitator'
 />
 <LinkCard
   title='x402 on Algorand'

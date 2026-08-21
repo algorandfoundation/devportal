@@ -1,0 +1,346 @@
+---
+title: 'Account Assets'
+description: 'This example demonstrates how to query account asset holdings using the IndexerClient lookupAccountAssets() and lookupAccountCreatedAssets() methods.'
+sidebar:
+  order: 3
+---
+
+[← Back to Indexer Client](/docs/algokit-utils/typescript/latest/examples/indexer-client/)
+
+## Description
+
+This example demonstrates how to query account asset holdings using the IndexerClient lookupAccountAssets() and lookupAccountCreatedAssets() methods.
+
+## Prerequisites
+
+- LocalNet running (via `algokit localnet start`)
+
+## Run This Example
+
+From the repository root:
+
+```bash
+cd examples
+npm run example indexer_client/03-account-assets.ts
+```
+
+## Code
+
+[View source on GitHub](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/examples/indexer_client/03-account-assets.ts)
+
+```typescript title="03-account-assets.ts"
+/**
+ * Example: Account Assets
+ *
+ * This example demonstrates how to query account asset holdings using
+ * the IndexerClient lookupAccountAssets() and lookupAccountCreatedAssets() methods.
+ *
+ * Prerequisites:
+ * - LocalNet running (via `algokit localnet start`)
+ */
+
+import {
+  createAlgorandClient,
+  createIndexerClient,
+  printError,
+  printHeader,
+  printInfo,
+  printStep,
+  printSuccess,
+  shortenAddress,
+} from '../shared/utils.js';
+
+async function main() {
+  printHeader('Account Assets Example');
+
+  // Create clients
+  const indexer = createIndexerClient();
+  const algorand = createAlgorandClient();
+
+  // =========================================================================
+  // Step 1: Get a funded account from LocalNet
+  // =========================================================================
+  printStep(1, 'Getting a funded account from LocalNet');
+
+  let creatorAddress: string;
+
+  try {
+    const dispenser = await algorand.account.dispenserFromEnvironment();
+    creatorAddress = dispenser.addr.toString();
+    printSuccess(`Using dispenser account: ${shortenAddress(creatorAddress)}`);
+  } catch (error) {
+    printError(
+      `Failed to get dispenser account: ${error instanceof Error ? error.message : String(error)}`,
+    );
+    printInfo('');
+    printInfo('Make sure LocalNet is running: algokit localnet start');
+    printInfo('If issues persist, try: algokit localnet reset');
+    return;
+  }
+
+  // =========================================================================
+  // Step 2: Create test assets using AlgorandClient
+  // =========================================================================
+  printStep(2, 'Creating test assets for demonstration');
+
+  let assetId1: bigint;
+  let assetId2: bigint;
+
+  try {
+    // Create first test asset
+    printInfo('Creating first test asset: TestCoin (TC)...');
+    const result1 = await algorand.send.assetCreate({
+      sender: creatorAddress,
+      total: 1_000_000_000n, // 1000 units with 6 decimals
+      decimals: 6,
+      assetName: 'TestCoin',
+      unitName: 'TC',
+      url: 'https://example.com/testcoin',
+      defaultFrozen: false,
+    });
+    assetId1 = result1.assetId;
+    printSuccess(`Created TestCoin with Asset ID: ${assetId1}`);
+
+    // Create second test asset
+    printInfo('Creating second test asset: DemoCoin (DEMO)...');
+    const result2 = await algorand.send.assetCreate({
+      sender: creatorAddress,
+      total: 500_000n, // 500 units with 3 decimals
+      decimals: 3,
+      assetName: 'DemoCoin',
+      unitName: 'DEMO',
+      url: 'https://example.com/democoin',
+      defaultFrozen: false,
+    });
+    assetId2 = result2.assetId;
+    printSuccess(`Created DemoCoin with Asset ID: ${assetId2}`);
+    printInfo('');
+  } catch (error) {
+    printError(
+      `Failed to create test assets: ${error instanceof Error ? error.message : String(error)}`,
+    );
+    printInfo('');
+    printInfo('If LocalNet errors occur, try: algokit localnet reset');
+    return;
+  }
+
+  // =========================================================================
+  // Step 3: Lookup account assets with lookupAccountAssets()
+  // =========================================================================
+  printStep(3, 'Looking up account asset holdings with lookupAccountAssets()');
+
+  try {
+    // lookupAccountAssets() returns all assets held by an account
+    const assetsResult = await indexer.lookupAccountAssets(creatorAddress);
+
+    printSuccess(`Found ${assetsResult.assets.length} asset holding(s) for account`);
+    printInfo('');
+
+    if (assetsResult.assets.length > 0) {
+      printInfo('Asset holdings:');
+      for (const holding of assetsResult.assets) {
+        printInfo(`  Asset ID: ${holding.assetId}`);
+        printInfo(`    - amount: ${holding.amount.toLocaleString('en-US')}`);
+        printInfo(`    - isFrozen: ${holding.isFrozen}`);
+        if (holding.optedInAtRound !== undefined) {
+          printInfo(`    - optedInAtRound: ${holding.optedInAtRound}`);
+        }
+        printInfo('');
+      }
+    }
+
+    printInfo(`Query performed at round: ${assetsResult.currentRound}`);
+  } catch (error) {
+    printError(
+      `lookupAccountAssets failed: ${error instanceof Error ? error.message : String(error)}`,
+    );
+  }
+
+  // =========================================================================
+  // Step 4: Lookup account created assets with lookupAccountCreatedAssets()
+  // =========================================================================
+  printStep(4, 'Looking up created assets with lookupAccountCreatedAssets()');
+
+  try {
+    // lookupAccountCreatedAssets() returns assets created by an account
+    const createdResult = await indexer.lookupAccountCreatedAssets(creatorAddress);
+
+    printSuccess(`Found ${createdResult.assets.length} asset(s) created by account`);
+    printInfo('');
+
+    if (createdResult.assets.length > 0) {
+      printInfo('Created assets:');
+      for (const asset of createdResult.assets) {
+        printInfo(`  Asset ID: ${asset.id}`);
+        printInfo(`    - creator: ${shortenAddress(asset.params.creator)}`);
+        printInfo(`    - total: ${asset.params.total.toLocaleString('en-US')}`);
+        printInfo(`    - decimals: ${asset.params.decimals}`);
+        printInfo(`    - name: ${asset.params.name ?? '(not set)'}`);
+        printInfo(`    - unitName: ${asset.params.unitName ?? '(not set)'}`);
+        if (asset.createdAtRound !== undefined) {
+          printInfo(`    - createdAtRound: ${asset.createdAtRound}`);
+        }
+        printInfo('');
+      }
+    }
+
+    printInfo(`Query performed at round: ${createdResult.currentRound}`);
+  } catch (error) {
+    printError(
+      `lookupAccountCreatedAssets failed: ${error instanceof Error ? error.message : String(error)}`,
+    );
+  }
+
+  // =========================================================================
+  // Step 5: Demonstrate pagination with limit parameter
+  // =========================================================================
+  printStep(5, 'Demonstrating pagination with limit parameter');
+
+  try {
+    // First query: get only 1 asset holding
+    printInfo('Querying with limit=1...');
+    const page1 = await indexer.lookupAccountAssets(creatorAddress, { limit: 1 });
+
+    printInfo(`Page 1: Retrieved ${page1.assets.length} asset(s)`);
+    if (page1.assets.length > 0) {
+      printInfo(`  - Asset ID: ${page1.assets[0].assetId}`);
+    }
+
+    // Check if there are more results
+    if (page1.nextToken) {
+      printInfo(`  - Next token available: ${page1.nextToken.substring(0, 20)}...`);
+      printInfo('');
+
+      // Second query: use the next token to get more results
+      printInfo('Querying next page with next parameter...');
+      const page2 = await indexer.lookupAccountAssets(creatorAddress, {
+        limit: 1,
+        next: page1.nextToken,
+      });
+
+      printInfo(`Page 2: Retrieved ${page2.assets.length} asset(s)`);
+      if (page2.assets.length > 0) {
+        printInfo(`  - Asset ID: ${page2.assets[0].assetId}`);
+      }
+
+      if (page2.nextToken) {
+        printInfo(`  - More results available (nextToken present)`);
+      } else {
+        printInfo(`  - No more results (no nextToken)`);
+      }
+    } else {
+      printInfo('  - No pagination needed (all results fit in one page)');
+    }
+  } catch (error) {
+    printError(`Pagination demo failed: ${error instanceof Error ? error.message : String(error)}`);
+  }
+
+  // =========================================================================
+  // Step 6: Query specific asset holding with assetId filter
+  // =========================================================================
+  printStep(6, 'Querying specific asset holding with assetId filter');
+
+  try {
+    // You can filter lookupAccountAssets by a specific assetId
+    printInfo(`Querying holdings for Asset ID ${assetId1} only...`);
+    const specificResult = await indexer.lookupAccountAssets(creatorAddress, {
+      assetId: assetId1,
+    });
+
+    if (specificResult.assets.length > 0) {
+      const holding = specificResult.assets[0];
+      printSuccess(`Found holding for Asset ID ${assetId1}`);
+      printInfo(`  - amount: ${holding.amount.toLocaleString('en-US')}`);
+      printInfo(`  - isFrozen: ${holding.isFrozen}`);
+    } else {
+      printInfo(`No holding found for Asset ID ${assetId1}`);
+    }
+  } catch (error) {
+    printError(
+      `Specific asset query failed: ${error instanceof Error ? error.message : String(error)}`,
+    );
+  }
+
+  // =========================================================================
+  // Step 7: Query specific created asset with assetId filter
+  // =========================================================================
+  printStep(7, 'Querying specific created asset with assetId filter');
+
+  try {
+    // You can also filter lookupAccountCreatedAssets by a specific assetId
+    printInfo(`Querying created asset with ID ${assetId2} only...`);
+    const specificCreated = await indexer.lookupAccountCreatedAssets(creatorAddress, {
+      assetId: assetId2,
+    });
+
+    if (specificCreated.assets.length > 0) {
+      const asset = specificCreated.assets[0];
+      printSuccess(`Found created asset with ID ${assetId2}`);
+      printInfo(`  - name: ${asset.params.name ?? '(not set)'}`);
+      printInfo(`  - unitName: ${asset.params.unitName ?? '(not set)'}`);
+      printInfo(`  - total: ${asset.params.total.toLocaleString('en-US')}`);
+      printInfo(`  - decimals: ${asset.params.decimals}`);
+    } else {
+      printInfo(`No created asset found with ID ${assetId2}`);
+    }
+  } catch (error) {
+    printError(
+      `Specific created asset query failed: ${error instanceof Error ? error.message : String(error)}`,
+    );
+  }
+
+  // =========================================================================
+  // Summary
+  // =========================================================================
+  printHeader('Summary');
+  printInfo('This example demonstrated:');
+  printInfo('  1. Creating test assets using AlgorandClient.send.assetCreate()');
+  printInfo('  2. lookupAccountAssets(address) - Get all assets held by an account');
+  printInfo('  3. lookupAccountCreatedAssets(address) - Get assets created by an account');
+  printInfo('  4. Pagination using limit and next parameters');
+  printInfo('  5. Filtering by specific assetId');
+  printInfo('');
+  printInfo('Key AssetHolding fields (from lookupAccountAssets):');
+  printInfo('  - assetId: The asset identifier (bigint)');
+  printInfo('  - amount: Number of units held (bigint)');
+  printInfo('  - isFrozen: Whether the holding is frozen (boolean)');
+  printInfo('  - optedInAtRound: Round when account opted into asset (optional bigint)');
+  printInfo('');
+  printInfo('Key Asset params fields (from lookupAccountCreatedAssets):');
+  printInfo('  - creator: Address that created the asset');
+  printInfo('  - total: Total supply in base units (bigint)');
+  printInfo('  - decimals: Number of decimal places (0-19)');
+  printInfo('  - name: Full asset name (optional)');
+  printInfo('  - unitName: Short unit name like "ALGO" (optional)');
+  printInfo('');
+  printInfo('Pagination parameters:');
+  printInfo('  - limit: Maximum number of results per page');
+  printInfo('  - next: Token from previous response to get next page');
+}
+
+main().catch(error => {
+  console.error('Fatal error:', error);
+  process.exit(1);
+});
+```
+
+---
+
+### Other examples in Indexer Client
+
+- [Indexer Health Check](/docs/algokit-utils/typescript/latest/examples/indexer-client/01-health-check/)
+- [Account Lookup](/docs/algokit-utils/typescript/latest/examples/indexer-client/02-account-lookup/)
+- **Account Assets**
+- [Account Applications](/docs/algokit-utils/typescript/latest/examples/indexer-client/04-account-applications/)
+- [Account Transactions](/docs/algokit-utils/typescript/latest/examples/indexer-client/05-account-transactions/)
+- [Transaction Lookup](/docs/algokit-utils/typescript/latest/examples/indexer-client/06-transaction-lookup/)
+- [Transaction Search](/docs/algokit-utils/typescript/latest/examples/indexer-client/07-transaction-search/)
+- [Asset Lookup](/docs/algokit-utils/typescript/latest/examples/indexer-client/08-asset-lookup/)
+- [Asset Balances](/docs/algokit-utils/typescript/latest/examples/indexer-client/09-asset-balances/)
+- [Asset Transactions](/docs/algokit-utils/typescript/latest/examples/indexer-client/10-asset-transactions/)
+- [Application Lookup](/docs/algokit-utils/typescript/latest/examples/indexer-client/11-application-lookup/)
+- [Application Logs Lookup](/docs/algokit-utils/typescript/latest/examples/indexer-client/12-application-logs/)
+- [Application Boxes Lookup](/docs/algokit-utils/typescript/latest/examples/indexer-client/13-application-boxes/)
+- [Block Lookup](/docs/algokit-utils/typescript/latest/examples/indexer-client/14-block-lookup/)
+- [Block Headers Search](/docs/algokit-utils/typescript/latest/examples/indexer-client/15-block-headers/)
+- [Pagination](/docs/algokit-utils/typescript/latest/examples/indexer-client/16-pagination/)
