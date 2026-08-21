@@ -687,7 +687,7 @@ To create an application in your code, you can use the following examples:
 
 ### Application Update Transaction
 
-An Application Update Transaction modifies an existing application's logic by providing new Approval and Clear programs. Only the current application's Approval Program can authorize this update.
+An Application Update Transaction modifies an existing application's logic by providing new Approval and Clear programs, and from consensus v42 it can also change the application's extra program pages and global state schema. Only the current application's Approval Program can authorize this update.
 
 ```json showLineNumbers=false frame=none
 {
@@ -712,6 +712,33 @@ This transaction contains the following key components:
 - The `"apid"` field specifies the application to update (51)
 - The `"apan"` field is set to UpdateApplication (4)
 - New Approval and Clear programs are provided in `"apap"` and `"apsu"` fields
+- Neither `"apep"` nor `"apgs"` is present, so the application keeps the extra program pages and global state schema it already has
+
+An update that carries `"apep"`, `"apgs"`, or both changes the application's size. The transaction below gives application 51 one extra program page and a global state schema of two integers and one byte slice:
+
+```json showLineNumbers=false frame=none
+{
+  "txn": {
+    "apan": 4,
+    "apap": "BYEB",
+    "apep": 1,
+    "apgs": {
+      "nbs": 1,
+      "nui": 2
+    },
+    "apid": 51,
+    "apsu": "BYEB",
+    "fee": 1000,
+    "fv": 12973,
+    "gh": "ALXYc8IX90hlq7olIdloOUZjWfbnA3Ix1N5vLn81zI8=",
+    "lv": 13973,
+    "snd": "FOZF4CMXLU2KDWJ5QARE3J2U7XELSXL7MWGNWUHD7OPKGQAI4GPSMGNLCE",
+    "type": "appl"
+  }
+}
+```
+
+Both fields are applied absolutely rather than as adjustments, so a size-changing update must state the value it wants for each of them. Omitting `"apep"` from the transaction above would set the application to zero extra program pages, and omitting `"apgs"` would empty its global state schema. The sender of a size-changing update takes on the minimum balance requirement for the extra pages and the global state. See [Size Changes on Update](/concepts/transactions/reference#size-changes-on-update) for the constraints these transactions must satisfy.
 
 To update an application in your code, you can use the following examples:
 
