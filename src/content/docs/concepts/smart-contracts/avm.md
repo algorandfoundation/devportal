@@ -830,7 +830,7 @@ Box opcodes that create, delete, or resize boxes affect the minimum
 balance requirement of the account of the application that _owns_ the
 box, which in v13 and later is not necessarily the calling
 application. The change is immediate, and can be observed after
-exection by using `min_balance`. If the account does not possess the
+execution by using `min_balance`. If the account does not possess the
 new minimum balance, the opcode fails.
 
 By default, an application may only access boxes that it owns. In v13

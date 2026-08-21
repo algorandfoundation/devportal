@@ -658,7 +658,7 @@ Here are two different ways you can provide the box reference when calling a con
 
 ## Access List: A Mutually Exclusive Alternative to Reference Arrays
 
-Starting with AVM v13 in consensus v42, the Access List, `txn.Access` or `al`, provides a more flexible way to specify resources. It serves as a mutually exclusive alternative to the traditional reference arrays: Accounts, Assets, Applications, Boxes. You cannot use both in the same transaction. Providing an Access List means no foreign arrays are used, and vice versa.
+Starting with AVM v12 in consensus v41, the Access List, `txn.Access` or `al`, provides a more flexible way to specify resources. It serves as a mutually exclusive alternative to the traditional reference arrays: Accounts, Assets, Applications, Boxes. You cannot use both in the same transaction. Providing an Access List means no foreign arrays are used, and vice versa.
 
 ### Key Features
 
@@ -672,9 +672,11 @@ Starting with AVM v13 in consensus v42, the Access List, `txn.Access` or `al`, p
   - Locals (`l`): References an account's local state for a specific app (account + app ID).
   - Box (`b`): References a box with an app index and box name (e.g., for reading/writing box data).
 
-- **Empty BoxRefs**: Use `{}` for boxes where the App ID is unknown or defaults to the current app.
+- **Empty Entries**: An entirely empty entry, `{}`, names no resource. Its purpose is to add box I/O budget. It also lets an application created earlier in the same group reach one box it could not name in advance, since a new application's ID is not known when the transaction is built; one such access is allowed per empty entry. To reference a box of the currently executing application, use a Box entry with an app index of 0, not an empty entry.
 
 - **Limits**: Up to 16 entries via consensus parameter `MaxAppAccess`, higher than the 8 total for foreign references.
+
+- **Box I/O Budget**: Only Box entries and empty entries add box I/O budget, 2048 bytes each. Address, Asset, App, Holding, and Locals entries occupy a slot without adding any budget. Since every one of the 16 entries may be a Box or empty entry, an access list can reach 32,768 bytes of box I/O budget in a single application call, against 16,384 for the foreign arrays. Note that referencing another application's box costs a slot for that application too, and that slot adds no budget.
 
 - **Cross-Product vs. Explicit Access**: Traditional foreign arrays enable "cross-product" access (e.g., all combinations of listed accounts and assets for holdings). Access Lists require explicit listing of each needed resource (e.g., specify each holding individually), but allow more granular control and higher limits without combinatorial explosion.
 
