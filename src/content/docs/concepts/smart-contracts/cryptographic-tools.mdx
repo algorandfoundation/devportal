@@ -49,7 +49,7 @@ SumHash512 strives to strike a balance between ZK and non-ZK friendliness. It is
 
 ## Signature Schemes
 
-Signature schemes allow use to do and verify digital signatures, a cornerstone of cryptography. The following opcodes are available:
+Signature schemes allow us to do and verify digital signatures, a cornerstone of cryptography. The following opcodes are available:
 
 - Ed25519 (EdDSA)
   - `ed25519verify`
@@ -58,15 +58,16 @@ Signature schemes allow use to do and verify digital signatures, a cornerstone o
   - `ecdsa_verify`
   - `ecdsa_pk_decompress`
   - `ecdsa_pk_recover`
-- v12: `falcon_verify`
+- FALCON (post-quantum)
+  - `falcon_verify`
 
-`ed25519verify`requires passing in a hash of the smart contract. Algorand's account structure and consensus mechanism is based off of Ed25519, and as such it is generally dangerous to have users sign off on aribtrary data with their Algorand addresses, given that a malicious entity could slip in an actual transaction (prefixed by e.g. `MX`). The `ed25519verify` was devised to force the user of a smart contract to sign off on a payload prefixed by a concatenation of `ProgData` and the actual hash of the smart contract code.
+`ed25519verify`requires passing in a hash of the smart contract. Algorand's account structure and consensus mechanism is based off of Ed25519, and as such it is generally dangerous to have users sign off on arbitrary data with their Algorand addresses, given that a malicious entity could slip in an actual transaction (prefixed by e.g. `MX`). The `ed25519verify` was devised to force the user of a smart contract to sign off on a payload prefixed by a concatenation of `ProgData` and the actual hash of the smart contract code.
 
 Later on the `ed25519verify_bare` opcode was introduced, removing the restriction on the payload and making it possible to verify all signatures.
 
 ECDSA comes in two flavors: Secp256k1 and Secp256r1. The former is used in some other blockchains like Bitcoin and Ethereum. The latter is also referred to as P256 or Prime256v1 and it is commonly used in passkeys.
 
-FALCON is based off of lattice-based cryptography and is notably one of the NIST approved post-quantum secure (to the best of our knowledge) signature schemes. Like SumHash512, it is also currently being used in State Proofs.
+FALCON is based off of lattice-based cryptography and is notably one of the NIST approved post-quantum secure (to the best of our knowledge) signature schemes. Like SumHash512, it is also currently being used in State Proofs. The `falcon_verify` opcode is available from AVM v12.
 
 ## Elliptic Curve Operations
 
@@ -75,7 +76,7 @@ Some of the underlying cryptographic primitives involved in ECC (elliptic curve 
 - `ec_add`
 - `ec_scalar_mul`
 - `ec_multi_scalar_mul`
-- `ec_subrgroup_check`
+- `ec_subgroup_check`
 - `ec_map_to`
 - `ec_pairing_check`
 
