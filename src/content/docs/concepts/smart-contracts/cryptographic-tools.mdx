@@ -58,7 +58,7 @@ Signature schemes allow use to do and verify digital signatures, a cornerstone o
   - `ecdsa_verify`
   - `ecdsa_pk_decompress`
   - `ecdsa_pk_recover`
-- vFuture: `falcon_verify`
+- v12: `falcon_verify`
 
 `ed25519verify`requires passing in a hash of the smart contract. Algorand's account structure and consensus mechanism is based off of Ed25519, and as such it is generally dangerous to have users sign off on aribtrary data with their Algorand addresses, given that a malicious entity could slip in an actual transaction (prefixed by e.g. `MX`). The `ed25519verify` was devised to force the user of a smart contract to sign off on a payload prefixed by a concatenation of `ProgData` and the actual hash of the smart contract code.
 
