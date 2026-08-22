@@ -610,6 +610,7 @@ export default defineConfig({
           collapsed: true,
           items: [
             { slug: 'resources/overview' },
+            { slug: 'resources/security-best-practices' },
             { slug: 'resources/liquid-auth' },
             { slug: 'resources/bridging' },
             { slug: 'resources/x402-on-algorand' },
