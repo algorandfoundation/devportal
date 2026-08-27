@@ -51,7 +51,7 @@ Algorand confirms blocks every 2.82 seconds on average. This means transactions 
 
 ### Throughput
 
-Algorand is designed for high throughput, supporting thousands of transactions per second (TPS). Each block can hold up to 25,000 transactions, which ensures the network can scale to meet growing demand without sacrificing security or decentralization.
+Algorand is designed for high throughput, supporting thousands of transactions per second (TPS). Block capacity is bounded by size rather than by a fixed transaction count: each block holds up to 5,242,880 bytes (5 MB) of transaction data, set by the [`MaxTxnBytesPerBlock`](/concepts/protocol/protocol-parameters) consensus parameter. How many transactions that works out to depends on their type and size, so the count varies from block to block. Mainnet blocks have carried tens of thousands of transactions during periods of high activity.
 
 ### Finality and No Forking
 
