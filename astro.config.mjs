@@ -414,12 +414,12 @@ export default defineConfig({
               items: [
                 { slug: 'algokit/utils/algokit-clients' },
                 {
+                  slug: 'docs/algorand-python/python/latest/guides/overview',
                   label: 'Algorand Python',
-                  link: '/docs/algorand-python/python/latest/guides/overview/',
                 },
                 {
+                  slug: 'docs/algorand-typescript/typescript/latest',
                   label: 'Algorand TypeScript',
-                  link: '/docs/algorand-typescript/typescript/latest/',
                 },
               ],
             },
