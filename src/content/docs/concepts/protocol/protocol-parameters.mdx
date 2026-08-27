@@ -40,7 +40,7 @@ Protocol parameters are constants that define the limits and requirements of the
 | Additional minimum constraint if congested | Additional fee per byte | -                    |                                                                                                                     |
 | Max number of transactions in a group      | 16                      | MaxTxGroupSize       |                                                                                                                     |
 | Max number of inner transactions           | 256                     | MaxInnerTransactions | Each transaction allows 16 inner transactions, multiplied by MaxTxGroupSize (16) through inner transaction pooling. |
-| Maximum size of a block                    | 5242880 bytes           | MaxTxnBytesPerBlock  | 5 MiB (5 \* 1024 \* 1024)                                                                                            |
+| Maximum size of a block                    | 5242880 bytes           | MaxTxnBytesPerBlock  | 5 MiB (5 \* 1024 \* 1024)                                                                                           |
 | Maximum size of note                       | 1024 bytes              | MaxTxnNoteBytes      | Up to 4096 bytes (MaxAbsoluteTxnNoteBytes) for an [additional fee](/concepts/transactions/fees#larger-transactions) |
 | Maximum transaction life                   | 1000 rounds             | MaxTxnLife           |                                                                                                                     |
 
