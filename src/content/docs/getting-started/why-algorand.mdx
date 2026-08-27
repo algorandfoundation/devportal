@@ -69,10 +69,12 @@ Algorand’s performance has been consistently validated through public mainnet 
 
 #### Throughput
 
+Algorand blocks are bounded by size rather than by a fixed transaction count: each block holds up to 5 MB of transaction data, set by the [`MaxTxnBytesPerBlock`](/concepts/protocol/protocol-parameters) consensus parameter. How many transactions fit depends on their type and size, so the figures below are notable observed instances rather than hard limits.
+
 Algorand has demonstrated strong performance under sustained load in real-world conditions:
 
 - **5,000–5,700+ sustained TPS (May 2024)** — Community-led stress tests pushed the network to over 5,000 transactions per second sustained across 100+ blocks
-- **34,000+ transactions in a single block (Feb 2025)** — Blocks finalized in under 3 seconds while processing significantly higher-than-average transaction volumes
+- **34,000+ transactions in a single block (Feb 2025)** — A single block finalized in under 3 seconds while carrying significantly higher-than-average transaction volume
 - **14,500+ TPS peak (Dec 2023)** — Mainnet analysis showed short bursts of very high throughput depending on transaction composition
 
 Importantly, these results were achieved on **public mainnet infrastructure**, not isolated test environments.
