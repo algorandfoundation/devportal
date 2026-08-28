@@ -232,6 +232,7 @@ export default defineConfig({
       ],
       components: {
         Footer: './src/components/Footer.astro',
+        Head: './src/components/Head.astro',
         Header: './src/components/Header.astro',
         Hero: './src/components/Hero.astro',
         Banner: './src/components/Banner.astro',
