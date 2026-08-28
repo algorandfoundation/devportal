@@ -205,7 +205,7 @@ export default defineConfig({
           tag: 'meta',
           attrs: {
             property: 'og:image',
-            content: '/devportal-og.png',
+            content: 'https://dev.algorand.co/devportal-og.png',
           },
         },
         {
@@ -220,6 +220,13 @@ export default defineConfig({
           attrs: {
             property: 'og:image:height',
             content: '1080',
+          },
+        },
+        {
+          tag: 'meta',
+          attrs: {
+            name: 'twitter:image',
+            content: 'https://dev.algorand.co/devportal-og.png',
           },
         },
       ],
