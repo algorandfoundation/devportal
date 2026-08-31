@@ -1,0 +1,19 @@
+---
+/**
+ * Head override - extends Starlight's default head with per-page
+ * Twitter/X meta tags. X falls back to og:title/og:description, but
+ * explicit twitter:* tags make the card rendering deterministic and
+ * are picked up by other platforms that only read twitter:* keys.
+ */
+import Default from '@astrojs/starlight/components/Head.astro';
+
+const { entry, siteTitle } = Astro.locals.starlightRoute;
+const { title, description } = entry.data;
+
+const twitterTitle = title ? `${title} | ${siteTitle}` : siteTitle;
+---
+
+<Default><slot /></Default>
+
+<meta name='twitter:title' content={twitterTitle} />
+{description && <meta name='twitter:description' content={description} />}

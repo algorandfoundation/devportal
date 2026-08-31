@@ -205,7 +205,7 @@ export default defineConfig({
           tag: 'meta',
           attrs: {
             property: 'og:image',
-            content: '/devportal-og.png',
+            content: 'https://dev.algorand.co/devportal-og.png',
           },
         },
         {
@@ -222,9 +222,17 @@ export default defineConfig({
             content: '1080',
           },
         },
+        {
+          tag: 'meta',
+          attrs: {
+            name: 'twitter:image',
+            content: 'https://dev.algorand.co/devportal-og.png',
+          },
+        },
       ],
       components: {
         Footer: './src/components/Footer.astro',
+        Head: './src/components/Head.astro',
         Header: './src/components/Header.astro',
         Hero: './src/components/Hero.astro',
         Banner: './src/components/Banner.astro',
