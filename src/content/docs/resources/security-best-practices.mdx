@@ -3577,6 +3577,15 @@ Before shipping an upgrade:
 
 Treat storage layout as part of your upgrade surface, not just the TEAL source.
 
+### DO: Account for size changes on update
+
+Since the v42 consensus upgrade, an `UpdateApplication` call can also **resize** an application: `ExtraProgramPages` and `GlobalStateSchema` may be set on an update rather than only at creation. Update authority therefore covers more than code replacement — whoever can update your contract can also grow or shrink its program allocation and global state schema. Two behaviors matter for safety:
+
+- **Both size fields are applied absolutely, and an omitted field is applied as zero.** Setting `GlobalStateSchema` while omitting `ExtraProgramPages` drops the application to zero extra pages, and vice versa. An authorized but careless update can silently discard allocation, so always state the complete intended value of both fields. The protocol rejects a schema smaller than the entries currently stored, and the programs carried by the transaction must fit the requested page count.
+- **The sender of a size-changing update becomes the application's size sponsor**: that account's minimum balance requirement carries the extra-page and global-schema costs from then on, and a later size-changing update moves the entire sponsored amount to its own sender. If updates run through a multisig or operations account, budget its balance accordingly. Programs can read the current sponsor with `app_params_get` (`AppSizeSponsor`).
+
+If your update authorization policy predates v42 and treats updates purely as code replacement, revisit it with resizing in mind. See [Size Changes on Update](/concepts/transactions/reference/#size-changes-on-update) for the full mechanics.
+
 ### Pattern: Upgradeable contract with timelock
 
 A **timelock pattern** announces the upgrade in advance, waits a minimum delay, then applies it. The current program enforces the delay, giving users time to review and exit before the update takes effect. Once the update goes through, the new program could remove the timelock for future updates.
@@ -3695,6 +3704,7 @@ If a contract's application address holds ALGO or assets, deleting the contract 
 - Choose immutable or upgradeable: document the choice for users.
 - If upgradeable, use a timelock with program hash pre-announcement.
 - Upgrades replace code, not storage. Migrate or retire stale keys and boxes deliberately.
+- Since v42, updates can also resize programs and global schema: state both size fields completely and account for the size sponsor's minimum balance.
 - Never delete a contract that holds funds.
 - For immutable contracts, consider rekeying the creator to zero address for provable immutability.
 
@@ -3893,11 +3903,25 @@ Never use a single-key account as the creator of a contract holding significant 
 - Deploy to testnet first and run your full test suite before mainnet.
 - Verify the deployed TEAL bytecode matches your compiled source.
 
+### DO: Know the post-quantum migration path for long-lived keys
+
+Every ordinary Algorand address encodes its Ed25519 public key, so an adversary can record public keys today and attack them if large-scale quantum computers arrive. Since the v42 consensus upgrade, the protocol supports **post-quantum accounts** secured by Falcon-1024 signatures, and **rekeying is the migration path**: an existing account keeps its address and sets its authorized address to a post-quantum address.
+
+For key management this means:
+
+- **Creator, admin, and treasury keys are the natural first candidates.** They guard the most value for the longest time.
+- **Migration is forward-looking, not urgent.** No quantum computer that threatens Ed25519 is known to exist, and after rekeying, every transaction from the account must be Falcon-signed — with a 3,000 microALGO minimum fee instead of 1,000, and tooling support still maturing. Plan the path now; execute it when the threat is credible and your tooling supports it.
+- **Multisig remains Ed25519-only.** There is no post-quantum native multisig; threshold-style control of a post-quantum account is achieved with logic signatures instead. Factor this in before assuming your creator multisig can migrate as-is.
+- **A rekey does not survive a close-out.** If a migrated account is closed and later re-funded, it is recreated under the control of its original Ed25519 key. Never close an account you have rekeyed for quantum resistance.
+
+See [Post-Quantum Accounts](/concepts/accounts/post-quantum/) for the protocol mechanics, and [Section 6](#6-rekeying--account-draining) for rekeying safety in general.
+
 ### Key Takeaways
 
 - Always use multisig for the creator account of contracts holding significant value.
 - Document signer ordering and use a majority threshold: avoid 1-of-N or N-of-N.
 - Never store keys in code or version-controlled config files.
+- Post-quantum accounts (v42+) give long-lived keys a quantum-resistant migration path via rekeying; multisig remains Ed25519-only.
 
 <CardGrid>
   <LinkCard
