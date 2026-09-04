@@ -1,0 +1,422 @@
+---
+title: Intermezzo API Reference
+description: The Intermezzo REST API — authentication, user provisioning, every supported transaction type, atomic groups, DID lifecycle, and credential issuance.
+sidebar:
+  label: API Reference
+---
+
+import { Steps, LinkCard, CardGrid } from '@astrojs/starlight/components';
+
+Intermezzo is a REST service that builds, signs, and submits Algorand transactions using keys held in HashiCorp Vault. Your application never handles key material — it names a user, states an intent, and receives a transaction id.
+
+This page is the endpoint reference. If you have not read [Intermezzo Concepts](/resources/intermezzo-concepts) yet, start there: it explains why the signing key lives outside the application and what that arrangement does and does not protect.
+
+Every route below is prefixed with `/v1`, and a locally running service listens on port `3000`.
+
+:::note
+The running service publishes its own generated OpenAPI documentation: interactive Swagger UI at `/docs` and the raw spec at `/docs-json`. That spec is generated from the code, so treat it as authoritative on exact field types when it disagrees with this page.
+:::
+
+---
+
+## Installation
+
+Setup is covered in the repository README, which is the maintained source for prerequisites, environment variables, and the Vault initialization script. In outline: bring up the Vault and service containers with Docker Compose, run the development Vault init script to unseal Vault and provision the transit engines, policies, and AppRoles, then fund the manager account before making transactions.
+
+<LinkCard
+  title='Intermezzo on GitHub'
+  href='https://github.com/algorandfoundation/intermezzo'
+  description='Repository README — installation, environment configuration, Vault setup, CLI mode, and testing.'
+/>
+
+:::caution
+The Vault init script shipped for development writes unseal keys to a local file and returns a root token. It is a convenience for getting a local stack running, not a production configuration.
+:::
+
+---
+
+## Authentication
+
+Authentication is a two-step exchange. Vault issues the first credential; Intermezzo issues the second. Both are short-lived.
+
+<Steps>
+
+1.  **Log in to Vault with an AppRole.** Post a `role_id` and `secret_id` to Vault's AppRole login endpoint. The development init script prints both for the manager and user roles. Vault returns a client token under `auth.client_token`.
+
+    ```bash
+    curl -X POST http://localhost:8200/v1/auth/approle/login \
+      -H 'Content-Type: application/json' \
+      -d '{
+            "role_id": "3ab5dada-ec1d-34a6-19ed-d63c9f6eba9c",
+            "secret_id": "e857e495-48b2-ab69-3cd1-99f6fe44ccc1"
+          }'
+    ```
+
+2.  **Exchange the Vault token for a session token.** Post it to Intermezzo's sign-in endpoint, which validates it against Vault and returns a signed session token.
+
+    ```bash
+    curl -X POST http://localhost:3000/v1/auth/sign-in/ \
+      -H 'Content-Type: application/json' \
+      -d '{"vault_token": "hvs.CAESIJ..."}'
+    ```
+
+    ```json
+    { "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..." }
+    ```
+
+3.  **Send it as a bearer token** on every subsequent request.
+
+    ```bash
+    Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+    ```
+
+</Steps>
+
+Which AppRole you authenticate with determines what you can do, because the Vault policy bound to that role is what ultimately authorizes signing. A token from the manager role can list users, sign as the manager, and deploy the issuer identity. A token from the user role can only sign for keys under the users path.
+
+| Endpoint            | Method | Auth | Purpose                                                 |
+| ------------------- | ------ | ---- | ------------------------------------------------------- |
+| `/v1/auth/sign-in/` | POST   | None | Exchange a Vault token for an Intermezzo session token. |
+
+---
+
+## Request conventions
+
+A handful of rules apply across every endpoint, and knowing them removes most first-integration surprises.
+
+**Amounts are in microAlgos.** The `amount` field on a payment maps directly onto the protocol's amount field, so `1000000` is one Algo. Asset amounts are in the asset's own base units, so what a unit means depends on the `decimals` chosen at creation.
+
+**`fromUserId` accepts the literal string `manager`.** This is the one piece of magic in the API. Any other value is treated as a `user_id` and signed with that user's key; the exact string `manager` routes signing to the enterprise's own operational key instead. It is how you send funds or make app calls as the platform rather than on behalf of a customer.
+
+**Users are named by your own identifier.** A `user_id` is whatever string you provide at creation — a customer id from your own database is the normal choice. It becomes the Vault key name, so it is also the thing you pass everywhere afterwards.
+
+**`lease` and `note` are optional on most transaction bodies.** A `note` is public, attached to the transaction on-chain, and capped at 1000 characters. A `lease` is a 32-byte base64 value that prevents a conflicting transaction from being submitted while the first is still valid — see [Transaction Leases](/concepts/transactions/leases).
+
+:::caution
+The payment endpoint accepts `lease` and `note` in its request body, but the current implementation does not forward them to the transaction it builds. If you depend on either for a payment, verify the submitted transaction on-chain before relying on it.
+:::
+
+---
+
+## Transaction types
+
+Intermezzo covers five of Algorand's transaction types. This table maps each protocol type to the endpoint that produces it and to the key that signs it.
+
+| Algorand type                                                                         | Endpoint                                     | Signed by                         |
+| ------------------------------------------------------------------------------------- | -------------------------------------------- | --------------------------------- |
+| Payment (`pay`)                                                                       | `/v1/wallet/transactions/transfer-algo/`     | Manager or user, per `fromUserId` |
+| Asset configuration (`acfg`)                                                          | `/v1/wallet/transactions/create-asset/`      | Manager                           |
+| Asset transfer (`axfer`)                                                              | `/v1/wallet/transactions/transfer-asset/`    | Manager, plus user opt-in         |
+| Asset clawback (`axfer` with an asset sender)                                         | `/v1/wallet/transactions/clawback-asset/`    | Manager                           |
+| Application call (`appl`)                                                             | `/v1/wallet/transactions/app-call/`          | Manager or user, per `fromUserId` |
+| Any mix of the above, as one [atomic group](/concepts/transactions/atomic-txn-groups) | `/v1/wallet/transactions/group-transaction/` | Per-transaction sender            |
+
+Key registration (`keyreg`) and asset freeze (`afrz`) are not exposed. For the full protocol picture, see [Transaction Types](/concepts/transactions/types).
+
+Every single-transaction endpoint responds with the submitted transaction id.
+
+```json
+{ "transaction_id": "QOOBRVQMX4HW5QZ2EGLQDQCQTKRF3UP3JKDGKYPCXMI6AVV35KQA" }
+```
+
+### Payment
+
+Sends Algo from a user or from the manager to any address.
+
+| Field        | Type   | Required | Notes                                             |
+| ------------ | ------ | -------- | ------------------------------------------------- |
+| `fromUserId` | string | Yes      | A `user_id`, or `manager` to send as the platform |
+| `toAddress`  | string | Yes      | Destination Algorand address                      |
+| `amount`     | number | Yes      | microAlgos                                        |
+| `lease`      | string | No       | See the caution above                             |
+| `note`       | string | No       | See the caution above                             |
+
+```bash
+curl -X POST http://localhost:3000/v1/wallet/transactions/transfer-algo/ \
+  -H 'Authorization: Bearer <access_token>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+        "fromUserId": "1234",
+        "toAddress": "I3345FUQQ2GRBHFZQPLYQQX5HJMMRZMABCHRLWV6RCJYC6OO4MOLEUBEGU",
+        "amount": 1000000
+      }'
+```
+
+### Create asset
+
+Creates an Algorand Standard Asset with the manager as creator. The four role addresses are optional and default to the manager, which is what makes a later clawback possible — an asset can only be clawed back if it was created with a clawback address.
+
+| Field                                                                  | Type    | Required | Notes                                   |
+| ---------------------------------------------------------------------- | ------- | -------- | --------------------------------------- |
+| `total`                                                                | number  | Yes      | Total supply in base units              |
+| `decimals`                                                             | number  | Yes      | Decimal places                          |
+| `defaultFrozen`                                                        | boolean | Yes      | Whether holdings start frozen           |
+| `unitName`                                                             | string  | Yes      | Short ticker, for example `TEST`        |
+| `assetName`                                                            | string  | Yes      | Display name                            |
+| `url`                                                                  | string  | Yes      | Asset URL                               |
+| `managerAddress`, `reserveAddress`, `freezeAddress`, `clawbackAddress` | string  | No       | Role addresses; omit to use the manager |
+
+```bash
+curl -X POST http://localhost:3000/v1/wallet/transactions/create-asset/ \
+  -H 'Authorization: Bearer <access_token>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+        "total": 31415,
+        "decimals": 2,
+        "defaultFrozen": false,
+        "unitName": "TEST",
+        "assetName": "Test Asset",
+        "url": "https://example.com"
+      }'
+```
+
+See [Asset Operations](/concepts/assets/asset-operations) for what each role address controls.
+
+### Transfer asset
+
+Sends an asset from the manager to a user. This endpoint does more work than its signature suggests, and the extra work is the useful part.
+
+Before transferring, Intermezzo checks whether the recipient has opted into the asset and whether they hold enough Algo to cover the [minimum balance](/concepts/accounts/funding) that the new holding will require. If either is missing, it assembles an atomic group that funds the user from the manager, opts the user in, and then transfers the asset — so a brand-new, unfunded user can receive an asset in one call.
+
+| Field     | Type   | Required | Notes                       |
+| --------- | ------ | -------- | --------------------------- |
+| `assetId` | number | Yes      | The asset to transfer       |
+| `userId`  | string | Yes      | Recipient `user_id`         |
+| `amount`  | number | Yes      | Amount in asset base units  |
+| `lease`   | string | No       | 32-byte base64 lease        |
+| `note`    | string | No       | Public note, max 1000 chars |
+
+```bash
+curl -X POST http://localhost:3000/v1/wallet/transactions/transfer-asset/ \
+  -H 'Authorization: Bearer <access_token>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+        "assetId": 1234567890,
+        "userId": "1234",
+        "amount": 10
+      }'
+```
+
+:::note
+Because the manager funds the opt-in minimum balance, an underfunded manager account causes asset transfers to fail even though the asset itself is available. Monitor the manager balance as an operational metric.
+:::
+
+### Clawback asset
+
+Moves an asset from a user back to the manager without the user's signature. This only works if the asset was created with the manager as its clawback address.
+
+| Field     | Type   | Required | Notes                       |
+| --------- | ------ | -------- | --------------------------- |
+| `assetId` | number | Yes      | The asset to claw back      |
+| `userId`  | string | Yes      | The holder to take from     |
+| `amount`  | number | Yes      | Amount in asset base units  |
+| `lease`   | string | No       | 32-byte base64 lease        |
+| `note`    | string | No       | Public note, max 1000 chars |
+
+```bash
+curl -X POST http://localhost:3000/v1/wallet/transactions/clawback-asset/ \
+  -H 'Authorization: Bearer <access_token>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+        "assetId": 1234567890,
+        "userId": "1234",
+        "amount": 10
+      }'
+```
+
+### Application call
+
+Calls a smart contract, or creates one by supplying programs instead of an `appId`. The body covers both cases, so which fields you send determines what happens.
+
+| Field                                                            | Type   | Required | Notes                                                                                   |
+| ---------------------------------------------------------------- | ------ | -------- | --------------------------------------------------------------------------------------- |
+| `fromUserId`                                                     | string | Yes      | A `user_id`, or `manager`                                                               |
+| `appId`                                                          | number | No       | Omit when creating a new application                                                    |
+| `approvalProgram`, `clearProgram`                                | string | No       | Compiled programs, for creation                                                         |
+| `globalInts`, `globalByteSlices`, `localInts`, `localByteSlices` | number | No       | State schema, for creation                                                              |
+| `onComplete`                                                     | number | No       | The [on-completion action](/concepts/smart-contracts/lifecycle)                         |
+| `args`                                                           | object | No       | ABI method name and typed arguments                                                     |
+| `foreignAssets`, `foreignApps`, `foreignAccounts`                | array  | No       | Additional [resources](/concepts/smart-contracts/resource-usage) the program may access |
+| `boxes`                                                          | array  | No       | [Boxes](/concepts/smart-contracts/storage/box) to make available                        |
+| `fee`                                                            | number | No       | Fee override in microAlgos                                                              |
+| `lease`, `note`                                                  | string | No       | As above                                                                                |
+
+```bash
+curl -X POST http://localhost:3000/v1/wallet/transactions/app-call/ \
+  -H 'Authorization: Bearer <access_token>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+        "fromUserId": "manager",
+        "appId": 1234,
+        "onComplete": 0,
+        "args": {
+          "name": "hello",
+          "args": [{ "type": "string", "value": "world" }],
+          "returns": { "type": "void" }
+        }
+      }'
+```
+
+Arguments are described with their ABI types rather than pre-encoded, so the service handles encoding. See the [ABI](/concepts/smart-contracts/abi) reference for the type system.
+
+### Atomic group
+
+Submits up to 16 transactions that succeed or fail together. Each entry names a type and carries the same payload that type's dedicated endpoint would accept.
+
+The five permitted type values are `payment`, `appCall`, `assetConfig`, `assetTransfer`, and `assetClawback`. Each transaction's sender is resolved from its own payload, so a single group can mix manager-signed and user-signed transactions — Intermezzo signs each position with the correct key.
+
+```bash
+curl -X POST http://localhost:3000/v1/wallet/transactions/group-transaction/ \
+  -H 'Authorization: Bearer <access_token>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+        "transactions": [
+          {
+            "type": "payment",
+            "payload": {
+              "fromUserId": "manager",
+              "toAddress": "I3345FUQQ2GRBHFZQPLYQQX5HJMMRZMABCHRLWV6RCJYC6OO4MOLEUBEGU",
+              "amount": 1000
+            }
+          },
+          {
+            "type": "appCall",
+            "payload": { "fromUserId": "manager", "appId": 123, "onComplete": 0 }
+          }
+        ]
+      }'
+```
+
+This endpoint returns a group id rather than a transaction id.
+
+```json
+{ "group_id": "QOOBRVQMX4HW5QZ2EGLQDQCQTKRF3UP3JKDGKYPCXMI6AVV35KQA" }
+```
+
+:::note
+Each position in a group requires its own signing round trip to Vault, so a group of _N_ transactions costs _N_ signing calls. Budget latency accordingly on large groups.
+:::
+
+---
+
+## Users and manager
+
+These endpoints provision and inspect accounts. Creating a user mints an Ed25519 key in Vault and derives its Algorand address; nothing is written on-chain and no balance is required until the account is funded.
+
+| Endpoint                      | Method | Purpose                                                              |
+| ----------------------------- | ------ | -------------------------------------------------------------------- |
+| `/v1/wallet/user/`            | POST   | Create a user from a `user_id` and return its derived address.       |
+| `/v1/wallet/users/`           | GET    | List all users. Requires a manager token.                            |
+| `/v1/wallet/users/{user_id}/` | GET    | Get one user's id, address, and Algo balance.                        |
+| `/v1/wallet/assets/{user_id}` | GET    | Get a user's address and full asset holdings.                        |
+| `/v1/wallet/manager/`         | GET    | Get the manager's Algorand address.                                  |
+| `/v1/wallet/manager/identity` | GET    | Resolve the manager's issuer `did:algo` and return its DID document. |
+| `/v1/wallet/manager/identity` | POST   | Deploy the contract backing the manager's issuer DID.                |
+
+```bash
+curl -X POST http://localhost:3000/v1/wallet/user/ \
+  -H 'Authorization: Bearer <access_token>' \
+  -H 'Content-Type: application/json' \
+  -d '{"user_id": "1234"}'
+```
+
+```json
+{
+  "user_id": "1234",
+  "public_address": "I3345FUQQ2GRBHFZQPLYQQX5HJMMRZMABCHRLWV6RCJYC6OO4MOLEUBEGU",
+  "algoBalance": "0"
+}
+```
+
+The manager identity deploy endpoint is normally called once, at first boot. It deploys the storage contract, publishes the manager's issuer DID against it, and persists the contract id to Vault so later boots reuse the same instance. It returns `409 Conflict` if a contract is already configured; pass `{ "force": true }` to reuse the contract and republish the document, which is the path to take on key rotation. It returns `422` when the manager account cannot pay for the deployment.
+
+---
+
+## Decentralized identity
+
+These endpoints manage a per-user `did:algo` whose document is stored on-chain. The signing model here is deliberately different from the wallet endpoints: **the user's wallet signs, not the manager.**
+
+The two read endpoints take a manager session token. The four transaction-building endpoints are authenticated instead by a verifiable credential presented in an `X-Credential-Presentation` header; the credential's bound key identifies which DID the caller owns, so a caller cannot act on someone else's DID.
+
+| Endpoint                      | Method | Auth          | Purpose                                                               |
+| ----------------------------- | ------ | ------------- | --------------------------------------------------------------------- |
+| `/v1/did/identities`          | GET    | Manager token | List every registered per-user `did:algo`.                            |
+| `/v1/did/identities/{didKey}` | GET    | Manager token | Look up one user's `did:algo` by their `did:key`.                     |
+| `/v1/did/create/transactions` | POST   | Credential    | Build the transaction group that deploys a caller-owned DID contract. |
+| `/v1/did/create/submit`       | POST   | Credential    | Broadcast the wallet-signed group and register the new DID.           |
+| `/v1/did/update/transactions` | POST   | Credential    | Build the groups that replace the caller's DID document.              |
+| `/v1/did/update/submit`       | POST   | Credential    | Broadcast the wallet-signed document update.                          |
+
+Both flows are two-phase: request the transactions, sign the indicated positions in your wallet, then submit. On create, Intermezzo builds the group but leaves the application-creation transaction unsigned so that the wallet becomes the on-chain creator and owner of its own contract; the manager signs only the funding payments, and revalidates the wallet-signed bytes before broadcasting.
+
+---
+
+## Verifiable credentials
+
+Credential issuance and verification run through a Credo agent whose signing key also lives in Vault. The endpoints below orchestrate sessions and take a manager token. Wallets talk to the protocol routes that Credo mounts at `/oid4vci` and `/oid4vp`, which sit outside the `/v1` prefix.
+
+| Endpoint                                    | Method | Purpose                                                       |
+| ------------------------------------------- | ------ | ------------------------------------------------------------- |
+| `/v1/credential/issuer/configurations`      | GET    | List the credential configurations this issuer advertises.    |
+| `/v1/credential/issuer/configurations/{id}` | POST   | Add or update a configuration.                                |
+| `/v1/credential/issuer/configurations/{id}` | DELETE | Remove a configuration.                                       |
+| `/v1/credential/issuer/offers`              | POST   | Create a pre-authorized offer pinned to a wallet's `did:key`. |
+| `/v1/credential/issuer/sessions`            | GET    | List issuance sessions.                                       |
+| `/v1/credential/issuer/sessions/{id}`       | GET    | Get one issuance session.                                     |
+| `/v1/credential/verifier/requests`          | POST   | Create an OID4VP authorization request for QR rendering.      |
+| `/v1/credential/verifier/sessions`          | GET    | List verification sessions.                                   |
+| `/v1/credential/verifier/sessions/{id}`     | GET    | Get one verification session, refreshing its state.           |
+
+The intended sequence is that you verify a user out of band — device attestation, KYC, an email proof, whatever your product requires — then create an offer pinned to that wallet's `did:key` and hand the offer to the wallet as a URL or QR code. The wallet redeems it over OID4VCI and can then use the resulting credential to authenticate against the DID endpoints above.
+
+---
+
+## Errors
+
+Errors surface as standard HTTP status codes. Vault's own failures are mapped through to the caller, which means an authorization problem inside Vault appears as an authorization error on the API.
+
+| Status | Typical cause                                                                |
+| ------ | ---------------------------------------------------------------------------- |
+| `400`  | Malformed body or a field that fails validation.                             |
+| `401`  | Missing, expired, or invalid session token.                                  |
+| `403`  | The Vault policy behind your AppRole does not permit the operation.          |
+| `404`  | No such user, asset, or key.                                                 |
+| `409`  | A manager identity contract is already configured. Pass `force` to redeploy. |
+| `422`  | The manager account is underfunded and cannot pay for the operation.         |
+| `500`  | Chain rejection or an unexpected Vault condition, including a sealed Vault.  |
+
+:::caution
+A sealed Vault takes the whole signing path down: reads and writes of key material both fail, so no transaction can be produced. Treat Vault availability and auto-unseal as part of your own uptime requirements.
+:::
+
+---
+
+## Resources & References
+
+- **Repository:** [algorandfoundation/intermezzo](https://github.com/algorandfoundation/intermezzo) — installation, environment configuration, Vault setup, CLI mode, and tests.
+- **Generated API docs:** `/docs` for Swagger UI and `/docs-json` for the raw OpenAPI spec on a running instance.
+- **Vault Transit engine:** [developer.hashicorp.com/vault/docs/secrets/transit](https://developer.hashicorp.com/vault/docs/secrets/transit).
+- **Vault AppRole auth:** [developer.hashicorp.com/vault/docs/auth/approle](https://developer.hashicorp.com/vault/docs/auth/approle).
+
+<CardGrid>
+  <LinkCard
+    title='Intermezzo Concepts'
+    href='/resources/intermezzo-concepts'
+    description='Why the signing key lives outside the application, and how this compares to regulated and MPC custody.'
+  />
+  <LinkCard
+    title='Transaction Types'
+    href='/concepts/transactions/types'
+    description='Every Algorand transaction type and the fields each one carries.'
+  />
+  <LinkCard
+    title='Atomic Transaction Groups'
+    href='/concepts/transactions/atomic-txn-groups'
+    description='How all-or-nothing grouping works at the protocol level.'
+  />
+  <LinkCard
+    title='Asset Operations'
+    href='/concepts/assets/asset-operations'
+    description='Creating, transferring, freezing, and clawing back Algorand Standard Assets.'
+  />
+</CardGrid>

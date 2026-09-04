@@ -1,0 +1,583 @@
+---
+title: Intermezzo Concepts
+description: How Intermezzo uses a KMS as middleware to keep Algorand signing keys out of application memory, why it runs on HashiCorp Vault's Transit engine, and how it compares to regulated and MPC custody.
+sidebar:
+  label: Concepts
+---
+
+import { Steps, LinkCard, CardGrid } from '@astrojs/starlight/components';
+
+Almost every backend that touches a blockchain starts the same way. Somebody generates an account, copies the 25-word mnemonic into an environment variable, and writes three lines of code that turn it back into a private key at boot. It works on the first try, it is fast, and it is how nearly every tutorial teaches you to sign a transaction. It is also the reason that a single log line, a leaked crash report, or one bad dependency can drain every account the service controls.
+
+**Intermezzo** removes that private key from your application entirely. Your service keeps deciding _what_ should be signed; a Key Management Service (KMS) keeps the key and does the actual signing; and neither one is ever in a position to do the other's job.
+
+This page covers the concepts: what Intermezzo is, why it is built on HashiCorp Vault, what it would take to run it on a different KMS, and where it sits among the other ways of holding keys. Installation, endpoints, and worked code examples are covered separately in the [API reference](/resources/intermezzo-api-reference). You do not need prior experience with Vault or verifiable credentials to read this page — every term is defined as it appears, and there is a [glossary](#glossary) at the end.
+
+---
+
+## What is Intermezzo?
+
+_Intermezzo_ is Italian, from the Latin _intermedius_ — _inter_ ("between") and _medius_ ("middle"). In opera, an intermezzo is a short piece performed between the acts of a larger work. It is not the main performance and it does not replace an act. Its whole purpose is to occupy the space between two things and carry the audience from one to the other.
+
+The software is named for that role. It sits between two systems that should never be merged:
+
+- **Your application** knows _who_ the user is and _what_ they want to do. It is also large, changes weekly, pulls in hundreds of transitive dependencies, and is the part of the stack most likely to be compromised.
+- **The KMS** holds the private keys. It is small, changes rarely, exposes a narrow API, and is audited.
+
+Intermezzo is the piece in between. It translates a business request — "transfer 5 Algo from user `1234` to this address" — into exact Algorand transaction bytes, asks the KMS to sign those bytes with a key it is not permitted to read, attaches the returned signature, and submits the result to the network.
+
+<figure>
+
+```d2 darkTheme='false' title='Isolation between application space and the KMS'
+  vars: {
+    d2-config: {
+      pad: 60
+      layout-engine: dagre
+      sketch: true
+    }
+  }
+  direction: right
+
+  app: Application space {
+    style: {
+      fill: "#eef4f5"
+      stroke: "#26565c"
+    }
+
+    client: Your application {
+      shape: rectangle
+      style: {
+        fill: "#d5e5f5"
+        stroke: "#000000"
+      }
+    }
+
+    pawn: Intermezzo {
+      shape: rectangle
+      style: {
+        fill: "#d5e5f5"
+        stroke: "#000000"
+        bold: true
+      }
+    }
+
+    client -> pawn: REST + JWT
+  }
+
+  kms: Trusted space {
+    style: {
+      fill: "#faf1e2"
+      stroke: "#8a6212"
+    }
+
+    vault: Vault Transit holds the key {
+      shape: rectangle
+      style: {
+        fill: "#f5e5d5"
+        stroke: "#000000"
+      }
+    }
+  }
+
+  chain: Algorand network {
+    shape: cylinder
+    style: {
+      fill: "#d5e5e5"
+      stroke: "#000000"
+    }
+  }
+
+  app.pawn -> kms.vault: sign(bytes)
+  kms.vault -> app.pawn: signature, 64 bytes
+  app.pawn -> chain: signed transaction
+```
+
+<figcaption>Figure: Requests, bytes-to-sign, and signatures all cross the boundary between the two spaces. The private key is the one thing that does not.</figcaption>
+</figure>
+
+In concrete terms, Intermezzo is a stateless NestJS service written in TypeScript, deployed alongside a Vault instance, talking to an algod node that you configure.
+
+### One transfer, end to end
+
+The clearest way to understand the design is to trace a single Algo payment through it.
+
+<Steps>
+
+1.  **Your service authenticates.** It presents a Vault token to the sign-in endpoint and receives a short-lived session token in return. Every subsequent call carries that session token as a bearer credential.
+
+2.  **Your service asks for a transfer.** The request names a sender by `user_id`, a destination address, and an amount. No key material and no mnemonic appears anywhere in it.
+
+3.  **Intermezzo looks up the public key.** It reads the user's public key from Vault and derives the sender address from it. Only the public half is involved, so this is a safe read.
+
+4.  **Intermezzo builds the transaction.** It assembles the payment and encodes it in the canonical form Algorand signs: the transaction msgpack-encoded with sorted keys, prefixed with the two ASCII bytes `TX` for domain separation. This is what `encodeTransaction()` produces — see [Encoding and Decoding](/docs/algokit-utils/typescript/latest/examples/transact/13-encoding-decoding) — and it is the byte string handed to the KMS. For the wider signing model, see [Signing Transactions](/concepts/transactions/signing).
+
+5.  **Vault signs the bytes.** Intermezzo sends the encoded transaction to the Transit engine, which returns a signature wrapped in a `vault:v1:` envelope. The private key never appears in this exchange — Vault holds it, uses it, and returns only the 64 bytes of signature.
+
+6.  **Intermezzo assembles and submits.** It strips the envelope, attaches the raw signature to the encoded transaction, broadcasts the result to the network, and returns the transaction id.
+
+</Steps>
+
+At no point in those six steps does a private key exist inside the application process. That property is the entire point of the architecture, and everything else on this page follows from protecting it.
+
+### What Intermezzo is not
+
+It is worth being precise about the boundaries, because several of these are commonly assumed.
+
+- It is **not a wallet with keys in it**. It never holds, receives, or can retrieve private key material.
+- It is **not a KMS**. All key storage and cryptography is delegated to Vault.
+- It is **not a security product**. It gives you isolation; you still own the Vault instance, its policies, its network, and its operations.
+- It is **not multi-chain**. It is Algorand-specific: Ed25519 keys, the `TX` domain prefix, msgpack encoding.
+
+:::caution
+Intermezzo does not manage security for you. Securing the Vault instance, writing access policies, and handling admin tokens are the integrator's responsibility. This is stated in the project README and it is not a formality — see [What you still have to build](#what-you-still-have-to-build).
+:::
+
+### The three surfaces
+
+Intermezzo exposes three groups of endpoints.
+
+| Surface                 | Route prefix                                           | What it does                                                                                                                             |
+| ----------------------- | ------------------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------- |
+| Wallet and transactions | `/v1/wallet/*`                                         | Provision users, read balances and asset holdings, and build, sign, and submit payments, asset operations, app calls, and atomic groups. |
+| Decentralized identity  | `/v1/did/*`                                            | Deploy and update a per-user `did:algo` document stored on-chain.                                                                        |
+| Verifiable credentials  | `/v1/credential/issuer/*`, `/v1/credential/verifier/*` | Issue credentials (OID4VCI) and verify presentations (OID4VP) through a Credo agent whose signing key also lives in Vault.               |
+
+There is also a CLI mode that talks to the same Vault directly, which is useful as a personal or operator tool.
+
+---
+
+## KMS middleware and hot wallets
+
+### Hot wallets
+
+A hot wallet is a wallet whose private key is present, in plaintext, in the memory of an online system. In practice it takes one of three shapes: a mnemonic in an environment variable, a key file read from disk at startup, or an account generated in the process and held in the heap. All three put the same secret in the same place.
+
+It is called hot because it is connected and immediately usable. Signing is a local operation that takes microseconds and depends on nothing. That convenience is real, and it is why this pattern is everywhere.
+
+The opposite arrangement, a cold wallet, keeps the key on a device that is never connected. It is far safer and it cannot serve an API, which is why backends reach for hot wallets in the first place.
+
+### Why it is a problem
+
+The difficulty is not that hot wallets sign transactions. It is that a hot wallet converts _any_ ability to read memory, disk, or environment — anywhere in the stack — into permanent and silent loss of funds.
+
+Consider a realistic incident. A transitive dependency of a logging library is compromised and publishes a patch release. Your CI picks it up. The new code reads the process environment and posts it to a remote host. Nothing crashes, no alert fires, and your monitoring shows a healthy service. The attacker now has a key that works forever, from anywhere, with no further access to your systems, and they can wait months before using it.
+
+Several properties combine to make that scenario as bad as it is.
+
+- **A key is an asset, not a permission.** Once copied it works indefinitely. There is no revoke.
+- **Theft leaves no trace.** Copying a key changes nothing observable. You find out when funds move.
+- **The exfiltration surface is enormous.** Remote code execution, a malicious dependency, an SSRF into the cloud metadata service, a heap or core dump, an unredacted crash report, a debug log line, the process environment file, a container image layer, a CI secret, a VM snapshot.
+- **The blast radius is everything at once.** Whatever keys the process holds are lost together. If it holds one key per user, that is every user.
+- **Scaling multiplies copies.** Ten replicas means ten copies of the key, in ten memory spaces, across ten sets of logs.
+- **Backups become key material.** Snapshots and database dumps now contain spendable secrets and inherit the same handling rules as production.
+- **Rotation is a migration.** Rotating normally means creating a new account and moving every asset to it, with a new address that breaks anything which pinned the old one.
+
+### Isolation
+
+Isolation of secret management means drawing a hard line between the code that decides _what_ should be signed and the system that _can_ sign, and making that line a network boundary guarded by a revocable credential rather than a function call inside the same process.
+
+<figure>
+
+```d2 darkTheme='false' title='The same breach, two architectures'
+  vars: {
+    d2-config: {
+      pad: 60
+      layout-engine: dagre
+      sketch: true
+    }
+  }
+  direction: right
+
+  hot: A. Key in the process {
+    direction: down
+    style: {
+      fill: "#fdf3f0"
+      stroke: "#9b3a22"
+    }
+
+    breach: compromise {
+      shape: hexagon
+      style: {
+        fill: "#f6e4de"
+        stroke: "#9b3a22"
+      }
+    }
+
+    proc: application process {
+      style: {
+        fill: "#f7f8f7"
+        stroke: "#000000"
+      }
+
+      key: private key {
+        shape: rectangle
+        style: {
+          fill: "#f5e5d5"
+          stroke: "#8a6212"
+        }
+      }
+    }
+
+    breach -> proc.key: reads memory
+  }
+
+  iso: B. Key behind a KMS {
+    direction: down
+    style: {
+      fill: "#eef4f5"
+      stroke: "#26565c"
+    }
+
+    breach: compromise {
+      shape: hexagon
+      style: {
+        fill: "#f6e4de"
+        stroke: "#9b3a22"
+      }
+    }
+
+    proc: application process {
+      style: {
+        fill: "#f7f8f7"
+        stroke: "#000000"
+      }
+
+      token: vault token with a TTL {
+        shape: rectangle
+        style: {
+          fill: "#d5e5f5"
+          stroke: "#26565c"
+        }
+      }
+    }
+
+    vault: Vault holds the key {
+      shape: rectangle
+      style: {
+        fill: "#f5e5d5"
+        stroke: "#8a6212"
+      }
+    }
+
+    breach -> proc.token: reads memory
+    proc.token -> vault: sign(bytes)
+  }
+```
+
+<figcaption>Figure: The structure is identical down to the process box; the difference is what is inside it. In A the breach yields a key that is valid forever and leaves no trace. In B it yields a capability that expires, can be revoked, and is logged on every use.</figcaption>
+</figure>
+
+The two spaces have genuinely different risk profiles, and that is the justification for separating them. Your application changes constantly and imports code you did not write. A KMS changes rarely and does one thing. Combining them gives the whole system the risk profile of its most exposed line of code.
+
+KMS middleware is the layer that makes this arrangement usable. Something still has to know which key to use, what bytes to sign, and what to do with the signature that comes back. That is application knowledge and it does not belong inside the KMS, so it goes in the middle.
+
+### What isolation changes
+
+After the split, an attacker who fully owns your application does not get a key. They get a capability: the ability to ask Vault to sign, for as long as the stolen token is valid, within whatever that token's policy permits.
+
+Those are very different objects to be holding.
+
+| Property               | Hot wallet key | KMS capability              |
+| ---------------------- | -------------- | --------------------------- |
+| Lifetime               | Forever        | Token TTL                   |
+| Revocable              | No             | Yes, instantly              |
+| Scoped                 | No             | Yes, per path and operation |
+| Rate limitable         | No             | Yes                         |
+| Leaves evidence of use | No             | Yes, in the audit log       |
+| Works off your network | Yes            | Only with access to Vault   |
+
+:::caution
+Isolation changes the attack from "steal the key" to "abuse the signing capability while you hold it". It does not eliminate the second attack. Closing that remaining gap is the job of a transaction policy layer, which Intermezzo does not ship — see [What you still have to build](#what-you-still-have-to-build).
+:::
+
+---
+
+## Why Vault and Transit
+
+### The Vault model
+
+Vault is an identity-based secrets platform, and almost everything in it follows one chain: an **auth method** establishes who you are, which yields a **token**, which is bound to a **policy**, which grants access to a **secret engine**.
+
+**Auth methods** are how a caller proves identity. Intermezzo uses **AppRole**, which is designed for machines: a `role_id` (like a username) and a `secret_id` (like a password) are exchanged for a token. Vault also supports GitHub, LDAP, OIDC, Kubernetes service accounts, and TLS certificates, so an enterprise can wire this into an existing identity provider.
+
+**Tokens** are short-lived bearer credentials with a TTL, revocable at any moment.
+
+**Policies** grant capabilities — `create`, `read`, `update`, `delete`, `list`, `deny` — on specific paths. Because policies are path-based, the choice of Vault paths in Intermezzo is a security decision rather than a naming one.
+
+**Secret engines** are pluggable backends mounted at a path, each with its own API. The two that matter here are Transit and KV.
+
+Everything is HTTP, everything is subject to policy, and with an audit device enabled, everything is logged.
+
+### Transit versus KV
+
+Vault's KV engine is a versioned key-value store: you put a secret in and you get the same secret back. Its Transit engine is cryptography as a service: you send it data and it performs an operation using a key that stays inside Vault.
+
+That distinction is the single most important design decision in this project. Suppose Intermezzo stored Algorand mnemonics in KV. A read against that path would return the mnemonic itself, which would then be in the application's memory. You would have rebuilt a hot wallet with extra network hops, TLS, and a tidy audit line recording that you did it.
+
+Transit inverts the exchange. A sign request carries the bytes to be signed and the response carries only a signature. For a non-exportable key there is no Transit endpoint that returns the private key at all. That is not a policy you configure and can accidentally weaken; it is the shape of the engine.
+
+### Why Transit fits Algorand
+
+Transit supports `ed25519` natively, which is exactly the signature scheme Algorand uses. There is no curve translation, no re-encoding, and no adapter: the 64 bytes Vault returns are the 64 bytes that go into the signed transaction.
+
+This matters more than it may sound, because [most cloud KMS products do not offer Ed25519](#alternatives-to-vault). It is the main reason Vault is the default here.
+
+When Intermezzo creates a user key it makes three deliberate choices in the key configuration. The type is `ed25519`, to match Algorand. Derivation is disabled, so there is one key per name rather than a derivation tree. Deletion is disallowed, so the key cannot be destroyed by an accidental call. The response carries only the public key, which becomes an Algorand address by appending a 4-byte checksum and encoding the result in base32 — the standard transformation described in [Keys and Signing](/concepts/accounts/keys-signing).
+
+:::note
+The `vault:v1:` prefix on every signature carries the **key version**. Transit can rotate a key while keeping older signatures verifiable, and the version records which one was used. Intermezzo strips this envelope before attaching the signature and asserts that exactly 64 bytes remain.
+:::
+
+### Paths and policies
+
+Intermezzo mounts two separate Transit engines and gives them different policies.
+
+| Path (environment variable)   | Default         | Holds                                                      |
+| ----------------------------- | --------------- | ---------------------------------------------------------- |
+| `VAULT_TRANSIT_USERS_PATH`    | `pawn/users`    | One Ed25519 key per end user, named by `user_id`           |
+| `VAULT_TRANSIT_MANAGERS_PATH` | `pawn/managers` | The enterprise's own operational key (`VAULT_MANAGER_KEY`) |
+
+Two AppRoles are provisioned against them — `pawn_users_approle` and `pawn_managers_approle` — bound to `pawn_users_policy` and `pawn_managers_policy` respectively. Users may create, read, and sign with keys under their own path. Managers may additionally list user keys and read and write operational state in KV.
+
+Both policies explicitly **deny** the key configuration sub-paths. Without that denial, a token that can sign could also reconfigure the key it signs with — for example, to make it exportable.
+
+:::caution
+The repository ships a development script that initializes Vault, unseals it, mounts the engines, and writes the policies. It is a development convenience, not a production setup: it writes unseal keys to a local file and hands you a root token. Read it as a reference for what needs configuring, then configure production according to Vault's own hardening guidance.
+:::
+
+### Vault signs bytes, not transactions
+
+Transit signs arbitrary input. It has no concept of an Algorand transaction and cannot distinguish a 1 Algo payment from a 1,000,000 Algo payment, a transfer from a [rekey](/concepts/accounts/rekeying), or a routine app call from one that drains an account.
+
+That is what makes Transit general-purpose, but it has a direct consequence for anyone deploying this.
+
+:::caution
+Every transaction-level control is Intermezzo's responsibility, not Vault's. Spending limits, destination allowlists, velocity checks, approval workflows, and simulation before signing all have to live in the middleware or in front of it. Vault will faithfully sign anything a valid token asks it to sign.
+:::
+
+---
+
+## Alternatives to Vault
+
+### The deciding question
+
+Algorand signs with pure Ed25519 (RFC 8032) over the msgpack encoding of a transaction prefixed with `TX`. Not Ed25519ph, not ECDSA, and not a DER-wrapped signature — a raw, detached, 64-byte signature over exactly those bytes.
+
+So the first question to ask about any candidate KMS is not whether it is secure or whether your cloud provider offers it. It is: **can it produce a raw Ed25519 signature over a caller-supplied message, without pre-hashing?**
+
+Many cloud KMS products were designed around TLS and PKI, and expose RSA and NIST ECDSA curves rather than Ed25519. This is the constraint that eliminates most of the obvious candidates.
+
+| Option                                             | Raw Ed25519 signing                   | Self-hostable | Notes                                                                                                                        |
+| -------------------------------------------------- | ------------------------------------- | ------------- | ---------------------------------------------------------------------------------------------------------------------------- |
+| **HashiCorp Vault** (Transit)                      | Native                                | Yes           | The current default.                                                                                                         |
+| **OpenBao**                                        | Native                                | Yes           | Linux Foundation fork of Vault, API-compatible. Often a URL change. The natural choice if Vault's BUSL licence is a blocker. |
+| **AWS KMS**                                        | Historically not supported            | No            | Strong IAM, CloudTrail, and compliance story, but verify Ed25519 support before designing around it.                         |
+| **GCP Cloud KMS**                                  | Historically not supported            | No            | Same caveat.                                                                                                                 |
+| **Azure Key Vault / Managed HSM**                  | Historically not supported            | No            | Same caveat.                                                                                                                 |
+| **PKCS#11 HSM** — Luna, nShield, YubiHSM, CloudHSM | Usually, via the EdDSA mechanism      | Yes           | Strongest hardware assurance and FIPS options. Highest operational cost.                                                     |
+| **TEE / enclave signer** — Nitro Enclaves, SGX     | Yes — you write the signer            | Yes           | Attestation is powerful, and you are now maintaining a KMS.                                                                  |
+| **MPC / TSS service**                              | Yes, for vendors that support Ed25519 | No            | A different trust model entirely — see [the comparison below](#comparing-custody-models).                                    |
+
+:::note
+KMS capabilities change. Treat this table as a starting point for your own check against current provider documentation rather than a settled answer.
+:::
+
+If the KMS your organisation mandates cannot sign Ed25519 natively, there are four practical routes: run Vault or OpenBao inside that cloud for signing keys only, unsealed by the cloud's own KMS; put an HSM behind PKCS#11; write a plugin; or use [multisig](/concepts/accounts/multisig) and [rekeying](/concepts/accounts/rekeying) to combine a supported-curve control plane with an Ed25519 signer.
+
+### What a plugin must provide
+
+Intermezzo does not scatter Vault calls through its business logic. All KMS access funnels through two narrow interfaces, so swapping the backend is a matter of implementing them.
+
+The first is the KMS service itself. A replacement needs to offer six operations: create a non-exportable Ed25519 key and return its raw public key; fetch the public key for an existing key; sign a caller-supplied byte string and return a raw 64-byte detached signature; enumerate key names, which backs the list-users endpoint; exchange long-lived credentials for a short-lived scoped token; and a small read, write, delete, and list interface for operational state such as deployed DID application ids.
+
+The second is the credential agent's signer, which was written from the start to be KMS-agnostic. It defines a key binding — an opaque pair naming a key and the path it lives under — a signer function that takes that binding plus the data to sign, and a store that persists the mapping from a public key to its binding. The package's own documentation notes that the binding "is never interpreted by the package — hosts on a different KMS may repurpose either field."
+
+So writing a plugin means implementing the first interface against your KMS SDK and registering a signer closure over it. None of the wallet, DID, or credential modules need to change.
+
+### Five plugin pitfalls
+
+Four of these five produce a signature that looks structurally valid and is rejected by the network, which makes them frustrating to debug. Test for them explicitly.
+
+1. **Pre-hashing.** Ed25519ph, or any "sign the hash of the message" behaviour, produces a valid signature over the wrong message. Algorand needs pure Ed25519 over the raw `TX`-prefixed bytes.
+2. **Signature encoding.** ECDSA-oriented KMS products return a DER-wrapped pair, sometimes with a recovery byte appended. Algorand expects 64 raw bytes. Assert the length.
+3. **Public key encoding.** SPKI, DER, or PEM-wrapped public keys must be unwrapped to the raw 32 bytes before deriving an address. A wrong unwrap yields a plausible-looking address for an account that does not exist, and the failure shows up as an unfunded account rather than as a crypto error.
+4. **Extractability.** If the plugin's key can be exported, you have rebuilt a hot wallet with a longer call stack. Set keys non-extractable at creation and deny the configuration paths.
+5. **Latency.** Signing is now a network round trip, and an [atomic group](/concepts/transactions/atomic-txn-groups) of _N_ transactions is _N_ round trips. Set timeouts and decide what a partial failure mid-group means before you meet one.
+
+---
+
+## Custody for enterprises
+
+### Who can sign
+
+Where the software runs is not what determines custody. The operative question is: who is able to produce a signature?
+
+With Intermezzo, the enterprise can, by holding a Vault token authorised for the user key path. The end user cannot, because they have no key material and no path to any. That makes it custodial by definition. Self-hosting does not change the answer; it changes who the custodian is.
+
+### Managers and users
+
+The system has exactly two kinds of identity.
+
+A **manager** represents the enterprise itself. Its key lives under the managers path, it pays fees and [minimum balance requirements](/concepts/accounts/funding) for user operations, it can list users, and it owns the issuer `did:algo` used for credentials.
+
+A **user** represents one end customer. Its key lives under the users path, named by `user_id`, and it can sign only its own transactions.
+
+Provisioning a user is deliberately cheap: one API call creates one Transit key and returns the derived Algorand address. There is no on-chain transaction and no minimum balance until the account is actually funded, so onboarding a million users costs a million Transit keys and nothing else.
+
+### Enterprise fit
+
+Enterprises evaluating blockchain custody tend to arrive with the same short list of requirements, and this architecture answers them in a specific way.
+
+Customer assets never leave your control, because no third party sits in the signing path — the keys are in your Vault, on your network, inside your compliance boundary. It fits existing security architecture, because Vault is frequently already deployed, already has an on-call rotation, an audit pipeline, and a policy review process, all of which Intermezzo reuses rather than duplicating. Per-operation audit evidence is available, because Vault audit devices record every signing call and those records correlate with the application request log and the resulting on-chain transaction id. And the cost model is infrastructure rather than per-wallet fees, which is what makes provisioning a key per user reasonable in the first place.
+
+As the project README puts it, traditional web3 custody can be expensive and overly complex for many use cases. This targets that gap specifically.
+
+### The self-custodial part
+
+Intermezzo is custodial for value and deliberately self-custodial for identity, which is easy to miss on a first read of the DID endpoints.
+
+The user's wallet holds a `did:key` that never leaves the device. When the wallet deploys its own `did:algo` contract, Intermezzo builds the three-transaction atomic group but does **not** sign the application creation. The wallet signs that position itself, which makes the wallet's own address the on-chain creator and owner of its DID storage contract. The manager signs only the two funding payments, and re-validates the wallet-signed bytes byte-for-byte before broadcasting. Access is gated by a credential guard that pins the owner to the confirmation key inside a presented credential, so a caller cannot claim someone else's DID.
+
+The result is a split that suits regulated consumer products well: the enterprise custodies the money, and the user custodies their identity.
+
+### What you still have to build
+
+Four things are outside the scope of the repository and worth planning for before a production deployment.
+
+- **A transaction policy engine.** Spending limits, destination allowlists, and approval quorums do not exist here, and Vault will not supply them because it cannot read transactions.
+- **A compliance programme.** Qualified custodian status, insurance, and SOC 2 are properties of an organisation, not a repository.
+- **Key recovery.** There are no seed phrases and no social recovery. Recovery means your Vault's backup and disaster recovery story, which needs to exist before you need it.
+- **Security operations.** Sealing and unsealing, network policy, token hygiene, secret rotation, monitoring, and incident response are all yours.
+
+---
+
+## Comparing custody models
+
+The three models differ most in who is capable of producing a signature, and who carries the loss when the wrong signature gets produced.
+
+A **regulated custodian** — Coinbase Custody, BitGo Trust, Anchorage, Fidelity Digital Assets — is a licensed third party that legally holds the assets. You send instructions and they sign. You have transferred control, and to a contractually defined extent, liability.
+
+An **MPC or TSS service** — Fireblocks, Dfns, Turnkey, Copper — never assembles the private key anywhere. Threshold signature shares are split between you, the vendor, and often a backup party, and a signature requires a quorum. That is cryptographically strong, and it also means the vendor is a mandatory co-signer sitting on your critical path.
+
+**Intermezzo** uses one whole Ed25519 key per account, in a KMS you run, used by middleware you run. No third party is in the signing path, and no third party shares the risk.
+
+| Dimension                 | Regulated custodian                          | MPC / TSS SaaS                          | Intermezzo                            |
+| ------------------------- | -------------------------------------------- | --------------------------------------- | ------------------------------------- |
+| Who can sign              | The custodian                                | You and the vendor, at quorum           | You alone                             |
+| Key technology            | Vendor HSMs                                  | Threshold shares, key never assembled   | Single Ed25519 key in your KMS        |
+| Key location              | Vendor infrastructure                        | Split across parties                    | Your Vault, your network              |
+| Main compromise risk      | Custodian breach or insolvency               | Quorum compromise, which is hard        | A valid Vault token, or a Vault admin |
+| Insider risk              | Their insiders                               | Requires collusion                      | Your insiders                         |
+| Regulatory posture        | Licensed, often required for regulated funds | Technology vendor                       | You are the custodian                 |
+| Insurance                 | Typically included, with limits              | Sometimes, on vendor-held components    | None; self-insure                     |
+| Cost model                | Basis points on assets, plus minimums        | Per wallet, per signature, platform fee | Infrastructure only                   |
+| Vendor on critical path   | Yes                                          | Yes                                     | No                                    |
+| Policy engine             | Mature                                       | Mature                                  | Not provided; build it                |
+| Chain coverage            | Broad                                        | Broad                                   | Algorand                              |
+| Latency                   | Their API plus their controls                | Multi-round MPC protocol                | One Vault round trip                  |
+| Recovery                  | The custodian's problem                      | Vendor-assisted share recovery          | Your Vault backups, plus rekeying     |
+| Exit and lock-in          | High; assets sit with them                   | High; shares are not portable           | Low; Apache-2.0 and standard APIs     |
+| Time to first transaction | Weeks to months                              | Days                                    | Hours                                 |
+| Who is liable             | Largely the custodian                        | Shared, per contract                    | You                                   |
+
+### Choosing
+
+Choose a **regulated custodian** when regulation requires a qualified custodian, when you hold third-party assets at scale, or when the requirement from your board is that this must not be your risk.
+
+Choose **MPC SaaS** when you want cryptographic quorum and a mature policy engine without building either, need many chains, and accept a vendor on your signing path along with per-wallet pricing.
+
+Choose **Intermezzo** when the assets are yours or your users' under your own terms, when keys must stay inside your infrastructure, when you want to eliminate hot wallet key exfiltration without buying a custody platform, and when you have or will build the operational maturity to run a KMS and a policy layer.
+
+:::caution
+A single key in a KMS is not MPC. There is no cryptographic quorum, so a sufficiently privileged token or Vault operator can cause a signature to be produced. Compensate at other layers: approval workflows in the middleware, policy separation and audit alerting in Vault, and Algorand's own controls — [multisig accounts](/concepts/accounts/multisig) for genuine _m_-of-_n_ authorisation, [rekeying](/concepts/accounts/rekeying) for key rotation, and [asset-level freeze and clawback](/concepts/assets/asset-operations).
+:::
+
+:::tip
+These models compose. Using Intermezzo for high-volume operational accounts and a regulated custodian for treasury is a normal arrangement, and the usual hot, warm, and cold tiering applies here unchanged.
+:::
+
+---
+
+## Multi-cloud portability
+
+Portability is not a single property. Three layers of this system move at very different speeds, and it is worth separating them.
+
+### The application layer
+
+Intermezzo is a stateless NestJS container with no database, no cloud SDK, no managed queue, and no proprietary datastore. Its entire coupling to a given cloud is a handful of environment variables.
+
+| Variable                                                   | Couples to                                                    |
+| ---------------------------------------------------------- | ------------------------------------------------------------- |
+| `VAULT_BASE_URL`                                           | Where Vault lives                                             |
+| `VAULT_NAMESPACE`                                          | Vault Enterprise or HCP namespace, sent as a namespace header |
+| `VAULT_TRANSIT_USERS_PATH`, `VAULT_TRANSIT_MANAGERS_PATH`  | Where keys are mounted                                        |
+| `VAULT_ROLE_ID`, `VAULT_SECRET_ID`                         | AppRole credentials                                           |
+| `NODE_HTTP_SCHEME`, `NODE_HOST`, `NODE_PORT`, `NODE_TOKEN` | Which algod node to use                                       |
+
+Change the URLs and redeploy. This layer is genuinely portable and stays that way as long as cloud-specific types are kept out of the service classes.
+
+### The KMS layer
+
+This is the real fork in the road, and it is decided on the day you pick a KMS rather than on the day you migrate.
+
+Vault and OpenBao run self-hosted on any cloud, on-premises, or as HCP Vault. Moving cloud means standing up a cluster in the new one; the API your code calls is identical. AWS KMS, GCP Cloud KMS, and Azure Key Vault do not leave their respective clouds, so choosing one is choosing that cloud for as long as those keys exist — on top of the Ed25519 question above.
+
+:::note
+Even on Vault, note the open source and Enterprise line. Namespaces, disaster recovery and performance replication, HSM auto-unseal, and Managed Keys are Enterprise or HCP features. A portability plan that assumes replication needs the licence that provides it. OpenBao is the open source escape hatch if the BUSL licence is the constraint.
+:::
+
+### Key material
+
+Transit keys here are created non-exportable. There is no API that returns the private key, which is precisely the property the whole architecture rests on — and it means you cannot copy keys into a new cloud.
+
+Key portability therefore comes from three other mechanisms, in increasing order of disruption.
+
+| Mechanism                   | How it works                                                                                                                                                                                               | Disruption                  |
+| --------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------- |
+| **Vault-level replication** | Raft snapshots, or disaster recovery and performance replication on Enterprise, move keys inside Vault's own encrypted barrier to a cluster in the target cloud. Your application never sees key material. | None; addresses unchanged   |
+| **Rekeying**                | Provision a fresh key in the new KMS and rekey each account to that key's address. The account keeps its address, its assets, and its application state; only the authorised signing key changes.          | One transaction per account |
+| **New accounts**            | Create new accounts and move everything across.                                                                                                                                                            | High; addresses change      |
+
+The second option is the strategically important one. Rekeying makes the signing key a replaceable property of an account rather than its identity, which turns a KMS migration — or a key compromise incident — from a fund migration into a routine transaction.
+
+<LinkCard
+  title='Rekeying Accounts'
+  href='/concepts/accounts/rekeying'
+  description='How an Algorand account keeps a static public address while rotating the authorized spending key.'
+/>
+
+### Keeping it portable
+
+Four habits preserve this over time. Keep all KMS access behind the two interfaces described above, so no cloud SDK type reaches the wallet, DID, or credential modules. Keep vendor formats at the edge — the signature envelope is parsed in exactly one place, and everything downstream sees raw 64-byte signatures. Prefer configuration over code for topology, which the environment variables above already do. And note that the identity layer is portable by construction: `did:algo` documents live on Algorand rather than in any cloud, and credentials use OID4VCI, OID4VP, and SD-JWT VC, so moving cloud does not invalidate an issued credential or a published DID.
+
+---
+
+## Resources & References
+
+- **Repository:** [algorandfoundation/intermezzo](https://github.com/algorandfoundation/intermezzo) — source, setup instructions, and the development Vault init script.
+- **HashiCorp Vault Transit engine:** [developer.hashicorp.com/vault/docs/secrets/transit](https://developer.hashicorp.com/vault/docs/secrets/transit) — the sign, verify, and key-rotation API this project builds on.
+- **Vault AppRole auth:** [developer.hashicorp.com/vault/docs/auth/approle](https://developer.hashicorp.com/vault/docs/auth/approle) — machine authentication with a role id and secret id.
+- **Vault access policies:** [developer.hashicorp.com/vault/docs/concepts/policies](https://developer.hashicorp.com/vault/docs/concepts/policies) — the path-and-capability model behind the user and manager split.
+
+<CardGrid>
+  <LinkCard
+    title='Keys and Signing'
+    href='/concepts/accounts/keys-signing'
+    description='How Ed25519 keys become Algorand addresses, and the signing methods available.'
+  />
+  <LinkCard
+    title='Rekeying Accounts'
+    href='/concepts/accounts/rekeying'
+    description='Rotate the authorized signing key without changing the account address.'
+  />
+  <LinkCard
+    title='Multi-Signature Accounts'
+    href='/concepts/accounts/multisig'
+    description='Genuine m-of-n authorization enforced by the protocol.'
+  />
+  <LinkCard
+    title='Atomic Transaction Groups'
+    href='/concepts/transactions/atomic-txn-groups'
+    description='All-or-nothing execution for the groups Intermezzo builds and signs.'
+  />
+</CardGrid>
