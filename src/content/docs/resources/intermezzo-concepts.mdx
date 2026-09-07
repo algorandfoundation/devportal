@@ -370,7 +370,7 @@ Many cloud KMS products were designed around TLS and PKI, and expose RSA and NIS
 | Option                                             | Raw Ed25519 signing                   | Self-hostable | Notes                                                                                                                        |
 | -------------------------------------------------- | ------------------------------------- | ------------- | ---------------------------------------------------------------------------------------------------------------------------- |
 | **HashiCorp Vault** (Transit)                      | Native                                | Yes           | The current default.                                                                                                         |
-| **OpenBao**                                        | Native                                | Yes           | Linux Foundation fork of Vault, API-compatible. Often a URL change. The natural choice if Vault's BUSL licence is a blocker. |
+| **OpenBao**                                        | Native                                | Yes           | Linux Foundation fork of Vault, API-compatible. Often a URL change. The natural choice if Vault's BUSL license is a blocker. |
 | **AWS KMS**                                        | Historically not supported            | No            | Strong IAM, CloudTrail, and compliance story, but verify Ed25519 support before designing around it.                         |
 | **GCP Cloud KMS**                                  | Historically not supported            | No            | Same caveat.                                                                                                                 |
 | **Azure Key Vault / Managed HSM**                  | Historically not supported            | No            | Same caveat.                                                                                                                 |
@@ -382,7 +382,7 @@ Many cloud KMS products were designed around TLS and PKI, and expose RSA and NIS
 KMS capabilities change. Treat this table as a starting point for your own check against current provider documentation rather than a settled answer.
 :::
 
-If the KMS your organisation mandates cannot sign Ed25519 natively, there are four practical routes: run Vault or OpenBao inside that cloud for signing keys only, unsealed by the cloud's own KMS; put an HSM behind PKCS#11; write a plugin; or use [multisig](/concepts/accounts/multisig) and [rekeying](/concepts/accounts/rekeying) to combine a supported-curve control plane with an Ed25519 signer.
+If the KMS your organization mandates cannot sign Ed25519 natively, there are four practical routes: run Vault or OpenBao inside that cloud for signing keys only, unsealed by the cloud's own KMS; put an HSM behind PKCS#11; write a plugin; or use [multisig](/concepts/accounts/multisig) and [rekeying](/concepts/accounts/rekeying) to combine a supported-curve control plane with an Ed25519 signer.
 
 ### What a plugin must provide
 
@@ -398,7 +398,7 @@ So writing a plugin means implementing the first interface against your KMS SDK 
 
 Four of these five produce a signature that looks structurally valid and is rejected by the network, which makes them frustrating to debug. Test for them explicitly.
 
-1. **Pre-hashing.** Ed25519ph, or any "sign the hash of the message" behaviour, produces a valid signature over the wrong message. Algorand needs pure Ed25519 over the raw `TX`-prefixed bytes.
+1. **Pre-hashing.** Ed25519ph, or any "sign the hash of the message" behavior, produces a valid signature over the wrong message. Algorand needs pure Ed25519 over the raw `TX`-prefixed bytes.
 2. **Signature encoding.** ECDSA-oriented KMS products return a DER-wrapped pair, sometimes with a recovery byte appended. Algorand expects 64 raw bytes. Assert the length.
 3. **Public key encoding.** SPKI, DER, or PEM-wrapped public keys must be unwrapped to the raw 32 bytes before deriving an address. A wrong unwrap yields a plausible-looking address for an account that does not exist, and the failure shows up as an unfunded account rather than as a crypto error.
 4. **Extractability.** If the plugin's key can be exported, you have rebuilt a hot wallet with a longer call stack. Set keys non-extractable at creation and deny the configuration paths.
@@ -412,7 +412,7 @@ Four of these five produce a signature that looks structurally valid and is reje
 
 Where the software runs is not what determines custody. The operative question is: who is able to produce a signature?
 
-With Intermezzo, the enterprise can, by holding a Vault token authorised for the user key path. The end user cannot, because they have no key material and no path to any. That makes it custodial by definition. Self-hosting does not change the answer; it changes who the custodian is.
+With Intermezzo, the enterprise can, by holding a Vault token authorized for the user key path. The end user cannot, because they have no key material and no path to any. That makes it custodial by definition. Self-hosting does not change the answer; it changes who the custodian is.
 
 ### Managers and users
 
@@ -445,7 +445,7 @@ The result is a split that suits regulated consumer products well: the enterpris
 Four things are outside the scope of the repository and worth planning for before a production deployment.
 
 - **A transaction policy engine.** Spending limits, destination allowlists, and approval quorums do not exist here, and Vault will not supply them because it cannot read transactions.
-- **A compliance programme.** Qualified custodian status, insurance, and SOC 2 are properties of an organisation, not a repository.
+- **A compliance program.** Qualified custodian status, insurance, and SOC 2 are properties of an organization, not a repository.
 - **Key recovery.** There are no seed phrases and no social recovery. Recovery means your Vault's backup and disaster recovery story, which needs to exist before you need it.
 - **Security operations.** Sealing and unsealing, network policy, token hygiene, secret rotation, monitoring, and incident response are all yours.
 
@@ -489,7 +489,7 @@ Choose **MPC SaaS** when you want cryptographic quorum and a mature policy engin
 Choose **Intermezzo** when the assets are yours or your users' under your own terms, when keys must stay inside your infrastructure, when you want to eliminate hot wallet key exfiltration without buying a custody platform, and when you have or will build the operational maturity to run a KMS and a policy layer.
 
 :::caution
-A single key in a KMS is not MPC. There is no cryptographic quorum, so a sufficiently privileged token or Vault operator can cause a signature to be produced. Compensate at other layers: approval workflows in the middleware, policy separation and audit alerting in Vault, and Algorand's own controls — [multisig accounts](/concepts/accounts/multisig) for genuine _m_-of-_n_ authorisation, [rekeying](/concepts/accounts/rekeying) for key rotation, and [asset-level freeze and clawback](/concepts/assets/asset-operations).
+A single key in a KMS is not MPC. There is no cryptographic quorum, so a sufficiently privileged token or Vault operator can cause a signature to be produced. Compensate at other layers: approval workflows in the middleware, policy separation and audit alerting in Vault, and Algorand's own controls — [multisig accounts](/concepts/accounts/multisig) for genuine _m_-of-_n_ authorization, [rekeying](/concepts/accounts/rekeying) for key rotation, and [asset-level freeze and clawback](/concepts/assets/asset-operations).
 :::
 
 :::tip
@@ -523,7 +523,7 @@ This is the real fork in the road, and it is decided on the day you pick a KMS r
 Vault and OpenBao run self-hosted on any cloud, on-premises, or as HCP Vault. Moving cloud means standing up a cluster in the new one; the API your code calls is identical. AWS KMS, GCP Cloud KMS, and Azure Key Vault do not leave their respective clouds, so choosing one is choosing that cloud for as long as those keys exist — on top of the Ed25519 question above.
 
 :::note
-Even on Vault, note the open source and Enterprise line. Namespaces, disaster recovery and performance replication, HSM auto-unseal, and Managed Keys are Enterprise or HCP features. A portability plan that assumes replication needs the licence that provides it. OpenBao is the open source escape hatch if the BUSL licence is the constraint.
+Even on Vault, note the open source and Enterprise line. Namespaces, disaster recovery and performance replication, HSM auto-unseal, and Managed Keys are Enterprise or HCP features. A portability plan that assumes replication needs the license that provides it. OpenBao is the open source escape hatch if the BUSL license is the constraint.
 :::
 
 ### Key material
@@ -535,7 +535,7 @@ Key portability therefore comes from three other mechanisms, in increasing order
 | Mechanism                   | How it works                                                                                                                                                                                               | Disruption                  |
 | --------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------- |
 | **Vault-level replication** | Raft snapshots, or disaster recovery and performance replication on Enterprise, move keys inside Vault's own encrypted barrier to a cluster in the target cloud. Your application never sees key material. | None; addresses unchanged   |
-| **Rekeying**                | Provision a fresh key in the new KMS and rekey each account to that key's address. The account keeps its address, its assets, and its application state; only the authorised signing key changes.          | One transaction per account |
+| **Rekeying**                | Provision a fresh key in the new KMS and rekey each account to that key's address. The account keeps its address, its assets, and its application state; only the authorized signing key changes.          | One transaction per account |
 | **New accounts**            | Create new accounts and move everything across.                                                                                                                                                            | High; addresses change      |
 
 The second option is the strategically important one. Rekeying makes the signing key a replaceable property of an account rather than its identity, which turns a KMS migration — or a key compromise incident — from a fund migration into a routine transaction.
@@ -549,6 +549,28 @@ The second option is the strategically important one. Rekeying makes the signing
 ### Keeping it portable
 
 Four habits preserve this over time. Keep all KMS access behind the two interfaces described above, so no cloud SDK type reaches the wallet, DID, or credential modules. Keep vendor formats at the edge — the signature envelope is parsed in exactly one place, and everything downstream sees raw 64-byte signatures. Prefer configuration over code for topology, which the environment variables above already do. And note that the identity layer is portable by construction: `did:algo` documents live on Algorand rather than in any cloud, and credentials use OID4VCI, OID4VP, and SD-JWT VC, so moving cloud does not invalidate an issued credential or a published DID.
+
+---
+
+## Glossary
+
+| Term                 | Meaning                                                                                                                          |
+| -------------------- | -------------------------------------------------------------------------------------------------------------------------------- |
+| **AppRole**          | Vault auth method for machines: a `role_id` and `secret_id` exchanged for a short-lived token.                                   |
+| **Atomic group**     | Up to 16 Algorand transactions that all succeed or all fail together.                                                            |
+| **Clawback**         | An asset-level power allowing a designated address to move tokens from a holder without their signature.                         |
+| **Credo**            | TypeScript agent framework for verifiable credentials, used here for OID4VCI and OID4VP.                                         |
+| **`did:algo`**       | DID method whose document is stored on-chain in a per-user application.                                                          |
+| **`did:key`**        | Self-contained DID derived directly from a public key; the user's wallet holds one and it never leaves the device.               |
+| **Ed25519**          | The signature scheme Algorand uses: 32-byte public keys, 64-byte signatures.                                                     |
+| **KMS**              | Key Management Service — stores and uses keys without ever releasing them.                                                       |
+| **MPC / TSS**        | Multi-Party Computation / Threshold Signature Scheme — a signature produced by a quorum of shares, with the key never assembled. |
+| **OID4VCI / OID4VP** | OpenID for Verifiable Credential Issuance and Presentation — the credential exchange standards.                                  |
+| **Rekey**            | Algorand operation that changes the key authorized to sign for an account while keeping its address.                             |
+| **SD-JWT VC**        | Selective-disclosure JWT verifiable credential; the holder reveals only the claims they choose.                                  |
+| **Seal / unseal**    | Vault starts sealed and cannot decrypt its storage until enough unseal key shares are supplied.                                  |
+| **Transit engine**   | Vault's cryptography-as-a-service backend: sign and encrypt without exposing the key.                                            |
+| **`TX` prefix**      | The two ASCII bytes Algorand prepends to a transaction before signing, for domain separation.                                    |
 
 ---
 
