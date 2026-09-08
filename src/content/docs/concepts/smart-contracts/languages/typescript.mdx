@@ -10,6 +10,10 @@ Algorand TypeScript is a partial implementation of the TypeScript programming la
 
 It maintains the syntax and semantics of TypeScript, so a developer who knows TypeScript can make safe assumptions about the behavior of the compiled code when running on the AVM. Algorand TypeScript is also executable TypeScript that can be run and debugged on a Node.js virtual machine with transpilation to EcmaScript and run from automated tests.
 
+:::caution[Use Algorand TypeScript, not TEALScript]
+Algorand TypeScript is the supported way to write Algorand smart contracts in TypeScript. TEALScript is its predecessor and is not recommended for new projects: `algokit init -t typescript` scaffolds Algorand TypeScript, and existing TEALScript contracts should be moved across using the [TEALScript to Algorand TypeScript migration guide](/docs/algorand-typescript/typescript/latest/migration-guides#migrating-tealscript-to-algorand-typescript-10).
+:::
+
 # Benefits of using Algorand Typescript
 
 1. Rapid development: Typescript's concise syntax allows for quick prototyping and iteration of smart contract ideas.
