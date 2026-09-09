@@ -599,6 +599,14 @@ export default defineConfig({
             { slug: 'resources/liquid-auth' },
             { slug: 'resources/bridging' },
             { slug: 'resources/x402-on-algorand' },
+            {
+              label: 'Intermezzo',
+              collapsed: true,
+              items: [
+                { slug: 'resources/intermezzo-concepts' },
+                { slug: 'resources/intermezzo-api-reference' },
+              ],
+            },
             { slug: 'resources/algo-x-evm' },
             {
               label: 'Algorand Specifications',
