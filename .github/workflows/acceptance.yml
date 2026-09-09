@@ -79,7 +79,7 @@ jobs:
           cache: "pnpm"
 
       - name: Install D2
-        run: curl -fsSL https://d2lang.com/install.sh | sh -s -- --tala
+        run: curl -fsSL https://d2lang.com/install.sh | sh
 
       - name: Setup Python for importing docs
         uses: actions/setup-python@v6
