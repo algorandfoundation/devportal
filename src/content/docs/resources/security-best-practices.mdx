@@ -3780,6 +3780,9 @@ If only the owner can call the method that reads the random value, the owner can
 
 The real Randomness Beacon isn't available on LocalNet. Use a beacon stub that implements the same `get`/`must_get` interface with a controllable `set_next` method, so you can test your app's randomness logic with deterministic values.
 
+<Tabs syncKey='lang'>
+  <TabItem label='TypeScript' icon='seti:typescript'>
+
 ```typescript
 import { bytes, Bytes, Contract, GlobalState, arc4 } from '@algorandfoundation/algorand-typescript';
 
@@ -3801,6 +3804,35 @@ export class BeaconStub extends Contract {
   }
 }
 ```
+
+  </TabItem>
+  <TabItem label='Python' icon='seti:python'>
+
+```python
+import typing
+
+from algopy import ARC4Contract, Bytes, arc4
+
+# TEST ONLY: deterministic stand-in for the beacon, never deploy to TestNet or MainNet
+class BeaconStub(ARC4Contract):
+    def __init__(self) -> None:
+        self.next = Bytes.from_hex("0000000000000000000000000000000000000000000000000000000000000000")
+
+    @arc4.abimethod
+    def set_next(self, next_value: arc4.StaticArray[arc4.Byte, typing.Literal[32]]) -> None:
+        self.next = next_value.bytes
+
+    @arc4.abimethod
+    def must_get(self, round: arc4.UInt64, user_data: arc4.DynamicBytes) -> arc4.DynamicBytes:
+        return arc4.DynamicBytes(self.next)
+
+    @arc4.abimethod
+    def get(self, round: arc4.UInt64, user_data: arc4.DynamicBytes) -> arc4.DynamicBytes:
+        return arc4.DynamicBytes(self.next)
+```
+
+  </TabItem>
+</Tabs>
 
 ### Key Takeaways
 
