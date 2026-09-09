@@ -75,7 +75,7 @@ for (const lib of libraries) {
     <library-picker class='library-picker'>
       <button
         class='picker-btn'
-        aria-expanded='false'
+        aria-expanded='true'
         aria-controls='library-picker-panel'
       >
         <svg
@@ -116,7 +116,7 @@ for (const lib of libraries) {
         </svg>
       </button>
 
-      <div class='picker-panel' id='library-picker-panel' aria-hidden='true'>
+      <div class='picker-panel' id='library-picker-panel' aria-hidden='false'>
         <ul class='picker-list' role='list'>
           {categoryOrder.map(cat =>
             categories[cat]?.map(lib => {

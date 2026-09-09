@@ -205,7 +205,7 @@ export default defineConfig({
           tag: 'meta',
           attrs: {
             property: 'og:image',
-            content: '/devportal-og.png',
+            content: 'https://dev.algorand.co/devportal-og.png',
           },
         },
         {
@@ -222,9 +222,17 @@ export default defineConfig({
             content: '1080',
           },
         },
+        {
+          tag: 'meta',
+          attrs: {
+            name: 'twitter:image',
+            content: 'https://dev.algorand.co/devportal-og.png',
+          },
+        },
       ],
       components: {
         Footer: './src/components/Footer.astro',
+        Head: './src/components/Head.astro',
         Header: './src/components/Header.astro',
         Hero: './src/components/Hero.astro',
         Banner: './src/components/Banner.astro',
@@ -411,37 +419,15 @@ export default defineConfig({
             {
               label: 'AlgoKit Utils',
               collapsed: true,
-              items: [{ slug: 'algokit/utils/algokit-clients' }],
-            },
-            {
-              label: 'Smart Contract Languages',
-              collapsed: true,
               items: [
+                { slug: 'algokit/utils/algokit-clients' },
                 {
+                  slug: 'docs/algorand-python/python/latest/guides/overview',
                   label: 'Algorand Python',
-                  items: [
-                    { slug: 'algokit/languages/python/overview' },
-                    { slug: 'algokit/languages/python/lg-migration-4-5' },
-                    { slug: 'algokit/languages/python/language-guide' },
-                    { slug: 'algokit/languages/python/principles' },
-                    { slug: 'algokit/languages/python/lg-structure' },
-                    { slug: 'algokit/languages/python/lg-types' },
-                    { slug: 'algokit/languages/python/lg-control' },
-                    { slug: 'algokit/languages/python/lg-modules' },
-                    { slug: 'algokit/languages/python/lg-builtins' },
-                    { slug: 'algokit/languages/python/lg-errors' },
-                    { slug: 'algokit/languages/python/lg-data-structures' },
-                    { slug: 'algokit/languages/python/lg-storage' },
-                    { slug: 'algokit/languages/python/lg-logs' },
-                    { slug: 'algokit/languages/python/lg-transactions' },
-                    { slug: 'algokit/languages/python/lg-ops' },
-                    { slug: 'algokit/languages/python/lg-opcode-budget' },
-                    { slug: 'algokit/languages/python/lg-arc4' },
-                    { slug: 'algokit/languages/python/lg-arc28' },
-                    { slug: 'algokit/languages/python/lg-calling-apps' },
-                    { slug: 'algokit/languages/python/overview' },
-                    { slug: 'algokit/languages/python/lg-unsupported-python-features' },
-                  ],
+                },
+                {
+                  slug: 'docs/algorand-typescript/typescript/latest',
+                  label: 'Algorand TypeScript',
                 },
               ],
             },
