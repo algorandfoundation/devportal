@@ -607,11 +607,7 @@ export default defineConfig({
               attrs: { target: '_blank', rel: 'noopener' },
             },
             { slug: 'resources/p2p-func' },
-            {
-              label: 'SDK',
-              collapsed: true,
-              items: [{ slug: 'resources/sdk/sdk-list' }],
-            },
+            { slug: 'resources/sdk/sdk-list' },
           ],
         },
         // Library sidebars — consumed by LibraryDocsSidebar, hidden from main sidebar
