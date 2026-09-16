@@ -657,6 +657,30 @@ Some of these have immediate data in the byte or bytes after the opcode.
 | 64    | ApprovalProgramPages   | []byte  | v7  | Approval Program as an array of pages                                                       |
 | 66    | ClearStateProgramPages | []byte  | v7  | ClearState Program as an array of pages                                                     |
 
+The index given to `txna` (and to `gtxna`, `txnas`, and the `itxn`
+equivalents) is not the plain position of an entry in the array the
+transaction carries. For `Accounts` and `Applications`, index 0 is
+reserved: it evaluates to that transaction's `Sender` and to its
+`ApplicationID` respectively, so the first entry the transaction
+actually carries is reached at index 1. These are fields of the
+transaction being inspected, which for `gtxna` and the `itxn` forms is
+not the executing one; on an application-create call `ApplicationID`
+is 0, and so is `Applications 0`. `Assets` has no reserved index, so
+the first entry of `txn.ForeignAssets` is reached at index 0.
+`ApplicationArgs`, `Logs`, `ApprovalProgramPages` and
+`ClearStateProgramPages` are plain 0-based arrays.
+
+The reservation belongs to the opcode, not to the array. See
+[Operations](#operations), which states the same rule for the opcodes
+that take an account or application reference. The `apat` and `apfa`
+arrays encoded in the transaction hold exactly the accounts and
+applications the caller listed; neither the sender nor the called
+application is an entry in them. `NumAccounts` and `NumApplications`
+report the number of entries the transaction carries and do not count
+the reserved index, so the largest valid index for `Accounts` and
+`Applications` is `NumAccounts` and `NumApplications` rather than one
+less.
+
 Additional details in the [opcodes document](/reference/algorand-teal/opcodes#txn) on the `txn` op.
 
 **Global Fields**
