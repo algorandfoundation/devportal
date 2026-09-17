@@ -34,7 +34,8 @@ Encoding for the data types is specified [here](/arc-standards/arc-0004#encoding
 
 ### Reference Types
 
-Reference types may be specified in the method signature referring to some transaction parameters that must be passed. The value encoded is a uint8 reference to the index of element in the relevant array (i.e. for account, the index in the foreign accounts array).
+Reference types may be specified in the method signature referring to some transaction parameters that must be passed. The value encoded is a uint8 index at which the AVM reaches the resource, not the address or the ID itself. Those indexes are not plain array offsets: index 0 is reserved for the transaction sender (`account`) and for the called application (`application`), so the first entry of the Accounts array and the first entry of the Foreign Apps array are both index 1. `asset` has no reserved index, so the first entry of the Foreign Assets array is index 0. The arrays themselves hold only what the caller listed; the sender and the called application are not entries in them, and ARC-4's description of an "implicit value at index 0" refers to how the opcodes read an index, not to the array's contents. See [How References Are Indexed](/concepts/smart-contracts/resource-usage#how-references-are-indexed).
+
 These types are:
 
 - `account` - represents an Algorand account, stored in the Accounts array
