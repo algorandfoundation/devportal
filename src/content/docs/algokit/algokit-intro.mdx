@@ -383,6 +383,21 @@ Some useful commands for updating or removing AlgoKit in the future.
 - To update AlgoKit: `brew upgrade algokit`
 - To remove AlgoKit: `brew uninstall algokit`
 
+Both short names depend on the `algorandfoundation/tap` tap being present and trusted. Since
+[Homebrew 6.0.0](https://brew.sh/2026/06/11/homebrew-6.0.0/), non-official taps must be explicitly trusted
+before Homebrew will load their code. The fully qualified install command above adds the tap and trusts the
+`algokit` cask together, so there is no separate trust step.
+
+If either command reports an untrusted tap or no such formula or cask, re-run that same install command to
+restore the tap and its trust:
+
+```shell
+brew install algorandfoundation/tap/algokit
+```
+
+Running `brew trust --cask algorandfoundation/tap/algokit` alone will not fix it, because trusting a cask
+does not add the tap. See [Tap Trust](https://docs.brew.sh/Tap-Trust) for the full trust model.
+
 ### Install AlgoKit on Linux
 
 :::note
