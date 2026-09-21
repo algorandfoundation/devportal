@@ -943,7 +943,7 @@ Application NoOp Transactions are the most common type of application calls. The
     "apas": [16],
     "apat": ["4RLXQGPZVVRSXQF4VKZ74I6BCUD7TUVROOUBCVRKY37LQSHXORZV4KCAP4"],
     "apfa": [10],
-    "apbx": [{ "i": 51, "n": "Y29vbF9ib3g=" }],
+    "apbx": [{ "i": 0, "n": "Y29vbF9ib3g=" }],
     "apid": 51,
     "fee": 1000,
     "fv": 13376,
@@ -963,7 +963,7 @@ This transaction contains the following key components:
 - The `"apat"` field references an external account
 - The `"apas"` field references ASA ID 16
 - The `"apfa"` field references application ID 10
-- The `"apbx"` field references a box named "cool_box" owned by the application
+- The `"apbx"` field references a box named "cool_box" owned by the called application. A box reference's `"i"` field is an index, not an application ID: `0` names the called application and `n` names the nth entry of `"apfa"`
 - The OnComplete method defaults to NoOp (0), so the `"apan"` field is omitted
 
 To make a NoOp call to an application in your code, you can use the following examples:

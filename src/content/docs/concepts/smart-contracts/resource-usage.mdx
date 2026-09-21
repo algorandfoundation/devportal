@@ -28,7 +28,7 @@ There are four reference arrays:
 Including necessary resources in the appropriate arrays enables the smart contract to access the necessary data during execution, such as reading an account’s Algo balance or examining the immutable properties of an ASA.
 This page explains how data access is managed by a smart contract in version 9 or later of the Algorand Virtual Machine (AVM). For details on earlier AVM versions, refer to the [TEAL specification](https://github.com/algorandfoundation/specs/blob/master/dev/TEAL.md#resource-availability)
 
-By default, the reference arrays are empty, with the exception of the accounts and applications arrays. The Accounts array contains the transaction sender's address, and the Applications array contains the called smart contract ID.
+By default, the reference arrays are empty, and for a top-level application call they can only be populated prior to transaction submission. A program can add accounts, assets and applications to an [inner transaction](#inner-transaction-resource-availability) it builds during execution, but only ones already available to it; box references cannot be set on an inner transaction at all. The transaction sender and the called smart contract are always available to the program without being listed, but they are not entries in any array. Instead, the opcodes that expect an account or an application reserve index 0 for them.
 
 ### Types of Resources to Make Available
 
@@ -50,10 +50,28 @@ Let's say contract A sends an inner transaction that calls a method in contract 
 
 There are certain limitations and requirements you need to consider when providing references in the reference arrays:
 
-- The four reference arrays are limited to a combined total of eight values per application transaction. This limit excludes the default references to the transaction sender’s address and the called smart contract ID.
+- The four reference arrays are limited to a combined total of eight values per application transaction. The transaction sender and the called smart contract do not count against this limit, because they are available without being listed.
 - The accounts array can contain no more than four accounts.
 - The values passed into the reference arrays can change per application transaction.
 - When accessing one of the sublists of items, the application transaction must include both the top-level item and the nested list item within the same call. For example, to read an ASA balance for a specific account, the account and the asset must be present in the respective accounts and asset arrays for the given transaction.
+
+### How References Are Indexed
+
+A program reaches a listed resource by its index:
+
+| Index | As an account reference   | As an application reference   | As an asset reference   |
+| ----- | ------------------------- | ----------------------------- | ----------------------- |
+| 0     | the transaction sender    | the called smart contract     | the first listed asset  |
+| 1     | the first listed account  | the first listed application  | the second listed asset |
+| 2     | the second listed account | the second listed application | the third listed asset  |
+
+Account and application references are shifted by one because index 0 is reserved. Assets are not shifted: an asset's index is its plain position in the list, counting from 0.
+
+The accounts and applications arrays are encoded exactly as you supply them, and neither the sender nor the called smart contract appears in them. `txn NumAccounts` and `txn NumApplications` report how many entries the transaction carries and do not count the reserved index.
+
+The same convention applies to a box reference, whose app index is 0 for the called smart contract and n for the nth listed application. The [Access List](#access-list-a-mutually-exclusive-alternative-to-reference-arrays) does not follow the table above: it numbers its own entries from 1 throughout, assets included.
+
+Since AVM v4, the opcodes that take an account, asset, or application also accept the value itself (i.e. an address or an ID) instead of an index; the resource must still be available. Indexes remain how ARC-4 [reference type](/concepts/smart-contracts/abi#reference-types) arguments are encoded. See [Operations](/concepts/smart-contracts/avm#operations) for the AVM-level rules.
 
 ### Reason for limited Access to Resources
 

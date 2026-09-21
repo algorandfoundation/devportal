@@ -167,6 +167,24 @@ Includes all fields in [Header](#common-fields-header-and-type) and `"type"` is 
 | <a id="rejectversion">RejectVersion</a> | _optional_ | uint64                                | `"aprv"` | If the application being called has a version equal to or greater than the provided reject version, the transaction will be rejected.                                                                                                                                                                                                                                                                                                                                                                                                               |
 | <a id="accesslist">AccessList</a>       | _optional_ | <a href='#access-list'>[]Resource</a> | `"al"`   | An array of resources that the application or group can use. Each resource will be one of two types; "simple" or "complex". The Access List and existing Foreign Reference arrays (apat, apfa, apas, apbx) are mutually exclusive and cannot be used together on the same transaction.                                                                                                                                                                                                                                                              |
 
+### Referencing Resources by Index
+
+The `apat`, `apfa`, and `apas` arrays are encoded exactly as supplied: they hold only the accounts, applications, and assets the caller listed. The [sender](#sender) is not an entry in `apat`, and the called application is not an entry in `apfa`; both are available to the program without being listed.
+
+A program reaches a listed resource by index, and the opcodes that expect an account or an application reserve index 0 for the sender and for the called application:
+
+| Index | As an account reference | As an application reference | As an asset reference |
+| ----- | ----------------------- | --------------------------- | --------------------- |
+| `0`   | the transaction sender  | the called application      | `apas[0]`             |
+| `1`   | `apat[0]`               | `apfa[0]`                   | `apas[1]`             |
+| `2`   | `apat[1]`               | `apfa[1]`                   | `apas[2]`             |
+
+Accounts and applications are shifted by one because index 0 is reserved. Assets are not shifted: an asset's index is its plain position in `apas`.
+
+The reserved index belongs to the opcode, not to the array: `txn NumAccounts` and `txn NumApplications` report the encoded array lengths without counting it.
+
+The same convention applies to the `"i"` field of a box reference in `apbx`, where `0` names the called application and `n` names `apfa[n-1]`. The Access List (`al`) is numbered separately: its entries are addressed from `1` throughout, assets included. See [Resource Usage](/concepts/smart-contracts/resource-usage#how-references-are-indexed).
+
 ### Size Changes on Update
 
 An application call whose `OnComplete` is `UpdateApplication` may carry a non-zero `ExtraProgramPages`, `GlobalStateSchema`, or both, changing the extra program pages allocated to the application and the maximum number of global state entries it may store. On any other call to an existing application, both fields must be zero; at creation, they are how the initial allocations are set. `LocalStateSchema` may only be set at creation — a non-zero value on any later call fails with `inappropriate non-zero tx.LocalStateSchema`.
