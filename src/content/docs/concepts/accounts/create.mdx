@@ -2,6 +2,9 @@
 title: Creating an account
 sidebar:
   label: Creating Accounts
+tableOfContents:
+  minHeadingLevel: 2
+  maxHeadingLevel: 4
 ---
 
 import { Code } from '@astrojs/starlight/components';
@@ -110,7 +113,7 @@ Pera Wallet is a popular non-custodial wallet for the Algorand blockchain.
 
 />
 
-#### Vault Wallet
+## Vault Wallet
 
 Hashicorp Vault implementation can also be used for managing Algorand standalone accounts securely. By leveraging Vault, you can store private keys and 25-word mnemonics securely, ensuring sensitive data is protected from unauthorized access. This implementation provides a streamlined way to create and manage standalone accounts while maintaining best practices for key management.
 
@@ -286,7 +289,7 @@ An offline wallet may not accurately reflect account balances, but the state for
 For compatibility with other developer tools, `goal` provides functions to import and export accounts into kmd wallets, however, keep in mind that an imported account can not be recovered/derived from the wallet-level mnemonic. You must always keep track of the account-level mnemonics that you import into kmd wallets.
 :::
 
-#### HD Wallets
+## HD Wallets
 
 Algorand's Hierarchical Deterministic (HD) wallet implementation enables the creation of multiple accounts from a single master seed. API implementations are available in TypeScript, Kotlin, Swift, Python, and Rust, providing a consistent and efficient solution for managing multiple accounts with a single mnemonic.
 
