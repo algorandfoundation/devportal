@@ -62,6 +62,94 @@ Two subtleties are worth understanding:
 - **The canonical salt is a tooling convention, not a consensus rule.** The protocol verifies a `pqsig` for _any_ salt value, so a single Falcon key pair can control up to 256 distinct addresses. Algorand tooling always uses the lowest salt that produces an off-curve address (the _canonical salt_), and you should too, but do not build systems that assume one public key maps to only one address.
 - **The off-curve check happens at the node's REST boundary, not in consensus.** When you submit a transaction, algod rejects post-quantum addresses that are on-curve as a safety measure. This check can be bypassed with the `skip-pq-address-check` query parameter on the transaction submission endpoints. Consensus itself accepts any salt.
 
+## Hash-Derived Addresses
+
+Most Algorand addresses are a public key: the 58-character string encodes a 32-byte Ed25519 key directly. However, application accounts, logic signature contract accounts, multisig accounts, and post-quantum accounts all derive their address by hashing something else, such as an application ID, a compiled program, a set of signer keys, or a Falcon public key respectively.
+
+A hash output is just 32 bytes, and **about half of all 32-byte values happen to decode as a valid point on the Ed25519 curve**, purely by chance. When a hash-derived address lands on the curve, those same bytes can also be read as an Ed25519 public key, and the reasoning from [The Salt Byte](#the-salt-byte) applies again: a quantum attacker who recovered the matching private key could authorize transactions from that address with an ordinary `sig`, bypassing whatever was supposed to control it, whether that is a smart contract, a TEAL program, or a signing threshold.
+
+An address that is **not** a curve point is called **post-quantum (PQ) compliant**, meaning no Ed25519 key pair can ever claim it.
+
+:::note
+This property is not new in the v42 upgrade. It has held for application and contract accounts for as long as they have existed. What v42 adds is a name for the property, a tool to test it, and an automatic fix for some of these address types.
+:::
+
+| Address type            | Derived by hashing              | PQ compliant by construction?           |
+| ----------------------- | ------------------------------- | --------------------------------------- |
+| Post-quantum account    | scheme, salt, Falcon public key | **Yes** — the salt is searched          |
+| LogicSig contract       | the compiled program            | **Yes** for TEAL v13+ contract accounts |
+| Multisig account        | version, threshold, signer keys | No                                      |
+| **Application account** | **the application ID**          | **No, and nothing checks it for you**   |
+
+### Application Accounts
+
+Every application has an account, and its address is derived from the application ID:
+
+```txt showLineNumbers=false frame=none
+address = SHA512-256("appID" || application ID)
+```
+
+The application ID is assigned by the network at creation time, from a global transaction counter. You cannot choose it, predict it reliably, or search for a favorable one, and there is no way for a program to test its own address and abort. About half of all applications therefore have an application address that is a point on the Ed25519 curve.
+
+Unlike post-quantum addresses and TEAL v13+ contract accounts, **nothing warns you about this**. There is no consensus rule and no check at the node's REST boundary that inspects an application address. An application whose address is on-curve deploys, funds, and operates exactly like one whose address is not.
+
+The exposure is not limited to the application's balance. An address that is a curve point is one whose signing rights could be forged under a quantum attack, so anything the application address is trusted to do could be done by someone else: spending its Algos and assets, and exercising any asset role, allowlist membership, or authorized-sender check that names it.
+
+**This is not an imminent threat.** Forging those rights requires a large-scale quantum computer, and none is known to exist. It is worth knowing about now because an application address is public from the moment of deployment, and an application deployed today may still hold value and authority when that picture changes.
+
+#### Checking an Application Address
+
+`algokey pq check-address` tests any Algorand address, not only post-quantum ones:
+
+```shell showLineNumbers=false frame=none
+$ algokey pq check-address \
+    EGGRNA45S7W3FCDQOEX7H64KCECFHIBWO5MB6B724NVPFQNOFPQQLDF3RY
+address EGGRNA45S7W3FCDQOEX7H64KCECFHIBWO5MB6B724NVPFQNOFPQQLDF3RY is PQ
+compliant
+```
+
+Pass your application's address to see whether it is PQ compliant.
+
+#### What to Do About It
+
+**For new applications**, treat the check as a deployment step. Deploy, check the resulting application address, and if it is not PQ compliant, delete the application and deploy again. Each attempt is an independent coin flip, so a favorable address usually arrives within a few tries. This depends on the application being deletable, so decide that before you deploy, not after. An application can only be deleted if its approval program approves a `DeleteApplication` call. If it rejects delete but permits update, you can first update it to a program that allows deletion and then delete it. An application whose program rejects both can never be deleted by anyone, including its creator.
+
+:::caution
+Deleting an application does not return the funds in its account. If the application account holds Algos or assets, move them out first, and remember that minimum balance locked by boxes is not recoverable after deletion.
+:::
+
+**For applications already deployed, the recommendation is to wait.** More robust handling of this case may be addressed at the protocol level, and redeploying in the meantime is expensive: the application ID changes, which breaks frontends, published app specifications, other contracts that reference the ID, and indexer history, and every opted-in account has to opt in again. The exception is an application that is already deletable and whose owners accept those breaking changes, for which deleting and redeploying until the address is PQ compliant is available today. Checking your application addresses is worthwhile either way, so that you know where you stand.
+
+**Rekeying is not a substitute.** Rekeying an application account to a post-quantum address does block the forged-signature attack, but it also stops the application spending from its own account, because an inner transaction is authorized by checking that its sender's authorized address is the application address. This applies to inner transactions only: the holder of the new authorized address can still move the account's Algos and assets with ordinary signed transactions, and only that holder can rekey the account back. Control is transferred rather than removed, and for a live application that decommissions the contract's account rather than protecting it.
+
+### LogicSig Contract Accounts
+
+A logic signature contract account derives its address from the compiled program:
+
+```txt showLineNumbers=false frame=none
+address = SHA512-256("Program" || program)
+```
+
+Unlike an application ID, a program has room in it to change. Since **TEAL v13**, the assembler takes advantage of this: when a stateless program would hash to an on-curve address, it automatically appends a salt value to the program's integer constant block and searches for one that produces a PQ compliant address. Compiling a contract account at v13 or later gives you a PQ compliant address without doing anything. As a second layer, algod refuses to broadcast a transaction spending from an on-curve TEAL v13+ contract account.
+
+Three cases fall outside that protection:
+
+- **Programs compiled at TEAL v12 or earlier.** Neither the automatic salt nor the node's check applies. Recompiling an existing contract account at v13+ produces a PQ compliant address, but it is a _different_ address, so it means moving funds.
+- **Delegated logic signatures.** The node's check covers contract accounts only. A delegated program is authorized by the delegating account's signature, so the relevant address is the delegator's, not the program hash.
+- **`#pragma autosalt false`.** This opts out of the automatic salt. The assembler warns, but the program still compiles.
+
+### Multisig Accounts
+
+A multisig address is derived from the signer set:
+
+```txt showLineNumbers=false frame=none
+address = SHA512-256("MultisigAddr" || version || threshold || signer keys)
+```
+
+Nothing searches for a PQ compliant result, so about half of multisig addresses are on-curve. The exposure is the same, and the consequence is specific: **nothing on-chain records that an account is a multisig.** The threshold and the signer set exist only inside the `msig` blob that a spender presents. A transaction carrying an ordinary `sig` from the address is authorized by that address alone, so an attacker who recovered a private key for an on-curve multisig address would bypass the threshold entirely. It would never be consulted.
+
+Multisig accounts can be rekeyed to a post-quantum address generated with the canonical salt, as Algorand tooling does by default, which protects the funds. The canonical salt matters here: the protocol accepts a post-quantum address built with any salt, so rekeying to one that is itself on-curve would leave the account exposed. What that does not preserve is the multisig itself: there is no post-quantum native multisig, so the account ends up controlled by a single Falcon key. See [Limitations](#limitations).
+
 ## Keys and the Master Mnemonic
 
 Generating a post-quantum account starts from 256 bits of entropy, represented as a familiar 25-word mnemonic. The scheme-specific seed is derived with domain separation:

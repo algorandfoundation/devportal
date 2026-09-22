@@ -39,6 +39,8 @@ Some important characteristics to understand:
 - You must [send Algos](/concepts/accounts/funding) to the multi-signature address to initialize its state on the ledger.
 - Rekeying an account whose address is part of a multisig does NOT affect what key needs to sign for it. The key for account `A` will always need to sign for address `A` in multisig `[A, B, C]`, even if account `A` is rekeyed to `D`. However, the multisig account could be rekeyed to `[D, B, C]` if desired.
 
+Because a multisig address is a hash of the version, threshold, and ordered signer keys rather than a public key, roughly half of all multisig addresses are also valid points on the Ed25519 curve. An address that is a curve point is one whose signing rights could be forged under a quantum attack, and since nothing on-chain records that an account is a multisig, that would bypass the threshold entirely: the signer set is never consulted. Addresses that are not curve points are **post-quantum (PQ) compliant**. This is not an imminent threat, and no tooling currently checks multisig addresses for it. See [Hash-Derived Addresses](/concepts/accounts/post-quantum#multisig-accounts).
+
 ---
 
 ## Benefits & Implications
