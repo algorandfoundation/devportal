@@ -64,7 +64,7 @@ Two subtleties are worth understanding:
 
 ## Hash-Derived Addresses
 
-Most Algorand addresses are a public key: the 58-character string encodes a 32-byte Ed25519 key directly. However, application accounts, logic signature contract accounts, multisig accounts, and post-quantum accounts all derive their address by hashing something else, such as an application ID, a compiled program, a set of signer keys, or a Falcon public key respectively.
+Most Algorand addresses encode an Ed25519 public key: the 58-character string is the 32-byte key plus a 4-byte checksum. However, application accounts, logic signature contract accounts, multisig accounts, and post-quantum accounts all derive their address by hashing something else, such as an application ID, a compiled program, a set of signer keys, or a Falcon public key respectively.
 
 A hash output is just 32 bytes, and **about half of all 32-byte values happen to decode as a valid point on the Ed25519 curve**, purely by chance. When a hash-derived address lands on the curve, those same bytes can also be read as an Ed25519 public key, and the reasoning from [The Salt Byte](#the-salt-byte) applies again: a quantum attacker who recovered the matching private key could authorize transactions from that address with an ordinary `sig`, bypassing whatever was supposed to control it, whether that is a smart contract, a TEAL program, or a signing threshold.
 
