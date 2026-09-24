@@ -467,6 +467,11 @@ export default defineConfig({
               ],
             },
             {
+              label: 'Deployment',
+              collapsed: true,
+              items: [{ slug: 'algokit/deployment' }],
+            },
+            {
               label: 'AVM Debugger',
               collapsed: true,
               items: [{ slug: 'algokit/avm-debugger' }],
@@ -601,6 +606,7 @@ export default defineConfig({
             { slug: 'resources/bridging' },
             { slug: 'resources/x402-on-algorand' },
             { slug: 'resources/algo-x-evm' },
+            { slug: 'resources/nodely' },
             {
               label: 'Algorand Specifications',
               link: 'https://specs.algorand.co',
