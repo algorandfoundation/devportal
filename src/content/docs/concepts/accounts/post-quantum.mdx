@@ -104,8 +104,7 @@ The exposure is not limited to the application's balance. An address that is a c
 ```shell showLineNumbers=false frame=none
 $ algokey pq check-address \
     EGGRNA45S7W3FCDQOEX7H64KCECFHIBWO5MB6B724NVPFQNOFPQQLDF3RY
-address EGGRNA45S7W3FCDQOEX7H64KCECFHIBWO5MB6B724NVPFQNOFPQQLDF3RY is PQ
-compliant
+address EGGRNA45S7W3FCDQOEX7H64KCECFHIBWO5MB6B724NVPFQNOFPQQLDF3RY is PQ compliant
 ```
 
 Pass your application's address to see whether it is PQ compliant.
@@ -130,7 +129,7 @@ A logic signature contract account derives its address from the compiled program
 address = SHA512-256("Program" || program)
 ```
 
-Unlike an application ID, a program has room in it to change. Since **TEAL v13**, the assembler takes advantage of this: when a stateless program would hash to an on-curve address, it automatically appends a salt value to the program's integer constant block and searches for one that produces a PQ compliant address. Compiling a contract account at v13 or later gives you a PQ compliant address without doing anything. As a second layer, algod refuses to broadcast a transaction spending from an on-curve TEAL v13+ contract account.
+Unlike an application ID, a program has room in it to change. Since **TEAL v13**, the assembler takes advantage of this: when a stateless program would hash to an on-curve address, it automatically appends a salt value to the program's integer constant block and searches for one that produces a PQ compliant address. Compiling a contract account at v13 or later gives you a PQ compliant address without doing anything. As a second layer, algod rejects a transaction spending from an on-curve TEAL v13+ contract account when it is submitted. This is the same node-level safeguard described under [The Salt Byte](#the-salt-byte): it applies at the REST boundary rather than in consensus, and the same `skip-pq-address-check` parameter bypasses it.
 
 Three cases fall outside that protection:
 
