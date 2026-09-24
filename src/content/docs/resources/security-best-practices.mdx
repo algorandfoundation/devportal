@@ -3945,8 +3945,23 @@ For key management this means:
 - **Migration is forward-looking, not urgent.** No quantum computer that threatens Ed25519 is known to exist, and after rekeying, every transaction from the account must be Falcon-signed — with a 3,000 microALGO minimum fee instead of 1,000, and tooling support still maturing. Plan the path now; execute it when the threat is credible and your tooling supports it.
 - **Multisig remains Ed25519-only.** There is no post-quantum native multisig; threshold-style control of a post-quantum account is achieved with logic signatures instead. Factor this in before assuming your creator multisig can migrate as-is.
 - **A rekey does not survive a close-out.** If a migrated account is closed and later re-funded, it is recreated under the control of its original Ed25519 key. Never close an account you have rekeyed for quantum resistance.
+- **Application and multisig addresses carry a related, separate exposure.** Both are derived by hashing rather than from a public key, so roughly half of them are also valid Ed25519 curve points. Rekeying does not help an application account: it stops the application spending from that account via inner transactions, while whoever holds the new authorized address can still move the funds with ordinary signed transactions. See [DO: Check your application address for post-quantum compliance](#do-check-your-application-address-for-post-quantum-compliance).
 
 See [Post-Quantum Accounts](/concepts/accounts/post-quantum/) for the protocol mechanics, and [Section 6](#6-rekeying--account-draining) for rekeying safety in general.
+
+### DO: Check your application address for post-quantum compliance
+
+An application's account address is derived by hashing its application ID, not from a public key. About half of all 32-byte hash outputs are also valid points on the Ed25519 curve, so **roughly half of all applications have an on-curve application address**. An address that is a curve point is one whose signing rights could be forged under a quantum attack, which would let an attacker act as that application account: spending its Algos and assets, and exercising any asset role or authorized-sender check that names it. An address that is not a curve point is **post-quantum (PQ) compliant** and can never be claimed by an Ed25519 key pair.
+
+This is not an imminent threat, and nothing checks it for you. Unlike post-quantum addresses and TEAL v13+ contract accounts, no consensus rule and no node-level check inspects an application address.
+
+For **new** applications, make the check a deployment step: deploy, run `algokey pq check-address <application address>`, and if the result is not PQ compliant, delete and deploy again. Each attempt is an independent coin flip. This requires the application to be deletable, or updatable so that it can be made deletable, so decide that before deploying. Move any funds out of the application account first, because deletion does not return them.
+
+For applications **already deployed**, check the address so that you know where you stand, but the recommendation is to wait: more robust handling may be addressed at the protocol level, and changing the application ID breaks frontends, published app specifications, contracts referencing the ID, and indexer history, and forces every opted-in account to opt in again. Redeploy now only if the application is already deletable and you accept those breaking changes.
+
+Rekeying is not a substitute. It blocks the forged-signature attack, but it also stops the application spending from its own account via inner transactions, while the holder of the new authorized address can still move the account's Algos and assets with ordinary signed transactions. Control is transferred, not removed, and only that holder can rekey the account back.
+
+See [Hash-Derived Addresses](/concepts/accounts/post-quantum#hash-derived-addresses) for the full mechanics, including logic signature and multisig accounts.
 
 ### Key Takeaways
 
@@ -3954,6 +3969,7 @@ See [Post-Quantum Accounts](/concepts/accounts/post-quantum/) for the protocol m
 - Document signer ordering and use a majority threshold: avoid 1-of-N or N-of-N.
 - Never store keys in code or version-controlled config files.
 - Post-quantum accounts (v42+) give long-lived keys a quantum-resistant migration path via rekeying; multisig remains Ed25519-only.
+- Check new application addresses with `algokey pq check-address`; about half are on-curve, and rekeying transfers control of the account rather than protecting it.
 
 <CardGrid>
   <LinkCard

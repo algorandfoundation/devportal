@@ -61,6 +61,8 @@ Logic signatures have two basic usage scenarios: as a **_contract account_** or 
 
 For each unique compiled logic signature program there exists a single corresponding Algorand address. To use a TEAL program as a contract account, send Algos to its address to turn it into an account on Algorand with a balance. Outwardly, this account looks no different from any other Algorand account and anyone can send it Algos or Algorand Standard Assets to increase its balance. The account differs in how it authenticates spends from it, in that the logic determines if the transaction is approved. To spend from a contract account, create a transaction that will evaluate True against the TEAL logic, then add the compiled TEAL code as its logic signature. It is worth noting that anyone can create and submit the transaction that spends from a contract account as long as they have the compiled TEAL contract to add as a logic signature.
 
+Since a contract account's address is the hash of its compiled program, roughly half of all programs would produce an address that is also a valid point on the Ed25519 curve. As of **TEAL v13** the assembler automatically salts a stateless program until its address is off the curve, so **contract accounts compiled at v13 or later are post-quantum (PQ) compliant** without any action on your part. Programs compiled at TEAL v12 or earlier, and programs using `#pragma autosalt false`, are not covered. See [Hash-Derived Addresses](/concepts/accounts/post-quantum#logicsig-contract-accounts).
+
 <Figure src={lsigsDiagram2} alt='Figure: TEAL Contract Account' />
 
 ### Delegated Approval
