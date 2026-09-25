@@ -95,7 +95,7 @@ Intermezzo is the piece in between. It translates a business request — "transf
 <figcaption>Figure: Requests, bytes-to-sign, and signatures all cross the boundary between the two spaces. The private key is the one thing that does not.</figcaption>
 </figure>
 
-In concrete terms, Intermezzo is a stateless NestJS service written in TypeScript, deployed alongside a Vault instance, talking to an algod node that you configure.
+In concrete terms, Intermezzo is a NestJS service written in TypeScript, deployed alongside a Vault instance, talking to an algod node that you configure. It keeps no key material, but it does keep some state: operational records such as deployed DID application ids and credential session mappings go to Vault's KV engine, and the Credo credential agent keeps its own records in a local Askar wallet.
 
 ### One transfer, end to end
 
@@ -337,7 +337,7 @@ Intermezzo mounts two separate Transit engines and gives them different policies
 | `VAULT_TRANSIT_USERS_PATH`    | `pawn/users`    | One Ed25519 key per end user, named by `user_id`           |
 | `VAULT_TRANSIT_MANAGERS_PATH` | `pawn/managers` | The enterprise's own operational key (`VAULT_MANAGER_KEY`) |
 
-Two AppRoles are provisioned against them — `pawn_users_approle` and `pawn_managers_approle` — bound to `pawn_users_policy` and `pawn_managers_policy` respectively. Users may create, read, and sign with keys under their own path. Managers may additionally list user keys and read and write operational state in KV.
+Two AppRoles are provisioned against them — `pawn_users_approle` and `pawn_managers_approle` — bound to `pawn_users_policy` and `pawn_managers_policy` respectively. The user policy can create and read keys under the users path and has no Transit `sign` path, so a user-role token cannot produce any signature. The manager policy can sign with the manager key and with every user key, list user keys, and read and write operational state in KV. In practice every signature Intermezzo produces, including signatures with a user's key, is requested with a manager-role token.
 
 Both policies explicitly **deny** the key configuration sub-paths. Without that denial, a token that can sign could also reconfigure the key it signs with — for example, to make it exportable.
 
@@ -412,7 +412,9 @@ Four of these five produce a signature that looks structurally valid and is reje
 
 Where the software runs is not what determines custody. The operative question is: who is able to produce a signature?
 
-With Intermezzo, the enterprise can, by holding a Vault token authorized for the user key path. The end user cannot, because they have no key material and no path to any. That makes it custodial by definition. Self-hosting does not change the answer; it changes who the custodian is.
+For Algo and asset transactions, only the enterprise can. It holds the manager-role Vault token, and that token is the only credential allowed to sign with a user's key. The end user holds no key material and no credential, and the API has no route through which the end user can trigger a signature. That makes Intermezzo custodial for value. Self-hosting does not change the answer. It changes who the custodian is.
+
+Decentralized identity is the exception. There the user's wallet signs with its own key, as described in [The self-custodial part](#the-self-custodial-part).
 
 ### Managers and users
 
@@ -420,7 +422,7 @@ The system has exactly two kinds of identity.
 
 A **manager** represents the enterprise itself. Its key lives under the managers path, it pays fees and [minimum balance requirements](/concepts/accounts/funding) for user operations, it can list users, and it owns the issuer `did:algo` used for credentials.
 
-A **user** represents one end customer. Its key lives under the users path, named by `user_id`, and it can sign only its own transactions.
+A **user** represents one end customer. The user's key lives under the users path, named by `user_id`. That key signs only transactions sent from the user's own account, and only when the enterprise requests the signature with a manager-role token. The end user never triggers a signature themselves.
 
 Provisioning a user is deliberately cheap: one API call creates one Transit key and returns the derived Algorand address. There is no on-chain transaction and no minimum balance until the account is actually funded, so onboarding a million users costs a million Transit keys and nothing else.
 
@@ -504,7 +506,7 @@ Portability is not a single property. Three layers of this system move at very d
 
 ### The application layer
 
-Intermezzo is a stateless NestJS container with no database, no cloud SDK, no managed queue, and no proprietary datastore. Its entire coupling to a given cloud is a handful of environment variables.
+Intermezzo is a NestJS container with no cloud SDK, no managed queue, and no proprietary datastore. It is not fully stateless. Operational records live in Vault KV, which moves with Vault. The Credo agent also keeps its records in an Askar wallet on the container's local storage, which holds no ed25519 private keys but is local state a deployment has to account for. Apart from that, the container's coupling to a given cloud is a handful of environment variables.
 
 | Variable                                                   | Couples to                                                    |
 | ---------------------------------------------------------- | ------------------------------------------------------------- |
