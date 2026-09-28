@@ -348,7 +348,7 @@ The `POST /v1/wallet/manager/identity` endpoint is normally called once, at firs
 
 These endpoints manage a per-user `did:algo`, a decentralized identifier (DID) whose document is stored on-chain. These endpoints are non-custodial. The user's wallet signs the transactions that create and update its DID contract, with a key that never leaves the device. The wallet endpoints above are custodial and sign with keys in Vault.
 
-The two read endpoints require a manager session token. The four transaction endpoints require a verifiable credential presented in an `X-Credential-Presentation` header instead. Intermezzo reads the key bound to that credential to find which DID the caller owns, so a caller cannot act on another user's DID.
+The two read endpoints require a manager session token. The four transaction endpoints require a credential in the `X-Credential-Presentation` header instead. The credential must be a compact Selective Disclosure JWT Verifiable Credential (SD-JWT VC) with `vct` set to `device-attestation-credential`, issued by the manager's issuer `did:algo`, and bound to a `did:key` through its `cnf` claim. Intermezzo rejects any other credential with `401`. The bound `did:key` identifies which DID the caller owns, so a caller cannot act on another user's DID.
 
 | Endpoint                      | Method | Auth          | Purpose                                                               |
 | ----------------------------- | ------ | ------------- | --------------------------------------------------------------------- |
@@ -383,7 +383,7 @@ The endpoints below manage issuance and verification sessions and require a mana
 | `/v1/credential/verifier/sessions`          | GET    | List verification sessions.                                   |
 | `/v1/credential/verifier/sessions/{id}`     | GET    | Get one verification session, refreshing its state.           |
 
-The issuance sequence starts outside Intermezzo. The integrating application verifies the user by its own method, such as device attestation, a know-your-customer (KYC) check, or an email proof. It then creates an offer pinned to the wallet's `did:key` and passes the offer to the wallet as a URL or QR code. The wallet redeems the offer over OID4VCI. It can then present the resulting credential to the DID endpoints above.
+The issuance sequence starts outside Intermezzo. The integrating application verifies the user by its own method, such as device attestation, a know-your-customer (KYC) check, or an email proof. It then creates an offer pinned to the wallet's `did:key` and passes the offer to the wallet as a URL or QR code. The wallet redeems the offer over OID4VCI. The DID endpoints above accept the resulting credential only when the offer was for the `device-attestation-credential` configuration.
 
 ---
 
