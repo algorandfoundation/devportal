@@ -316,7 +316,7 @@ These endpoints provision and inspect accounts. Creating a user generates an Ed2
 | `/v1/wallet/users/`           | GET    | List all users. Requires a manager token.                                                 |
 | `/v1/wallet/users/{user_id}/` | GET    | Get one user's id, address, and Algo balance.                                             |
 | `/v1/wallet/assets/{user_id}` | GET    | Get a user's address and all asset holdings.                                              |
-| `/v1/wallet/manager/`         | GET    | Get the manager's Algorand address.                                                       |
+| `/v1/wallet/manager/`         | GET    | Get the manager's Algorand address, Algo balance, and asset holdings.                     |
 | `/v1/wallet/manager/identity` | GET    | Resolve the manager's issuer `did:algo` and return its decentralized identifier document. |
 | `/v1/wallet/manager/identity` | POST   | Deploy the contract that stores the manager's issuer `did:algo` document.                 |
 
