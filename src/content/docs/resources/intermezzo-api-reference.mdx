@@ -391,18 +391,19 @@ The issuance sequence starts outside Intermezzo. The integrating application ver
 
 Intermezzo returns standard HTTP status codes. Vault failures pass through to the caller, so a permission denied inside Vault reaches the caller as a `403`.
 
-| Status | Typical cause                                                                               |
-| ------ | ------------------------------------------------------------------------------------------- |
-| `400`  | Malformed body, or a field that fails validation.                                           |
-| `401`  | Missing, expired, or invalid session token.                                                 |
-| `403`  | The Vault policy bound to the caller's AppRole does not permit the operation.               |
-| `404`  | No such user, asset, or key.                                                                |
-| `409`  | A manager identity contract is already configured. Send `force` to redeploy.                |
-| `422`  | The manager account is underfunded and cannot pay for the operation.                        |
-| `500`  | The network rejected the transaction, or Vault is in an unexpected state, including sealed. |
+| Status | Typical cause                                                                                                                                                                |
+| ------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `400`  | Malformed body, or a field that fails validation.                                                                                                                            |
+| `401`  | Missing or invalid session token. The session token has no expiry of its own.                                                                                                |
+| `403`  | Vault rejected the request: the Vault token inside the session token has expired or been revoked, or the policy bound to the caller's AppRole does not permit the operation. |
+| `404`  | No such user, asset, or key.                                                                                                                                                 |
+| `409`  | A manager identity contract is already configured. Send `force` to redeploy.                                                                                                 |
+| `422`  | The manager account is underfunded and cannot pay for the operation.                                                                                                         |
+| `500`  | The network rejected the transaction, or an unexpected error occurred.                                                                                                       |
+| `503`  | Vault is sealed.                                                                                                                                                             |
 
 :::caution
-While Vault is sealed, Intermezzo can neither read public keys nor request signatures, so it cannot produce any transaction. Vault availability and auto-unseal are therefore part of the deploying service's uptime requirements.
+While Vault is sealed, Intermezzo can neither read public keys nor request signatures, so it cannot produce any transaction and returns `503`. Vault availability and auto-unseal are therefore part of the deploying service's uptime requirements.
 :::
 
 ---
