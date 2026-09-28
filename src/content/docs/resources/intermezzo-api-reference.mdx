@@ -95,7 +95,7 @@ These rules apply to every endpoint.
 **`lease` and `note` are optional on most transaction bodies.** A `note` is public, stored with the transaction on-chain, and limited to 1000 characters. A `lease` is a 32-byte base64 value. While the leased transaction is valid, the network rejects any other transaction from the same sender with the same lease. See [Transaction Leases](/concepts/transactions/leases).
 
 :::caution
-The payment endpoint accepts `lease` and `note` in its request body, but the current implementation does not copy them into the transaction it builds. Before relying on either field for a payment, check the submitted transaction on-chain.
+The payment endpoint and `payment` entries in an atomic group accept `lease` and `note` in their bodies, but the current implementation does not copy them into the payment transaction it builds. Before relying on either field for a payment, check the submitted transaction on-chain.
 :::
 
 ---
@@ -120,6 +120,10 @@ Each single-transaction endpoint returns the id of the submitted transaction.
 ```json frame=none showLineNumbers=false
 { "transaction_id": "QOOBRVQMX4HW5QZ2EGLQDQCQTKRF3UP3JKDGKYPCXMI6AVV35KQA" }
 ```
+
+:::note
+Every transaction endpoint returns once algod confirms the transaction, or after 20 rounds (about a minute), whichever comes first. A pool error in that window fails the request with `500`. Transactions normally confirm in the next round. Under congestion or with a lagging algod node, the current version of Intermezzo can return the transaction id before confirmation, without an error. The transaction stays valid for 1000 rounds and can still confirm later, so check it on-chain where the outcome matters.
+:::
 
 ### Payment
 
@@ -234,19 +238,19 @@ curl -X POST http://localhost:3000/v1/wallet/transactions/clawback-asset/ \
 
 Calls an existing smart contract, or creates a new one. A request with `appId` calls that application. A request without `appId` that supplies `approvalProgram` and `clearProgram` creates an application.
 
-| Name                                                             | Type   | Required | Description                                                                                 |
-| ---------------------------------------------------------------- | ------ | -------- | ------------------------------------------------------------------------------------------- |
-| `fromUserId`                                                     | string | Yes      | A `user_id`, or `manager`                                                                   |
-| `appId`                                                          | number | No       | Id of the application to call. Omit when creating                                           |
-| `approvalProgram`, `clearProgram`                                | string | No       | Compiled programs. Required for creation                                                    |
-| `globalInts`, `globalByteSlices`, `localInts`, `localByteSlices` | number | No       | State schema for creation                                                                   |
-| `onComplete`                                                     | number | No       | Protocol [on-completion value](/concepts/smart-contracts/lifecycle), for example `0` (NoOp) |
-| `args`                                                           | object | No       | ABI method name, typed arguments, and return type                                           |
-| `foreignAssets`, `foreignApps`, `foreignAccounts`                | array  | No       | Additional [resources](/concepts/smart-contracts/resource-usage) the program may access     |
-| `boxes`                                                          | array  | No       | [Boxes](/concepts/smart-contracts/storage/box) the program may access                       |
-| `fee`                                                            | number | No       | Fee override in microAlgos                                                                  |
-| `lease`                                                          | string | No       | 32-byte base64 lease                                                                        |
-| `note`                                                           | string | No       | Public note, at most 1000 characters                                                        |
+| Name                                                             | Type   | Required | Description                                                                                                                                                                                                                                     |
+| ---------------------------------------------------------------- | ------ | -------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `fromUserId`                                                     | string | Yes      | A `user_id`, or `manager`                                                                                                                                                                                                                       |
+| `appId`                                                          | number | No       | Id of the application to call. Omit, or send `0`, when creating                                                                                                                                                                                 |
+| `approvalProgram`, `clearProgram`                                | string | No       | Compiled program bytes, base64-encoded. Required for creation                                                                                                                                                                                   |
+| `globalInts`, `globalByteSlices`, `localInts`, `localByteSlices` | number | No       | State schema for creation                                                                                                                                                                                                                       |
+| `onComplete`                                                     | number | No       | Protocol [on-completion value](/concepts/smart-contracts/lifecycle). Default: `0` (NoOp)                                                                                                                                                        |
+| `args`                                                           | object | No       | ABI method name, typed arguments, and return type. See the argument types below                                                                                                                                                                 |
+| `foreignAssets`, `foreignApps`, `foreignAccounts`                | array  | No       | Additional [resources](/concepts/smart-contracts/resource-usage) the program may access                                                                                                                                                         |
+| `boxes`                                                          | array  | No       | [Boxes](/concepts/smart-contracts/storage/box) the program may access, as `{ "i": number, "n": string }` objects. `n` is the base64-encoded box name. `i` is the application id that owns the box. Default for `i`: `0`, the called application |
+| `fee`                                                            | number | No       | Fee override in microAlgos                                                                                                                                                                                                                      |
+| `lease`                                                          | string | No       | 32-byte base64 lease                                                                                                                                                                                                                            |
+| `note`                                                           | string | No       | Public note, at most 1000 characters                                                                                                                                                                                                            |
 
 ```shell
 curl -X POST http://localhost:3000/v1/wallet/transactions/app-call/ \
@@ -265,6 +269,16 @@ curl -X POST http://localhost:3000/v1/wallet/transactions/app-call/ \
 ```
 
 `args` describes each argument by its Application Binary Interface (ABI) type and plain value, and Intermezzo does the encoding. [ABI](/concepts/smart-contracts/abi) documents the type system.
+
+Intermezzo builds the method selector from every argument type listed, but encodes argument values only for these types:
+
+| ABI type  | Value                         |
+| --------- | ----------------------------- |
+| `uint64`  | Number                        |
+| `string`  | String                        |
+| `address` | 58-character Algorand address |
+
+Transaction-type arguments (`pay`, `keyreg`, `axfer`, `acfg`, `appl`) are not encoded. Send those transactions as separate entries in an [atomic group](#atomic-group). An argument whose `value` is `null` or missing is skipped. Any other type, for example `uint8`, `byte[]`, or a tuple, fails with `500`. The response body says only `Internal server error`, and the message `Unsupported ABI argument type` appears in the server log.
 
 ### Atomic Group
 
