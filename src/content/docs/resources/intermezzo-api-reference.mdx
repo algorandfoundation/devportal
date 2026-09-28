@@ -39,7 +39,7 @@ The development Vault init script writes unseal keys to a local file and returns
 
 ## Authentication
 
-Authentication takes two credentials. Vault issues the first and Intermezzo issues the second. Both expire.
+Authentication takes two credentials. Vault issues the first, a Vault token whose lifetime Vault sets. Intermezzo issues the second, a session token that wraps the Vault token and has no expiry of its own. Once the Vault token expires, Vault rejects every request made with the session token, and Intermezzo returns `403`.
 
 <Steps>
 
