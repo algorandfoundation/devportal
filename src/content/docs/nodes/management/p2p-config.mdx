@@ -46,7 +46,7 @@ Choose this mode if you have strict bandwidth constraints.
     ./nodekit configure algod --hybrid=false
     ```
 
-    NodeKit writes `EnableP2PHybridMode` to your node's `config.json` and restarts `algod` if the value changed.
+    NodeKit writes `EnableP2PHybridMode` to your node's `config.json` and restarts `algod` if the value changed. NodeKit only manages `EnableP2PHybridMode` — if you turned on P2P-only mode by editing `config.json`, set `EnableP2P` to `false` there as well.
 
   </TabItem>
   <TabItem label='config.json'>
