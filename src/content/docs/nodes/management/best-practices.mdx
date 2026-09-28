@@ -88,6 +88,8 @@ automatically be marked offline.
 
 Visit the [Renew Participation Keys](/concepts/protocol/partkey-management#renew-participation-keys) section for detailed instructions.
 
+If you use NodeKit, the `Expires` column in the Accounts table shows a `⚠` during the last week of a key's validity. Press `g` to generate a new key and `r` to register it.
+
 ### Ensure that Validator Nodes are Working Properly
 
 Monitor your validator node to ensure high performance and consistent access to your registered
@@ -128,6 +130,8 @@ online but the node isn’t voting or proposing blocks. If you go offline gracef
 register the keys online again without having to pay the elevated fee again for incentives
 eligibility.
 
+In NodeKit, select the key and press `o` — see [Register Your Account Offline](/concepts/protocol/registration#register-your-account-offline).
+
 ### Re-Enrolling In Staking Rewards
 
 Have an Algo buffer on hand for key registration fees. If your account is eligible for staking
@@ -152,6 +156,8 @@ performing. Refer to the following guide for how to enable telemetry on your nod
   href='/nodes/installation/manual-installation#enable-telemetry'
   description='Learn how to use telemetry on your node'
 />
+
+If you installed with NodeKit, `./nodekit telemetry enable nodely` configures telemetry to the default Nodely provider and `./nodekit telemetry status` shows your dashboard URL.
 
 A complete reference for telemetry configuration options can be found here:
 

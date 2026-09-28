@@ -115,6 +115,8 @@ Applies typically to Debian or RPM installs or any Linux environment where Algor
 
 This applies if the node is configured to run as a [.plist service on macOS](/nodes/installation/manual-installation#running-the-node-as-a-macos-service). If your macOS node is run purely via command line, follow the [unmanaged installation](#unmanaged-command-line-only-install) process instead.
 
+If NodeKit installed your node, the service is `com.algorand.algod` and its plist is `/Library/LaunchDaemons/com.algorand.algod.plist` — use those names in the commands below.
+
 <Steps>
 
 1. Unload the Current Service (Adjust path and filename as needed.)
