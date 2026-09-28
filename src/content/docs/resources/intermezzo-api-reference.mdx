@@ -211,6 +211,15 @@ curl -X POST http://localhost:3000/v1/wallet/transactions/transfer-asset/ \
 The manager pays the opt-in minimum balance. If the manager account is underfunded, asset transfers fail even when the manager holds the asset. Alerting on the manager balance catches this before transfers start failing.
 :::
 
+#### Errors
+
+Besides the [common errors](#common-errors):
+
+| Status | Condition                                    |
+| ------ | -------------------------------------------- |
+| `404`  | No user key exists for `userId`.             |
+| `500`  | `assetId` cannot be converted to an integer. |
+
 ### Clawback Asset
 
 Moves an asset from a user back to the manager without the user's signature. The asset's clawback address must be the manager.
@@ -401,20 +410,38 @@ The issuance sequence starts outside Intermezzo. The integrating application ver
 
 ---
 
-## Errors
+## Common Errors
 
-Intermezzo returns standard HTTP status codes. Vault failures pass through to the caller, so a permission denied inside Vault reaches the caller as a `403`.
+These errors apply to every endpoint on this page. Each endpoint section lists only the errors specific to that endpoint, including any exception to these rules.
 
-| Status | Typical cause                                                                                                                                                                |
-| ------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `400`  | Malformed body, or a field that fails validation.                                                                                                                            |
-| `401`  | Missing or invalid session token. The session token has no expiry of its own.                                                                                                |
-| `403`  | Vault rejected the request: the Vault token inside the session token has expired or been revoked, or the policy bound to the caller's AppRole does not permit the operation. |
-| `404`  | No such user, asset, or key.                                                                                                                                                 |
-| `409`  | A manager identity contract is already configured. Send `force` to redeploy.                                                                                                 |
-| `422`  | The manager account is underfunded and cannot pay for the operation.                                                                                                         |
-| `500`  | The network rejected the transaction, or an unexpected error occurred.                                                                                                       |
-| `503`  | Vault is sealed.                                                                                                                                                             |
+| Status | Condition                                                                                                                                                                   |
+| ------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `400`  | A field fails validation, or the body is malformed.                                                                                                                         |
+| `400`  | algod rejects the submitted transaction or group. The response message starts with `NodeException:`.                                                                        |
+| `401`  | The session token is missing or invalid. The session token has no expiry of its own.                                                                                        |
+| `403`  | Vault rejects the request: the Vault token inside the session token has expired or been revoked, or the policy bound to the caller's AppRole does not permit the operation. |
+| `500`  | algod reports a pool error while Intermezzo waits for confirmation, or an unexpected error occurs.                                                                          |
+| `503`  | Vault is sealed.                                                                                                                                                            |
+
+Intermezzo passes Vault's and algod's HTTP status codes through to the caller. A failure that is not an HTTP error returns `500` with the body message `Internal server error`, and the detail goes only to the server log. That includes a Vault instance Intermezzo cannot reach.
+
+### Error Response Format
+
+Every error response uses the same envelope. The `response` field holds the error detail. This example is a validation failure:
+
+```json
+{
+  "statusCode": 400,
+  "timestamp": "2026-09-28T10:15:30.000Z",
+  "path": "/v1/wallet/transactions/transfer-asset/",
+  "method": "POST",
+  "response": {
+    "message": [{ "property": "userId", "message": "userId must be a string" }],
+    "error": "Bad Request",
+    "statusCode": 400
+  }
+}
+```
 
 :::caution
 While Vault is sealed, Intermezzo can neither read public keys nor request signatures, so it cannot produce any transaction and returns `503`. Vault availability and auto-unseal are therefore part of the deploying service's uptime requirements.

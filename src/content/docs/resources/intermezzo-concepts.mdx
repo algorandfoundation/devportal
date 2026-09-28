@@ -325,14 +325,14 @@ Transit supports `ed25519` natively, which is exactly the signature scheme Algor
 When Intermezzo creates a user key it makes three deliberate choices in the key configuration. The type is `ed25519`, to match Algorand. Derivation is disabled, so there is one key per name rather than a derivation tree. Deletion is disallowed, so the key cannot be destroyed by an accidental call. The response carries only the public key, which becomes an Algorand address by appending a 4-byte checksum and encoding the result in base32. [Keys and Signing](/concepts/accounts/keys-signing) describes this transformation.
 
 :::note
-The `vault:v1:` prefix on every signature carries the **key version**. Transit can rotate a key while keeping older signatures verifiable, and the version records which one was used. Intermezzo strips this envelope before attaching the signature and asserts that exactly 64 bytes remain.
+The `vault:v1:` prefix on every signature carries the **key version**. Transit can rotate a key while keeping older signatures verifiable, and the version records which one was used. Intermezzo strips this envelope before attaching the signature. The DID and credential signing paths also check that exactly 64 bytes remain. The wallet transaction path does not.
 :::
 
 ### Paths and Policies
 
 Intermezzo mounts two separate Transit engines and gives them different policies.
 
-| Path (environment variable)   | Default         | Holds                                                      |
+| Path (environment variable)   | Template value  | Holds                                                      |
 | ----------------------------- | --------------- | ---------------------------------------------------------- |
 | `VAULT_TRANSIT_USERS_PATH`    | `pawn/users`    | One Ed25519 key per end user, named by `user_id`           |
 | `VAULT_TRANSIT_MANAGERS_PATH` | `pawn/managers` | The enterprise's own operational key (`VAULT_MANAGER_KEY`) |
@@ -386,13 +386,13 @@ If the KMS your organization mandates cannot sign Ed25519 natively, there are fo
 
 ### What a Plugin Must Provide
 
-Intermezzo does not scatter Vault calls through its business logic. All KMS access funnels through two narrow interfaces, so swapping the backend is a matter of implementing them.
+Intermezzo does not scatter Vault calls through its business logic. All KMS access funnels through two narrow boundaries: the `VaultService` class and the credential agent's signer ports. Swapping the backend is a matter of reimplementing them.
 
-The first is the KMS service itself. A replacement needs to offer six operations: create a non-exportable Ed25519 key and return its raw public key; fetch the public key for an existing key; sign a caller-supplied byte string and return a raw 64-byte detached signature; enumerate key names, which backs the list-users endpoint; exchange long-lived credentials for a short-lived scoped token; and a small read, write, delete, and list interface for operational state such as deployed DID application ids.
+The first is the KMS service itself. A replacement needs to offer seven operations: create a non-exportable Ed25519 key and return its raw public key; fetch the public key for an existing key; sign a caller-supplied byte string and return a raw 64-byte detached signature; enumerate key names, which backs the list-users endpoint; exchange long-lived credentials for a short-lived scoped token; validate a caller's token, which backs the sign-in endpoint; and a small read, write, delete, and list interface for operational state such as deployed DID application ids.
 
 The second is the credential agent's signer, which was written from the start to be KMS-agnostic. It defines three things: a key binding (an opaque pair naming a key and the path it lives under), a signer function that takes that binding plus the data to sign, and a store that persists the mapping from a public key to its binding. The package's own documentation notes that the binding "is never interpreted by the package — hosts on a different KMS may repurpose either field."
 
-So writing a plugin means implementing the first interface against your KMS SDK and registering a signer closure over it. None of the wallet, DID, or credential modules need to change.
+So writing a plugin means reimplementing the first boundary against your KMS SDK and registering a signer closure over it. None of the wallet, DID, or credential modules need to change.
 
 ### Five Plugin Pitfalls
 
@@ -508,13 +508,16 @@ Three layers of this system move between clouds at very different speeds, so eac
 
 Intermezzo is a NestJS container with no cloud SDK, no managed queue, and no proprietary datastore. It is not fully stateless. Operational records live in Vault KV, which moves with Vault. The Credo agent also keeps its records in an Askar wallet on the container's local storage, which holds no ed25519 private keys but is local state a deployment has to account for. Apart from that, the container's coupling to a given cloud is a handful of environment variables.
 
-| Variable                                                   | Couples to                                                                               |
-| ---------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
-| `VAULT_BASE_URL`                                           | Where Vault lives                                                                        |
-| `VAULT_NAMESPACE`                                          | Vault Enterprise or HashiCorp Cloud Platform (HCP) namespace, sent as a namespace header |
-| `VAULT_TRANSIT_USERS_PATH`, `VAULT_TRANSIT_MANAGERS_PATH`  | Where keys are mounted                                                                   |
-| `VAULT_ROLE_ID`, `VAULT_SECRET_ID`                         | AppRole credentials                                                                      |
-| `NODE_HTTP_SCHEME`, `NODE_HOST`, `NODE_PORT`, `NODE_TOKEN` | Which algod node to use                                                                  |
+| Variable                                                   | Couples to                                                                                                  |
+| ---------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------- |
+| `VAULT_BASE_URL`                                           | Where Vault lives                                                                                           |
+| `VAULT_NAMESPACE`                                          | Vault Enterprise or HashiCorp Cloud Platform (HCP) namespace, sent as a namespace header                    |
+| `VAULT_TRANSIT_USERS_PATH`, `VAULT_TRANSIT_MANAGERS_PATH`  | Where keys are mounted                                                                                      |
+| `VAULT_ROLE_ID`, `VAULT_SECRET_ID`                         | AppRole credentials                                                                                         |
+| `NODE_HTTP_SCHEME`, `NODE_HOST`, `NODE_PORT`, `NODE_TOKEN` | Which algod node to use                                                                                     |
+| `VAULT_KV_MOUNT`                                           | Where operational state lives in Vault KV. Default: `secret`                                                |
+| `OID4VC_BASE_URL`                                          | The public URL built into credential offers and authorization requests. Default: `http://localhost:3000/v1` |
+| `JWT_SECRET`                                               | The key that signs session tokens. Changing it invalidates every issued session token                       |
 
 Change the URLs and redeploy. This layer moves between clouds with configuration changes only, as long as cloud-specific types stay out of the service classes.
 
@@ -550,7 +553,9 @@ The second option is the strategically important one. Rekeying makes the signing
 
 ### Keeping It Portable
 
-Four habits preserve this over time. Keep all KMS access behind the two interfaces described above, so no cloud SDK type reaches the wallet, DID, or credential modules. Keep vendor formats at the edge: the signature envelope is parsed in exactly one place, and everything downstream sees raw 64-byte signatures. Prefer configuration over code for topology, which the environment variables above already do. And note that the identity layer is portable by construction: `did:algo` documents live on Algorand rather than in any cloud, and credentials use OID4VCI, OID4VP, and Selective Disclosure JWT Verifiable Credentials (SD-JWT VC), so moving cloud does not invalidate an issued credential or a published DID.
+Four habits preserve this over time. Keep all KMS access behind the two boundaries described above, so no cloud SDK type reaches the wallet, DID, or credential modules. Keep vendor formats at the edge by parsing the signature envelope in one place, so everything downstream sees raw 64-byte signatures. Today three places parse it, and only two check the length. Prefer configuration over code for topology, which the environment variables above already do. And note that the identity layer is portable by construction: `did:algo` documents live on Algorand rather than in any cloud, and credentials use OID4VCI, OID4VP, and Selective Disclosure JWT Verifiable Credentials (SD-JWT VC), so moving cloud does not invalidate an issued credential or a published DID.
+
+This holds while the manager key moves with Vault. The issuer DID has the manager's public key built into it, so migrating to a new manager key produces a new issuer DID, and credentials issued under the old one stop working on the DID endpoints.
 
 ---
 
