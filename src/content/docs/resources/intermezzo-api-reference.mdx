@@ -180,7 +180,9 @@ curl -X POST http://localhost:3000/v1/wallet/transactions/create-asset/ \
 
 Sends an asset from the manager to a user. If the user cannot yet receive the asset, Intermezzo prepares the account first.
 
-Before transferring, Intermezzo checks two things: whether the recipient has opted into the asset, and whether the recipient holds enough Algo for the [minimum balance](/concepts/accounts/funding) the new holding adds. If either check fails, Intermezzo builds an atomic group of three steps. The manager funds the user, the user opts in, and the manager transfers the asset. A new, unfunded user can therefore receive an asset in one request.
+Before transferring, Intermezzo checks the recipient's account. If the recipient has not opted into the asset, Intermezzo adds an opt-in transaction signed with the user's key. The opt-in needs 100,000 microAlgos for the new holding plus the minimum transaction fee. If the recipient's balance above its current [minimum balance](/concepts/accounts/funding) is less than that, the manager sends a payment for the shortfall. An already opted-in recipient gets a payment only when its balance is below its minimum balance.
+
+Intermezzo submits the result as one atomic group of one to three transactions, in this order: the funding payment if needed, the opt-in if needed, and the asset transfer. A new, unfunded user can therefore receive an asset in one request.
 
 | Name      | Type   | Required | Description                          |
 | --------- | ------ | -------- | ------------------------------------ |
