@@ -5,6 +5,8 @@ description: Details on configuring P2P networking mode for Algorand nodes.
 
 import { LinkCard } from '@astrojs/starlight/components';
 import { Tabs, TabItem } from '@astrojs/starlight/components';
+import { Image } from 'astro:assets';
+import nodekitStateP2PHybrid from '@images/nodekit-state-p2p-hybrid.png';
 import { Aside } from '@astrojs/starlight/components';
 
 This guide explains peer-to-peer (P2P) network mode for Algorand nodes and how to configure your node to enable it. Peer-to-peer networking lets Algorand nodes discover and connect to permissionless Repeaters on a global mesh. Validators make outbound connections to Repeaters, which then propagate blocks, transactions, and participation messages across many independent paths, improving resilience and censorship resistance.
@@ -39,10 +41,12 @@ Choose this mode if you have strict bandwidth constraints.
 <Tabs syncKey='method'>
   <TabItem label='NodeKit'>
 
-    Assuming NodeKit is already [installed](/nodes/nodekit-quick-start/), run the following command:
+    From the directory that holds the `nodekit` binary:
     ```shell frame=none
-    ./bin/nodekit configure algod --hybrid=false
+    ./nodekit configure algod --hybrid=false
     ```
+
+    NodeKit writes `EnableP2PHybridMode` to your node's `config.json` and restarts `algod` if the value changed.
 
   </TabItem>
   <TabItem label='config.json'>
@@ -73,10 +77,14 @@ Choose this mode if you have flexible bandwidth constraints. This mode will also
 <Tabs syncKey='method'>
   <TabItem label='NodeKit'>
 
-    Assuming NodeKit is already [installed](/nodes/nodekit-quick-start/), run the following command:
+    `nodekit bootstrap` does not enable P2P — this is a separate step once your node is running. From the directory that holds the `nodekit` binary:
     ```shell frame=none
-    ./bin/nodekit configure algod --hybrid=true
+    ./nodekit configure algod --hybrid
     ```
+
+    NodeKit writes `EnableP2PHybridMode` to your node's `config.json` and restarts `algod` if the value changed. To check the current setting, run `./nodekit configure algod` with no flags. The TUI's Status panel also shows it as `P2P: HYBRID` or `P2P: NO`, and in hybrid mode splits the peer count into `WS` and `P2P`. The TUI reads the config once when it starts, so if it was already open, quit with `q` and start it again — otherwise it shows `Network/Config Mismatch` until you do.
+
+    <Image src={nodekitStateP2PHybrid} alt='NodeKit Status panel showing P2P: HYBRID and a WS/P2P peer split' />
 
   </TabItem>
   <TabItem label='config.json'>
