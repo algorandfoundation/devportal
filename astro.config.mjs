@@ -212,14 +212,14 @@ export default defineConfig({
           tag: 'meta',
           attrs: {
             property: 'og:image:width',
-            content: '1920',
+            content: '1200',
           },
         },
         {
           tag: 'meta',
           attrs: {
             property: 'og:image:height',
-            content: '1080',
+            content: '630',
           },
         },
         {
