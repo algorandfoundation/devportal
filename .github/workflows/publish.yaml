@@ -23,7 +23,7 @@ jobs:
         uses: actions/checkout@v6
 
       - name: Install D2
-        run: curl -fsSL https://d2lang.com/install.sh | sh -s -- --tala
+        run: curl -fsSL https://d2lang.com/install.sh | sh
 
       - name: Set up Node.js
         uses: actions/setup-node@v6
