@@ -9,6 +9,7 @@ import { Tabs, TabItem } from '@astrojs/starlight/components';
 import RemoteCode from '/src/components/RemoteCode.astro';
 import scratchPy from '/examples/smart-contracts/py/scratch.py?raw';
 import scratchTeal from '/examples/smart-contracts/teal/scratch.teal?raw';
+import { LinkCard } from '@astrojs/starlight/components';
 
 A scratch space is a temporary storage area used to store values for later use in your program. It consists of 256 scratch slots.
 Scratch spaces may be uint64 or byte-array and are initialized as uint64(0).
@@ -40,3 +41,9 @@ In Algorand Python, you can directly use these opcodes through the `op.Scratch` 
     <Code code={scratchTeal} lang='TEAL' frame='none' />
   </TabItem>
 </Tabs>
+
+<LinkCard
+  title='Scratch storage in Algorand TypeScript'
+  description='How to use scratch space in the Algorand TypeScript language guide'
+  href='/docs/algorand-typescript/typescript/latest/language-guide/storage/#scratch-storage'
+/>

@@ -15,6 +15,7 @@ import {
   boxRefTestTEAL,
 } from '/src/content/code-imports.js';
 import RemoteCode from '/src/components/RemoteCode.astro';
+import { LinkCard } from '@astrojs/starlight/components';
 
 Box storage in Algorand is a feature that provides additional on-chain storage options for smart contracts, allowing them to store and manage larger amounts of data beyond the limitations of global and local state. Unlike the fixed sizes of global and local state storages, box storage offers dynamic flexibility for creating, resizing, and deleting storage units
 
@@ -469,3 +470,9 @@ Different functions of the box can be used. The detailed API reference can be fo
     />
   </TabItem>
 </Tabs>
+
+<LinkCard
+  title='Box storage in Algorand TypeScript'
+  description='How to declare and use boxes in the Algorand TypeScript language guide'
+  href='/docs/algorand-typescript/typescript/latest/language-guide/storage/#box-storage'
+/>

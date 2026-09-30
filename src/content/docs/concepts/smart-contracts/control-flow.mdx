@@ -3,7 +3,7 @@ title: Control Flow
 description: Overview of control flow in Algorand smart contracts
 ---
 
-import { Tabs, TabItem } from '@astrojs/starlight/components';
+import { Tabs, TabItem, LinkCard } from '@astrojs/starlight/components';
 import RemoteCode from '/src/components/RemoteCode.astro';
 
 Control flow in Algorand smart contracts follows common programming paradigms, with support for if statements, while loops, for loops, and switch/match statements. Both Algorand Python and Algorand TypeScript provide familiar syntax for these constructs.
@@ -140,6 +140,12 @@ Here is an example of how you can use For loops in smart contracts:
 </Tabs>
 
 Note: Captures and patterns are not supported. Currently, there is only support for basic case/switch functionality; pattern matching and guard clauses are not currently supported.
+
+<LinkCard
+  title='Algorand TypeScript language guide'
+  description='Algorand TypeScript keeps TypeScript syntax and semantics, so if, loops and switch statements compile as written'
+  href='/docs/algorand-typescript/typescript/latest/language-guide/'
+/>
 
 ## TEAL Flow Control Opcode
 

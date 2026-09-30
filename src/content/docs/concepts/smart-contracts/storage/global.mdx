@@ -13,6 +13,7 @@ import {
   deleteGlobalStorageTEAL,
 } from '/src/content/code-imports.js';
 import RemoteCode from '/src/components/RemoteCode.astro';
+import { LinkCard } from '@astrojs/starlight/components';
 
 Global state is associated with the app itself
 Global storage is a feature in Algorand that allows smart contracts to persistently store key-value pairs in a globally accessible state. This guide provides comprehensive information on how to allocate, read, write, and manipulate global storage within smart contracts.
@@ -233,3 +234,9 @@ Different functions of globalState class can be used. The detailed api reference
 | GlobalState(type\_) | Initialize a global state with the specified data type |
 | get(default) | Get data or a default value if not found |
 | maybe() | Get data and a boolean indicating if it exists |
+
+<LinkCard
+  title='Global storage in Algorand TypeScript'
+  description='How to declare and use global state in the Algorand TypeScript language guide'
+  href='/docs/algorand-typescript/typescript/latest/language-guide/storage/#global-storage'
+/>

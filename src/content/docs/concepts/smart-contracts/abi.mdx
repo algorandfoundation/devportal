@@ -2,6 +2,8 @@
 title: ABI
 ---
 
+import { LinkCard } from '@astrojs/starlight/components';
+
 The ABI (Application Binary Interface) is a specification that defines the encoding/decoding of data types and a standard for exposing and invoking methods in a smart contract.
 
 The specification is defined in [ARC4](/arc-standards/arc-0004).
@@ -354,3 +356,15 @@ For example:
 Tuples with dynamically sized elements are encoded with two sections of a byte array. The head which contains offsets into the byte array where the values live and the tail which includes the actual value. For example, `[0xdead, 0xbeef]` encoded as `(byte[], byte[])` is `0x000400080002dead0002beef` because `0x0002dead` starts at byte 4 and `0x0002beef` starts at byte 8. If the offsets are larger than the byte length the AVM can panic. Offsets that point to the incorrect byte offset can lead to unintended behavior in contract logic.
 
 Most high-level languages, such as the ones that use the Puya compiler, will always use the head offsets to extract values from the tuple. This means that incorrect head offsets will lead to panics when attempting to use those values thus not allowing unintended memory access. Caution and understanding should still be taken when not validation types because this is not guaranteed to always be the case.
+
+<LinkCard
+  title='ABI routing in Algorand TypeScript'
+  description='How ABI methods, bare methods and on-completion actions are routed in Algorand TypeScript'
+  href='/docs/algorand-typescript/typescript/latest/reference/abi-routing/'
+/>
+
+<LinkCard
+  title='ARC4 encoded types in Algorand TypeScript'
+  description='ARC4 types available in the Algorand TypeScript language guide'
+  href='/docs/algorand-typescript/typescript/latest/language-guide/types/#arc4-encoded-types'
+/>
