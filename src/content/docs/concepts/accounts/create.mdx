@@ -10,7 +10,7 @@ tableOfContents:
 import { Code } from '@astrojs/starlight/components';
 import { Tabs, TabItem } from '@astrojs/starlight/components';
 import RemoteCode from '/src/components/RemoteCode.astro';
-import { LinkCard } from '@astrojs/starlight/components';
+import { LinkCard, CardGrid } from '@astrojs/starlight/components';
 
 Algorand offers multiple methods to account creation, in this guide we'll explore the various methods available for creating accounts on the Algorand blockchain.
 
@@ -113,15 +113,32 @@ Pera Wallet is a popular non-custodial wallet for the Algorand blockchain.
 
 />
 
-## Vault Wallet
+## Vault-Backed Accounts (Intermezzo)
 
-Hashicorp Vault implementation can also be used for managing Algorand standalone accounts securely. By leveraging Vault, you can store private keys and 25-word mnemonics securely, ensuring sensitive data is protected from unauthorized access. This implementation provides a streamlined way to create and manage standalone accounts while maintaining best practices for key management.
+Intermezzo is a REST service that signs Algorand transactions with keys held in HashiCorp Vault. The calling application never handles a private key or a mnemonic. Each account's key is an Ed25519 key in the Vault Transit engine, created non-exportable, so Vault returns signatures and public keys but has no endpoint that returns the private key.
 
-The integration is particularly useful for developers and enterprises seeking a secure, API-driven approach to manage Algorand accounts at scale, without relying on local storage or manual handling of sensitive credentials.
+Your backend sends a `user_id` and a transaction request to Intermezzo. Intermezzo builds the transaction, sends its bytes to Vault for signing, attaches the returned signature, and submits the signed transaction to the network.
 
-:::note
-More details coming soon
+Creating an account takes one call to `POST /v1/wallet/user/`. Intermezzo creates a Transit key named after the `user_id` and returns the Algorand address derived from the key's public key. The call writes nothing on-chain, so the address needs [funding](/concepts/accounts/funding) before it can send transactions.
+
+Intermezzo is not an end-user wallet. For Algo and asset transactions it is custodial. Only a manager-role Vault token, held by the enterprise that runs Intermezzo, can request a signature, including a signature made with a user's key. End users hold no key and cannot trigger a signature. That model fits an enterprise that holds accounts on behalf of its users, such as a custodial wallet service or a set of operational accounts.
+
+:::caution
+Intermezzo keeps keys out of your application's memory. The integrator remains responsible for securing the Vault instance, writing its access policies, handling Vault tokens, backing up keys, and enforcing transaction rules such as spending limits or destination allowlists.
 :::
+
+<CardGrid>
+  <LinkCard
+    title='Intermezzo Concepts'
+    href='/resources/intermezzo-concepts'
+    description='Why signing keys live in Vault, the custody model, and how it compares to regulated and multi-party computation (MPC) custody.'
+  />
+  <LinkCard
+    title='Intermezzo API Reference'
+    href='/resources/intermezzo-api-reference'
+    description='Installation, authentication, user provisioning, and transaction endpoints.'
+  />
+</CardGrid>
 
 ## KMD-Managed Accounts
 
