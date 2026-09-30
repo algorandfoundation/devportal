@@ -205,28 +205,28 @@ export default defineConfig({
           tag: 'meta',
           attrs: {
             property: 'og:image',
-            content: 'https://dev.algorand.co/devportal-og.png',
+            content: 'https://dev.algorand.co/devportal-og.png?v=2',
           },
         },
         {
           tag: 'meta',
           attrs: {
             property: 'og:image:width',
-            content: '1920',
+            content: '1200',
           },
         },
         {
           tag: 'meta',
           attrs: {
             property: 'og:image:height',
-            content: '1080',
+            content: '630',
           },
         },
         {
           tag: 'meta',
           attrs: {
             name: 'twitter:image',
-            content: 'https://dev.algorand.co/devportal-og.png',
+            content: 'https://dev.algorand.co/devportal-og.png?v=2',
           },
         },
       ],
