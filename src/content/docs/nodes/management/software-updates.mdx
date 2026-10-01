@@ -48,6 +48,25 @@ amount of stake went offline because nodes were simultaneously running an automa
 possible that the network could briefly halt while waiting for enough stake to certify blocks.
 :::
 
+### NodeKit Install
+
+If you installed your node with [NodeKit](/nodes/nodekit-overview/), NodeKit updates it too. When a newer version of `algod` is available, the terminal user interface (TUI) shows `[UPDATE AVAILABLE]` next to the node version in the Protocol panel, or an `Upgrade Available: true` row in terminals narrower than 90 columns. NodeKit also checks for new releases of itself every time it starts, and prints a warning if one is available.
+
+To upgrade, run this from the directory that holds the `nodekit` binary:
+
+```shell showLineNumbers=false frame=none
+./nodekit upgrade
+```
+
+This does two things, in order:
+
+1. If the latest NodeKit release differs from the one you are running, it downloads it and replaces the `nodekit` binary in place.
+2. It upgrades the `algorand` package through your package manager (`apt-get` or `dnf` on Linux, Homebrew on macOS) and restarts the node service.
+
+If `algod` was not installed through one of those package managers, `upgrade` stops with an error and exit status 1. Upgrade such installs the same way they were installed.
+
+Expect a short interruption while `algod` restarts. If your account is online, see [Going Offline Gracefully](/nodes/management/best-practices#going-offline-gracefully) before you upgrade.
+
 ### Linux - Package Manager Install
 
 The RPM or Debian packages in the package repository are updated automatically, but this does not mean that the node installation on your local machine is updated automatically. Depending on your Linux distribution and version, you may have or need to install `unattended-upgrades` to handle automatic updates.
@@ -79,3 +98,24 @@ Add a line that looks like this (run `update.sh` every hour, on the half-hour, o
 ```shell showLineNumbers=false frame=none
 30 * * * * /home/user/node/update.sh -d /home/user/node/data >/home/user/node/update.log 2>&1
 ```
+
+## Removing a NodeKit-Installed Node
+
+If your account is online, register it offline first and wait 320 rounds. See [Going Offline Gracefully](/nodes/management/best-practices#going-offline-gracefully). Then:
+
+```shell showLineNumbers=false frame=none
+./nodekit stop
+./nodekit uninstall
+```
+
+`uninstall` removes the `algorand` package and the service definition. It leaves the data directory in place (`~/.algorand` on macOS, `/var/lib/algorand` on Linux) because it holds the ledger and any participation keys. On macOS the launchd plist at `/Library/LaunchDaemons/com.algorand.algod.plist` is also left behind. `uninstall` fails if `algod` was not installed through a package manager: always on Linux, and on macOS unless you pass `--force`.
+
+On macOS, to remove everything, including the data directory, use `--force`:
+
+```shell showLineNumbers=false frame=none
+./nodekit uninstall --force
+```
+
+On macOS, `--force` stops `algod`, deletes whichever of `/var/lib/algorand`, `~/node/data` and `~/.algorand` holds an Algorand data directory, and deletes the plist. On Linux, `--force` does not stop `algod` or delete the data directory; delete `/var/lib/algorand` yourself after uninstalling. Your participation keys go with the data directory, so only do this once your accounts are offline.
+
+Neither form removes the `nodekit` binary itself. Delete it from wherever you ran the installer.

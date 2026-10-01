@@ -99,7 +99,7 @@ The validity ranges of participation keys can overlap. For any account, at any t
 
 ## Step-by-Step
 
-- [Create a new participation key](#generating-participation-keys-with-goal) with a first voting round that is less than the last voting round of the current participation key. It should leave enough time to carry out this whole process (e.g. 40,000 rounds).
+- [Create a new participation key](#generating-participation-keys-with-goal) (or press `g` in NodeKit once the node is synced; NodeKit sets the first voting round to the current round) with a first voting round that is less than the last voting round of the current participation key. It should leave enough time to carry out this whole process (e.g. 40,000 rounds).
 - Once the network reaches the first voting round for the new key, submit an online key registration transaction for the [new participation key](/concepts/protocol/registration).
 - Wait at least 320 rounds to [validate that the node is participating](/concepts/protocol/registration#register-your-account-online).
 - Once participation is confirmed, it is safe to [delete the old participation key](/concepts/protocol/partkey-management#removing-old-keys).
@@ -122,3 +122,5 @@ $ goal account deletepartkey --partkeyid IWBP2447JQIT54XWOZ7XKWOBVITS2AEIBOEZXDA
 ```
 
 Make sure to identify the correct key (i.e. make sure it is not the currently registered key) before deleting.
+
+In NodeKit, select the account, then the key, and press `d` on the Key Information screen.

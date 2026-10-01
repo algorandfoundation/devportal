@@ -11,6 +11,8 @@ When first starting a node it will process all blocks in the blockchain, even if
 
 If you cannot wait for catchup, there are multiple options: [AlgoKit](https://algorand.co/algokit) allows quick setup of private network and public networks. For public networks, the node will be non-archiver and use fast-catchup. Sandbox should only be used for development purposes. [Fast Catchup](/nodes/installation/manual-installation#fast-catchup) can be used to quickly sync a non-archiver node, but requires trust in the entity providing the catchpoint. Third-party snapshots such [Nodely.io snapshots](https://nodely.io/extras/) may be used for archiver nodes, but requires trust in the third party. Algorand denies any responsibility if any such snapshot is used.
 
+If you installed with [NodeKit](/nodes/nodekit-overview/), `./nodekit bootstrap` asks whether to run a fast-catchup and starts it if you agree. To start one on an existing node, run `./nodekit catchup` from the directory that holds the binary; `./nodekit catchup stop` aborts one in progress.
+
 :::note
 If a node is stopped it will stop processing blocks. Once the node is restarted, it will start processing blocks where it left off.
 :::
@@ -28,6 +30,8 @@ goal node status [-d <data directory>]
 ```
 
 After running this status check, monitor the `Sync Time:` property that is returned. If this value is incrementing, the node is still synching. The `Sync Time:` will display `Sync Time: 0.0s` when the node is fully caught up. The status also reports the last block process by the node in the `Last committed block:` property. Comparing this block number to what is shown using an Algorand [Block Explorer](https://metrics.allo.info/) will indicate how much more time catchup will take.
+
+In the NodeKit terminal user interface (TUI), the status label at the top shows `FAST-CATCHUP`, then `SYNCING`, then `RUNNING` once caught up, next to `Latest Round`.
 
 :::note
 Progress of last committed block is not linear. Earlier blocks usually have much fewer transactions than more recent blocks and catchup usually slows down the closer to the current block you are.

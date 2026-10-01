@@ -1,8 +1,9 @@
 ---
 title: NodeKit Quick Start
+description: Install NodeKit, bootstrap and sync an Algorand node, then generate participation keys and register them online.
 ---
 
-import { Tabs, TabItem, LinkCard } from '@astrojs/starlight/components';
+import { Tabs, TabItem, LinkCard, Code } from '@astrojs/starlight/components';
 import { Image } from 'astro:assets';
 import nodekitInstall from '@images/nodekit-install.png';
 import nodekitBootstrap from '@images/nodekit-bootstrap.png';
@@ -22,7 +23,8 @@ import nodekitOnliningPera from '@images/nodekit-onlining-pera.png';
 import nodekitOnliningLoraResult from '@images/nodekit-onlining-lora-result.png';
 
 import nodekitKeyregSuccess from '@images/nodekit-keyreg-success.png';
-import nodekitNoteProtocolVoting from '@images/nodekit-note-protocol-voting.png';
+import nodekitNoteProtocolUpgrade from '@images/nodekit-note-protocol-upgrade.png';
+import nodekitAccountParticipating from '@images/nodekit-account-participating.png';
 import nodekitNavigateAccounts from '@images/nodekit-navigate-accounts.gif';
 import nodekitNavigateKeys from '@images/nodekit-navigate-keys.gif';
 
@@ -34,6 +36,17 @@ NodeKit can help you with:
 - Syncing your node with the latest state of the network
 - Managing consensus participation keys
 - Monitoring your node and the network
+
+## Before You Begin
+
+You need:
+
+- A machine that meets the [hardware requirements](/nodes/types#hardware-requirements) for a validator node: 8 vCPU, 16 GB RAM and 100 GB NVMe storage.
+- `sudo` access. NodeKit installs `algod` through your system package manager.
+- On macOS, [Homebrew](https://brew.sh). NodeKit installs `algod` with it and stops with `brew not found` if it is missing.
+- An Algorand account with enough ALGO to cover the 2 ALGO key registration fee. Accounts holding between 30,000 and 70,000,000 ALGO earn rewards for the blocks they propose.
+
+By default, NodeKit registers your account as eligible for staking rewards, which is what the 2 ALGO fee pays for. If the account is already eligible, NodeKit skips the fee. If you don't want rewards eligibility, run NodeKit with the `-n` flag and it registers the key without the fee. The installer and `bootstrap` open the terminal user interface (TUI) without this flag, so to opt out, quit that TUI with `q` and start it again with `./nodekit -n` before you press `r` to register the key.
 
 ## Installing NodeKit
 
@@ -80,8 +93,6 @@ It will then immediately start the bootstrap process to get your Algorand node u
 
 ## Bootstrapping the Algorand Node
 
-import { Code } from '@astrojs/starlight/components';
-
 ### How to Start the Process
 
 The bootstrap process is automatically started after following the installation instructions above, but it can also be triggered manually by running this command:
@@ -93,6 +104,8 @@ The bootstrap process is automatically started after following the installation 
 ### Prompts: Installation and Fast-Catchup
 
 `nodekit bootstrap` will check to see if there is a node already installed.
+
+If it finds a node that is already synced, it opens the TUI straight away. Skip ahead to [Generating Participation Keys](#generating-participation-keys). If the node isn't synced yet, it only asks the fast-catchup question. `bootstrap` only works with the default data directory; for a node elsewhere, open the TUI with `./nodekit -d <path>` instead.
 
 If there is none, it will ask if you want to start a node installation:
 
@@ -141,6 +154,8 @@ The installation phase should only take a few minutes. Your terminal will look l
 
 After installation is complete, NodeKit will automatically start the NodeKit user interface.
 
+When the TUI opens you'll see a `NodeKit Information` popup about peer-to-peer (P2P) hybrid mode. It appears on every launch until you press `d` to stop it, or until you enable hybrid mode. Press `esc`, `enter` or `p` to close it, and `p` to open it again. Enabling hybrid mode is optional. See [P2P configuration](/nodes/management/p2p-config/).
+
 This will display the progress of catching up to the latest state of the Algorand network:
 
 <Image
@@ -150,9 +165,17 @@ This will display the progress of catching up to the latest state of the Algoran
 
 This process usually takes between 30-60 minutes, depending on your hardware and network connection.
 
-When the process is done, the Fast Catchup status information will disappear and the yellow `FAST-CATCHUP` status at the top will change to a green `RUNNING` state.
+The colored status label at the top of the screen tells you where the node is:
 
-<Image src={nodekitStateRunning} alt='Screenshot of NodeKit running in fast-catchup state' />
+| Status         | Meaning                                                                                |
+| -------------- | -------------------------------------------------------------------------------------- |
+| `FAST-CATCHUP` | Downloading a recent snapshot of the ledger. Usually 30–60 minutes.                    |
+| `SYNCING`      | Catching up the remaining rounds from the snapshot to the live network. A few minutes. |
+| `RUNNING`      | Fully synced and following the network in real time.                                   |
+
+When fast-catchup is done, the Fast Catchup status information disappears and the label moves through `SYNCING` to a green `RUNNING`.
+
+<Image src={nodekitStateRunning} alt='Screenshot of NodeKit in RUNNING state after fast-catchup' />
 
 <details>
   <summary>Troubleshooting: Fast-catchup</summary>
@@ -176,7 +199,7 @@ After fast-catchup completes successfully, it is normal for a node to be in a `S
 
 During this the `Latest Round` number should be increasing rapidly.
 
-If there is no progress for a while, or the Latest Round value is smaller than `46000000` (46 million) then you should start fast-catchup again.
+If the Latest Round stops increasing for several minutes, restart fast-catchup as described above.
 
 </details>
 
@@ -190,7 +213,7 @@ If it is not running already, start NodeKit with this command:
 
 After your node has fully synced with the network, you will see a green `RUNNING` label at the top:
 
-<Image src={nodekitStateRunning} alt='NodeKit running in fast-catchup state' />
+<Image src={nodekitStateRunning} alt='NodeKit in RUNNING state' />
 
 You will only be able to generate participation keys after your node is in a `RUNNING` state
 
@@ -204,11 +227,11 @@ NodeKit will ask the account address that will be participating in consensus. En
 
 ### Select Participation Key Duration
 
-NodeKit will ask the number of days that the participation keys will be valid for:
+NodeKit asks how long the keys should be valid for. The default is 30 days; press `enter` to accept it or type a different number.
 
 <Image src={nodekitPartKeyGen2} alt='NodeKit key information display' />
 
-You can press the `S` key to cycle through duration modes in days / months / rounds.
+Press `s` to switch the unit between days, months and rounds.
 
 The longer your duration, the longer the participation key generation step will take to complete.
 
@@ -230,7 +253,7 @@ Occasionally, Nodekit may fall out of sync with the Algorand node while waiting 
 You can:
 
 - wait for the participation keys to appear in the Accounts list
-- try to generate a participation key again - If the key generation process is still running on the node, you will see a `Participation key generation already in progress` error
+- try to generate a participation key again - If the key generation process is still running on the node, you will see a `participation key generation already in progress` error
 
 </details>
 
@@ -244,13 +267,13 @@ You are now one step away from participating in Algorand consensus! The next ste
 
 ## Registering Your Keys Online
 
-After generating a participation key, you can press `r` to start registering it on the Algorand network. By default NodeKit will assume that the account should be made eligible for staking rewards, which costs a 2A fee on key registration. To opt out of this default logic and have accounts not be enrolled in staking rewards, launch NodeKit with `./nodekit -n`, including the `-n` flag.
+After generating a participation key, press `r` to register it on the Algorand network. Registration costs 2 ALGO unless you launched NodeKit with `-n` or the account is already rewards-eligible. See [Before You Begin](#before-you-begin).
 
 You can also start this flow by pressing `r` on the [key information screen](#navigating-accounts-and-keys) shown below.
 
 <Image src={nodekitPartKeyGen4} alt='NodeKit key information display' />
 
-After you press `r`, you will see a link that you can follow to sign your key registration transaction:
+After you press `r`, NodeKit shows a short link to the key registration transaction. The note above the link tells you the fee, `Transaction fee set to 2 ALGO (opting in to rewards)`, unless you launched with `-n` or the account is already eligible.
 
 <figure>
   <Image src={nodekitOnliningLink} alt='NodeKit link to register keys online' />
@@ -275,7 +298,7 @@ After scanning with Pera, you will see the transaction details in your wallet.
 
 </figure>
 
-3. Sign the transaction
+Sign the transaction.
 
 The transaction will be submitted to the network. If it is accepted, you will see a visual confirmation in Lora similar to the one displayed below:
 
@@ -289,14 +312,30 @@ NodeKit will detect the key registration and take you back to the Key informatio
 
 You can press `esc` twice to get back to the home screen.
 
-To confirm that your account is online, review the `STATUS` of your account. Accounts with an `ONLINE` status are participating in consensus.
+## Verify Your Node Is Participating
 
-That's it! If your account balance is over 30,000 ALGO, it will accumulate rewards for each block it proposes on the Algorand network.
+Back on the home screen, your account now has a row in the Accounts table. The status shows `PARTICIPATING` as soon as the transaction is confirmed, but the key only starts voting 320 rounds (about 15 minutes) later.
+
+<Image
+  src={nodekitAccountParticipating}
+  alt='NodeKit Accounts table showing an account with status PARTICIPATING'
+/>
+
+| Column      | What to expect                                                                                                                                                                                                                                 |
+| ----------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Status**  | `PARTICIPATING`: your account is online and its key is valid. `IDLE` means it isn't registered, or the key has expired.                                                                                                                        |
+| **Rewards** | `ELIGIBLE` when you opted in and hold between 30,000 and 70,000,000 ALGO. `PAUSED` when you opted in but your balance is outside that range. `INELIGIBLE` when the account isn't opted in to rewards, for example if you registered with `-n`. |
+| **Expires** | When the participation key runs out. It shows `⚠` in the last week. Generate and register a new key before then to stay online.                                                                                                                |
+
+The status label at the top should be a green `RUNNING` with `Latest Round` increasing. While the node is catching up, the Expires column shows `SYNCING` instead of a date.
 
 :::note
-The `Protocol Voting` label in the top right panel refers to the **consensus protocol upgrade process**, not your account participation.
+The `Protocol Upgrade` row in the `Protocol` panel refers to the **consensus protocol upgrade process**, not your account participation.
 
-<Image src={nodekitNoteProtocolVoting} alt='NodeKit protocol voting indicator location' />
+<Image
+  src={nodekitNoteProtocolUpgrade}
+  alt='NodeKit Protocol panel showing the Protocol Upgrade row'
+/>
 
 :::
 
@@ -324,7 +363,7 @@ If you have more than one set of participating keys for your account, you can hi
 
 Press `enter` to view the key information.
 
-From this screen, you can press `esc` to return back to they keys list, `D` to delete a participation key, or `r` to register your key online or offline.
+From this screen, you can press `esc` to return to the keys list, `d` to delete an inactive key, `r` to register an inactive key online, or `o` to take the active key offline.
 
 <Image src={nodekitNavigateKeys} alt='Demo of navigating between participation keys' />
 
