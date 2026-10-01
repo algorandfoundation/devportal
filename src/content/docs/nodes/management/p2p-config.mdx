@@ -46,7 +46,7 @@ Choose this mode if you have strict bandwidth constraints.
     ./nodekit configure algod --hybrid=false
     ```
 
-    NodeKit writes `EnableP2PHybridMode` to your node's `config.json` and restarts `algod` if the value changed. NodeKit only manages `EnableP2PHybridMode` — if you turned on P2P-only mode by editing `config.json`, set `EnableP2P` to `false` there as well.
+    NodeKit writes `EnableP2PHybridMode` to your node's `config.json` and restarts `algod` if the value changed. NodeKit only manages `EnableP2PHybridMode`. If you turned on P2P-only mode by editing `config.json`, set `EnableP2P` to `false` there as well.
 
   </TabItem>
   <TabItem label='config.json'>
@@ -77,12 +77,12 @@ Choose this mode if you have flexible bandwidth constraints. This mode will also
 <Tabs syncKey='method'>
   <TabItem label='NodeKit'>
 
-    `nodekit bootstrap` does not enable P2P — this is a separate step once your node is running. From the directory that holds the `nodekit` binary:
+    `nodekit bootstrap` does not enable P2P. This is a separate step once your node is running. From the directory that holds the `nodekit` binary:
     ```shell frame=none
     ./nodekit configure algod --hybrid
     ```
 
-    NodeKit writes `EnableP2PHybridMode` to your node's `config.json` and restarts `algod` if the value changed. To check the current setting, run `./nodekit configure algod` with no flags. The TUI's Status panel also shows it as `P2P: HYBRID` or `P2P: NO`, and in hybrid mode splits the peer count into `WS` and `P2P`. The TUI reads the config once when it starts, so if it was already open, quit with `q` and start it again — otherwise it shows `Network/Config Mismatch` until you do.
+    NodeKit writes `EnableP2PHybridMode` to your node's `config.json` and restarts `algod` if the value changed. To check the current setting, run `./nodekit configure algod` with no flags. The Status panel of the terminal user interface (TUI) shows it as `P2P: HYBRID`, `P2P: ONLY` or `P2P: NO`, and in hybrid mode splits the peer count into WebSocket (`WS`) and `P2P`. The TUI reads the config once when it starts, so if it was already open, quit with `q` and start it again. Otherwise it shows `Network/Config Mismatch` until you do.
 
     <Image src={nodekitStateP2PHybrid} alt='NodeKit Status panel showing P2P: HYBRID and a WS/P2P peer split' />
 

@@ -1,5 +1,6 @@
 ---
 title: NodeKit Quick Start
+description: Install NodeKit, bootstrap and sync an Algorand node, then generate participation keys and register them online.
 ---
 
 import { Tabs, TabItem, LinkCard, Code } from '@astrojs/starlight/components';
@@ -22,7 +23,7 @@ import nodekitOnliningPera from '@images/nodekit-onlining-pera.png';
 import nodekitOnliningLoraResult from '@images/nodekit-onlining-lora-result.png';
 
 import nodekitKeyregSuccess from '@images/nodekit-keyreg-success.png';
-import nodekitNoteProtocolVoting from '@images/nodekit-note-protocol-voting.png';
+import nodekitNoteProtocolUpgrade from '@images/nodekit-note-protocol-upgrade.png';
 import nodekitAccountParticipating from '@images/nodekit-account-participating.png';
 import nodekitNavigateAccounts from '@images/nodekit-navigate-accounts.gif';
 import nodekitNavigateKeys from '@images/nodekit-navigate-keys.gif';
@@ -42,9 +43,10 @@ You need:
 
 - A machine that meets the [hardware requirements](/nodes/types#hardware-requirements) for a validator node: 8 vCPU, 16 GB RAM and 100 GB NVMe storage.
 - `sudo` access. NodeKit installs `algod` through your system package manager.
+- On macOS, [Homebrew](https://brew.sh). NodeKit installs `algod` with it and stops with `brew not found` if it is missing.
 - An Algorand account with enough ALGO to cover the 2 ALGO key registration fee. Accounts holding between 30,000 and 70,000,000 ALGO earn rewards for the blocks they propose.
 
-By default, NodeKit registers your account as eligible for staking rewards, which is what the 2 ALGO fee pays for. If you don't want that, run NodeKit with the `-n` flag and it registers the key without the fee. The installer and `bootstrap` open the TUI without this flag, so to opt out, quit that TUI with `q` and start it again with `./nodekit -n` before you press `r` to register the key.
+By default, NodeKit registers your account as eligible for staking rewards, which is what the 2 ALGO fee pays for. If the account is already eligible, NodeKit skips the fee. If you don't want rewards eligibility, run NodeKit with the `-n` flag and it registers the key without the fee. The installer and `bootstrap` open the terminal user interface (TUI) without this flag, so to opt out, quit that TUI with `q` and start it again with `./nodekit -n` before you press `r` to register the key.
 
 ## Installing NodeKit
 
@@ -103,7 +105,7 @@ The bootstrap process is automatically started after following the installation 
 
 `nodekit bootstrap` will check to see if there is a node already installed.
 
-If it finds a node that is already synced, it opens the TUI straight away — skip ahead to [Generating Participation Keys](#generating-participation-keys). If the node isn't synced yet, it only asks the fast-catchup question. `bootstrap` only works with the default data directory; for a node elsewhere, open the TUI with `./nodekit -d <path>` instead.
+If it finds a node that is already synced, it opens the TUI straight away. Skip ahead to [Generating Participation Keys](#generating-participation-keys). If the node isn't synced yet, it only asks the fast-catchup question. `bootstrap` only works with the default data directory; for a node elsewhere, open the TUI with `./nodekit -d <path>` instead.
 
 If there is none, it will ask if you want to start a node installation:
 
@@ -152,7 +154,7 @@ The installation phase should only take a few minutes. Your terminal will look l
 
 After installation is complete, NodeKit will automatically start the NodeKit user interface.
 
-The first time the TUI opens you'll see a `NodeKit Information` popup about P2P hybrid mode. Press `enter` to close it, or `d` to stop it appearing. Enabling hybrid mode is optional — see [P2P configuration](/nodes/management/p2p-config/).
+When the TUI opens you'll see a `NodeKit Information` popup about peer-to-peer (P2P) hybrid mode. It appears on every launch until you press `d` to stop it, or until you enable hybrid mode. Press `esc`, `enter` or `p` to close it, and `p` to open it again. Enabling hybrid mode is optional. See [P2P configuration](/nodes/management/p2p-config/).
 
 This will display the progress of catching up to the latest state of the Algorand network:
 
@@ -251,7 +253,7 @@ Occasionally, Nodekit may fall out of sync with the Algorand node while waiting 
 You can:
 
 - wait for the participation keys to appear in the Accounts list
-- try to generate a participation key again - If the key generation process is still running on the node, you will see a `Participation key generation already in progress` error
+- try to generate a participation key again - If the key generation process is still running on the node, you will see a `participation key generation already in progress` error
 
 </details>
 
@@ -265,13 +267,13 @@ You are now one step away from participating in Algorand consensus! The next ste
 
 ## Registering Your Keys Online
 
-After generating a participation key, press `r` to register it on the Algorand network. Registration costs 2 ALGO unless you launched NodeKit with `-n` — see [Before You Begin](#before-you-begin).
+After generating a participation key, press `r` to register it on the Algorand network. Registration costs 2 ALGO unless you launched NodeKit with `-n` or the account is already rewards-eligible. See [Before You Begin](#before-you-begin).
 
 You can also start this flow by pressing `r` on the [key information screen](#navigating-accounts-and-keys) shown below.
 
 <Image src={nodekitPartKeyGen4} alt='NodeKit key information display' />
 
-After you press `r`, NodeKit shows a short link to the key registration transaction. The note above the link tells you the fee — `Transaction fee set to 2 ALGO (opting in to rewards)` — unless you launched with `-n`.
+After you press `r`, NodeKit shows a short link to the key registration transaction. The note above the link tells you the fee, `Transaction fee set to 2 ALGO (opting in to rewards)`, unless you launched with `-n` or the account is already eligible.
 
 <figure>
   <Image src={nodekitOnliningLink} alt='NodeKit link to register keys online' />
@@ -321,16 +323,19 @@ Back on the home screen, your account now has a row in the Accounts table. The s
 
 | Column      | What to expect                                                                                                                                                                                                                                 |
 | ----------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Status**  | `PARTICIPATING` — your account is online and its key is valid. `IDLE` means it isn't registered, or the key has expired.                                                                                                                       |
+| **Status**  | `PARTICIPATING`: your account is online and its key is valid. `IDLE` means it isn't registered, or the key has expired.                                                                                                                        |
 | **Rewards** | `ELIGIBLE` when you opted in and hold between 30,000 and 70,000,000 ALGO. `PAUSED` when you opted in but your balance is outside that range. `INELIGIBLE` when the account isn't opted in to rewards, for example if you registered with `-n`. |
 | **Expires** | When the participation key runs out. It shows `⚠` in the last week. Generate and register a new key before then to stay online.                                                                                                                |
 
 The status label at the top should be a green `RUNNING` with `Latest Round` increasing. While the node is catching up, the Expires column shows `SYNCING` instead of a date.
 
 :::note
-The `Protocol Voting` label in the top right panel refers to the **consensus protocol upgrade process**, not your account participation.
+The `Protocol Upgrade` row in the `Protocol` panel refers to the **consensus protocol upgrade process**, not your account participation.
 
-<Image src={nodekitNoteProtocolVoting} alt='NodeKit protocol voting indicator location' />
+<Image
+  src={nodekitNoteProtocolUpgrade}
+  alt='NodeKit Protocol panel showing the Protocol Upgrade row'
+/>
 
 :::
 
@@ -358,7 +363,7 @@ If you have more than one set of participating keys for your account, you can hi
 
 Press `enter` to view the key information.
 
-From this screen, you can press `esc` to return to the keys list, `d` to delete a participation key, `r` to register an unregistered key online, or `o` to take a registered key offline.
+From this screen, you can press `esc` to return to the keys list, `d` to delete an inactive key, `r` to register an inactive key online, or `o` to take the active key offline.
 
 <Image src={nodekitNavigateKeys} alt='Demo of navigating between participation keys' />
 
