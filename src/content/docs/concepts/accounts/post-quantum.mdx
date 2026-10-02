@@ -74,12 +74,12 @@ An address that is **not** a curve point is called **post-quantum (PQ) compliant
 This property is not new in the v42 upgrade. It has held for application and contract accounts for as long as they have existed. What v42 adds is a name for the property, a tool to test it, and an automatic fix for some of these address types.
 :::
 
-| Address type            | Derived by hashing              | PQ compliant by construction?           |
-| ----------------------- | ------------------------------- | --------------------------------------- |
-| Post-quantum account    | scheme, salt, Falcon public key | **Yes** — the salt is searched          |
-| LogicSig contract       | the compiled program            | **Yes** for TEAL v13+ contract accounts |
-| Multisig account        | version, threshold, signer keys | No                                      |
-| **Application account** | **the application ID**          | **No, and nothing checks it for you**   |
+| Address type            | Derived by hashing              | PQ compliant by construction?         |
+| ----------------------- | ------------------------------- | ------------------------------------- |
+| Post-quantum account    | scheme, salt, Falcon public key | **Yes** — the salt is searched        |
+| LogicSig contract       | the compiled program            | **Yes**, when the assembler salts it  |
+| Multisig account        | version, threshold, signer keys | No                                    |
+| **Application account** | **the application ID**          | **No, and nothing checks it for you** |
 
 ### Application Accounts
 
@@ -129,13 +129,19 @@ A logic signature contract account derives its address from the compiled program
 address = SHA512-256("Program" || program)
 ```
 
-Unlike an application ID, a program has room in it to change. Since **TEAL v13**, the assembler takes advantage of this: when a stateless program would hash to an on-curve address, it automatically appends a salt value to the program's integer constant block and searches for one that produces a PQ compliant address. Compiling a contract account at v13 or later gives you a PQ compliant address without doing anything. As a second layer, algod rejects a transaction spending from an on-curve TEAL v13+ contract account when it is submitted. This is the same node-level safeguard described under [The Salt Byte](#the-salt-byte): it applies at the REST boundary rather than in consensus, and the same `skip-pq-address-check` parameter bypasses it.
+Unlike an application ID, a program has room in it to change, and assemblers now take advantage of this: when a stateless program would hash to an on-curve address, the assembler appends a salt value as an integer constant and searches for one that produces a PQ compliant address. Salting happens during assembly, so whether a program is salted depends on the tool that assembled it, not only on its TEAL version:
 
-Three cases fall outside that protection:
+- **go-algorand's assembler**, used by `goal clerk compile` and algod's `/v2/teal/compile` endpoint, salts programs at TEAL v13 or later by default.
+- **PuyaPy 5.10+ and PuyaTs 1.3+** salt logic signatures by default at any TEAL version.
 
-- **Programs compiled at TEAL v12 or earlier.** Neither the automatic salt nor the node's check applies. Recompiling an existing contract account at v13+ produces a PQ compliant address, but it is a _different_ address, so it means moving funds.
+As a second layer, algod rejects a transaction spending from an on-curve TEAL v13+ contract account when it is submitted, whichever tool assembled the program. This is the same node-level safeguard described under [The Salt Byte](#the-salt-byte): it applies at the REST boundary rather than in consensus, and the same `skip-pq-address-check` parameter bypasses it. The rejection happens when the account tries to spend, not when it is funded, so run `algokey pq check-address` on a contract account's address before sending funds to it.
+
+These cases fall outside that protection:
+
+- **Programs compiled at TEAL v12 or earlier.** The node's check does not apply, and go-algorand's assembler only salts them if the program opts in with `#pragma autosalt true`. Fixing an on-curve contract account means recompiling it with salting, which produces a _different_ address, so it means moving funds.
+- **Programs that were not salted during assembly.** A program assembled by tooling that does not salt, or whose bytes are changed after assembly, can hash to an on-curve address at any TEAL version. At v13 or later, the node's check still applies to it.
 - **Delegated logic signatures.** The node's check covers contract accounts only. A delegated program is authorized by the delegating account's signature, so the relevant address is the delegator's, not the program hash.
-- **`#pragma autosalt false`.** This opts out of the automatic salt. The assembler warns, but the program still compiles.
+- **Salting turned off.** `#pragma autosalt false`, or `autosalt` set to false in Puya, opts out of the automatic salt. go-algorand's assembler warns when this leaves the address on-curve, but the program still compiles.
 
 ### Multisig Accounts
 
