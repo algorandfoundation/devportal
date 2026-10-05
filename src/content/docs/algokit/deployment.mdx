@@ -49,14 +49,14 @@ AlgoKit loads a general `.env` file from your project directory first, then a ne
 
 These are the variables the deploy reads. `localnet`, `testnet`, and `mainnet` have default server URLs, so `ALGOD_SERVER` and `INDEXER_SERVER` are required only for other network names:
 
-| Variable         | Required             | Description                                                                                 |
-| ---------------- | -------------------- | ------------------------------------------------------------------------------------------- |
-| `ALGOD_SERVER`   | Custom networks only | Base URL of the algod endpoint, scheme included, e.g. `https://testnet-api.4160.nodely.dev` |
-| `ALGOD_PORT`     | No                   | Port for algod. Omit for HTTPS endpoints on 443                                             |
-| `ALGOD_TOKEN`    | No                   | API token for algod. Empty string for token-free public endpoints                           |
-| `INDEXER_SERVER` | Custom networks only | Base URL of the indexer endpoint                                                            |
-| `INDEXER_PORT`   | No                   | Port for indexer. Omit for HTTPS endpoints on 443                                           |
-| `INDEXER_TOKEN`  | No                   | API token for indexer. Empty string for token-free public endpoints                         |
+| Variable         | Required                                                                               | Description                                                                                 |
+| ---------------- | -------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------- |
+| `ALGOD_SERVER`   | Custom networks only. Ignored for `testnet` and `mainnet` unless exported in the shell | Base URL of the algod endpoint, scheme included, e.g. `https://testnet-api.4160.nodely.dev` |
+| `ALGOD_PORT`     | No                                                                                     | Port for algod. Omit for HTTPS endpoints on 443                                             |
+| `ALGOD_TOKEN`    | No                                                                                     | API token for algod. Empty string for token-free public endpoints                           |
+| `INDEXER_SERVER` | Custom networks only. Ignored for `testnet` and `mainnet` unless exported in the shell | Base URL of the indexer endpoint                                                            |
+| `INDEXER_PORT`   | No                                                                                     | Port for indexer. Omit for HTTPS endpoints on 443                                           |
+| `INDEXER_TOKEN`  | No                                                                                     | API token for indexer. Empty string for token-free public endpoints                         |
 
 ### Overriding the Default Endpoint
 
