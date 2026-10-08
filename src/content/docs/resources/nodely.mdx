@@ -1,0 +1,166 @@
+---
+title: Nodely
+description: Reference for Nodely's public Algorand algod and indexer endpoints, covering archival access, failover hostname sets, legacy hostnames, and free-tier limits and errors.
+---
+
+import { LinkCard } from '@astrojs/starlight/components';
+
+Nodely is a third-party infrastructure provider, based in Poland, that runs public `algod` and `indexer` endpoints for Algorand. The free tier needs no registration or API token, and AlgoKit uses it as the default endpoint for TestNet and MainNet.
+
+Nodely sets its own availability, limits, and pricing, and can change them. This page records what Nodely's documentation states at the time of writing, and the [Additional Resources](#additional-resources) section links to the source for each figure.
+
+The sections below list the free endpoints and what they support, the example requests and error responses, the failover hostnames, the legacy hostnames, and the free-tier limits.
+
+## Endpoints by Network
+
+Each endpoint listens on port 443. SDK configuration takes the base URL as listed, with no `/v2` or trailing `/`.
+
+| Network | Service | Endpoint                              |
+| ------- | ------- | ------------------------------------- |
+| MainNet | algod   | `https://mainnet-api.4160.nodely.dev` |
+| MainNet | indexer | `https://mainnet-idx.4160.nodely.dev` |
+| TestNet | algod   | `https://testnet-api.4160.nodely.dev` |
+| TestNet | indexer | `https://testnet-idx.4160.nodely.dev` |
+| BetaNet | algod   | `https://betanet-api.4160.nodely.dev` |
+| BetaNet | indexer | `https://betanet-idx.4160.nodely.dev` |
+| FNet    | algod   | `https://fnet-api.4160.nodely.dev`    |
+| FNet    | indexer | `https://fnet-idx.4160.nodely.dev`    |
+
+## What the Free Endpoints Support
+
+| Capability          | Detail                                                                                               |
+| ------------------- | ---------------------------------------------------------------------------------------------------- |
+| Archival data       | Every free `algod` and `indexer` endpoint is archival                                                |
+| API surface         | Unmodified algod v2 and indexer v2 APIs                                                              |
+| Developer endpoints | Enabled on `algod`: `/v2/teal/compile`, `/v2/teal/disassemble`, and `/v2/transactions/async`         |
+| Authentication      | None. Requests carry no `X-Algo-API-Token` header                                                    |
+| Browser access      | Responses include `access-control-allow-origin: *`, so frontend code can call the endpoints directly |
+| Distribution        | Primary endpoints are served through Cloudflare from 19 regions                                      |
+| SDK compatibility   | Standard Algorand SDKs and AlgoKit Utils work without changes, because the API is unmodified         |
+| Support             | Best effort, per Nodely's pricing page. The free tier has no service level agreement (SLA)           |
+
+## Example Requests
+
+A status request against TestNet `algod` needs no headers:
+
+```shell frame=none showLineNumbers=false
+curl https://testnet-api.4160.nodely.dev/v2/status
+```
+
+The response is the standard `algod` `/v2/status` body. An excerpt:
+
+```json frame=none showLineNumbers=false
+{
+  "catchup-time": 0,
+  "last-round": 67776061,
+  "next-version-round": 67776062,
+  "next-version-supported": true
+}
+```
+
+A request for a round the ledger has not reached returns `404`:
+
+```shell frame=none showLineNumbers=false
+curl https://testnet-api.4160.nodely.dev/v2/blocks/999999999
+```
+
+```json frame=none showLineNumbers=false
+{ "message": "failed to retrieve information from the ledger" }
+```
+
+The free-tier limit errors, `429` and `403`, are listed under [Errors](#errors).
+
+## Failover Endpoint Sets
+
+Nodely publishes three hostname families for MainNet and TestNet. Each family runs on separate delivery infrastructure, so an outage at one content delivery network (CDN) leaves the other two reachable. In the patterns below, `{net}` is `mainnet` or `testnet`.
+
+| Role              | algod                        | indexer                      | Delivery                                              |
+| ----------------- | ---------------------------- | ---------------------------- | ----------------------------------------------------- |
+| Primary           | `{net}-api.4160.nodely.dev`  | `{net}-idx.4160.nodely.dev`  | Cloudflare, 19 regions                                |
+| Backup            | `{net}-api.algonode.xyz`     | `{net}-idx.algonode.xyz`     | Bunny CDN, 19 regions                                 |
+| Disaster recovery | `{net}-api.algonode.network` | `{net}-idx.algonode.network` | Domain Name System (DNS) failover, no CDN, 12 regions |
+
+Nodely recommends that backends switch between these sets automatically or behind a feature flag when the primary CDN fails.
+
+## Legacy Hostnames
+
+The older `algonode.cloud` hostnames remain in service. Nodely documents them as legacy endpoints on the same infrastructure under the same rules, and has not published a retirement date.
+
+| Network | algod                                | indexer                              |
+| ------- | ------------------------------------ | ------------------------------------ |
+| MainNet | `https://mainnet-api.algonode.cloud` | `https://mainnet-idx.algonode.cloud` |
+| TestNet | `https://testnet-api.algonode.cloud` | `https://testnet-idx.algonode.cloud` |
+| BetaNet | `https://betanet-api.algonode.cloud` | `https://betanet-idx.algonode.cloud` |
+
+AlgoKit resolves to these hostnames by default. `ClientManager.getAlgoNodeConfig()` in AlgoKit Utils returns an `algonode.cloud` URL, and `algokit project deploy testnet` and `algokit project deploy mainnet` derive their defaults from it.
+
+To point a deploy at a different endpoint, see [Overriding the Default Endpoint](/algokit/deployment#overriding-the-default-endpoint).
+
+### AlgoNode and Nodely
+
+Both names refer to the same service. Nodely is the operating company and AlgoNode is the earlier service brand. The AlgoNode name survives in three places:
+
+- The `algonode.cloud` legacy hostnames.
+- The `algonode.xyz` and `algonode.network` failover hostnames. These are current, not legacy.
+- AlgoKit Utils API names: `ClientManager.getAlgoNodeConfig()` in TypeScript and `ClientManager.get_algonode_config()` in Python.
+
+## Free-Tier Limits
+
+Nodely applies quotas per project or site, and rate limits per user or Internet Protocol (IP) address.
+
+| Limit                              | Value                                   | Applies to    |
+| ---------------------------------- | --------------------------------------- | ------------- |
+| Monthly requests                   | 6,000,000                               | Project       |
+| Daily requests                     | 200,000                                 | Project       |
+| Monthly response volume            | 150 GB                                  | Project       |
+| Daily response volume              | 5 GB                                    | Project, user |
+| Requests per second                | 60                                      | User          |
+| Requests per second, all regions   | 1,000                                   | Site          |
+| Transaction submissions per second | 18                                      | User          |
+| Concurrent calls                   | 10                                      | User          |
+| Added latency                      | 150 ms, or 250 ms for archival requests | Every request |
+
+Nodely's quickstart page states the added latency as 50 ms. The fair usage policy states 150 ms, and this page uses the policy figure.
+
+### Errors
+
+| Status | Cause                                                             |
+| ------ | ----------------------------------------------------------------- |
+| `429`  | The per-second rate limit or the concurrency limit was exceeded   |
+| `403`  | The daily request quota or the daily response volume was exceeded |
+
+Failed requests count toward the quota. Nodely asks that clients apply exponential backoff after a `429` and not retry immediately.
+
+### Conditions of Use
+
+Projects issuing more than one million requests per month are asked to credit Nodely on their site. Public-good projects can apply to Nodely's public goods program for an allowance above the free tier.
+
+## Paid Tiers
+
+Nodely sells Unlimited, Business, and Enterprise tiers above the free tier, which differ in throughput, SLA, and support. Nodely Pricing under [Additional Resources](#additional-resources) lists the current terms.
+
+## When the Free Tier Stops Fitting
+
+The free tier stops fitting an application when any of these hold:
+
+- Sustained traffic approaches the daily or monthly quota, or bursts past 60 requests per second.
+- The added 150 ms of latency is too slow for the application.
+- The application needs an SLA.
+- Query patterns or client addresses cannot be routed through a third party.
+
+For a self-hosted setup, see [Algorand Node Types](/nodes/types) for hardware requirements and [Indexer Installation](/nodes/installation/indexer-installation) for historical queries.
+
+<LinkCard
+  title='Deploying to TestNet and MainNet'
+  href='/algokit/deployment'
+  description='How to point an AlgoKit project at a public network endpoint and deploy to it.'
+/>
+
+## Additional Resources
+
+- [Nodely QuickStart](https://nodely.io/docs/free/start/): free-tier overview and SDK setup.
+- [Nodely Endpoint Matrix](https://nodely.io/docs/free/endpoints/): every free-tier endpoint, including Tor and Voi networks.
+- [Nodely Backup Endpoints](https://nodely.io/docs/free/backup/): the primary, backup, and disaster recovery hostname sets.
+- [Nodely Fair Usage Policy](https://nodely.io/docs/free/policy/): free-tier quotas, throttling, and conditions of use.
+- [Nodely Pricing](https://nodely.io/pricing/): tier pricing, throughput limits, SLAs, and support levels.
+- [Nodely Documentation](https://nodely.io/docs/): telemetry, archival snapshots, Light Indexer, BigQuery dataset, IPFS gateway, and other Nodely services.
