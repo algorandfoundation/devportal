@@ -356,6 +356,7 @@ export default defineConfig({
                 { slug: 'concepts/smart-contracts/apps' },
                 { slug: 'concepts/smart-contracts/abi' },
                 { slug: 'concepts/smart-contracts/control-flow' },
+                { slug: 'concepts/smart-contracts/code-structure' },
                 { slug: 'concepts/smart-contracts/inner-txn' },
                 { slug: 'concepts/smart-contracts/resource-usage' },
                 { slug: 'concepts/smart-contracts/opcodes-overview' },
