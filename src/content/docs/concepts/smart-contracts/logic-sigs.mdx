@@ -10,7 +10,7 @@ import RemoteCode from '/src/components/RemoteCode.astro';
 import lsigsDiagram1 from '@images/smart-contracts-lsigs-1.png';
 import lsigsDiagram2 from '@images/smart-contracts-lsigs-2.png';
 import lsigsDiagram3 from '@images/smart-contracts-lsigs-3.png';
-import { LinkCard } from '@astrojs/starlight/components';
+import { LinkCard, CardGrid } from '@astrojs/starlight/components';
 
 Logic Signatures (LogicSig), are a feature in Algorand that allows transactions to be authorized using a TEAL program. These signatures are used to sign transactions from either a **_Contract Account_** or a **_Delegated Account_**.
 
@@ -152,8 +152,15 @@ The following logic signature ensures the contract will cover the fee for a prio
 - **_Public Nature of Code and Arguments_**: The logic signature code, the transaction fields, and the arguments of the logic signature are all public. An attacker can replay a transaction signed by a logic signature. Also, arguments of Logic Signatures are not signed by the sender account and are not part of the computation of the group ID.
 - **_Network Considerations_**: The same logic signature can be used in multiple networks. If a logic signature is signed with the intent of using it on TestNet, that same transaction can be sent to MainNet with that same logic signature. Its always recommended to check which network lsig is running on.
 
-<LinkCard
-  title='Logic signatures in Algorand TypeScript'
-  description='Writing logic signatures in the Algorand TypeScript language guide'
-  href='/docs/algorand-typescript/typescript/latest/language-guide/program-structure/#logic-signatures'
-/>
+<CardGrid>
+  <LinkCard
+    title='Logic signatures in Algorand TypeScript'
+    description='Writing logic signatures in the Algorand TypeScript language guide'
+    href='/docs/algorand-typescript/typescript/latest/language-guide/program-structure/#logic-signatures'
+  />
+  <LinkCard
+    title='Logic signatures in Algorand Python'
+    description='Writing logic signatures in the Algorand Python language guide'
+    href='/docs/algorand-python/python/latest/guides/lg-structure/#logic-signatures'
+  />
+</CardGrid>

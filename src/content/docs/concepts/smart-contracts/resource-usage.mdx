@@ -3,7 +3,7 @@ title: Resource Usage
 ---
 
 import { Code } from '@astrojs/starlight/components';
-import { Tabs, TabItem, LinkCard } from '@astrojs/starlight/components';
+import { Tabs, TabItem, LinkCard, CardGrid } from '@astrojs/starlight/components';
 import RemoteCode from '/src/components/RemoteCode.astro';
 
 Algorand smart contracts do not have default access to the entire blockchain ledger. Therefore, when a smart contract method needs to access resources such as accounts, assets (ASA), other applications (smart contracts), or box references, these must be provided through the reference array during invocation. This page explains what reference arrays are, why they are necessary, the different ways to provide them, and includes a series of code examples.
@@ -830,8 +830,15 @@ This provides extra budget without specifying a particular box.
 }
 ```
 
-<LinkCard
-  title='Account, Asset and Application types in Algorand TypeScript'
-  description='Reference types for accessing accounts, assets and applications from a contract in the Algorand TypeScript language guide'
-  href='/docs/algorand-typescript/typescript/latest/language-guide/types/#account-asset-application'
-/>
+<CardGrid>
+  <LinkCard
+    title='Account, Asset and Application types in Algorand TypeScript'
+    description='Reference types for accessing accounts, assets and applications from a contract in the Algorand TypeScript language guide'
+    href='/docs/algorand-typescript/typescript/latest/language-guide/types/#account-asset-application'
+  />
+  <LinkCard
+    title='Account, Asset and Application types in Algorand Python'
+    description='Reference types for accessing accounts, assets and applications from a contract in the Algorand Python language guide'
+    href='/docs/algorand-python/python/latest/guides/lg-types/#avm-types'
+  />
+</CardGrid>

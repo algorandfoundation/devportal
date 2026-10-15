@@ -6,7 +6,7 @@ description: Overview of Inner Transactions in Algorand Smart Contracts.
 import { Tabs, TabItem } from '@astrojs/starlight/components';
 import { Code } from '@astrojs/starlight/components';
 import RemoteCode from '/src/components/RemoteCode.astro';
-import { LinkCard } from '@astrojs/starlight/components';
+import { LinkCard, CardGrid } from '@astrojs/starlight/components';
 
 ## What are Inner Transactions?
 
@@ -340,8 +340,15 @@ Smart contracts can dynamically create and deploy other smart contracts using in
   </TabItem>
 </Tabs>
 
-<LinkCard
-  title='Inner transactions in Algorand TypeScript'
-  description='Composing and submitting inner transactions in the Algorand TypeScript language guide'
-  href='/docs/algorand-typescript/typescript/latest/language-guide/itxns/'
-/>
+<CardGrid>
+  <LinkCard
+    title='Inner transactions in Algorand TypeScript'
+    description='Composing and submitting inner transactions in the Algorand TypeScript language guide'
+    href='/docs/algorand-typescript/typescript/latest/language-guide/itxns/'
+  />
+  <LinkCard
+    title='Inner transactions in Algorand Python'
+    description='Composing and submitting inner transactions in the Algorand Python language guide'
+    href='/docs/algorand-python/python/latest/guides/lg-transactions/#inner-transactions'
+  />
+</CardGrid>
