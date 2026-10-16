@@ -4,7 +4,7 @@ sidebar:
   label: Development Lifecycle
 ---
 
-import { LinkCard } from '@astrojs/starlight/components';
+import { LinkCard, CardGrid } from '@astrojs/starlight/components';
 import YouTube from '/src/components/YouTube.astro';
 
 This page will walk you through the Algorand smart contract development lifecycle, a comprehensive process that guides developers from initial setup to final deployment on MainNet. By following these steps with AlgoKit, you’ll be able to build robust, secure, and efficient smart contracts in either [Algorand Python](/concepts/smart-contracts/languages/python) or [Algorand TypeScript](/concepts/smart-contracts/languages/typescript).
@@ -187,3 +187,16 @@ You can build your UI using any popular web framework—React, Angular, or Vue�
 By following this structured development lifecycle—from environment setup and contract implementation to auditing, deployment, and optional frontend integration—you’ll ensure that your Algorand applications are secure, efficient, and ready for real-world usage.
 
 :::
+
+<CardGrid>
+  <LinkCard
+    title='Application lifecycle methods in Algorand TypeScript'
+    description='Create, update, delete and other lifecycle methods in the Algorand TypeScript language guide'
+    href='/docs/algorand-typescript/typescript/latest/language-guide/program-structure/#application-lifecycle-methods-and-other-method-options'
+  />
+  <LinkCard
+    title='Contract classes in Algorand Python'
+    description='Application lifecycle and contract class configuration in the Algorand Python language guide'
+    href='/docs/algorand-python/python/latest/guides/lg-structure/#contract-classes'
+  />
+</CardGrid>

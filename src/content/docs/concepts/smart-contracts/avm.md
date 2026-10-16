@@ -368,6 +368,8 @@ An application transaction must indicate the action to be taken following the ex
 
 ## Operations
 
+For how these opcodes are exposed in each language, see AVM operations in [Algorand TypeScript](/docs/algorand-typescript/typescript/latest/language-guide/ops/) and [Algorand Python](/docs/algorand-python/python/latest/guides/lg-ops/), or the [Opcodes overview](/concepts/smart-contracts/opcodes-overview) Concepts page.
+
 Most operations work with only one type of argument, `uint64` or `bytes`, and fail if the wrong type value is on the stack.
 
 Many instructions accept values to designate Accounts, Assets, or Applications.

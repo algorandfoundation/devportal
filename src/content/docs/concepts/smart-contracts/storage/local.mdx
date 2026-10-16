@@ -12,6 +12,7 @@ import {
   setLocalStorageTEAL,
   deleteLocalStorageTEAL,
 } from '/src/content/code-imports.js';
+import { LinkCard, CardGrid } from '@astrojs/starlight/components';
 
 Local state is associated with each account that opts into the application.
 Algorand smart contracts offer local storage, which enables accounts to maintain persistent key-value data. This data is accessible to authorized contracts and can be queried from external sources.
@@ -216,3 +217,16 @@ Different functions of LocalState class can be used. The detailed api reference 
 | setitem(account, value) | Set data for the given account                                        |
 | delitem(account)        | Delete data for the given account                                     |
 | contains(account)       | Check if data exists for the given account                            |
+
+<CardGrid>
+  <LinkCard
+    title='Local storage in Algorand TypeScript'
+    description='How to declare and use local state in the Algorand TypeScript language guide'
+    href='/docs/algorand-typescript/typescript/latest/language-guide/storage/#local-storage'
+  />
+  <LinkCard
+    title='Local storage in Algorand Python'
+    description='Declaring and using local state in the Algorand Python language guide'
+    href='/docs/algorand-python/python/latest/guides/lg-storage/#local-storage'
+  />
+</CardGrid>

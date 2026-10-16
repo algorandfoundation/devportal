@@ -5,7 +5,7 @@ sidebar:
 description: Data storage primitives in the Algorand Virtual Machine (AVM)
 ---
 
-import { LinkCard } from '@astrojs/starlight/components';
+import { LinkCard, CardGrid } from '@astrojs/starlight/components';
 
 In Algorand, when developing an application, data and values can be persistently saved on the decentralized ledger itself. This storage mechanism is known as on-chain storage.
 
@@ -123,3 +123,16 @@ This approach eliminates the need for opt-in transactions since we're not using 
   description='Detailed guide on implementing and managing Box Storage in Algorand smart contracts'
   href='/concepts/smart-contracts/storage/box/'
 />
+
+<CardGrid>
+  <LinkCard
+    title='Storage in Algorand TypeScript'
+    description='Global, local, box and scratch storage in the Algorand TypeScript language guide'
+    href='/docs/algorand-typescript/typescript/latest/language-guide/storage/'
+  />
+  <LinkCard
+    title='Storage in Algorand Python'
+    description='Global, local, box and scratch storage in the Algorand Python language guide'
+    href='/docs/algorand-python/python/latest/guides/lg-storage/'
+  />
+</CardGrid>
