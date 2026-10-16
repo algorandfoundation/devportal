@@ -92,7 +92,7 @@ Algorand Request for Comments (ARC) standard, and you want the compiler to check
 that each one is complete.
 
 An ABI declaration constrains method names, argument types and return types. It
-does not constrain behaviour, so implementing an interface is not evidence that
+does not constrain behavior, so implementing an interface is not evidence that
 a contract follows the standard the interface came from.
 
 **Algorand TypeScript**
@@ -175,17 +175,19 @@ through `arc4.abi_call`, which takes the method off the class.
 
 ## Feature Mixins
 
-A mixin is a small class holding one reusable behaviour, such as an owner check
+A mixin is a small class holding one reusable behavior, such as an owner check
 or a pause switch, that a contract inherits alongside others. Mixins that
 declare storage under the same key overwrite each other silently, so give each
 mixin its own key prefix.
 
 **Algorand TypeScript**
 
-There is no native multiple inheritance. A linear stack of behaviours can use
+There is no native multiple inheritance. A linear stack of behaviors can use
 chained `extends`. Combining two independent mixins needs the Polytype package,
 whose method resolution order is depth first: the whole prototype chain of the
-first base type is walked before the second is considered.
+first base type is walked before the second is considered. The
+[Algorand TypeScript language guide](/docs/algorand-typescript/typescript/latest/language-guide/program-structure/#multi-inheritance)
+covers the syntax.
 
 Marking the mixin class `abstract` keeps it out of the build.
 
@@ -198,7 +200,9 @@ Marking the mixin class `abstract` keeps it out of the build.
 **Algorand Python**
 
 Mixins compose with ordinary multiple inheritance, following Python's method
-resolution order. Each base class's `__init__` must be called explicitly.
+resolution order. Each base class's `__init__` must be called explicitly. The
+[Algorand Python language guide](/docs/algorand-python/python/latest/guides/lg-structure/)
+covers contract class structure.
 
 Keeping a mixin out of the build takes at least one unimplemented
 `@abstractmethod`. Inheriting `ABC` alone does not do it, and the mixin is then
@@ -315,7 +319,7 @@ Constants in a module, imported where they are raised. For ARC-65 logged errors,
 | Keeping a base class undeployed | Needs at least one unimplemented `@abstractmethod`; inheriting `ABC` alone still compiles the class | The `abstract` class modifier is enough                                                 |
 | Abstract methods                | Supported, and can carry `@arc4.abimethod` at the same time                                         | Not supported; a method declared `abstract` has no body, and every method needs one     |
 | Generating a call stub          | `puyapy-clientgen`, or `--output-client` while compiling                                            | `puya-ts-clientgen`, or `--output-client` while compiling                               |
-| Constructors                    | Each base class's `__init__` is called explicitly                                                   | State is set up with property initialisers; one-time setup goes in an `onCreate` method |
+| Constructors                    | Each base class's `__init__` is called explicitly                                                   | State is set up with property initializers; one-time setup goes in an `onCreate` method |
 
 ## Additional Resources
 
