@@ -308,14 +308,14 @@ Constants in a module, imported where they are raised. For ARC-65 logged errors,
 
 ## Language Differences
 
-| Topic                            | Algorand Python                                                                                      | Algorand TypeScript                                                                      |
-| -------------------------------- | ---------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
-| Forcing an implementation        | `@abstractmethod` on an `ARC4Contract, ABC` base; an incomplete subclass is dropped with a warning     | A plain `interface` and `implements`; an incomplete class stops the build                  |
-| Multiple inheritance             | Native, using Python's method resolution order                                                         | Chained `extends`, or `classes(A, B)` from Polytype, resolved depth first                  |
-| Keeping a base class undeployed  | Needs at least one unimplemented `@abstractmethod`; inheriting `ABC` alone still compiles the class    | The `abstract` class modifier is enough                                                    |
-| Abstract methods                 | Supported, and can carry `@arc4.abimethod` at the same time                                            | Not supported; a method declared `abstract` has no body, and every method needs one        |
-| Generating a call stub           | `puyapy-clientgen`, or `--output-client` while compiling                                               | `puya-ts-clientgen`, or `--output-client` while compiling                                  |
-| Constructors                     | Each base class's `__init__` is called explicitly                                                      | State is set up with property initialisers; one-time setup goes in an `onCreate` method    |
+| Topic                           | Algorand Python                                                                                     | Algorand TypeScript                                                                     |
+| ------------------------------- | --------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------- |
+| Forcing an implementation       | `@abstractmethod` on an `ARC4Contract, ABC` base; an incomplete subclass is dropped with a warning  | A plain `interface` and `implements`; an incomplete class stops the build               |
+| Multiple inheritance            | Native, using Python's method resolution order                                                      | Chained `extends`, or `classes(A, B)` from Polytype, resolved depth first               |
+| Keeping a base class undeployed | Needs at least one unimplemented `@abstractmethod`; inheriting `ABC` alone still compiles the class | The `abstract` class modifier is enough                                                 |
+| Abstract methods                | Supported, and can carry `@arc4.abimethod` at the same time                                         | Not supported; a method declared `abstract` has no body, and every method needs one     |
+| Generating a call stub          | `puyapy-clientgen`, or `--output-client` while compiling                                            | `puya-ts-clientgen`, or `--output-client` while compiling                               |
+| Constructors                    | Each base class's `__init__` is called explicitly                                                   | State is set up with property initialisers; one-time setup goes in an `onCreate` method |
 
 ## Additional Resources
 
