@@ -1,0 +1,329 @@
+---
+title: Code Structure
+description: Six patterns for splitting Algorand smart contract code across classes and modules, the trade-offs of each, and how they differ between Algorand Python and Algorand TypeScript.
+---
+
+import { LinkCard } from '@astrojs/starlight/components';
+
+Algorand smart contracts are ordinary Python and TypeScript classes, so the
+language's own ways of splitting code across classes and modules apply to them.
+This page describes six such patterns and what each one costs. All six work in
+both Algorand Python and Algorand TypeScript, though three take a different form
+in each language.
+
+```d2 darkTheme='false' title='Five Layers of a Structured Contract'
+  vars: {
+    d2-config: {
+      pad: 60
+      layout-engine: dagre
+      sketch: true
+      theme-overrides: {
+        N1: "#001324"
+        N2: "#192A39"
+        N4: "#4C5965"
+        N5: "#7F8991"
+        N7: "#dfe1e5"
+        B1: "#2D2DF1"
+        B2: "#4444ED"
+        B3: "#6C6CF1"
+        B4: "#9595F5"
+        B5: "#BFBFF9"
+        B6: "#E9E9FD"
+      }
+    }
+  }
+  direction: up
+
+  subroutines: "Subroutine library" {
+    shape: rectangle
+    style: {
+      fill: "#d5e5e5"
+      stroke: "#000000"
+    }
+  }
+
+  errors: "Error module" {
+    shape: rectangle
+    style: {
+      fill: "#d5e5e5"
+      stroke: "#000000"
+    }
+  }
+
+  mixins: "Mixins" {
+    shape: rectangle
+    style: {
+      fill: "#d5e5f5"
+      stroke: "#000000"
+    }
+  }
+
+  interface: "Interface" {
+    shape: rectangle
+    style: {
+      fill: "#d5e5f5"
+      stroke: "#000000"
+    }
+  }
+
+  contract: "Concrete contract" {
+    shape: rectangle
+    style: {
+      fill: "#E9E9FD"
+      stroke: "#2D2DF1"
+    }
+  }
+
+  subroutines -> contract
+  errors -> contract
+  mixins -> contract
+  interface -> contract
+```
+
+Only the concrete contract is deployed. The four layers below it are compiled
+into it, which is why each one adds to the deployed program's size.
+
+## Contract Interfaces
+
+An interface declares the Application Binary Interface (ABI) methods a contract
+must implement, kept separate from the implementation. Reach for one when
+several contracts expose the same ABI, such as competing implementations of an
+Algorand Request for Comments (ARC) standard, and you want the compiler to check
+that each one is complete.
+
+An ABI declaration constrains method names, argument types and return types. It
+does not constrain behavior, so implementing an interface is not evidence that
+a contract follows the standard the interface came from.
+
+**Algorand TypeScript**
+
+A plain TypeScript `interface`, with an `implements` clause on the contract
+class. The interface is erased at compile time and carries signatures only, so
+it adds nothing to the deployed program and cannot hold shared state.
+
+An incomplete implementation stops the build with
+`Class 'X' incorrectly implements interface 'I'`, and nothing is emitted.
+
+<LinkCard
+  title='Algorand TypeScript Example'
+  href='https://github.com/algorandfoundation/puya-ts/blob/main/tests/approvals/teal-script-conventions.algo.ts'
+  description='A contract implementing the ConventionalRouting interface'
+/>
+
+**Algorand Python**
+
+An abstract contract class inheriting both `ARC4Contract` and `ABC`, with
+`@abstractmethod` on each declared method. The interface sits in the inheritance
+chain, so it can carry shared state and concrete helper methods as well as
+signatures.
+
+An incomplete implementation is not an error. The compiler emits nothing for the
+class, warns that it is implicitly abstract, and exits with status 0, so a build
+that does not check for the artifacts it expects passes having produced no
+contract.
+
+<LinkCard
+  title='Algorand Python Example'
+  href='https://github.com/algorandfoundation/arc20/blob/main/smart_contracts/arc20_interface.py'
+  description='The ARC-20 interface declaration'
+/>
+
+## Interface Stubs for Contract Calls
+
+A stub describes another application's ABI so a contract can call it without
+building method selectors by hand. The compiler derives each selector from the
+signature, checks the argument types at compile time, and types the return
+value. Writing one by hand is only necessary for a contract you have no
+specification for.
+
+A stub is a compile-time description and nothing more. It does not check that
+the application you call at run time implements those methods, so passing the
+wrong application ID fails on chain rather than during the build. A stub also
+calls an application that already exists; a contract can instead compile another
+contract class, deploy it and call the result within one application call, which
+[Inner Transactions](/concepts/smart-contracts/inner-txn) covers.
+
+**Algorand TypeScript**
+
+An abstract contract class whose methods carry `err('stub only')` bodies,
+because the compiler requires every method to have a body. Calls go through
+`arc4.abiCall`, which takes the method off the class prototype.
+
+`puya-ts-clientgen` generates a stub from an ARC-56 specification, and
+`--output-client` emits one for a contract you are already compiling.
+
+<LinkCard
+  title='Algorand TypeScript Example'
+  href='https://github.com/algorandfoundation/puya-ts/blob/main/examples/devportal/arc4_client/contract.algo.ts'
+  description='A typed client and the contract that calls through it'
+/>
+
+**Algorand Python**
+
+A class inheriting both `arc4.ARC4Client` and `typing.Protocol`, with decorated
+method signatures and `...` bodies. Both base classes are required. Calls go
+through `arc4.abi_call`, which takes the method off the class.
+
+`puyapy-clientgen` generates a stub from an ARC-56 specification, and
+`--output-client` emits one for a contract you are already compiling.
+
+<LinkCard
+  title='Algorand Python Example'
+  href='https://github.com/algorandfoundation/puya/blob/main/examples/devportal/arc4_client/contract.py'
+  description='A typed client and the contract that calls through it'
+/>
+
+## Feature Mixins
+
+A mixin is a small class holding one reusable behavior, such as an owner check
+or a pause switch, that a contract inherits alongside others. Mixins that
+declare storage under the same key overwrite each other silently, so give each
+mixin its own key prefix.
+
+**Algorand TypeScript**
+
+There is no native multiple inheritance. A linear stack of behaviors can use
+chained `extends`. Combining two independent mixins needs the Polytype package,
+whose method resolution order is depth first: the whole prototype chain of the
+first base type is walked before the second is considered. The
+[Algorand TypeScript language guide](/docs/algorand-typescript/typescript/latest/language-guide/program-structure/#multi-inheritance)
+covers the syntax.
+
+Marking the mixin class `abstract` keeps it out of the build.
+
+<LinkCard
+  title='Algorand TypeScript Example'
+  href='https://github.com/algorandfoundation/puya-ts/blob/main/tests/approvals/multi-inheritance.algo.ts'
+  description='Composing two bases with Polytype'
+/>
+
+**Algorand Python**
+
+Mixins compose with ordinary multiple inheritance, following Python's method
+resolution order. Each base class's `__init__` must be called explicitly. The
+[Algorand Python language guide](/docs/algorand-python/python/latest/guides/lg-structure/)
+covers contract class structure.
+
+Keeping a mixin out of the build takes at least one unimplemented
+`@abstractmethod`. Inheriting `ABC` alone does not do it, and the mixin is then
+compiled and deployed as a contract in its own right.
+
+<LinkCard
+  title='Algorand Python Example'
+  href='https://github.com/algorandfoundation/arc89/blob/main/smart_contracts/asa_validation.py'
+  description='The ARC-89 asset validation mixin'
+/>
+
+## Settling Mixins
+
+A settling mixin wraps the state changes made by the class that inherits it. It
+reads a value before those changes, lets the subclass act, then reconciles the
+difference afterwards.
+
+The worked case is minimum balance requirement (MBR) accounting. A contract that
+holds boxes on behalf of its callers charges each account for the storage it
+causes the application to hold. The mixin reads the application account's MBR
+before the subclass touches its boxes and settles the difference after, so no
+box size formula is hard-coded anywhere. This works because the Algorand Virtual
+Machine (AVM) checks the MBR once, at the end of the top-level application call,
+so the requirement can be exceeded partway through.
+
+The pattern puts two constraints on the classes that inherit it. Every box the
+subclass creates must belong to the account being charged, because a refund goes
+to whoever triggers the decrease, and a box shared between two accounts would
+refund the wrong one. The subclass must also keep its box key prefixes clear of
+the prefix the mixin uses for its own credit boxes.
+
+**Algorand TypeScript**
+
+An `abstract class` extending `Contract`, with a `protected` helper the subclass
+calls after its own state changes. A subclass that overrides an inherited ABI
+method reaches the original with `super.method()`.
+
+**Algorand Python**
+
+An `ARC4Contract, ABC` subclass with a `@subroutine` helper the subclass calls
+after its own state changes. A subclass that overrides an inherited ABI method
+reaches the original by naming the base, as `Base.method(self)`.
+
+## Shared Subroutine Libraries
+
+Stateless helpers that several contracts need belong in a module of their own
+rather than copied into each contract.
+
+A shared module is compiled into every contract that imports it. It is not
+deployed once and shared on chain, so it adds to the program size of each
+contract separately. Importing a large helper module into a contract already
+near the program size limit can push it over.
+
+**Algorand TypeScript**
+
+Ordinary functions exported from a `.algo.ts` module and imported where they are
+used. No decorator is needed.
+
+No Algorand-maintained example covers this yet. The `puya-ts-utils` library
+listed under Additional Resources has several.
+
+**Algorand Python**
+
+Each helper is marked `@subroutine` in a module, and contracts bring them in
+with ordinary Python imports.
+
+<LinkCard
+  title='Algorand Python Example'
+  href='https://github.com/algorandfoundation/arc89/blob/main/smart_contracts/avm_library.py'
+  description='A module of shared subroutines in ARC-89'
+/>
+
+## Shared Error Modules
+
+Error codes defined once in a module and imported where needed keep the same
+string in every contract that raises them, and in the clients that match on
+them.
+
+Both languages support ARC-65 logged errors, which write a structured
+`ERR:{code}:{message}` string before failing the transaction, so a failed
+transaction carries its error in the algod response. Both compilers check the
+code format and reject a code or message containing `:`, the domain separator
+the standard reserves. Every distinct code and message becomes a byte string in
+the compiled program, so keep both short.
+
+**Algorand TypeScript**
+
+Constants in a module, imported where they are raised. For ARC-65 logged errors,
+`loggedAssert` and `loggedErr`.
+
+<LinkCard
+  title='Algorand TypeScript Example'
+  href='https://github.com/algorandfoundation/puya-ts/blob/main/examples/devportal/logged_errors/contract.algo.ts'
+  description='ARC-65 logged errors'
+/>
+
+**Algorand Python**
+
+Constants in a module, imported where they are raised. For ARC-65 logged errors,
+`logged_assert` and `logged_err`.
+
+<LinkCard
+  title='Algorand Python Example'
+  href='https://github.com/algorandfoundation/puya/blob/main/examples/devportal/logged_errors/contract.py'
+  description='ARC-65 logged errors'
+/>
+
+## Language Differences
+
+| Topic                           | Algorand Python                                                                                     | Algorand TypeScript                                                                     |
+| ------------------------------- | --------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------- |
+| Forcing an implementation       | `@abstractmethod` on an `ARC4Contract, ABC` base; an incomplete subclass is dropped with a warning  | A plain `interface` and `implements`; an incomplete class stops the build               |
+| Multiple inheritance            | Native, using Python's method resolution order                                                      | Chained `extends`, or `classes(A, B)` from Polytype, resolved depth first               |
+| Keeping a base class undeployed | Needs at least one unimplemented `@abstractmethod`; inheriting `ABC` alone still compiles the class | The `abstract` class modifier is enough                                                 |
+| Abstract methods                | Supported, and can carry `@arc4.abimethod` at the same time                                         | Not supported; a method declared `abstract` has no body, and every method needs one     |
+| Generating a call stub          | `puyapy-clientgen`, or `--output-client` while compiling                                            | `puya-ts-clientgen`, or `--output-client` while compiling                               |
+| Constructors                    | Each base class's `__init__` is called explicitly                                                   | State is set up with property initializers; one-time setup goes in an `onCreate` method |
+
+## Additional Resources
+
+- [Polytype](https://github.com/fasttime/Polytype), the package Algorand
+  TypeScript uses for multiple inheritance.
+- [puya-ts-utils](https://github.com/d13co/puya-ts-utils), a community library
+  of shared helper modules and mixins written in Algorand TypeScript.
