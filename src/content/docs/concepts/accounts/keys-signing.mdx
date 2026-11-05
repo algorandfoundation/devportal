@@ -2,6 +2,9 @@
 title: Keys and Signing
 sidebar:
   label: Keys & Signing
+tableOfContents:
+  minHeadingLevel: 2
+  maxHeadingLevel: 4
 ---
 
 import { LinkCard } from '@astrojs/starlight/components';
@@ -210,6 +213,23 @@ To integrate Pera Wallet and other Algorand wallets with minimal setup, follow t
 UseWallet is a community-developed library maintained by TxnLab and may have updates or changes independent of Algorand Foundation.
 :::
 
-### HD wallet
+### HD Wallet
 
-(coming soon)
+A hierarchical deterministic (HD) wallet derives many Ed25519 key pairs from one root key. Each derived private key signs a transaction the same way a standalone account's key does: it signs the `TX`-prefixed transaction bytes and returns a 64-byte signature. What differs is where the key comes from. The wallet recomputes each key from the root key and a derivation path when it signs, instead of storing one key per account.
+
+The Algorand Foundation's `@algorandfoundation/xhd-wallet-api` TypeScript library implements BIP32-Ed25519 derivation. It derives Algorand address keys on the BIP44 path `m/44'/283'/account'/0/index`, where `283` is Algorand's registered coin type. The root key comes from a BIP39 mnemonic, which is not interchangeable with Algorand's [25-word account mnemonic](#transformation-private-key-to-25-word-mnemonic).
+
+The library has two signing methods:
+
+- `signAlgoTransaction` signs an encoded transaction, including its `TX` prefix.
+- `signData` signs arbitrary data after validating it against a schema. It rejects data whose first bytes match a protocol domain prefix such as `TX`, `MX`, or `Program`, so a request to sign data cannot produce a valid transaction or program signature.
+
+:::caution
+The library does not store the seed or the root key. Every signing method takes the root key as a parameter, so the consuming application must protect the seed and root key and zero the variables that hold them once it no longer needs them.
+:::
+
+<LinkCard
+  title='xHD Wallet API (TypeScript)'
+  href='https://github.com/algorandfoundation/xHD-Wallet-API-ts'
+  description='BIP32-Ed25519 key derivation and signing for Algorand accounts.'
+/>
