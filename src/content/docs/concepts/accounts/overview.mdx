@@ -68,7 +68,7 @@ Multisig accounts can be configured to require signatures from multiple keys to 
 
 ### Minimum Balance
 
-Every account on Algorand must have a minimum balance of 100,000 microAlgos. If a transaction is sent that would result in a balance lower than the minimum, the transaction will fail. The minimum balance increases with each asset holding the account whether the asset was created or owned by the account and with each application, the account created or opted in. Destroying a created asset, opting out/closing out an owned asset, destroying a created app, or opting out of an opted-in app decreases the minimum balance accordingly.
+Every account on Algorand must have a minimum balance of 100,000 microAlgos. If a transaction is sent that would result in a balance lower than the minimum, the transaction will fail. The minimum balance increases with each asset holding the account whether the asset was created or owned by the account and with each application, the account created or opted in. Destroying a created asset, opting out/closing out an owned asset, destroying a created app, or opting out of an opted-in app decreases the minimum balance accordingly. An application's global state schema and extra program pages add to its creator's minimum balance, or, once another account has resized the application, to that account's as the application's [size sponsor](/concepts/transactions/reference#size-changes-on-update). Local state schema adds to each account that opts in, and boxes add to the application account's. An account can be closed only once its minimum balance is back to the base 100,000 microAlgos; see [Close an Account](/concepts/transactions/types#close-an-account).
 
 <LinkCard
   title='Costs and Constraints'

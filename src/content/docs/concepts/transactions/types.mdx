@@ -67,9 +67,9 @@ To implement payment transactions in your code, you can use the following exampl
 
 Closing an account removes it from the Algorand ledger. Due to the minimum balance requirement (MBR), the most reliable and conventional way to completely remove an account is to use the close field (also known as CloseRemainderTo) in a payment transaction.
 
-The `close` field provides a reliable mechanism for emptying and closing an account. Rather than requiring the sender to calculate an exact amount, `close` transfers any remaining balance, after the transaction amount and fee are deducted, to the designated close-to account and removes the account from the ledger. To close an account, whether with the `close` field or with the plain payment described at the end of this section, its minimum balance requirement must first be back to the base 100,000 microAlgos. Anything that raises the requirement above the base blocks the close: asset holdings, applications the account created or opted into, boxes held by an application account, and the extra-page and global-schema costs the account carries as an application's size sponsor (see [Size Changes on Update](/concepts/transactions/reference#size-changes-on-update)). A `close` that fails this check is rejected, and the error reports the account's current requirement against the base, followed by the counts that make up the difference.
+The `close` field provides a reliable mechanism for emptying and closing an account. Rather than requiring the sender to calculate an exact amount, `close` transfers any remaining balance, after the transaction amount and fee are deducted, to the designated close-to account and removes the account from the ledger. To close an account with the `close` field, its minimum balance requirement must first be back to the base 100,000 microAlgos. Anything that raises the requirement above the base blocks the close: asset holdings, applications the account created or opted into, boxes held by an application account, and the extra-page and global-schema costs the account carries as an application's size sponsor (see [Size Changes on Update](/concepts/transactions/reference#size-changes-on-update)). A `close` that fails this check is rejected, and the error reports the account's current requirement against the base, followed by a breakdown of what the account holds.
 
-For example, an account that sponsors a single global uint for an application it did not create carries a minimum balance requirement of 128,500 microAlgos: the 100,000 base plus 25,000 + 3,500 for the uint. Its close fails with an error containing:
+For example, take an account that is the size sponsor of an application it did not create, where the application has a global schema of one uint and no extra pages. The account's minimum balance requirement is 128,500 microAlgos: the 100,000 base plus 25,000 + 3,500 for the uint. Its close fails with an error containing:
 
 ```text showLineNumbers=false frame=none
 cannot close: min balance 128500 exceeds base 100000: 0 outstanding assets, 0 created apps, 0 opted-in apps, 0 boxes, 0 extra pages, 1/0 globals/locals (uint/bytes)
@@ -95,9 +95,9 @@ Here is an example transaction using the `close` field:
 
 In this transaction, the sender account `"SYGHTA..."` pays the transaction fee and transfers its remaining balance to the close-to account `"EW64GC..."`. When no amount is specified, `amt` defaults to 0 Algo.
 
-If an account has any assets, those holdings must be closed first by specifying an Asset Close Remainder To address in an Asset Transfer transaction before closing the Algorand account.
+If an account has any assets, those holdings must be closed first by specifying an Asset Close Remainder To address in an Asset Transfer transaction before closing the Algorand account. This does not work for an asset the account created: the creator cannot close out its own holding, so the asset has to be destroyed instead. Only the asset's manager can destroy it, and only once every unit is back in the creator's account.
 
-Application state must be released too: opt out of or clear each application the account has opted into, and delete each application it created. If the account is the size sponsor of an application, its own size-changing update can lower those costs but not clear them. Only a size-changing update sent by another account, or deleting the application, moves them off the account. See [Size Changes on Update](/concepts/transactions/reference#size-changes-on-update).
+Application state must be released too: opt out of or clear each application the account has opted into, and delete each application it created. An application account must also delete its boxes, which only the application's own program can do. If the account is the size sponsor of an application, its own size-changing update can lower those costs but not clear them. Only a size-changing update sent by another account, or deleting the application, moves them off the account, and either call needs the application's approval program to allow it. See [Size Changes on Update](/concepts/transactions/reference#size-changes-on-update).
 
 For rekeyed accounts, using the `--close-to` parameter removes the **auth-addr** field and returns signing authority to the original address. Keyholders of the **auth-addr** should use this parameter with caution as it permanently removes their control of the account.
 
@@ -124,7 +124,7 @@ To create a close account transaction in your code, refer to the following examp
   </TabItem>
 </Tabs>
 
-Alternatively, you can close an account by transferring the spendable balance using a standard payment transaction without the `close` field. For example, if account A has a balance of 1 Algo, A could send a normal payment of 0.999 Algo (balance minus the 0.001 Algo fee) to account B, with no `close` field set. Only a payment that reduces the balance to exactly zero removes the account from the ledger. Any other amount leaves it with less than a full transfer completed. This option requires calculating the exact remaining balance at submission time.
+Sending the entire balance away in an ordinary payment, without the `close` field, does not close an account on MainNet or TestNet. Every payment records the network's current rewards level in the sender's account, so the account record is never left empty, and a payment that would leave the balance below the minimum balance requirement, including at zero, is rejected. Use the `close` field to close an account.
 
 ## Key Registration Transaction
 
