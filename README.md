@@ -286,7 +286,7 @@ This project adheres to the [Contributor Covenant Code of Conduct](code_of_condu
 - [Starlight Documentation](https://starlight.astro.build/)
 - [Astro Documentation](https://docs.astro.build)
 - [Algorand Developer Portal](https://dev.algorand.co)
-- [Algorand Foundation](https://algorand.co)
+- [Algorand](https://algorand.co)
 
 ## Deployment
 

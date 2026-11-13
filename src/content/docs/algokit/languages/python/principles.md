@@ -51,7 +51,7 @@ or second most popular following JavaScript:
 - [Tiobe](https://www.tiobe.com/tiobe-index/)
 - [PYPL](https://pypl.github.io/PYPL.html)
 
-The AlgoKit project is an Algorand Foundation initiative to improve the developer experience on Algorand. Within this
+The AlgoKit project is an Algorand initiative to improve the developer experience on Algorand. Within this
 broad remit, two of the key [principles](https://github.com/algorandfoundation/algokit-cli/blob/main/docs/algokit.md#guiding-principles)
 are to “meet developers where they are” and “leverage existing ecosystem”.
 Building a compiler that allows developers to write smart contracts using an idiomatic subset of a high level language
@@ -105,8 +105,8 @@ such as those listed in [PEP-20](https://peps.python.org/pep-0020/) (aka “The 
 
 #### “Extensible”
 
-> Be extensible for community contribution rather than stifling innovation, bottle-necking all changes through the
-> Algorand Foundation and preventing the opportunity for other ecosystems being represented (e.g. Go, Rust, etc.).
+> Be extensible for community contribution rather than stifling innovation, bottle-necking all changes through
+> Algorand and preventing the opportunity for other ecosystems being represented (e.g. Go, Rust, etc.).
 > This helps make developers feel welcome and is part of the developer experience, plus it makes it easier to add
 > features sustainably
 
