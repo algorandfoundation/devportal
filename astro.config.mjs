@@ -25,6 +25,11 @@ export default defineConfig({
   description:
     'The Algorand Developer Portal is the go-to resource for developers building on Algorand.',
   output: 'static',
+  // The site has no landing page: the root URL sends visitors straight into the
+  // docs, starting at the first sidebar entry.
+  redirects: {
+    '/': '/getting-started/portal-guide/',
+  },
   integrations: [
     starlight({
       title: 'Algorand Developer Portal',
@@ -231,10 +236,8 @@ export default defineConfig({
         },
       ],
       components: {
-        Footer: './src/components/Footer.astro',
         Head: './src/components/Head.astro',
         Header: './src/components/Header.astro',
-        Hero: './src/components/Hero.astro',
         Banner: './src/components/Banner.astro',
         Search: './src/components/CustomSearch.astro',
         Sidebar: './src/components/Sidebar.astro',
@@ -356,6 +359,7 @@ export default defineConfig({
                 { slug: 'concepts/smart-contracts/apps' },
                 { slug: 'concepts/smart-contracts/abi' },
                 { slug: 'concepts/smart-contracts/control-flow' },
+                { slug: 'concepts/smart-contracts/code-structure' },
                 { slug: 'concepts/smart-contracts/inner-txn' },
                 { slug: 'concepts/smart-contracts/resource-usage' },
                 { slug: 'concepts/smart-contracts/opcodes-overview' },
@@ -465,6 +469,11 @@ export default defineConfig({
                   ],
                 },
               ],
+            },
+            {
+              label: 'Deployment',
+              collapsed: true,
+              items: [{ slug: 'algokit/deployment' }],
             },
             {
               label: 'AVM Debugger',
@@ -596,21 +605,27 @@ export default defineConfig({
           collapsed: true,
           items: [
             { slug: 'resources/overview' },
+            { slug: 'resources/security-best-practices' },
             { slug: 'resources/liquid-auth' },
             { slug: 'resources/bridging' },
             { slug: 'resources/x402-on-algorand' },
+            {
+              label: 'Intermezzo',
+              collapsed: true,
+              items: [
+                { slug: 'resources/intermezzo-concepts' },
+                { slug: 'resources/intermezzo-api-reference' },
+              ],
+            },
             { slug: 'resources/algo-x-evm' },
+            { slug: 'resources/nodely' },
             {
               label: 'Algorand Specifications',
               link: 'https://specs.algorand.co',
               attrs: { target: '_blank', rel: 'noopener' },
             },
             { slug: 'resources/p2p-func' },
-            {
-              label: 'SDK',
-              collapsed: true,
-              items: [{ slug: 'resources/sdk/sdk-list' }],
-            },
+            { slug: 'resources/sdk/sdk-list' },
           ],
         },
         // Library sidebars — consumed by LibraryDocsSidebar, hidden from main sidebar

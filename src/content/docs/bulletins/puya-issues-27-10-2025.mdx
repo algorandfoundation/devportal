@@ -30,7 +30,7 @@ As of the publication date, no direct impacts have been reported from the ecosys
 
 #### Discovery
 
-On October 10, 2025, the Algorand Foundation received a report that a smart contract compiled with Puya was not checking ABI method arguments in the compiled TEAL code. Upon investigation by the engineering team, this was confirmed to be true and the full extent of missing validations was determined. In this process, the second missing assert vulnerability was also identified.
+On October 10, 2025, Algorand received a report that a smart contract compiled with Puya was not checking ABI method arguments in the compiled TEAL code. Upon investigation by the engineering team, this was confirmed to be true and the full extent of missing validations was determined. In this process, the second missing assert vulnerability was also identified.
 
 Further investigation found that multiple other Algorand smart contract languages, such as PyTeal, TEALScript, and Tealish, also did partial or no validation of ABI values, with varying degrees of documentation about compiler behavior in this regard.
 
@@ -46,7 +46,7 @@ Going forward, Puya’s design will be secure-by-default, and security recommend
 
 ### Strategic Mitigation Initiatives
 
-The Algorand Foundation engineering team has implemented multiple strategic prevention measures to prevent future issues. These include strengthening regression tests for the Puya compiler, implementing clearer warnings when automatic validation is disabled, and improving release processes to require additional reviewers through standard operating procedures and automated CI/CD controls.
+The Algorand engineering team has implemented multiple strategic prevention measures to prevent future issues. These include strengthening regression tests for the Puya compiler, implementing clearer warnings when automatic validation is disabled, and improving release processes to require additional reviewers through standard operating procedures and automated CI/CD controls.
 
 ### Steps to Reproduce
 
@@ -77,11 +77,13 @@ Tealish supports fixed-size structs, but the compiler does not check them automa
 
 Developers should also review any smart contracts written directly in TEAL to ensure the appropriate checks are performed around ABI values.
 
+The languages named above are not recommended for new development. Write new smart contracts in [Algorand Python](/concepts/smart-contracts/languages/python) or [Algorand TypeScript](/concepts/smart-contracts/languages/typescript), where automatic ABI validation is applied by default in the fixed Puya versions listed above.
+
 ### Acknowledgements
 
 Thanks to Folks Finance for discovering the vulnerabilities and reporting them responsibly.
 
-Additionally, thanks to the Algorand Foundation Engineering team and MakerX for their swift and thorough response to the issues and assistance in reviewing smart contracts for various applications.
+Additionally, thanks to the Algorand Engineering team and MakerX for their swift and thorough response to the issues and assistance in reviewing smart contracts for various applications.
 
 And, as always, thanks to the global Algorand community of validators, developers, and contributors who keep the network running, safe, and secure.
 
@@ -104,8 +106,8 @@ For general discussion of the bulletin, please join the [Algorand Discord](https
 
 | Key Actions                     | Date             | Description                                                                                                         |
 | ------------------------------- | ---------------- | ------------------------------------------------------------------------------------------------------------------- |
-| ABI validation issue discovered | October 10, 2025 | Algorand Foundation received the initial report about issues with ABI value validation in Puya-compiled contracts.  |
-| Missing assert issue discovered | October 12, 2025 | Algorand Foundation received the second report of a missing assert bug in Puya.                                     |
+| ABI validation issue discovered | October 10, 2025 | Algorand received the initial report about issues with ABI value validation in Puya-compiled contracts.             |
+| Missing assert issue discovered | October 12, 2025 | Algorand received the second report of a missing assert bug in Puya.                                                |
 | Mitigation communications       | October 21, 2025 | Vulnerabilities and remediation actions were communicated privately to key ecosystem protocols to mitigate risk.    |
 | Affected versions unpublished   | October 27, 2025 | Vulnerable versions of Puya were taken down from PyPI and NPM (`5.0.0`, `5.0.1` puyapy, puya-ts betas not affected) |
 | All fixes released              | October 24, 2025 | Fixed versions of Puya for Python and TypeScript were published.                                                    |

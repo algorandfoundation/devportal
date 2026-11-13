@@ -8,26 +8,16 @@ interface Props {
 const { classList } = Astro.props;
 
 const id = `moon-mask-${crypto.randomBytes(4).toString('hex')}`;
-const isHomepage = Astro.locals.starlightRoute.id === 'index.mdx';
 ---
 
 <starlight-rapide-theme-select>
   <button
     aria-label='Toggle Theme'
     aria-live='polite'
-    class:list={[
-      'theme-select sl-flex',
-      isHomepage ? 'w-[23px] h-[23px] md:w-[25px] md:h-[25px] pt-2! pb-4!' : '',
-      classList,
-    ]}
+    class:list={['theme-select sl-flex', classList]}
     title='Toggle Theme'
   >
-    <svg
-      aria-hidden='true'
-      height={!isHomepage ? '16' : '100%'}
-      viewBox='0 0 24 24'
-      width={!isHomepage ? '16' : '100%'}
-    >
+    <svg aria-hidden='true' height='16' viewBox='0 0 24 24' width='16'>
       <mask class='moon' id={id}>
         <rect x='0' y='0' width='100%' height='100%' fill='white'></rect>
         <circle cx='26' cy='10' r='6' fill='black'></circle>

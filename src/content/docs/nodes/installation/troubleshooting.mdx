@@ -57,6 +57,38 @@ If you see:
   Starting a node varies depending on the
   [installation method](/nodes/installation/manual-installation).
 
+### Installed with NodeKit?
+
+`goal` works against a NodeKit-installed node, but you need to tell it where the data directory is. NodeKit uses `~/.algorand` on macOS and `/var/lib/algorand` on Linux. Either export it once:
+
+```bash showLineNumbers=false frame=none
+# macOS
+export ALGORAND_DATA=~/.algorand
+```
+
+```bash showLineNumbers=false frame=none
+# Linux
+export ALGORAND_DATA=/var/lib/algorand
+```
+
+or pass `-d <path>` to each `goal` command.
+
+NodeKit also has two commands for collecting diagnostics. Run them from the directory that holds the `nodekit` binary:
+
+```bash showLineNumbers=false frame=none
+./nodekit debug
+```
+
+prints a JSON block with the NodeKit version, whether `algod` is on your `$PATH`, running and registered as a service, the data directory and its free space, and the telemetry configuration. It's meant to be pasted into a bug report.
+
+```bash showLineNumbers=false frame=none
+./nodekit catchup debug
+```
+
+does the same for Fast-Catchup: the node's current status, whether a catchup is in progress, and the latest catchpoint for the network.
+
+If the NodeKit terminal user interface (TUI) shows `Network/Config Mismatch` in red after you changed a setting with `./nodekit configure`, quit it with `q` and start it again. It reads `config.json` only on startup.
+
 ## Common Issues for `algod`
 
 ### Most common issues: wrong version, wrong network, not caught up

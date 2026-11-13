@@ -2,7 +2,7 @@
 title: 'Opcodes Overview'
 ---
 
-import { LinkCard } from '@astrojs/starlight/components';
+import { LinkCard, CardGrid } from '@astrojs/starlight/components';
 
 TEAL is an assembly language syntax used to write programs that are executed by the Algorand Virtual Machine (AVM). These programs can function as either Smart Signatures or Smart Contracts. The AVM is a bytecode-based stack interpreter that processes TEAL programs. Each opcode in TEAL performs a specific operation, manipulating data on the stack or interacting with the blockchain's state.
 
@@ -25,3 +25,16 @@ Algorand provides high level languages like [Algorand Python](/concepts/smart-co
 Additionally, Algokit gives a way for easier development and deployment of these smart contracts.
 
 <LinkCard title='Algokit Quick Start' href='/getting-started/tutorials/get-ready-to-build' />
+
+<CardGrid>
+  <LinkCard
+    title='AVM operations in Algorand TypeScript'
+    description='How AVM opcodes are exposed in the Algorand TypeScript language guide'
+    href='/docs/algorand-typescript/typescript/latest/language-guide/ops/'
+  />
+  <LinkCard
+    title='AVM operations in Algorand Python'
+    description='Accessing AVM opcodes through algopy.op in the Algorand Python language guide'
+    href='/docs/algorand-python/python/latest/guides/lg-ops/'
+  />
+</CardGrid>

@@ -2,6 +2,8 @@
 title: ABI
 ---
 
+import { LinkCard, CardGrid } from '@astrojs/starlight/components';
+
 The ABI (Application Binary Interface) is a specification that defines the encoding/decoding of data types and a standard for exposing and invoking methods in a smart contract.
 
 The specification is defined in [ARC4](/arc-standards/arc-0004).
@@ -34,7 +36,8 @@ Encoding for the data types is specified [here](/arc-standards/arc-0004#encoding
 
 ### Reference Types
 
-Reference types may be specified in the method signature referring to some transaction parameters that must be passed. The value encoded is a uint8 reference to the index of element in the relevant array (i.e. for account, the index in the foreign accounts array).
+Reference types may be specified in the method signature referring to some transaction parameters that must be passed. The value encoded is a uint8 index at which the AVM reaches the resource, not the address or the ID itself. Those indexes are not plain array offsets: index 0 is reserved for the transaction sender (`account`) and for the called application (`application`), so the first entry of the Accounts array and the first entry of the Foreign Apps array are both index 1. `asset` has no reserved index, so the first entry of the Foreign Assets array is index 0. The arrays themselves hold only what the caller listed; the sender and the called application are not entries in them, and ARC-4's description of an "implicit value at index 0" refers to how the opcodes read an index, not to the array's contents. See [How References Are Indexed](/concepts/smart-contracts/resource-usage#how-references-are-indexed).
+
 These types are:
 
 - `account` - represents an Algorand account, stored in the Accounts array
@@ -353,3 +356,22 @@ For example:
 Tuples with dynamically sized elements are encoded with two sections of a byte array. The head which contains offsets into the byte array where the values live and the tail which includes the actual value. For example, `[0xdead, 0xbeef]` encoded as `(byte[], byte[])` is `0x000400080002dead0002beef` because `0x0002dead` starts at byte 4 and `0x0002beef` starts at byte 8. If the offsets are larger than the byte length the AVM can panic. Offsets that point to the incorrect byte offset can lead to unintended behavior in contract logic.
 
 Most high-level languages, such as the ones that use the Puya compiler, will always use the head offsets to extract values from the tuple. This means that incorrect head offsets will lead to panics when attempting to use those values thus not allowing unintended memory access. Caution and understanding should still be taken when not validation types because this is not guaranteed to always be the case.
+
+<CardGrid>
+<LinkCard
+  title='ABI routing in Algorand TypeScript'
+  description='How ABI methods, bare methods and on-completion actions are routed in Algorand TypeScript'
+  href='/docs/algorand-typescript/typescript/latest/reference/abi-routing/'
+/>
+
+<LinkCard
+  title='ARC4 encoded types in Algorand TypeScript'
+  description='ARC4 types available in the Algorand TypeScript language guide'
+  href='/docs/algorand-typescript/typescript/latest/language-guide/types/#arc4-encoded-types'
+/>
+<LinkCard
+  title='ARC-4 in Algorand Python'
+  description='ABI methods, routing and ARC-4 types in the Algorand Python language guide'
+  href='/docs/algorand-python/python/latest/guides/lg-arc4/'
+/>
+</CardGrid>

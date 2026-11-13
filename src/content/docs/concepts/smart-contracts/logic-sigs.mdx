@@ -10,6 +10,7 @@ import RemoteCode from '/src/components/RemoteCode.astro';
 import lsigsDiagram1 from '@images/smart-contracts-lsigs-1.png';
 import lsigsDiagram2 from '@images/smart-contracts-lsigs-2.png';
 import lsigsDiagram3 from '@images/smart-contracts-lsigs-3.png';
+import { LinkCard, CardGrid } from '@astrojs/starlight/components';
 
 Logic Signatures (LogicSig), are a feature in Algorand that allows transactions to be authorized using a TEAL program. These signatures are used to sign transactions from either a **_Contract Account_** or a **_Delegated Account_**.
 
@@ -60,6 +61,8 @@ Logic signatures have two basic usage scenarios: as a **_contract account_** or 
 ### Contract Account
 
 For each unique compiled logic signature program there exists a single corresponding Algorand address. To use a TEAL program as a contract account, send Algos to its address to turn it into an account on Algorand with a balance. Outwardly, this account looks no different from any other Algorand account and anyone can send it Algos or Algorand Standard Assets to increase its balance. The account differs in how it authenticates spends from it, in that the logic determines if the transaction is approved. To spend from a contract account, create a transaction that will evaluate True against the TEAL logic, then add the compiled TEAL code as its logic signature. It is worth noting that anyone can create and submit the transaction that spends from a contract account as long as they have the compiled TEAL contract to add as a logic signature.
+
+Since a contract account's address is the hash of its compiled program, roughly half of all programs would produce an address that is also a valid point on the Ed25519 curve. go-algorand's assembler and Puya avoid this by automatically salting a stateless program until its address is off the curve: go-algorand's assembler does so at **TEAL v13** or later, and PuyaPy 5.10+ and PuyaTs 1.3+ do so for logic signatures at any version. Salting happens during assembly, so a contract account is guaranteed to be post-quantum (PQ) compliant only if the tool that assembled it salted it. Programs compiled by go-algorand's assembler at TEAL v12 or earlier, programs assembled by tooling that does not salt, and programs compiled with salting turned off may still have an on-curve address. See [Hash-Derived Addresses](/concepts/accounts/post-quantum#logicsig-contract-accounts).
 
 <Figure src={lsigsDiagram2} alt='Figure: TEAL Contract Account' />
 
@@ -148,3 +151,16 @@ The following logic signature ensures the contract will cover the fee for a prio
 - **_Size and Cost Constraints_**: The standard maximum size of compiled TEAL code combined with arguments is 1000 bytes (consensus parameter LogicSigMaxSize), and the maximum cost of TEAL code is 20000. With an [additional fee](/concepts/transactions/fees#larger-transactions), the program can be up to 16,000 bytes. Arguments are never charged because they can be modified after signing, so the required fee cannot depend on them. Up to 1000 bytes of arguments are allowed per logic signature without group size pooling.
 - **_Public Nature of Code and Arguments_**: The logic signature code, the transaction fields, and the arguments of the logic signature are all public. An attacker can replay a transaction signed by a logic signature. Also, arguments of Logic Signatures are not signed by the sender account and are not part of the computation of the group ID.
 - **_Network Considerations_**: The same logic signature can be used in multiple networks. If a logic signature is signed with the intent of using it on TestNet, that same transaction can be sent to MainNet with that same logic signature. Its always recommended to check which network lsig is running on.
+
+<CardGrid>
+  <LinkCard
+    title='Logic signatures in Algorand TypeScript'
+    description='Writing logic signatures in the Algorand TypeScript language guide'
+    href='/docs/algorand-typescript/typescript/latest/language-guide/program-structure/#logic-signatures'
+  />
+  <LinkCard
+    title='Logic signatures in Algorand Python'
+    description='Writing logic signatures in the Algorand Python language guide'
+    href='/docs/algorand-python/python/latest/guides/lg-structure/#logic-signatures'
+  />
+</CardGrid>

@@ -11,6 +11,8 @@ Algorand Smart Contracts, also known as Applications, are the logic component of
 
 Smart contracts live on the blockchain. Once they are deployed, the on-chain instance of the contract is referred to as an application and assigned an Application ID, which can be used by any client to lookup the application or to execute its methods.
 
+Every application also has an **application account**, whose address is derived by hashing the Application ID. Because that address is a hash rather than a public key, roughly half of all applications have an address that is also a valid point on the Ed25519 curve, which has implications for long-term quantum resistance. See [Hash-Derived Addresses](/concepts/accounts/post-quantum#application-accounts) for what this means and how to check your application's address.
+
 ## Storage
 
 Applications can store values on the Algorand blockchain using one of the following storage types:

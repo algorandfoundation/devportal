@@ -5,13 +5,13 @@ title: Account Registration
 import { Tabs, TabItem } from '@astrojs/starlight/components';
 import { Image } from 'astro:assets';
 
-import nodekitOnliningKeysGenerated from '@images/nodekit-onlining-keys-generated.png';
+import nodekitPartKeyGen4 from '@images/nodekit-partkey-gen-4.png';
 import nodekitOnliningLink from '@images/nodekit-onlining-link.png';
 import nodekitOnliningQR from '@images/nodekit-onlining-qr.png';
 import nodekitOnliningLora from '@images/nodekit-onlining-lora.png';
 import nodekitOnliningPera from '@images/nodekit-onlining-pera.png';
 import nodekitOnliningLoraResult from '@images/nodekit-onlining-lora-result.png';
-import nodekitOnliningKeysView from '@images/nodekit-onlining-keys-view.png';
+import nodekitKeyregSuccess from '@images/nodekit-keyreg-success.png';
 
 import keyregOffline1 from '@images/nodekit-keyreg-offline-1.png';
 import keyregOffline2 from '@images/nodekit-keyreg-offline-2.png';
@@ -43,9 +43,9 @@ There are two main ways you can create an online key registration transaction.
  <TabItem label="NodeKit">
     After generating a participation key, you can press `r` to register it online on the Algorand network.
 
-    You can also start this flow by pressing `r` on the [key information screen](https://nodekit.run/guides/navigating-accounts-and-keys/) shown below.
+    You can also start this flow by pressing `r` on the [key information screen](/nodes/nodekit-quick-start#navigating-accounts-and-keys) shown below.
     <figure>
-        <Image src={nodekitOnliningKeysGenerated} alt='NodeKit keys generated' />
+        <Image src={nodekitPartKeyGen4} alt='NodeKit keys generated' />
     </figure>
 
     After you press `r`, you will see a link that you can follow to sign your key registration transaction:
@@ -122,12 +122,12 @@ There are two main ways you can create an online key registration transaction.
 
     NodeKit will detect the key registration and take you back to the Key information view:
     <figure>
-        <Image src={nodekitOnliningKeysView} alt='NodeKit keys view' />
+        <Image src={nodekitKeyregSuccess} alt='NodeKit keys view' />
     </figure>
 
     You can press `ESC` to leave the key information modal.
 
-    That’s it! Your node is now participating in Algorand consensus. If your account balance exceeds 30,000 ALGO`, it will accumulate rewards for each block it proposes on the Algorand network.
+    That’s it! Your node is now participating in Algorand consensus. If your account balance exceeds 30,000 ALGO, it will accumulate rewards for each block it proposes on the Algorand network.
     </TabItem>
     <TabItem label="goal">
         To sign the key registration transaction inside the `online.txn` file generated from the previous step with goal, you first need to have a funded account in a goal wallet.
@@ -204,11 +204,11 @@ Just like with online keyreg transactions. The moment a key registration transac
 
 ### Create an Offline Key Registration Transaction
 
-There are two main ways you can create an online key registration transaction.
+There are two main ways you can create an offline key registration transaction.
 
 <Tabs syncKey='lang'>
     <TabItem label="NodeKit">
-    To generate an offline key registration transaction, press `o` on the [key information screen](https://nodekit.run/guides/navigating-accounts-and-keys/) shown below to start the flow.
+    To generate an offline key registration transaction, press `o` on the [key information screen](/nodes/nodekit-quick-start#navigating-accounts-and-keys) shown below to start the flow.
     <figure>
         <Image src={keyregOffline1} alt='Keyreg Offline 1' />
     </figure>

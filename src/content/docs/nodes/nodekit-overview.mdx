@@ -1,132 +1,72 @@
 ---
 title: NodeKit Overview
+description: What NodeKit is, who it is for, which platforms it supports, and the commands and flags it provides for running an Algorand node.
 ---
 
 import { LinkCard } from '@astrojs/starlight/components';
 
-NodeKit is a terminal-based user interface (TUI) designed to simplify the process of managing Algorand nodes, a one-stop shop for managing Algorand nodes. With NodeKit, you can easily handle tasks like node installation, configuration, and maintenance, all from the command line, making it accessible for beginners and seasoned developers.
+NodeKit is a command-line tool for running an Algorand node. It installs the Algorand daemon (`algod`), gets it synced with a Fast-Catchup, and keeps it configured and up to date, so you do not have to assemble those steps yourself.
 
-## Benefits
+Run `nodekit` with no arguments and it opens a terminal user interface (TUI) showing the node's live state: the latest round, round time, transactions per second, connected peers, whether peer-to-peer (P2P) networking is enabled, the node version and any available upgrade, the network it is on, protocol upgrade voting, and a table of participating accounts with their status, rewards, key expiry and balance.
 
-Setting up and running an Algorand node can be a complex process. NodeKit addresses common challenges by providing a unified interface to:
+## Who NodeKit Is For
 
-- Install and bootstrap nodes with minimal configuration.
-- Simplify node upgrades and maintenance tasks.
-- Manage node settings and debugging in a consistent and structured way.
+NodeKit is for anyone who wants a working node without learning every step of manual setup: developers who need a local node to build against, and validators taking part in consensus.
 
-With NodeKit, you save time and avoid the pitfalls of manual node management, empowering you to focus on building and deploying your applications.
+| Approach                | What it is                                                                                                                               | Best suited to                                                                                          |
+| ----------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------- |
+| **NodeKit**             | A single binary that installs, configures, syncs and monitors `algod`, with a built-in TUI.                                              | Getting a node running quickly, and day-to-day operation of a validator or development node.            |
+| **Manual installation** | Installing `algod` from the Algorand packages or source and driving it with `goal`.                                                      | Custom or non-standard deployments, and operators who want full control over every configuration value. |
+| **FUNC**                | A [third-party service](https://github.com/GalaxyPay/func) that runs the node behind a local web interface, on Windows, macOS and Linux. | Operators who prefer a browser UI to a terminal, and Windows users.                                     |
 
-## Features
+These are not mutually exclusive. NodeKit manages a standard `algod` installation, so `goal` continues to work against the same node.
 
-NodeKit offers several powerful features for managing your Algorand nodes:
+## Supported Platforms
 
-### install
+| Platform                     | Support                                                                                |
+| ---------------------------- | -------------------------------------------------------------------------------------- |
+| Linux (x86_64, arm64)        | Supported. Installs `algod` via apt or dnf.                                            |
+| macOS (Apple Silicon, Intel) | Supported. Installs `algod` via Homebrew.                                              |
+| Windows                      | Only through Windows Subsystem for Linux (WSL). The installer refuses to run natively. |
 
-Configures the local package manager and installs the Algorand daemon on your local machine.
+## Commands
 
-```bash showLineNumbers=false frame=none
-nodekit install [flags]
-```
+NodeKit provides the following commands.
 
-**Options**:
+| Command             | What it does                                                                                |
+| ------------------- | ------------------------------------------------------------------------------------------- |
+| `nodekit`           | Opens the TUI with live node status and participation accounts.                             |
+| `nodekit bootstrap` | Installs Algorand, starts the node and runs a Fast-Catchup in one step.                     |
+| `nodekit install`   | Configures the local package manager and installs the Algorand daemon.                      |
+| `nodekit start`     | Starts the Algorand daemon if it is not already running.                                    |
+| `nodekit stop`      | Stops the Algorand daemon.                                                                  |
+| `nodekit catchup`   | Manages Fast-Catchup. Subcommands: `start`, `stop`, `debug`.                                |
+| `nodekit configure` | Adjusts node configuration. Subcommands: `algod`, `service`, `telemetry`.                   |
+| `nodekit telemetry` | Controls telemetry reporting. Subcommands: `enable nodely`, `disable`, `status`.            |
+| `nodekit debug`     | Prints diagnostic information about the node and its environment.                           |
+| `nodekit upgrade`   | Upgrades NodeKit itself if the latest release differs from yours, then the Algorand daemon. |
+| `nodekit uninstall` | Removes the Algorand daemon. On macOS, `--force` also deletes the data directory.           |
 
-```bash showLineNumbers=false frame=none
-  -f, --force   forcefully install the node
-  -h, --help    help for install
-```
+### Flags
 
-<LinkCard
-  title='nodekit install'
-  href='/docs/nodekit/go/latest/commands/#install'
-  description='Install the node daemon'
-/>
+`-n`/`--no-incentives` and `-v` are flags of the root `nodekit` command. `-d` is accepted by `start`, `stop`, `debug`, `catchup` and its subcommands, `configure algod`, `configure telemetry`, `telemetry status` and `telemetry enable nodely`. It is not accepted by `bootstrap`, `install`, `upgrade` or `uninstall`.
 
-### bootstrap
+| Flag                    | What it does                                                     |
+| ----------------------- | ---------------------------------------------------------------- |
+| `-d`, `--datadir`       | Points NodeKit at a specific node data directory.                |
+| `-n`, `--no-incentives` | Registers participation keys without the incentive-eligible fee. |
+| `-v`, `--version`       | Prints the NodeKit version.                                      |
 
-Get up and running with a fresh Algorand node.
-Uses the local package manager to install Algorand, then starts the node and performs a Fast-Catchup.
+### Notes
 
-```bash showLineNumbers=false frame=none
-nodekit bootstrap [flags]
-```
-
-**Options**:
-
-```bash showLineNumbers=false frame=none
--h, --help   help for bootstrap
-```
-
-<LinkCard
-  title='nodekit bootstrap'
-  href='/docs/nodekit/go/latest/commands/#bootstrap'
-  description='Initialize a fresh node'
-/>
-
-### catchup
-
-The entire process should sync a node in minutes rather than hours or days. Actual sync times may vary depending on the number of accounts, number of blocks and the network.
-
-```bash showLineNumbers=false frame=none
-nodekit catchup [flags]
-```
-
-**Options**:
-
-```bash showLineNumbers=false frame=none
--d, --datadir string   Data directory for the node
--h, --help             help for catchup
-```
+- `nodekit configure algod --hybrid` enables P2P hybrid mode. `bootstrap` does not turn this on. It is a separate step after your node is running. See [P2P configuration](/nodes/management/p2p-config/).
 
 <LinkCard
-  title='nodekit catchup'
-  href='/docs/nodekit/go/latest/commands/#catchup'
-  description='Manage Fast-Catchup for your node'
+  title='NodeKit command reference'
+  href='/docs/nodekit/go/latest/commands/'
+  description='Command, subcommand and flag reference, generated from the NodeKit source'
 />
 
-### start
+## Getting Started
 
-Start the Algorand daemon on your local machine if it is not already running. Optionally, the daemon can be forcefully started.
-
-```bash showLineNumbers=false frame=none
-nodekit start [flags]
-```
-
-**Options**:
-
-```bash showLineNumbers=false frame=none
--f, --force   forcefully start the node
--h, --help    help for start
-```
-
-<LinkCard
-  title='nodekit start'
-  href='/docs/nodekit/go/latest/commands/#start'
-  description='Start the node daemon'
-/>
-
-### stop
-
-Stops the Algorand daemon on your local machine. Optionally, the daemon can be forcefully stopped.
-
-This requires the daemon to be installed on your system.
-
-```bash showLineNumbers=false frame=none
-nodekit stop [flags]
-```
-
-**Options**:
-
-```bash showLineNumbers=false frame=none
--f, --force   forcefully stop the node
--h, --help    help for stop
-```
-
-<LinkCard
-  title='nodekit stop'
-  href='/docs/nodekit/go/latest/commands/#stop'
-  description='Stop the node daemon'
-/>
-
-## Getting started
-
-Ready to get started? Follow the [Getting Started Guide](/nodes/nodekit-quick-start/) to install NodeKit and set up your first Algorand node.
+Follow the [NodeKit Quick Start](/nodes/nodekit-quick-start/) to install NodeKit and bring up your first Algorand node.

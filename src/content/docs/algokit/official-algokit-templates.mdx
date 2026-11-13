@@ -20,7 +20,7 @@ AlgoKit provides several official templates to cater to different development ne
 
 - Smart Contract Templates:
   - [Algorand Python](https://github.com/algorandfoundation/algokit-python-template)
-  - [Algorand TypeScript](https://github.com/algorand-devrel/tealscript-algokit-template)
+  - [Algorand TypeScript](https://github.com/algorandfoundation/algokit-typescript-template)
 - [DApp React Frontend](https://github.com/algorandfoundation/algokit-react-frontend-template)
 - [Fullstack (Smart Contract & DApp Frontend template)](https://github.com/algorandfoundation/algokit-fullstack-template)
 
@@ -92,23 +92,30 @@ Once the template is instantiated, you can follow the `README.md` file to see in
 
 ## Algorand TypeScript Smart Contract Template
 
-[Algorand TypeScript Smart Contract Template Github Repo](https://github.com/algorand-devrel/tealscript-algokit-template)
+[Algorand TypeScript Smart Contract Template Github Repo](https://github.com/algorandfoundation/algokit-typescript-template)
 
-This template provides a baseline TealScript smart contract development environment.
+This template provides a production-ready baseline for developing and deploying [Algorand TypeScript](https://github.com/algorandfoundation/puya-ts) smart contracts.
 
-To use it [install AlgoKit](https://github.com/algorandfoundation/algokit-cli#readme) and then either pass in `-t tealscript` to `algokit init` or select the `TypeScript` language option interactively during `algokit init.`
+To use it [install AlgoKit](https://github.com/algorandfoundation/algokit-cli#readme) and then either pass in `-t typescript` to `algokit init` or select the `TypeScript` language option interactively during `algokit init.`
 
 ```shell showLineNumbers=false frame=terminal
-algokit init -t tealscript
+algokit init -t typescript
 
 # or
 
 algokit init # and select Smart Contracts & TypeScript template
 ```
 
+:::caution[Do not use the `tealscript` template]
+`algokit init -t tealscript` still resolves, but it scaffolds a [TEALScript](https://github.com/algorandfoundation/tealscript) project. TEALScript is deprecated and receives no further development. Use `-t typescript` for new TypeScript smart contract projects, and see the [TEALScript to Algorand TypeScript migration guide](/docs/algorand-typescript/typescript/latest/migration-guides) for existing ones.
+:::
+
 ### Getting started
 
-Once the template is instantiated, you can follow the [README.md](https://github.com/algorand-devrel/tealscript-algokit-template/blob/master/template_content/README.md) file for instructions on how to use it.
+Once the template is instantiated, you can follow the `README.md` file to see instructions on how to use the template.
+
+- [Instructions for Starter template](https://github.com/algorandfoundation/algokit-typescript-template/blob/main/examples/starter/README.md)
+- [Instructions for Production template](https://github.com/algorandfoundation/algokit-typescript-template/blob/main/examples/production/README.md)
 
 ## DApp Frontend React Template
 
@@ -171,7 +178,7 @@ This template supports many features for developing full-stack applications usin
 And the following backend templates:
 
 - [algokit-python-template](https://github.com/algorandfoundation/algokit-python-template) - An official starter for developing and deploying Algorand Python smart contracts.
-- [algokit-tealscript-template](https://github.com/algorand-devrel/tealscript-algokit-template) - An official starter for developing and deploying TealScript smart contracts.
+- [algokit-typescript-template](https://github.com/algorandfoundation/algokit-typescript-template) - An official starter for developing and deploying Algorand TypeScript smart contracts.
 
 Initializing a fullstack algokit project will create an AlgoKit workspace with a frontend React web app and Algorand smart contract project inside the `projects` folder.
 
