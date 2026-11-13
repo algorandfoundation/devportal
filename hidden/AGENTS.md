@@ -137,7 +137,7 @@ Multi-language examples use `Tabs` with `syncKey="lang"` so the user's language 
 ## Links and References
 
 - Internal links must point to real pages. Verify after restructuring.
-- External resources not owned by Algorand Foundation or Algorand Technologies belong in an "Additional Resources" section at the bottom, not inline.
+- External resources not owned by Algorand belong in an "Additional Resources" section at the bottom, not inline.
 - Cross-references use the destination page's actual title, not "click here" or "this page."
 
 ## Review Checklist
