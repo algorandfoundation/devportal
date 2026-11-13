@@ -25,6 +25,11 @@ export default defineConfig({
   description:
     'The Algorand Developer Portal is the go-to resource for developers building on Algorand.',
   output: 'static',
+  // The site has no landing page: the root URL sends visitors straight into the
+  // docs, starting at the first sidebar entry.
+  redirects: {
+    '/': '/getting-started/portal-guide/',
+  },
   integrations: [
     starlight({
       title: 'Algorand Developer Portal',
@@ -231,10 +236,8 @@ export default defineConfig({
         },
       ],
       components: {
-        Footer: './src/components/Footer.astro',
         Head: './src/components/Head.astro',
         Header: './src/components/Header.astro',
-        Hero: './src/components/Hero.astro',
         Banner: './src/components/Banner.astro',
         Search: './src/components/CustomSearch.astro',
         Sidebar: './src/components/Sidebar.astro',
