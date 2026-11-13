@@ -397,7 +397,7 @@ The **Size** field lists an opcode's total encoded length in bytes: the opcode i
     - **Size:** 2
     - **Availability:** v13
     - **Cost:** 1
-    - **Description:** create a box named B, of length C, for app A. Fail if the name B is empty or C exceeds 32,768. Returns 0 if B already existed, else 1
+    - **Description:** create a box named B, of length C, for app A. Fail if the name B is empty or longer than 64 bytes, or C exceeds 32,768. Returns 0 if B already existed, else 1
     - **Groups:** `Box Access`
 
     <span class="opcode-detail-caption">Notes</span>
@@ -550,7 +550,7 @@ The **Size** field lists an opcode's total encoded length in bytes: the opcode i
     - **Size:** 2
     - **Availability:** v13
     - **Cost:** 1
-    - **Description:** change the size of box named B of app A to be of length C, adding zero bytes to end or removing bytes from the end, as needed. Fail if the name B is empty, B is not an existing box, or C exceeds 32,768.
+    - **Description:** change the size of box named B of app A to be of length C, adding zero bytes to end or removing bytes from the end, as needed. Fail if the name B is empty or longer than 64 bytes, B is not an existing box, or C exceeds 32,768.
     - **Groups:** `Box Access`
 
 
@@ -839,6 +839,8 @@ Deleting a key which is already absent has no effect on the application local st
     - **Description:** set field F of the current app to A
     - **Groups:** `Application Access`
 
+    <span class="opcode-detail-caption">Notes</span>
+    Setting `AppForeignBoxReads` allows any app to read this app's boxes. Setting `AppFamilyBoxAccess` allows any app with the same creator, present or future, to read and write them, and subjects this app's boxes to the family reentrancy rule. Either flag may be set (A nonzero) or cleared (A zero) at any time by the app itself.
 
     <span class="opcode-detail-caption">Field Reference</span>
     <table>
@@ -870,6 +872,8 @@ Deleting a key which is already absent has no effect on the application local st
     - **Description:** Nth LogicSig argument
     - **Groups:** `Loading Values`
 
+    <span class="opcode-detail-caption">Notes</span>
+    LogicSig arguments are supplied outside of any signature, and are part of neither the transaction ID nor the group hash, so a third party can alter them while a transaction is in flight. From AVM v14 a LogicSig may therefore carry no argument it does not read: none at all above the highest index it reads, and none below that index unless the argument is empty or is read.
 
 
     <span class="opcode-detail-caption">Immediate Parameters</span>
@@ -896,6 +900,8 @@ Deleting a key which is already absent has no effect on the application local st
     - **Description:** LogicSig argument 0
     - **Groups:** `Loading Values`
 
+    <span class="opcode-detail-caption">Notes</span>
+    LogicSig arguments are supplied outside of any signature, and are part of neither the transaction ID nor the group hash, so a third party can alter them while a transaction is in flight. From AVM v14 a LogicSig may therefore carry no argument it does not read: none at all above the highest index it reads, and none below that index unless the argument is empty or is read.
 
 
 
@@ -917,6 +923,8 @@ Deleting a key which is already absent has no effect on the application local st
     - **Description:** LogicSig argument 1
     - **Groups:** `Loading Values`
 
+    <span class="opcode-detail-caption">Notes</span>
+    LogicSig arguments are supplied outside of any signature, and are part of neither the transaction ID nor the group hash, so a third party can alter them while a transaction is in flight. From AVM v14 a LogicSig may therefore carry no argument it does not read: none at all above the highest index it reads, and none below that index unless the argument is empty or is read.
 
 
 
@@ -938,6 +946,8 @@ Deleting a key which is already absent has no effect on the application local st
     - **Description:** LogicSig argument 2
     - **Groups:** `Loading Values`
 
+    <span class="opcode-detail-caption">Notes</span>
+    LogicSig arguments are supplied outside of any signature, and are part of neither the transaction ID nor the group hash, so a third party can alter them while a transaction is in flight. From AVM v14 a LogicSig may therefore carry no argument it does not read: none at all above the highest index it reads, and none below that index unless the argument is empty or is read.
 
 
 
@@ -959,6 +969,8 @@ Deleting a key which is already absent has no effect on the application local st
     - **Description:** LogicSig argument 3
     - **Groups:** `Loading Values`
 
+    <span class="opcode-detail-caption">Notes</span>
+    LogicSig arguments are supplied outside of any signature, and are part of neither the transaction ID nor the group hash, so a third party can alter them while a transaction is in flight. From AVM v14 a LogicSig may therefore carry no argument it does not read: none at all above the highest index it reads, and none below that index unless the argument is empty or is read.
 
 
 
@@ -980,6 +992,8 @@ Deleting a key which is already absent has no effect on the application local st
     - **Description:** Ath LogicSig argument
     - **Groups:** `Loading Values`
 
+    <span class="opcode-detail-caption">Notes</span>
+    LogicSig arguments are supplied outside of any signature, and are part of neither the transaction ID nor the group hash, so a third party can alter them while a transaction is in flight. From AVM v14 a LogicSig may therefore carry no argument it does not read: none at all above the highest index it reads, and none below that index unless the argument is empty or is read.
 
 
 
@@ -1056,7 +1070,7 @@ Deleting a key which is already absent has no effect on the application local st
     - **Groups:** `Asset Access`
 
     <span class="opcode-detail-caption">Notes</span>
-    params: Txn.ForeignAssets offset (or, since v4, an _available_ asset id. Return: did_exist flag (1 if the asset existed and 0 otherwise), value.
+    params: Txn.ForeignAssets offset (or, since v4, an _available_ asset id). Return: did_exist flag (1 if the asset existed and 0 otherwise), value.
 
     <span class="opcode-detail-caption">Field Reference</span>
     <table>
@@ -1094,7 +1108,7 @@ Deleting a key which is already absent has no effect on the application local st
     <span class="opcode-detail-caption">Immediate Parameters</span>
     <table>
   <thead><tr><th>Name</th><th>Encoding</th><th>Description</th></tr></thead>
-  <tbody><tr><td>TARGET</td><td>int16 (big-endian)</td><td>branch offset</td></tr></tbody>
+  <tbody><tr><td>TARGET</td><td>varint (zigzag)</td><td>branch offset</td></tr></tbody>
 </table>
 
 </div>
@@ -1107,11 +1121,11 @@ Deleting a key which is already absent has no effect on the application local st
 
     ### b!=
     - **Bytecode:** `0xa9`
-    - **Stack Input:** `bigint,bigint`
+    - **Stack Input:** `[]byte,[]byte`
     - **Stack Output:** `bool`
     - **Size:** 1
     - **Availability:** v4
-    - **Cost:** 1
+    - **Cost:** 1 + 1 per 32 bytes of the longer of A and B
     - **Description:** 0 if A is equal to B, else 1. A and B are interpreted as big-endian unsigned integers
     - **Groups:** `Byte Array Arithmetic`
 
@@ -1128,11 +1142,11 @@ Deleting a key which is already absent has no effect on the application local st
 
     ### b%
     - **Bytecode:** `0xaa`
-    - **Stack Input:** `bigint,bigint`
-    - **Stack Output:** `bigint`
+    - **Stack Input:** `[]byte,[]byte`
+    - **Stack Output:** `[]byte`
     - **Size:** 1
     - **Availability:** v4
-    - **Cost:** 20
+    - **Cost:** 10 + (1 + Q/16) * (8 + D/16) / 2 + 1 per 32 bytes of the longer of A and B, where Q = max(a - b, 0) and D = min(a, b), and a and b are the lengths of A and B without their leading zero bytes
     - **Description:** A modulo B. A and B are interpreted as big-endian unsigned integers. Fail if B is zero.
     - **Groups:** `Byte Array Arithmetic`
 
@@ -1153,7 +1167,7 @@ Deleting a key which is already absent has no effect on the application local st
     - **Stack Output:** `[]byte`
     - **Size:** 1
     - **Availability:** v4
-    - **Cost:** 6
+    - **Cost:** 1 + 1 per 32 bytes of the longer of A and B
     - **Description:** A bitwise-and B. A and B are zero-left extended to the greater of their lengths
     - **Groups:** `Byte Array Logic`
 
@@ -1170,11 +1184,11 @@ Deleting a key which is already absent has no effect on the application local st
 
     ### b*
     - **Bytecode:** `0xa3`
-    - **Stack Input:** `bigint,bigint`
+    - **Stack Input:** `[]byte,[]byte`
     - **Stack Output:** `[]byte`
     - **Size:** 1
     - **Availability:** v4
-    - **Cost:** 20
+    - **Cost:** (8 + len(A)/16) * (8 + len(B)/16) / 6. If both A and B are at least 512 bytes: 4 * max(len(A), len(B)) / 16 + (8 + len(A)/16) * (8 + len(B)/16) / 12
     - **Description:** A times B. A and B are interpreted as big-endian unsigned integers.
     - **Groups:** `Byte Array Arithmetic`
 
@@ -1191,11 +1205,11 @@ Deleting a key which is already absent has no effect on the application local st
 
     ### b+
     - **Bytecode:** `0xa0`
-    - **Stack Input:** `bigint,bigint`
+    - **Stack Input:** `[]byte,[]byte`
     - **Stack Output:** `[]byte`
     - **Size:** 1
     - **Availability:** v4
-    - **Cost:** 10
+    - **Cost:** 2 + 1 per 32 bytes of the longer of A and B
     - **Description:** A plus B. A and B are interpreted as big-endian unsigned integers
     - **Groups:** `Byte Array Arithmetic`
 
@@ -1212,11 +1226,11 @@ Deleting a key which is already absent has no effect on the application local st
 
     ### b-
     - **Bytecode:** `0xa1`
-    - **Stack Input:** `bigint,bigint`
-    - **Stack Output:** `bigint`
+    - **Stack Input:** `[]byte,[]byte`
+    - **Stack Output:** `[]byte`
     - **Size:** 1
     - **Availability:** v4
-    - **Cost:** 10
+    - **Cost:** 2 + 1 per 32 bytes of the longer of A and B
     - **Description:** A minus B. A and B are interpreted as big-endian unsigned integers. Fail on underflow.
     - **Groups:** `Byte Array Arithmetic`
 
@@ -1233,11 +1247,11 @@ Deleting a key which is already absent has no effect on the application local st
 
     ### b/
     - **Bytecode:** `0xa2`
-    - **Stack Input:** `bigint,bigint`
-    - **Stack Output:** `bigint`
+    - **Stack Input:** `[]byte,[]byte`
+    - **Stack Output:** `[]byte`
     - **Size:** 1
     - **Availability:** v4
-    - **Cost:** 20
+    - **Cost:** 10 + (1 + Q/16) * (8 + D/16) / 2 + 1 per 32 bytes of the longer of A and B, where Q = max(a - b, 0) and D = min(a, b), and a and b are the lengths of A and B without their leading zero bytes
     - **Description:** A divided by B (truncated division). A and B are interpreted as big-endian unsigned integers. Fail if B is zero.
     - **Groups:** `Byte Array Arithmetic`
 
@@ -1254,11 +1268,11 @@ Deleting a key which is already absent has no effect on the application local st
 
     ### b&lt;
     - **Bytecode:** `0xa4`
-    - **Stack Input:** `bigint,bigint`
+    - **Stack Input:** `[]byte,[]byte`
     - **Stack Output:** `bool`
     - **Size:** 1
     - **Availability:** v4
-    - **Cost:** 1
+    - **Cost:** 1 + 1 per 32 bytes of the longer of A and B
     - **Description:** 1 if A is less than B, else 0. A and B are interpreted as big-endian unsigned integers
     - **Groups:** `Byte Array Arithmetic`
 
@@ -1275,11 +1289,11 @@ Deleting a key which is already absent has no effect on the application local st
 
     ### b&lt;=
     - **Bytecode:** `0xa6`
-    - **Stack Input:** `bigint,bigint`
+    - **Stack Input:** `[]byte,[]byte`
     - **Stack Output:** `bool`
     - **Size:** 1
     - **Availability:** v4
-    - **Cost:** 1
+    - **Cost:** 1 + 1 per 32 bytes of the longer of A and B
     - **Description:** 1 if A is less than or equal to B, else 0. A and B are interpreted as big-endian unsigned integers
     - **Groups:** `Byte Array Arithmetic`
 
@@ -1296,11 +1310,11 @@ Deleting a key which is already absent has no effect on the application local st
 
     ### b==
     - **Bytecode:** `0xa8`
-    - **Stack Input:** `bigint,bigint`
+    - **Stack Input:** `[]byte,[]byte`
     - **Stack Output:** `bool`
     - **Size:** 1
     - **Availability:** v4
-    - **Cost:** 1
+    - **Cost:** 1 + 1 per 32 bytes of the longer of A and B
     - **Description:** 1 if A is equal to B, else 0. A and B are interpreted as big-endian unsigned integers
     - **Groups:** `Byte Array Arithmetic`
 
@@ -1317,11 +1331,11 @@ Deleting a key which is already absent has no effect on the application local st
 
     ### b&gt;
     - **Bytecode:** `0xa5`
-    - **Stack Input:** `bigint,bigint`
+    - **Stack Input:** `[]byte,[]byte`
     - **Stack Output:** `bool`
     - **Size:** 1
     - **Availability:** v4
-    - **Cost:** 1
+    - **Cost:** 1 + 1 per 32 bytes of the longer of A and B
     - **Description:** 1 if A is greater than B, else 0. A and B are interpreted as big-endian unsigned integers
     - **Groups:** `Byte Array Arithmetic`
 
@@ -1338,11 +1352,11 @@ Deleting a key which is already absent has no effect on the application local st
 
     ### b&gt;=
     - **Bytecode:** `0xa7`
-    - **Stack Input:** `bigint,bigint`
+    - **Stack Input:** `[]byte,[]byte`
     - **Stack Output:** `bool`
     - **Size:** 1
     - **Availability:** v4
-    - **Cost:** 1
+    - **Cost:** 1 + 1 per 32 bytes of the longer of A and B
     - **Description:** 1 if A is greater than or equal to B, else 0. A and B are interpreted as big-endian unsigned integers
     - **Groups:** `Byte Array Arithmetic`
 
@@ -1363,7 +1377,7 @@ Deleting a key which is already absent has no effect on the application local st
     - **Stack Output:** `[]byte`
     - **Size:** 1
     - **Availability:** v4
-    - **Cost:** 6
+    - **Cost:** 1 + 1 per 32 bytes of the longer of A and B
     - **Description:** A bitwise-xor B. A and B are zero-left extended to the greater of their lengths
     - **Groups:** `Byte Array Logic`
 
@@ -1389,7 +1403,7 @@ Deleting a key which is already absent has no effect on the application local st
     - **Groups:** `Account Access`
 
     <span class="opcode-detail-caption">Notes</span>
-    params: Txn.Accounts offset (or, since v4, an _available_ account address), _available_ application id (or, since v4, a Txn.ForeignApps offset). Return: value.
+    params: Txn.Accounts offset (or, since v4, an _available_ account address). Return: value.
 
 
 
@@ -1442,7 +1456,7 @@ Deleting a key which is already absent has no effect on the application local st
     - **Stack Output:** `uint64`
     - **Size:** 1
     - **Availability:** v4
-    - **Cost:** 1
+    - **Cost:** 1 + 1 per 32 bytes of A, or 1 if A is a uint64
     - **Description:** The highest set bit in A. If A is a byte-array, it is interpreted as a big-endian unsigned integer. bitlen of 0 is 0, bitlen of 8 is 4
     - **Groups:** `Arithmetic`
 
@@ -1479,8 +1493,29 @@ Deleting a key which is already absent has no effect on the application local st
     <span class="opcode-detail-caption">Immediate Parameters</span>
     <table>
   <thead><tr><th>Name</th><th>Encoding</th><th>Description</th></tr></thead>
-  <tbody><tr><td>F</td><td>uint8</td><td> block field index</td></tr></tbody>
+  <tbody><tr><td>F</td><td>uint8</td><td>block field index</td></tr></tbody>
 </table>
+
+</div>
+
+
+<div class="opcode-section"
+     data-name="bmodexp"
+     data-version="v14"
+     data-groups="Byte Array Arithmetic">
+
+    ### bmodexp
+    - **Bytecode:** `0x99`
+    - **Stack Input:** `[]byte,[]byte,[]byte`
+    - **Stack Output:** `[]byte`
+    - **Size:** 1
+    - **Availability:** v14
+    - **Cost:** 10 + 1 per 32 bytes of A, B, and C, plus a cost that depends on bitlen(B). Let S = 2 + 2W + W^2/10, where W = len(C)/8, rounded up. If bitlen(B) == 0, nothing more. If bitlen(B) == 1, the cost of A b% C. If bitlen(B) &lt;= 64, (bitlen(B) + popcount(B)) * (S + 2), plus, if len(A) &gt; len(C), popcount(B) * (1 + (len(A)-len(C))/8) * (1 + len(C)/8) / 2 + 3 * (A b* A) + (2*len(A) b% C). Otherwise, (64 * ceil(bitlen(B)/64) + 16) * S + (A b% C). Costs in parentheses are the costs of those operations on inputs of those lengths. Like b% itself, the b% terms are based on the lengths of A and C without their leading zero bytes.
+    - **Description:** A raised to the Bth power modulo C. A, B and C are interpreted as big-endian unsigned integers limited to 4096 bytes. Fail if C is zero, or if A and B are both zero.
+    - **Groups:** `Byte Array Arithmetic`
+
+
+
 
 </div>
 
@@ -1500,7 +1535,11 @@ Deleting a key which is already absent has no effect on the application local st
     - **Groups:** `Flow Control`
 
     <span class="opcode-detail-caption">Notes</span>
-    The `bnz` instruction opcode 0x40 is followed by two immediate data bytes which are a high byte first and low byte second which together form a 16 bit offset which the instruction may branch to. For a bnz instruction at `pc`, if the last element of the stack is not zero then branch to instruction at `pc + 3 + N`, else proceed to next instruction at `pc + 3`. Branch targets must be aligned instructions. (e.g. Branching to the second byte of a 2 byte op will be rejected.) Starting at v4, the offset is treated as a signed 16 bit integer allowing for backward branches and looping. In prior version (v1 to v3), branch offsets are limited to forward branches only, 0-0x7fff.
+    From v1 to v12, the `bnz` opcode byte 0x40 is followed by exactly two immediate bytes, high byte first, which together form a 16 bit offset N. The instruction is 3 bytes long. For a bnz instruction at `pc`, if the last element of the stack is not zero then branch to the instruction at `pc + 3 + N`, else proceed to the next instruction at `pc + 3`. Starting at v4, the offset is treated as a signed 16 bit integer allowing for backward branches and looping. In prior version (v1 to v3), branch offsets are limited to forward branches only, 0-0x7fff.
+
+Starting at v13, the offset is encoded as a `binary.Varint` (zigzag plus ULEB128) of one or more bytes, so the instruction is `1 + len(offset)` bytes long. A non-negative offset N is measured from the end of the instruction: execution continues at `pc + 1 + len(offset) + N`. A negative offset N is measured from the start of the instruction: execution continues at `pc + N`. Not branching always continues at `pc + 1 + len(offset)`. A branch to the start of its own instruction cannot be encoded, since a zero offset means the following instruction; the assembler rejects the attempt.
+
+Branch targets must be aligned instructions at every version. (e.g. Branching to the second byte of a 2 byte op will be rejected.)
 
 At v2 it became allowed to branch to the end of the program exactly after the last instruction: bnz to byte N (with 0-indexing) was illegal for a TEAL program with N bytes before v2, and is legal after it. This change eliminates the need for a last instruction of no-op as a branch target at the end. (Branching beyond the end--in other words, to a byte larger than N--is still illegal and will cause the program to fail.)
 
@@ -1508,7 +1547,7 @@ At v2 it became allowed to branch to the end of the program exactly after the la
     <span class="opcode-detail-caption">Immediate Parameters</span>
     <table>
   <thead><tr><th>Name</th><th>Encoding</th><th>Description</th></tr></thead>
-  <tbody><tr><td>TARGET</td><td>int16 (big-endian)</td><td>branch offset</td></tr></tbody>
+  <tbody><tr><td>TARGET</td><td>varint (zigzag)</td><td>branch offset</td></tr></tbody>
 </table>
 
 </div>
@@ -1526,7 +1565,7 @@ At v2 it became allowed to branch to the end of the program exactly after the la
     - **Size:** 1
     - **Availability:** v8
     - **Cost:** 1
-    - **Description:** create a box named A, of length B. Fail if the name A is empty or B exceeds 32,768. Returns 0 if A already existed, else 1
+    - **Description:** create a box named A, of length B. Fail if the name A is empty or longer than 64 bytes, or B exceeds 32,768. Returns 0 if A already existed, else 1
     - **Groups:** `Box Access`
 
     <span class="opcode-detail-caption">Notes</span>
@@ -1679,7 +1718,7 @@ At v2 it became allowed to branch to the end of the program exactly after the la
     - **Size:** 1
     - **Availability:** v10
     - **Cost:** 1
-    - **Description:** change the size of box named A to be of length B, adding zero bytes to end or removing bytes from the end, as needed. Fail if the name A is empty, A is not an existing box, or B exceeds 32,768.
+    - **Description:** change the size of box named A to be of length B, adding zero bytes to end or removing bytes from the end, as needed. Fail if the name A is empty or longer than 64 bytes, A is not an existing box, or B exceeds 32,768.
     - **Groups:** `Box Access`
 
 
@@ -1718,11 +1757,11 @@ At v2 it became allowed to branch to the end of the program exactly after the la
 
     ### bsqrt
     - **Bytecode:** `0x96`
-    - **Stack Input:** `bigint`
-    - **Stack Output:** `bigint`
+    - **Stack Input:** `[]byte`
+    - **Stack Output:** `[]byte`
     - **Size:** 1
     - **Availability:** v6
-    - **Cost:** 40
+    - **Cost:** 5 + (len(A) // 96)^2*bitlen(len(A)) + len(A)
     - **Description:** The largest integer I such that I^2 &lt;= A. A and I are interpreted as big-endian unsigned integers
     - **Groups:** `Byte Array Arithmetic`
 
@@ -1747,8 +1786,6 @@ At v2 it became allowed to branch to the end of the program exactly after the la
     - **Description:** converts big-endian byte array A to uint64. Fails if len(A) &gt; 8. Padded by leading 0s if len(A) &lt; 8.
     - **Groups:** `Arithmetic`
 
-    <span class="opcode-detail-caption">Notes</span>
-    `btoi` fails if the input is longer than 8 bytes.
 
 
 
@@ -1939,7 +1976,7 @@ At v2 it became allowed to branch to the end of the program exactly after the la
     <span class="opcode-detail-caption">Immediate Parameters</span>
     <table>
   <thead><tr><th>Name</th><th>Encoding</th><th>Description</th></tr></thead>
-  <tbody><tr><td>TARGET</td><td>int16 (big-endian)</td><td>branch offset</td></tr></tbody>
+  <tbody><tr><td>TARGET</td><td>varint (zigzag)</td><td>branch offset</td></tr></tbody>
 </table>
 
 </div>
@@ -1957,7 +1994,7 @@ At v2 it became allowed to branch to the end of the program exactly after the la
     - **Size:** 1
     - **Availability:** v4
     - **Cost:** 1
-    - **Description:** zero filled byte-array of length A
+    - **Description:** zero filled byte-array of length A. Fail if A exceeds 4096
     - **Groups:** `Loading Values`
 
 
@@ -1977,7 +2014,7 @@ At v2 it became allowed to branch to the end of the program exactly after the la
     - **Stack Output:** `[]byte`
     - **Size:** 1
     - **Availability:** v4
-    - **Cost:** 6
+    - **Cost:** 1 + 1 per 32 bytes of the longer of A and B
     - **Description:** A bitwise-or B. A and B are zero-left extended to the greater of their lengths
     - **Groups:** `Byte Array Logic`
 
@@ -1998,7 +2035,7 @@ At v2 it became allowed to branch to the end of the program exactly after the la
     - **Stack Output:** `[]byte`
     - **Size:** 1
     - **Availability:** v4
-    - **Cost:** 4
+    - **Cost:** 1 + 1 per 32 bytes of A
     - **Description:** A with all bits inverted
     - **Groups:** `Byte Array Logic`
 
@@ -2023,13 +2060,13 @@ At v2 it became allowed to branch to the end of the program exactly after the la
     - **Groups:** `Flow Control`
 
     <span class="opcode-detail-caption">Notes</span>
-    The call stack is separate from the data stack. Only `callsub`, `retsub`, and `proto` manipulate it.
+    The call stack is separate from the data stack. Only `callsub`, `retsub`, and `proto` manipulate it. See `bnz` for details on how the branch offset is encoded.
 
 
     <span class="opcode-detail-caption">Immediate Parameters</span>
     <table>
   <thead><tr><th>Name</th><th>Encoding</th><th>Description</th></tr></thead>
-  <tbody><tr><td>TARGET</td><td>int16 (big-endian)</td><td>branch offset</td></tr></tbody>
+  <tbody><tr><td>TARGET</td><td>varint (zigzag)</td><td>branch offset</td></tr></tbody>
 </table>
 
 </div>
@@ -2121,8 +2158,8 @@ At v2 it became allowed to branch to the end of the program exactly after the la
     - **Stack Output:** `uint64,uint64,uint64,uint64`
     - **Size:** 1
     - **Availability:** v4
-    - **Cost:** 20
-    - **Description:** W,X = (A,B / C,D); Y,Z = (A,B modulo C,D)
+    - **Cost:** 2
+    - **Description:** W,X = (A,B / C,D); Y,Z = (A,B modulo C,D). Fail if C,D == 0
     - **Groups:** `Arithmetic`
 
     <span class="opcode-detail-caption">Notes</span>
@@ -2310,7 +2347,7 @@ Fails if A or B is not in G.<br />A and/or B are allowed to be the point at infi
     - **Groups:** `Cryptography`
 
     <span class="opcode-detail-caption">Notes</span>
-    A is a list of concatenated points, encoded and checked as described in `ec_add`. B is a list of concatenated scalars which, unlike ec_scalar_mul, must all be exactly 32 bytes long.<br />The name `ec_multi_scalar_mul` was chosen to reflect common usage, but a more consistent name would be `ec_multi_scalar_mul`. AVM values are limited to 4096 bytes, so `ec_multi_scalar_mul` is limited by the size of the points in the group being operated upon.
+    A is a list of concatenated points, encoded and checked as described in `ec_add`. B is a list of concatenated scalars which, unlike ec_scalar_mul, must all be exactly 32 bytes long.<br />The operation computes the sum of the individual scalar multiplications, and is often called multi-exponentiation. AVM values are limited to 4096 bytes, so `ec_multi_scalar_mul` is limited by the size of the points in the group being operated upon.
 
     <span class="opcode-detail-caption">Field Reference</span>
     <table>
@@ -2473,7 +2510,7 @@ Fails if A or B is not in G.<br />A and/or B are allowed to be the point at infi
     - **Groups:** `Cryptography`
 
     <span class="opcode-detail-caption">Notes</span>
-    S (top) and R elements of a signature, recovery id and data (bottom) are expected on the stack and used to deriver a public key. All values are big-endian encoded. The signed data must be 32 bytes long.
+    S (top) and R elements of a signature, recovery id and data (bottom) are expected on the stack and used to derive a public key. All values are big-endian encoded. The signed data must be 32 bytes long.
 
     <span class="opcode-detail-caption">Field Reference</span>
     <table>
@@ -2620,7 +2657,7 @@ Fails if A or B is not in G.<br />A and/or B are allowed to be the point at infi
     - **Stack Output:** `uint64,uint64`
     - **Size:** 1
     - **Availability:** v4
-    - **Cost:** 10
+    - **Cost:** 1
     - **Description:** A raised to the Bth power as a 128-bit result in two uint64s. X is the high 64 bits, Y is the low. Fail if A == B == 0 or if the results exceeds 2^128-1
     - **Groups:** `Arithmetic`
 
@@ -2747,18 +2784,30 @@ Fails if A or B is not in G.<br />A and/or B are allowed to be the point at infi
 
     ### falcon_verify
     - **Bytecode:** `0x85`
-    - **Stack Input:** `[]byte,[]byte,[1793]byte`
+    - **Stack Input:** `[]byte,[]byte,[]byte`
     - **Stack Output:** `bool`
-    - **Size:** 1
+    - **Size:** 2
     - **Availability:** v12
-    - **Cost:** 1700
-    - **Description:** for (data A, deterministic FALCON-1024 compressed-format signature B, pubkey C) verify the signature of data against the pubkey =&gt; &#123;0 or 1&#125;
+    - **Cost:** FalconDet1024=1700; FalconDet512=850
+    - **Description:** for (data A, deterministic Falcon compressed-format signature B, pubkey C) verify the signature of data against the pubkey =&gt; &#123;0 or 1&#125;
     - **Groups:** `Cryptography`
 
     <span class="opcode-detail-caption">Notes</span>
-    Signature B is variable-length, with maximum size 1423 bytes.
+    Since v14, the Falcon variant is named by immediate F. Before that, `falcon_verify` took no immediate and always used FALCON-DET1024.
 
+Signature B is variable-length, with maximum size 1423 bytes for FalconDet1024, or 713 bytes for FalconDet512. Pubkey C must be exactly 1793 bytes for FalconDet1024, or 897 bytes for FalconDet512.
 
+    <span class="opcode-detail-caption">Field Reference</span>
+    <table>
+  <thead><tr><th>Index</th><th>Name</th><th>Type</th></tr></thead>
+  <tbody><tr><td>0</td><td>FalconDet1024</td><td>-</td></tr><tr><td>1</td><td>FalconDet512</td><td>-</td></tr></tbody>
+</table>
+
+    <span class="opcode-detail-caption">Immediate Parameters</span>
+    <table>
+  <thead><tr><th>Name</th><th>Encoding</th><th>Description</th></tr></thead>
+  <tbody><tr><td>F</td><td>uint8</td><td>falcon configuration index</td></tr></tbody>
+</table>
 
 </div>
 
@@ -2929,7 +2978,7 @@ Fails if A or B is not in G.<br />A and/or B are allowed to be the point at infi
     <span class="opcode-detail-caption">Field Reference</span>
     <table>
   <thead><tr><th>Index</th><th>Name</th><th>Type</th></tr></thead>
-  <tbody><tr><td>0</td><td>Sender</td><td>address</td></tr><tr><td>1</td><td>Fee</td><td>uint64</td></tr><tr><td>2</td><td>FirstValid</td><td>uint64</td></tr><tr><td>3</td><td>FirstValidTime</td><td>uint64</td></tr><tr><td>4</td><td>LastValid</td><td>uint64</td></tr><tr><td>5</td><td>Note</td><td>[]byte</td></tr><tr><td>6</td><td>Lease</td><td>[32]byte</td></tr><tr><td>7</td><td>Receiver</td><td>address</td></tr><tr><td>8</td><td>Amount</td><td>uint64</td></tr><tr><td>9</td><td>CloseRemainderTo</td><td>address</td></tr><tr><td>10</td><td>VotePK</td><td>[32]byte</td></tr><tr><td>11</td><td>SelectionPK</td><td>[32]byte</td></tr><tr><td>12</td><td>VoteFirst</td><td>uint64</td></tr><tr><td>13</td><td>VoteLast</td><td>uint64</td></tr><tr><td>14</td><td>VoteKeyDilution</td><td>uint64</td></tr><tr><td>15</td><td>Type</td><td>[]byte</td></tr><tr><td>16</td><td>TypeEnum</td><td>uint64</td></tr><tr><td>17</td><td>XferAsset</td><td>uint64</td></tr><tr><td>18</td><td>AssetAmount</td><td>uint64</td></tr><tr><td>19</td><td>AssetSender</td><td>address</td></tr><tr><td>20</td><td>AssetReceiver</td><td>address</td></tr><tr><td>21</td><td>AssetCloseTo</td><td>address</td></tr><tr><td>22</td><td>GroupIndex</td><td>uint64</td></tr><tr><td>23</td><td>TxID</td><td>[32]byte</td></tr><tr><td>24</td><td>ApplicationID</td><td>uint64</td></tr><tr><td>25</td><td>OnCompletion</td><td>uint64</td></tr><tr><td>26</td><td>ApplicationArgs</td><td>[]byte</td></tr><tr><td>27</td><td>NumAppArgs</td><td>uint64</td></tr><tr><td>28</td><td>Accounts</td><td>address</td></tr><tr><td>29</td><td>NumAccounts</td><td>uint64</td></tr><tr><td>30</td><td>ApprovalProgram</td><td>[]byte</td></tr><tr><td>31</td><td>ClearStateProgram</td><td>[]byte</td></tr><tr><td>32</td><td>RekeyTo</td><td>address</td></tr><tr><td>33</td><td>ConfigAsset</td><td>uint64</td></tr><tr><td>34</td><td>ConfigAssetTotal</td><td>uint64</td></tr><tr><td>35</td><td>ConfigAssetDecimals</td><td>uint64</td></tr><tr><td>36</td><td>ConfigAssetDefaultFrozen</td><td>bool</td></tr><tr><td>37</td><td>ConfigAssetUnitName</td><td>[]byte</td></tr><tr><td>38</td><td>ConfigAssetName</td><td>[]byte</td></tr><tr><td>39</td><td>ConfigAssetURL</td><td>[]byte</td></tr><tr><td>40</td><td>ConfigAssetMetadataHash</td><td>[32]byte</td></tr><tr><td>41</td><td>ConfigAssetManager</td><td>address</td></tr><tr><td>42</td><td>ConfigAssetReserve</td><td>address</td></tr><tr><td>43</td><td>ConfigAssetFreeze</td><td>address</td></tr><tr><td>44</td><td>ConfigAssetClawback</td><td>address</td></tr><tr><td>45</td><td>FreezeAsset</td><td>uint64</td></tr><tr><td>46</td><td>FreezeAssetAccount</td><td>address</td></tr><tr><td>47</td><td>FreezeAssetFrozen</td><td>bool</td></tr><tr><td>48</td><td>Assets</td><td>uint64</td></tr><tr><td>49</td><td>NumAssets</td><td>uint64</td></tr><tr><td>50</td><td>Applications</td><td>uint64</td></tr><tr><td>51</td><td>NumApplications</td><td>uint64</td></tr><tr><td>52</td><td>GlobalNumUint</td><td>uint64</td></tr><tr><td>53</td><td>GlobalNumByteSlice</td><td>uint64</td></tr><tr><td>54</td><td>LocalNumUint</td><td>uint64</td></tr><tr><td>55</td><td>LocalNumByteSlice</td><td>uint64</td></tr><tr><td>56</td><td>ExtraProgramPages</td><td>uint64</td></tr><tr><td>57</td><td>Nonparticipation</td><td>bool</td></tr><tr><td>58</td><td>Logs</td><td>[]byte</td></tr><tr><td>59</td><td>NumLogs</td><td>uint64</td></tr><tr><td>60</td><td>CreatedAssetID</td><td>uint64</td></tr><tr><td>61</td><td>CreatedApplicationID</td><td>uint64</td></tr><tr><td>62</td><td>LastLog</td><td>[]byte</td></tr><tr><td>63</td><td>StateProofPK</td><td>[64]byte</td></tr><tr><td>64</td><td>ApprovalProgramPages</td><td>[]byte</td></tr><tr><td>65</td><td>NumApprovalProgramPages</td><td>uint64</td></tr><tr><td>66</td><td>ClearStateProgramPages</td><td>[]byte</td></tr><tr><td>67</td><td>NumClearStateProgramPages</td><td>uint64</td></tr><tr><td>68</td><td>RejectVersion</td><td>uint64</td></tr></tbody>
+  <tbody><tr><td>0</td><td>Sender</td><td>address</td></tr><tr><td>1</td><td>Fee</td><td>uint64</td></tr><tr><td>2</td><td>FirstValid</td><td>uint64</td></tr><tr><td>3</td><td>FirstValidTime</td><td>uint64</td></tr><tr><td>4</td><td>LastValid</td><td>uint64</td></tr><tr><td>5</td><td>Note</td><td>[]byte</td></tr><tr><td>6</td><td>Lease</td><td>[32]byte</td></tr><tr><td>7</td><td>Receiver</td><td>address</td></tr><tr><td>8</td><td>Amount</td><td>uint64</td></tr><tr><td>9</td><td>CloseRemainderTo</td><td>address</td></tr><tr><td>10</td><td>VotePK</td><td>[32]byte</td></tr><tr><td>11</td><td>SelectionPK</td><td>[32]byte</td></tr><tr><td>12</td><td>VoteFirst</td><td>uint64</td></tr><tr><td>13</td><td>VoteLast</td><td>uint64</td></tr><tr><td>14</td><td>VoteKeyDilution</td><td>uint64</td></tr><tr><td>15</td><td>Type</td><td>[]byte</td></tr><tr><td>16</td><td>TypeEnum</td><td>uint64</td></tr><tr><td>17</td><td>XferAsset</td><td>uint64</td></tr><tr><td>18</td><td>AssetAmount</td><td>uint64</td></tr><tr><td>19</td><td>AssetSender</td><td>address</td></tr><tr><td>20</td><td>AssetReceiver</td><td>address</td></tr><tr><td>21</td><td>AssetCloseTo</td><td>address</td></tr><tr><td>22</td><td>GroupIndex</td><td>uint64</td></tr><tr><td>23</td><td>TxID</td><td>[32]byte</td></tr><tr><td>24</td><td>ApplicationID</td><td>uint64</td></tr><tr><td>25</td><td>OnCompletion</td><td>uint64</td></tr><tr><td>26</td><td>NumAppArgs</td><td>uint64</td></tr><tr><td>27</td><td>NumAccounts</td><td>uint64</td></tr><tr><td>28</td><td>ApprovalProgram</td><td>[]byte</td></tr><tr><td>29</td><td>ClearStateProgram</td><td>[]byte</td></tr><tr><td>30</td><td>RekeyTo</td><td>address</td></tr><tr><td>31</td><td>ConfigAsset</td><td>uint64</td></tr><tr><td>32</td><td>ConfigAssetTotal</td><td>uint64</td></tr><tr><td>33</td><td>ConfigAssetDecimals</td><td>uint64</td></tr><tr><td>34</td><td>ConfigAssetDefaultFrozen</td><td>bool</td></tr><tr><td>35</td><td>ConfigAssetUnitName</td><td>[]byte</td></tr><tr><td>36</td><td>ConfigAssetName</td><td>[]byte</td></tr><tr><td>37</td><td>ConfigAssetURL</td><td>[]byte</td></tr><tr><td>38</td><td>ConfigAssetMetadataHash</td><td>[32]byte</td></tr><tr><td>39</td><td>ConfigAssetManager</td><td>address</td></tr><tr><td>40</td><td>ConfigAssetReserve</td><td>address</td></tr><tr><td>41</td><td>ConfigAssetFreeze</td><td>address</td></tr><tr><td>42</td><td>ConfigAssetClawback</td><td>address</td></tr><tr><td>43</td><td>FreezeAsset</td><td>uint64</td></tr><tr><td>44</td><td>FreezeAssetAccount</td><td>address</td></tr><tr><td>45</td><td>FreezeAssetFrozen</td><td>bool</td></tr><tr><td>46</td><td>NumAssets</td><td>uint64</td></tr><tr><td>47</td><td>NumApplications</td><td>uint64</td></tr><tr><td>48</td><td>GlobalNumUint</td><td>uint64</td></tr><tr><td>49</td><td>GlobalNumByteSlice</td><td>uint64</td></tr><tr><td>50</td><td>LocalNumUint</td><td>uint64</td></tr><tr><td>51</td><td>LocalNumByteSlice</td><td>uint64</td></tr><tr><td>52</td><td>ExtraProgramPages</td><td>uint64</td></tr><tr><td>53</td><td>Nonparticipation</td><td>bool</td></tr><tr><td>54</td><td>NumLogs</td><td>uint64</td></tr><tr><td>55</td><td>CreatedAssetID</td><td>uint64</td></tr><tr><td>56</td><td>CreatedApplicationID</td><td>uint64</td></tr><tr><td>57</td><td>LastLog</td><td>[]byte</td></tr><tr><td>58</td><td>StateProofPK</td><td>[64]byte</td></tr><tr><td>59</td><td>NumApprovalProgramPages</td><td>uint64</td></tr><tr><td>60</td><td>NumClearStateProgramPages</td><td>uint64</td></tr><tr><td>61</td><td>RejectVersion</td><td>uint64</td></tr></tbody>
 </table>
 
     <span class="opcode-detail-caption">Immediate Parameters</span>
@@ -2988,6 +3037,11 @@ Fails if A or B is not in G.<br />A and/or B are allowed to be the point at infi
     - **Groups:** `Inner Transactions`
 
 
+    <span class="opcode-detail-caption">Field Reference</span>
+    <table>
+  <thead><tr><th>Index</th><th>Name</th><th>Type</th></tr></thead>
+  <tbody><tr><td>0</td><td>ApplicationArgs</td><td>[]byte</td></tr><tr><td>1</td><td>Accounts</td><td>address</td></tr><tr><td>2</td><td>Assets</td><td>uint64</td></tr><tr><td>3</td><td>Applications</td><td>uint64</td></tr><tr><td>4</td><td>Logs</td><td>[]byte</td></tr><tr><td>5</td><td>ApprovalProgramPages</td><td>[]byte</td></tr><tr><td>6</td><td>ClearStateProgramPages</td><td>[]byte</td></tr></tbody>
+</table>
 
     <span class="opcode-detail-caption">Immediate Parameters</span>
     <table>
@@ -3127,7 +3181,7 @@ Fails if A or B is not in G.<br />A and/or B are allowed to be the point at infi
     <span class="opcode-detail-caption">Field Reference</span>
     <table>
   <thead><tr><th>Index</th><th>Name</th><th>Type</th></tr></thead>
-  <tbody><tr><td>0</td><td>Sender</td><td>address</td></tr><tr><td>1</td><td>Fee</td><td>uint64</td></tr><tr><td>2</td><td>FirstValid</td><td>uint64</td></tr><tr><td>3</td><td>FirstValidTime</td><td>uint64</td></tr><tr><td>4</td><td>LastValid</td><td>uint64</td></tr><tr><td>5</td><td>Note</td><td>[]byte</td></tr><tr><td>6</td><td>Lease</td><td>[32]byte</td></tr><tr><td>7</td><td>Receiver</td><td>address</td></tr><tr><td>8</td><td>Amount</td><td>uint64</td></tr><tr><td>9</td><td>CloseRemainderTo</td><td>address</td></tr><tr><td>10</td><td>VotePK</td><td>[32]byte</td></tr><tr><td>11</td><td>SelectionPK</td><td>[32]byte</td></tr><tr><td>12</td><td>VoteFirst</td><td>uint64</td></tr><tr><td>13</td><td>VoteLast</td><td>uint64</td></tr><tr><td>14</td><td>VoteKeyDilution</td><td>uint64</td></tr><tr><td>15</td><td>Type</td><td>[]byte</td></tr><tr><td>16</td><td>TypeEnum</td><td>uint64</td></tr><tr><td>17</td><td>XferAsset</td><td>uint64</td></tr><tr><td>18</td><td>AssetAmount</td><td>uint64</td></tr><tr><td>19</td><td>AssetSender</td><td>address</td></tr><tr><td>20</td><td>AssetReceiver</td><td>address</td></tr><tr><td>21</td><td>AssetCloseTo</td><td>address</td></tr><tr><td>22</td><td>GroupIndex</td><td>uint64</td></tr><tr><td>23</td><td>TxID</td><td>[32]byte</td></tr><tr><td>24</td><td>ApplicationID</td><td>uint64</td></tr><tr><td>25</td><td>OnCompletion</td><td>uint64</td></tr><tr><td>26</td><td>ApplicationArgs</td><td>[]byte</td></tr><tr><td>27</td><td>NumAppArgs</td><td>uint64</td></tr><tr><td>28</td><td>Accounts</td><td>address</td></tr><tr><td>29</td><td>NumAccounts</td><td>uint64</td></tr><tr><td>30</td><td>ApprovalProgram</td><td>[]byte</td></tr><tr><td>31</td><td>ClearStateProgram</td><td>[]byte</td></tr><tr><td>32</td><td>RekeyTo</td><td>address</td></tr><tr><td>33</td><td>ConfigAsset</td><td>uint64</td></tr><tr><td>34</td><td>ConfigAssetTotal</td><td>uint64</td></tr><tr><td>35</td><td>ConfigAssetDecimals</td><td>uint64</td></tr><tr><td>36</td><td>ConfigAssetDefaultFrozen</td><td>bool</td></tr><tr><td>37</td><td>ConfigAssetUnitName</td><td>[]byte</td></tr><tr><td>38</td><td>ConfigAssetName</td><td>[]byte</td></tr><tr><td>39</td><td>ConfigAssetURL</td><td>[]byte</td></tr><tr><td>40</td><td>ConfigAssetMetadataHash</td><td>[32]byte</td></tr><tr><td>41</td><td>ConfigAssetManager</td><td>address</td></tr><tr><td>42</td><td>ConfigAssetReserve</td><td>address</td></tr><tr><td>43</td><td>ConfigAssetFreeze</td><td>address</td></tr><tr><td>44</td><td>ConfigAssetClawback</td><td>address</td></tr><tr><td>45</td><td>FreezeAsset</td><td>uint64</td></tr><tr><td>46</td><td>FreezeAssetAccount</td><td>address</td></tr><tr><td>47</td><td>FreezeAssetFrozen</td><td>bool</td></tr><tr><td>48</td><td>Assets</td><td>uint64</td></tr><tr><td>49</td><td>NumAssets</td><td>uint64</td></tr><tr><td>50</td><td>Applications</td><td>uint64</td></tr><tr><td>51</td><td>NumApplications</td><td>uint64</td></tr><tr><td>52</td><td>GlobalNumUint</td><td>uint64</td></tr><tr><td>53</td><td>GlobalNumByteSlice</td><td>uint64</td></tr><tr><td>54</td><td>LocalNumUint</td><td>uint64</td></tr><tr><td>55</td><td>LocalNumByteSlice</td><td>uint64</td></tr><tr><td>56</td><td>ExtraProgramPages</td><td>uint64</td></tr><tr><td>57</td><td>Nonparticipation</td><td>bool</td></tr><tr><td>58</td><td>Logs</td><td>[]byte</td></tr><tr><td>59</td><td>NumLogs</td><td>uint64</td></tr><tr><td>60</td><td>CreatedAssetID</td><td>uint64</td></tr><tr><td>61</td><td>CreatedApplicationID</td><td>uint64</td></tr><tr><td>62</td><td>LastLog</td><td>[]byte</td></tr><tr><td>63</td><td>StateProofPK</td><td>[64]byte</td></tr><tr><td>64</td><td>ApprovalProgramPages</td><td>[]byte</td></tr><tr><td>65</td><td>NumApprovalProgramPages</td><td>uint64</td></tr><tr><td>66</td><td>ClearStateProgramPages</td><td>[]byte</td></tr><tr><td>67</td><td>NumClearStateProgramPages</td><td>uint64</td></tr><tr><td>68</td><td>RejectVersion</td><td>uint64</td></tr></tbody>
+  <tbody><tr><td>0</td><td>Sender</td><td>address</td></tr><tr><td>1</td><td>Fee</td><td>uint64</td></tr><tr><td>2</td><td>FirstValid</td><td>uint64</td></tr><tr><td>3</td><td>FirstValidTime</td><td>uint64</td></tr><tr><td>4</td><td>LastValid</td><td>uint64</td></tr><tr><td>5</td><td>Note</td><td>[]byte</td></tr><tr><td>6</td><td>Lease</td><td>[32]byte</td></tr><tr><td>7</td><td>Receiver</td><td>address</td></tr><tr><td>8</td><td>Amount</td><td>uint64</td></tr><tr><td>9</td><td>CloseRemainderTo</td><td>address</td></tr><tr><td>10</td><td>VotePK</td><td>[32]byte</td></tr><tr><td>11</td><td>SelectionPK</td><td>[32]byte</td></tr><tr><td>12</td><td>VoteFirst</td><td>uint64</td></tr><tr><td>13</td><td>VoteLast</td><td>uint64</td></tr><tr><td>14</td><td>VoteKeyDilution</td><td>uint64</td></tr><tr><td>15</td><td>Type</td><td>[]byte</td></tr><tr><td>16</td><td>TypeEnum</td><td>uint64</td></tr><tr><td>17</td><td>XferAsset</td><td>uint64</td></tr><tr><td>18</td><td>AssetAmount</td><td>uint64</td></tr><tr><td>19</td><td>AssetSender</td><td>address</td></tr><tr><td>20</td><td>AssetReceiver</td><td>address</td></tr><tr><td>21</td><td>AssetCloseTo</td><td>address</td></tr><tr><td>22</td><td>GroupIndex</td><td>uint64</td></tr><tr><td>23</td><td>TxID</td><td>[32]byte</td></tr><tr><td>24</td><td>ApplicationID</td><td>uint64</td></tr><tr><td>25</td><td>OnCompletion</td><td>uint64</td></tr><tr><td>26</td><td>NumAppArgs</td><td>uint64</td></tr><tr><td>27</td><td>NumAccounts</td><td>uint64</td></tr><tr><td>28</td><td>ApprovalProgram</td><td>[]byte</td></tr><tr><td>29</td><td>ClearStateProgram</td><td>[]byte</td></tr><tr><td>30</td><td>RekeyTo</td><td>address</td></tr><tr><td>31</td><td>ConfigAsset</td><td>uint64</td></tr><tr><td>32</td><td>ConfigAssetTotal</td><td>uint64</td></tr><tr><td>33</td><td>ConfigAssetDecimals</td><td>uint64</td></tr><tr><td>34</td><td>ConfigAssetDefaultFrozen</td><td>bool</td></tr><tr><td>35</td><td>ConfigAssetUnitName</td><td>[]byte</td></tr><tr><td>36</td><td>ConfigAssetName</td><td>[]byte</td></tr><tr><td>37</td><td>ConfigAssetURL</td><td>[]byte</td></tr><tr><td>38</td><td>ConfigAssetMetadataHash</td><td>[32]byte</td></tr><tr><td>39</td><td>ConfigAssetManager</td><td>address</td></tr><tr><td>40</td><td>ConfigAssetReserve</td><td>address</td></tr><tr><td>41</td><td>ConfigAssetFreeze</td><td>address</td></tr><tr><td>42</td><td>ConfigAssetClawback</td><td>address</td></tr><tr><td>43</td><td>FreezeAsset</td><td>uint64</td></tr><tr><td>44</td><td>FreezeAssetAccount</td><td>address</td></tr><tr><td>45</td><td>FreezeAssetFrozen</td><td>bool</td></tr><tr><td>46</td><td>NumAssets</td><td>uint64</td></tr><tr><td>47</td><td>NumApplications</td><td>uint64</td></tr><tr><td>48</td><td>GlobalNumUint</td><td>uint64</td></tr><tr><td>49</td><td>GlobalNumByteSlice</td><td>uint64</td></tr><tr><td>50</td><td>LocalNumUint</td><td>uint64</td></tr><tr><td>51</td><td>LocalNumByteSlice</td><td>uint64</td></tr><tr><td>52</td><td>ExtraProgramPages</td><td>uint64</td></tr><tr><td>53</td><td>Nonparticipation</td><td>bool</td></tr><tr><td>54</td><td>NumLogs</td><td>uint64</td></tr><tr><td>55</td><td>CreatedAssetID</td><td>uint64</td></tr><tr><td>56</td><td>CreatedApplicationID</td><td>uint64</td></tr><tr><td>57</td><td>LastLog</td><td>[]byte</td></tr><tr><td>58</td><td>StateProofPK</td><td>[64]byte</td></tr><tr><td>59</td><td>NumApprovalProgramPages</td><td>uint64</td></tr><tr><td>60</td><td>NumClearStateProgramPages</td><td>uint64</td></tr><tr><td>61</td><td>RejectVersion</td><td>uint64</td></tr></tbody>
 </table>
 
     <span class="opcode-detail-caption">Immediate Parameters</span>
@@ -3222,7 +3276,7 @@ Fails if A or B is not in G.<br />A and/or B are allowed to be the point at infi
     <span class="opcode-detail-caption">Field Reference</span>
     <table>
   <thead><tr><th>Index</th><th>Name</th><th>Type</th></tr></thead>
-  <tbody><tr><td>0</td><td>Sender</td><td>address</td></tr><tr><td>1</td><td>Fee</td><td>uint64</td></tr><tr><td>2</td><td>FirstValid</td><td>uint64</td></tr><tr><td>3</td><td>FirstValidTime</td><td>uint64</td></tr><tr><td>4</td><td>LastValid</td><td>uint64</td></tr><tr><td>5</td><td>Note</td><td>[]byte</td></tr><tr><td>6</td><td>Lease</td><td>[32]byte</td></tr><tr><td>7</td><td>Receiver</td><td>address</td></tr><tr><td>8</td><td>Amount</td><td>uint64</td></tr><tr><td>9</td><td>CloseRemainderTo</td><td>address</td></tr><tr><td>10</td><td>VotePK</td><td>[32]byte</td></tr><tr><td>11</td><td>SelectionPK</td><td>[32]byte</td></tr><tr><td>12</td><td>VoteFirst</td><td>uint64</td></tr><tr><td>13</td><td>VoteLast</td><td>uint64</td></tr><tr><td>14</td><td>VoteKeyDilution</td><td>uint64</td></tr><tr><td>15</td><td>Type</td><td>[]byte</td></tr><tr><td>16</td><td>TypeEnum</td><td>uint64</td></tr><tr><td>17</td><td>XferAsset</td><td>uint64</td></tr><tr><td>18</td><td>AssetAmount</td><td>uint64</td></tr><tr><td>19</td><td>AssetSender</td><td>address</td></tr><tr><td>20</td><td>AssetReceiver</td><td>address</td></tr><tr><td>21</td><td>AssetCloseTo</td><td>address</td></tr><tr><td>22</td><td>GroupIndex</td><td>uint64</td></tr><tr><td>23</td><td>TxID</td><td>[32]byte</td></tr><tr><td>24</td><td>ApplicationID</td><td>uint64</td></tr><tr><td>25</td><td>OnCompletion</td><td>uint64</td></tr><tr><td>26</td><td>ApplicationArgs</td><td>[]byte</td></tr><tr><td>27</td><td>NumAppArgs</td><td>uint64</td></tr><tr><td>28</td><td>Accounts</td><td>address</td></tr><tr><td>29</td><td>NumAccounts</td><td>uint64</td></tr><tr><td>30</td><td>ApprovalProgram</td><td>[]byte</td></tr><tr><td>31</td><td>ClearStateProgram</td><td>[]byte</td></tr><tr><td>32</td><td>RekeyTo</td><td>address</td></tr><tr><td>33</td><td>ConfigAsset</td><td>uint64</td></tr><tr><td>34</td><td>ConfigAssetTotal</td><td>uint64</td></tr><tr><td>35</td><td>ConfigAssetDecimals</td><td>uint64</td></tr><tr><td>36</td><td>ConfigAssetDefaultFrozen</td><td>bool</td></tr><tr><td>37</td><td>ConfigAssetUnitName</td><td>[]byte</td></tr><tr><td>38</td><td>ConfigAssetName</td><td>[]byte</td></tr><tr><td>39</td><td>ConfigAssetURL</td><td>[]byte</td></tr><tr><td>40</td><td>ConfigAssetMetadataHash</td><td>[32]byte</td></tr><tr><td>41</td><td>ConfigAssetManager</td><td>address</td></tr><tr><td>42</td><td>ConfigAssetReserve</td><td>address</td></tr><tr><td>43</td><td>ConfigAssetFreeze</td><td>address</td></tr><tr><td>44</td><td>ConfigAssetClawback</td><td>address</td></tr><tr><td>45</td><td>FreezeAsset</td><td>uint64</td></tr><tr><td>46</td><td>FreezeAssetAccount</td><td>address</td></tr><tr><td>47</td><td>FreezeAssetFrozen</td><td>bool</td></tr><tr><td>48</td><td>Assets</td><td>uint64</td></tr><tr><td>49</td><td>NumAssets</td><td>uint64</td></tr><tr><td>50</td><td>Applications</td><td>uint64</td></tr><tr><td>51</td><td>NumApplications</td><td>uint64</td></tr><tr><td>52</td><td>GlobalNumUint</td><td>uint64</td></tr><tr><td>53</td><td>GlobalNumByteSlice</td><td>uint64</td></tr><tr><td>54</td><td>LocalNumUint</td><td>uint64</td></tr><tr><td>55</td><td>LocalNumByteSlice</td><td>uint64</td></tr><tr><td>56</td><td>ExtraProgramPages</td><td>uint64</td></tr><tr><td>57</td><td>Nonparticipation</td><td>bool</td></tr><tr><td>58</td><td>Logs</td><td>[]byte</td></tr><tr><td>59</td><td>NumLogs</td><td>uint64</td></tr><tr><td>60</td><td>CreatedAssetID</td><td>uint64</td></tr><tr><td>61</td><td>CreatedApplicationID</td><td>uint64</td></tr><tr><td>62</td><td>LastLog</td><td>[]byte</td></tr><tr><td>63</td><td>StateProofPK</td><td>[64]byte</td></tr><tr><td>64</td><td>ApprovalProgramPages</td><td>[]byte</td></tr><tr><td>65</td><td>NumApprovalProgramPages</td><td>uint64</td></tr><tr><td>66</td><td>ClearStateProgramPages</td><td>[]byte</td></tr><tr><td>67</td><td>NumClearStateProgramPages</td><td>uint64</td></tr><tr><td>68</td><td>RejectVersion</td><td>uint64</td></tr></tbody>
+  <tbody><tr><td>0</td><td>Sender</td><td>address</td></tr><tr><td>1</td><td>Fee</td><td>uint64</td></tr><tr><td>2</td><td>FirstValid</td><td>uint64</td></tr><tr><td>3</td><td>FirstValidTime</td><td>uint64</td></tr><tr><td>4</td><td>LastValid</td><td>uint64</td></tr><tr><td>5</td><td>Note</td><td>[]byte</td></tr><tr><td>6</td><td>Lease</td><td>[32]byte</td></tr><tr><td>7</td><td>Receiver</td><td>address</td></tr><tr><td>8</td><td>Amount</td><td>uint64</td></tr><tr><td>9</td><td>CloseRemainderTo</td><td>address</td></tr><tr><td>10</td><td>VotePK</td><td>[32]byte</td></tr><tr><td>11</td><td>SelectionPK</td><td>[32]byte</td></tr><tr><td>12</td><td>VoteFirst</td><td>uint64</td></tr><tr><td>13</td><td>VoteLast</td><td>uint64</td></tr><tr><td>14</td><td>VoteKeyDilution</td><td>uint64</td></tr><tr><td>15</td><td>Type</td><td>[]byte</td></tr><tr><td>16</td><td>TypeEnum</td><td>uint64</td></tr><tr><td>17</td><td>XferAsset</td><td>uint64</td></tr><tr><td>18</td><td>AssetAmount</td><td>uint64</td></tr><tr><td>19</td><td>AssetSender</td><td>address</td></tr><tr><td>20</td><td>AssetReceiver</td><td>address</td></tr><tr><td>21</td><td>AssetCloseTo</td><td>address</td></tr><tr><td>22</td><td>GroupIndex</td><td>uint64</td></tr><tr><td>23</td><td>TxID</td><td>[32]byte</td></tr><tr><td>24</td><td>ApplicationID</td><td>uint64</td></tr><tr><td>25</td><td>OnCompletion</td><td>uint64</td></tr><tr><td>26</td><td>NumAppArgs</td><td>uint64</td></tr><tr><td>27</td><td>NumAccounts</td><td>uint64</td></tr><tr><td>28</td><td>ApprovalProgram</td><td>[]byte</td></tr><tr><td>29</td><td>ClearStateProgram</td><td>[]byte</td></tr><tr><td>30</td><td>RekeyTo</td><td>address</td></tr><tr><td>31</td><td>ConfigAsset</td><td>uint64</td></tr><tr><td>32</td><td>ConfigAssetTotal</td><td>uint64</td></tr><tr><td>33</td><td>ConfigAssetDecimals</td><td>uint64</td></tr><tr><td>34</td><td>ConfigAssetDefaultFrozen</td><td>bool</td></tr><tr><td>35</td><td>ConfigAssetUnitName</td><td>[]byte</td></tr><tr><td>36</td><td>ConfigAssetName</td><td>[]byte</td></tr><tr><td>37</td><td>ConfigAssetURL</td><td>[]byte</td></tr><tr><td>38</td><td>ConfigAssetMetadataHash</td><td>[32]byte</td></tr><tr><td>39</td><td>ConfigAssetManager</td><td>address</td></tr><tr><td>40</td><td>ConfigAssetReserve</td><td>address</td></tr><tr><td>41</td><td>ConfigAssetFreeze</td><td>address</td></tr><tr><td>42</td><td>ConfigAssetClawback</td><td>address</td></tr><tr><td>43</td><td>FreezeAsset</td><td>uint64</td></tr><tr><td>44</td><td>FreezeAssetAccount</td><td>address</td></tr><tr><td>45</td><td>FreezeAssetFrozen</td><td>bool</td></tr><tr><td>46</td><td>NumAssets</td><td>uint64</td></tr><tr><td>47</td><td>NumApplications</td><td>uint64</td></tr><tr><td>48</td><td>GlobalNumUint</td><td>uint64</td></tr><tr><td>49</td><td>GlobalNumByteSlice</td><td>uint64</td></tr><tr><td>50</td><td>LocalNumUint</td><td>uint64</td></tr><tr><td>51</td><td>LocalNumByteSlice</td><td>uint64</td></tr><tr><td>52</td><td>ExtraProgramPages</td><td>uint64</td></tr><tr><td>53</td><td>Nonparticipation</td><td>bool</td></tr><tr><td>54</td><td>NumLogs</td><td>uint64</td></tr><tr><td>55</td><td>CreatedAssetID</td><td>uint64</td></tr><tr><td>56</td><td>CreatedApplicationID</td><td>uint64</td></tr><tr><td>57</td><td>LastLog</td><td>[]byte</td></tr><tr><td>58</td><td>StateProofPK</td><td>[64]byte</td></tr><tr><td>59</td><td>NumApprovalProgramPages</td><td>uint64</td></tr><tr><td>60</td><td>NumClearStateProgramPages</td><td>uint64</td></tr><tr><td>61</td><td>RejectVersion</td><td>uint64</td></tr></tbody>
 </table>
 
     <span class="opcode-detail-caption">Immediate Parameters</span>
@@ -3473,7 +3527,7 @@ Fails if A or B is not in G.<br />A and/or B are allowed to be the point at infi
     <span class="opcode-detail-caption">Field Reference</span>
     <table>
   <thead><tr><th>Index</th><th>Name</th><th>Type</th></tr></thead>
-  <tbody><tr><td>0</td><td>Sender</td><td>address</td></tr><tr><td>1</td><td>Fee</td><td>uint64</td></tr><tr><td>2</td><td>FirstValid</td><td>uint64</td></tr><tr><td>3</td><td>FirstValidTime</td><td>uint64</td></tr><tr><td>4</td><td>LastValid</td><td>uint64</td></tr><tr><td>5</td><td>Note</td><td>[]byte</td></tr><tr><td>6</td><td>Lease</td><td>[32]byte</td></tr><tr><td>7</td><td>Receiver</td><td>address</td></tr><tr><td>8</td><td>Amount</td><td>uint64</td></tr><tr><td>9</td><td>CloseRemainderTo</td><td>address</td></tr><tr><td>10</td><td>VotePK</td><td>[32]byte</td></tr><tr><td>11</td><td>SelectionPK</td><td>[32]byte</td></tr><tr><td>12</td><td>VoteFirst</td><td>uint64</td></tr><tr><td>13</td><td>VoteLast</td><td>uint64</td></tr><tr><td>14</td><td>VoteKeyDilution</td><td>uint64</td></tr><tr><td>15</td><td>Type</td><td>[]byte</td></tr><tr><td>16</td><td>TypeEnum</td><td>uint64</td></tr><tr><td>17</td><td>XferAsset</td><td>uint64</td></tr><tr><td>18</td><td>AssetAmount</td><td>uint64</td></tr><tr><td>19</td><td>AssetSender</td><td>address</td></tr><tr><td>20</td><td>AssetReceiver</td><td>address</td></tr><tr><td>21</td><td>AssetCloseTo</td><td>address</td></tr><tr><td>22</td><td>GroupIndex</td><td>uint64</td></tr><tr><td>23</td><td>TxID</td><td>[32]byte</td></tr><tr><td>24</td><td>ApplicationID</td><td>uint64</td></tr><tr><td>25</td><td>OnCompletion</td><td>uint64</td></tr><tr><td>26</td><td>ApplicationArgs</td><td>[]byte</td></tr><tr><td>27</td><td>NumAppArgs</td><td>uint64</td></tr><tr><td>28</td><td>Accounts</td><td>address</td></tr><tr><td>29</td><td>NumAccounts</td><td>uint64</td></tr><tr><td>30</td><td>ApprovalProgram</td><td>[]byte</td></tr><tr><td>31</td><td>ClearStateProgram</td><td>[]byte</td></tr><tr><td>32</td><td>RekeyTo</td><td>address</td></tr><tr><td>33</td><td>ConfigAsset</td><td>uint64</td></tr><tr><td>34</td><td>ConfigAssetTotal</td><td>uint64</td></tr><tr><td>35</td><td>ConfigAssetDecimals</td><td>uint64</td></tr><tr><td>36</td><td>ConfigAssetDefaultFrozen</td><td>bool</td></tr><tr><td>37</td><td>ConfigAssetUnitName</td><td>[]byte</td></tr><tr><td>38</td><td>ConfigAssetName</td><td>[]byte</td></tr><tr><td>39</td><td>ConfigAssetURL</td><td>[]byte</td></tr><tr><td>40</td><td>ConfigAssetMetadataHash</td><td>[32]byte</td></tr><tr><td>41</td><td>ConfigAssetManager</td><td>address</td></tr><tr><td>42</td><td>ConfigAssetReserve</td><td>address</td></tr><tr><td>43</td><td>ConfigAssetFreeze</td><td>address</td></tr><tr><td>44</td><td>ConfigAssetClawback</td><td>address</td></tr><tr><td>45</td><td>FreezeAsset</td><td>uint64</td></tr><tr><td>46</td><td>FreezeAssetAccount</td><td>address</td></tr><tr><td>47</td><td>FreezeAssetFrozen</td><td>bool</td></tr><tr><td>48</td><td>Assets</td><td>uint64</td></tr><tr><td>49</td><td>NumAssets</td><td>uint64</td></tr><tr><td>50</td><td>Applications</td><td>uint64</td></tr><tr><td>51</td><td>NumApplications</td><td>uint64</td></tr><tr><td>52</td><td>GlobalNumUint</td><td>uint64</td></tr><tr><td>53</td><td>GlobalNumByteSlice</td><td>uint64</td></tr><tr><td>54</td><td>LocalNumUint</td><td>uint64</td></tr><tr><td>55</td><td>LocalNumByteSlice</td><td>uint64</td></tr><tr><td>56</td><td>ExtraProgramPages</td><td>uint64</td></tr><tr><td>57</td><td>Nonparticipation</td><td>bool</td></tr><tr><td>58</td><td>Logs</td><td>[]byte</td></tr><tr><td>59</td><td>NumLogs</td><td>uint64</td></tr><tr><td>60</td><td>CreatedAssetID</td><td>uint64</td></tr><tr><td>61</td><td>CreatedApplicationID</td><td>uint64</td></tr><tr><td>62</td><td>LastLog</td><td>[]byte</td></tr><tr><td>63</td><td>StateProofPK</td><td>[64]byte</td></tr><tr><td>64</td><td>ApprovalProgramPages</td><td>[]byte</td></tr><tr><td>65</td><td>NumApprovalProgramPages</td><td>uint64</td></tr><tr><td>66</td><td>ClearStateProgramPages</td><td>[]byte</td></tr><tr><td>67</td><td>NumClearStateProgramPages</td><td>uint64</td></tr><tr><td>68</td><td>RejectVersion</td><td>uint64</td></tr></tbody>
+  <tbody><tr><td>0</td><td>Sender</td><td>address</td></tr><tr><td>1</td><td>Fee</td><td>uint64</td></tr><tr><td>2</td><td>FirstValid</td><td>uint64</td></tr><tr><td>3</td><td>FirstValidTime</td><td>uint64</td></tr><tr><td>4</td><td>LastValid</td><td>uint64</td></tr><tr><td>5</td><td>Note</td><td>[]byte</td></tr><tr><td>6</td><td>Lease</td><td>[32]byte</td></tr><tr><td>7</td><td>Receiver</td><td>address</td></tr><tr><td>8</td><td>Amount</td><td>uint64</td></tr><tr><td>9</td><td>CloseRemainderTo</td><td>address</td></tr><tr><td>10</td><td>VotePK</td><td>[32]byte</td></tr><tr><td>11</td><td>SelectionPK</td><td>[32]byte</td></tr><tr><td>12</td><td>VoteFirst</td><td>uint64</td></tr><tr><td>13</td><td>VoteLast</td><td>uint64</td></tr><tr><td>14</td><td>VoteKeyDilution</td><td>uint64</td></tr><tr><td>15</td><td>Type</td><td>[]byte</td></tr><tr><td>16</td><td>TypeEnum</td><td>uint64</td></tr><tr><td>17</td><td>XferAsset</td><td>uint64</td></tr><tr><td>18</td><td>AssetAmount</td><td>uint64</td></tr><tr><td>19</td><td>AssetSender</td><td>address</td></tr><tr><td>20</td><td>AssetReceiver</td><td>address</td></tr><tr><td>21</td><td>AssetCloseTo</td><td>address</td></tr><tr><td>22</td><td>GroupIndex</td><td>uint64</td></tr><tr><td>23</td><td>TxID</td><td>[32]byte</td></tr><tr><td>24</td><td>ApplicationID</td><td>uint64</td></tr><tr><td>25</td><td>OnCompletion</td><td>uint64</td></tr><tr><td>26</td><td>NumAppArgs</td><td>uint64</td></tr><tr><td>27</td><td>NumAccounts</td><td>uint64</td></tr><tr><td>28</td><td>ApprovalProgram</td><td>[]byte</td></tr><tr><td>29</td><td>ClearStateProgram</td><td>[]byte</td></tr><tr><td>30</td><td>RekeyTo</td><td>address</td></tr><tr><td>31</td><td>ConfigAsset</td><td>uint64</td></tr><tr><td>32</td><td>ConfigAssetTotal</td><td>uint64</td></tr><tr><td>33</td><td>ConfigAssetDecimals</td><td>uint64</td></tr><tr><td>34</td><td>ConfigAssetDefaultFrozen</td><td>bool</td></tr><tr><td>35</td><td>ConfigAssetUnitName</td><td>[]byte</td></tr><tr><td>36</td><td>ConfigAssetName</td><td>[]byte</td></tr><tr><td>37</td><td>ConfigAssetURL</td><td>[]byte</td></tr><tr><td>38</td><td>ConfigAssetMetadataHash</td><td>[32]byte</td></tr><tr><td>39</td><td>ConfigAssetManager</td><td>address</td></tr><tr><td>40</td><td>ConfigAssetReserve</td><td>address</td></tr><tr><td>41</td><td>ConfigAssetFreeze</td><td>address</td></tr><tr><td>42</td><td>ConfigAssetClawback</td><td>address</td></tr><tr><td>43</td><td>FreezeAsset</td><td>uint64</td></tr><tr><td>44</td><td>FreezeAssetAccount</td><td>address</td></tr><tr><td>45</td><td>FreezeAssetFrozen</td><td>bool</td></tr><tr><td>46</td><td>NumAssets</td><td>uint64</td></tr><tr><td>47</td><td>NumApplications</td><td>uint64</td></tr><tr><td>48</td><td>GlobalNumUint</td><td>uint64</td></tr><tr><td>49</td><td>GlobalNumByteSlice</td><td>uint64</td></tr><tr><td>50</td><td>LocalNumUint</td><td>uint64</td></tr><tr><td>51</td><td>LocalNumByteSlice</td><td>uint64</td></tr><tr><td>52</td><td>ExtraProgramPages</td><td>uint64</td></tr><tr><td>53</td><td>Nonparticipation</td><td>bool</td></tr><tr><td>54</td><td>NumLogs</td><td>uint64</td></tr><tr><td>55</td><td>CreatedAssetID</td><td>uint64</td></tr><tr><td>56</td><td>CreatedApplicationID</td><td>uint64</td></tr><tr><td>57</td><td>LastLog</td><td>[]byte</td></tr><tr><td>58</td><td>StateProofPK</td><td>[64]byte</td></tr><tr><td>59</td><td>NumApprovalProgramPages</td><td>uint64</td></tr><tr><td>60</td><td>NumClearStateProgramPages</td><td>uint64</td></tr><tr><td>61</td><td>RejectVersion</td><td>uint64</td></tr></tbody>
 </table>
 
     <span class="opcode-detail-caption">Immediate Parameters</span>
@@ -3501,7 +3555,9 @@ Fails if A or B is not in G.<br />A and/or B are allowed to be the point at infi
     - **Groups:** `Inner Transactions`
 
     <span class="opcode-detail-caption">Notes</span>
-    `itxn_begin` initializes Sender to the application address; Fee to the minimum allowable, taking into account MinTxnFee and credit from overpaying in earlier transactions; FirstValid/LastValid to the values in the invoking transaction, and all other fields to zero or empty values.
+    `itxn_begin` initializes Sender to the application address; Fee to a default, described below; FirstValid/LastValid to the values in the invoking transaction, and all other fields to zero or empty values.
+
+The default Fee is the additional amount that would make the group's fees sufficient so far: MinTxnFee times the fee usage of the transactions already in the group plus one base fee for this new transaction, less the fees already set and any credit from overpaying in earlier transactions. Because the new transaction's own cost is counted as a single base fee, extra costs from fields set later, such as a large note or program, are not reflected in the default. The group fee is checked and charged at `itxn_submit`, so changing Fee, setting fields that cost more, or adding transactions with `itxn_next` all change what is owed.
 
 
 
@@ -3524,7 +3580,7 @@ Fails if A or B is not in G.<br />A and/or B are allowed to be the point at infi
     - **Groups:** `Inner Transactions`
 
     <span class="opcode-detail-caption">Notes</span>
-    `itxn_field` fails if A is of the wrong type for F, including a byte array of the wrong size for use as an address when F is an address field. `itxn_field` also fails if A is an account, asset, or app that is not _available_, or an attempt is made extend an array field beyond the limit imposed by consensus parameters. (Addresses set into asset params of acfg transactions need not be _available_.)
+    `itxn_field` fails if A is of the wrong type for F, including a byte array of the wrong size for use as an address when F is an address field. `itxn_field` also fails if A is an account, asset, or app that is not _available_, or an attempt is made to extend an array field beyond the limit imposed by consensus parameters. (Addresses set into asset params of acfg transactions need not be _available_.)
 
     <span class="opcode-detail-caption">Field Reference</span>
     <table>
@@ -3634,6 +3690,11 @@ Fails if A or B is not in G.<br />A and/or B are allowed to be the point at infi
     - **Groups:** `Inner Transactions`
 
 
+    <span class="opcode-detail-caption">Field Reference</span>
+    <table>
+  <thead><tr><th>Index</th><th>Name</th><th>Type</th></tr></thead>
+  <tbody><tr><td>0</td><td>ApplicationArgs</td><td>[]byte</td></tr><tr><td>1</td><td>Accounts</td><td>address</td></tr><tr><td>2</td><td>Assets</td><td>uint64</td></tr><tr><td>3</td><td>Applications</td><td>uint64</td></tr><tr><td>4</td><td>Logs</td><td>[]byte</td></tr><tr><td>5</td><td>ApprovalProgramPages</td><td>[]byte</td></tr><tr><td>6</td><td>ClearStateProgramPages</td><td>[]byte</td></tr></tbody>
+</table>
 
     <span class="opcode-detail-caption">Immediate Parameters</span>
     <table>
@@ -3656,13 +3717,13 @@ Fails if A or B is not in G.<br />A and/or B are allowed to be the point at infi
     - **Size:** 2
     - **Availability:** v7
     - **Cost:** 25 + 2 per 7 bytes of A
-    - **Description:** key B's value, of type R, from a [valid](jsonspec.md) utf-8 encoded json object A
+    - **Description:** key B's value, of type R, from the json object A, which must satisfy the [JSON spec](https://github.com/algorand/go-algorand/blob/master/data/transactions/logic/jsonspec.md)
     - **Groups:** `Byte Array Manipulation`
 
     <span class="opcode-detail-caption">Notes</span>
     _Warning_: Usage should be restricted to very rare use cases, as JSON decoding is expensive and quite limited. In addition, JSON objects are large and not optimized for size.
 
-Almost all smart contracts should use simpler and smaller methods (such as the [ABI](https://arc.algorand.foundation/ARCs/arc-0004). This opcode should only be used in cases where JSON is only available option, e.g. when a third-party only signs JSON.
+Almost all smart contracts should use simpler and smaller methods (such as the [ABI](https://arc.algorand.foundation/ARCs/arc-0004)). This opcode should only be used in cases where JSON is the only available option, e.g. when a third-party only signs JSON.
 
     <span class="opcode-detail-caption">Field Reference</span>
     <table>
@@ -3759,7 +3820,7 @@ Almost all smart contracts should use simpler and smaller methods (such as the [
     - **Size:** 1
     - **Availability:** v5
     - **Cost:** 1
-    - **Description:** Ath scratch space value.  All scratch spaces are 0 at program start.
+    - **Description:** Ath scratch space value. All scratch spaces are 0 at program start.
     - **Groups:** `Loading Values`
 
 
@@ -3771,7 +3832,7 @@ Almost all smart contracts should use simpler and smaller methods (such as the [
 <div class="opcode-section"
      data-name="log"
      data-version="v5"
-     data-groups="Application Access">
+     data-groups="Block Access">
 
     ### log
     - **Bytecode:** `0xb0`
@@ -3781,7 +3842,7 @@ Almost all smart contracts should use simpler and smaller methods (such as the [
     - **Availability:** v5
     - **Cost:** 1
     - **Description:** write A to log state of the current application
-    - **Groups:** `Application Access`
+    - **Groups:** `Block Access`
 
     <span class="opcode-detail-caption">Notes</span>
     `log` fails if called more than MaxLogCalls times in a program, or if the sum of logged bytes exceeds 1024 bytes.
@@ -3801,8 +3862,8 @@ Almost all smart contracts should use simpler and smaller methods (such as the [
     - **Stack Input:** `any`
     - **Stack Output:** `-`
     - **Availability:** v8
-    - **Cost:** 1
-    - **Description:** given match cases from A[1] to A[N], branch to the Ith label where A[I] = B. Continue to the following instruction if no matches are found.
+    - **Cost:** 1 + 2 per label
+    - **Description:** given N match cases, deepest first, branch to the Ith label (numbering from 0) where case I equals B. Continue to the following instruction if no matches are found.
     - **Groups:** `Flow Control`
 
     <span class="opcode-detail-caption">Notes</span>
@@ -3834,7 +3895,7 @@ Almost all smart contracts should use simpler and smaller methods (such as the [
     - **Groups:** `Cryptography`
 
     <span class="opcode-detail-caption">Notes</span>
-    A is a non-empty list of concatenated 32 byte big-endian unsigned integer scalars.  Fail if A's length is not a multiple of 32 or any element is greater than or equal to the scalar field modulus.
+    A is a non-empty list of concatenated 32 byte big-endian unsigned integer scalars. Fail if A's length is not a multiple of 32 or any element is greater than or equal to the scalar field modulus.
 
 MiMC hashes field elements, not arbitrary byte strings; reducing external inputs modulo the scalar field modulus makes congruent inputs hash identically. MiMC is thus not a general purpose hash function, but meant to be used in zero knowledge applications to match a zk-circuit implementation.
 
@@ -3869,9 +3930,42 @@ MiMC hashes field elements, not arbitrary byte strings; reducing external inputs
     - **Groups:** `Account Access`
 
     <span class="opcode-detail-caption">Notes</span>
-    params: Txn.Accounts offset (or, since v4, an _available_ account address), _available_ application id (or, since v4, a Txn.ForeignApps offset). Return: value.
+    params: Txn.Accounts offset (or, since v4, an _available_ account address). Return: value.
 
 
+
+</div>
+
+
+<div class="opcode-section"
+     data-name="mldsa_verify"
+     data-version="v14"
+     data-groups="Cryptography">
+
+    ### mldsa_verify
+    - **Bytecode:** `0xe8`
+    - **Stack Input:** `[]byte,[]byte,[]byte,[]byte`
+    - **Stack Output:** `bool`
+    - **Size:** 2
+    - **Availability:** v14
+    - **Cost:** MLDSA44=3700 + 5 per 64 bytes of A; MLDSA65=5850 + 5 per 64 bytes of A
+    - **Description:** for (data A, signature B, pubkey C, context D) verify the ML-DSA signature of the data against the pubkey and context =&gt; &#123;0 or 1&#125;
+    - **Groups:** `Cryptography`
+
+    <span class="opcode-detail-caption">Notes</span>
+    Pure ML-DSA verification (NIST FIPS 204), with context string D. Use an empty D for the default context. Signature B must be exactly 2420 bytes for MLDSA44, or 3309 bytes for MLDSA65. Pubkey C must be exactly 1312 bytes for MLDSA44, or 1952 bytes for MLDSA65. Context D must be at most 255 bytes.
+
+    <span class="opcode-detail-caption">Field Reference</span>
+    <table>
+  <thead><tr><th>Index</th><th>Name</th><th>Type</th></tr></thead>
+  <tbody><tr><td>0</td><td>MLDSA44</td><td>-</td></tr><tr><td>1</td><td>MLDSA65</td><td>-</td></tr></tbody>
+</table>
+
+    <span class="opcode-detail-caption">Immediate Parameters</span>
+    <table>
+  <thead><tr><th>Name</th><th>Encoding</th><th>Description</th></tr></thead>
+  <tbody><tr><td>P</td><td>uint8</td><td>ML-DSA parameter set index</td></tr></tbody>
+</table>
 
 </div>
 
@@ -3909,7 +4003,7 @@ MiMC hashes field elements, not arbitrary byte strings; reducing external inputs
     - **Size:** 1
     - **Availability:** v11
     - **Cost:** 1
-    - **Description:** the total online stake in the agreement round
+    - **Description:** the total online stake as of the balance round: 320 rounds before the current round
     - **Groups:** `Block Access`
 
 
@@ -4147,7 +4241,7 @@ Poseidon2 hashes field elements, not arbitrary byte strings; reducing external i
     - **Stack Output:** `[]byte`
     - **Size:** 2
     - **Availability:** v7
-    - **Cost:** 1
+    - **Cost:** 1 + 1 per 32 bytes of A
     - **Description:** Copy of A with the bytes starting at S replaced by the bytes of B. Fails if S+len(B) exceeds len(A)
     - **Groups:** `Byte Array Manipulation`
 
@@ -4173,7 +4267,7 @@ Poseidon2 hashes field elements, not arbitrary byte strings; reducing external i
     - **Stack Output:** `[]byte`
     - **Size:** 1
     - **Availability:** v7
-    - **Cost:** 1
+    - **Cost:** 1 + 1 per 32 bytes of A
     - **Description:** Copy of A with the bytes starting at B replaced by the bytes of C. Fails if B+len(C) exceeds len(A)
     - **Groups:** `Byte Array Manipulation`
 
@@ -4259,7 +4353,7 @@ Poseidon2 hashes field elements, not arbitrary byte strings; reducing external i
     - **Stack Output:** `any`
     - **Size:** 1
     - **Availability:** v3
-    - **Cost:** 1
+    - **Cost:** 1 + 1 per 32 bytes of A, or 1 if A is a uint64
     - **Description:** Copy of (byte-array or integer) A, with the Bth bit set to (0 or 1) C. If B is greater than or equal to the bit length of the value (8*byte length), the program fails
     - **Groups:** `Byte Array Manipulation`
 
@@ -4282,7 +4376,7 @@ Poseidon2 hashes field elements, not arbitrary byte strings; reducing external i
     - **Stack Output:** `[]byte`
     - **Size:** 1
     - **Availability:** v3
-    - **Cost:** 1
+    - **Cost:** 1 + 1 per 32 bytes of A
     - **Description:** Copy of A with the Bth byte set to small integer (between 0..255) C. If B is greater than or equal to the array length, the program fails
     - **Groups:** `Byte Array Manipulation`
 
@@ -4388,7 +4482,7 @@ Poseidon2 hashes field elements, not arbitrary byte strings; reducing external i
     - **Size:** 1
     - **Availability:** v4
     - **Cost:** 1
-    - **Description:** A times 2^B, modulo 2^64
+    - **Description:** A times 2^B, modulo 2^64. Fail if B &gt; 63
     - **Groups:** `Arithmetic`
 
 
@@ -4409,7 +4503,7 @@ Poseidon2 hashes field elements, not arbitrary byte strings; reducing external i
     - **Size:** 1
     - **Availability:** v4
     - **Cost:** 1
-    - **Description:** A divided by 2^B
+    - **Description:** A divided by 2^B. Fail if B &gt; 63
     - **Groups:** `Arithmetic`
 
 
@@ -4534,6 +4628,27 @@ Poseidon2 hashes field elements, not arbitrary byte strings; reducing external i
 
 
 <div class="opcode-section"
+     data-name="sumhash512"
+     data-version="v14"
+     data-groups="Cryptography">
+
+    ### sumhash512
+    - **Bytecode:** `0x86`
+    - **Stack Input:** `[]byte`
+    - **Stack Output:** `[64]byte`
+    - **Size:** 1
+    - **Availability:** v14
+    - **Cost:** 150 + 4 per 7 bytes of A
+    - **Description:** sumhash512 of value A, yields [64]byte
+    - **Groups:** `Cryptography`
+
+
+
+
+</div>
+
+
+<div class="opcode-section"
      data-name="swap"
      data-version="v3"
      data-groups="Flow Control">
@@ -4565,7 +4680,7 @@ Poseidon2 hashes field elements, not arbitrary byte strings; reducing external i
     - **Stack Output:** `-`
     - **Availability:** v8
     - **Cost:** 1
-    - **Description:** branch to the Ath label. Continue at following instruction if index A exceeds the number of labels.
+    - **Description:** branch to the Ath label. Labels are numbered from 0, so execution continues at the following instruction if A is greater than or equal to the number of labels.
     - **Groups:** `Flow Control`
 
 
@@ -4598,7 +4713,7 @@ Poseidon2 hashes field elements, not arbitrary byte strings; reducing external i
     <span class="opcode-detail-caption">Field Reference</span>
     <table>
   <thead><tr><th>Index</th><th>Name</th><th>Type</th></tr></thead>
-  <tbody><tr><td>0</td><td>Sender</td><td>address</td></tr><tr><td>1</td><td>Fee</td><td>uint64</td></tr><tr><td>2</td><td>FirstValid</td><td>uint64</td></tr><tr><td>3</td><td>FirstValidTime</td><td>uint64</td></tr><tr><td>4</td><td>LastValid</td><td>uint64</td></tr><tr><td>5</td><td>Note</td><td>[]byte</td></tr><tr><td>6</td><td>Lease</td><td>[32]byte</td></tr><tr><td>7</td><td>Receiver</td><td>address</td></tr><tr><td>8</td><td>Amount</td><td>uint64</td></tr><tr><td>9</td><td>CloseRemainderTo</td><td>address</td></tr><tr><td>10</td><td>VotePK</td><td>[32]byte</td></tr><tr><td>11</td><td>SelectionPK</td><td>[32]byte</td></tr><tr><td>12</td><td>VoteFirst</td><td>uint64</td></tr><tr><td>13</td><td>VoteLast</td><td>uint64</td></tr><tr><td>14</td><td>VoteKeyDilution</td><td>uint64</td></tr><tr><td>15</td><td>Type</td><td>[]byte</td></tr><tr><td>16</td><td>TypeEnum</td><td>uint64</td></tr><tr><td>17</td><td>XferAsset</td><td>uint64</td></tr><tr><td>18</td><td>AssetAmount</td><td>uint64</td></tr><tr><td>19</td><td>AssetSender</td><td>address</td></tr><tr><td>20</td><td>AssetReceiver</td><td>address</td></tr><tr><td>21</td><td>AssetCloseTo</td><td>address</td></tr><tr><td>22</td><td>GroupIndex</td><td>uint64</td></tr><tr><td>23</td><td>TxID</td><td>[32]byte</td></tr><tr><td>24</td><td>ApplicationID</td><td>uint64</td></tr><tr><td>25</td><td>OnCompletion</td><td>uint64</td></tr><tr><td>26</td><td>ApplicationArgs</td><td>[]byte</td></tr><tr><td>27</td><td>NumAppArgs</td><td>uint64</td></tr><tr><td>28</td><td>Accounts</td><td>address</td></tr><tr><td>29</td><td>NumAccounts</td><td>uint64</td></tr><tr><td>30</td><td>ApprovalProgram</td><td>[]byte</td></tr><tr><td>31</td><td>ClearStateProgram</td><td>[]byte</td></tr><tr><td>32</td><td>RekeyTo</td><td>address</td></tr><tr><td>33</td><td>ConfigAsset</td><td>uint64</td></tr><tr><td>34</td><td>ConfigAssetTotal</td><td>uint64</td></tr><tr><td>35</td><td>ConfigAssetDecimals</td><td>uint64</td></tr><tr><td>36</td><td>ConfigAssetDefaultFrozen</td><td>bool</td></tr><tr><td>37</td><td>ConfigAssetUnitName</td><td>[]byte</td></tr><tr><td>38</td><td>ConfigAssetName</td><td>[]byte</td></tr><tr><td>39</td><td>ConfigAssetURL</td><td>[]byte</td></tr><tr><td>40</td><td>ConfigAssetMetadataHash</td><td>[32]byte</td></tr><tr><td>41</td><td>ConfigAssetManager</td><td>address</td></tr><tr><td>42</td><td>ConfigAssetReserve</td><td>address</td></tr><tr><td>43</td><td>ConfigAssetFreeze</td><td>address</td></tr><tr><td>44</td><td>ConfigAssetClawback</td><td>address</td></tr><tr><td>45</td><td>FreezeAsset</td><td>uint64</td></tr><tr><td>46</td><td>FreezeAssetAccount</td><td>address</td></tr><tr><td>47</td><td>FreezeAssetFrozen</td><td>bool</td></tr><tr><td>48</td><td>Assets</td><td>uint64</td></tr><tr><td>49</td><td>NumAssets</td><td>uint64</td></tr><tr><td>50</td><td>Applications</td><td>uint64</td></tr><tr><td>51</td><td>NumApplications</td><td>uint64</td></tr><tr><td>52</td><td>GlobalNumUint</td><td>uint64</td></tr><tr><td>53</td><td>GlobalNumByteSlice</td><td>uint64</td></tr><tr><td>54</td><td>LocalNumUint</td><td>uint64</td></tr><tr><td>55</td><td>LocalNumByteSlice</td><td>uint64</td></tr><tr><td>56</td><td>ExtraProgramPages</td><td>uint64</td></tr><tr><td>57</td><td>Nonparticipation</td><td>bool</td></tr><tr><td>58</td><td>Logs</td><td>[]byte</td></tr><tr><td>59</td><td>NumLogs</td><td>uint64</td></tr><tr><td>60</td><td>CreatedAssetID</td><td>uint64</td></tr><tr><td>61</td><td>CreatedApplicationID</td><td>uint64</td></tr><tr><td>62</td><td>LastLog</td><td>[]byte</td></tr><tr><td>63</td><td>StateProofPK</td><td>[64]byte</td></tr><tr><td>64</td><td>ApprovalProgramPages</td><td>[]byte</td></tr><tr><td>65</td><td>NumApprovalProgramPages</td><td>uint64</td></tr><tr><td>66</td><td>ClearStateProgramPages</td><td>[]byte</td></tr><tr><td>67</td><td>NumClearStateProgramPages</td><td>uint64</td></tr><tr><td>68</td><td>RejectVersion</td><td>uint64</td></tr></tbody>
+  <tbody><tr><td>0</td><td>Sender</td><td>address</td></tr><tr><td>1</td><td>Fee</td><td>uint64</td></tr><tr><td>2</td><td>FirstValid</td><td>uint64</td></tr><tr><td>3</td><td>FirstValidTime</td><td>uint64</td></tr><tr><td>4</td><td>LastValid</td><td>uint64</td></tr><tr><td>5</td><td>Note</td><td>[]byte</td></tr><tr><td>6</td><td>Lease</td><td>[32]byte</td></tr><tr><td>7</td><td>Receiver</td><td>address</td></tr><tr><td>8</td><td>Amount</td><td>uint64</td></tr><tr><td>9</td><td>CloseRemainderTo</td><td>address</td></tr><tr><td>10</td><td>VotePK</td><td>[32]byte</td></tr><tr><td>11</td><td>SelectionPK</td><td>[32]byte</td></tr><tr><td>12</td><td>VoteFirst</td><td>uint64</td></tr><tr><td>13</td><td>VoteLast</td><td>uint64</td></tr><tr><td>14</td><td>VoteKeyDilution</td><td>uint64</td></tr><tr><td>15</td><td>Type</td><td>[]byte</td></tr><tr><td>16</td><td>TypeEnum</td><td>uint64</td></tr><tr><td>17</td><td>XferAsset</td><td>uint64</td></tr><tr><td>18</td><td>AssetAmount</td><td>uint64</td></tr><tr><td>19</td><td>AssetSender</td><td>address</td></tr><tr><td>20</td><td>AssetReceiver</td><td>address</td></tr><tr><td>21</td><td>AssetCloseTo</td><td>address</td></tr><tr><td>22</td><td>GroupIndex</td><td>uint64</td></tr><tr><td>23</td><td>TxID</td><td>[32]byte</td></tr><tr><td>24</td><td>ApplicationID</td><td>uint64</td></tr><tr><td>25</td><td>OnCompletion</td><td>uint64</td></tr><tr><td>26</td><td>NumAppArgs</td><td>uint64</td></tr><tr><td>27</td><td>NumAccounts</td><td>uint64</td></tr><tr><td>28</td><td>ApprovalProgram</td><td>[]byte</td></tr><tr><td>29</td><td>ClearStateProgram</td><td>[]byte</td></tr><tr><td>30</td><td>RekeyTo</td><td>address</td></tr><tr><td>31</td><td>ConfigAsset</td><td>uint64</td></tr><tr><td>32</td><td>ConfigAssetTotal</td><td>uint64</td></tr><tr><td>33</td><td>ConfigAssetDecimals</td><td>uint64</td></tr><tr><td>34</td><td>ConfigAssetDefaultFrozen</td><td>bool</td></tr><tr><td>35</td><td>ConfigAssetUnitName</td><td>[]byte</td></tr><tr><td>36</td><td>ConfigAssetName</td><td>[]byte</td></tr><tr><td>37</td><td>ConfigAssetURL</td><td>[]byte</td></tr><tr><td>38</td><td>ConfigAssetMetadataHash</td><td>[32]byte</td></tr><tr><td>39</td><td>ConfigAssetManager</td><td>address</td></tr><tr><td>40</td><td>ConfigAssetReserve</td><td>address</td></tr><tr><td>41</td><td>ConfigAssetFreeze</td><td>address</td></tr><tr><td>42</td><td>ConfigAssetClawback</td><td>address</td></tr><tr><td>43</td><td>FreezeAsset</td><td>uint64</td></tr><tr><td>44</td><td>FreezeAssetAccount</td><td>address</td></tr><tr><td>45</td><td>FreezeAssetFrozen</td><td>bool</td></tr><tr><td>46</td><td>NumAssets</td><td>uint64</td></tr><tr><td>47</td><td>NumApplications</td><td>uint64</td></tr><tr><td>48</td><td>GlobalNumUint</td><td>uint64</td></tr><tr><td>49</td><td>GlobalNumByteSlice</td><td>uint64</td></tr><tr><td>50</td><td>LocalNumUint</td><td>uint64</td></tr><tr><td>51</td><td>LocalNumByteSlice</td><td>uint64</td></tr><tr><td>52</td><td>ExtraProgramPages</td><td>uint64</td></tr><tr><td>53</td><td>Nonparticipation</td><td>bool</td></tr><tr><td>54</td><td>NumLogs</td><td>uint64</td></tr><tr><td>55</td><td>CreatedAssetID</td><td>uint64</td></tr><tr><td>56</td><td>CreatedApplicationID</td><td>uint64</td></tr><tr><td>57</td><td>LastLog</td><td>[]byte</td></tr><tr><td>58</td><td>StateProofPK</td><td>[64]byte</td></tr><tr><td>59</td><td>NumApprovalProgramPages</td><td>uint64</td></tr><tr><td>60</td><td>NumClearStateProgramPages</td><td>uint64</td></tr><tr><td>61</td><td>RejectVersion</td><td>uint64</td></tr></tbody>
 </table>
 
     <span class="opcode-detail-caption">Immediate Parameters</span>
@@ -4710,7 +4825,7 @@ Poseidon2 hashes field elements, not arbitrary byte strings; reducing external i
     - **Size:** 2
     - **Availability:** v11
     - **Cost:** 1
-    - **Description:** X is field F from online account A as of the balance round: 320 rounds before the current round. Y is 1 if A had positive algos online in the agreement round, else Y is 0 and X is a type specific zero-value
+    - **Description:** X is field F from online account A as of the balance round: 320 rounds before the current round. Y is 1 if A had positive online algos in the balance round, else Y is 0 and X is a type specific zero-value
     - **Groups:** `Account Access`
 
 
@@ -4756,7 +4871,7 @@ Poseidon2 hashes field elements, not arbitrary byte strings; reducing external i
     <span class="opcode-detail-caption">Immediate Parameters</span>
     <table>
   <thead><tr><th>Name</th><th>Encoding</th><th>Description</th></tr></thead>
-  <tbody><tr><td>S</td><td>uint8</td><td> parameters index</td></tr></tbody>
+  <tbody><tr><td>S</td><td>uint8</td><td>parameters index</td></tr></tbody>
 </table>
 
 </div>

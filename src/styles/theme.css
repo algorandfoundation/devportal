@@ -8,9 +8,6 @@
    ========================================================================== */
 
 @theme {
-  /* ---- Breakpoints ---- */
-  --breakpoint-home-container: 1354px;
-
   /* ---- Font families ---- */
   --font-sans: Inter, sans-serif;
   --font-mono: Source Code Pro, monospace;

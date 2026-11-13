@@ -25,6 +25,18 @@ function htmlEscape(s = '') {
     .replace(/>/g, '&gt;');
 }
 
+// Escape for MDX text: angle brackets would start a JSX tag, braces an
+// expression. The template is compiled with `noEscape: true`, so any field
+// carrying free text from the langspec must go through this.
+function mdxEscape(s = '') {
+  return htmlEscape(s).replace(/{/g, '&#123;').replace(/}/g, '&#125;');
+}
+
+// Inline MDX-safe text (single line, no paragraph splitting)
+Handlebars.registerHelper('mdxText', (s = '') => {
+  return new Handlebars.SafeString(mdxEscape(s));
+});
+
 // Render arrays as comma-separated (used for Args/Returns simple cell rendering)
 Handlebars.registerHelper('valueList', arr => {
   if (!Array.isArray(arr) || arr.length === 0) return '-';
