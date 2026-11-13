@@ -172,7 +172,7 @@ AlgoKit's deploy is idempotent, so running it again applies only what changed. O
 - **No existing app:** creates it.
 - **Logic unchanged:** does nothing.
 - **Logic changed:** acts according to `onUpdate`: `update` in place, `replace`, `append` (create a new app, leaving the old one), or `fail`.
-- **Schema grew:** the app needs more global or local state, or more extra program pages, than it was created with. None of these can grow after creation. Acts according to `onSchemaBreak`: `replace`, `append`, or `fail`.
+- **Schema grew:** the app needs more global or local state, or more extra program pages, than it was created with. AlgoKit treats any such growth as a schema break, although an account with permission to update the app can use that update to grow global state and extra program pages in place. Local state cannot grow after creation. Acts according to `onSchemaBreak`: `replace`, `append`, or `fail`.
 
 `onUpdate` and `onSchemaBreak` both default to `fail`. `replace` sends one atomic group that creates the new app and deletes the old one. If the old app is not deletable, the delete fails, the whole group fails, and neither app changes.
 
@@ -234,7 +234,7 @@ MainNet transactions cost real ALGO and cannot be reversed. An immutable, perman
 - Updatability and permanence for MainNet are set explicitly in the deploy call.
 - The deployer account is dedicated to this purpose, its mnemonic lives in a secret manager, and no copy of it is in git history.
 - The deployer holds enough ALGO for the creation transaction, the application account's minimum balance, and any funding the app needs to operate.
-- Global and local state schema is sized for what the app will need, since schema cannot grow after creation without replacing the app.
+- Local state schema is sized for what the app will need, since it cannot grow after creation. Global state and extra program pages can grow only through an app update, so they are also fixed for an app that is not updatable.
 - The contract has been reviewed, and audited if it will custody meaningful value.
 - You know which endpoint you're deploying through and whether its rate limits suit your production traffic.
 
