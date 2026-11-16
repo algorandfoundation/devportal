@@ -1,8 +1,8 @@
 ---
 title: Algorand Node Types
+description: Algorand nodes are validator or repeater nodes, optionally in archiver mode. Their hardware requirements differ, and the right one depends on the use case.
 sidebar:
   label: Node Types
-description: This document explains the different types of Algorand nodes, their configurations, and provides guidance on which node type to choose based on specific use cases.
 ---
 
 The Algorand network is comprised of two distinct types of nodes, **Repeater Nodes**, and **Validator Nodes**. Repeater nodes are primarily used for communication routing to a set of connected validator nodes. Repeater nodes communicate with other repeater nodes and route blocks to all connected validator nodes. Validator nodes only connect to repeater nodes and can also participate in consensus. Validator nodes may connect to several repeater nodes but never connect to another validator node.

@@ -1,8 +1,8 @@
 ---
 title: Configure a Node as a Repeater
+description: Turn an Algorand node into a repeater by setting NetAddress in config.json, then connect other nodes to it with goal node start, without DNS entries.
 sidebar:
   label: Repeater Node Configuration
-description: This guide outlines setting up a repeater node in Algorand by configuring NetAddress in config.json and connecting other nodes via goal node start. Repeater nodes should avoid account interaction or consensus participation.
 ---
 
 A benefit of Algorand's decentralized network implementation is that a Repeater is effectively the same as any other node. The distinction currently is made by configuring a node to actively listen for connections from other nodes and having itself advertised using SRV records available through DNS.
