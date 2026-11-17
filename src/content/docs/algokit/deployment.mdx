@@ -128,7 +128,7 @@ The deployer is the account that creates the application, and it becomes the app
 
 2. **Fund it.**
 
-   On TestNet, use the Lora dispenser at [lora.algokit.io/testnet/fund](https://lora.algokit.io/testnet/fund), or the CLI:
+   On TestNet, use the Live Onchain Resource Analyzer (LORA) dispenser at [lora.algokit.io/testnet/fund](https://lora.algokit.io/testnet/fund), or the CLI:
 
    ```shell frame=none showLineNumbers=false
    algokit dispenser login
@@ -221,7 +221,7 @@ The parameters take effect only when the contract gates its update and delete ha
 
 Your deploy command prints the application ID. Confirm it landed as expected:
 
-- **Lora:** open [lora.algokit.io](https://lora.algokit.io) and switch to the matching network, then look the app up by ID to inspect its global state, schema, and creation transaction.
+- **LORA:** open [lora.algokit.io](https://lora.algokit.io) and switch to the matching network, then look the app up by ID to inspect its global state, schema, and creation transaction.
 - **A block explorer:** [allo.info](https://allo.info) for MainNet and TestNet.
 
 Check that the creator address is the deployer you intended, that global state holds the values your deploy set, and that the updatable and deletable flags in the ARC-2 note match what you meant to ship.
