@@ -1,5 +1,6 @@
 ---
 title: 'Algorand REST APIs'
+description: The algod, kmd, and Indexer daemons expose REST APIs for integrating with Algorand, and most calls authenticate with an API token header.
 sidebar:
   label: Overview
 ---

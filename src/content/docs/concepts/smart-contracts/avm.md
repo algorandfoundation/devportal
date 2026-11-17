@@ -1,5 +1,6 @@
 ---
 title: Algorand Virtual Machine
+description: The Algorand Virtual Machine (AVM) is a stack-based bytecode interpreter that runs smart contracts and logic signatures, using defined stack types and opcodes.
 ---
 
 The AVM is a bytecode based stack interpreter that executes programs
