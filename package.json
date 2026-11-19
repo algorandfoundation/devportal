@@ -92,11 +92,11 @@
     "openai": "^6.21.0",
     "picomatch": "^4.0.3",
     "pnpm": "^10.29.3",
-    "prettier": "^3.8.1",
+    "prettier": "^3.10.1",
     "prettier-plugin-astro": "^0.14.1",
     "tsx": "^4.21.0",
     "typescript": "^5.9.3",
-    "typescript-eslint": "^8.55.0",
+    "typescript-eslint": "^8.72.2",
     "vitest": "^4.0.18"
   },
   "engines": {
