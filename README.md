@@ -76,10 +76,12 @@ Before you begin, ensure you have the following installed:
 ├── imports/
 │   ├── configs/           # GitHub loader import configurations
 │   └── transforms/        # Content transformation utilities
+├── openapi/               # Vendored algod/indexer/kmd OpenAPI specs (generated)
 ├── public/                # Static assets (favicons, etc.)
 ├── scripts/               # Build and utility scripts
 │   ├── clean-docs-import.ts       # Clear imported documentation
 │   ├── generate-opcode-list.ts    # Render the opcode reference page
+│   ├── generate-openapi-schemas.ts # Vendor the REST API OpenAPI specs
 │   ├── manage-sidebar-meta.ts     # Sidebar metadata generator
 │   ├── prose-check.ts             # AI-powered prose quality checker
 │   └── update-opcodes.ts          # Sync TEAL opcodes from go-algorand
@@ -162,8 +164,9 @@ All commands are run from the root of the project:
 | `pnpm run update:opcodes`         | Fetch the latest opcodes from go-algorand, update `opcodes.json`, and re-render |
 | `pnpm run update:opcodes:dry-run` | Preview an opcode update without writing any files                              |
 | `pnpm run check:opcodes`          | Warn (non-blocking) if the committed opcode reference is out of date            |
+| `pnpm run generate:openapi`       | Re-vendor the algod/indexer/kmd OpenAPI specs into `openapi/`                   |
 
-See [TEAL Opcode Reference](#teal-opcode-reference) for how these fit together.
+See [TEAL Opcode Reference](#teal-opcode-reference) and [REST API Reference](#rest-api-reference) for how these fit together.
 
 ### Content Import
 
@@ -264,6 +267,14 @@ The [AVM Opcodes](https://dev.algorand.co/reference/algorand-teal/opcodes) refer
 - `opcodes.json` is the dataset; `opcodes.mdx` is rendered from it (auto, in `prebuild`).
 - `check:opcodes` runs during `prebuild` and prints a non-blocking warning when the dataset is out of date.
 - To refresh, run **Actions → Update Opcodes → Run workflow** (opens a `devrel`-reviewed PR), or run `pnpm run update:opcodes` locally on a dedicated branch.
+
+### REST API Reference
+
+The [algod](https://dev.algorand.co/reference/rest-api/algod), [indexer](https://dev.algorand.co/reference/rest-api/indexer) and [kmd](https://dev.algorand.co/reference/rest-api/kmd) references are rendered by `starlight-openapi` from OpenAPI specs vendored into `openapi/`.
+
+- `scripts/generate-openapi-schemas.ts` fetches each upstream spec, rewrites `info.title` and `info.description`, and writes `openapi/{algod,indexer,kmd}.json`. The output is committed; refresh it with `pnpm run generate:openapi` on a dedicated branch.
+- Overwriting `info.description` is the reason the specs are vendored rather than read from their upstream URLs. `starlight-openapi` builds each API's landing page from `info` alone, so that field is the entire page, and upstream ships a single sentence there.
+- Nothing else in the spec is modified, so operation pages stay faithful to upstream.
 
 ## Contributing
 
