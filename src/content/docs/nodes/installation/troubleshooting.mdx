@@ -226,6 +226,17 @@ If you receive an `overspend` error:
    2. The [fee](https://developer.algorand.org/docs/get-details/transactions/#fees) paid by the
       transaction sender.
 
+#### Package manager cannot verify Algorand packages
+
+If `apt-get update` reports `NO_PUBKEY F1C9063D88DB5791`, or `dnf` or `yum` reports `GPG check
+FAILED` for an Algorand package, nothing is wrong with your node: the Algorand repository signing key
+stored on your machine is out of date. Algorand renewed its Debian and RPM signing keys on
+November 1, 2026, and installs made before then still hold the old copy.
+
+See
+[Updating the Repository Signing Key](/nodes/installation/manual-installation#updating-the-repository-signing-key)
+for the commands that refresh it.
+
 #### None of the above works
 
 If these solutions don't help, check the
