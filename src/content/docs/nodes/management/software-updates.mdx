@@ -65,11 +65,23 @@ This does two things, in order:
 
 If `algod` was not installed through one of those package managers, `upgrade` stops with an error and exit status 1. Upgrade such installs the same way they were installed.
 
+Because step 2 goes through the system package manager, `upgrade` also fails when the Algorand
+repository signing key on the machine is out of date. See
+[Updating the Repository Signing Key](/nodes/installation/manual-installation#updating-the-repository-signing-key).
+
 Expect a short interruption while `algod` restarts. If your account is online, see [Going Offline Gracefully](/nodes/management/best-practices#going-offline-gracefully) before you upgrade.
 
 ### Linux - Package Manager Install
 
 The RPM or Debian packages in the package repository are updated automatically, but this does not mean that the node installation on your local machine is updated automatically. Depending on your Linux distribution and version, you may have or need to install `unattended-upgrades` to handle automatic updates.
+
+:::caution
+Updates also stop arriving if the Algorand repository signing key stored on the machine is out of
+date: the package manager refuses the repository and the node stays on the version it has. If you
+rely on `unattended-upgrades`, this can go unnoticed for a long time. The keys were last renewed on
+November 1, 2026 — see
+[Updating the Repository Signing Key](/nodes/installation/manual-installation#updating-the-repository-signing-key).
+:::
 
 ### Linux or MacOS - Update Script Install
 
