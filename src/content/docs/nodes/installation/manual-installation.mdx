@@ -196,11 +196,15 @@ until you refresh it.
 <Tabs syncKey="systems">
 <TabItem label="Ubuntu, Linux Mint">
    The November 2026 renewal replaced an expired signing subkey, so every machine that installed
-   before then is affected. `sudo apt-get update` fails with a message like:
+   before then is affected. `sudo apt-get update` reports:
 
 ```plaintext showLineNumbers=false frame=none
 The following signatures couldn't be verified because the public key is not available: NO_PUBKEY F1C9063D88DB5791
 ```
+
+Depending on your apt version this may be a warning rather than a hard error: apt keeps the package
+index it has already cached and still exits 0, so updates stop arriving rather than failing loudly.
+A node can sit on an old version for weeks this way.
 
 Fetch the current key, overwriting the stored copy:
 
@@ -213,10 +217,11 @@ sudo apt-get update
 matter how the key was originally added, including older installs that used the now-removed
 `apt-key add`.
 
-To confirm which key you have, check that a signing subkey dated 2026-10-31 is present:
+To confirm you have the current key, check that the signing subkey ending in `F1C9063D88DB5791`
+is present:
 
 ```shell showLineNumbers=false frame=none
-gpg --show-keys /etc/apt/trusted.gpg.d/algorand.asc
+gpg --show-keys --with-subkey-fingerprint /etc/apt/trusted.gpg.d/algorand.asc
 ```
 
 ```plaintext showLineNumbers=false frame=none
@@ -224,7 +229,11 @@ pub   rsa3072 2019-06-11 [SC]
       611DE94A396F01359C72AF56EDACD29DA10A4EA6
 uid                      Algorand developers <dev@algorand.com>
 sub   rsa4096 2026-10-31 [S] [expires: 2030-10-30]
+      A2696A69562A3F158F5DD446F1C9063D88DB5791
 ```
+
+`gpg` prints dates in local time, so the subkey may show as 2026-11-01 if you are east of UTC. The
+fingerprint is the reliable check, not the date.
 
 </TabItem>
 <TabItem label="Fedora, CentOS">
@@ -239,16 +248,14 @@ sudo rpmkeys --import rpm_algorand.pub
 
 The renewed key keeps the same key ID as the old one, so some versions of `rpm` treat the import
 as already done and keep the stale copy. If updates still fail afterwards, remove the stored key
-and import it again:
+and import it again. Run the first command on its own and use the identifier it prints in the
+second — it is normally `gpg-pubkey-91a8ba41-5d0179e4`, but check rather than assume:
 
 ```shell showLineNumbers=false frame=none
 rpm -q gpg-pubkey --qf '%{NAME}-%{VERSION}-%{RELEASE} %{SUMMARY}\n' | grep -i algorand
-sudo rpm -e gpg-pubkey-91a8ba41-5d0176e4
+sudo rpm -e gpg-pubkey-91a8ba41-5d0179e4
 sudo rpmkeys --import rpm_algorand.pub
 ```
-
-The first command prints the stored key; use the identifier it reports in the second command, as
-it may differ from the example above.
 
 </TabItem>
 </Tabs>

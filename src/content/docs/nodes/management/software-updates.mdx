@@ -65,9 +65,7 @@ This does two things, in order:
 
 If `algod` was not installed through one of those package managers, `upgrade` stops with an error and exit status 1. Upgrade such installs the same way they were installed.
 
-Because step 2 goes through the system package manager, `upgrade` also fails when the Algorand
-repository signing key on the machine is out of date. See
-[Updating the Repository Signing Key](/nodes/installation/manual-installation#updating-the-repository-signing-key).
+NodeKit v1.7.1 and later check the repository signing key during `upgrade` and offer to install the renewed one if it is out of date. NodeKit will not touch a key held in the legacy `/etc/apt/trusted.gpg` keyring or written inline into the source file: it warns instead, and the upgrade installs nothing. Refresh those by hand — see [Updating the Repository Signing Key](/nodes/installation/manual-installation#updating-the-repository-signing-key).
 
 Expect a short interruption while `algod` restarts. If your account is online, see [Going Offline Gracefully](/nodes/management/best-practices#going-offline-gracefully) before you upgrade.
 
