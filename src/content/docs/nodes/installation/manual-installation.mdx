@@ -112,7 +112,7 @@ directory, eliminating the need to specify it with the `-d` flag in every comman
 2.  Add Algorand’s repository and security key:
 
     ```shell showLineNumbers=false frame=none
-    curl -o - https://releases.algorand.com/key.pub | sudo tee /etc/apt/trusted.gpg.d/algorand.asc
+    curl -f -o - https://releases.algorand.com/key.pub | sudo tee /etc/apt/trusted.gpg.d/algorand.asc
     sudo add-apt-repository "deb [arch=amd64] https://releases.algorand.com/deb/ stable main"
     sudo apt-get update
     ```
@@ -140,7 +140,7 @@ directory, eliminating the need to specify it with the `-d` flag in every comman
 1.  Import Algorand’s repository key and set up the repository:
 
     ```shell showLineNumbers=false frame=none
-    curl -O https://releases.algorand.com/rpm/rpm_algorand.pub
+    curl -fO https://releases.algorand.com/rpm/rpm_algorand.pub
     sudo rpmkeys --import rpm_algorand.pub
     sudo yum install yum-utils
     sudo yum-config-manager --add-repo https://releases.algorand.com/rpm/stable/algorand.repo
@@ -165,7 +165,7 @@ directory, eliminating the need to specify it with the `-d` flag in every comman
 1.  Import Algorand’s repository key and set up the repository:
 
     ```shell showLineNumbers=false frame=none
-    curl -O https://releases.algorand.com/rpm/rpm_algorand.pub
+    curl -fO https://releases.algorand.com/rpm/rpm_algorand.pub
     sudo rpmkeys --import rpm_algorand.pub
     dnf install -y 'dnf-command(config-manager)'
     dnf config-manager --add-repo=https://releases.algorand.com/rpm/stable/algorand.repo
@@ -209,7 +209,7 @@ A node can sit on an old version for weeks this way.
 Fetch the current key, overwriting the stored copy:
 
 ```shell showLineNumbers=false frame=none
-curl -o - https://releases.algorand.com/key.pub | sudo tee /etc/apt/trusted.gpg.d/algorand.asc
+curl -f -o - https://releases.algorand.com/key.pub | sudo tee /etc/apt/trusted.gpg.d/algorand.asc
 sudo apt-get update
 ```
 
@@ -242,7 +242,7 @@ fingerprint is the reliable check, not the date.
    reports a `GPG check FAILED` error, or a missing public key, for an Algorand package:
 
 ```shell showLineNumbers=false frame=none
-curl -O https://releases.algorand.com/rpm/rpm_algorand.pub
+curl -fO https://releases.algorand.com/rpm/rpm_algorand.pub
 sudo rpmkeys --import rpm_algorand.pub
 ```
 
