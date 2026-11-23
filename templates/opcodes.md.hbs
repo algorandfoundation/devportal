@@ -8,7 +8,11 @@ import OpcodeFilters from '../../../../components/OpcodeFilters.astro';
 
 This page documents the current state of the AVM and may include AVM versions that have not yet been approved and adopted by all node operators.
 
-The **Size** field lists an opcode's total encoded length in bytes: the opcode bytes plus its immediate arguments. It is omitted when an immediate has variable length. Constant opcodes such as `pushint`, `pushbytes` and `intcblock` carry their values inline; `b`, `bz`, `bnz` and `callsub` encode their relative target offset as a `varint (zigzag)` (see the notes under `bnz`); and `switch` and `match` take a variable-length list of `int16` targets. Opcodes that take an immediate also carry an **Immediate Parameters** note describing what each argument expects. In a **Field Reference** table, **Index** is the field's number: the value of the field immediate in the bytecode. Each table lists only the fields that opcode's immediate can name, so the numbers can skip.
+Some opcodes take *immediates*: arguments encoded directly in the instruction, rather than taken from the stack. Opcodes that take immediates carry an **Immediate Parameters** note describing what each one expects.
+
+The **Size** field lists an opcode's total encoded length in bytes: the opcode bytes plus its immediates. It is omitted when an immediate has variable length. Constant opcodes such as `pushint`, `pushbytes` and `intcblock` carry their values inline; `b`, `bz`, `bnz` and `callsub` encode their relative target offset as a `varint (zigzag)` (see the notes under `bnz`); and `switch` and `match` take a variable-length list of `int16` targets.
+
+Opcodes such as `txn` and `global` take a field immediate: one byte that selects which field to read or set. In their **Field Reference** table, **Index** is that byte's value. Each table lists only the fields that opcode can select, so the numbers can skip.
 
 <OpcodeFilters currentVersion="{{latestReleasedVersion}}" />
 
