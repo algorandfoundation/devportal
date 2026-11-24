@@ -23,6 +23,8 @@ These PRs are generated nightly by the `import-docs.yml` workflow, which pulls d
 - Flag any unexpected file deletions or structural changes
 - Check that code examples in docs are syntactically correct
 - Note any new pages that may need sidebar configuration
+- Check `imports/import-manifest.json`: each library should move to a newer stable release tag, never to a pre-release, and never backwards
+- Flag any `api/` directory appearing under a library whose import config sets `apiReferenceUrl` (API reference for those libraries links out and must not be committed)
 
 ### Production Sync PRs
 Labels: `automated`, `sync`

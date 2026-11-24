@@ -1,0 +1,73 @@
+name: Check Freshness
+
+# Weekly check that data copied from other repositories has not fallen behind
+# its source. The import and opcode workflows are what keep this data current;
+# this workflow exists to notice when they stop doing so. It fails (and so
+# notifies whoever watches this repo's Actions) when:
+#
+#   - an imported library's docs are behind its latest stable release
+#   - a branch import (ARC standards, NodeKit) is more than a week behind
+#   - the TEAL opcode dataset is behind go-algorand
+#
+# It changes nothing. To fix a failure, run the "Import Documentation" or
+# "Update Opcodes" workflow and merge the PR it opens.
+on:
+  schedule:
+    # Mondays 06:00 UTC, an hour after the daily import.
+    - cron: "0 6 * * 1"
+
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  check-freshness:
+    name: Check imported data against upstream
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      # Read-only access to public upstream repos (rate-limit relief).
+      GITHUB_TOKEN: ${{ github.token }}
+
+    steps:
+      - name: Checkout DevPortal
+        uses: actions/checkout@v6
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10.6.3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: "20"
+          cache: "pnpm"
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Imported docs
+        id: imports
+        continue-on-error: true
+        run: pnpm run check:freshness
+
+      - name: TEAL opcode dataset
+        id: opcodes
+        continue-on-error: true
+        run: pnpm run check:opcodes:strict
+
+      - name: Summary
+        if: always()
+        run: |
+          {
+            echo "## Freshness"
+            echo ""
+            echo "- Imported docs: ${{ steps.imports.outcome }}"
+            echo "- TEAL opcode dataset: ${{ steps.opcodes.outcome }}"
+          } >> "$GITHUB_STEP_SUMMARY"
+          if [ "${{ steps.imports.outcome }}" != "success" ] || [ "${{ steps.opcodes.outcome }}" != "success" ]; then
+            echo "One or more data sources are behind upstream. See the step logs above." >&2
+            exit 1
+          fi

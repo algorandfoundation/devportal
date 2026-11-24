@@ -42,7 +42,6 @@ This is one step inside `pnpm run import:docs`.
 
 Current examples include:
 
-- `algorand-python`
 - `arc-standards`
 
 `nodekit` also uses this import path, but it is currently imported only as a
@@ -65,6 +64,7 @@ Current examples include:
 - `algokit-utils`
 - `algokit-cli`
 - `algokit-subscriber`
+- `algorand-python`
 - `algorand-typescript`
 
 The artifact is not a full repo archive. It is a docs bundle, typically containing:
@@ -72,6 +72,23 @@ The artifact is not a full repo archive. It is a docs bundle, typically containi
 - `content/`
 - `sidebar.json`
 - `manifest.json`
+
+`manifest.json` records the upstream tag, commit and build time. The import
+copies those into `imports/import-manifest.json`, which is committed. That file
+is the portal's record of which upstream release each library's docs came from;
+the version selector and `pnpm run check:freshness` both read it.
+
+#### API reference
+
+A library's generated API reference (TypeDoc, Sphinx) is not imported when its
+import config sets `apiReferenceUrl`. The `api/` tree is dropped, the sidebar
+gets one external link, and links into `api/` are rewritten to that URL. Old
+portal URLs are redirected in `public/_redirects`.
+
+Only set `apiReferenceUrl` when the library's own docs site documents the same
+release line the portal imports. If the site is built from the default branch
+and that is ahead of the latest stable release, leave it unset so the API
+reference keeps coming from the release bundle.
 
 ## Import Command
 
@@ -96,7 +113,15 @@ Remote docs are refreshed by:
 
 - `.github/workflows/import-docs.yml`
 
-This workflow runs `pnpm run import:docs` and opens or updates a PR with the imported changes.
+This workflow runs `pnpm run import:docs` daily and opens or updates a PR with the imported changes. It authenticates with the DevPortal GitHub App (`BOT_ID` / `BOT_SK`), as `update-opcodes.yml` and `sync-to-production.yml` do.
+
+An import source that fails makes the whole run fail. A library whose latest stable release has no docs bundle is skipped without failing the run (its committed docs are left as they are) and is listed in the run log.
+
+### Freshness check
+
+- `.github/workflows/check-freshness.yml`
+
+Runs weekly and fails when imported docs or the TEAL opcode dataset are behind upstream. It makes no changes. Its purpose is to make a stalled import visible: imported docs are committed, so nothing else notices when the import stops producing PRs.
 
 That means imported docs are normally committed into this repo before deployment.
 
@@ -171,8 +196,10 @@ That means the portal only exposes `latest`.
 
 For artifact-based imports, mapping works like this:
 
-- version slug `latest` -> GitHub Release tag `docs-latest`
+- version slug `latest` -> the repo's latest **stable** release (GitHub's "latest release", which excludes pre-releases, so the rolling `docs-latest` build is never used)
 - any other version slug -> GitHub Release tag with the same name
+
+So the portal documents what users can install, not unreleased work on the default branch. If the latest stable release has no `devportal-docs.tar.gz` (it was cut before the library adopted the publishing action), that library is skipped and keeps its committed docs until a release ships a bundle.
 
 If a library config were changed to:
 
@@ -183,7 +210,7 @@ versions: [
 ];
 ```
 
-then DevPortal would attempt to import and expose both `docs-latest` and `v8.0.3`.
+then DevPortal would import and expose both the latest stable release and `v8.0.3`.
 
 In practice, most libraries are currently configured as `latest` only.
 
@@ -192,8 +219,8 @@ In practice, most libraries are currently configured as `latest` only.
 `algokit-utils-ts` is an example of the artifact flow:
 
 - it has a `publish-devportal-docs.yml` workflow
-- it publishes a rolling `docs-latest` release
-- that release includes `devportal-docs.tar.gz`
+- it attaches `devportal-docs.tar.gz` to each version release (this is what the portal imports)
+- it also publishes a rolling `docs-latest` pre-release from the default branch (not imported)
 
 One piece of technical debt is easy to miss:
 

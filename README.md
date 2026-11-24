@@ -162,19 +162,40 @@ All commands are run from the root of the project:
 | `pnpm run update:opcodes`         | Fetch the latest opcodes from go-algorand, update `opcodes.json`, and re-render |
 | `pnpm run update:opcodes:dry-run` | Preview an opcode update without writing any files                              |
 | `pnpm run check:opcodes`          | Warn (non-blocking) if the committed opcode reference is out of date            |
+| `pnpm run check:opcodes:strict`   | Same check, but exit non-zero when out of date (used by the weekly workflow)    |
 
 See [TEAL Opcode Reference](#teal-opcode-reference) for how these fit together.
 
 ### Content Import
 
-Documentation is imported from external GitHub repositories using `@algorandfoundation/astro-github-loader`. Import configurations are defined in `imports/configs/`.
+Library documentation is imported from other repositories and committed here. Import configurations are defined in `imports/configs/`. There are two paths:
 
-| Command                   | Description                                                         |
-| ------------------------- | ------------------------------------------------------------------- |
-| `pnpm run import:docs`    | Import all content from GitHub, regenerate sidebar, and fix linting |
-| `pnpm run import:force`   | Force re-import all content, ignoring cache                         |
-| `pnpm run import:dry-run` | Preview GitHub content imports without making changes               |
-| `pnpm run import:clear`   | Remove all imported documentation content                           |
+- **Release bundles** (AlgoKit Utils, AlgoKit CLI, Subscriber, Algorand Python, Algorand TypeScript): each library attaches a `devportal-docs.tar.gz` to its GitHub releases. The portal imports the bundle from the library's **latest stable release**, never from unreleased work, and records the tag in `imports/import-manifest.json`. That record is what the version selector shows, for example "Latest (v9.2.2)".
+- **Branch imports** (ARC standards, NodeKit command reference): files are read from a branch with `@algorandfoundation/astro-github-loader`.
+
+Generated API reference is not imported where the library's own docs site documents the same release line; the sidebar links out to it instead (`apiReferenceUrl` in the library's import config).
+
+| Command                           | Description                                                              |
+| --------------------------------- | ------------------------------------------------------------------------ |
+| `pnpm run import:docs`            | Import all content, regenerate sidebar, and fix linting                  |
+| `pnpm run import:release`         | Import only the release bundles                                          |
+| `pnpm run import:release:dry-run` | List what the release import would download                              |
+| `pnpm run import:force`           | Force re-import all content, ignoring cache                              |
+| `pnpm run import:dry-run`         | Preview branch imports without making changes                            |
+| `pnpm run import:clear`           | Remove all imported documentation content                                |
+| `pnpm run check:freshness`        | Exit non-zero if imported docs are behind their upstream release/branch  |
+
+`GITHUB_TOKEN` is optional for local imports (the sources are public) but avoids GitHub's 60 requests/hour anonymous limit.
+
+### Keeping Content Current
+
+| Check                           | What it catches                                                        | Where it runs                     |
+| ------------------------------- | ---------------------------------------------------------------------- | --------------------------------- |
+| `pnpm run check:freshness`      | Imported docs behind the latest stable release or tracked branch       | Weekly (`check-freshness.yml`)    |
+| `pnpm run check:opcodes:strict` | TEAL opcode dataset behind go-algorand                                 | Weekly (`check-freshness.yml`)    |
+| `pnpm run check:version-claims` | New "current version" style statements in hand-written docs            | Every PR (`acceptance.yml`)       |
+
+See [CONTRIBUTING.md](./CONTRIBUTING.md#version-specific-information) for the writing rules behind the last check.
 
 ### Auto-Sidebar Management
 
@@ -255,14 +276,18 @@ Your content here...
 
 ### Importing External Documentation
 
-The project uses `@algorandfoundation/astro-github-loader` to import documentation from external repositories. Configure imports in `imports/configs/`. See the [documentation](https://github.com/algorandfoundation/astro-github-loader/blob/main/packages/astro-github-loader/README.md) for details on how to configure external documentation imports.
+Imports are configured in `imports/configs/`; see [Content Import](#content-import) above and [DEPLOYMENT.md](./DEPLOYMENT.md) for how the two import paths work. For branch imports, see the [`astro-github-loader` documentation](https://github.com/algorandfoundation/astro-github-loader/blob/main/packages/astro-github-loader/README.md).
+
+Imported files are overwritten on the next import, so do not edit them in this repo. Fix them in the source repository.
 
 ### TEAL Opcode Reference
 
 The [AVM Opcodes](https://dev.algorand.co/reference/algorand-teal/opcodes) reference is sourced from the TEAL language spec in [algorand/go-algorand](https://github.com/algorand/go-algorand/tree/master/data/transactions/logic) (`master`). The page's version filter defaults to the latest live release, so opcodes for a newer, not-yet-released AVM version are hidden until the reader opts in by widening the filter.
 
 - `opcodes.json` is the dataset; `opcodes.mdx` is rendered from it (auto, in `prebuild`).
-- `check:opcodes` runs during `prebuild` and prints a non-blocking warning when the dataset is out of date.
+- `check:opcodes` runs during `prebuild` and prints a non-blocking warning when the dataset is out of date. The weekly `check-freshness.yml` workflow runs the same check in strict mode and fails when it is.
+- The opcode names in the TEAL syntax-highlighting grammar (`src/utils/teal-syntax.json`) are topped up from the same dataset during `prebuild`, so new opcodes are highlighted without editing the grammar.
+- Pages that mention the current AVM version use `<AvmVersion />`, which reads `LatestReleasedVersion` from the dataset.
 - To refresh, run **Actions → Update Opcodes → Run workflow** (opens a `devrel`-reviewed PR), or run `pnpm run update:opcodes` locally on a dedicated branch.
 
 ## Contributing

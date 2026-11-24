@@ -43,3 +43,74 @@ describe('mdxText helper', () => {
     expect(render('{{{mdxText v}}}', {})).toBe('');
   });
 });
+
+describe('syncTealGrammar', () => {
+  const grammarWith = (...matches: string[]) => ({
+    repository: {
+      keywords: {
+        patterns: matches.map(match => ({ name: 'keyword.other.teal', match })),
+      },
+    },
+  });
+
+  it('adds opcodes the hand-written groups do not cover', async () => {
+    const { syncTealGrammar, GENERATED_OPCODES_COMMENT } = await import(
+      '../../scripts/generate-opcode-list.ts'
+    );
+    const grammar = grammarWith('\\b(box_get|box_put|sha256)\\b');
+
+    const changed = syncTealGrammar(grammar, [
+      'box_get',
+      'box_splice',
+      'sha256',
+      'falcon_verify',
+    ]);
+
+    expect(changed).toBe(true);
+    expect(grammar.repository.keywords.patterns.at(-1)).toEqual({
+      comment: GENERATED_OPCODES_COMMENT,
+      name: 'keyword.other.unit.teal',
+      match: '\\b(box_splice|falcon_verify)\\b',
+    });
+  });
+
+  it('does not treat a longer name as covering a shorter one', async () => {
+    const { syncTealGrammar } = await import(
+      '../../scripts/generate-opcode-list.ts'
+    );
+    // `sha512_256` is hand-written; plain `sha512` is a different opcode.
+    const grammar = grammarWith('\\b(sha512_256)\\b');
+
+    syncTealGrammar(grammar, ['sha512', 'sha512_256']);
+
+    expect(grammar.repository.keywords.patterns.at(-1)?.match).toBe(
+      '\\b(sha512)\\b',
+    );
+  });
+
+  it('ignores operator opcodes and is stable on a second run', async () => {
+    const { syncTealGrammar } = await import(
+      '../../scripts/generate-opcode-list.ts'
+    );
+    const grammar = grammarWith('\\b(box_get)\\b');
+
+    syncTealGrammar(grammar, ['b+', '>=', 'box_get', 'mimc']);
+    const first = JSON.stringify(grammar);
+
+    expect(syncTealGrammar(grammar, ['b+', '>=', 'box_get', 'mimc'])).toBe(false);
+    expect(JSON.stringify(grammar)).toBe(first);
+    expect(first).not.toContain('b+');
+  });
+
+  it('removes the generated group once everything is hand-written', async () => {
+    const { syncTealGrammar } = await import(
+      '../../scripts/generate-opcode-list.ts'
+    );
+    const grammar = grammarWith('\\b(box_get)\\b');
+    syncTealGrammar(grammar, ['box_get', 'mimc']);
+    grammar.repository.keywords.patterns[0].match = '\\b(box_get|mimc)\\b';
+
+    expect(syncTealGrammar(grammar, ['box_get', 'mimc'])).toBe(true);
+    expect(grammar.repository.keywords.patterns).toHaveLength(1);
+  });
+});

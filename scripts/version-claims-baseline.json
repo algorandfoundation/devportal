@@ -1,0 +1,52 @@
+[
+  {
+    "file": "src/content/docs/algokit/algokit-intro.mdx",
+    "rule": "current-version",
+    "text": "The table below lists the minimum version of each tool required by the AlgoKit 3.0 release. Each repository links to its latest release, which is the source of truth for the current version. The Algorand SDKs are marked `N/A` for the AlgoKit 3.0 minimum as they were not part of that release."
+  },
+  {
+    "file": "src/content/docs/concepts/accounts/post-quantum.mdx",
+    "rule": "pinned-release-link",
+    "text": "Post-quantum signatures are part of the **v42 consensus upgrade**, shipped in [algod v5.0.0](https://github.com/algorand/go-algorand/releases/tag/v5.0.0-stable). All statements on this page describe behavior **after the upgrade takes effect** on a given network. Until then, the network rejects post-quantum signatures."
+  },
+  {
+    "file": "src/content/docs/concepts/accounts/post-quantum.mdx",
+    "rule": "dated-claim",
+    "text": "Falcon-1024 is based on lattice problems that are believed to resist quantum attack. Falcon was selected by the National Institute of Standards and Technology (NIST) for standardization in 2022, and a derived scheme, FN-DSA, is being standardized in FIPS 206, which is in draft at the time of writing. Algorand uses a deterministic variant of Falcon, which differs from the draft FN-DSA. By supporting it natively in the protocol, Algorand lets any account holder move to quantum-resistant security without waiting for a network-wide migration."
+  },
+  {
+    "file": "src/content/docs/concepts/protocol/staking-rewards.mdx",
+    "rule": "currently-number",
+    "text": "of two components. First, a portion of the block fees (currently 50%) are paid to the proposer."
+  },
+  {
+    "file": "src/content/docs/concepts/protocol/staking-rewards.mdx",
+    "rule": "currently-number",
+    "text": "`Payouts.ChallengeInterval` rounds (currently 1000), a random selected portion (currently 1/32) of"
+  },
+  {
+    "file": "src/content/docs/concepts/protocol/staking-rewards.mdx",
+    "rule": "currently-number",
+    "text": "rounds (currently 200), or they will be subject to suspension. With the current consensus"
+  },
+  {
+    "file": "src/content/docs/concepts/transactions/reference.mdx",
+    "rule": "currently-number",
+    "text": "| <a id=\"fee\">Fee</a> | _required_ | uint64 | `\"fee\"` | Paid by the sender to the FeeSink to prevent denial-of-service. The minimum fee on Algorand is currently 1000 microAlgos. |"
+  },
+  {
+    "file": "src/content/docs/concepts/transactions/signing.mdx",
+    "rule": "currently-number",
+    "text": "Because post-quantum signatures are substantially larger than Ed25519 signatures, transactions authorized by a `pqsig` pay a higher minimum fee — the base fee plus a Falcon contribution of 2× the base fee, currently 3,000 microAlgo (0.003 Algo) in total. See [Transaction Fees](/concepts/transactions/fees) for details."
+  },
+  {
+    "file": "src/content/docs/resources/intermezzo-api-reference.mdx",
+    "rule": "current-version",
+    "text": "Every transaction endpoint returns once algod confirms the transaction, or after 20 rounds (about a minute), whichever comes first. A pool error in that window fails the request with `500`. Transactions normally confirm in the next round. Under congestion or with a lagging algod node, the current version of Intermezzo can return the transaction id before confirmation, without an error. The transaction stays valid for 1000 rounds and can still confirm later, so check it on-chain where the outcome matters."
+  },
+  {
+    "file": "src/content/docs/resources/nodely.mdx",
+    "rule": "dated-claim",
+    "text": "Nodely sets its own availability, limits, and pricing, and can change them. This page records what Nodely's documentation states at the time of writing, and the [Additional Resources](#additional-resources) section links to the source for each figure."
+  }
+]
