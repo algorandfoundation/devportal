@@ -38,6 +38,7 @@ const CONTENT_DOCS_ROOT = join(process.cwd(), 'src/content/docs');
  * - autogenerate.directory: prefix with `{prefix}/`
  * - link (no leading /):    prefix with `{prefix}/`
  * - link (leading /):       prefix with `/{prefix}`
+ * - link (http/https):      left as-is (external)
  * - items (group):          recurse into children
  */
 export function rebaseSidebarEntries(
@@ -58,6 +59,9 @@ export function rebaseSidebarEntries(
       return { ...entry, slug: `${prefix}/${entry.slug}` };
     }
     if ('link' in entry) {
+      // External links (e.g. a library's own API reference site) are not
+      // content paths — leave them untouched.
+      if (/^https?:\/\//.test(entry.link)) return entry;
       const rebased = entry.link.startsWith('/')
         ? `/${prefix}${entry.link}`
         : `${prefix}/${entry.link}`;

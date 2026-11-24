@@ -12,6 +12,11 @@ import type { LibraryImportConfig } from '../../imports/types';
 import type { VersionConfig } from '../../imports/types';
 import type { StarlightRouteData } from '@astrojs/starlight/route-data';
 import { LIBRARY_CONFIGS } from '../../imports/configs/index.js';
+import {
+  manifestKey,
+  readImportManifest,
+  versionLabel,
+} from '../../imports/manifest.js';
 
 export type { VersionConfig };
 
@@ -132,6 +137,25 @@ export function getVersionBySlug(
   slug: string,
 ): VersionConfig | undefined {
   return library.versions.find(v => v.slug === slug);
+}
+
+/** Committed record of which upstream build each variant was imported from. */
+const importManifest = readImportManifest();
+
+/**
+ * Label for a version as shown in the version selector, including the upstream
+ * release the docs were actually built from, e.g. `Latest (v9.2.2)`.
+ *
+ * Per language, because variants of one library are released independently.
+ */
+export function getVersionLabel(
+  library: LibraryConfig,
+  language: string,
+  version: VersionConfig,
+): string {
+  const entry =
+    importManifest[manifestKey(library.slug, language, version.slug)];
+  return versionLabel(entry, version.label);
 }
 
 /**

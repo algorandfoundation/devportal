@@ -5,6 +5,21 @@
  * downloads devportal-docs.tar.gz from the appropriate GitHub Release,
  * and unpacks content to the correct location in src/content/docs/.
  *
+ * Which release:
+ * - version slug `latest` -> the repo's latest STABLE release (GitHub's
+ *   "latest release", which excludes pre-releases and drafts). The rolling
+ *   `docs-latest` pre-release built from the default branch is never used, so
+ *   the portal does not document unreleased APIs.
+ * - any other slug -> the release with that tag.
+ *
+ * If the latest stable release has no docs bundle (it was cut before the
+ * library adopted the publish action), the variant is SKIPPED: its committed
+ * content is left as it is and the run still succeeds. scripts/check-freshness.ts
+ * reports these so they are not forgotten.
+ *
+ * Every successful import is recorded in imports/import-manifest.json
+ * (upstream tag, commit and build time).
+ *
  * Run: pnpm run import:release
  * Flags: --dry-run (log planned downloads, no network calls)
  */
@@ -28,6 +43,14 @@ import picomatch from 'picomatch';
 
 import { LIBRARY_CONFIGS } from '../imports/configs/index.js';
 import { isArtifactVariant } from '../imports/types.js';
+import {
+  manifestKey,
+  readImportManifest,
+  writeImportManifest,
+} from '../imports/manifest.js';
+import type { ImportManifestEntry } from '../imports/manifest.js';
+import { linkOutApiLinks, linkOutApiSidebar } from '../imports/api-link-out.js';
+import type { SidebarJsonEntry } from '../imports/types.js';
 import type { GithubArtifactConfig, PostImportTransform } from '../imports/types.js';
 import type { VersionConfig } from '../imports/types.js';
 
@@ -56,15 +79,19 @@ const REPO_FILTER = (() => {
 // Auth
 // ---------------------------------------------------------------------------
 
+// The source repos are public, so a token is optional. Without one GitHub
+// allows 60 API requests per hour, which is enough for a local run (two
+// requests per library) but not for CI, where GITHUB_TOKEN should be set.
 const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
 if (!GITHUB_TOKEN && !DRY_RUN) {
-  console.error(
-    'GITHUB_TOKEN environment variable is required (set in .env or CI)',
+  console.warn(
+    'GITHUB_TOKEN is not set: using unauthenticated GitHub API access (60 requests/hour).\n',
   );
-  process.exit(1);
 }
 
-const octokit = GITHUB_TOKEN ? new Octokit({ auth: GITHUB_TOKEN }) : null;
+const octokit = DRY_RUN
+  ? null
+  : new Octokit(GITHUB_TOKEN ? { auth: GITHUB_TOKEN } : {});
 
 // ---------------------------------------------------------------------------
 // Constants
@@ -82,7 +109,8 @@ interface DownloadTask {
   librarySlug: string;
   variant: GithubArtifactConfig;
   version: VersionConfig;
-  releaseTag: string;
+  /** Release tag to import, or null to resolve the latest stable release. */
+  releaseTag: string | null;
   destDir: string;
   prefix: string;
   postImportTransforms?: PostImportTransform[];
@@ -105,7 +133,7 @@ function buildTasks(): DownloadTask[] {
             librarySlug: lib.metadata.slug,
             variant,
             version,
-            releaseTag: version.slug === 'latest' ? 'docs-latest' : version.slug,
+            releaseTag: version.slug === 'latest' ? null : version.slug,
             destDir: join(CONTENT_DOCS_DIR, prefix),
             prefix,
             postImportTransforms: variant.postImportTransforms,
@@ -327,27 +355,94 @@ function normalizeAllLinks(
   }
 }
 
-async function downloadAndUnpack(task: DownloadTask): Promise<void> {
-  const { variant, version, releaseTag, destDir, prefix } = task;
-  const label = `${variant.owner}/${variant.repo}@${releaseTag} (${variant.language} ${version.slug})`;
+// ---------------------------------------------------------------------------
+// API reference link-out
+// ---------------------------------------------------------------------------
+
+/**
+ * Remove the generated `api/` tree and point everything that referenced it at
+ * the library's own API site. Idempotent, so it is also applied to committed
+ * content of variants whose import was skipped.
+ */
+function applyApiLinkOut(
+  destDir: string,
+  prefix: string,
+  apiReferenceUrl: string,
+): void {
+  if (!existsSync(destDir)) return;
+
+  const apiDir = join(destDir, 'api');
+  if (existsSync(apiDir)) {
+    const removed = walkFiles(apiDir).length;
+    rmSync(apiDir, { recursive: true });
+    console.log(`  Removed ${removed} generated API file(s) -> ${apiReferenceUrl}`);
+  }
+
+  const sidebarPath = join(destDir, 'sidebar.json');
+  if (existsSync(sidebarPath)) {
+    const entries: SidebarJsonEntry[] = JSON.parse(
+      readFileSync(sidebarPath, 'utf-8'),
+    );
+    const linked = linkOutApiSidebar(entries, apiReferenceUrl);
+    writeFileSync(sidebarPath, `${JSON.stringify(linked, null, 2)}\n`);
+  }
+
+  let count = 0;
+  for (const filePath of walkFiles(destDir)) {
+    if (!/\.(md|mdx)$/i.test(filePath)) continue;
+    const content = readFileSync(filePath, 'utf-8');
+    const rewritten = linkOutApiLinks(content, prefix, apiReferenceUrl);
+    if (rewritten !== content) {
+      writeFileSync(filePath, rewritten);
+      count++;
+    }
+  }
+  if (count > 0) {
+    console.log(`  Pointed API links at the library site in ${count} file(s)`);
+  }
+}
+
+/** The latest stable release exists but carries no docs bundle. Not an error. */
+class MissingArtifactError extends Error {
+  constructor(public readonly tag: string, repo: string) {
+    super(
+      `latest stable release ${tag} of ${repo} has no '${ASSET_NAME}'; ` +
+        `keeping committed content until a release ships one`,
+    );
+  }
+}
+
+async function downloadAndUnpack(
+  task: DownloadTask,
+): Promise<ImportManifestEntry> {
+  const { variant, version, destDir, prefix } = task;
+  const repoName = `${variant.owner}/${variant.repo}`;
 
   if (!octokit) throw new Error('No octokit instance');
 
-  // 1. Fetch release by tag
+  // 1. Fetch the release: an explicit tag, or the latest stable release
   console.log(
-    `  Fetching release ${releaseTag} from ${variant.owner}/${variant.repo}...`,
+    `  Fetching ${task.releaseTag ?? 'latest stable'} release from ${repoName}...`,
   );
-  const release = await octokit.rest.repos.getReleaseByTag({
-    owner: variant.owner,
-    repo: variant.repo,
-    tag: releaseTag,
-  });
+  const release = task.releaseTag
+    ? await octokit.rest.repos.getReleaseByTag({
+        owner: variant.owner,
+        repo: variant.repo,
+        tag: task.releaseTag,
+      })
+    : await octokit.rest.repos.getLatestRelease({
+        owner: variant.owner,
+        repo: variant.repo,
+      });
+  const releaseTag = release.data.tag_name;
+  const label = `${repoName}@${releaseTag} (${variant.language} ${version.slug})`;
 
   // 2. Find the tarball asset
   const asset = release.data.assets.find((a) => a.name === ASSET_NAME);
   if (!asset) {
+    if (!task.releaseTag) throw new MissingArtifactError(releaseTag, repoName);
     throw new Error(
-      `Asset '${ASSET_NAME}' not found in release '${releaseTag}' of ${variant.owner}/${variant.repo}`,
+      `Asset '${ASSET_NAME}' not found in release '${releaseTag}' of ${repoName}`,
     );
   }
 
@@ -410,13 +505,19 @@ async function downloadAndUnpack(task: DownloadTask): Promise<void> {
       console.log(`  Copied sidebar.json -> ${prefix}/sidebar.json`);
     }
 
-    // 10. Read site base from manifest (self-describing artifact),
-    //     falling back to repo name for older tarballs without it.
+    // 10. Read site base and provenance from manifest (self-describing
+    //     artifact), falling back to repo name for older tarballs without it.
     const manifestPath = join(extractDir, 'manifest.json');
     let siteBase = variant.repo;
+    let upstreamRef: string | null = null;
+    let upstreamBuiltAt: string | null = null;
     if (existsSync(manifestPath)) {
       try {
         const manifest = JSON.parse(readFileSync(manifestPath, 'utf-8'));
+        if (typeof manifest.ref === 'string') upstreamRef = manifest.ref;
+        if (typeof manifest.timestamp === 'string') {
+          upstreamBuiltAt = manifest.timestamp;
+        }
         if (manifest.base && manifest.base !== '/') {
           // Strip leading/trailing slashes — normalizeLinks expects bare name (e.g. 'algokit-utils-ts')
           siteBase = manifest.base.replace(/^\//, '').replace(/\/$/, '');
@@ -435,7 +536,21 @@ async function downloadAndUnpack(task: DownloadTask): Promise<void> {
       applyPostImportTransforms(destDir, task.postImportTransforms, prefix);
     }
 
+    // 13. Drop generated API reference in favour of the library's own site
+    if (variant.apiReferenceUrl) {
+      applyApiLinkOut(destDir, prefix, variant.apiReferenceUrl);
+    }
+
     console.log(`  Done: ${label} -> ${prefix}/`);
+
+    return {
+      repo: repoName,
+      channel: 'stable',
+      tag: releaseTag,
+      ref: upstreamRef,
+      builtAt: upstreamBuiltAt ?? release.data.published_at ?? null,
+      importedAt: new Date().toISOString(),
+    };
   } finally {
     rmSync(tempDir, { recursive: true, force: true });
   }
@@ -459,9 +574,12 @@ async function main(): Promise<void> {
     console.log('Dry run — no downloads will be performed.\n');
     for (const task of tasks) {
       console.log(
-        `  Would download: ${task.variant.owner}/${task.variant.repo}@${task.releaseTag}`,
+        `  Would download: ${task.variant.owner}/${task.variant.repo}@${task.releaseTag ?? '<latest stable release>'}`,
       );
       console.log(`    -> ${task.prefix}/`);
+      if (task.variant.apiReferenceUrl) {
+        console.log(`    API reference links out to ${task.variant.apiReferenceUrl}`);
+      }
     }
     return;
   }
@@ -469,19 +587,42 @@ async function main(): Promise<void> {
   console.log(`Found ${tasks.length} artifact variant(s) to download.${REPO_FILTER ? ` (filtered by --repo ${REPO_FILTER})` : ''}\n`);
 
   const failures: Array<{ label: string; error: string }> = [];
+  const skipped: string[] = [];
+  const manifest = readImportManifest();
 
   for (const task of tasks) {
+    const key = manifestKey(
+      task.librarySlug,
+      task.variant.language,
+      task.version.slug,
+    );
     try {
-      await downloadAndUnpack(task);
+      manifest[key] = await downloadAndUnpack(task);
     } catch (err) {
-      const label = `${task.variant.owner}/${task.variant.repo}@${task.releaseTag}`;
       const message = err instanceof Error ? err.message : String(err);
+      if (err instanceof MissingArtifactError) {
+        console.warn(`  Skipped: ${message}`);
+        skipped.push(message);
+        // Committed content stays, but it still must not carry API reference.
+        if (task.variant.apiReferenceUrl) {
+          applyApiLinkOut(task.destDir, task.prefix, task.variant.apiReferenceUrl);
+        }
+        continue;
+      }
+      const label = `${task.variant.owner}/${task.variant.repo}@${task.releaseTag ?? 'latest'}`;
       console.error(`  Failed: ${label}: ${message}`);
       failures.push({ label, error: message });
     }
   }
 
+  writeImportManifest(manifest);
+
   console.log('');
+  if (skipped.length > 0) {
+    console.warn(`${skipped.length} variant(s) skipped (no docs bundle on the latest stable release):`);
+    for (const s of skipped) console.warn(`  - ${s}`);
+    console.log('');
+  }
   if (failures.length > 0) {
     console.error(`${failures.length} failure(s):`);
     for (const f of failures) {

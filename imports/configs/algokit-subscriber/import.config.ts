@@ -16,6 +16,9 @@ export const config: LibraryImportConfig = {
       versions: [{ slug: 'latest', label: 'Latest' }],
       owner: 'algorandfoundation',
       repo: 'algokit-subscriber-ts',
+      // No apiReferenceUrl: the library's docs site is built from the default
+      // branch (unreleased v4) and currently serves no API section, so the
+      // API reference is imported from the stable release bundle instead.
       postImportTransforms: [
         {
           pattern: '**/*.{md,mdx}',
@@ -29,6 +32,7 @@ export const config: LibraryImportConfig = {
       versions: [{ slug: 'latest', label: 'Latest' }],
       owner: 'algorandfoundation',
       repo: 'algokit-subscriber-py',
+      apiReferenceUrl: 'https://algorandfoundation.github.io/algokit-subscriber-py/api/algokit_subscriber/',
       postImportTransforms: [
         {
           pattern: '**/*.{md,mdx}',

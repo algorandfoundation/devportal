@@ -76,6 +76,20 @@ describe('rebaseSidebarEntries', () => {
     ]);
   });
 
+  it('should leave external links untouched', () => {
+    const entries: SidebarJsonEntry[] = [
+      {
+        label: 'API Reference',
+        link: 'https://example.github.io/mylib/api/',
+        attrs: { target: '_blank' },
+      },
+    ];
+
+    const result = rebaseSidebarEntries(entries, 'docs/mylib/ts/latest');
+
+    expect(result).toEqual(entries);
+  });
+
   it('should rebase link entries with leading slash', () => {
     const entries: SidebarJsonEntry[] = [{ label: 'Guide', link: '/guides/intro' }];
 

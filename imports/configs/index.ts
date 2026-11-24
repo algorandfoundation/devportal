@@ -11,16 +11,9 @@ import type { LibraryImportConfig, SidebarMetadata } from '../types';
 import { isArtifactVariant } from '../types.js';
 
 // Per-library configs
-import {
-  config as algokitUtils,
-  legacyTsGuideConfig as algokitUtilsTsLegacy,
-  legacyPyGuideConfig as algokitUtilsPyLegacy,
-} from './algokit-utils/import.config.js';
+import { config as algokitUtils } from './algokit-utils/import.config.js';
 import { config as algokitCli } from './algokit-cli/import.config.js';
-import {
-  config as algorandPython,
-  legacyGuideConfig as algorandPythonLegacy,
-} from './algorand-python/import.config.js';
+import { config as algorandPython } from './algorand-python/import.config.js';
 import { config as algorandTypescript } from './algorand-typescript/import.config.js';
 import { config as algokitSubscriber } from './algokit-subscriber/import.config.js';
 import { config as nodekit } from './nodekit/import.config.js';
@@ -56,10 +49,6 @@ export const REMOTE_CONTENT: ImportOptions[] = [
   ...algokitSubscriber.variants.filter(v => !isArtifactVariant(v)),
   ...nodekit.variants.filter(v => !isArtifactVariant(v)),
   arcStandardsConfig,
-  // Legacy guide targets — keep old algokit/* paths in sync via stateKey
-  algorandPythonLegacy,
-  algokitUtilsTsLegacy,
-  algokitUtilsPyLegacy,
 ];
 
 /** All sidebar metadata rules for _meta.yml generation. */

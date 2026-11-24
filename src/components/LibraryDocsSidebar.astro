@@ -15,6 +15,7 @@ import {
   parseLibraryPath,
   buildLibraryUrl,
   getVersionBySlug,
+  getVersionLabel,
   type LibraryConfig,
 } from '../config/libraries';
 import { langIcons } from '../config/lang-icons';
@@ -186,7 +187,9 @@ const isMultiLanguage = library.languages.length > 1;
             <circle cx='7' cy='7' r='1' fill='currentColor'></circle>
           </svg>
         </span>
-        <span class='selector-label'>{currentVersion.label}</span>
+        <span class='selector-label'>
+          {getVersionLabel(library, currentLanguage, currentVersion)}
+        </span>
         <span class='selector-chevron' aria-hidden='true'>
           <svg width='12' height='12' viewBox='0 0 12 12' fill='none'>
             <path
@@ -216,7 +219,9 @@ const isMultiLanguage = library.languages.length > 1;
                 data-value={ver.slug}
                 data-href={href}
               >
-                <span class='option-label'>{ver.label}</span>
+                <span class='option-label'>
+                  {getVersionLabel(library, currentLanguage, ver)}
+                </span>
               </li>
             );
           })

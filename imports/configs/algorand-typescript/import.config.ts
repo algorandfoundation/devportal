@@ -16,6 +16,7 @@ export const config: LibraryImportConfig = {
       versions: [{ slug: 'latest', label: 'Latest' }],
       owner: 'algorandfoundation',
       repo: 'puya-ts',
+      apiReferenceUrl: 'https://algorandfoundation.github.io/puya-ts/api/',
       postImportTransforms: [
         {
           pattern: '**/*.{md,mdx}',

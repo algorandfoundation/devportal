@@ -70,6 +70,18 @@ export interface GithubArtifactConfig {
   repo: string;
   /** Transforms applied to matching files after unpacking. */
   postImportTransforms?: PostImportTransform[];
+  /**
+   * Landing page of the API reference on the library's own docs site, e.g.
+   * `https://algorandfoundation.github.io/algokit-utils-ts/api/`.
+   *
+   * When set, the generated `api/` tree is NOT imported: the sidebar gets a
+   * single external link and links into `api/` are rewritten to this URL.
+   *
+   * Only set this when that site documents the same release line the portal
+   * imports (the latest stable release). Leave it unset to keep importing the
+   * API reference from the release bundle.
+   */
+  apiReferenceUrl?: string;
 }
 
 /** Discriminated union — use `isArtifactVariant()` to narrow. */
@@ -126,7 +138,7 @@ export interface SidebarMetadata {
  * Matches Starlight's SidebarItem shape (subset used by library sidebars).
  */
 export type SidebarJsonEntry =
-  | { label: string; link: string }
+  | { label: string; link: string; attrs?: Record<string, string> }
   | { slug: string }
   | { label: string; autogenerate: { directory: string; collapsed?: boolean }; collapsed?: boolean }
   | { label: string; items: SidebarJsonEntry[]; collapsed?: boolean };
