@@ -7,6 +7,7 @@ import { resolve } from 'path';
 import starlightImageZoom from 'starlight-image-zoom';
 import starlightLinksValidator from 'starlight-links-validator';
 import rehypeAstroRelativeMarkdownLinks from 'astro-rehype-relative-markdown-links';
+import rehypeOpcodeAnchorIds from './src/plugins/rehype-opcode-anchor-ids.mjs';
 import tailwindcss from '@tailwindcss/vite';
 import starlightLlmsTxt from 'starlight-llms-txt';
 import starlightAutoSidebar from 'starlight-auto-sidebar';
@@ -642,6 +643,8 @@ export default defineConfig({
   ],
   markdown: {
     rehypePlugins: [
+      // Must come before Starlight's heading ids; see the plugin's header.
+      rehypeOpcodeAnchorIds,
       [rehypeAstroRelativeMarkdownLinks, { collectionBase: false }],
       [rehypeExternalLinks, { target: '_blank', rel: 'noopener noreferrer' }],
     ],
