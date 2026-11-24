@@ -112,7 +112,7 @@ directory, eliminating the need to specify it with the `-d` flag in every comman
 2.  Add Algorand’s repository and security key:
 
     ```shell showLineNumbers=false frame=none
-    curl -o - https://releases.algorand.com/key.pub | sudo tee /etc/apt/trusted.gpg.d/algorand.asc
+    curl -f -o - https://releases.algorand.com/key.pub | sudo tee /etc/apt/trusted.gpg.d/algorand.asc
     sudo add-apt-repository "deb [arch=amd64] https://releases.algorand.com/deb/ stable main"
     sudo apt-get update
     ```
@@ -140,7 +140,7 @@ directory, eliminating the need to specify it with the `-d` flag in every comman
 1.  Import Algorand’s repository key and set up the repository:
 
     ```shell showLineNumbers=false frame=none
-    curl -O https://releases.algorand.com/rpm/rpm_algorand.pub
+    curl -fO https://releases.algorand.com/rpm/rpm_algorand.pub
     sudo rpmkeys --import rpm_algorand.pub
     sudo yum install yum-utils
     sudo yum-config-manager --add-repo https://releases.algorand.com/rpm/stable/algorand.repo
@@ -165,7 +165,7 @@ directory, eliminating the need to specify it with the `-d` flag in every comman
 1.  Import Algorand’s repository key and set up the repository:
 
     ```shell showLineNumbers=false frame=none
-    curl -O https://releases.algorand.com/rpm/rpm_algorand.pub
+    curl -fO https://releases.algorand.com/rpm/rpm_algorand.pub
     sudo rpmkeys --import rpm_algorand.pub
     dnf install -y 'dnf-command(config-manager)'
     dnf config-manager --add-repo=https://releases.algorand.com/rpm/stable/algorand.repo
@@ -181,6 +181,93 @@ directory, eliminating the need to specify it with the `-d` flag in every comman
 
 </TabItem>
 </Tabs>
+
+### Updating the Repository Signing Key
+
+Algorand signs its Debian and RPM repositories with GnuPG keys that are renewed periodically. The
+keys were last renewed on November 1, 2026, and the current Debian signing subkey is valid through
+October 2030.
+
+A renewal does not affect a fresh install — the commands above always fetch the current key. It does
+affect machines that installed earlier, because the copy of the key saved on those machines no longer
+matches the one the repository is signed with, and your package manager will refuse the packages
+until you refresh it.
+
+<Tabs syncKey="systems">
+<TabItem label="Ubuntu, Linux Mint">
+   The November 2026 renewal replaced an expired signing subkey, so every machine that installed
+   before then is affected. `sudo apt-get update` reports:
+
+```plaintext showLineNumbers=false frame=none
+The following signatures couldn't be verified because the public key is not available: NO_PUBKEY F1C9063D88DB5791
+```
+
+Depending on your apt version this may be a warning rather than a hard error: apt keeps the package
+index it has already cached and still exits 0, so updates stop arriving rather than failing loudly.
+A node can sit on an old version for weeks this way.
+
+Fetch the current key, overwriting the stored copy:
+
+```shell showLineNumbers=false frame=none
+curl -f -o - https://releases.algorand.com/key.pub | sudo tee /etc/apt/trusted.gpg.d/algorand.asc
+sudo apt-get update
+```
+
+`apt-get update` should now complete without a signature error. This is the right command no
+matter how the key was originally added, including older installs that used the now-removed
+`apt-key add`.
+
+To confirm you have the current key, check that the signing subkey ending in `F1C9063D88DB5791`
+is present:
+
+```shell showLineNumbers=false frame=none
+gpg --show-keys --with-subkey-fingerprint /etc/apt/trusted.gpg.d/algorand.asc
+```
+
+```plaintext showLineNumbers=false frame=none
+pub   rsa3072 2019-06-11 [SC]
+      611DE94A396F01359C72AF56EDACD29DA10A4EA6
+uid                      Algorand developers <dev@algorand.com>
+sub   rsa4096 2026-10-31 [S] [expires: 2030-10-30]
+      A2696A69562A3F158F5DD446F1C9063D88DB5791
+```
+
+`gpg` prints dates in local time, so the subkey may show as 2026-11-01 if you are east of UTC. The
+fingerprint is the reliable check, not the date.
+
+</TabItem>
+<TabItem label="Fedora, CentOS">
+   RPM packages are signed with the primary key, which did not change during the November 2026
+   renewal, so most Red Hat-based installs keep updating normally. Refresh the key if `dnf` or `yum`
+   reports a `GPG check FAILED` error, or a missing public key, for an Algorand package:
+
+```shell showLineNumbers=false frame=none
+curl -fO https://releases.algorand.com/rpm/rpm_algorand.pub
+sudo rpmkeys --import rpm_algorand.pub
+```
+
+The renewed key keeps the same key ID as the old one, so some versions of `rpm` treat the import
+as already done and keep the stale copy. If updates still fail afterwards, remove the stored key
+and import it again. Run the first command on its own and use the identifier it prints in the
+second — it is normally `gpg-pubkey-91a8ba41-5d0179e4`, but check rather than assume:
+
+```shell showLineNumbers=false frame=none
+rpm -q gpg-pubkey --qf '%{NAME}-%{VERSION}-%{RELEASE} %{SUMMARY}\n' | grep -i algorand
+sudo rpm -e gpg-pubkey-91a8ba41-5d0179e4
+sudo rpmkeys --import rpm_algorand.pub
+```
+
+</TabItem>
+</Tabs>
+
+:::note
+Both keys are published on the [Algorand Releases](https://releases.algorand.com/) page. The primary
+key fingerprints have not changed since 2019, so you can check an imported key against them:
+
+- Debian: `611D E94A 396F 0135 9C72  AF56 EDAC D29D A10A 4EA6`
+- RPM: `1393 C1B5 69ED 3630 91FD  BB66 2299 9ED9 91A8 BA41`
+
+:::
 
 ### Post-Installation Notes
 
