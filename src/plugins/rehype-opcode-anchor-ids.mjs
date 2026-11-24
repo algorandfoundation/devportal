@@ -9,8 +9,12 @@ export default function rehypeOpcodeAnchorIds() {
     if (!OPCODES_PAGE.test(file.path ?? '')) return;
     for (const node of tree.children) {
       if (node.type !== 'mdxJsxFlowElement') continue;
+      const classes = node.attributes?.find(a => a.name === 'class')?.value;
+      if (
+        typeof classes !== 'string' ||
+        !classes.split(/\s+/).includes('opcode-section')
+      ) continue;
       const anchor = node.attributes?.find(a => a.name === 'data-anchor')?.value;
-      if (anchor === undefined) continue;
       const heading = node.children?.find(c => c.tagName === 'h3');
       // Fail the build rather than silently lose the ids if the template changes.
       if (!anchor || !heading) throw new Error(`opcode section without anchor or h3: ${anchor}`);
