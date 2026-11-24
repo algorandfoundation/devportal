@@ -263,7 +263,7 @@ When you define an event listener it will be called, one-by-one in the order the
 
 If you call `on_batch` it will be called first, with the full set of transactions that were found in the current poll (0 or more). Following that, each transaction in turn will then be passed to the listener(s) that subscribed with `on` for that event.
 
-The default type that will be received is a [`SubscribedTransaction`](/docs/algokit-subscriber/python/latest/api/algokit_subscriber/), which is a dataclass that extends the indexer `Transaction` model with additional fields like `filters_matched`, `arc28_events`, `balance_changes`, and `parent_transaction_id`.
+The default type that will be received is a [`SubscribedTransaction`](https://algorandfoundation.github.io/algokit-subscriber-py/api/algokit_subscriber/), which is a dataclass that extends the indexer `Transaction` model with additional fields like `filters_matched`, `arc28_events`, `balance_changes`, and `parent_transaction_id`.
 
 See the [detail about this type](/docs/algokit-subscriber/python/latest/guide/subscriptions/#subscribedtransaction).
 

@@ -5,20 +5,27 @@ description: Get up and running with AlgoKit Subscriber in minutes.
 
 ## Install
 
-This library can be installed from NPM using your favourite npm client, e.g.:
+Version 3 of this library targets `algosdk@3` and `@algorandfoundation/algokit-utils@9`. Both are peer dependencies, so
+install them alongside the subscriber using your favourite npm client, e.g.:
 
 ```bash
-npm install @algorandfoundation/algokit-subscriber
+npm install algosdk@^3.0.0 @algorandfoundation/algokit-utils@^9.0.0 @algorandfoundation/algokit-subscriber
+```
+
+If you need to target `algosdk@2`, use version 2 of the subscriber instead:
+
+```bash
+npm install algosdk@^2.10.0 @algorandfoundation/algokit-utils@^7.1.0 @algorandfoundation/algokit-subscriber@^2.2.0
 ```
 
 ## Quick start
 
 ```typescript
-import { AlgorandClient } from '@algorandfoundation/algokit-utils';
-import { AlgorandSubscriber } from '@algorandfoundation/algokit-subscriber';
-import { TransactionType } from '@algorandfoundation/algokit-utils/transact';
+import { AlgorandClient } from '@algorandfoundation/algokit-utils'
+import { AlgorandSubscriber } from '@algorandfoundation/algokit-subscriber'
+import { TransactionType } from 'algosdk'
 
-const algorand = AlgorandClient.testNet();
+const algorand = AlgorandClient.testNet()
 
 // Create subscriber
 const subscriber = new AlgorandSubscriber(
@@ -32,33 +39,33 @@ const subscriber = new AlgorandSubscriber(
         },
       },
     ],
+    maxRoundsToSync: 100,
+    syncBehaviour: 'skip-sync-newest',
     watermarkPersistence: {
       get: async () => 0n,
-      set: async watermark => {
-        /* save watermark */
-      },
+      set: async (watermark) => { /* save watermark */ },
     },
   },
   algorand.client.algod,
   algorand.client.indexer,
-);
+)
 
 // Set up subscription(s)
-subscriber.on('filter1', async transaction => {
+subscriber.on('filter1', async (transaction) => {
   // ...
-});
+})
 //...
 
 // Set up error handling
-subscriber.onError(e => {
+subscriber.onError((e) => {
   // ...
-});
+})
 
 // Either: Start the subscriber (if in long-running process)
-subscriber.start();
+subscriber.start()
 
 // OR: Poll the subscriber (if in cron job / periodic lambda)
-subscriber.pollOnce();
+await subscriber.pollOnce()
 ```
 
 ## Entry points

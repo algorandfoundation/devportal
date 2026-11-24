@@ -3,99 +3,15 @@
     "algorandfoundation/arcs@devportal": {
       "name": "ARC Standards",
       "repoId": "algorandfoundation/arcs@devportal",
-      "lastCommitSha": "7eea3b1e342b8a7ce9506f6fb5e56bf79a4f31cf",
-      "lastImported": "2026-02-15T09:21:16.909Z",
+      "lastCommitSha": "ac49384cbbab34df02b66a682cbc954ac2650561",
+      "lastImported": "2026-11-24T20:02:05.880Z",
       "ref": "devportal"
     },
     "algorandfoundation/nodekit@main": {
       "name": "NodeKit Command Reference",
       "repoId": "algorandfoundation/nodekit@main",
-      "lastCommitSha": "42b0c2248c5c05979002360a109898a29ececf65",
-      "lastImported": "2025-12-30T12:54:46.175Z",
-      "ref": "main"
-    },
-    "algorandfoundation/algokit-cli@chore/content-fix": {
-      "name": "AlgoKit CLI Docs",
-      "repoId": "algorandfoundation/algokit-cli@chore/content-fix",
-      "lastCommitSha": "40762f855a87326e16ce94e94673c7fefac5c025",
-      "lastImported": "2025-12-30T12:54:55.029Z",
-      "ref": "chore/content-fix"
-    },
-    "algorandfoundation/algokit-utils-ts@chore/fix-docs": {
-      "name": "AlgoKit Utils TS Docs",
-      "repoId": "algorandfoundation/algokit-utils-ts@chore/fix-docs",
-      "lastCommitSha": "44369ef738406062d14080e5ca6b45871dcde5af",
-      "lastImported": "2026-02-17T16:31:11.058Z",
-      "ref": "chore/fix-docs"
-    },
-    "algorandfoundation/algokit-utils-py@main": {
-      "name": "AlgoKit Utils Python Docs",
-      "repoId": "algorandfoundation/algokit-utils-py@main",
-      "lastCommitSha": "6971b957fbe298facdda00dca158c0a7eb9690df",
-      "lastImported": "2026-02-17T16:31:22.452Z",
-      "ref": "main"
-    },
-    "algorandfoundation/puya@devportal": {
-      "name": "Algorand Python",
-      "repoId": "algorandfoundation/puya@devportal",
-      "lastCommitSha": "3d88a33396fdd9ce3ea311f5a1c69848dda7266e",
-      "lastImported": "2026-02-17T16:31:40.442Z",
-      "ref": "devportal"
-    },
-    "algorandfoundation/puya-ts@devportal": {
-      "name": "Algorand Typescript",
-      "repoId": "algorandfoundation/puya-ts@devportal",
-      "lastCommitSha": "e47bd211ffe3de89a8ee6818ee9849b32802dc2f",
-      "lastImported": "2026-02-17T16:32:26.921Z",
-      "ref": "devportal"
-    },
-    "larkiny/algokit-subscriber-ts@docs-dist": {
-      "name": "Algokit Subscriber TS API Docs",
-      "repoId": "larkiny/algokit-subscriber-ts@docs-dist",
-      "lastCommitSha": "c1babecd1a695a320814efec0d6cb08771c77b4c",
-      "lastImported": "2026-02-17T16:32:32.001Z",
-      "ref": "docs-dist"
-    },
-    "algokit-cli-legacy-guides": {
-      "name": "AlgoKit CLI Legacy Guides",
-      "repoId": "algokit-cli-legacy-guides",
-      "lastCommitSha": "40762f855a87326e16ce94e94673c7fefac5c025",
-      "lastImported": "2026-02-17T16:32:51.611Z",
-      "ref": "chore/content-fix"
-    },
-    "algorand-python-legacy-guides": {
-      "name": "Algorand Python Legacy Guides",
-      "repoId": "algorand-python-legacy-guides",
-      "lastCommitSha": "3d88a33396fdd9ce3ea311f5a1c69848dda7266e",
-      "lastImported": "2026-02-17T16:32:55.860Z",
-      "ref": "devportal"
-    },
-    "algorand-typescript-legacy-guides": {
-      "name": "Algorand TypeScript Legacy Guides",
-      "repoId": "algorand-typescript-legacy-guides",
-      "lastCommitSha": "e47bd211ffe3de89a8ee6818ee9849b32802dc2f",
-      "lastImported": "2026-02-17T16:33:00.370Z",
-      "ref": "devportal"
-    },
-    "algokit-subscriber-legacy-guides": {
-      "name": "AlgoKit Subscriber Legacy Guides",
-      "repoId": "algokit-subscriber-legacy-guides",
-      "lastCommitSha": "c1babecd1a695a320814efec0d6cb08771c77b4c",
-      "lastImported": "2026-02-17T16:33:03.315Z",
-      "ref": "docs-dist"
-    },
-    "algokit-utils-ts-legacy-guides": {
-      "name": "AlgoKit Utils TS Legacy Guides",
-      "repoId": "algokit-utils-ts-legacy-guides",
-      "lastCommitSha": "44369ef738406062d14080e5ca6b45871dcde5af",
-      "lastImported": "2026-02-17T16:33:08.179Z",
-      "ref": "chore/fix-docs"
-    },
-    "algokit-utils-py-legacy-guides": {
-      "name": "AlgoKit Utils Python Legacy Guides",
-      "repoId": "algokit-utils-py-legacy-guides",
-      "lastCommitSha": "6971b957fbe298facdda00dca158c0a7eb9690df",
-      "lastImported": "2026-02-17T16:33:11.621Z",
+      "lastCommitSha": "f23255f7e735c475310eabede67529477937ebc1",
+      "lastImported": "2026-11-24T20:01:56.587Z",
       "ref": "main"
     }
   },

@@ -2,10 +2,10 @@
 editUrl: false
 next: false
 prev: false
-title: '@algorandfoundation/algokit-subscriber'
+title: "@algorandfoundation/algokit-subscriber"
 ---
 
 ## Modules
 
-- [index](/docs/algokit-subscriber/typescript/latest/api/index/index/)
-- [types](/docs/algokit-subscriber/typescript/latest/api/types/index/)
+- [algokit-subscriber](/docs/algokit-subscriber/typescript/latest/api/algokit-subscriber/index/)
+- [algokit-subscriber/types](/docs/algokit-subscriber/typescript/latest/api/algokit-subscriber/types/index/)
