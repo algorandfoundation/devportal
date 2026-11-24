@@ -1,0 +1,83 @@
+# Cloudflare Pages redirects.
+#
+# Pages that used to be copied into the portal and are now either served from
+# their imported location or from the owning library's own docs site. Keeping
+# these means old links and search results do not 404.
+#
+# Format: <source> <destination> <status>. More specific rules go first.
+
+# --- Generated API reference now lives on each library's own site -----------
+/docs/algorand-python/python/latest/api/* https://algorandfoundation.github.io/puya/api/algopy/algopy/ 301
+/docs/algorand-typescript/typescript/latest/api/* https://algorandfoundation.github.io/puya-ts/api/ 301
+/docs/algokit-utils/python/latest/api/* https://algorandfoundation.github.io/algokit-utils-py/api/algokit_utils/ 301
+/docs/algokit-subscriber/python/latest/api/* https://algorandfoundation.github.io/algokit-subscriber-py/api/algokit_subscriber/ 301
+
+# --- Algorand Python guides moved with the switch to the release docs bundle -
+/docs/algorand-python/python/latest/guides/overview/ /docs/algorand-python/python/latest/ 301
+/docs/algorand-python/python/latest/guides/language-guide/ /docs/algorand-python/python/latest/language-guide/ 301
+/docs/algorand-python/python/latest/guides/compiler/ /docs/algorand-python/python/latest/compiler/ 301
+/docs/algorand-python/python/latest/guides/principles/ /docs/algorand-python/python/latest/reference/principles/ 301
+/docs/algorand-python/python/latest/guides/lg-arc28/ /docs/algorand-python/python/latest/language-guide/arc28/ 301
+/docs/algorand-python/python/latest/guides/lg-arc4/ /docs/algorand-python/python/latest/language-guide/arc4/ 301
+/docs/algorand-python/python/latest/guides/lg-builtins/ /docs/algorand-python/python/latest/language-guide/builtins/ 301
+/docs/algorand-python/python/latest/guides/lg-calling-apps/ /docs/algorand-python/python/latest/language-guide/calling-apps/ 301
+/docs/algorand-python/python/latest/guides/lg-compile/ /docs/algorand-python/python/latest/language-guide/compile/ 301
+/docs/algorand-python/python/latest/guides/lg-control/ /docs/algorand-python/python/latest/language-guide/control/ 301
+/docs/algorand-python/python/latest/guides/lg-data-structures/ /docs/algorand-python/python/latest/language-guide/data-structures/ 301
+/docs/algorand-python/python/latest/guides/lg-errors/ /docs/algorand-python/python/latest/language-guide/errors/ 301
+/docs/algorand-python/python/latest/guides/lg-logs/ /docs/algorand-python/python/latest/language-guide/logs/ 301
+/docs/algorand-python/python/latest/guides/lg-migration-4-5/ /docs/algorand-python/python/latest/language-guide/migration-4-5/ 301
+/docs/algorand-python/python/latest/guides/lg-modules/ /docs/algorand-python/python/latest/language-guide/modules/ 301
+/docs/algorand-python/python/latest/guides/lg-opcode-budget/ /docs/algorand-python/python/latest/language-guide/opcode-budget/ 301
+/docs/algorand-python/python/latest/guides/lg-ops/ /docs/algorand-python/python/latest/language-guide/ops/ 301
+/docs/algorand-python/python/latest/guides/lg-storage/ /docs/algorand-python/python/latest/language-guide/storage/ 301
+/docs/algorand-python/python/latest/guides/lg-structure/ /docs/algorand-python/python/latest/language-guide/structure/ 301
+/docs/algorand-python/python/latest/guides/lg-transactions/ /docs/algorand-python/python/latest/language-guide/transactions/ 301
+/docs/algorand-python/python/latest/guides/lg-types/ /docs/algorand-python/python/latest/language-guide/types/ 301
+/docs/algorand-python/python/latest/guides/lg-unsupported-python-features/ /docs/algorand-python/python/latest/language-guide/unsupported-python-features/ 301
+/docs/algorand-python/python/latest/guides/* /docs/algorand-python/python/latest/ 301
+
+# --- Old duplicate of the Algorand Python guides -----------------------------
+/algokit/languages/python/overview/ /docs/algorand-python/python/latest/ 301
+/algokit/languages/python/language-guide/ /docs/algorand-python/python/latest/language-guide/ 301
+/algokit/languages/python/compiler/ /docs/algorand-python/python/latest/compiler/ 301
+/algokit/languages/python/principles/ /docs/algorand-python/python/latest/reference/principles/ 301
+/algokit/languages/python/lg-arc28/ /docs/algorand-python/python/latest/language-guide/arc28/ 301
+/algokit/languages/python/lg-arc4/ /docs/algorand-python/python/latest/language-guide/arc4/ 301
+/algokit/languages/python/lg-builtins/ /docs/algorand-python/python/latest/language-guide/builtins/ 301
+/algokit/languages/python/lg-calling-apps/ /docs/algorand-python/python/latest/language-guide/calling-apps/ 301
+/algokit/languages/python/lg-compile/ /docs/algorand-python/python/latest/language-guide/compile/ 301
+/algokit/languages/python/lg-control/ /docs/algorand-python/python/latest/language-guide/control/ 301
+/algokit/languages/python/lg-data-structures/ /docs/algorand-python/python/latest/language-guide/data-structures/ 301
+/algokit/languages/python/lg-errors/ /docs/algorand-python/python/latest/language-guide/errors/ 301
+/algokit/languages/python/lg-logs/ /docs/algorand-python/python/latest/language-guide/logs/ 301
+/algokit/languages/python/lg-migration-4-5/ /docs/algorand-python/python/latest/language-guide/migration-4-5/ 301
+/algokit/languages/python/lg-modules/ /docs/algorand-python/python/latest/language-guide/modules/ 301
+/algokit/languages/python/lg-opcode-budget/ /docs/algorand-python/python/latest/language-guide/opcode-budget/ 301
+/algokit/languages/python/lg-ops/ /docs/algorand-python/python/latest/language-guide/ops/ 301
+/algokit/languages/python/lg-storage/ /docs/algorand-python/python/latest/language-guide/storage/ 301
+/algokit/languages/python/lg-structure/ /docs/algorand-python/python/latest/language-guide/structure/ 301
+/algokit/languages/python/lg-transactions/ /docs/algorand-python/python/latest/language-guide/transactions/ 301
+/algokit/languages/python/lg-types/ /docs/algorand-python/python/latest/language-guide/types/ 301
+/algokit/languages/python/lg-unsupported-python-features/ /docs/algorand-python/python/latest/language-guide/unsupported-python-features/ 301
+/algokit/languages/python/* /docs/algorand-python/python/latest/ 301
+
+# --- Old copies of the Subscriber guides -------------------------------------
+/algokit/subscriber/typescript/subscriber/ /docs/algokit-subscriber/typescript/latest/guide/subscriber/ 301
+/algokit/subscriber/typescript/subscriptions/ /docs/algokit-subscriber/typescript/latest/guide/subscriptions/ 301
+/algokit/subscriber/typescript/* /docs/algokit-subscriber/typescript/latest/ 301
+/algokit/subscriber/python/subscriber/ /docs/algokit-subscriber/python/latest/guide/subscriber/ 301
+/algokit/subscriber/python/subscriptions/ /docs/algokit-subscriber/python/latest/guide/subscriptions/ 301
+/algokit/subscriber/python/* /docs/algokit-subscriber/python/latest/ 301
+
+# --- Old copies of the unit testing guides -----------------------------------
+/algokit/unit-testing/typescript/* /algokit/unit-testing/ 301
+/algokit/unit-testing/python/* /algokit/unit-testing/ 301
+
+# --- AlgoKit Utils TS: pages that exist only in the unreleased v10 docs ------
+/docs/algokit-utils/typescript/latest/concepts/advanced/modular-imports/ /docs/algokit-utils/typescript/latest/ 301
+/docs/algokit-utils/typescript/latest/concepts/core/* /docs/algokit-utils/typescript/latest/capabilities/:splat 301
+/docs/algokit-utils/typescript/latest/concepts/building/* /docs/algokit-utils/typescript/latest/capabilities/:splat 301
+/docs/algokit-utils/typescript/latest/concepts/advanced/* /docs/algokit-utils/typescript/latest/capabilities/:splat 301
+/docs/algokit-utils/typescript/latest/tutorials/* /docs/algokit-utils/typescript/latest/ 301
+/docs/algokit-utils/typescript/latest/examples/* /docs/algokit-utils/typescript/latest/ 301

@@ -73,16 +73,6 @@ export default defineConfig({
             // TypeDoc code module refs in imported guides
             if (link.includes('/code/modules/')) return true;
 
-            // Subscriber docs — heavily cross-linked imported pages
-            if (
-              slug.startsWith('algokit/subscriber/') ||
-              slug.startsWith('docs/algokit-subscriber/')
-            )
-              return true;
-
-            // Unit-testing docs — references unimported sibling pages
-            if (slug.startsWith('algokit/unit-testing/')) return true;
-
             // All imported library docs under src/content/docs/docs/
             if (slug.startsWith('docs/')) return true;
 
@@ -103,16 +93,6 @@ export default defineConfig({
               paths: ['reference/**'],
             },
             {
-              label: 'Typescript - Reference',
-              description: 'Algorand Developer Portal - Typescript Reference Docs',
-              paths: ['docs/algorand-typescript/typescript/latest/api/**'],
-            },
-            {
-              label: 'Python - Reference',
-              description: 'Algorand Developer Portal - Python Reference Docs',
-              paths: ['docs/algorand-python/python/latest/api/**'],
-            },
-            {
               label: 'Typescript',
               description: 'Algorand Developer Portal - Typescript Docs',
               paths: ['docs/algorand-typescript/typescript/latest/**'],
@@ -125,11 +105,15 @@ export default defineConfig({
           ],
         }),
         starlightAutoSidebar(),
+        // REST API specs are fetched on every build. algod and kmd follow
+        // go-algorand's `rel/stable` branch so the reference matches the
+        // released node rather than unreleased work on master. Indexer has no
+        // stable branch, so it follows `main`.
         starlightOpenAPI([
           {
             base: 'reference/rest-api/algod',
             schema:
-              'https://raw.githubusercontent.com/algorand/go-algorand/refs/heads/master/daemon/algod/api/algod.oas3.yml',
+              'https://raw.githubusercontent.com/algorand/go-algorand/refs/heads/rel/stable/daemon/algod/api/algod.oas3.yml',
             sidebar: {
               label: 'algod',
               group: algodAPIDocsSidebarGroup,
@@ -151,7 +135,7 @@ export default defineConfig({
           {
             base: 'reference/rest-api/kmd',
             schema:
-              'https://raw.githubusercontent.com/algorand/go-algorand/ad578576ab5f5bfe58a590164903617ecef379e4/daemon/kmd/api/swagger.json',
+              'https://raw.githubusercontent.com/algorand/go-algorand/refs/heads/rel/stable/daemon/kmd/api/swagger.json',
             sidebar: {
               label: 'kmd',
               group: kmdAPIDocsSidebarGroup,
@@ -292,7 +276,7 @@ export default defineConfig({
               attrs: { target: '_blank', rel: 'noopener' },
             },
             {
-              label: 'AlgoKit 3.0 Video Course',
+              label: 'AlgoKit Video Course',
               link: 'https://youtube.com/playlist?list=PLwRyHoehE4356E8tPKxC2XJtFEyLOHHEB&si=kfoKgu0jVObIJGWO',
               attrs: { target: '_blank', rel: 'noopener' },
             },
@@ -426,7 +410,7 @@ export default defineConfig({
               items: [
                 { slug: 'algokit/utils/algokit-clients' },
                 {
-                  slug: 'docs/algorand-python/python/latest/guides/overview',
+                  slug: 'docs/algorand-python/python/latest',
                   label: 'Algorand Python',
                 },
                 {
@@ -435,41 +419,7 @@ export default defineConfig({
                 },
               ],
             },
-            {
-              label: 'Unit Testing',
-              collapsed: true,
-              items: [
-                {
-                  label: 'TypeScript Unit Testing ',
-                  items: [
-                    { slug: 'algokit/unit-testing/typescript/overview' },
-                    { slug: 'algokit/unit-testing/typescript/concepts' },
-                    { slug: 'algokit/unit-testing/typescript/avm-types' },
-                    { slug: 'algokit/unit-testing/typescript/arc4-types' },
-                    { slug: 'algokit/unit-testing/typescript/transactions' },
-                    { slug: 'algokit/unit-testing/typescript/contract-testing' },
-                    { slug: 'algokit/unit-testing/typescript/signature-testing' },
-                    { slug: 'algokit/unit-testing/typescript/state-management' },
-                    { slug: 'algokit/unit-testing/typescript/opcodes' },
-                  ],
-                },
-                {
-                  label: 'Python Unit Testing',
-                  items: [
-                    { slug: 'algokit/unit-testing/python/overview' },
-                    { slug: 'algokit/unit-testing/python/concepts' },
-                    { slug: 'algokit/unit-testing/python/avm-types' },
-                    { slug: 'algokit/unit-testing/python/arc4-types' },
-                    { slug: 'algokit/unit-testing/python/transactions' },
-                    { slug: 'algokit/unit-testing/python/contract-testing' },
-                    { slug: 'algokit/unit-testing/python/signature-testing' },
-                    { slug: 'algokit/unit-testing/python/state-management' },
-                    { slug: 'algokit/unit-testing/python/subroutines' },
-                    { slug: 'algokit/unit-testing/python/opcodes' },
-                  ],
-                },
-              ],
-            },
+            { slug: 'algokit/unit-testing' },
             {
               label: 'Deployment',
               collapsed: true,
@@ -493,21 +443,12 @@ export default defineConfig({
               collapsed: true,
               items: [
                 {
+                  slug: 'docs/algokit-subscriber/typescript/latest',
                   label: 'Subscriber TypeScript',
-                  items: [
-                    { slug: 'algokit/subscriber/typescript/overview' },
-                    { slug: 'algokit/subscriber/typescript/subscriber' },
-                    { slug: 'algokit/subscriber/typescript/subscriptions' },
-                    // { slug: 'algokit/subscriber/typescript/v3-migration' }, // content not in source repo
-                  ],
                 },
                 {
+                  slug: 'docs/algokit-subscriber/python/latest',
                   label: 'Subscriber Python',
-                  items: [
-                    { slug: 'algokit/subscriber/python/overview' },
-                    { slug: 'algokit/subscriber/python/subscriber' },
-                    { slug: 'algokit/subscriber/python/subscriptions' },
-                  ],
                 },
               ],
             },

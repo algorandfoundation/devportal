@@ -1,0 +1,49 @@
+---
+title: Unit Testing
+description: Where to find the unit testing guides for Algorand Python and Algorand TypeScript smart contracts.
+---
+
+import { LinkCard, CardGrid } from '@astrojs/starlight/components';
+
+Algorand smart contracts can be unit tested offline, without a network or a running node. Each smart contract language has a companion testing library that emulates the AVM inside your normal test runner.
+
+The testing guides are maintained with the libraries themselves, so they always match the version you install. This page links to them rather than copying them.
+
+## TypeScript
+
+`algorand-typescript-testing` runs Algorand TypeScript contracts inside test frameworks such as Vitest and Jest.
+
+<CardGrid>
+  <LinkCard
+    title='Algorand TypeScript Testing docs'
+    href='https://algorandfoundation.github.io/algorand-typescript-testing/'
+    description='Guides, concepts and API reference for the TypeScript testing library'
+  />
+  <LinkCard
+    title='algorand-typescript-testing on GitHub'
+    href='https://github.com/algorandfoundation/algorand-typescript-testing'
+    description='Source code, examples and releases'
+  />
+</CardGrid>
+
+## Python
+
+`algorand-python-testing` runs Algorand Python contracts inside test frameworks such as pytest and unittest.
+
+<CardGrid>
+  <LinkCard
+    title='Algorand Python Testing docs'
+    href='https://algorandfoundation.github.io/algorand-python-testing/'
+    description='Guides, concepts and API reference for the Python testing library'
+  />
+  <LinkCard
+    title='algorand-python-testing on GitHub'
+    href='https://github.com/algorandfoundation/algorand-python-testing'
+    description='Source code, examples and releases'
+  />
+</CardGrid>
+
+## Related
+
+- [Algorand Python](/docs/algorand-python/python/latest/reference/algopy-testing/): how the testing library fits with the language.
+- [Smart contract lifecycle](/concepts/smart-contracts/lifecycle/): where testing sits in the development process.
