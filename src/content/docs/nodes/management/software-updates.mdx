@@ -13,8 +13,8 @@ When the network is in a voting period, additional details can be seen in the ou
 Last committed block: 46248141
 Time since last block: 2.3s
 Sync Time: 0.0s
-Last consensus protocol: https://github.com/algorandfoundation/specs/tree/925a46433742afb0b51bb939354bd907fa88bf95
-Next consensus protocol: https://github.com/algorandfoundation/specs/tree/925a46433742afb0b51bb939354bd907fa88bf95
+Last consensus protocol: https://github.com/algorandfoundation/specs/tree/<commit-hash>
+Next consensus protocol: https://github.com/algorandfoundation/specs/tree/<commit-hash>
 Round for next consensus protocol: 46248142
 Next consensus protocol supported: true
 Last Catchpoint:
@@ -76,9 +76,10 @@ The RPM or Debian packages in the package repository are updated automatically, 
 :::caution
 Updates also stop arriving if the Algorand repository signing key stored on the machine is out of
 date: the package manager refuses the repository and the node stays on the version it has. If you
-rely on `unattended-upgrades`, this can go unnoticed for a long time. The keys were last renewed on
-November 1, 2026 — see
-[Updating the Repository Signing Key](/nodes/installation/manual-installation#updating-the-repository-signing-key).
+rely on `unattended-upgrades`, this can go unnoticed for a long time. The keys are renewed
+periodically — see
+[Updating the Repository Signing Key](/nodes/installation/manual-installation#updating-the-repository-signing-key)
+for the date of the last renewal and how to refresh the key.
 :::
 
 ### Linux or MacOS - Update Script Install

@@ -4,6 +4,7 @@ description: Algorand protocol parameters set the minimum balances and limits fo
 ---
 
 import { LinkCard } from '@astrojs/starlight/components';
+import AvmVersion from '/src/components/AvmVersion.astro';
 
 Protocol parameters are constants that define the limits and requirements of the Algorand blockchain. These parameters control various aspects of the network including transaction fees, minimum balances, smart contract constraints, and asset creation limits. Understanding these parameters is essential for developers building on Algorand, as they directly impact the cost and feasibility of different operations on the network.
 
@@ -12,6 +13,10 @@ Protocol parameters are constants that define the limits and requirements of the
   description='Learn about the specific costs and constraints that affect smart contract development'
   href='/concepts/smart-contracts/costs-constraints'
 />
+
+:::note
+The values in the tables below were last reviewed against consensus v42, the version that introduced AVM v13 and the fee-based size limits. Consensus parameters can change with each protocol upgrade: the source of truth is [`config/consensus.go`](https://github.com/algorand/go-algorand/blob/rel/stable/config/consensus.go) in go-algorand, where each parameter is listed under the `Variable` name used in these tables.
+:::
 
 ## Minimum Balance Requirements
 
@@ -66,7 +71,7 @@ Protocol parameters are constants that define the limits and requirements of the
 
 | Name                                                               | Value             | Variable                 | Note                                                                                                                                                                                     |
 | ------------------------------------------------------------------ | ----------------- | ------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Current Max AVM/TEAL Version                                       | 13                | LogicSigVersion          | Available in consensus v42/AVM v13                                                                                                                                                       |
+| Max AVM/TEAL Version                                               | <AvmVersion />    | LogicSigVersion          | Highest version in the latest go-algorand release; usable on a network once it adopts the matching consensus version. See the [opcodes reference](/reference/algorand-teal/opcodes/)     |
 | Page size of compiled approval + clear TEAL code                   | 2048 bytes        | MaxAppProgramLen         | by default, each application has a single page                                                                                                                                           |
 | Max extra app pages                                                | 3                 | MaxExtraAppProgramPages  | an application can "pay" for additional pages via minimum balance; up to 7 pages (MaxAbsoluteExtraProgramPages) for an [additional fee](/concepts/transactions/fees#larger-transactions) |
 | Max cost of approval TEAL code                                     | 700               | MaxAppProgramCost        |                                                                                                                                                                                          |

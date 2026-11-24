@@ -1,0 +1,10 @@
+---
+// AvmVersion.astro renders the latest released AVM (TEAL) version as inline text.
+// The number comes from the opcode dataset that `scripts/update-opcodes.ts` keeps
+// in sync with go-algorand, so pages never hardcode a "current" AVM version.
+import opcodes from '../content/docs/reference/algorand-teal/opcodes.json';
+
+const version: number = opcodes.LatestReleasedVersion;
+---
+
+{version}

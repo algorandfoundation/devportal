@@ -6,6 +6,7 @@ sidebar:
 ---
 
 import { Image } from 'astro:assets';
+import AvmVersion from '/src/components/AvmVersion.astro';
 import txnProperties from '@images/smart-contract-teal-txn-properties.png';
 import pseudoCodes from '@images/smart-contract-teal-pseudo-codes.png';
 import operators from '@images/smart-contract-teal-operators.png';
@@ -38,7 +39,7 @@ The AVM is responsible for processing TEAL programs. It interprets and executes 
 
 ## Program Versions and Compatibility
 
-Currently, Algorand supports versions 1 through 10 of TEAL. When writing contracts with program version 2 or higher, make sure to add `#pragma version #` where # should be replaced by the specific number as the first line of the program. If this line does not exist, the protocol will treat the contract as a version 1 contract. If upgrading a contract to version 2 or higher, it is important to verify you are checking the `RekeyTo` property of all transactions that are attached to the contract.
+The latest go-algorand release supports TEAL versions 1 through <AvmVersion />. A new version can be used on a network once that network has upgraded to the consensus protocol that enables it, which can be some time after the software release. The [opcodes reference](/reference/algorand-teal/opcodes/) lists the opcodes available in each version. When writing contracts with program version 2 or higher, make sure to add `#pragma version #` where # should be replaced by the specific number as the first line of the program. If this line does not exist, the protocol will treat the contract as a version 1 contract. If upgrading a contract to version 2 or higher, it is important to verify you are checking the `RekeyTo` property of all transactions that are attached to the contract.
 
 ## Transaction Properties and Pseudo Opcodes
 

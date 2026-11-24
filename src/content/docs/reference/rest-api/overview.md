@@ -23,9 +23,9 @@ Algorand provides endpoints for [Open API Specification version 2 (OAS2)](https:
 
 ### Algod REST Endpoints
 
-[Algod REST Endpoints OAS3 spec file](https://github.com/algorand/go-algorand/blob/master/daemon/algod/api/algod.oas3.yml?raw=true)(.yml)
+[Algod REST Endpoints OAS3 spec file](https://github.com/algorand/go-algorand/blob/rel/stable/daemon/algod/api/algod.oas3.yml?raw=true)(.yml)
 
-[Algod REST Endpoints OAS2 spec file](https://github.com/algorand/go-algorand/blob/master/daemon/algod/api/algod.oas2.json?raw=true)
+[Algod REST Endpoints OAS2 spec file](https://github.com/algorand/go-algorand/blob/rel/stable/daemon/algod/api/algod.oas2.json?raw=true)
 
 <a href="https://algorand-algod.apidocumentation.com/reference" style="display: inline-block;">
   <img src="https://img.shields.io/badge/Run%20in-Scalar-4A90E2?style=flat&logoColor=4A90E2&color=f0f0f0" alt="Run in Scalar">
@@ -47,9 +47,9 @@ Algorand provides endpoints for [Open API Specification version 2 (OAS2)](https:
 
 The `algorand-indexer` daemon provides its API from the _host:port_ defined by the _--server_ flag specified at start up. The default port is 8980.
 
-[Indexer REST Endpoints OAS3 spec file](https://www.github.com/algorand/indexer/blob/develop/api/indexer.oas3.yml?raw=true)(.yml)
+[Indexer REST Endpoints OAS3 spec file](https://github.com/algorand/indexer/blob/main/api/indexer.oas3.yml?raw=true)(.yml)
 
-[Indexer REST Endpoints OAS2 spec file](https://github.com/algorand/indexer/blob/develop/api/indexer.oas2.json?raw=true)
+[Indexer REST Endpoints OAS2 spec file](https://github.com/algorand/indexer/blob/main/api/indexer.oas2.json?raw=true)
 
 <a href="https://algorand-indexer.apidocumentation.com/reference" style="display: inline-block;">
   <img src="https://img.shields.io/badge/Run%20in-Scalar-4A90E2?style=flat&logoColor=4A90E2&color=f0f0f0" alt="Run in Scalar">

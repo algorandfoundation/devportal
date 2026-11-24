@@ -109,7 +109,7 @@ The clearest way to understand the design is to trace a single Algo payment thro
 
 3.  **Intermezzo looks up the public key.** It reads the user's public key from Vault and derives the sender address from it. Only the public half is involved, so this is a safe read.
 
-4.  **Intermezzo builds the transaction.** It assembles the payment and encodes it in the canonical form Algorand signs: the transaction msgpack-encoded with sorted keys, prefixed with the two ASCII bytes `TX` for domain separation. `encodeTransaction()` produces these bytes (see [Encoding and Decoding](/docs/algokit-utils/typescript/latest/examples/transact/13-encoding-decoding)), and they are what Intermezzo hands to the KMS. For the wider signing model, see [Signing Transactions](/concepts/transactions/signing).
+4.  **Intermezzo builds the transaction.** It assembles the payment and encodes it in the canonical form Algorand signs: the transaction msgpack-encoded with sorted keys, prefixed with the two ASCII bytes `TX` for domain separation. `encodeTransaction()` produces these bytes (see [Encoding and Decoding](https://algorandfoundation.github.io/algokit-utils-ts/examples/transact/13-encoding-decoding/)), and they are what Intermezzo hands to the KMS. For the wider signing model, see [Signing Transactions](/concepts/transactions/signing).
 
 5.  **Vault signs the bytes.** Intermezzo sends the encoded transaction to the Transit engine, which returns a signature wrapped in a `vault:v1:` envelope. The private key never appears in this exchange. Vault holds it, uses it, and returns only the 64 bytes of signature.
 

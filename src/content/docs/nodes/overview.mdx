@@ -30,7 +30,7 @@ There are two primary types of nodes in Algorand:
 Also, depending on configuration, the nodes can be categorized as following:
 
 - **Archiver Nodes:** Store the entire blockchain ledger.
-- **API Provider Nodes**: Retain only the last 1000 blocks.
+- **API Provider Nodes**: Retain only the most recent blocks (see [Archiver Mode](/nodes/types/#archiver-mode)).
 
 <LinkCard
   title='Algorand Node Types'
@@ -68,7 +68,7 @@ Running a node on the Algorand network has several benefits that enhance the blo
 
 - **Direct Access to Blockchain Data with Advanced Querying**: Running a node provides direct access to the Algorand blockchain, enabling you to submit transactions, access real-time data. Additionally, running an archiver node with an indexer enhances this capability by allowing advanced querying for specific transactions, accounts, or assets.
 
-- **Ease of Setup and Maintenance**: Algorand nodes use an efficient sync mechanism that requires only minimal disk space (~6-10 GB) for non-archiver nodes. Your node can be fully operational within minutes using the Fast Catchup feature.
+- **Ease of Setup and Maintenance**: Algorand nodes use an efficient sync mechanism that requires only minimal disk space for non-archiver nodes (see the [hardware requirements](/nodes/types/#hardware-requirements)). Your node can be fully operational within minutes using the Fast Catchup feature.
 
 ## Running a Node
 

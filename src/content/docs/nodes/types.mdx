@@ -7,7 +7,7 @@ sidebar:
 
 The Algorand network is comprised of two distinct types of nodes, **Repeater Nodes**, and **Validator Nodes**. Repeater nodes are primarily used for communication routing to a set of connected validator nodes. Repeater nodes communicate with other repeater nodes and route blocks to all connected validator nodes. Validator nodes only connect to repeater nodes and can also participate in consensus. Validator nodes may connect to several repeater nodes but never connect to another validator node.
 
-In addition to the two node types, nodes can be configured to be an [**Archiver**](#archiver-mode). Archiver nodes store the entire ledger, as opposed to the last 1000 blocks for non-archiver nodes. Repeater nodes are necessarily archiver nodes as well. Validator archiver nodes are often used to feed an [**indexer**](/nodes/installation/indexer-installation) that allows more advanced queries on the history of the blockchain.
+In addition to the two node types, nodes can be configured to be an [**Archiver**](#archiver-mode). Archiver nodes store the entire ledger, as opposed to only the most recent blocks for non-archiver nodes. Repeater nodes are necessarily archiver nodes as well. Validator archiver nodes are often used to feed an [**indexer**](/nodes/installation/indexer-installation) that allows more advanced queries on the history of the blockchain.
 
 Finally, a node may either participate in consensus or not. Validator nodes do not need to be archiver. In addition, to reduce attack surfaces and outage risks, it is strongly recommended that validator nodes are only used for the purpose in participating in consensus. In particular, validator nodes should not be repeaters.
 
@@ -65,8 +65,8 @@ types.
 - 5 TB/month egress
 - 1 Gbps connection with low latency (< 100ms)
 
-> **Info**: While directly-attached NVMe SSDs are recommended, AWS EBS gp3 volumes have proven
-> sufficient as of October 2022. Monitor performance closely and be prepared to upgrade if TPS
+> **Info**: Directly-attached NVMe SSDs are recommended. If you use network-attached storage such
+> as AWS EBS gp3 volumes instead, monitor performance closely and be prepared to upgrade if TPS
 > increases significantly.
 
 ## Which mode do I need?
@@ -94,12 +94,12 @@ Non-repeater nodes do not have to participate in consensus. They still have acce
 
 ## Archiver Mode
 
-By default validator nodes only store a limited number of blocks (approximately up to the last 1000 blocks) locally. Older blocks are dropped from the local copy of the ledger. This reduces the disk space requirement of the node. These nodes can still participate in consensus and applications can connect to these nodes for transaction submission and reading block data. The primary drawback for this type of operation is that older block data will not be available.
+By default validator nodes only store a limited number of blocks (the precise number depends on the consensus parameters; see the `Archival` setting in [Node Configuration Settings](/nodes/reference/config-settings/)) locally. Older blocks are dropped from the local copy of the ledger. This reduces the disk space requirement of the node. These nodes can still participate in consensus and applications can connect to these nodes for transaction submission and reading block data. The primary drawback for this type of operation is that older block data will not be available.
 
 The archiver property must be set to true to run in archiver mode, which will then set the node to store the entire ledger.
 
 :::caution
-Setting a node to run in archiver mode on MainNet/TestNet/BetaNet will significantly increase the disk space requirements for the node. For example, in September 2023, a MainNet non-archiver node uses around 20GB of storage, while an archiver node requires approximately 2TB of storage.
+Setting a node to run in archiver mode on MainNet/TestNet/BetaNet will significantly increase the disk space requirements for the node. See [Hardware Requirements](#hardware-requirements) for the storage each node type needs.
 :::
 
 ## Repeater Node
@@ -113,6 +113,6 @@ A node is a valid repeater node if two things are true:
 
 Repeater nodes are where other nodes connect. Therefore, a repeater node must be able to support a large number of connections and handle the processing load associated with all the data flowing to and from these connections. Thus, repeater nodes require significantly more power than validator nodes. Repeater nodes are always configured in archiver mode.
 
-Repeater nodes also require very high egress bandwidth. In October 2022, MainNet repeater nodes egress bandwidth is between 10TB to 30TB per month.
+Repeater nodes also require very high egress bandwidth.
 
 See [Configuring Node as a Repeater](/nodes/reference/repeater-config) for more information on setting up a repeater.

@@ -14,7 +14,6 @@ import importedCode from '/src/env.d.ts?raw';
 import { Aside } from '@astrojs/starlight/components';
 import { Image } from 'astro:assets';
 import avmDebuggerExample from '/examples/algokit/py/algokit-py-avm-debugger-example.py?raw';
-import avmDebuggerDeployConfig from '/examples/algokit/py/algokit-py-avm-debugger-deploy-config.py?raw';
 import avmDebuggerFixed from '/examples/algokit/py/algokit-py-avm-debugger-fixed.py?raw';
 import avmDebuggerExtension from '@images/algokit-avm-debugger-extension.png';
 import avmDebuggerDebugTraces from '@images/algokit-py-avm-debugger-debug-traces.png';
@@ -34,7 +33,7 @@ This tutorial demonstrates the workflow using a Python-based Algorand project. W
 ## Prerequisites
 
 - Visual Studio Code (version 1.80.0 or higher)
-- Node.js (version 18.x or higher)
+- Node.js (see the [AlgoKit prerequisites](/algokit/algokit-intro/#prerequisites) for the minimum version)
 - [algokit-cli](/algokit/algokit-intro) installed
 - [Algokit AVM VSCode Debugger](https://github.com/microsoft/vscode-mock-debug) extension installed
 - Basic understanding of [Algorand smart contracts using Python](/concepts/smart-contracts/languages/python)
@@ -63,13 +62,14 @@ Replace the content of `contract.py` with the code below.
   </TabItem>
 </Tabs>
 
-Add the below deployment code in `deploy.config` file:
+Then write the deployment script in the contract's `deploy_config.py` so that deploying the app also plays a game, which produces the transaction traces you will debug. The script needs to:
 
-<Tabs syncKey='lang'>
-  <TabItem label='Python' icon='seti:python'>
-    <Code code={avmDebuggerDeployConfig} lang='py' frame='none' showLineNumbers={false} />
-  </TabItem>
-</Tabs>
+1. Deploy the app with the generated `TicTacToeClient` typed client.
+2. Create and fund two accounts, a host and a guest.
+3. Call `new_game` as the host, paying the minimum balance for the game box, then `join` as the guest.
+4. Call `move` alternately as the host and the guest until the game ends.
+
+The script is not reproduced here because the client API it uses changes between AlgoKit Utils releases. Write it against the version installed in your project, using the [typed app client](/docs/algokit-utils/python/latest/concepts/building/typed-app-clients/) and [account management](/docs/algokit-utils/python/latest/concepts/core/account/) guides. If you are following an older tutorial that imports from `algokit_utils.beta`, see the [v3 migration guide](/docs/algokit-utils/python/latest/migration/v3-migration-guide/).
 
 ## Step 3: Compile & Deploy the Smart Contract
 

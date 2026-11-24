@@ -42,7 +42,7 @@ Each section highlights risks with concrete code examples. Headings are categori
 LogicSigs are powerful but dangerous, especially in delegated mode, where a single missing check can permanently compromise the signer's account. **Prefer applications** where possible.
 
 :::note
-As of **April 21, 2026**, typed LogicSig arguments are available in the **`1.2.0-beta`** PuyaTs / Algorand TypeScript release line. Support first appeared in **`v1.2.0-beta.19`** on **March 18, 2026**. If you are on an older stable toolchain, you may still only have the older raw-`op.arg(...)` workflow.
+Typed LogicSig arguments first appeared in PuyaTs / Algorand TypeScript **`v1.2.0-beta.19`**, released on **March 18, 2026**. If you are on an older toolchain, you may still only have the older raw-`op.arg(...)` workflow.
 :::
 
 ### Risk
@@ -4101,7 +4101,7 @@ Your dApp frontend and backend are standard web applications. Apply the [OWASP T
   - `UpdateApplication` or `DeleteApplication` calls
   - Large or unusual fund movements
   - Rapid increase in transaction volume
-- **Use [AlgoKit Subscriber](/algokit/subscriber/typescript/overview/) ([TypeScript](/algokit/subscriber/typescript/overview/) | [Python](/algokit/subscriber/python/overview/))** to subscribe to on-chain events and build real-time monitoring services.
+- **Use [AlgoKit Subscriber](/docs/algokit-subscriber/typescript/latest/) ([TypeScript](/docs/algokit-subscriber/typescript/latest/) | [Python](/docs/algokit-subscriber/python/latest/))** to subscribe to on-chain events and build real-time monitoring services.
 - **Have an incident response plan**: who to contact, how to pause the contract (if a kill switch exists), and how to communicate with users.
 
 ### Pattern: Pausable contract with kill switch
@@ -4192,7 +4192,7 @@ class PausableContract(ARC4Contract):
 <CardGrid>
   <LinkCard
     title='AlgoKit Subscriber'
-    href='/algokit/subscriber/typescript/overview/'
+    href='/docs/algokit-subscriber/typescript/latest/'
     description='Review the subscriber tooling used to build on-chain monitors and alerting pipelines.'
   />
   <LinkCard
@@ -4226,7 +4226,7 @@ class PausableContract(ARC4Contract):
   />
   <LinkCard
     title='Algorand Python'
-    href='/algokit/languages/python/language-guide/'
+    href='/docs/algorand-python/python/latest/language-guide/'
     description='Review the Python language docs and related AlgoKit guidance for smart contract development.'
   />
   <LinkCard

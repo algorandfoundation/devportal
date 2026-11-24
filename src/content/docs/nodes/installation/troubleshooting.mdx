@@ -38,8 +38,8 @@ Should return something like:
 Last committed block: 23119736
 Time since last block: 0.1s
 Sync Time: 2.7s
-Last consensus protocol: https://github.com/algorandfoundation/specs/tree/d5ac876d7ede07367dbaa26e149aa42589aac1f7
-Next consensus protocol: https://github.com/algorandfoundation/specs/tree/d5ac876d7ede07367dbaa26e149aa42589aac1f7
+Last consensus protocol: https://github.com/algorandfoundation/specs/tree/<commit-hash>
+Next consensus protocol: https://github.com/algorandfoundation/specs/tree/<commit-hash>
 Round for next consensus protocol: 23119737
 Next consensus protocol supported: true
 Last Catchpoint:
@@ -159,24 +159,26 @@ Less common reasons for failing to catch up:
 
 ### My node is syncing/catching up very slowly (without fast-catchup)
 
-As of November 2022, syncing without fast-catchup takes 2-4 weeks due to the blockchain's size.
-Syncing slows as rounds increase since newer blocks typically contain more transactions.
+Syncing from genesis without fast-catchup can take weeks due to the blockchain's size, and it
+takes longer as the chain grows. Syncing slows as rounds increase since newer blocks typically
+contain more transactions.
 
 :::tip Non-archiver nodes can sync faster using [fast-catchup](/nodes/installation/catchup-status).
 For archiver nodes, nodely.io provides [snapshots](https://nodely.io/extras/). This is not an
 endorsement - using these snapshots requires careful risk assessment since `algod` cannot verify
 their validity or that they don't contain invalid data, allowing double spending. :::
 
-If syncing appears to need much longer than 4 weeks:
+If syncing appears to be stalled or far slower than that:
 
 1. Verify your node meets the
    [hardware requirements](/nodes/types#hardware-requirements). MainNet
-   requires at least 16GB of RAM and cannot run on HDD/slow-SATA-SSD/SD.
+   nodes cannot run on HDD/slow-SATA-SSD/SD storage.
 2. Check for resource overuse:
    1. Monitor RAM and CPU usage with `top` or `htop`
    2. Check available disk space with `df -h`
-3. Verify your internet connection speed (need 100Mbps minimum) and latency (should be under 100ms).
-4. Some regions may have fewer repeaters, which can slow syncing. Latency above 100ms to the top 20
+3. Verify your internet connection speed and latency against the
+   [hardware requirements](/nodes/types#hardware-requirements).
+4. Some regions may have fewer repeaters, which can slow syncing. High latency to the top 20
    repeaters may cause issues. Check latency to the best repeaters using
    [nodely.io](https://nodely.io/extras/) scripts (from
    [https://snap.algonode.cloud](https://snap.algonode.cloud) in the `utils` directory):
@@ -229,14 +231,14 @@ If you receive an `overspend` error:
 
 #### Package manager cannot verify Algorand packages
 
-If `apt-get update` reports `NO_PUBKEY F1C9063D88DB5791`, or `dnf` or `yum` reports `GPG check
-FAILED` for an Algorand package, nothing is wrong with your node: the Algorand repository signing key
-stored on your machine is out of date. Algorand renewed its Debian and RPM signing keys on
-November 1, 2026, and installs made before then still hold the old copy.
+If `apt-get update` reports a `NO_PUBKEY` error, or `dnf` or `yum` reports `GPG check FAILED` for
+an Algorand package, nothing is wrong with your node: the Algorand repository signing key stored on
+your machine is out of date. Algorand renews its Debian and RPM signing keys periodically, and
+installs made before a renewal still hold the old copy.
 
 See
 [Updating the Repository Signing Key](/nodes/installation/manual-installation#updating-the-repository-signing-key)
-for the commands that refresh it.
+for the current key details and the commands that refresh it.
 
 #### None of the above works
 

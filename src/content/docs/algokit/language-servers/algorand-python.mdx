@@ -26,8 +26,8 @@ This tutorial demonstrates how to set up and use the Algorand Python extension t
 
 - [Visual Studio Code](https://code.visualstudio.com/download) 1.80.0 or higher
 - [Python extension for Visual Studio Code](https://marketplace.visualstudio.com/items?itemName=ms-python.python)
-- [Python](https://www.python.org/downloads/) 3.12 or higher
-- [PuyaPy](https://pypi.org/project/puyapy/) 5.3.0 or higher
+- [Python](https://www.python.org/downloads/) (see the [AlgoKit prerequisites](/algokit/algokit-intro/#prerequisites) for the minimum version)
+- The latest release of [PuyaPy](https://pypi.org/project/puyapy/) (see the [Puya compiler bulletin](/bulletins/puya-issues-27-10-2025/) for releases to avoid)
 - Basic understanding of [Algorand smart contracts using Python](/concepts/smart-contracts/languages/python/)
 
 :::caution
@@ -68,7 +68,7 @@ If you haven't installed algokit, follow these [steps](/getting-started/tutorial
 
 ### Install PuyaPy
 
-The extension requires PuyaPy version `5.3.0` or higher. Install it as a dev dependency in your project's virtual environment:
+The extension requires a recent PuyaPy release. Install the latest release as a dev dependency in your project's virtual environment:
 
 ```bash
 # Activate your virtual environment first
@@ -81,7 +81,7 @@ We recommend installing PuyaPy in your project's virtual environment to ensure t
 puyapy --version
 ```
 
-It should display `5.3.0` or higher.
+It should display the latest release listed on [PyPI](https://pypi.org/project/puyapy/). If it shows an older version, upgrade with `pip install --upgrade puyapy`: the [Puya compiler bulletin](/bulletins/puya-issues-27-10-2025/) lists releases with known vulnerabilities.
 
 ## Step 3: Enable the Language Server
 
@@ -209,7 +209,7 @@ If the extension isn't working as expected:
    pip show puyapy
    ```
 
-   - Ensure version `5.3.0` or higher is installed
+   - Ensure the latest release is installed
    - Confirm it's in the same virtual environment VS Code is using
 
 ### Check Python Interpreter
@@ -259,7 +259,7 @@ Learn Algorand Python concepts, write and test smart contracts, debug with AVM D
 />
 <LinkCard
   title='Unit Tests'
-  href='/algokit/unit-testing/python/overview'
+  href='/algokit/unit-testing/#python'
   description='Learn about unit testing Python contracts'
 />
 <LinkCard title='AVM Debugger' href='/algokit/avm-debugger' description='Try the AVM Debugger' />
