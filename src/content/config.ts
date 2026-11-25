@@ -33,6 +33,8 @@ export const collections = {
         if (IMPORT_GITHUB) {
           console.log('🔄 Importing content from GitHub repositories...');
 
+          const failed: string[] = [];
+
           for (const config of REMOTE_CONTENT) {
             if (!config.enabled) continue;
 
@@ -48,7 +50,17 @@ export const collections = {
               console.log(`✅ ${config.name} loaded successfully`);
             } catch (error) {
               console.error(`❌ Error loading ${config.name}:`, error);
+              failed.push(config.name ?? `${config.owner}/${config.repo}`);
             }
+          }
+
+          // Keep going so one broken source doesn't hide the others, but make
+          // the run fail: a partial import that exits 0 goes unnoticed and the
+          // affected docs silently stop updating.
+          if (failed.length > 0) {
+            throw new Error(
+              `Documentation import failed for: ${failed.join(', ')}`,
+            );
           }
         }
       },

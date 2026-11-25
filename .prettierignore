@@ -7,3 +7,7 @@ src/content/docs/nodes/nodekit-reference/**
 src/content/docs/arc-standards/**
 src/content/docs/reference/rest-api/
 src/content/docs/reference/algorand-teal/**
+# Imported library docs are owned by their source repositories and overwritten
+# on every import. Reformatting them here is at best noise and at worst breaks
+# them: Prettier collapses fenced code blocks nested inside JSX in MDX.
+src/content/docs/docs/**

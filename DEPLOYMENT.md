@@ -73,6 +73,12 @@ The artifact is not a full repo archive. It is a docs bundle, typically containi
 - `sidebar.json`
 - `manifest.json`
 
+`manifest.json` records the upstream commit and build time. The import copies
+those, with the date of the downloaded release asset, into the committed
+`imports/import-manifest.json`. That file is the repo's record of which
+upstream build each library's docs came from, and `pnpm run check:freshness`
+reads it.
+
 ## Import Command
 
 The full import entry point is:
@@ -96,7 +102,17 @@ Remote docs are refreshed by:
 
 - `.github/workflows/import-docs.yml`
 
-This workflow runs `pnpm run import:docs` and opens or updates a PR with the imported changes.
+This workflow runs `pnpm run import:docs` daily and opens or updates a PR with the imported changes. It authenticates with the DevPortal GitHub App (`BOT_ID` / `BOT_SK`), as `update-opcodes.yml` and `sync-to-production.yml` do.
+
+An import source that fails makes the whole run fail.
+
+### Freshness check
+
+- `.github/workflows/check-freshness.yml`
+
+Runs weekly and fails when imported docs or the TEAL opcode dataset are more than a week behind upstream. It makes no changes. Its purpose is to make a stalled import visible: imported docs are committed, so nothing else notices when the import stops producing PRs.
+
+It cannot detect an upstream source that has itself stopped updating. `algorand-python` is imported from the `puya@devportal` branch, which has had no commits since November 2025.
 
 That means imported docs are normally committed into this repo before deployment.
 

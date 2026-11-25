@@ -54,10 +54,11 @@ interface LangSpec {
 
 function parseArgs(argv: string[]) {
   const check = argv.includes('--check');
+  const strict = argv.includes('--strict');
   const dryRun = argv.includes('--dry-run');
   const refArg = argv.find((a) => a.startsWith('--ref='));
   const ref = refArg ? refArg.slice('--ref='.length) : process.env.GO_ALGORAND_REF || DEFAULT_REF;
-  return { check, dryRun, ref };
+  return { check, strict, dryRun, ref };
 }
 
 async function fetchWithTimeout(url: string, init?: RequestInit) {
@@ -173,8 +174,17 @@ async function readCurrent() {
   };
 }
 
-/** Non-blocking warning used in the build. Never throws, never exits non-zero. */
-async function runCheck(ref: string) {
+/**
+ * Staleness check.
+ *
+ * Default (used in the build): a non-blocking warning. Never throws, never
+ * exits non-zero, so an offline build or a rate limit cannot break a deploy.
+ *
+ * `--strict` (used by the scheduled freshness workflow): exits non-zero when
+ * the dataset is stale or the check could not run, so staleness is reported
+ * instead of scrolling past in a build log.
+ */
+async function runCheck(ref: string, strict: boolean) {
   try {
     const current = await readCurrent();
     const masterVersion = await highestVersion(ref, current.version);
@@ -192,8 +202,12 @@ async function runCheck(ref: string) {
           '   Run \x1b[36mpnpm run update:opcodes\x1b[0m on a dedicated branch to refresh it,\n' +
           '   or trigger the "Update Opcodes" workflow to open a PR.\n'
       );
+      if (strict) process.exitCode = 1;
+    } else if (strict) {
+      console.log(`[update-opcodes] Opcode reference is up to date (AVM v${current.version}, released v${released}).`);
     }
   } catch (err) {
+    if (strict) throw err;
     // Best-effort only: offline builds, rate limits, etc. must not break the build.
     console.warn(`[update-opcodes] check skipped (${err instanceof Error ? err.message : String(err)}).`);
   }
@@ -231,8 +245,8 @@ async function runUpdate(ref: string, dryRun: boolean) {
 }
 
 async function main() {
-  const { check, dryRun, ref } = parseArgs(process.argv.slice(2));
-  if (check) await runCheck(ref);
+  const { check, strict, dryRun, ref } = parseArgs(process.argv.slice(2));
+  if (check) await runCheck(ref, strict);
   else await runUpdate(ref, dryRun);
 }
 

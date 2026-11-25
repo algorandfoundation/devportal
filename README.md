@@ -162,6 +162,7 @@ All commands are run from the root of the project:
 | `pnpm run update:opcodes`         | Fetch the latest opcodes from go-algorand, update `opcodes.json`, and re-render |
 | `pnpm run update:opcodes:dry-run` | Preview an opcode update without writing any files                              |
 | `pnpm run check:opcodes`          | Warn (non-blocking) if the committed opcode reference is out of date            |
+| `pnpm run check:opcodes:strict`   | Same check, but exit non-zero when out of date (used by the weekly workflow)    |
 
 See [TEAL Opcode Reference](#teal-opcode-reference) for how these fit together.
 
@@ -175,6 +176,13 @@ Documentation is imported from external GitHub repositories using `@algorandfoun
 | `pnpm run import:force`   | Force re-import all content, ignoring cache                         |
 | `pnpm run import:dry-run` | Preview GitHub content imports without making changes               |
 | `pnpm run import:clear`   | Remove all imported documentation content                           |
+| `pnpm run check:freshness` | Exit non-zero if imported docs have fallen behind their upstream   |
+
+`GITHUB_TOKEN` is optional for a local import (the sources are public), but without it GitHub allows only 60 API requests per hour.
+
+Imported files under `src/content/docs/docs/` and `src/content/docs/arc-standards/` are overwritten by the next import and are not formatted by Prettier. Fix them in the source repository, not here.
+
+The daily `import-docs.yml` workflow keeps these docs current. The weekly `check-freshness.yml` workflow fails when imported docs or the TEAL opcode dataset are behind upstream, so a stalled import is noticed.
 
 ### Auto-Sidebar Management
 
@@ -262,7 +270,7 @@ The project uses `@algorandfoundation/astro-github-loader` to import documentati
 The [AVM Opcodes](https://dev.algorand.co/reference/algorand-teal/opcodes) reference is sourced from the TEAL language spec in [algorand/go-algorand](https://github.com/algorand/go-algorand/tree/master/data/transactions/logic) (`master`). The page's version filter defaults to the latest live release, so opcodes for a newer, not-yet-released AVM version are hidden until the reader opts in by widening the filter.
 
 - `opcodes.json` is the dataset; `opcodes.mdx` is rendered from it (auto, in `prebuild`).
-- `check:opcodes` runs during `prebuild` and prints a non-blocking warning when the dataset is out of date.
+- `check:opcodes` runs during `prebuild` and prints a non-blocking warning when the dataset is out of date. The weekly `check-freshness.yml` workflow runs the same check in strict mode and fails when it is.
 - To refresh, run **Actions → Update Opcodes → Run workflow** (opens a `devrel`-reviewed PR), or run `pnpm run update:opcodes` locally on a dedicated branch.
 
 ## Contributing

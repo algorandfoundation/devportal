@@ -5,6 +5,10 @@
  * downloads devportal-docs.tar.gz from the appropriate GitHub Release,
  * and unpacks content to the correct location in src/content/docs/.
  *
+ * Every successful import is recorded in imports/import-manifest.json
+ * (upstream commit, build time and release asset date), which
+ * scripts/check-freshness.ts uses to detect docs that have fallen behind.
+ *
  * Run: pnpm run import:release
  * Flags: --dry-run (log planned downloads, no network calls)
  */
@@ -28,6 +32,12 @@ import picomatch from 'picomatch';
 
 import { LIBRARY_CONFIGS } from '../imports/configs/index.js';
 import { isArtifactVariant } from '../imports/types.js';
+import {
+  manifestKey,
+  readImportManifest,
+  writeImportManifest,
+} from '../imports/manifest.js';
+import type { ImportManifestEntry } from '../imports/manifest.js';
 import type { GithubArtifactConfig, PostImportTransform } from '../imports/types.js';
 import type { VersionConfig } from '../imports/types.js';
 
@@ -56,15 +66,19 @@ const REPO_FILTER = (() => {
 // Auth
 // ---------------------------------------------------------------------------
 
+// The source repos are public, so a token is optional. Without one GitHub
+// allows 60 API requests per hour, which is enough for a local run (two
+// requests per library) but not for CI, where GITHUB_TOKEN should be set.
 const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
 if (!GITHUB_TOKEN && !DRY_RUN) {
-  console.error(
-    'GITHUB_TOKEN environment variable is required (set in .env or CI)',
+  console.warn(
+    'GITHUB_TOKEN is not set: using unauthenticated GitHub API access (60 requests/hour).\n',
   );
-  process.exit(1);
 }
 
-const octokit = GITHUB_TOKEN ? new Octokit({ auth: GITHUB_TOKEN }) : null;
+const octokit = DRY_RUN
+  ? null
+  : new Octokit(GITHUB_TOKEN ? { auth: GITHUB_TOKEN } : {});
 
 // ---------------------------------------------------------------------------
 // Constants
@@ -327,7 +341,9 @@ function normalizeAllLinks(
   }
 }
 
-async function downloadAndUnpack(task: DownloadTask): Promise<void> {
+async function downloadAndUnpack(
+  task: DownloadTask,
+): Promise<ImportManifestEntry> {
   const { variant, version, releaseTag, destDir, prefix } = task;
   const label = `${variant.owner}/${variant.repo}@${releaseTag} (${variant.language} ${version.slug})`;
 
@@ -410,13 +426,19 @@ async function downloadAndUnpack(task: DownloadTask): Promise<void> {
       console.log(`  Copied sidebar.json -> ${prefix}/sidebar.json`);
     }
 
-    // 10. Read site base from manifest (self-describing artifact),
-    //     falling back to repo name for older tarballs without it.
+    // 10. Read site base and provenance from manifest (self-describing
+    //     artifact), falling back to repo name for older tarballs without it.
     const manifestPath = join(extractDir, 'manifest.json');
     let siteBase = variant.repo;
+    let upstreamRef: string | null = null;
+    let upstreamBuiltAt: string | null = null;
     if (existsSync(manifestPath)) {
       try {
         const manifest = JSON.parse(readFileSync(manifestPath, 'utf-8'));
+        if (typeof manifest.ref === 'string') upstreamRef = manifest.ref;
+        if (typeof manifest.timestamp === 'string') {
+          upstreamBuiltAt = manifest.timestamp;
+        }
         if (manifest.base && manifest.base !== '/') {
           // Strip leading/trailing slashes — normalizeLinks expects bare name (e.g. 'algokit-utils-ts')
           siteBase = manifest.base.replace(/^\//, '').replace(/\/$/, '');
@@ -436,6 +458,15 @@ async function downloadAndUnpack(task: DownloadTask): Promise<void> {
     }
 
     console.log(`  Done: ${label} -> ${prefix}/`);
+
+    return {
+      repo: `${variant.owner}/${variant.repo}`,
+      releaseTag,
+      ref: upstreamRef,
+      builtAt: upstreamBuiltAt,
+      assetUpdatedAt: asset.updated_at,
+      importedAt: new Date().toISOString(),
+    };
   } finally {
     rmSync(tempDir, { recursive: true, force: true });
   }
@@ -469,10 +500,13 @@ async function main(): Promise<void> {
   console.log(`Found ${tasks.length} artifact variant(s) to download.${REPO_FILTER ? ` (filtered by --repo ${REPO_FILTER})` : ''}\n`);
 
   const failures: Array<{ label: string; error: string }> = [];
+  const manifest = readImportManifest();
 
   for (const task of tasks) {
     try {
-      await downloadAndUnpack(task);
+      manifest[
+        manifestKey(task.librarySlug, task.variant.language, task.version.slug)
+      ] = await downloadAndUnpack(task);
     } catch (err) {
       const label = `${task.variant.owner}/${task.variant.repo}@${task.releaseTag}`;
       const message = err instanceof Error ? err.message : String(err);
@@ -480,6 +514,9 @@ async function main(): Promise<void> {
       failures.push({ label, error: message });
     }
   }
+
+  // Record what was imported, even if another library failed.
+  writeImportManifest(manifest);
 
   console.log('');
   if (failures.length > 0) {
