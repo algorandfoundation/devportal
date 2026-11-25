@@ -2,12 +2,12 @@
 editUrl: false
 next: false
 prev: false
-title: 'arg'
+title: "arg"
 ---
 
-> **arg**(`a`): [`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)
+> **arg**(`a`): [`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)
 
-Defined in: [op.ts:419](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/op.ts#L419)
+Defined in: [op.ts:561](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/op.ts#L561)
 
 Ath LogicSig argument
 
@@ -15,11 +15,11 @@ Ath LogicSig argument
 
 ### a
 
-[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
+[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
 
 ## Returns
 
-[`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)
+[`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)
 
 ## See
 

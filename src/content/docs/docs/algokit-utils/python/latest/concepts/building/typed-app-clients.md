@@ -1,6 +1,6 @@
 ---
-title: 'Typed application clients'
-description: 'Typed application clients are automatically generated, typed Python deployment and invocation clients for smart contracts that have a defined [ARC-56](https://github.com/algorandfoundation/ARCs/pull/258) or [ARC-32](https://github.com/algorandfoundation/ARCs/blob/main/ARCs/arc-0032.md) application specification so that the development experience is easier with less upskill ramp-up and less deployment errors. These clients give you a type-safe, intellisense-driven experience for invoking the smart contract.'
+title: "Typed application clients"
+description: "Typed application clients are automatically generated, typed Python deployment and invocation clients for smart contracts that have a defined ARC-56 or ARC-32 application specification so that the development experience is easier with less upskill ramp-up and less deployment errors. These clients give you a type-safe, intellisense-driven experience for invoking the smart contract."
 ---
 
 Typed application clients are automatically generated, typed Python deployment and invocation clients for smart contracts that have a defined [ARC-56](https://github.com/algorandfoundation/ARCs/pull/258) or [ARC-32](https://github.com/algorandfoundation/ARCs/blob/main/ARCs/arc-0032.md) application specification so that the development experience is easier with less upskill ramp-up and less deployment errors. These clients give you a type-safe, intellisense-driven experience for invoking the smart contract.
@@ -11,8 +11,10 @@ Typed application clients are the recommended way of interacting with smart cont
 
 You can generate an app spec file:
 
-- Using [Algorand Python](https://algorandfoundation.github.io/puya/#quick-start)
-- By hand by following the specification [ARC-56](https://github.com/algorandfoundation/ARCs/pull/258)/[ARC-32](https://github.com/algorandfoundation/ARCs/blob/main/ARCs/arc-0032.md)
+-   Using [Algorand Python](https://algorandfoundation.github.io/puya/#quick-start)
+-   Using [TEALScript](https://tealscript.netlify.app/tutorials/hello-world/0004-artifacts/)
+-   By hand by following the specification [ARC-56](https://github.com/algorandfoundation/ARCs/pull/258)/[ARC-32](https://github.com/algorandfoundation/ARCs/blob/main/ARCs/arc-0032.md)
+-   Using [Beaker](https://algorand-devrel.github.io/beaker/html/usage.html) (PyTEAL) _(DEPRECATED)_
 
 ## Generating a typed client
 
@@ -28,173 +30,158 @@ Note: AlgoKit Utils >= 3.0.0 is compatible with the older 1.x.x generated typed 
 
 To get an instance of a typed client you can use an [`AlgorandClient`](/docs/algokit-utils/python/latest/concepts/core/algorand-client/) instance or a typed app [`Factory`](#creating-a-typed-factory-instance) instance.
 
-The approach to obtaining a client instance depends on how many app clients you require for a given app spec and if the app has already been deployed, which is summarised below:
+The approach to obtaining a client instance depends on how many app clients you require for a given app spec and if the app has already been deployed:
 
 ### App is deployed
 
-<table>
-<thead>
-<tr>
-<th colspan="2">Resolve App by ID</th>
-<th colspan="2">Resolve App by Creator and Name</th>
-</tr>
-<tr>
-<th>Single App Client Instance</th>
-<th>Multiple App Client Instances</th>
-<th>Single App Client Instance</th>
-<th>Multiple App Client Instances</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
+#### Resolve App by ID
+
+**Single Typed App Client Instance:**
 
 ```python
-app_client = algorand.client.get_typed_app_client_by_id(
-    MyContractClient,
+# Typed: Using the AlgorandClient extension method
+typed_client = algorand.client.get_typed_app_client_by_id(
+    MyContractClient,  # Generated typed client class
     app_id=1234,
     # ...
 )
-# or
-app_client = MyContractClient(
-    algorand=algorand,
+# or Typed: Using the generated client class directly
+typed_client = MyContractClient(
+    algorand,
     app_id=1234,
     # ...
 )
 ```
 
-</td>
-<td>
+**Multiple Typed App Client Instances:**
 
 ```python
-app_client1 = factory.get_app_client_by_id(
+# Typed: Using a typed factory to get multiple client instances
+typed_client1 = typed_factory.get_app_client_by_id(
     app_id=1234,
     # ...
 )
-app_client2 = factory.get_app_client_by_id(
+typed_client2 = typed_factory.get_app_client_by_id(
     app_id=4321,
     # ...
 )
 ```
 
-</td>
-<td>
+#### Resolve App by Creator and Name
+
+**Single Typed App Client Instance:**
 
 ```python
-app_client = algorand.client.get_typed_app_client_by_creator_and_name(
-    MyContractClient,
+# Typed: Using the AlgorandClient extension method
+typed_client = algorand.client.get_typed_app_client_by_creator_and_name(
+    MyContractClient,  # Generated typed client class
     creator_address="CREATORADDRESS",
     app_name="contract-name",
     # ...
 )
-# or
-app_client = MyContractClient.from_creator_and_name(
-    algorand=algorand,
+# or Typed: Using the static method on the generated client class
+typed_client = MyContractClient.from_creator_and_name(
+    algorand,
     creator_address="CREATORADDRESS",
     app_name="contract-name",
     # ...
 )
 ```
 
-</td>
-<td>
+**Multiple Typed App Client Instances:**
 
 ```python
-app_client1 = factory.get_app_client_by_creator_and_name(
+# Typed: Using a typed factory to get multiple client instances by name
+typed_client1 = typed_factory.get_app_client_by_creator_and_name(
     creator_address="CREATORADDRESS",
     app_name="contract-name",
     # ...
 )
-app_client2 = factory.get_app_client_by_creator_and_name(
+typed_client2 = typed_factory.get_app_client_by_creator_and_name(
     creator_address="CREATORADDRESS",
     app_name="contract-name-2",
     # ...
 )
 ```
 
-</td>
-</tr>
-</tbody>
-</table>
-
-To understand the difference between resolving by ID vs by creator and name see the underlying [app client documentation](/docs/algokit-utils/python/latest/concepts/building/app-client/#appclient).
-
 ### App is not deployed
 
-<table>
-<thead>
-<tr>
-<th>Deploy a New App</th>
-<th>Deploy or Resolve App Idempotently by Creator and Name</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
+#### Deploy a New App
 
 ```python
-app_client, result = factory.send.bare.create(
+# Typed: For typed clients, you call a specific creation method rather than generic 'create'
+typed_client, response = typed_factory.send.create.{METHODNAME}(
     # ...
-)
-# or
-app_client, result = factory.send.create(
-    # method call params ...
 )
 ```
 
-</td>
-<td>
+#### Deploy or Resolve App Idempotently by Creator and Name
 
 ```python
-app_client, result = factory.deploy(
+# Typed: Using the deploy method on a typed factory
+typed_client, response = typed_factory.deploy(
+    on_update=OnUpdate.UpdateApp,
+    on_schema_break=OnSchemaBreak.ReplaceApp,
+    # The parameters for create/update/delete would be specific to your generated client
     app_name="contract-name",
     # ...
 )
 ```
-
-</td>
-</tr>
-</tbody>
-</table>
 
 ### Creating a typed factory instance
 
 If your scenario calls for an app factory, you can create one using the below:
 
 ```python
-factory = algorand.client.get_typed_app_factory(MyContractFactory)
-# or
-factory = MyContractFactory(algorand)
+# Typed: Using the AlgorandClient extension method
+typed_factory = algorand.client.get_typed_app_factory(MyContractFactory)  # Generated factory class
+# or Typed: Using the factory class constructor directly
+typed_factory = MyContractFactory(algorand)
 ```
 
 ## Client usage
 
-See the [official usage docs](https://github.com/algorandfoundation/algokit-client-generator-py/blob/main/docs/usage.md) for full details.
+See the [official usage docs](https://github.com/algorandfoundation/algokit-client-generator-py/blob/main/docs/usage.md) for full details about typed clients.
 
-For a simple example that deploys a contract and calls a `"hello"` method, see below:
+Below is a realistic example that deploys a contract, funds it if newly created, and calls a `"hello"` method:
 
 ```python
-# A similar working example can be seen in the AlgoKit init production smart contract templates
-# In this case the generated factory is called `HelloWorldAppFactory` and is in `./artifacts/hello_world/client.py`
-from artifacts.hello_world.client import HelloWorldAppFactory, HelloWorldAppClient, HelloArgs
-from algokit_utils import AlgorandClient
+# Typed: Complete example using a typed application client
+import algokit_utils
+from artifacts.hello_world.hello_world_client import (
+    HelloArgs,  # Generated args class
+    HelloWorldFactory,  # Generated factory class
+)
 
-# These require environment variables to be present, or it will retrieve from default LocalNet
-algorand = AlgorandClient.from_environment()
+# Get Algorand client from environment variables
+algorand = algokit_utils.AlgorandClient.from_environment()
 deployer = algorand.account.from_environment("DEPLOYER")
 
 # Create the typed app factory
-factory = algorand.client.get_typed_app_factory(
-    HelloWorldAppFactory,
-    default_sender=deployer.addr,
+typed_factory = algorand.client.get_typed_app_factory(
+    HelloWorldFactory, default_sender=deployer.address
 )
 
-# Create the app and get a typed app client for the created app (note: this creates a new instance of the app every time,
-#  you can use .deploy() to deploy idempotently if the app wasn't previously
-#  deployed or needs to be updated if that's allowed)
-app_client, result = factory.send.bare.create()
+# Deploy idempotently - creates if it doesn't exist or updates if changed
+typed_client, result = typed_factory.deploy(
+    on_update=algokit_utils.OnUpdate.AppendApp,
+    on_schema_break=algokit_utils.OnSchemaBreak.AppendApp,
+)
 
-# Make a call to an ABI method and print the result
-response = app_client.send.hello(args=HelloArgs(name="world"))
-print(response)
+# Fund the app with 1 ALGO if it's newly created
+if result.operation_performed in [
+    algokit_utils.OperationPerformed.Create,
+    algokit_utils.OperationPerformed.Replace,
+]:
+    algorand.send.payment(
+        algokit_utils.PaymentParams(
+            amount=algokit_utils.AlgoAmount(algo=1),
+            sender=deployer.address,
+            receiver=typed_client.app_address,
+        )
+    )
+
+# Call the hello method on the smart contract
+name = "world"
+response = typed_client.send.hello(args=HelloArgs(name=name))  # Using generated args class
 ```

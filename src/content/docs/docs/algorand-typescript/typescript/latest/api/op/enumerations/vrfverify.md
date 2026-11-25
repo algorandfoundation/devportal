@@ -2,10 +2,10 @@
 editUrl: false
 next: false
 prev: false
-title: 'VrfVerify'
+title: "VrfVerify"
 ---
 
-Defined in: [op.ts:49](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/op.ts#L49)
+Defined in: [op.ts:59](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/op.ts#L59)
 
 ## Enumeration Members
 
@@ -13,4 +13,4 @@ Defined in: [op.ts:49](https://github.com/algorandfoundation/puya-ts/blob/main/p
 
 > **VrfAlgorand**: `"VrfAlgorand"`
 
-Defined in: [op.ts:50](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/op.ts#L50)
+Defined in: [op.ts:60](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/op.ts#L60)

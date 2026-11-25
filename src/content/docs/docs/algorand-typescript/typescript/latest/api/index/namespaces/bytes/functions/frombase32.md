@@ -2,12 +2,12 @@
 editUrl: false
 next: false
 prev: false
-title: 'fromBase32'
+title: "fromBase32"
 ---
 
 ## Call Signature
 
-> **fromBase32**(`b32`): [`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)\<[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)\>
+> **fromBase32**(`b32`): [`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)\<[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)\>
 
 Defined in: [primitives.ts:336](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/primitives.ts#L336)
 
@@ -23,11 +23,11 @@ A literal string of b32 encoded characters
 
 ### Returns
 
-[`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)\<[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)\>
+[`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)\<[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)\>
 
 ## Call Signature
 
-> **fromBase32**\<`TLength`\>(`b32`, `options`): [`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)\<`TLength`\>
+> **fromBase32**\<`TLength`\>(`b32`, `options`): [`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)\<`TLength`\>
 
 Defined in: [primitives.ts:342](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/primitives.ts#L342)
 
@@ -37,7 +37,7 @@ Create a new bytes value from a base 32 encoded string
 
 #### TLength
 
-`TLength` _extends_ [`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
+`TLength` *extends* [`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
 
 ### Parameters
 
@@ -55,4 +55,4 @@ Options for bounded bytes
 
 ### Returns
 
-[`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)\<`TLength`\>
+[`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)\<`TLength`\>

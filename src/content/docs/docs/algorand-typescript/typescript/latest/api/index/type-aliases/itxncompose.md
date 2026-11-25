@@ -2,12 +2,12 @@
 editUrl: false
 next: false
 prev: false
-title: 'ItxnCompose'
+title: "ItxnCompose"
 ---
 
 > **ItxnCompose** = `object`
 
-Defined in: [itxn-compose.ts:44](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/itxn-compose.ts#L44)
+Defined in: [itxn-compose.ts:45](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/itxn-compose.ts#L45)
 
 ## Methods
 
@@ -17,7 +17,7 @@ Defined in: [itxn-compose.ts:44](https://github.com/algorandfoundation/puya-ts/b
 
 > **begin**(`fields`): `void`
 
-Defined in: [itxn-compose.ts:49](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/itxn-compose.ts#L49)
+Defined in: [itxn-compose.ts:50](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/itxn-compose.ts#L50)
 
 Begin a transaction group with a payment transaction
 
@@ -25,7 +25,7 @@ Begin a transaction group with a payment transaction
 
 ###### fields
 
-[`PaymentComposeFields`](/algorand-typescript/api/index/interfaces/paymentcomposefields/)
+[`PaymentComposeFields`](/docs/algorand-typescript/typescript/latest/api/index/interfaces/paymentcomposefields/)
 
 Specifies any transaction fields which should differ from their defaults
 
@@ -37,7 +37,7 @@ Specifies any transaction fields which should differ from their defaults
 
 > **begin**(`fields`): `void`
 
-Defined in: [itxn-compose.ts:54](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/itxn-compose.ts#L54)
+Defined in: [itxn-compose.ts:55](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/itxn-compose.ts#L55)
 
 Begin a transaction group with a key registration transaction
 
@@ -45,7 +45,7 @@ Begin a transaction group with a key registration transaction
 
 ###### fields
 
-[`KeyRegistrationComposeFields`](/algorand-typescript/api/index/interfaces/keyregistrationcomposefields/)
+[`KeyRegistrationComposeFields`](/docs/algorand-typescript/typescript/latest/api/index/interfaces/keyregistrationcomposefields/)
 
 Specifies any transaction fields which should differ from their defaults
 
@@ -57,7 +57,7 @@ Specifies any transaction fields which should differ from their defaults
 
 > **begin**(`fields`): `void`
 
-Defined in: [itxn-compose.ts:59](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/itxn-compose.ts#L59)
+Defined in: [itxn-compose.ts:60](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/itxn-compose.ts#L60)
 
 Begin a transaction group with an asset config transaction
 
@@ -65,7 +65,7 @@ Begin a transaction group with an asset config transaction
 
 ###### fields
 
-[`AssetConfigComposeFields`](/algorand-typescript/api/index/interfaces/assetconfigcomposefields/)
+[`AssetConfigComposeFields`](/docs/algorand-typescript/typescript/latest/api/index/interfaces/assetconfigcomposefields/)
 
 Specifies any transaction fields which should differ from their defaults
 
@@ -77,7 +77,7 @@ Specifies any transaction fields which should differ from their defaults
 
 > **begin**(`fields`): `void`
 
-Defined in: [itxn-compose.ts:64](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/itxn-compose.ts#L64)
+Defined in: [itxn-compose.ts:65](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/itxn-compose.ts#L65)
 
 Begin a transaction group with an asset transfer transaction
 
@@ -85,7 +85,7 @@ Begin a transaction group with an asset transfer transaction
 
 ###### fields
 
-[`AssetTransferComposeFields`](/algorand-typescript/api/index/interfaces/assettransfercomposefields/)
+[`AssetTransferComposeFields`](/docs/algorand-typescript/typescript/latest/api/index/interfaces/assettransfercomposefields/)
 
 Specifies any transaction fields which should differ from their defaults
 
@@ -97,7 +97,7 @@ Specifies any transaction fields which should differ from their defaults
 
 > **begin**(`fields`): `void`
 
-Defined in: [itxn-compose.ts:69](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/itxn-compose.ts#L69)
+Defined in: [itxn-compose.ts:70](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/itxn-compose.ts#L70)
 
 Begin a transaction group with an asset freeze transaction
 
@@ -105,7 +105,7 @@ Begin a transaction group with an asset freeze transaction
 
 ###### fields
 
-[`AssetFreezeComposeFields`](/algorand-typescript/api/index/interfaces/assetfreezecomposefields/)
+[`AssetFreezeComposeFields`](/docs/algorand-typescript/typescript/latest/api/index/interfaces/assetfreezecomposefields/)
 
 Specifies any transaction fields which should differ from their defaults
 
@@ -117,7 +117,7 @@ Specifies any transaction fields which should differ from their defaults
 
 > **begin**(`fields`): `void`
 
-Defined in: [itxn-compose.ts:74](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/itxn-compose.ts#L74)
+Defined in: [itxn-compose.ts:75](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/itxn-compose.ts#L75)
 
 Begin a transaction group with an application call transaction
 
@@ -125,7 +125,7 @@ Begin a transaction group with an application call transaction
 
 ###### fields
 
-[`ApplicationCallComposeFields`](/algorand-typescript/api/index/interfaces/applicationcallcomposefields/)
+[`ApplicationCallComposeFields`](/docs/algorand-typescript/typescript/latest/api/index/interfaces/applicationcallcomposefields/)
 
 Specifies any transaction fields which should differ from their defaults
 
@@ -137,7 +137,7 @@ Specifies any transaction fields which should differ from their defaults
 
 > **begin**(`fields`): `void`
 
-Defined in: [itxn-compose.ts:79](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/itxn-compose.ts#L79)
+Defined in: [itxn-compose.ts:80](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/itxn-compose.ts#L80)
 
 Begin a transaction group with a new transaction with the specified fields
 
@@ -145,7 +145,7 @@ Begin a transaction group with a new transaction with the specified fields
 
 ###### fields
 
-[`AnyTransactionComposeFields`](/algorand-typescript/api/index/interfaces/anytransactioncomposefields/)
+[`AnyTransactionComposeFields`](/docs/algorand-typescript/typescript/latest/api/index/interfaces/anytransactioncomposefields/)
 
 Specifies the type, and any transaction fields which should differ from their defaults
 
@@ -157,7 +157,7 @@ Specifies the type, and any transaction fields which should differ from their de
 
 > **begin**(`fields`): `void`
 
-Defined in: [itxn-compose.ts:84](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/itxn-compose.ts#L84)
+Defined in: [itxn-compose.ts:85](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/itxn-compose.ts#L85)
 
 Begin a transaction group with a new transaction from the specified itxn params object
 
@@ -165,7 +165,7 @@ Begin a transaction group with a new transaction from the specified itxn params 
 
 ###### fields
 
-[`ComposeItxnParams`](/algorand-typescript/api/index/type-aliases/composeitxnparams/)
+[`ComposeItxnParams`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/composeitxnparams/)
 
 ##### Returns
 
@@ -175,7 +175,7 @@ Begin a transaction group with a new transaction from the specified itxn params 
 
 > **begin**\<`TArgs`\>(`method`, `fields`): `void`
 
-Defined in: [itxn-compose.ts:94](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/itxn-compose.ts#L94)
+Defined in: [itxn-compose.ts:95](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/itxn-compose.ts#L95)
 
 Begin a transaction group with a typed application call transaction.
 
@@ -189,19 +189,19 @@ object, or via an explicit generic param. (`itxnCompose.begin({ method: MyContra
 
 ###### TArgs
 
-`TArgs` _extends_ `any`[]
+`TArgs` *extends* `any`[]
 
 ##### Parameters
 
 ###### method
 
-`InstanceMethod`\<[`Contract`](/algorand-typescript/api/arc4/classes/contract/), `TArgs`\>
+`InstanceMethod`\<[`Contract`](/docs/algorand-typescript/typescript/latest/api/arc4/classes/contract/), `TArgs`\>
 
 The ABI method to call
 
 ###### fields
 
-[`TypedApplicationCallFields`](/algorand-typescript/api/arc4/type-aliases/typedapplicationcallfields/)\<`TArgs`\>
+[`TypedApplicationCallFields`](/docs/algorand-typescript/typescript/latest/api/arc4/type-aliases/typedapplicationcallfields/)\<`TArgs`\>
 
 Specifies any transaction fields which should differ from their defaults
 
@@ -213,7 +213,7 @@ Specifies any transaction fields which should differ from their defaults
 
 > **begin**\<`TMethod`\>(`options`): `void`
 
-Defined in: [itxn-compose.ts:101](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/itxn-compose.ts#L101)
+Defined in: [itxn-compose.ts:102](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/itxn-compose.ts#L102)
 
 Begin a transaction group with a typed application call transaction. The method can be specified by options.method, or
 by explicitly defining the type of the generic parameter TMethod.
@@ -230,7 +230,7 @@ The type of an ARC4 method signature (eg. `typeof MyContract.prototype.myMethod`
 
 ###### options
 
-[`AbiCallOptions`](/algorand-typescript/api/arc4/interfaces/abicalloptions/)\<`TMethod`\>
+[`AbiCallOptions`](/docs/algorand-typescript/typescript/latest/api/arc4/interfaces/abicalloptions/)\<`TMethod`\>
 
 Specifies any transaction fields which should differ from their defaults
 
@@ -238,7 +238,7 @@ Specifies any transaction fields which should differ from their defaults
 
 `void`
 
----
+***
 
 ### next()
 
@@ -246,7 +246,7 @@ Specifies any transaction fields which should differ from their defaults
 
 > **next**(`fields`): `void`
 
-Defined in: [itxn-compose.ts:107](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/itxn-compose.ts#L107)
+Defined in: [itxn-compose.ts:108](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/itxn-compose.ts#L108)
 
 Continue a transaction group with a payment transaction
 
@@ -254,7 +254,7 @@ Continue a transaction group with a payment transaction
 
 ###### fields
 
-[`PaymentComposeFields`](/algorand-typescript/api/index/interfaces/paymentcomposefields/)
+[`PaymentComposeFields`](/docs/algorand-typescript/typescript/latest/api/index/interfaces/paymentcomposefields/)
 
 Specifies any transaction fields which should differ from their defaults
 
@@ -266,7 +266,7 @@ Specifies any transaction fields which should differ from their defaults
 
 > **next**(`fields`): `void`
 
-Defined in: [itxn-compose.ts:112](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/itxn-compose.ts#L112)
+Defined in: [itxn-compose.ts:113](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/itxn-compose.ts#L113)
 
 Continue a transaction group with a key registration transaction
 
@@ -274,7 +274,7 @@ Continue a transaction group with a key registration transaction
 
 ###### fields
 
-[`KeyRegistrationComposeFields`](/algorand-typescript/api/index/interfaces/keyregistrationcomposefields/)
+[`KeyRegistrationComposeFields`](/docs/algorand-typescript/typescript/latest/api/index/interfaces/keyregistrationcomposefields/)
 
 Specifies any transaction fields which should differ from their defaults
 
@@ -286,7 +286,7 @@ Specifies any transaction fields which should differ from their defaults
 
 > **next**(`fields`): `void`
 
-Defined in: [itxn-compose.ts:117](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/itxn-compose.ts#L117)
+Defined in: [itxn-compose.ts:118](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/itxn-compose.ts#L118)
 
 Continue a transaction group with an asset config transaction
 
@@ -294,7 +294,7 @@ Continue a transaction group with an asset config transaction
 
 ###### fields
 
-[`AssetConfigComposeFields`](/algorand-typescript/api/index/interfaces/assetconfigcomposefields/)
+[`AssetConfigComposeFields`](/docs/algorand-typescript/typescript/latest/api/index/interfaces/assetconfigcomposefields/)
 
 Specifies any transaction fields which should differ from their defaults
 
@@ -306,7 +306,7 @@ Specifies any transaction fields which should differ from their defaults
 
 > **next**(`fields`): `void`
 
-Defined in: [itxn-compose.ts:122](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/itxn-compose.ts#L122)
+Defined in: [itxn-compose.ts:123](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/itxn-compose.ts#L123)
 
 Continue a transaction group with an asset transfer transaction
 
@@ -314,7 +314,7 @@ Continue a transaction group with an asset transfer transaction
 
 ###### fields
 
-[`AssetTransferComposeFields`](/algorand-typescript/api/index/interfaces/assettransfercomposefields/)
+[`AssetTransferComposeFields`](/docs/algorand-typescript/typescript/latest/api/index/interfaces/assettransfercomposefields/)
 
 Specifies any transaction fields which should differ from their defaults
 
@@ -326,7 +326,7 @@ Specifies any transaction fields which should differ from their defaults
 
 > **next**(`fields`): `void`
 
-Defined in: [itxn-compose.ts:127](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/itxn-compose.ts#L127)
+Defined in: [itxn-compose.ts:128](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/itxn-compose.ts#L128)
 
 Continue a transaction group with an asset freeze transaction
 
@@ -334,7 +334,7 @@ Continue a transaction group with an asset freeze transaction
 
 ###### fields
 
-[`AssetFreezeComposeFields`](/algorand-typescript/api/index/interfaces/assetfreezecomposefields/)
+[`AssetFreezeComposeFields`](/docs/algorand-typescript/typescript/latest/api/index/interfaces/assetfreezecomposefields/)
 
 Specifies any transaction fields which should differ from their defaults
 
@@ -346,7 +346,7 @@ Specifies any transaction fields which should differ from their defaults
 
 > **next**(`fields`): `void`
 
-Defined in: [itxn-compose.ts:132](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/itxn-compose.ts#L132)
+Defined in: [itxn-compose.ts:133](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/itxn-compose.ts#L133)
 
 Continue a transaction group with an application call transaction
 
@@ -354,7 +354,7 @@ Continue a transaction group with an application call transaction
 
 ###### fields
 
-[`ApplicationCallComposeFields`](/algorand-typescript/api/index/interfaces/applicationcallcomposefields/)
+[`ApplicationCallComposeFields`](/docs/algorand-typescript/typescript/latest/api/index/interfaces/applicationcallcomposefields/)
 
 Specifies any transaction fields which should differ from their defaults
 
@@ -366,7 +366,7 @@ Specifies any transaction fields which should differ from their defaults
 
 > **next**(`fields`): `void`
 
-Defined in: [itxn-compose.ts:137](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/itxn-compose.ts#L137)
+Defined in: [itxn-compose.ts:138](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/itxn-compose.ts#L138)
 
 Continue a transaction group with a new transaction with the specified fields
 
@@ -374,7 +374,7 @@ Continue a transaction group with a new transaction with the specified fields
 
 ###### fields
 
-[`AnyTransactionComposeFields`](/algorand-typescript/api/index/interfaces/anytransactioncomposefields/)
+[`AnyTransactionComposeFields`](/docs/algorand-typescript/typescript/latest/api/index/interfaces/anytransactioncomposefields/)
 
 Specifies the type, and any transaction fields which should differ from their defaults
 
@@ -386,7 +386,7 @@ Specifies the type, and any transaction fields which should differ from their de
 
 > **next**(`fields`): `void`
 
-Defined in: [itxn-compose.ts:142](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/itxn-compose.ts#L142)
+Defined in: [itxn-compose.ts:143](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/itxn-compose.ts#L143)
 
 Continue a transaction group with a new transaction from the specified itxn params object
 
@@ -394,7 +394,7 @@ Continue a transaction group with a new transaction from the specified itxn para
 
 ###### fields
 
-[`ComposeItxnParams`](/algorand-typescript/api/index/type-aliases/composeitxnparams/)
+[`ComposeItxnParams`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/composeitxnparams/)
 
 ##### Returns
 
@@ -404,7 +404,7 @@ Continue a transaction group with a new transaction from the specified itxn para
 
 > **next**\<`TArgs`\>(`method`, `fields`): `void`
 
-Defined in: [itxn-compose.ts:152](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/itxn-compose.ts#L152)
+Defined in: [itxn-compose.ts:153](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/itxn-compose.ts#L153)
 
 Continue a transaction group with a typed application call transaction.
 
@@ -418,19 +418,19 @@ object, or via an explicit generic param. (`itxnCompose.next({ method: MyContrac
 
 ###### TArgs
 
-`TArgs` _extends_ `any`[]
+`TArgs` *extends* `any`[]
 
 ##### Parameters
 
 ###### method
 
-`InstanceMethod`\<[`Contract`](/algorand-typescript/api/arc4/classes/contract/), `TArgs`\>
+`InstanceMethod`\<[`Contract`](/docs/algorand-typescript/typescript/latest/api/arc4/classes/contract/), `TArgs`\>
 
 The ABI method to call
 
 ###### fields
 
-[`TypedApplicationCallFields`](/algorand-typescript/api/arc4/type-aliases/typedapplicationcallfields/)\<`TArgs`\>
+[`TypedApplicationCallFields`](/docs/algorand-typescript/typescript/latest/api/arc4/type-aliases/typedapplicationcallfields/)\<`TArgs`\>
 
 Specifies any transaction fields which should differ from their defaults
 
@@ -442,7 +442,7 @@ Specifies any transaction fields which should differ from their defaults
 
 > **next**\<`TMethod`\>(`options`): `void`
 
-Defined in: [itxn-compose.ts:159](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/itxn-compose.ts#L159)
+Defined in: [itxn-compose.ts:160](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/itxn-compose.ts#L160)
 
 Continue a transaction group with a typed application call transaction. The method can be specified by options.method, or
 by explicitly defining the type of the generic parameter TMethod.
@@ -459,7 +459,7 @@ The type of an ARC4 method signature (eg. `typeof MyContract.prototype.myMethod`
 
 ###### options
 
-[`AbiCallOptions`](/algorand-typescript/api/arc4/interfaces/abicalloptions/)\<`TMethod`\>
+[`AbiCallOptions`](/docs/algorand-typescript/typescript/latest/api/arc4/interfaces/abicalloptions/)\<`TMethod`\>
 
 Specifies any transaction fields which should differ from their defaults
 
@@ -467,13 +467,13 @@ Specifies any transaction fields which should differ from their defaults
 
 `void`
 
----
+***
 
 ### submit()
 
 > **submit**(): `void`
 
-Defined in: [itxn-compose.ts:167](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/itxn-compose.ts#L167)
+Defined in: [itxn-compose.ts:168](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/itxn-compose.ts#L168)
 
 Submit all transactions in the group
 

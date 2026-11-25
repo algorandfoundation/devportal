@@ -1,6 +1,6 @@
 ---
-title: 'App deployment'
-description: 'AlgoKit contains advanced smart contract deployment capabilities that allow you to have idempotent (safely retryable) deployment of a named app, including deploy-time immutability and permanence control and TEAL template substitution. This allows you to control the smart contract development lifecycle of a single-instance app across multiple environments (e.g. LocalNet, TestNet, MainNet).'
+title: "App deployment"
+description: "AlgoKit contains advanced smart contract deployment capabilities that allow you to have idempotent (safely retryable) deployment of a named app, including deploy-time immutability and permanence control and TEAL template substitution. This allows you to control the smart contract development lifecycle of a single-instance app across multiple environments (e.g. LocalNet, TestNet, MainNet)."
 ---
 
 AlgoKit contains advanced smart contract deployment capabilities that allow you to have idempotent (safely retryable) deployment of a named app, including deploy-time immutability and permanence control and TEAL template substitution. This allows you to control the smart contract development lifecycle of a single-instance app across multiple environments (e.g. LocalNet, TestNet, MainNet).
@@ -9,7 +9,7 @@ It's optional to use this functionality, since you can construct your own deploy
 
 App deployment is a higher-order use case capability provided by AlgoKit Utils that builds on top of the core capabilities, particularly [App management](/docs/algokit-utils/python/latest/concepts/building/app/).
 
-To see some usage examples check out the [automated tests](https://github.com/algorandfoundation/algokit-utils-py/tree/main/tests/applications).
+To see some usage examples check out the [automated tests](https://github.com/algorandfoundation/algokit-utils-py/blob/main/tests/test_deploy_scenarios.py).
 
 ## Smart contract development lifecycle
 
@@ -46,10 +46,10 @@ This design allows you to have the same deployment code across environments with
 
 The `AppDeployer` is a class that is used to manage app deployments and deployment metadata.
 
-To get an instance of `AppDeployer` you can use either [`AlgorandClient`](/docs/algokit-utils/python/latest/concepts/core/algorand-client/) via `algorand.app_deployer` or instantiate it directly (passing in an [`AppManager`](/docs/algokit-utils/python/latest/concepts/building/app/#appmanager), [`AlgorandClientTransactionSender`](/docs/algokit-utils/python/latest/concepts/core/algorand-client/#sending-a-single-transaction) and optionally an indexer client instance):
+To get an instance of `AppDeployer` you can use either [`AlgorandClient`](/docs/algokit-utils/python/latest/concepts/core/algorand-client/) via `algorand.appDeployer` or instantiate it directly (passing in an [`AppManager`](/docs/algokit-utils/python/latest/concepts/building/app/#appmanager), [`AlgorandClientTransactionSender`](/docs/algokit-utils/python/latest/concepts/core/algorand-client/#sending-a-single-transaction) and optionally an indexer client instance):
 
 ```python
-from algokit_utils.applications.app_deployer import AppDeployer
+from algokit_utils.app_deployer import AppDeployer
 
 app_deployer = AppDeployer(app_manager, transaction_sender, indexer)
 ```
@@ -58,15 +58,12 @@ app_deployer = AppDeployer(app_manager, transaction_sender, indexer)
 
 When AlgoKit performs a deployment of an app it creates metadata to describe that deployment and includes this metadata in an [ARC-2](https://github.com/algorandfoundation/ARCs/blob/main/ARCs/arc-0002.md) transaction note on any creation and update transactions.
 
-The deployment metadata is defined in `AppDeploymentMetaData`, which is an object with:
+The deployment metadata is defined in `AppDeployMetadata`, which is an object with:
 
 - `name: str` - The unique name identifier of the app within the creator account
 - `version: str` - The version of app that is / will be deployed; can be an arbitrary string, but we recommend using [semver](https://semver.org/)
-- `deletable: bool | None` - Whether or not the app is deletable (`True`) / permanent (`False`) / unspecified (`None`)
-- `updatable: bool | None` - Whether or not the app is updatable (`True`) / immutable (`False`) / unspecified (`None`)
-
-> [!NOTE]
-> As of v3.0.0, the contract version is no longer auto-incremented. You must explicitly set the `version` field in `AppDeploymentMetaData` for each deployment.
+- `deletable: bool | None` - Whether or not the app is deletable (`true`) / permanent (`false`) / unspecified (`None`)
+- `updatable: bool | None` - Whether or not the app is updatable (`true`) / immutable (`false`) / unspecified (`None`)
 
 An example of the ARC-2 transaction note that is attached as an app creation / update transaction note to specify this metadata is:
 
@@ -74,18 +71,20 @@ An example of the ARC-2 transaction note that is attached as an app creation / u
 ALGOKIT_DEPLOYER:j{name:"MyApp",version:"1.0",updatable:true,deletable:false}
 ```
 
+> NOTE: Starting from v3.0.0, AlgoKit Utils no longer automatically increments the contract version by default. It is the user's responsibility to explicitly manage versioning of their smart contracts (if desired).
+
 ## Lookup deployed apps by name
 
-In order to resolve what apps have been previously deployed and their metadata, AlgoKit provides a method that does a series of indexer lookups and returns a map of name to app metadata via `algorand.app_deployer.get_creator_apps_by_name(creator_address=...)`.
+In order to resolve what apps have been previously deployed and their metadata, AlgoKit provides a method that does a series of indexer lookups and returns a map of name to app metadata via `get_creator_apps_by_name(creator_address)`.
 
 ```python
-app_lookup = algorand.app_deployer.get_creator_apps_by_name(creator_address="CREATORADDRESS")
+app_lookup = algorand.app_deployer.get_creator_apps_by_name("CREATORADDRESS")
 app1_metadata = app_lookup.apps["app1"]
 ```
 
 This method caches the result of the lookup, since it's a reasonably heavyweight call (N+1 indexer calls for N deployed apps by the creator). If you want to skip the cache to get a fresh version then you can pass in a second parameter `ignore_cache=True`. This should only be needed if you are performing parallel deployments outside of the current `AppDeployer` instance, since it will keep its cache updated based on its own deployments.
 
-The return type of `get_creator_apps_by_name` is `ApplicationLookup`:
+The return type of `get_creator_apps_by_name` is `ApplicationLookup`, which is an object with:
 
 ```python
 @dataclasses.dataclass
@@ -94,60 +93,13 @@ class ApplicationLookup:
     apps: dict[str, ApplicationMetaData] = dataclasses.field(default_factory=dict)
 ```
 
-The `apps` property contains a lookup by app name that resolves to the current `ApplicationMetaData` value:
+The `apps` property contains a lookup by app name that resolves to the current `ApplicationMetaData`.
 
-```python
-@dataclasses.dataclass(frozen=True)
-class ApplicationReference:
-    app_id: int
-    app_address: str
-
-@dataclasses.dataclass(frozen=True)
-class ApplicationMetaData:
-    # App ID and address (wrapped in ApplicationReference)
-    reference: ApplicationReference
-    # The deployment metadata (name, version, deletable, updatable)
-    deploy_metadata: AppDeploymentMetaData
-    # The round the app was created
-    created_round: int
-    # The last round that the app was updated
-    updated_round: int
-    # Whether or not the app is deleted
-    deleted: bool = False
-
-    # Convenience properties (delegated from reference / deploy_metadata):
-    # app_id, app_address, name, version, deletable, updatable
-```
-
-An example `ApplicationLookup` might look like this:
-
-```python
-ApplicationLookup(
-    creator="<creator_address>",
-    apps={
-        "<app_name>": ApplicationMetaData(
-            reference=ApplicationReference(
-                app_id=1,
-                app_address="<app_account_address>",
-            ),
-            deploy_metadata=AppDeploymentMetaData(
-                name="<app_name>",
-                version="2.0.0",
-                deletable=False,
-                updatable=False,
-            ),
-            created_round=1,
-            updated_round=2,
-            deleted=False,
-        ),
-        # ...
-    },
-)
-```
+> Refer to the `ApplicationLookup` for latest information on exact types.
 
 ## Performing a deployment
 
-In order to perform a deployment, AlgoKit provides the `algorand.app_deployer.deploy(deployment)` method.
+In order to perform a deployment, AlgoKit provides the `deploy` method.
 
 For example:
 
@@ -164,7 +116,7 @@ deployment_result = algorand.app_deployer.deploy(
             sender="CREATORADDRESS",
             approval_program=approval_teal_template_or_byte_code,
             clear_state_program=clear_state_teal_template_or_byte_code,
-            schema=AppCreateSchema(
+            schema=StateSchema(
                 global_ints=1,
                 global_byte_slices=2,
                 local_ints=3,
@@ -174,24 +126,21 @@ deployment_result = algorand.app_deployer.deploy(
         ),
         update_params=AppUpdateParams(
             sender="SENDERADDRESS",
-            app_id=0,  # Placeholder — overridden by deploy()
-            approval_program="",  # Placeholder — overridden by deploy()
-            clear_state_program="",  # Placeholder — overridden by deploy()
+            # Other parameters if an update call is made...
         ),
         delete_params=AppDeleteParams(
             sender="SENDERADDRESS",
-            app_id=0,  # Placeholder — overridden by deploy()
+            # Other parameters if a delete call is made...
         ),
         deploy_time_params={
-            # Key => value of any TEAL template variables to replace before compilation
-            "VALUE": 1,
+            "VALUE": 1,  # TEAL template variables to replace
         },
-        # How to handle a schema break
-        on_schema_break=OnSchemaBreak.AppendApp,
-        # How to handle a contract code update
-        on_update=OnUpdate.UpdateApp,
-        # Optional send parameters
-        send_params={"populate_app_call_resources": True},
+        on_schema_break=OnSchemaBreak.Append,
+        on_update=OnUpdate.Update,
+        send_params=SendParams(
+            populate_app_call_resources=True,
+            # Other execution control parameters
+        ),
     )
 )
 ```
@@ -201,7 +150,7 @@ This method performs an idempotent (safely retryable) deployment. It will detect
 - Detect if the app has been updated (i.e. the program logic has changed) and either fail, perform an update, deploy a new version or perform a replacement (delete old app and create new app) based on the deployment configuration.
 - Detect if the app has a breaking schema change (i.e. more global or local storage is needed than were originally requested) and either fail, deploy a new version or perform a replacement (delete old app and create new app) based on the deployment configuration.
 
-It will automatically [add metadata to the transaction note of the create or update transactions](#deployment-metadata) that indicates the name, version, updatability and deletability of the contract. This metadata works in concert with [`app_deployer.get_creator_apps_by_name`](#lookup-deployed-apps-by-name) to allow the app to be reliably retrieved against that creator in it's currently deployed state. It will automatically update it's lookup cache so subsequent calls to `get_creator_apps_by_name` or `deploy` will use the latest metadata without needing to call indexer again.
+It will automatically [add metadata to the transaction note of the create or update transactions](#deployment-metadata) that indicates the name, version, updatability and deletability of the contract. This metadata works in concert with [`appDeployer.get_creator_apps_by_name`](#lookup-deployed-apps-by-name) to allow the app to be reliably retrieved against that creator in it's currently deployed state. It will automatically update it's lookup cache so subsequent calls to `get_creator_apps_by_name` or `deploy` will use the latest metadata without needing to call indexer again.
 
 `deploy` also automatically executes [template substitution](#compilation-and-template-substitution) including deploy-time control of permanence and immutability if the requisite template parameters are specified in the provided TEAL template.
 
@@ -209,18 +158,17 @@ It will automatically [add metadata to the transaction note of the create or upd
 
 The first parameter `deployment` is an `AppDeployParams`, which is an object with:
 
-- `metadata: AppDeploymentMetaData` - determines the [deployment metadata](#deployment-metadata) of the deployment
-- `create_params: AppCreateParams | AppCreateMethodCallParams` - the parameters for an [app creation call](/docs/algokit-utils/python/latest/concepts/building/app/#creation) (raw or ABI method call)
-- `update_params: AppUpdateParams | AppUpdateMethodCallParams` - the parameters for an [app update call](/docs/algokit-utils/python/latest/concepts/building/app/#updating) (raw or ABI method call) without the `app_id`, `approval_program` or `clear_state_program`, since these are calculated by the `deploy` method
-- `delete_params: AppDeleteParams | AppDeleteMethodCallParams` - the parameters for an [app delete call](/docs/algokit-utils/python/latest/concepts/building/app/#deleting) (raw or ABI method call) without the `app_id`, since this is calculated by the `deploy` method
-- `deploy_time_params: TealTemplateParams | None` - allows automatic substitution of [deploy-time TEAL template variables](#compilation-and-template-substitution)
-  - `TealTemplateParams` is a `key => value` dict that will result in `TMPL_{key}` being replaced with `value` (where a string or `bytes` will be appropriately encoded as bytes within the TEAL code)
-- `on_schema_break: Literal["replace", "fail", "append"] | OnSchemaBreak | None` - determines `what should happen` if a breaking change to the schema is detected (e.g. if you need more global or local state that was previously requested when the contract was originally created)
-- `on_update: Literal["update", "replace", "fail", "append"] | OnUpdate | None` - determines `what should happen` if an update to the smart contract is detected (e.g. the TEAL code has changed since last deployment)
-- `existing_deployments: ApplicationLookup | None` - optionally allows the [app lookup retrieval](#lookup-deployed-apps-by-name) to be skipped if it's already been retrieved outside of this `AppDeployer` instance
-- `ignore_cache: bool` - optionally allows the [lookup cache](#lookup-deployed-apps-by-name) to be ignored and force retrieval of fresh deployment metadata from indexer (default `False`)
-- `max_fee: int | None` - optional maximum fee
-- `send_params: SendParams | None` - optional [transaction execution control parameters](/docs/algokit-utils/python/latest/concepts/core/algorand-client/#transaction-parameters)
+- `metadata: AppDeployMetadata` - determines the [deployment metadata](#deployment-metadata) of the deployment
+- `create_params: AppCreateParams | CreateCallABI` - the parameters for an [app creation call](/docs/algokit-utils/python/latest/concepts/building/app/) (raw parameters or ABI method call)
+- `update_params: AppUpdateParams | UpdateCallABI` - the parameters for an [app update call](/docs/algokit-utils/python/latest/concepts/building/app/) (raw parameters or ABI method call) without the `app_id`, `approval_program`, or `clear_state_program` as these are handled by the deploy logic
+- `delete_params: AppDeleteParams | DeleteCallABI` - the parameters for an [app delete call](/docs/algokit-utils/python/latest/concepts/building/app/) (raw parameters or ABI method call) without the `app_id` parameter
+- `deploy_time_params: TealTemplateParams | None` - optional parameters for [TEAL template substitution](#compilation-and-template-substitution)
+  - `TealTemplateParams` is a dict that replaces `TMPL_{key}` with `value` (strings/Uint8Arrays are properly encoded)
+- `on_schema_break: OnSchemaBreak | str | None` - determines `OnSchemaBreak` if schema requirements increase (values: 'replace', 'fail', 'append')
+- `on_update: OnUpdate | str | None` - determines `OnUpdate` if contract logic changes (values: 'update', 'replace', 'fail', 'append')
+- `existing_deployments: ApplicationLookup | None` - optional pre-fetched app lookup data to skip indexer queries
+- `ignore_cache: bool | None` - if True, bypasses cached deployment metadata
+- Additional fields from `SendParams` - transaction execution parameters
 
 ### Idempotency
 
@@ -236,13 +184,16 @@ In order for a smart contract to opt-in to use this functionality, it must have 
 - `TMPL_UPDATABLE` - Which will be replaced with a `1` if an app should be updatable and `0` if it shouldn't (immutable)
 - `TMPL_DELETABLE` - Which will be replaced with a `1` if an app should be deletable and `0` if it shouldn't (permanent)
 
-If you passed in a TEAL template for the `approval_program` or `clear_state_program` (i.e. a `str` rather than `bytes`) then `deploy` will automatically compile the templates and use the resulting bytecode for the deployment.
+If you passed in a TEAL template for the `approval_program` or `clear_state_program` (i.e. a `str` rather than a `bytes`) then `deploy` will return the `CompiledTeal` of substituting then compiling the TEAL template(s) in the following properties of the return value:
 
-Template substitution is done internally via `AppManager.compile_teal_template(teal_template_code, template_params, deployment_metadata)`, which calls the following in order (all of which can also be invoked directly):
+- `compiled_approval: CompiledTeal | None`
+- `compiled_clear: CompiledTeal | None`
+
+Template substitution is done by executing `algorand.app.compile_teal_template(teal_template_code, template_params, deployment_metadata)`, which in turn calls the following in order and returns the compilation result per above (all of which can also be invoked directly):
 
 - `AppManager.strip_teal_comments(teal_code)` - Strips out any TEAL comments to reduce the payload that is sent to algod and reduce the likelihood of hitting the max payload limit
 - `AppManager.replace_template_variables(teal_template_code, template_values)` - Replaces the template variables by looking for `TMPL_{key}`
-- `AppManager.replace_teal_template_deploy_time_control_params(teal_template_code, params)` - If `params` is provided, it allows for deploy-time immutability and permanence control by replacing `TMPL_UPDATABLE` with `params.get("updatable")` if it's not `None` and replacing `TMPL_DELETABLE` with `params.get("deletable")` if it's not `None`
+- `AppManager.replace_teal_template_deploy_time_control_params(teal_template_code, params)` - If `params` is provided, it allows for deploy-time immutability and permanence control by replacing `TMPL_UPDATABLE` with `params.get("updatable")` if not `None` and replacing `TMPL_DELETABLE` with `params.get("deletable")` if not `None`
 - `algorand.app.compile_teal(teal_code)` - Sends the final TEAL to algod for compilation and returns the result including the source map and caches the compilation result within the `AppManager` instance
 
 #### Making updatable/deletable apps
@@ -281,45 +232,30 @@ With the above code, when deploying your application, you can pass in the follow
 
 ```python
 my_factory.deploy(
-    ... # other deployment parameters
+    ... # other deployment parameters ...
     compilation_params={
-        "updatable": True,  # resulting app will be updatable, and this metadata will be set in the ARC-2 transaction note
-        "deletable": False,  # resulting app will not be deletable, and this metadata will be set in the ARC-2 transaction note
+        "updatable": True, # resulting app will be updatable, and this metadata will be set in the ARC-2 transaction note
+        "deletable": False, # resulting app will not be deletable, and this metadata will be set in the ARC-2 transaction note
     }
 )
 ```
 
 ### Return value
 
-When `deploy` executes it will return a `comprehensive result` object that describes exactly what it did and has comprehensive metadata to describe the end result of the deployed app.
+When `deploy` executes it will return a `AppDeployResult` object that describes exactly what it did and has comprehensive metadata to describe the end result of the deployed app.
 
 The `deploy` call itself may do one of the following (which you can determine by looking at the `operation_performed` field on the return value from the function):
 
-- `OperationPerformed.Create` - The smart contract app was created
-- `OperationPerformed.Update` - The smart contract app was updated
-- `OperationPerformed.Replace` - The smart contract app was deleted and created again (in an atomic transaction)
-- `OperationPerformed.Nothing` - Nothing was done since it was detected the existing smart contract app deployment was up to date
+- `OperationPerformed.CREATE` - The smart contract app was created
+- `OperationPerformed.UPDATE` - The smart contract app was updated
+- `OperationPerformed.REPLACE` - The smart contract app was deleted and created again (in an atomic transaction)
+- `OperationPerformed.NOTHING` - Nothing was done since it was detected the existing smart contract app deployment was up to date
 
-The return type is `AppDeployResult`:
+As well as the `operation_performed` parameter and the [optional compilation result](#compilation-and-template-substitution), the return value will have the `ApplicationMetaData` [fields](#deployment-metadata) present.
 
-```python
-@dataclass(frozen=True)
-class AppDeployResult:
-    app: ApplicationMetaData
-    operation_performed: OperationPerformed
-    create_result: SendAppCreateTransactionResult | None = None
-    update_result: SendAppUpdateTransactionResult | None = None
-    delete_result: SendAppTransactionResult | None = None
-```
+Based on the value of `operation_performed`, there will be other data available in the return value:
 
-Based on the value of `operation_performed`, the corresponding result fields will be populated:
-
-- If `Create` then `create_result` will contain the [`SendAppCreateTransactionResult`](/docs/algokit-utils/python/latest/concepts/building/app/#calling-an-app)
-- If `Update` then `update_result` will contain the [`SendAppUpdateTransactionResult`](/docs/algokit-utils/python/latest/concepts/building/app/#calling-an-app)
-- If `Replace` then both `create_result` and `delete_result` will be populated (the old app is deleted and a new one is created in an atomic transaction)
-- If `Nothing` then all result fields will be `None`
-
-Both `SendAppCreateTransactionResult` and `SendAppUpdateTransactionResult` include compilation results when TEAL templates were compiled during deployment:
-
-- `compiled_approval: CompiledTeal | bytes | None` - The compiled approval program (a `CompiledTeal` object if compiled from a TEAL template, raw `bytes` if bytecode was provided directly, or `None` if not available)
-- `compiled_clear: CompiledTeal | bytes | None` - The compiled clear state program (same semantics as above)
+- If `CREATE`, `UPDATE` or `REPLACE` then it will have the relevant `SendAppTransactionResult` values:
+  - `create_result` for create operations
+  - `update_result` for update operations
+- If `REPLACE` then it will also have `delete_result` to capture the result of deleting the existing app

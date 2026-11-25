@@ -2,12 +2,12 @@
 editUrl: false
 next: false
 prev: false
-title: 'bitLength'
+title: "bitLength"
 ---
 
-> **bitLength**(`a`): [`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
+> **bitLength**(`a`): [`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
 
-Defined in: [op.ts:566](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/op.ts#L566)
+Defined in: [op.ts:708](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/op.ts#L708)
 
 The highest set bit in A. If A is a byte-array, it is interpreted as a big-endian unsigned integer. bitlen of 0 is 0, bitlen of 8 is 4
 bitlen interprets arrays as big-endian integers, unlike setbit/getbit
@@ -16,11 +16,11 @@ bitlen interprets arrays as big-endian integers, unlike setbit/getbit
 
 ### a
 
-[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/) | [`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)
+[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/) | [`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)
 
 ## Returns
 
-[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
+[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
 
 ## See
 

@@ -2,10 +2,10 @@
 editUrl: false
 next: false
 prev: false
-title: 'sizeOf'
+title: "sizeOf"
 ---
 
-> **sizeOf**\<`T`\>(): [`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
+> **sizeOf**\<`T`\>(): [`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
 
 Defined in: [arc4/index.ts:271](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/arc4/index.ts#L271)
 
@@ -23,4 +23,4 @@ Any native or arc4 type with a fixed encoding size.
 
 ## Returns
 
-[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
+[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)

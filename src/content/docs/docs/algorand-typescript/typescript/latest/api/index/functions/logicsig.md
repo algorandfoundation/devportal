@@ -2,12 +2,12 @@
 editUrl: false
 next: false
 prev: false
-title: 'logicsig'
+title: "logicsig"
 ---
 
 > **logicsig**(`options`): \<`T`\>(`logicSig`) => `T`
 
-Defined in: [logic-sig.ts:56](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/logic-sig.ts#L56)
+Defined in: [logic-sig.ts:73](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/logic-sig.ts#L73)
 
 The logicsig decorator can be used to specify additional configuration options for a logic signature
 
@@ -27,7 +27,7 @@ An object containing the configuration options
 
 #### T
 
-`T` _extends_ `ConstructorFor`\<[`LogicSig`](/algorand-typescript/api/index/classes/logicsig/)\>
+`T` *extends* `ConstructorFor`\<[`LogicSig`](/docs/algorand-typescript/typescript/latest/api/index/classes/logicsig/)\>
 
 ### Parameters
 

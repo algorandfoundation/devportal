@@ -2,10 +2,10 @@
 editUrl: false
 next: false
 prev: false
-title: 'encodeArc4'
+title: "encodeArc4"
 ---
 
-> **encodeArc4**\<`T`\>(`value`): [`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)
+> **encodeArc4**\<`T`\>(`value`): [`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)
 
 Defined in: [arc4/index.ts:261](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/arc4/index.ts#L261)
 
@@ -27,4 +27,4 @@ Any native Algorand TypeScript value with a supported ARC4 encoding
 
 ## Returns
 
-[`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)
+[`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)

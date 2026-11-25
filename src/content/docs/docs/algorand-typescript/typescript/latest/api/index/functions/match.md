@@ -2,12 +2,12 @@
 editUrl: false
 next: false
 prev: false
-title: 'match'
+title: "match"
 ---
 
 > **match**\<`T`\>(`subject`, `test`): `boolean`
 
-Defined in: [util.ts:111](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/util.ts#L111)
+Defined in: [util.ts:203](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/util.ts#L203)
 
 Applies all tests in `test` against `subject` and returns a boolean indicating if they all pass
 

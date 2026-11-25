@@ -2,12 +2,12 @@
 editUrl: false
 next: false
 prev: false
-title: 'GTxn'
+title: "GTxn"
 ---
 
 > `const` **GTxn**: `object`
 
-Defined in: [op.ts:1740](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/op.ts#L1740)
+Defined in: [op.ts:1899](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/op.ts#L1899)
 
 Get values for transactions in the current group
 
@@ -15,7 +15,7 @@ Get values for transactions in the current group
 
 ### accounts()
 
-> **accounts**(`a`, `b`): [`Account`](/algorand-typescript/api/index/type-aliases/account/)
+> **accounts**(`a`, `b`): [`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/account/)
 
 Accounts listed in the ApplicationCall transaction
 Min AVM version: 2
@@ -24,36 +24,36 @@ Min AVM version: 2
 
 ##### a
 
-[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
+[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
 
 ##### b
 
-[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
+[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
 
 #### Returns
 
-[`Account`](/algorand-typescript/api/index/type-aliases/account/)
+[`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/account/)
 
 ### amount()
 
-> **amount**(`a`): [`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
+> **amount**(`a`): [`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
 
 microalgos
-Min AVM version: 3
+Min AVM version: 1
 
 #### Parameters
 
 ##### a
 
-[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
+[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
 
 #### Returns
 
-[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
+[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
 
 ### applicationArgs()
 
-> **applicationArgs**(`a`, `b`): [`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)
+> **applicationArgs**(`a`, `b`): [`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)
 
 Arguments passed to the application in the ApplicationCall transaction
 Min AVM version: 2
@@ -62,19 +62,19 @@ Min AVM version: 2
 
 ##### a
 
-[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
+[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
 
 ##### b
 
-[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
+[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
 
 #### Returns
 
-[`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)
+[`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)
 
 ### applicationId()
 
-> **applicationId**(`a`): [`Application`](/algorand-typescript/api/index/type-aliases/application/)
+> **applicationId**(`a`): [`Application`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/application/)
 
 ApplicationID from ApplicationCall transaction
 Min AVM version: 2
@@ -83,15 +83,15 @@ Min AVM version: 2
 
 ##### a
 
-[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
+[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
 
 #### Returns
 
-[`Application`](/algorand-typescript/api/index/type-aliases/application/)
+[`Application`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/application/)
 
 ### applications()
 
-> **applications**(`a`, `b`): [`Application`](/algorand-typescript/api/index/type-aliases/application/)
+> **applications**(`a`, `b`): [`Application`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/application/)
 
 Foreign Apps listed in the ApplicationCall transaction
 Min AVM version: 3
@@ -100,19 +100,19 @@ Min AVM version: 3
 
 ##### a
 
-[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
+[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
 
 ##### b
 
-[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
+[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
 
 #### Returns
 
-[`Application`](/algorand-typescript/api/index/type-aliases/application/)
+[`Application`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/application/)
 
 ### approvalProgram()
 
-> **approvalProgram**(`a`): [`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)
+> **approvalProgram**(`a`): [`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)
 
 Approval program
 Min AVM version: 2
@@ -121,15 +121,15 @@ Min AVM version: 2
 
 ##### a
 
-[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
+[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
 
 #### Returns
 
-[`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)
+[`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)
 
 ### approvalProgramPages()
 
-> **approvalProgramPages**(`a`, `b`): [`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)
+> **approvalProgramPages**(`a`, `b`): [`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)
 
 Approval Program as an array of pages
 Min AVM version: 7
@@ -138,70 +138,70 @@ Min AVM version: 7
 
 ##### a
 
-[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
+[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
 
 ##### b
 
-[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
+[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
 
 #### Returns
 
-[`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)
+[`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)
 
 ### assetAmount()
 
-> **assetAmount**(`a`): [`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
+> **assetAmount**(`a`): [`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
 
 value in Asset's units
-Min AVM version: 3
+Min AVM version: 1
 
 #### Parameters
 
 ##### a
 
-[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
+[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
 
 #### Returns
 
-[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
+[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
 
 ### assetCloseTo()
 
-> **assetCloseTo**(`a`): [`Account`](/algorand-typescript/api/index/type-aliases/account/)
+> **assetCloseTo**(`a`): [`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/account/)
 
 32 byte address
-Min AVM version: 3
+Min AVM version: 1
 
 #### Parameters
 
 ##### a
 
-[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
+[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
 
 #### Returns
 
-[`Account`](/algorand-typescript/api/index/type-aliases/account/)
+[`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/account/)
 
 ### assetReceiver()
 
-> **assetReceiver**(`a`): [`Account`](/algorand-typescript/api/index/type-aliases/account/)
+> **assetReceiver**(`a`): [`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/account/)
 
 32 byte address
-Min AVM version: 3
+Min AVM version: 1
 
 #### Parameters
 
 ##### a
 
-[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
+[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
 
 #### Returns
 
-[`Account`](/algorand-typescript/api/index/type-aliases/account/)
+[`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/account/)
 
 ### assets()
 
-> **assets**(`a`, `b`): [`Asset`](/algorand-typescript/api/index/type-aliases/asset/)
+> **assets**(`a`, `b`): [`Asset`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/asset/)
 
 Foreign Assets listed in the ApplicationCall transaction
 Min AVM version: 3
@@ -210,36 +210,36 @@ Min AVM version: 3
 
 ##### a
 
-[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
+[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
 
 ##### b
 
-[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
+[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
 
 #### Returns
 
-[`Asset`](/algorand-typescript/api/index/type-aliases/asset/)
+[`Asset`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/asset/)
 
 ### assetSender()
 
-> **assetSender**(`a`): [`Account`](/algorand-typescript/api/index/type-aliases/account/)
+> **assetSender**(`a`): [`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/account/)
 
 32 byte address. Source of assets if Sender is the Asset's Clawback address.
-Min AVM version: 3
+Min AVM version: 1
 
 #### Parameters
 
 ##### a
 
-[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
+[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
 
 #### Returns
 
-[`Account`](/algorand-typescript/api/index/type-aliases/account/)
+[`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/account/)
 
 ### clearStateProgram()
 
-> **clearStateProgram**(`a`): [`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)
+> **clearStateProgram**(`a`): [`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)
 
 Clear state program
 Min AVM version: 2
@@ -248,15 +248,15 @@ Min AVM version: 2
 
 ##### a
 
-[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
+[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
 
 #### Returns
 
-[`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)
+[`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)
 
 ### clearStateProgramPages()
 
-> **clearStateProgramPages**(`a`, `b`): [`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)
+> **clearStateProgramPages**(`a`, `b`): [`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)
 
 ClearState Program as an array of pages
 Min AVM version: 7
@@ -265,36 +265,36 @@ Min AVM version: 7
 
 ##### a
 
-[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
+[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
 
 ##### b
 
-[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
+[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
 
 #### Returns
 
-[`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)
+[`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)
 
 ### closeRemainderTo()
 
-> **closeRemainderTo**(`a`): [`Account`](/algorand-typescript/api/index/type-aliases/account/)
+> **closeRemainderTo**(`a`): [`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/account/)
 
 32 byte address
-Min AVM version: 3
+Min AVM version: 1
 
 #### Parameters
 
 ##### a
 
-[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
+[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
 
 #### Returns
 
-[`Account`](/algorand-typescript/api/index/type-aliases/account/)
+[`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/account/)
 
 ### configAsset()
 
-> **configAsset**(`a`): [`Asset`](/algorand-typescript/api/index/type-aliases/asset/)
+> **configAsset**(`a`): [`Asset`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/asset/)
 
 Asset ID in asset config transaction
 Min AVM version: 2
@@ -303,15 +303,15 @@ Min AVM version: 2
 
 ##### a
 
-[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
+[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
 
 #### Returns
 
-[`Asset`](/algorand-typescript/api/index/type-aliases/asset/)
+[`Asset`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/asset/)
 
 ### configAssetClawback()
 
-> **configAssetClawback**(`a`): [`Account`](/algorand-typescript/api/index/type-aliases/account/)
+> **configAssetClawback**(`a`): [`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/account/)
 
 32 byte address
 Min AVM version: 2
@@ -320,15 +320,15 @@ Min AVM version: 2
 
 ##### a
 
-[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
+[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
 
 #### Returns
 
-[`Account`](/algorand-typescript/api/index/type-aliases/account/)
+[`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/account/)
 
 ### configAssetDecimals()
 
-> **configAssetDecimals**(`a`): [`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
+> **configAssetDecimals**(`a`): [`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
 
 Number of digits to display after the decimal place when displaying the asset
 Min AVM version: 2
@@ -337,11 +337,11 @@ Min AVM version: 2
 
 ##### a
 
-[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
+[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
 
 #### Returns
 
-[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
+[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
 
 ### configAssetDefaultFrozen()
 
@@ -354,7 +354,7 @@ Min AVM version: 2
 
 ##### a
 
-[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
+[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
 
 #### Returns
 
@@ -362,7 +362,7 @@ Min AVM version: 2
 
 ### configAssetFreeze()
 
-> **configAssetFreeze**(`a`): [`Account`](/algorand-typescript/api/index/type-aliases/account/)
+> **configAssetFreeze**(`a`): [`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/account/)
 
 32 byte address
 Min AVM version: 2
@@ -371,15 +371,15 @@ Min AVM version: 2
 
 ##### a
 
-[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
+[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
 
 #### Returns
 
-[`Account`](/algorand-typescript/api/index/type-aliases/account/)
+[`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/account/)
 
 ### configAssetManager()
 
-> **configAssetManager**(`a`): [`Account`](/algorand-typescript/api/index/type-aliases/account/)
+> **configAssetManager**(`a`): [`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/account/)
 
 32 byte address
 Min AVM version: 2
@@ -388,15 +388,15 @@ Min AVM version: 2
 
 ##### a
 
-[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
+[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
 
 #### Returns
 
-[`Account`](/algorand-typescript/api/index/type-aliases/account/)
+[`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/account/)
 
 ### configAssetMetadataHash()
 
-> **configAssetMetadataHash**(`a`): [`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)\<`32`\>
+> **configAssetMetadataHash**(`a`): [`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)\<`32`\>
 
 32 byte commitment to unspecified asset metadata
 Min AVM version: 2
@@ -405,15 +405,15 @@ Min AVM version: 2
 
 ##### a
 
-[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
+[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
 
 #### Returns
 
-[`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)\<`32`\>
+[`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)\<`32`\>
 
 ### configAssetName()
 
-> **configAssetName**(`a`): [`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)
+> **configAssetName**(`a`): [`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)
 
 The asset name
 Min AVM version: 2
@@ -422,15 +422,15 @@ Min AVM version: 2
 
 ##### a
 
-[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
+[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
 
 #### Returns
 
-[`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)
+[`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)
 
 ### configAssetReserve()
 
-> **configAssetReserve**(`a`): [`Account`](/algorand-typescript/api/index/type-aliases/account/)
+> **configAssetReserve**(`a`): [`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/account/)
 
 32 byte address
 Min AVM version: 2
@@ -439,15 +439,15 @@ Min AVM version: 2
 
 ##### a
 
-[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
+[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
 
 #### Returns
 
-[`Account`](/algorand-typescript/api/index/type-aliases/account/)
+[`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/account/)
 
 ### configAssetTotal()
 
-> **configAssetTotal**(`a`): [`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
+> **configAssetTotal**(`a`): [`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
 
 Total number of units of this asset created
 Min AVM version: 2
@@ -456,15 +456,15 @@ Min AVM version: 2
 
 ##### a
 
-[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
+[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
 
 #### Returns
 
-[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
+[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
 
 ### configAssetUnitName()
 
-> **configAssetUnitName**(`a`): [`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)
+> **configAssetUnitName**(`a`): [`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)
 
 Unit name of the asset
 Min AVM version: 2
@@ -473,15 +473,15 @@ Min AVM version: 2
 
 ##### a
 
-[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
+[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
 
 #### Returns
 
-[`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)
+[`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)
 
 ### configAssetUrl()
 
-> **configAssetUrl**(`a`): [`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)
+> **configAssetUrl**(`a`): [`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)
 
 URL
 Min AVM version: 2
@@ -490,15 +490,15 @@ Min AVM version: 2
 
 ##### a
 
-[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
+[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
 
 #### Returns
 
-[`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)
+[`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)
 
 ### createdApplicationId()
 
-> **createdApplicationId**(`a`): [`Application`](/algorand-typescript/api/index/type-aliases/application/)
+> **createdApplicationId**(`a`): [`Application`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/application/)
 
 ApplicationID allocated by the creation of an application (only with `itxn` in v5). Application mode only
 Min AVM version: 5
@@ -507,15 +507,15 @@ Min AVM version: 5
 
 ##### a
 
-[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
+[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
 
 #### Returns
 
-[`Application`](/algorand-typescript/api/index/type-aliases/application/)
+[`Application`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/application/)
 
 ### createdAssetId()
 
-> **createdAssetId**(`a`): [`Asset`](/algorand-typescript/api/index/type-aliases/asset/)
+> **createdAssetId**(`a`): [`Asset`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/asset/)
 
 Asset ID allocated by the creation of an ASA (only with `itxn` in v5). Application mode only
 Min AVM version: 5
@@ -524,15 +524,15 @@ Min AVM version: 5
 
 ##### a
 
-[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
+[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
 
 #### Returns
 
-[`Asset`](/algorand-typescript/api/index/type-aliases/asset/)
+[`Asset`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/asset/)
 
 ### extraProgramPages()
 
-> **extraProgramPages**(`a`): [`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
+> **extraProgramPages**(`a`): [`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
 
 Number of additional pages for each of the application's approval and clear state programs. An ExtraProgramPages of 1 means 2048 more total bytes, or 1024 for each program.
 Min AVM version: 4
@@ -541,49 +541,49 @@ Min AVM version: 4
 
 ##### a
 
-[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
+[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
 
 #### Returns
 
-[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
+[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
 
 ### fee()
 
-> **fee**(`a`): [`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
+> **fee**(`a`): [`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
 
 microalgos
-Min AVM version: 3
+Min AVM version: 1
 
 #### Parameters
 
 ##### a
 
-[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
+[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
 
 #### Returns
 
-[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
+[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
 
 ### firstValid()
 
-> **firstValid**(`a`): [`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
+> **firstValid**(`a`): [`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
 
 round number
-Min AVM version: 3
+Min AVM version: 1
 
 #### Parameters
 
 ##### a
 
-[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
+[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
 
 #### Returns
 
-[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
+[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
 
 ### firstValidTime()
 
-> **firstValidTime**(`a`): [`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
+> **firstValidTime**(`a`): [`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
 
 UNIX timestamp of block before txn.FirstValid. Fails if negative
 Min AVM version: 7
@@ -592,15 +592,15 @@ Min AVM version: 7
 
 ##### a
 
-[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
+[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
 
 #### Returns
 
-[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
+[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
 
 ### freezeAsset()
 
-> **freezeAsset**(`a`): [`Asset`](/algorand-typescript/api/index/type-aliases/asset/)
+> **freezeAsset**(`a`): [`Asset`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/asset/)
 
 Asset ID being frozen or un-frozen
 Min AVM version: 2
@@ -609,15 +609,15 @@ Min AVM version: 2
 
 ##### a
 
-[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
+[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
 
 #### Returns
 
-[`Asset`](/algorand-typescript/api/index/type-aliases/asset/)
+[`Asset`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/asset/)
 
 ### freezeAssetAccount()
 
-> **freezeAssetAccount**(`a`): [`Account`](/algorand-typescript/api/index/type-aliases/account/)
+> **freezeAssetAccount**(`a`): [`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/account/)
 
 32 byte address of the account whose asset slot is being frozen or un-frozen
 Min AVM version: 2
@@ -626,11 +626,11 @@ Min AVM version: 2
 
 ##### a
 
-[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
+[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
 
 #### Returns
 
-[`Account`](/algorand-typescript/api/index/type-aliases/account/)
+[`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/account/)
 
 ### freezeAssetFrozen()
 
@@ -643,7 +643,7 @@ Min AVM version: 2
 
 ##### a
 
-[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
+[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
 
 #### Returns
 
@@ -651,7 +651,7 @@ Min AVM version: 2
 
 ### globalNumByteSlice()
 
-> **globalNumByteSlice**(`a`): [`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
+> **globalNumByteSlice**(`a`): [`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
 
 Number of global state byteslices in ApplicationCall
 Min AVM version: 3
@@ -660,15 +660,15 @@ Min AVM version: 3
 
 ##### a
 
-[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
+[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
 
 #### Returns
 
-[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
+[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
 
 ### globalNumUint()
 
-> **globalNumUint**(`a`): [`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
+> **globalNumUint**(`a`): [`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
 
 Number of global state integers in ApplicationCall
 Min AVM version: 3
@@ -677,32 +677,32 @@ Min AVM version: 3
 
 ##### a
 
-[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
+[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
 
 #### Returns
 
-[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
+[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
 
 ### groupIndex()
 
-> **groupIndex**(`a`): [`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
+> **groupIndex**(`a`): [`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
 
 Position of this transaction within an atomic transaction group. A stand-alone transaction is implicitly element 0 in a group of 1
-Min AVM version: 3
+Min AVM version: 1
 
 #### Parameters
 
 ##### a
 
-[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
+[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
 
 #### Returns
 
-[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
+[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
 
 ### lastLog()
 
-> **lastLog**(`a`): [`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)
+> **lastLog**(`a`): [`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)
 
 The last message emitted. Empty bytes if none were emitted. Application mode only
 Min AVM version: 6
@@ -711,49 +711,49 @@ Min AVM version: 6
 
 ##### a
 
-[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
+[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
 
 #### Returns
 
-[`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)
+[`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)
 
 ### lastValid()
 
-> **lastValid**(`a`): [`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
+> **lastValid**(`a`): [`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
 
 round number
-Min AVM version: 3
+Min AVM version: 1
 
 #### Parameters
 
 ##### a
 
-[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
+[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
 
 #### Returns
 
-[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
+[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
 
 ### lease()
 
-> **lease**(`a`): [`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)\<`32`\>
+> **lease**(`a`): [`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)\<`32`\>
 
 32 byte lease value
-Min AVM version: 3
+Min AVM version: 1
 
 #### Parameters
 
 ##### a
 
-[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
+[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
 
 #### Returns
 
-[`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)\<`32`\>
+[`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)\<`32`\>
 
 ### localNumByteSlice()
 
-> **localNumByteSlice**(`a`): [`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
+> **localNumByteSlice**(`a`): [`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
 
 Number of local state byteslices in ApplicationCall
 Min AVM version: 3
@@ -762,15 +762,15 @@ Min AVM version: 3
 
 ##### a
 
-[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
+[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
 
 #### Returns
 
-[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
+[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
 
 ### localNumUint()
 
-> **localNumUint**(`a`): [`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
+> **localNumUint**(`a`): [`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
 
 Number of local state integers in ApplicationCall
 Min AVM version: 3
@@ -779,15 +779,15 @@ Min AVM version: 3
 
 ##### a
 
-[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
+[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
 
 #### Returns
 
-[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
+[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
 
 ### logs()
 
-> **logs**(`a`, `b`): [`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)
+> **logs**(`a`, `b`): [`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)
 
 Log messages emitted by an application call (only with `itxn` in v5). Application mode only
 Min AVM version: 5
@@ -796,15 +796,15 @@ Min AVM version: 5
 
 ##### a
 
-[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
+[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
 
 ##### b
 
-[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
+[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
 
 #### Returns
 
-[`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)
+[`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)
 
 ### nonparticipation()
 
@@ -817,7 +817,7 @@ Min AVM version: 5
 
 ##### a
 
-[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
+[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
 
 #### Returns
 
@@ -825,24 +825,24 @@ Min AVM version: 5
 
 ### note()
 
-> **note**(`a`): [`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)
+> **note**(`a`): [`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)
 
 Any data up to 1024 bytes
-Min AVM version: 3
+Min AVM version: 1
 
 #### Parameters
 
 ##### a
 
-[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
+[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
 
 #### Returns
 
-[`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)
+[`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)
 
 ### numAccounts()
 
-> **numAccounts**(`a`): [`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
+> **numAccounts**(`a`): [`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
 
 Number of Accounts
 Min AVM version: 2
@@ -851,15 +851,15 @@ Min AVM version: 2
 
 ##### a
 
-[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
+[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
 
 #### Returns
 
-[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
+[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
 
 ### numAppArgs()
 
-> **numAppArgs**(`a`): [`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
+> **numAppArgs**(`a`): [`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
 
 Number of ApplicationArgs
 Min AVM version: 2
@@ -868,15 +868,15 @@ Min AVM version: 2
 
 ##### a
 
-[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
+[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
 
 #### Returns
 
-[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
+[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
 
 ### numApplications()
 
-> **numApplications**(`a`): [`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
+> **numApplications**(`a`): [`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
 
 Number of Applications
 Min AVM version: 3
@@ -885,15 +885,15 @@ Min AVM version: 3
 
 ##### a
 
-[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
+[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
 
 #### Returns
 
-[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
+[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
 
 ### numApprovalProgramPages()
 
-> **numApprovalProgramPages**(`a`): [`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
+> **numApprovalProgramPages**(`a`): [`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
 
 Number of Approval Program pages
 Min AVM version: 7
@@ -902,15 +902,15 @@ Min AVM version: 7
 
 ##### a
 
-[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
+[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
 
 #### Returns
 
-[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
+[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
 
 ### numAssets()
 
-> **numAssets**(`a`): [`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
+> **numAssets**(`a`): [`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
 
 Number of Assets
 Min AVM version: 3
@@ -919,15 +919,15 @@ Min AVM version: 3
 
 ##### a
 
-[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
+[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
 
 #### Returns
 
-[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
+[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
 
 ### numClearStateProgramPages()
 
-> **numClearStateProgramPages**(`a`): [`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
+> **numClearStateProgramPages**(`a`): [`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
 
 Number of ClearState Program pages
 Min AVM version: 7
@@ -936,15 +936,15 @@ Min AVM version: 7
 
 ##### a
 
-[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
+[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
 
 #### Returns
 
-[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
+[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
 
 ### numLogs()
 
-> **numLogs**(`a`): [`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
+> **numLogs**(`a`): [`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
 
 Number of Logs (only with `itxn` in v5). Application mode only
 Min AVM version: 5
@@ -953,15 +953,15 @@ Min AVM version: 5
 
 ##### a
 
-[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
+[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
 
 #### Returns
 
-[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
+[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
 
 ### onCompletion()
 
-> **onCompletion**(`a`): [`OnCompleteAction`](/algorand-typescript/api/index/enumerations/oncompleteaction/)
+> **onCompletion**(`a`): [`OnCompleteAction`](/docs/algorand-typescript/typescript/latest/api/index/enumerations/oncompleteaction/)
 
 ApplicationCall transaction on completion action
 Min AVM version: 2
@@ -970,32 +970,32 @@ Min AVM version: 2
 
 ##### a
 
-[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
+[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
 
 #### Returns
 
-[`OnCompleteAction`](/algorand-typescript/api/index/enumerations/oncompleteaction/)
+[`OnCompleteAction`](/docs/algorand-typescript/typescript/latest/api/index/enumerations/oncompleteaction/)
 
 ### receiver()
 
-> **receiver**(`a`): [`Account`](/algorand-typescript/api/index/type-aliases/account/)
+> **receiver**(`a`): [`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/account/)
 
 32 byte address
-Min AVM version: 3
+Min AVM version: 1
 
 #### Parameters
 
 ##### a
 
-[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
+[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
 
 #### Returns
 
-[`Account`](/algorand-typescript/api/index/type-aliases/account/)
+[`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/account/)
 
 ### rejectVersion()
 
-> **rejectVersion**(`a`): [`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
+> **rejectVersion**(`a`): [`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
 
 Application version for which the txn must reject
 Min AVM version: 12
@@ -1004,15 +1004,15 @@ Min AVM version: 12
 
 ##### a
 
-[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
+[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
 
 #### Returns
 
-[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
+[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
 
 ### rekeyTo()
 
-> **rekeyTo**(`a`): [`Account`](/algorand-typescript/api/index/type-aliases/account/)
+> **rekeyTo**(`a`): [`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/account/)
 
 32 byte Sender's new AuthAddr
 Min AVM version: 2
@@ -1021,49 +1021,49 @@ Min AVM version: 2
 
 ##### a
 
-[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
+[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
 
 #### Returns
 
-[`Account`](/algorand-typescript/api/index/type-aliases/account/)
+[`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/account/)
 
 ### selectionPk()
 
-> **selectionPk**(`a`): [`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)\<`32`\>
+> **selectionPk**(`a`): [`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)\<`32`\>
 
 32 byte address
-Min AVM version: 3
+Min AVM version: 1
 
 #### Parameters
 
 ##### a
 
-[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
+[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
 
 #### Returns
 
-[`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)\<`32`\>
+[`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)\<`32`\>
 
 ### sender()
 
-> **sender**(`a`): [`Account`](/algorand-typescript/api/index/type-aliases/account/)
+> **sender**(`a`): [`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/account/)
 
 32 byte address
-Min AVM version: 3
+Min AVM version: 1
 
 #### Parameters
 
 ##### a
 
-[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
+[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
 
 #### Returns
 
-[`Account`](/algorand-typescript/api/index/type-aliases/account/)
+[`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/account/)
 
 ### stateProofPk()
 
-> **stateProofPk**(`a`): [`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)\<`64`\>
+> **stateProofPk**(`a`): [`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)\<`64`\>
 
 State proof public key
 Min AVM version: 6
@@ -1072,144 +1072,144 @@ Min AVM version: 6
 
 ##### a
 
-[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
+[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
 
 #### Returns
 
-[`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)\<`64`\>
+[`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)\<`64`\>
 
 ### txId()
 
-> **txId**(`a`): [`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)\<`32`\>
+> **txId**(`a`): [`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)\<`32`\>
 
 The computed ID for this transaction. 32 bytes.
-Min AVM version: 3
+Min AVM version: 1
 
 #### Parameters
 
 ##### a
 
-[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
+[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
 
 #### Returns
 
-[`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)\<`32`\>
+[`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)\<`32`\>
 
 ### type()
 
-> **type**(`a`): [`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)
+> **type**(`a`): [`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)
 
 Transaction type as bytes
-Min AVM version: 3
+Min AVM version: 1
 
 #### Parameters
 
 ##### a
 
-[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
+[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
 
 #### Returns
 
-[`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)
+[`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)
 
 ### typeEnum()
 
-> **typeEnum**(`a`): [`TransactionType`](/algorand-typescript/api/index/enumerations/transactiontype/)
+> **typeEnum**(`a`): [`TransactionType`](/docs/algorand-typescript/typescript/latest/api/index/enumerations/transactiontype/)
 
 Transaction type as integer
-Min AVM version: 3
+Min AVM version: 1
 
 #### Parameters
 
 ##### a
 
-[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
+[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
 
 #### Returns
 
-[`TransactionType`](/algorand-typescript/api/index/enumerations/transactiontype/)
+[`TransactionType`](/docs/algorand-typescript/typescript/latest/api/index/enumerations/transactiontype/)
 
 ### voteFirst()
 
-> **voteFirst**(`a`): [`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
+> **voteFirst**(`a`): [`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
 
 The first round that the participation key is valid.
-Min AVM version: 3
+Min AVM version: 1
 
 #### Parameters
 
 ##### a
 
-[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
+[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
 
 #### Returns
 
-[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
+[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
 
 ### voteKeyDilution()
 
-> **voteKeyDilution**(`a`): [`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
+> **voteKeyDilution**(`a`): [`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
 
 Dilution for the 2-level participation key
-Min AVM version: 3
+Min AVM version: 1
 
 #### Parameters
 
 ##### a
 
-[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
+[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
 
 #### Returns
 
-[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
+[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
 
 ### voteLast()
 
-> **voteLast**(`a`): [`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
+> **voteLast**(`a`): [`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
 
 The last round that the participation key is valid.
-Min AVM version: 3
+Min AVM version: 1
 
 #### Parameters
 
 ##### a
 
-[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
+[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
 
 #### Returns
 
-[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
+[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
 
 ### votePk()
 
-> **votePk**(`a`): [`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)\<`32`\>
+> **votePk**(`a`): [`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)\<`32`\>
 
 32 byte address
-Min AVM version: 3
+Min AVM version: 1
 
 #### Parameters
 
 ##### a
 
-[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
+[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
 
 #### Returns
 
-[`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)\<`32`\>
+[`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)\<`32`\>
 
 ### xferAsset()
 
-> **xferAsset**(`a`): [`Asset`](/algorand-typescript/api/index/type-aliases/asset/)
+> **xferAsset**(`a`): [`Asset`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/asset/)
 
 Asset ID
-Min AVM version: 3
+Min AVM version: 1
 
 #### Parameters
 
 ##### a
 
-[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
+[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
 
 #### Returns
 
-[`Asset`](/algorand-typescript/api/index/type-aliases/asset/)
+[`Asset`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/asset/)

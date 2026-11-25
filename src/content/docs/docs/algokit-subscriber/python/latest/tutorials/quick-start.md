@@ -14,41 +14,44 @@ pip install algokit-subscriber
 ## Quick start
 
 ```python
-import algokit_subscriber as sub
-from algokit_utils import AlgorandClient
+from algokit_subscriber import AlgorandSubscriber
+from algokit_utils import get_algod_client, get_algonode_config
 
-algorand = AlgorandClient.testnet()
+# Create an Algod client (testnet used for demo purposes)
+algod_client = get_algod_client(get_algonode_config("testnet", "algod", ""))
 
 # Create subscriber
-subscriber = sub.AlgorandSubscriber(
-    config=sub.AlgorandSubscriberConfig(
-        filters=[
-            sub.SubscriberConfigFilter(
-                name="filter1",
-                filter=sub.TransactionFilter(
-                    type="pay",
-                    sender="ABC...",
-                ),
-            ),
+subscriber = AlgorandSubscriber(
+    config={
+        "filters": [
+            {
+                "name": "filter1",
+                "filter": {
+                    "type": "pay",
+                    "sender": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAY5HFKQ",
+                },
+            },
         ],
-        watermark_persistence=sub.in_memory_watermark(),
-        sync_behaviour="skip-sync-newest",
-    ),
-    algod_client=algorand.client.algod,
+        "watermark_persistence": {"get": lambda: 0, "set": lambda x: None},
+        "sync_behaviour": "skip-sync-newest",
+        "max_rounds_to_sync": 100,
+    },
+    algod_client=algod_client,
 )
 
 # Set up subscription(s)
-subscriber.on("filter1", lambda transaction, _: ...)
+subscriber.on("filter1", lambda transaction, _: print(f"Received transaction: {transaction['id']}"))
 # ...
 
 # Set up error handling
-subscriber.on_error(lambda error, _: ...)
+subscriber.on_error(lambda error, _: print(f"Error occurred: {error}"))
 
 # Either: Start the subscriber (if in long-running process)
-subscriber.start()
+# subscriber.start()
 
 # OR: Poll the subscriber (if in cron job / periodic lambda)
-subscriber.poll_once()
+result = subscriber.poll_once()
+print(f"Polled {len(result['subscribed_transactions'])} transactions")
 ```
 
 ## Entry points

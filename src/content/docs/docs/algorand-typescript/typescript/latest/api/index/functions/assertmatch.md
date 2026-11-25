@@ -2,12 +2,12 @@
 editUrl: false
 next: false
 prev: false
-title: 'assertMatch'
+title: "assertMatch"
 ---
 
 > **assertMatch**\<`T`\>(`subject`, `test`, `message?`): `void`
 
-Defined in: [util.ts:123](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/util.ts#L123)
+Defined in: [util.ts:215](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/util.ts#L215)
 
 Applies all tests in `test` against `subject` and asserts they all pass
 

@@ -2,20 +2,20 @@
 editUrl: false
 next: false
 prev: false
-title: 'AssetConfigComposeFields'
+title: "AssetConfigComposeFields"
 ---
 
 Defined in: [itxn-compose.ts:13](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/itxn-compose.ts#L13)
 
 ## Extends
 
-- [`AssetConfigFields`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/assetconfigfields/)
+- [`AssetConfigFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/assetconfigfields/)
 
 ## Properties
 
 ### assetName?
 
-> `optional` **assetName**: `string` \| [`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)
+> `optional` **assetName**: `string` \| [`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)
 
 Defined in: [itxn.ts:745](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/itxn.ts#L745)
 
@@ -23,13 +23,13 @@ The asset name
 
 #### Inherited from
 
-[`AssetConfigFields`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/assetconfigfields/).[`assetName`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/assetconfigfields/#assetname)
+[`AssetConfigFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/assetconfigfields/).[`assetName`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/assetconfigfields/#assetname)
 
----
+***
 
 ### clawback?
 
-> `optional` **clawback**: [`bytes`](/algorand-typescript/api/index/type-aliases/bytes/) \| [`Account`](/algorand-typescript/api/index/type-aliases/account/)
+> `optional` **clawback**: [`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/) \| [`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/account/)
 
 Defined in: [itxn.ts:769](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/itxn.ts#L769)
 
@@ -37,13 +37,13 @@ Defined in: [itxn.ts:769](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 #### Inherited from
 
-[`AssetConfigFields`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/assetconfigfields/).[`clawback`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/assetconfigfields/#clawback)
+[`AssetConfigFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/assetconfigfields/).[`clawback`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/assetconfigfields/#clawback)
 
----
+***
 
 ### configAsset?
 
-> `optional` **configAsset**: [`uint64`](/algorand-typescript/api/index/type-aliases/uint64/) \| [`Asset`](/algorand-typescript/api/index/type-aliases/asset/)
+> `optional` **configAsset**: [`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/) \| [`Asset`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/asset/)
 
 Defined in: [itxn.ts:725](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/itxn.ts#L725)
 
@@ -51,13 +51,13 @@ Asset ID in asset config transaction
 
 #### Inherited from
 
-[`AssetConfigFields`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/assetconfigfields/).[`configAsset`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/assetconfigfields/#configasset)
+[`AssetConfigFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/assetconfigfields/).[`configAsset`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/assetconfigfields/#configasset)
 
----
+***
 
 ### decimals?
 
-> `optional` **decimals**: [`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
+> `optional` **decimals**: [`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
 
 Defined in: [itxn.ts:733](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/itxn.ts#L733)
 
@@ -65,9 +65,9 @@ Number of digits to display after the decimal place when displaying the asset
 
 #### Inherited from
 
-[`AssetConfigFields`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/assetconfigfields/).[`decimals`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/assetconfigfields/#decimals)
+[`AssetConfigFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/assetconfigfields/).[`decimals`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/assetconfigfields/#decimals)
 
----
+***
 
 ### defaultFrozen?
 
@@ -79,13 +79,13 @@ Whether the asset's slots are frozen by default or not, 0 or 1
 
 #### Inherited from
 
-[`AssetConfigFields`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/assetconfigfields/).[`defaultFrozen`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/assetconfigfields/#defaultfrozen)
+[`AssetConfigFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/assetconfigfields/).[`defaultFrozen`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/assetconfigfields/#defaultfrozen)
 
----
+***
 
 ### fee?
 
-> `optional` **fee**: [`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
+> `optional` **fee**: [`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
 
 Defined in: [itxn.ts:697](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/itxn.ts#L697)
 
@@ -93,13 +93,13 @@ microalgos
 
 #### Inherited from
 
-[`AssetConfigFields`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/assetconfigfields/).[`fee`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/assetconfigfields/#fee)
+[`AssetConfigFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/assetconfigfields/).[`fee`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/assetconfigfields/#fee)
 
----
+***
 
 ### firstValid?
 
-> `optional` **firstValid**: [`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
+> `optional` **firstValid**: [`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
 
 Defined in: [itxn.ts:701](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/itxn.ts#L701)
 
@@ -107,13 +107,13 @@ round number
 
 #### Inherited from
 
-[`AssetConfigFields`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/assetconfigfields/).[`firstValid`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/assetconfigfields/#firstvalid)
+[`AssetConfigFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/assetconfigfields/).[`firstValid`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/assetconfigfields/#firstvalid)
 
----
+***
 
 ### firstValidTime?
 
-> `optional` **firstValidTime**: [`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
+> `optional` **firstValidTime**: [`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
 
 Defined in: [itxn.ts:705](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/itxn.ts#L705)
 
@@ -121,13 +121,13 @@ UNIX timestamp of block before txn.FirstValid. Fails if negative
 
 #### Inherited from
 
-[`AssetConfigFields`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/assetconfigfields/).[`firstValidTime`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/assetconfigfields/#firstvalidtime)
+[`AssetConfigFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/assetconfigfields/).[`firstValidTime`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/assetconfigfields/#firstvalidtime)
 
----
+***
 
 ### freeze?
 
-> `optional` **freeze**: [`bytes`](/algorand-typescript/api/index/type-aliases/bytes/) \| [`Account`](/algorand-typescript/api/index/type-aliases/account/)
+> `optional` **freeze**: [`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/) \| [`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/account/)
 
 Defined in: [itxn.ts:765](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/itxn.ts#L765)
 
@@ -135,13 +135,13 @@ Defined in: [itxn.ts:765](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 #### Inherited from
 
-[`AssetConfigFields`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/assetconfigfields/).[`freeze`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/assetconfigfields/#freeze)
+[`AssetConfigFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/assetconfigfields/).[`freeze`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/assetconfigfields/#freeze)
 
----
+***
 
 ### lastValid?
 
-> `optional` **lastValid**: [`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
+> `optional` **lastValid**: [`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
 
 Defined in: [itxn.ts:709](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/itxn.ts#L709)
 
@@ -149,13 +149,13 @@ round number
 
 #### Inherited from
 
-[`AssetConfigFields`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/assetconfigfields/).[`lastValid`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/assetconfigfields/#lastvalid)
+[`AssetConfigFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/assetconfigfields/).[`lastValid`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/assetconfigfields/#lastvalid)
 
----
+***
 
 ### lease?
 
-> `optional` **lease**: [`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)\<`32`\>
+> `optional` **lease**: [`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)\<`32`\>
 
 Defined in: [itxn.ts:717](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/itxn.ts#L717)
 
@@ -163,13 +163,13 @@ Defined in: [itxn.ts:717](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 #### Inherited from
 
-[`AssetConfigFields`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/assetconfigfields/).[`lease`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/assetconfigfields/#lease)
+[`AssetConfigFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/assetconfigfields/).[`lease`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/assetconfigfields/#lease)
 
----
+***
 
 ### manager?
 
-> `optional` **manager**: [`bytes`](/algorand-typescript/api/index/type-aliases/bytes/) \| [`Account`](/algorand-typescript/api/index/type-aliases/account/)
+> `optional` **manager**: [`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/) \| [`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/account/)
 
 Defined in: [itxn.ts:757](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/itxn.ts#L757)
 
@@ -177,13 +177,13 @@ Defined in: [itxn.ts:757](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 #### Inherited from
 
-[`AssetConfigFields`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/assetconfigfields/).[`manager`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/assetconfigfields/#manager)
+[`AssetConfigFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/assetconfigfields/).[`manager`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/assetconfigfields/#manager)
 
----
+***
 
 ### metadataHash?
 
-> `optional` **metadataHash**: [`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)\<`32`\>
+> `optional` **metadataHash**: [`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)\<`32`\>
 
 Defined in: [itxn.ts:753](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/itxn.ts#L753)
 
@@ -191,13 +191,13 @@ Defined in: [itxn.ts:753](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 #### Inherited from
 
-[`AssetConfigFields`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/assetconfigfields/).[`metadataHash`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/assetconfigfields/#metadatahash)
+[`AssetConfigFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/assetconfigfields/).[`metadataHash`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/assetconfigfields/#metadatahash)
 
----
+***
 
 ### note?
 
-> `optional` **note**: `string` \| [`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)
+> `optional` **note**: `string` \| [`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)
 
 Defined in: [itxn.ts:713](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/itxn.ts#L713)
 
@@ -205,13 +205,13 @@ Any data up to 1024 bytes
 
 #### Inherited from
 
-[`AssetConfigFields`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/assetconfigfields/).[`note`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/assetconfigfields/#note)
+[`AssetConfigFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/assetconfigfields/).[`note`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/assetconfigfields/#note)
 
----
+***
 
 ### rekeyTo?
 
-> `optional` **rekeyTo**: [`bytes`](/algorand-typescript/api/index/type-aliases/bytes/) \| [`Account`](/algorand-typescript/api/index/type-aliases/account/)
+> `optional` **rekeyTo**: [`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/) \| [`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/account/)
 
 Defined in: [itxn.ts:721](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/itxn.ts#L721)
 
@@ -219,13 +219,13 @@ Defined in: [itxn.ts:721](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 #### Inherited from
 
-[`AssetConfigFields`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/assetconfigfields/).[`rekeyTo`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/assetconfigfields/#rekeyto)
+[`AssetConfigFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/assetconfigfields/).[`rekeyTo`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/assetconfigfields/#rekeyto)
 
----
+***
 
 ### reserve?
 
-> `optional` **reserve**: [`bytes`](/algorand-typescript/api/index/type-aliases/bytes/) \| [`Account`](/algorand-typescript/api/index/type-aliases/account/)
+> `optional` **reserve**: [`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/) \| [`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/account/)
 
 Defined in: [itxn.ts:761](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/itxn.ts#L761)
 
@@ -233,13 +233,13 @@ Defined in: [itxn.ts:761](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 #### Inherited from
 
-[`AssetConfigFields`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/assetconfigfields/).[`reserve`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/assetconfigfields/#reserve)
+[`AssetConfigFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/assetconfigfields/).[`reserve`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/assetconfigfields/#reserve)
 
----
+***
 
 ### sender?
 
-> `optional` **sender**: [`bytes`](/algorand-typescript/api/index/type-aliases/bytes/) \| [`Account`](/algorand-typescript/api/index/type-aliases/account/)
+> `optional` **sender**: [`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/) \| [`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/account/)
 
 Defined in: [itxn.ts:693](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/itxn.ts#L693)
 
@@ -247,13 +247,13 @@ Defined in: [itxn.ts:693](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 #### Inherited from
 
-[`AssetConfigFields`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/assetconfigfields/).[`sender`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/assetconfigfields/#sender)
+[`AssetConfigFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/assetconfigfields/).[`sender`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/assetconfigfields/#sender)
 
----
+***
 
 ### total?
 
-> `optional` **total**: [`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
+> `optional` **total**: [`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
 
 Defined in: [itxn.ts:729](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/itxn.ts#L729)
 
@@ -261,21 +261,21 @@ Total number of units of this asset created
 
 #### Inherited from
 
-[`AssetConfigFields`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/assetconfigfields/).[`total`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/assetconfigfields/#total)
+[`AssetConfigFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/assetconfigfields/).[`total`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/assetconfigfields/#total)
 
----
+***
 
 ### type
 
-> **type**: [`AssetConfig`](/algorand-typescript/api/index/enumerations/transactiontype/#assetconfig)
+> **type**: [`AssetConfig`](/docs/algorand-typescript/typescript/latest/api/index/enumerations/transactiontype/#assetconfig)
 
 Defined in: [itxn-compose.ts:14](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/itxn-compose.ts#L14)
 
----
+***
 
 ### unitName?
 
-> `optional` **unitName**: `string` \| [`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)
+> `optional` **unitName**: `string` \| [`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)
 
 Defined in: [itxn.ts:741](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/itxn.ts#L741)
 
@@ -283,13 +283,13 @@ Unit name of the asset
 
 #### Inherited from
 
-[`AssetConfigFields`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/assetconfigfields/).[`unitName`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/assetconfigfields/#unitname)
+[`AssetConfigFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/assetconfigfields/).[`unitName`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/assetconfigfields/#unitname)
 
----
+***
 
 ### url?
 
-> `optional` **url**: `string` \| [`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)
+> `optional` **url**: `string` \| [`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)
 
 Defined in: [itxn.ts:749](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/itxn.ts#L749)
 
@@ -297,4 +297,4 @@ URL
 
 #### Inherited from
 
-[`AssetConfigFields`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/assetconfigfields/).[`url`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/assetconfigfields/#url)
+[`AssetConfigFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/assetconfigfields/).[`url`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/assetconfigfields/#url)

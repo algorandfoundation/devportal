@@ -1,34 +1,39 @@
 ---
-title: 'Client management'
-description: 'Client management is one of the core capabilities provided by AlgoKit Utils. It allows you to create (auto-retry) [algod](https://dev.algorand.co/reference/rest-apis/algod), [indexer](https://dev.algorand.co/reference/rest-apis/indexer) and [kmd](https://dev.algorand.co/reference/rest-apis/kmd) clients against various networks resolved from environment or specified configuration.'
+title: "Client management"
+description: "Client management is one of the core capabilities provided by AlgoKit Utils. It allows you to create (auto-retry) algod, indexer and kmd clients against various networks resolved from environment or specified configuration."
 ---
 
 Client management is one of the core capabilities provided by AlgoKit Utils. It allows you to create (auto-retry) [algod](https://dev.algorand.co/reference/rest-apis/algod), [indexer](https://dev.algorand.co/reference/rest-apis/indexer) and [kmd](https://dev.algorand.co/reference/rest-apis/kmd) clients against various networks resolved from environment or specified configuration.
 
-To see some usage examples check out the [automated tests](https://github.com/algorandfoundation/algokit-utils-py/blob/main/tests/clients/).
+Any AlgoKit Utils function that needs one of these clients will take the underlying algosdk classes (`algosdk.v2client.algod.AlgodClient`, `algosdk.v2client.indexer.IndexerClient`, `algosdk.kmd.KMDClient`) so inline with the [Modularity](/docs/algokit-utils/python/latest/#core-principles) principle you can use existing logic to get instances of these clients without needing to use the Client management capability if you prefer.
+
+To see some usage examples check out the [automated tests](https://github.com/algorandfoundation/algokit-utils-py/blob/main/tests/test_network_clients.py).
 
 ## `ClientManager`
 
 The `ClientManager` is a class that is used to manage client instances.
 
-To get an instance of `ClientManager` you can get it from either [`AlgorandClient`](/docs/algokit-utils/python/latest/concepts/core/client/algorand-client/) via `algorand.client` or instantiate it directly:
+To get an instance of `ClientManager` you can instantiate it directly:
 
 ```python
 from algokit_utils import ClientManager, AlgoSdkClients, AlgoClientConfigs
+from algosdk.v2client.algod import AlgodClient
 
-# Algod client only
-client_manager = ClientManager(AlgoSdkClients(algod=algod_client), algorand_client)
-# All clients
-client_manager = ClientManager(AlgoSdkClients(algod=algod_client, indexer=indexer_client, kmd=kmd_client), algorand_client)
-# Algod config only
-client_manager = ClientManager(AlgoClientConfigs(algod_config=algod_config, indexer_config=None, kmd_config=None), algorand_client)
-# All client configs
-client_manager = ClientManager(AlgoClientConfigs(algod_config=algod_config, indexer_config=indexer_config, kmd_config=kmd_config), algorand_client)
+# Using AlgoSdkClients
+algod_client = AlgodClient(...)
+algorand_client = ...  # Get AlgorandClient instance from somewhere
+clients = AlgoSdkClients(algod=algod_client, indexer=indexer_client, kmd=kmd_client)
+client_manager = ClientManager(clients, algorand_client)
+
+# Using AlgoClientConfigs
+algod_config = AlgoClientNetworkConfig(server="https://...", token="")
+configs = AlgoClientConfigs(algod_config=algod_config)
+client_manager = ClientManager(configs, algorand_client)
 ```
 
 ## Network configuration
 
-The network configuration is specified using the `AlgoClientNetworkConfig` dataclass.
+The network configuration is specified using the `AlgoClientConfig` type. This same type is used to specify the config for `algod`, `indexer`, and `kmd` [SDK clients](https://github.com/algorand/py-algorand-sdk).
 
 There are a number of ways to produce one of these configuration objects:
 
@@ -46,8 +51,8 @@ There are a number of ways to produce one of these configuration objects:
 - `ClientManager.get_config_from_environment_or_localnet()` - Loads the Algod client config, the Indexer client config and the Kmd config from well-known environment variables or if not found then default LocalNet; this is useful to have code that can work across multiple blockchain environments (including LocalNet), without having to change
 - `ClientManager.get_algod_config_from_environment()` - Loads an Algod client config from well-known environment variables
 - `ClientManager.get_indexer_config_from_environment()` - Loads an Indexer client config from well-known environment variables; useful to have code that can work across multiple blockchain environments (including LocalNet), without having to change
-- `ClientManager.get_algonode_config(network, config)` - Loads an Algod or Indexer config against [AlgoNode free tier](https://nodely.io/docs/free/start) to either MainNet or TestNet, where `config` is `"algod"` or `"indexer"`
-- `ClientManager.get_default_localnet_config(config_or_port)` - Loads an Algod, Indexer or Kmd config against [LocalNet](https://github.com/algorandfoundation/algokit-cli/blob/main/docs/features/localnet.md) using the default configuration, where `config_or_port` is `"algod"`, `"indexer"`, `"kmd"`, or a port number
+- `ClientManager.get_algonode_config(network)` - Loads an Algod or indexer config against [AlgoNode free tier](https://nodely.io/docs/free/start) to either MainNet or TestNet
+- `ClientManager.get_default_localnet_config()` - Loads an Algod, Indexer or Kmd config against [LocalNet](https://github.com/algorandfoundation/algokit-cli/blob/main/docs/features/localnet.md) using the default configuration
 
 ## Clients
 
@@ -67,49 +72,43 @@ You can also shortcut needing to write the likes of `ClientManager.get_algod_cli
 
 ### Accessing SDK clients via ClientManager instance
 
-Once you have a `ClientManager` instance, you can access the SDK clients for the various Algorand APIs from it (expressed here as `algorand.client` to denote the syntax via an [`AlgorandClient`](/docs/algokit-utils/python/latest/concepts/core/client/algorand-client/)):
+Once you have a `ClientManager` instance, you can access the SDK clients:
 
 ```python
-algorand = AlgorandClient.default_localnet()
+client_manager = ClientManager(algod=algod_client, indexer=indexer_client, kmd=kmd_client)
 
-algod_client = algorand.client.algod
-indexer_client = algorand.client.indexer
-kmd_client = algorand.client.kmd
+algod_client = client_manager.algod
+indexer_client = client_manager.indexer
+kmd_client = client_manager.kmd
 ```
 
-If the method to create the `ClientManager` doesn't configure indexer or kmd ([both of which are optional](#client-management)), then accessing those clients will trigger an error:
-
-```python
-algorand = AlgorandClient.from_clients(algod=algod_client)
-
-algod_client = algorand.client.algod  # OK
-algorand.client.indexer  # Raises error
-algorand.client.kmd  # Raises error
-```
-
-### Creating an app client instance
-
-See [how to create app clients via ClientManager via AlgorandClient](/docs/algokit-utils/python/latest/concepts/core/building/app-client/#dynamically-creating-clients-for-a-given-app-spec).
+If the method to create the `ClientManager` doesn't configure indexer or kmd (both of which are optional), then accessing those clients will trigger an error.
 
 ### Creating a TestNet dispenser API client instance
 
-You can also create a [TestNet dispenser API client instance](/docs/algokit-utils/python/latest/concepts/core/advanced/dispenser-client/) from `ClientManager` too.
+You can also create a [TestNet dispenser API client instance](/docs/algokit-utils/python/latest/concepts/advanced/dispenser-client/) from `ClientManager` too.
 
 ## Automatic retry
 
-The Algod client returned by AlgoKit Utils (via `ClientManager.get_algod_client()` or `AlgorandClient`) has built-in retry logic that automatically retries transient HTTP failures with exponential backoff.
+When receiving an Algod or Indexer client from AlgoKit Utils, it will be a special wrapper client that handles retrying transient failures.
 
 ## Network information
 
-To get information about the current network you are connected to, you can use the `network()` method on `ClientManager` or the `is_{network}()` methods (which in turn call `network()`) as shown below (expressed here as `algorand.client` to denote the syntax via an [`AlgorandClient`](/docs/algokit-utils/python/latest/concepts/core/client/algorand-client/)):
+You can get information about the current network you are connected to:
 
 ```python
-algorand = AlgorandClient.default_localnet()
+# Get network information
+network = client_manager.network()
+print(f"Is mainnet: {network.is_mainnet}")
+print(f"Is testnet: {network.is_testnet}")
+print(f"Is localnet: {network.is_localnet}")
+print(f"Genesis ID: {network.genesis_id}")
+print(f"Genesis hash: {network.genesis_hash}")
 
-network = algorand.client.network()
-is_mainnet = algorand.client.is_mainnet()
-is_testnet = algorand.client.is_testnet()
-is_localnet = algorand.client.is_localnet()
+# Convenience methods
+is_mainnet = client_manager.is_mainnet()
+is_testnet = client_manager.is_testnet()
+is_localnet = client_manager.is_localnet()
 ```
 
 The first time `network()` is called it will make a HTTP call to algod to get the network parameters, but from then on it will be cached within that `ClientManager` instance for subsequent calls.

@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: 'AssetConfigItxnParams'
+title: "AssetConfigItxnParams"
 ---
 
 Defined in: [itxn.ts:1053](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/itxn.ts#L1053)
@@ -33,7 +33,7 @@ Return a copy of this AssetConfigItxnParams object
 
 `AssetConfigItxnParams`
 
----
+***
 
 ### set()
 
@@ -47,17 +47,17 @@ Update one or more fields in this AssetConfigItxnParams object
 
 ##### fields
 
-[`AssetConfigFields`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/assetconfigfields/)
+[`AssetConfigFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/assetconfigfields/)
 
 #### Returns
 
 `void`
 
----
+***
 
 ### submit()
 
-> **submit**(): [`AssetConfigInnerTxn`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/assetconfiginnertxn/)
+> **submit**(): [`AssetConfigInnerTxn`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/assetconfiginnertxn/)
 
 Defined in: [itxn.ts:1057](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/itxn.ts#L1057)
 
@@ -65,4 +65,4 @@ Submit an itxn with these fields and return the AssetConfigInnerTxn result
 
 #### Returns
 
-[`AssetConfigInnerTxn`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/assetconfiginnertxn/)
+[`AssetConfigInnerTxn`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/assetconfiginnertxn/)

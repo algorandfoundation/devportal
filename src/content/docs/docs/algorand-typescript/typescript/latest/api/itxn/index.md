@@ -2,9 +2,9 @@
 editUrl: false
 next: false
 prev: false
-title: 'itxn'
+title: "itxn"
 ---
 
 ## Namespaces
 
-- [itxn](/algorand-typescript/api/itxn/namespaces/itxn/index/)
+- [itxn](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/index/)

@@ -2,10 +2,10 @@
 editUrl: false
 next: false
 prev: false
-title: 'Box'
+title: "Box"
 ---
 
-> **Box**\<`TValue`\>(`options`): [`Box`](/algorand-typescript/api/index/type-aliases/box/)\<`TValue`\>
+> **Box**\<`TValue`\>(`options`): [`Box`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/box/)\<`TValue`\>
 
 Defined in: [box.ts:131](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/box.ts#L131)
 
@@ -29,4 +29,4 @@ Options for creating the Box proxy
 
 ## Returns
 
-[`Box`](/algorand-typescript/api/index/type-aliases/box/)\<`TValue`\>
+[`Box`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/box/)\<`TValue`\>

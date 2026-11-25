@@ -2,12 +2,12 @@
 editUrl: false
 next: false
 prev: false
-title: 'extractUint16'
+title: "extractUint16"
 ---
 
-> **extractUint16**(`a`, `b`): [`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
+> **extractUint16**(`a`, `b`): [`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
 
-Defined in: [op.ts:917](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/op.ts#L917)
+Defined in: [op.ts:1075](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/op.ts#L1075)
 
 A uint16 formed from a range of big-endian bytes from A starting at B up to but not including B+2. If B+2 is larger than the array length, the program fails
 
@@ -15,15 +15,15 @@ A uint16 formed from a range of big-endian bytes from A starting at B up to but 
 
 ### a
 
-[`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)
+[`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)
 
 ### b
 
-[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
+[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
 
 ## Returns
 
-[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
+[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
 
 ## See
 

@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: 'Asset'
+title: "Asset"
 ---
 
 > **Asset** = `object`
@@ -15,27 +15,27 @@ An Asset on the Algorand network.
 
 ### clawback
 
-> `readonly` **clawback**: [`Account`](/algorand-typescript/api/index/type-aliases/account/)
+> `readonly` **clawback**: [`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/account/)
 
 Defined in: [reference.ts:198](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/reference.ts#L198)
 
 Clawback address
 
----
+***
 
 ### creator
 
-> `readonly` **creator**: [`Account`](/algorand-typescript/api/index/type-aliases/account/)
+> `readonly` **creator**: [`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/account/)
 
 Defined in: [reference.ts:203](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/reference.ts#L203)
 
 Creator address
 
----
+***
 
 ### decimals
 
-> `readonly` **decimals**: [`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
+> `readonly` **decimals**: [`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
 
 Defined in: [reference.ts:153](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/reference.ts#L153)
 
@@ -43,7 +43,7 @@ Defined in: [reference.ts:153](https://github.com/algorandfoundation/puya-ts/blo
 
 AssetParams.decimals
 
----
+***
 
 ### defaultFrozen
 
@@ -53,91 +53,91 @@ Defined in: [reference.ts:158](https://github.com/algorandfoundation/puya-ts/blo
 
 Frozen by default or not
 
----
+***
 
 ### freeze
 
-> `readonly` **freeze**: [`Account`](/algorand-typescript/api/index/type-aliases/account/)
+> `readonly` **freeze**: [`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/account/)
 
 Defined in: [reference.ts:193](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/reference.ts#L193)
 
 Freeze address
 
----
+***
 
 ### id
 
-> `readonly` **id**: [`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
+> `readonly` **id**: [`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
 
 Defined in: [reference.ts:143](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/reference.ts#L143)
 
 Returns the id of the Asset
 
----
+***
 
 ### manager
 
-> `readonly` **manager**: [`Account`](/algorand-typescript/api/index/type-aliases/account/)
+> `readonly` **manager**: [`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/account/)
 
 Defined in: [reference.ts:183](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/reference.ts#L183)
 
 Manager address
 
----
+***
 
 ### metadataHash
 
-> `readonly` **metadataHash**: [`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)\<`32`\>
+> `readonly` **metadataHash**: [`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)\<`32`\>
 
 Defined in: [reference.ts:178](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/reference.ts#L178)
 
 Arbitrary commitment
 
----
+***
 
 ### name
 
-> `readonly` **name**: [`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)
+> `readonly` **name**: [`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)
 
 Defined in: [reference.ts:168](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/reference.ts#L168)
 
 Asset name
 
----
+***
 
 ### reserve
 
-> `readonly` **reserve**: [`Account`](/algorand-typescript/api/index/type-aliases/account/)
+> `readonly` **reserve**: [`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/account/)
 
 Defined in: [reference.ts:188](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/reference.ts#L188)
 
 Reserve address
 
----
+***
 
 ### total
 
-> `readonly` **total**: [`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
+> `readonly` **total**: [`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
 
 Defined in: [reference.ts:148](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/reference.ts#L148)
 
 Total number of units of this asset
 
----
+***
 
 ### unitName
 
-> `readonly` **unitName**: [`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)
+> `readonly` **unitName**: [`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)
 
 Defined in: [reference.ts:163](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/reference.ts#L163)
 
 Asset unit name
 
----
+***
 
 ### url
 
-> `readonly` **url**: [`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)
+> `readonly` **url**: [`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)
 
 Defined in: [reference.ts:173](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/reference.ts#L173)
 
@@ -147,7 +147,7 @@ URL with additional info about the asset
 
 ### balance()
 
-> **balance**(`account`): [`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
+> **balance**(`account`): [`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
 
 Defined in: [reference.ts:212](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/reference.ts#L212)
 
@@ -159,17 +159,17 @@ Asset and supplied Account must be an available resource
 
 ##### account
 
-[`Account`](/algorand-typescript/api/index/type-aliases/account/)
+[`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/account/)
 
 Account
 
 #### Returns
 
-[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
+[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
 
 balance: uint64
 
----
+***
 
 ### frozen()
 
@@ -185,7 +185,7 @@ Asset and supplied Account must be an available resource
 
 ##### account
 
-[`Account`](/algorand-typescript/api/index/type-aliases/account/)
+[`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/account/)
 
 Account
 

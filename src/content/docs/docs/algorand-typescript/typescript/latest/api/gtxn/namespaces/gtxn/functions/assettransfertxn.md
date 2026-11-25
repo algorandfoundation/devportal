@@ -2,10 +2,10 @@
 editUrl: false
 next: false
 prev: false
-title: 'AssetTransferTxn'
+title: "AssetTransferTxn"
 ---
 
-> **AssetTransferTxn**(`n`): [`AssetTransferTxn`](/algorand-typescript/api/gtxn/namespaces/gtxn/interfaces/assettransfertxn/)
+> **AssetTransferTxn**(`n`): [`AssetTransferTxn`](/docs/algorand-typescript/typescript/latest/api/gtxn/namespaces/gtxn/interfaces/assettransfertxn/)
 
 Defined in: [gtxn.ts:621](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/gtxn.ts#L621)
 
@@ -16,10 +16,10 @@ Verifies the txn type is 'axfer'
 
 ### n
 
-[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
+[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
 
 The index of the txn in the group
 
 ## Returns
 
-[`AssetTransferTxn`](/algorand-typescript/api/gtxn/namespaces/gtxn/interfaces/assettransfertxn/)
+[`AssetTransferTxn`](/docs/algorand-typescript/typescript/latest/api/gtxn/namespaces/gtxn/interfaces/assettransfertxn/)

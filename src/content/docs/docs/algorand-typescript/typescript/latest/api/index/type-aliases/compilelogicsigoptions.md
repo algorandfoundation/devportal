@@ -2,12 +2,12 @@
 editUrl: false
 next: false
 prev: false
-title: 'CompileLogicSigOptions'
+title: "CompileLogicSigOptions"
 ---
 
 > **CompileLogicSigOptions** = `object`
 
-Defined in: [compiled.ts:90](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/compiled.ts#L90)
+Defined in: [compiled.ts:92](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/compiled.ts#L92)
 
 Options for compiling a logic signature
 
@@ -17,17 +17,17 @@ Options for compiling a logic signature
 
 > `optional` **templateVars**: `Record`\<`string`, `DeliberateAny`\>
 
-Defined in: [compiled.ts:95](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/compiled.ts#L95)
+Defined in: [compiled.ts:97](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/compiled.ts#L97)
 
 Template variables to substitute into the contract, key should be without the prefix, must evaluate to a compile time constant
 and match the type of the template var declaration
 
----
+***
 
 ### templateVarsPrefix?
 
 > `optional` **templateVarsPrefix**: `string`
 
-Defined in: [compiled.ts:99](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/compiled.ts#L99)
+Defined in: [compiled.ts:101](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/compiled.ts#L101)
 
-Prefix to add to provided template vars, defaults to the prefix supplied on command line (which defaults to TMPL\_)
+Prefix to add to provided template vars, defaults to the prefix supplied on command line (which defaults to TMPL_)

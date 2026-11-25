@@ -2,12 +2,12 @@
 editUrl: false
 next: false
 prev: false
-title: 'LocalStateOptions'
+title: "LocalStateOptions"
 ---
 
 > **LocalStateOptions** = `object`
 
-Defined in: [state.ts:79](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/state.ts#L79)
+Defined in: [state.ts:120](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/state.ts#L120)
 
 Options for declaring a local state field
 
@@ -15,9 +15,9 @@ Options for declaring a local state field
 
 ### key?
 
-> `optional` **key**: [`bytes`](/algorand-typescript/api/index/type-aliases/bytes/) \| `string`
+> `optional` **key**: [`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/) \| `string`
 
-Defined in: [state.ts:85](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/state.ts#L85)
+Defined in: [state.ts:126](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/state.ts#L126)
 
 The key to be used for this local state field.
 

@@ -1,55 +1,54 @@
 ---
-title: 'algokit_utils.models.transaction'
+title: "algokit_utils.models.transaction"
 ---
 
 <div class="api-ref">
 
-# algokit_utils.models.transaction
-
 ## Attributes
 
-| [`Arc2TransactionNote`](#algokit_utils.models.transaction.Arc2TransactionNote) |     |
-| ------------------------------------------------------------------------------ | --- |
-| [`TransactionNoteData`](#algokit_utils.models.transaction.TransactionNoteData) |     |
-| [`TransactionNote`](#algokit_utils.models.transaction.TransactionNote)         |     |
+| [`Arc2TransactionNote`](#arc2transactionnote)   |    |
+|----------------------------------------------------------------------------------|----|
+| [`TransactionNoteData`](#transactionnotedata)   |    |
+| [`TransactionNote`](#transactionnote)           |    |
 
 ## Classes
 
-| [`BaseArc2Note`](#algokit_utils.models.transaction.BaseArc2Note)                 | Base ARC-0002 transaction note structure       |
-| -------------------------------------------------------------------------------- | ---------------------------------------------- |
-| [`StringFormatArc2Note`](#algokit_utils.models.transaction.StringFormatArc2Note) | ARC-0002 note for string-based formats (m/b/u) |
-| [`JsonFormatArc2Note`](#algokit_utils.models.transaction.JsonFormatArc2Note)     | ARC-0002 note for JSON format                  |
-| [`SendParams`](#algokit_utils.models.transaction.SendParams)                     | Parameters for sending a transaction           |
+| [`BaseArc2Note`](#class-basearc2note)                 | Base ARC-0002 transaction note structure                                         |
+|----------------------------------------------------------------------------------|----------------------------------------------------------------------------------|
+| [`StringFormatArc2Note`](#class-stringformatarc2note) | ARC-0002 note for string-based formats (m/b/u)                                   |
+| [`JsonFormatArc2Note`](#class-jsonformatarc2note)     | ARC-0002 note for JSON format                                                    |
+| [`TransactionWrapper`](#class-transactionwrapper)     | Wrapper around algosdk.transaction.Transaction with optional property validators |
+| [`SendParams`](#class-sendparams)                     | Parameters for sending a transaction                                             |
 
 ## Module Contents
 
-### _class_ BaseArc2Note
+### *class* BaseArc2Note
 
 Bases: `TypedDict`
 
 Base ARC-0002 transaction note structure
 
-#### dapp*name *: str\_
+#### dapp_name *: str*
 
-### _class_ StringFormatArc2Note
+### *class* StringFormatArc2Note
 
-Bases: [`BaseArc2Note`](#algokit_utils.models.transaction.BaseArc2Note)
+Bases: [`BaseArc2Note`](#class-basearc2note)
 
 ARC-0002 note for string-based formats (m/b/u)
 
-#### format _: Literal['m', 'b', 'u']_
+#### format *: Literal['m', 'b', 'u']*
 
-#### data _: str_
+#### data *: str*
 
-### _class_ JsonFormatArc2Note
+### *class* JsonFormatArc2Note
 
-Bases: [`BaseArc2Note`](#algokit_utils.models.transaction.BaseArc2Note)
+Bases: [`BaseArc2Note`](#class-basearc2note)
 
 ARC-0002 note for JSON format
 
-#### format _: Literal['j']_
+#### format *: Literal['j']*
 
-#### data _: str | dict[str, Any] | list[Any] | int | None_
+#### data *: str | dict[str, Any] | list[Any] | int | None*
 
 ### Arc2TransactionNote
 
@@ -57,18 +56,38 @@ ARC-0002 note for JSON format
 
 ### TransactionNote
 
-### _class_ SendParams
+### *class* TransactionWrapper
+Wrapper around algosdk.transaction.Transaction with optional property validators
+
+#### *property* raw *: algosdk.transaction.Transaction*
+
+#### *property* payment *: algosdk.transaction.PaymentTxn*
+
+#### *property* keyreg *: algosdk.transaction.KeyregTxn*
+
+#### *property* asset_config *: algosdk.transaction.AssetConfigTxn*
+
+#### *property* asset_transfer *: algosdk.transaction.AssetTransferTxn*
+
+#### *property* asset_freeze *: algosdk.transaction.AssetFreezeTxn*
+
+#### *property* application_call *: algosdk.transaction.ApplicationCallTxn*
+
+#### *property* state_proof *: algosdk.transaction.StateProofTxn*
+
+### *class* SendParams
 
 Bases: `TypedDict`
 
 Parameters for sending a transaction
 
-#### max*rounds_to_wait *: int\_
+#### max_rounds_to_wait *: int | None*
 
-#### suppress*log *: bool\_
+#### suppress_log *: bool | None*
 
-#### populate*app_call_resources *: bool\_
+#### populate_app_call_resources *: bool | None*
 
-#### cover*app_call_inner_transaction_fees *: bool\_
+#### cover_app_call_inner_transaction_fees *: bool | None*
+
 
 </div>

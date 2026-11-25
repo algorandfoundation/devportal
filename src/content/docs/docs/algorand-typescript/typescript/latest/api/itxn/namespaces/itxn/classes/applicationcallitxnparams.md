@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: 'ApplicationCallItxnParams'
+title: "ApplicationCallItxnParams"
 ---
 
 Defined in: [itxn.ts:1140](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/itxn.ts#L1140)
@@ -33,7 +33,7 @@ Return a copy of this ApplicationCallItxnParams object
 
 `ApplicationCallItxnParams`
 
----
+***
 
 ### set()
 
@@ -47,17 +47,17 @@ Update one or more fields in this ApplicationCallItxnParams object
 
 ##### fields
 
-[`ApplicationCallFields`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/applicationcallfields/)
+[`ApplicationCallFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/applicationcallfields/)
 
 #### Returns
 
 `void`
 
----
+***
 
 ### submit()
 
-> **submit**(): [`ApplicationCallInnerTxn`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/applicationcallinnertxn/)
+> **submit**(): [`ApplicationCallInnerTxn`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/applicationcallinnertxn/)
 
 Defined in: [itxn.ts:1144](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/itxn.ts#L1144)
 
@@ -65,4 +65,4 @@ Submit an itxn with these fields and return the ApplicationCallInnerTxn result
 
 #### Returns
 
-[`ApplicationCallInnerTxn`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/applicationcallinnertxn/)
+[`ApplicationCallInnerTxn`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/applicationcallinnertxn/)

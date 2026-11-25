@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: 'AssetFreezeItxnParams'
+title: "AssetFreezeItxnParams"
 ---
 
 Defined in: [itxn.ts:1111](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/itxn.ts#L1111)
@@ -33,7 +33,7 @@ Return a copy of this AssetFreezeItxnParams object
 
 `AssetFreezeItxnParams`
 
----
+***
 
 ### set()
 
@@ -47,17 +47,17 @@ Update one or more fields in this AssetFreezeItxnParams object
 
 ##### fields
 
-[`AssetFreezeFields`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/assetfreezefields/)
+[`AssetFreezeFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/assetfreezefields/)
 
 #### Returns
 
 `void`
 
----
+***
 
 ### submit()
 
-> **submit**(): [`AssetFreezeInnerTxn`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/assetfreezeinnertxn/)
+> **submit**(): [`AssetFreezeInnerTxn`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/assetfreezeinnertxn/)
 
 Defined in: [itxn.ts:1115](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/itxn.ts#L1115)
 
@@ -65,4 +65,4 @@ Submit an itxn with these fields and return the AssetFreezeInnerTxn result
 
 #### Returns
 
-[`AssetFreezeInnerTxn`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/assetfreezeinnertxn/)
+[`AssetFreezeInnerTxn`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/assetfreezeinnertxn/)

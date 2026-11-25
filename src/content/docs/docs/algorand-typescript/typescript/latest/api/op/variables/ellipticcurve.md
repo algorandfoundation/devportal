@@ -2,12 +2,12 @@
 editUrl: false
 next: false
 prev: false
-title: 'EllipticCurve'
+title: "EllipticCurve"
 ---
 
 > `const` **EllipticCurve**: `object`
 
-Defined in: [op.ts:762](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/op.ts#L762)
+Defined in: [op.ts:920](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/op.ts#L920)
 
 Elliptic Curve functions
 
@@ -15,7 +15,7 @@ Elliptic Curve functions
 
 ### add()
 
-> **add**(`g`, `a`, `b`): [`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)
+> **add**(`g`, `a`, `b`): [`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)
 
 for curve points A and B, return the curve point A + B
 A and B are curve points in affine representation: field element X concatenated with field element Y. Field element `Z` is encoded as follows.
@@ -31,19 +31,19 @@ Does _not_ check if A and B are in the main prime-order subgroup.
 
 ##### g
 
-[`Ec`](/algorand-typescript/api/op/enumerations/ec/)
+[`Ec`](/docs/algorand-typescript/typescript/latest/api/op/enumerations/ec/)
 
 ##### a
 
-[`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)
+[`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)
 
 ##### b
 
-[`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)
+[`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)
 
 #### Returns
 
-[`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)
+[`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)
 
 #### See
 
@@ -52,7 +52,7 @@ Min AVM version: 10
 
 ### mapTo()
 
-> **mapTo**(`g`, `a`): [`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)
+> **mapTo**(`g`, `a`): [`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)
 
 maps field element A to group G
 BN254 points are mapped by the SVDW map. BLS12-381 points are mapped by the SSWU map.
@@ -62,15 +62,15 @@ G1 element inputs are base field elements and G2 element inputs are quadratic fi
 
 ##### g
 
-[`Ec`](/algorand-typescript/api/op/enumerations/ec/)
+[`Ec`](/docs/algorand-typescript/typescript/latest/api/op/enumerations/ec/)
 
 ##### a
 
-[`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)
+[`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)
 
 #### Returns
 
-[`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)
+[`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)
 
 #### See
 
@@ -88,15 +88,15 @@ A and B are concatenated points, encoded and checked as described in `ec_add`. A
 
 ##### g
 
-[`Ec`](/algorand-typescript/api/op/enumerations/ec/)
+[`Ec`](/docs/algorand-typescript/typescript/latest/api/op/enumerations/ec/)
 
 ##### a
 
-[`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)
+[`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)
 
 ##### b
 
-[`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)
+[`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)
 
 #### Returns
 
@@ -109,7 +109,7 @@ Min AVM version: 10
 
 ### scalarMul()
 
-> **scalarMul**(`g`, `a`, `b`): [`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)
+> **scalarMul**(`g`, `a`, `b`): [`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)
 
 for curve point A and scalar B, return the curve point BA, the point A multiplied by the scalar B.
 A is a curve point encoded and checked as described in `ec_add`. Scalar B is interpreted as a big-endian unsigned integer. Fails if B exceeds 32 bytes.
@@ -118,19 +118,19 @@ A is a curve point encoded and checked as described in `ec_add`. Scalar B is int
 
 ##### g
 
-[`Ec`](/algorand-typescript/api/op/enumerations/ec/)
+[`Ec`](/docs/algorand-typescript/typescript/latest/api/op/enumerations/ec/)
 
 ##### a
 
-[`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)
+[`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)
 
 ##### b
 
-[`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)
+[`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)
 
 #### Returns
 
-[`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)
+[`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)
 
 #### See
 
@@ -139,7 +139,7 @@ Min AVM version: 10
 
 ### scalarMulMulti()
 
-> **scalarMulMulti**(`g`, `a`, `b`): [`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)
+> **scalarMulMulti**(`g`, `a`, `b`): [`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)
 
 for curve points A and scalars B, return curve point B0A0 + B1A1 + B2A2 + ... + BnAn
 A is a list of concatenated points, encoded and checked as described in `ec_add`. B is a list of concatenated scalars which, unlike ec_scalar_mul, must all be exactly 32 bytes long.
@@ -149,19 +149,19 @@ The name `ec_multi_scalar_mul` was chosen to reflect common usage, but a more co
 
 ##### g
 
-[`Ec`](/algorand-typescript/api/op/enumerations/ec/)
+[`Ec`](/docs/algorand-typescript/typescript/latest/api/op/enumerations/ec/)
 
 ##### a
 
-[`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)
+[`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)
 
 ##### b
 
-[`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)
+[`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)
 
 #### Returns
 
-[`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)
+[`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)
 
 #### See
 
@@ -178,11 +178,11 @@ Min AVM version: 10
 
 ##### g
 
-[`Ec`](/algorand-typescript/api/op/enumerations/ec/)
+[`Ec`](/docs/algorand-typescript/typescript/latest/api/op/enumerations/ec/)
 
 ##### a
 
-[`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)
+[`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)
 
 #### Returns
 

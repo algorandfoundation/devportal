@@ -2,12 +2,12 @@
 editUrl: false
 next: false
 prev: false
-title: 'AppGlobal'
+title: "AppGlobal"
 ---
 
 > `const` **AppGlobal**: `object`
 
-Defined in: [op.ts:186](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/op.ts#L186)
+Defined in: [op.ts:286](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/op.ts#L286)
 
 Get or modify Global app state
 
@@ -23,7 +23,7 @@ delete key A from the global state of the current application
 
 ##### a
 
-[`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)
+[`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)
 
 state key.
 Deleting a key which is already absent has no effect on the application global state. (In particular, it does _not_ cause the program to fail.)
@@ -39,7 +39,7 @@ Min AVM version: 2
 
 ### getBytes()
 
-> **getBytes**(`a`): [`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)
+> **getBytes**(`a`): [`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)
 
 global state of the key A in the current application
 
@@ -47,13 +47,13 @@ global state of the key A in the current application
 
 ##### a
 
-[`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)
+[`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)
 
 state key.
 
 #### Returns
 
-[`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)
+[`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)
 
 value. The value is zero (of type uint64) if the key does not exist.
 
@@ -64,7 +64,7 @@ Min AVM version: 2
 
 ### getExBytes()
 
-> **getExBytes**(`a`, `b`): readonly \[[`bytes`](/algorand-typescript/api/index/type-aliases/bytes/), `boolean`\]
+> **getExBytes**(`a`, `b`): readonly \[[`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/), `boolean`\]
 
 X is the global state of application A, key B. Y is 1 if key existed, else 0
 
@@ -74,15 +74,15 @@ X is the global state of application A, key B. Y is 1 if key existed, else 0
 
 Txn.ForeignApps offset (or, since v4, an _available_ application id), state key.
 
-[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/) | [`Application`](/algorand-typescript/api/index/type-aliases/application/)
+[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/) | [`Application`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/application/)
 
 ##### b
 
-[`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)
+[`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)
 
 #### Returns
 
-readonly \[[`bytes`](/algorand-typescript/api/index/type-aliases/bytes/), `boolean`\]
+readonly \[[`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/), `boolean`\]
 
 did_exist flag (top of the stack, 1 if the application and key existed and 0 otherwise), value. The value is zero (of type uint64) if the key does not exist.
 
@@ -93,7 +93,7 @@ Min AVM version: 2
 
 ### getExUint64()
 
-> **getExUint64**(`a`, `b`): readonly \[[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/), `boolean`\]
+> **getExUint64**(`a`, `b`): readonly \[[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/), `boolean`\]
 
 X is the global state of application A, key B. Y is 1 if key existed, else 0
 
@@ -103,15 +103,15 @@ X is the global state of application A, key B. Y is 1 if key existed, else 0
 
 Txn.ForeignApps offset (or, since v4, an _available_ application id), state key.
 
-[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/) | [`Application`](/algorand-typescript/api/index/type-aliases/application/)
+[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/) | [`Application`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/application/)
 
 ##### b
 
-[`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)
+[`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)
 
 #### Returns
 
-readonly \[[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/), `boolean`\]
+readonly \[[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/), `boolean`\]
 
 did_exist flag (top of the stack, 1 if the application and key existed and 0 otherwise), value. The value is zero (of type uint64) if the key does not exist.
 
@@ -122,7 +122,7 @@ Min AVM version: 2
 
 ### getUint64()
 
-> **getUint64**(`a`): [`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
+> **getUint64**(`a`): [`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
 
 global state of the key A in the current application
 
@@ -130,13 +130,13 @@ global state of the key A in the current application
 
 ##### a
 
-[`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)
+[`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)
 
 state key.
 
 #### Returns
 
-[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
+[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
 
 value. The value is zero (of type uint64) if the key does not exist.
 
@@ -155,11 +155,11 @@ write B to key A in the global state of the current application
 
 ##### a
 
-[`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)
+[`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)
 
 ##### b
 
-[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/) | [`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)
+[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/) | [`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)
 
 #### Returns
 

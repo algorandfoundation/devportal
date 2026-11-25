@@ -38,7 +38,7 @@ If you are doing a quick test or creating an ephemeral subscriber that just need
 ```typescript
 let watermark = 0n
 const subscriber = new AlgorandSubscriber({watermarkPersistence: {
-  get: () => watermark, set: (newWatermark: bigint) => watermark = newWatermark
+  get: async () => watermark, set: async (newWatermark: bigint) => { watermark = newWatermark }
 }, ...}, ...)
 
 // or:

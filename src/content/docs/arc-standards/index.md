@@ -22,8 +22,8 @@ New ideas for ARCs are discussed through <a href="https://github.com/algorandfou
     <tbody>
       <tr>
     <td><a href="/arc-standards/arc-0000/" style='display: block; text-decoration: none; color: inherit;'>0</a></td>
-    <td><a href="/arc-standards/arc-0000/" style='display: block; text-decoration: none; color: inherit;'>ARC Purpose and Guidelines</a></td>
-    <td><a href="/arc-standards/arc-0000/" style='display: block; text-decoration: none; color: inherit;'>Guide explaining how to write a new ARC</a></td>
+    <td><a href="/arc-standards/arc-0000/" style='display: block; text-decoration: none; color: inherit;'>Algorand Request for Comments (ARC)</a></td>
+    <td><a href="/arc-standards/arc-0000/" style='display: block; text-decoration: none; color: inherit;'>Definitions and guidelines for ARC process and artifacts.</a></td>
   </tr>
       <tr>
     <td><a href="/arc-standards/arc-0072/" style='display: block; text-decoration: none; color: inherit;'>72</a></td>
@@ -67,7 +67,7 @@ New ideas for ARCs are discussed through <a href="https://github.com/algorandfou
       <tr>
     <td><a href="/arc-standards/arc-0003/" style='display: block; text-decoration: none; color: inherit;'>3</a></td>
     <td><a href="/arc-standards/arc-0003/" style='display: block; text-decoration: none; color: inherit;'>Conventions Fungible/Non-Fungible Tokens</a></td>
-    <td><a href="/arc-standards/arc-0003/" style='display: block; text-decoration: none; color: inherit;'>Parameters Conventions for Algorand Standard Assets (ASAs) for fungible tokens and non-fungible tokens (NFTs).</a></td>
+    <td><a href="/arc-standards/arc-0003/" style='display: block; text-decoration: none; color: inherit;'>Parameters Conventions for ASAs for fungible tokens and non-fungible tokens (NFTs).</a></td>
   </tr>
       <tr>
     <td><a href="/arc-standards/arc-0004/" style='display: block; text-decoration: none; color: inherit;'>4</a></td>
@@ -145,14 +145,9 @@ New ideas for ARCs are discussed through <a href="https://github.com/algorandfou
     <td><a href="/arc-standards/arc-0036/" style='display: block; text-decoration: none; color: inherit;'>This is a convention for declaring filters in an NFT metadata</a></td>
   </tr>
       <tr>
-    <td><a href="/arc-standards/arc-0047/" style='display: block; text-decoration: none; color: inherit;'>47</a></td>
-    <td><a href="/arc-standards/arc-0047/" style='display: block; text-decoration: none; color: inherit;'>Logic Signature Templates</a></td>
-    <td><a href="/arc-standards/arc-0047/" style='display: block; text-decoration: none; color: inherit;'>Defining templated logic signatures so wallets can safely sign them.</a></td>
-  </tr>
-      <tr>
     <td><a href="/arc-standards/arc-0054/" style='display: block; text-decoration: none; color: inherit;'>54</a></td>
     <td><a href="/arc-standards/arc-0054/" style='display: block; text-decoration: none; color: inherit;'>ASA Burning App</a></td>
-    <td><a href="/arc-standards/arc-0054/" style='display: block; text-decoration: none; color: inherit;'>Standardized Application for Burning ASAs</a></td>
+    <td><a href="/arc-standards/arc-0054/" style='display: block; text-decoration: none; color: inherit;'>Singleton Application for Burning ASAs</a></td>
   </tr>
       <tr>
     <td><a href="/arc-standards/arc-0055/" style='display: block; text-decoration: none; color: inherit;'>55</a></td>
@@ -187,7 +182,7 @@ New ideas for ARCs are discussed through <a href="https://github.com/algorandfou
       <tr>
     <td><a href="/arc-standards/arc-0071/" style='display: block; text-decoration: none; color: inherit;'>71</a></td>
     <td><a href="/arc-standards/arc-0071/" style='display: block; text-decoration: none; color: inherit;'>Non-Transferable ASA</a></td>
-    <td><a href="/arc-standards/arc-0071/" style='display: block; text-decoration: none; color: inherit;'>Parameters Conventions Non-Transferable Algorand Standard Asset</a></td>
+    <td><a href="/arc-standards/arc-0071/" style='display: block; text-decoration: none; color: inherit;'>Parameters Conventions Non-Transferable ASA</a></td>
   </tr>
       <tr>
     <td><a href="/arc-standards/arc-0073/" style='display: block; text-decoration: none; color: inherit;'>73</a></td>
@@ -251,6 +246,11 @@ New ideas for ARCs are discussed through <a href="https://github.com/algorandfou
     <td><a href="/arc-standards/arc-0012/" style='display: block; text-decoration: none; color: inherit;'>12</a></td>
     <td><a href="/arc-standards/arc-0012/" style='display: block; text-decoration: none; color: inherit;'>Claimable ASA from vault application</a></td>
     <td><a href="/arc-standards/arc-0012/" style='display: block; text-decoration: none; color: inherit;'>A smart signature contract account that can receive & disburse claimable Algorand Smart Assets (ASA) to an intended recipient account.</a></td>
+  </tr>
+      <tr>
+    <td><a href="/arc-standards/arc-0047/" style='display: block; text-decoration: none; color: inherit;'>47</a></td>
+    <td><a href="/arc-standards/arc-0047/" style='display: block; text-decoration: none; color: inherit;'>Logic Signature Templates</a></td>
+    <td><a href="/arc-standards/arc-0047/" style='display: block; text-decoration: none; color: inherit;'>Defining templated logic signatures so wallets can safely sign them.</a></td>
   </tr>
     </tbody>
   </table>
@@ -375,6 +375,7 @@ New ideas for ARCs are discussed through <a href="https://github.com/algorandfou
 </section>
 
 ## ARC Status Terms
+
 <ul>
   <li>
     <strong>Idea</strong> - An idea that is pre-draft. This is not tracked

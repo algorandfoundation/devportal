@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: 'AssetTransferItxnParams'
+title: "AssetTransferItxnParams"
 ---
 
 Defined in: [itxn.ts:1082](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/itxn.ts#L1082)
@@ -33,7 +33,7 @@ Return a copy of this AssetTransferItxnParams object
 
 `AssetTransferItxnParams`
 
----
+***
 
 ### set()
 
@@ -47,17 +47,17 @@ Update one or more fields in this AssetTransferItxnParams object
 
 ##### fields
 
-[`AssetTransferFields`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/assettransferfields/)
+[`AssetTransferFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/assettransferfields/)
 
 #### Returns
 
 `void`
 
----
+***
 
 ### submit()
 
-> **submit**(): [`AssetTransferInnerTxn`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/assettransferinnertxn/)
+> **submit**(): [`AssetTransferInnerTxn`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/assettransferinnertxn/)
 
 Defined in: [itxn.ts:1086](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/itxn.ts#L1086)
 
@@ -65,4 +65,4 @@ Submit an itxn with these fields and return the AssetTransferInnerTxn result
 
 #### Returns
 
-[`AssetTransferInnerTxn`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/assettransferinnertxn/)
+[`AssetTransferInnerTxn`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/assettransferinnertxn/)

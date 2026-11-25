@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: 'Str'
+title: "Str"
 ---
 
 Defined in: [arc4/encoded-types.ts:110](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/arc4/encoded-types.ts#L110)
@@ -11,7 +11,7 @@ A utf8 encoded string prefixed with its length expressed as a 2 byte uint
 
 ## Extends
 
-- [`ARC4Encoded`](/algorand-typescript/api/arc4/classes/arc4encoded/)
+- [`ARC4Encoded`](/docs/algorand-typescript/typescript/latest/api/arc4/classes/arc4encoded/)
 
 ## Constructors
 
@@ -37,7 +37,7 @@ The native string to initialize this Str from
 
 #### Overrides
 
-[`ARC4Encoded`](/algorand-typescript/api/arc4/classes/arc4encoded/).[`constructor`](/algorand-typescript/api/arc4/classes/arc4encoded/#constructor)
+[`ARC4Encoded`](/docs/algorand-typescript/typescript/latest/api/arc4/classes/arc4encoded/).[`constructor`](/docs/algorand-typescript/typescript/latest/api/arc4/classes/arc4encoded/#constructor)
 
 ## Accessors
 
@@ -45,7 +45,7 @@ The native string to initialize this Str from
 
 #### Get Signature
 
-> **get** **bytes**(): [`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)
+> **get** **bytes**(): [`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)
 
 Defined in: [arc4/encoded-types.ts:102](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/arc4/encoded-types.ts#L102)
 
@@ -53,13 +53,13 @@ Retrieve the encoded bytes for this type
 
 ##### Returns
 
-[`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)
+[`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)
 
 #### Inherited from
 
-[`ARC4Encoded`](/algorand-typescript/api/arc4/classes/arc4encoded/).[`bytes`](/algorand-typescript/api/arc4/classes/arc4encoded/#bytes)
+[`ARC4Encoded`](/docs/algorand-typescript/typescript/latest/api/arc4/classes/arc4encoded/).[`bytes`](/docs/algorand-typescript/typescript/latest/api/arc4/classes/arc4encoded/#bytes)
 
----
+***
 
 ### native
 

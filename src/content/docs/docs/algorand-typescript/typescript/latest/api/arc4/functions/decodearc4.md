@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: 'decodeArc4'
+title: "decodeArc4"
 ---
 
 > **decodeArc4**\<`T`\>(`bytes`, `prefix?`): `T`
@@ -21,7 +21,7 @@ Decode the provided bytes to a native Algorand TypeScript value
 
 ### bytes
 
-[`BytesCompat`](/algorand-typescript/api/index/type-aliases/bytescompat/)
+[`BytesCompat`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytescompat/)
 
 An arc4 encoded bytes value
 

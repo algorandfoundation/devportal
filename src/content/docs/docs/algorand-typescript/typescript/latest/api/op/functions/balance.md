@@ -2,12 +2,12 @@
 editUrl: false
 next: false
 prev: false
-title: 'balance'
+title: "balance"
 ---
 
-> **balance**(`a`): [`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
+> **balance**(`a`): [`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
 
-Defined in: [op.ts:545](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/op.ts#L545)
+Defined in: [op.ts:687](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/op.ts#L687)
 
 balance for account A, in microalgos. The balance is observed after the effects of previous transactions in the group, and after the fee for the current transaction is deducted. Changes caused by inner transactions are observable immediately following `itxn_submit`
 
@@ -17,11 +17,11 @@ balance for account A, in microalgos. The balance is observed after the effects 
 
 Txn.Accounts offset (or, since v4, an _available_ account address), _available_ application id (or, since v4, a Txn.ForeignApps offset).
 
-[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/) | [`Account`](/algorand-typescript/api/index/type-aliases/account/)
+[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/) | [`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/account/)
 
 ## Returns
 
-[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
+[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
 
 value.
 

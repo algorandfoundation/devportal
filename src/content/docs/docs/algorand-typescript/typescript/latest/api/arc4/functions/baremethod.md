@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: 'baremethod'
+title: "baremethod"
 ---
 
 > **baremethod**\<`TContract`\>(`config?`): \<`TArgs`, `TReturn`\>(`target`, `ctx`) => (`this`, ...`args`) => `TReturn`
@@ -15,7 +15,7 @@ Declares the decorated method as a baremethod that can only be called with no tr
 
 ### TContract
 
-`TContract` _extends_ [`Contract`](/algorand-typescript/api/arc4/classes/contract/)
+`TContract` *extends* [`Contract`](/docs/algorand-typescript/typescript/latest/api/arc4/classes/contract/)
 
 the type of the contract this method is a part of
 
@@ -23,7 +23,7 @@ the type of the contract this method is a part of
 
 ### config?
 
-[`BareMethodConfig`](/algorand-typescript/api/arc4/type-aliases/baremethodconfig/)
+[`BareMethodConfig`](/docs/algorand-typescript/typescript/latest/api/arc4/type-aliases/baremethodconfig/)
 
 The config for this bare method
 
@@ -35,7 +35,7 @@ The config for this bare method
 
 #### TArgs
 
-`TArgs` _extends_ `any`[]
+`TArgs` *extends* `any`[]
 
 #### TReturn
 

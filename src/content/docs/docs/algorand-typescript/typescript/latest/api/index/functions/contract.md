@@ -2,12 +2,12 @@
 editUrl: false
 next: false
 prev: false
-title: 'contract'
+title: "contract"
 ---
 
 > **contract**(`options`): \<`T`\>(`contract`, `ctx`) => `never`
 
-Defined in: [base-contract.ts:86](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/base-contract.ts#L86)
+Defined in: [base-contract.ts:94](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/base-contract.ts#L94)
 
 The contract decorator can be used to specify additional configuration options for a smart contract
 
@@ -27,7 +27,7 @@ An object containing the configuration options
 
 #### T
 
-`T` _extends_ `ConstructorFor`\<[`BaseContract`](/algorand-typescript/api/index/classes/basecontract/)\>
+`T` *extends* `ConstructorFor`\<[`BaseContract`](/docs/algorand-typescript/typescript/latest/api/index/classes/basecontract/)\>
 
 ### Parameters
 

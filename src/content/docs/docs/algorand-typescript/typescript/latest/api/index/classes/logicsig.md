@@ -2,10 +2,10 @@
 editUrl: false
 next: false
 prev: false
-title: 'LogicSig'
+title: "LogicSig"
 ---
 
-Defined in: [logic-sig.ts:7](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/logic-sig.ts#L7)
+Defined in: [logic-sig.ts:8](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/logic-sig.ts#L8)
 
 Base class for Algorand TypeScript Logic Signatures (also known as Smart Signatures)
 
@@ -23,12 +23,18 @@ Base class for Algorand TypeScript Logic Signatures (also known as Smart Signatu
 
 ### program()
 
-> `abstract` **program**(): `boolean` \| [`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
+> `abstract` **program**(...`args`): `boolean` \| [`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
 
-Defined in: [logic-sig.ts:11](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/logic-sig.ts#L11)
+Defined in: [logic-sig.ts:12](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/logic-sig.ts#L12)
 
 The logic signature program logic
 
+#### Parameters
+
+##### args
+
+...`unknown`[]
+
 #### Returns
 
-`boolean` \| [`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
+`boolean` \| [`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)

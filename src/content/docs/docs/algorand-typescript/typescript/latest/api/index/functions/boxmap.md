@@ -2,10 +2,10 @@
 editUrl: false
 next: false
 prev: false
-title: 'BoxMap'
+title: "BoxMap"
 ---
 
-> **BoxMap**\<`TKey`, `TValue`\>(`options`): [`BoxMap`](/algorand-typescript/api/index/type-aliases/boxmap/)\<`TKey`, `TValue`\>
+> **BoxMap**\<`TKey`, `TValue`\>(`options`): [`BoxMap`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/boxmap/)\<`TKey`, `TValue`\>
 
 Defined in: [box.ts:151](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/box.ts#L151)
 
@@ -35,4 +35,4 @@ Options for creating the BoxMap proxy
 
 ## Returns
 
-[`BoxMap`](/algorand-typescript/api/index/type-aliases/boxmap/)\<`TKey`, `TValue`\>
+[`BoxMap`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/boxmap/)\<`TKey`, `TValue`\>

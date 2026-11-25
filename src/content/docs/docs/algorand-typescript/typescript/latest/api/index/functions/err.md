@@ -2,12 +2,12 @@
 editUrl: false
 next: false
 prev: false
-title: 'err'
+title: "err"
 ---
 
 > **err**(`message?`): `never`
 
-Defined in: [util.ts:27](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/util.ts#L27)
+Defined in: [util.ts:119](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/util.ts#L119)
 
 Raise an error and halt execution
 

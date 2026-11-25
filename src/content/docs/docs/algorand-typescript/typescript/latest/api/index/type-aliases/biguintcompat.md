@@ -2,10 +2,10 @@
 editUrl: false
 next: false
 prev: false
-title: 'BigUintCompat'
+title: "BigUintCompat"
 ---
 
-> **BigUintCompat** = `bigint` \| [`bytes`](/algorand-typescript/api/index/type-aliases/bytes/) \| `number` \| `boolean`
+> **BigUintCompat** = `bigint` \| [`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/) \| `number` \| `boolean`
 
 Defined in: [primitives.ts:10](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/primitives.ts#L10)
 

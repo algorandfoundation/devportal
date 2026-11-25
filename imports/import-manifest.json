@@ -1,0 +1,50 @@
+{
+  "docs/algokit-cli/python/latest": {
+    "repo": "algorandfoundation/algokit-cli",
+    "releaseTag": "docs-latest",
+    "ref": "0db1a43edcf1dfce2bfa1ffc0c89fe8e6cf2ba1f",
+    "builtAt": "2026-03-26T17:47:56Z",
+    "assetUpdatedAt": "2026-03-26T17:47:58Z",
+    "importedAt": "2026-11-25T01:09:03.633Z"
+  },
+  "docs/algokit-subscriber/python/latest": {
+    "repo": "algorandfoundation/algokit-subscriber-py",
+    "releaseTag": "docs-latest",
+    "ref": "c6b1c59158b7a6b94f6578169b96ce4c698ca18a",
+    "builtAt": "2026-07-23T14:59:39Z",
+    "assetUpdatedAt": "2026-07-23T14:59:41Z",
+    "importedAt": "2026-11-25T01:09:05.295Z"
+  },
+  "docs/algokit-subscriber/typescript/latest": {
+    "repo": "algorandfoundation/algokit-subscriber-ts",
+    "releaseTag": "docs-latest",
+    "ref": "3710d57ac335f121ff154240cea1070495861822",
+    "builtAt": "2026-09-23T15:04:03Z",
+    "assetUpdatedAt": "2026-09-23T15:04:04Z",
+    "importedAt": "2026-11-25T01:09:04.867Z"
+  },
+  "docs/algokit-utils/python/latest": {
+    "repo": "algorandfoundation/algokit-utils-py",
+    "releaseTag": "docs-latest",
+    "ref": "4bb8bde04aa890c23cdd067bd167c1f0375a632d",
+    "builtAt": "2026-08-14T19:49:16Z",
+    "assetUpdatedAt": "2026-08-14T19:49:17Z",
+    "importedAt": "2026-11-25T01:09:03.014Z"
+  },
+  "docs/algokit-utils/typescript/latest": {
+    "repo": "algorandfoundation/algokit-utils-ts",
+    "releaseTag": "docs-latest",
+    "ref": "6110ab468f909720dce0539036aa83e650c96a8b",
+    "builtAt": "2026-10-19T13:23:30Z",
+    "assetUpdatedAt": "2026-10-19T13:23:32Z",
+    "importedAt": "2026-11-25T01:09:02.462Z"
+  },
+  "docs/algorand-typescript/typescript/latest": {
+    "repo": "algorandfoundation/puya-ts",
+    "releaseTag": "docs-latest",
+    "ref": "c023b7b3b77be0b8cae25c5be33628268984fabf",
+    "builtAt": "2026-10-27T21:23:12Z",
+    "assetUpdatedAt": "2026-10-27T21:23:14Z",
+    "importedAt": "2026-11-25T01:09:04.364Z"
+  }
+}

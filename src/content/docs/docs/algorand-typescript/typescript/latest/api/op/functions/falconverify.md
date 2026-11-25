@@ -2,28 +2,29 @@
 editUrl: false
 next: false
 prev: false
-title: 'falconVerify'
+title: "falconVerify"
 ---
 
 > **falconVerify**(`a`, `b`, `c`): `boolean`
 
-Defined in: [op.ts:944](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/op.ts#L944)
+Defined in: [op.ts:1103](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/op.ts#L1103)
 
-for (data A, compressed-format signature B, pubkey C) verify the signature of data against the pubkey => {0 or 1}
+for (data A, deterministic FALCON-1024 compressed-format signature B, pubkey C) verify the signature of data against the pubkey => {0 or 1}
+Signature B is variable-length, with maximum size 1423 bytes.
 
 ## Parameters
 
 ### a
 
-[`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)
+[`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)
 
 ### b
 
-[`bytes`](/algorand-typescript/api/index/type-aliases/bytes/) | [`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)\<`1232`\>
+[`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)
 
 ### c
 
-[`bytes`](/algorand-typescript/api/index/type-aliases/bytes/) | [`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)\<`1793`\>
+[`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/) | [`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)\<`1793`\>
 
 ## Returns
 

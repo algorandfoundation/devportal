@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: 'GlobalStateOptions'
+title: "GlobalStateOptions"
 ---
 
 > **GlobalStateOptions**\<`ValueType`\> = `object`
@@ -27,11 +27,11 @@ Defined in: [state.ts:36](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 An initial value to assign to this global state field when the application is created
 
----
+***
 
 ### key?
 
-> `optional` **key**: [`bytes`](/algorand-typescript/api/index/type-aliases/bytes/) \| `string`
+> `optional` **key**: [`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/) \| `string`
 
 Defined in: [state.ts:32](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/state.ts#L32)
 

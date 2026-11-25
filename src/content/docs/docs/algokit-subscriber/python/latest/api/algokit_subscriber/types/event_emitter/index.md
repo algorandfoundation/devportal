@@ -1,29 +1,26 @@
 ---
-title: 'algokit_subscriber.types.event_emitter'
+title: "algokit_subscriber.types.event_emitter"
 ---
 
 <div class="api-ref">
 
 ## Attributes
 
-| [`TEventType`](#teventtype)       |                                                |
-| --------------------------------- | ---------------------------------------------- |
-| [`EventListener`](#eventlistener) | A function that takes an event and event name. |
+| [`EventListener`](#eventlistener)   | A function that takes a SubscribedTransaction and the event name.   |
+|----------------------------------------------------------------------------|---------------------------------------------------------------------|
 
 ## Classes
 
-| [`EventEmitter`](#class-eventemitter) | A simple event emitter that allows for the registration of event listeners and the |
-| ------------------------------------- | ---------------------------------------------------------------------------------- |
+| [`EventEmitter`](#class-eventemitter)   | A simple event emitter that allows for the registration of event listeners and the   |
+|--------------------------------------------------------------------------|--------------------------------------------------------------------------------------|
 
 ## Module Contents
 
-### TEventType
-
 ### EventListener
 
-A function that takes an event and event name.
+A function that takes a SubscribedTransaction and the event name.
 
-### _class_ EventEmitter
+### *class* EventEmitter
 
 A simple event emitter that allows for the registration of event listeners and the
 emission of events to those listeners.
@@ -45,5 +42,6 @@ Registers a listener for the given event name that will only be called once.
 Removes a listener for the given event name.
 
 #### off
+
 
 </div>

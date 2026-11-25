@@ -1,11 +1,30 @@
 ---
-title: 'algokit_utils.protocols.account'
+title: "algokit_utils.protocols.account"
 ---
 
 <div class="api-ref">
 
-# algokit_utils.protocols.account
+## Classes
 
-Account protocols - re-exported for convenience.
+| [`TransactionSignerAccountProtocol`](#class-transactionsigneraccountprotocol)   | An account that has a transaction signer.   |
+|-----------------------------------------------------------------------------------------------------------|---------------------------------------------|
+
+## Module Contents
+
+### *class* TransactionSignerAccountProtocol
+
+Bases: `Protocol`
+
+An account that has a transaction signer.
+Implemented by SigningAccount, LogicSigAccount, MultiSigAccount and TransactionSignerAccount abstractions.
+
+#### *property* address *: str*
+
+The address of the account.
+
+#### *property* signer *: algosdk.atomic_transaction_composer.TransactionSigner*
+
+The transaction signer for the account.
+
 
 </div>

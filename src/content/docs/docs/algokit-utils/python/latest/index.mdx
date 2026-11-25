@@ -2,23 +2,35 @@
 title: AlgoKit Utils Python
 description: A set of core Algorand utilities that make it easier to build solutions on Algorand
 ---
-
 import { Card, CardGrid, Tabs, TabItem } from '@astrojs/starlight/components';
 
 ## Installation
 
 <Tabs>
-  <TabItem label='pip'>```bash pip install algokit-utils ```</TabItem>
-  <TabItem label='poetry'>```bash poetry add algokit-utils ```</TabItem>
-  <TabItem label='uv'>```bash uv add algokit-utils ```</TabItem>
+  <TabItem label="pip">
+    ```bash
+    pip install algokit-utils
+    ```
+  </TabItem>
+  <TabItem label="poetry">
+    ```bash
+    poetry add algokit-utils
+    ```
+  </TabItem>
+  <TabItem label="uv">
+    ```bash
+    uv add algokit-utils
+    ```
+  </TabItem>
 </Tabs>
 
 ## Quick Example
 
 ```python
-from algokit_utils import AlgorandClient, AlgoAmount, PaymentParams
+from algokit_utils import AlgoAmount, AlgorandClient, PaymentParams
 
-# Connect to LocalNet
+# Connect to the network configured through environment variables,
+# or default LocalNet configuration if no environment variables are set
 algorand = AlgorandClient.from_environment()
 
 # Create and fund a test account
@@ -32,7 +44,7 @@ algorand.account.ensure_funded(
 # Send a payment
 result = algorand.send.payment(
     PaymentParams(
-        sender=account.addr,
+        sender=account.address,
         receiver="RECEIVERADDRESS",
         amount=AlgoAmount.from_algo(1),
     )
@@ -41,19 +53,27 @@ result = algorand.send.payment(
 print("Transaction ID:", result.tx_id)
 ```
 
+## Core principles
+
+This library follows the [Guiding Principles of AlgoKit](https://github.com/algorandfoundation/algokit-cli/blob/main/docs/algokit.md#guiding-principles) and is designed with the following principles:
+
+- **Modularity** - This library is a thin wrapper of modular building blocks over the Algorand SDK; the primitives from the underlying Algorand SDK are exposed and used wherever possible so you can opt-in to which parts of this library you want to use without having to use an all or nothing approach.
+- **Type-safety** - This library provides strong type hints with effort put into creating types that provide good type safety and intellisense when used with tools like MyPy.
+- **Productivity** - This library is built to make solution developers highly productive; it has a number of mechanisms to make common code easier and terser to write.
+
 ## Features
 
 <CardGrid>
-  <Card title='AlgorandClient' icon='rocket'>
+  <Card title="AlgorandClient" icon="rocket">
     The main entry point for interacting with Algorand networks.
   </Card>
-  <Card title='Transaction Composer' icon='puzzle'>
+  <Card title="Transaction Composer" icon="puzzle">
     Build and send atomic transaction groups with ease.
   </Card>
-  <Card title='App Client' icon='document'>
+  <Card title="App Client" icon="document">
     Deploy and interact with smart contracts.
   </Card>
-  <Card title='Testing Utilities' icon='approve-check'>
+  <Card title="Testing Utilities" icon="approve-check">
     Comprehensive testing support for LocalNet.
   </Card>
 </CardGrid>

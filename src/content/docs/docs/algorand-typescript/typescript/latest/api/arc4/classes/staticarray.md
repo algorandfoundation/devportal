@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: 'StaticArray'
+title: "StaticArray"
 ---
 
 Defined in: [arc4/encoded-types.ts:322](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/arc4/encoded-types.ts#L322)
@@ -17,19 +17,19 @@ A fixed sized array of arc4 items
 
 ### TItem
 
-`TItem` _extends_ [`ARC4Encoded`](/algorand-typescript/api/arc4/classes/arc4encoded/)
+`TItem` *extends* [`ARC4Encoded`](/docs/algorand-typescript/typescript/latest/api/arc4/classes/arc4encoded/)
 
 The type of a single item in the array
 
 ### TLength
 
-`TLength` _extends_ `number`
+`TLength` *extends* `number`
 
 The fixed length of the array
 
 ## Indexable
 
-\[`index`: [`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)\]: `TItem`
+\[`index`: [`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)\]: `TItem`
 
 Get or set the item at the specified index.
 Negative indexes are not supported
@@ -82,7 +82,7 @@ The initial items for the array
 
 #### Get Signature
 
-> **get** **bytes**(): [`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)
+> **get** **bytes**(): [`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)
 
 Defined in: [arc4/encoded-types.ts:102](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/arc4/encoded-types.ts#L102)
 
@@ -90,19 +90,19 @@ Retrieve the encoded bytes for this type
 
 ##### Returns
 
-[`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)
+[`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)
 
 #### Inherited from
 
 `Arc4ArrayBase.bytes`
 
----
+***
 
 ### length
 
 #### Get Signature
 
-> **get** **length**(): [`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
+> **get** **length**(): [`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
 
 Defined in: [arc4/encoded-types.ts:350](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/arc4/encoded-types.ts#L350)
 
@@ -110,7 +110,7 @@ Returns the statically declared length of this array
 
 ##### Returns
 
-[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
+[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
 
 #### Overrides
 
@@ -134,7 +134,7 @@ Returns an iterator for the items in this array
 
 `Arc4ArrayBase.[iterator]`
 
----
+***
 
 ### at()
 
@@ -149,7 +149,7 @@ Negative indexes are taken from the end.
 
 ##### index
 
-[`Uint64Compat`](/algorand-typescript/api/index/type-aliases/uint64compat/)
+[`Uint64Compat`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64compat/)
 
 The index of the item to retrieve
 
@@ -161,11 +161,11 @@ The index of the item to retrieve
 
 `Arc4ArrayBase.at`
 
----
+***
 
 ### concat()
 
-> **concat**(`other`): [`DynamicArray`](/algorand-typescript/api/arc4/classes/dynamicarray/)\<`TItem`\>
+> **concat**(`other`): [`DynamicArray`](/docs/algorand-typescript/typescript/latest/api/arc4/classes/dynamicarray/)\<`TItem`\>
 
 Defined in: [arc4/encoded-types.ts:343](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/arc4/encoded-types.ts#L343)
 
@@ -181,13 +181,13 @@ Another array to concat with this one
 
 #### Returns
 
-[`DynamicArray`](/algorand-typescript/api/arc4/classes/dynamicarray/)\<`TItem`\>
+[`DynamicArray`](/docs/algorand-typescript/typescript/latest/api/arc4/classes/dynamicarray/)\<`TItem`\>
 
----
+***
 
 ### entries()
 
-> **entries**(): `IterableIterator`\<readonly \[[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/), `TItem`\]\>
+> **entries**(): `IterableIterator`\<readonly \[[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/), `TItem`\]\>
 
 Defined in: [arc4/encoded-types.ts:299](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/arc4/encoded-types.ts#L299)
 
@@ -195,13 +195,13 @@ Returns an iterator for a tuple of the indexes and items in this array
 
 #### Returns
 
-`IterableIterator`\<readonly \[[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/), `TItem`\]\>
+`IterableIterator`\<readonly \[[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/), `TItem`\]\>
 
 #### Inherited from
 
 `Arc4ArrayBase.entries`
 
----
+***
 
 ### ~~join()~~
 
@@ -230,11 +230,11 @@ Join is not supported in Algorand TypeScript
 
 `Arc4ArrayBase.join`
 
----
+***
 
 ### keys()
 
-> **keys**(): `IterableIterator`\<[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)\>
+> **keys**(): `IterableIterator`\<[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)\>
 
 Defined in: [arc4/encoded-types.ts:306](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/arc4/encoded-types.ts#L306)
 
@@ -242,13 +242,13 @@ Returns an iterator for the indexes in this array
 
 #### Returns
 
-`IterableIterator`\<[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)\>
+`IterableIterator`\<[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)\>
 
 #### Inherited from
 
 `Arc4ArrayBase.keys`
 
----
+***
 
 ### ~~slice()~~
 
@@ -287,7 +287,7 @@ Negative indexes are taken from the end.
 
 ###### end
 
-[`Uint64Compat`](/algorand-typescript/api/index/type-aliases/uint64compat/)
+[`Uint64Compat`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64compat/)
 
 An index in which to stop copying items.
 
@@ -315,13 +315,13 @@ Negative indexes are taken from the end.
 
 ###### start
 
-[`Uint64Compat`](/algorand-typescript/api/index/type-aliases/uint64compat/)
+[`Uint64Compat`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64compat/)
 
 An index in which to start copying items.
 
 ###### end
 
-[`Uint64Compat`](/algorand-typescript/api/index/type-aliases/uint64compat/)
+[`Uint64Compat`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64compat/)
 
 An index in which to stop copying items
 

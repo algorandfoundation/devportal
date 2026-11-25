@@ -2,12 +2,12 @@
 editUrl: false
 next: false
 prev: false
-title: 'ed25519verifyBare'
+title: "ed25519verifyBare"
 ---
 
 > **ed25519verifyBare**(`a`, `b`, `c`): `boolean`
 
-Defined in: [op.ts:890](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/op.ts#L890)
+Defined in: [op.ts:1048](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/op.ts#L1048)
 
 for (data A, signature B, pubkey C) verify the signature of the data against the pubkey => {0 or 1}
 
@@ -15,15 +15,15 @@ for (data A, signature B, pubkey C) verify the signature of the data against the
 
 ### a
 
-[`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)
+[`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)
 
 ### b
 
-[`bytes`](/algorand-typescript/api/index/type-aliases/bytes/) | [`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)\<`64`\>
+[`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/) | [`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)\<`64`\>
 
 ### c
 
-[`bytes`](/algorand-typescript/api/index/type-aliases/bytes/) | [`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)\<`32`\>
+[`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/) | [`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)\<`32`\>
 
 ## Returns
 

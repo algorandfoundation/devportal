@@ -9,23 +9,9 @@ sidebar:
 Welcome to the Guideline. Here you'll find information on which ARCs to use for your project.
 ## General ARCs
 
-### ARC 0 - ARC Purpose and Guidelines
-
-#### What is an ARC?
-ARC stands for Algorand Request for Comments. An ARC is a design document providing information to the Algorand community or describing a new feature for Algorand or its processes or environment.
-The ARC should provide a concise technical specification and a rationale for the feature.
-The ARC author is responsible for building consensus within the community and documenting dissenting opinions.
-We intend ARCs to be the primary mechanisms for proposing new features and collecting community technical input on an issue.
-We maintain ARCs as text files in a versioned repository. Their revision history is the historical record of the feature proposal.
-
 ### ARC 26 - URI scheme
 
 This URI specification represents a standardized way for applications and websites to send requests and information through deeplinks, QR codes, etc. It is heavily based on Bitcoin’s <a href="https://github.com/bitcoin/bips/blob/master/bip-0021.mediawiki">BIP-0021</a> and should be seen as derivative of it. The decision to base it on BIP-0021 was made to make it easy and compatible as possible for any other application.
-
-### ARC 65 - AVM Run Time Errors In Program
-
-This document introduces a convention for rising informative run time errors on
-the Algorand Virtual Machine (AVM) directly from the program bytecode.
 
 ### ARC 78 - URI scheme, keyreg Transactions extension
 
@@ -56,57 +42,6 @@ This ARC defines a unified Algorand URI scheme that covers payment transactions,
 
 ## Asa ARCs
 
-### ARC 3 - Conventions Fungible/Non-Fungible Tokens
-
-The goal of these conventions is to make it simpler for block explorers, wallets, exchanges, marketplaces, and more generally, client software to display the properties of a given ASA.
-
-### ARC 16 - Convention for declaring traits of an NFT's
-
-The goal is to establish a standard for how traits are declared inside a non-fungible NFT's metadata, for example as specified in ([ARC-3](/arc-standards/arc-0003)), ([ARC-69](/arc-standards/arc-0069)) or ([ARC-72](/arc-standards/arc-0072)).
-
-### ARC 19 - Templating of NFT ASA URLs for mutability
-
-This ARC describes a template substitution for URLs in ASAs, initially for ipfs:// scheme URLs allowing mutable CID replacement in rendered URLs.
-The proposed template-XXX scheme has substitutions like:
-```
-template-ipfs://{ipfscid:<version>:<multicodec>:<field name containing 32-byte digest, ie reserve>:<hash type>}[/...]
-```
-This will allow modifying the 32-byte 'Reserve address' in an ASA to represent a new IPFS content-id hash. Changing of the reserve address via an asset-config transaction will be all that is needed to point an ASA URL to new IPFS content. The client reading this URL, will compose a fully formed IPFS Content-ID based on the version, multicodec, and hash arguments provided in the ipfscid substitution.
-
-### ARC 20 - Smart ASA
-
-A "Smart ASA" is an Algorand Standard Asset (ASA) controlled by a Smart Contract
-that exposes methods to create, configure, transfer, freeze, and destroy the
-asset.
-This ARC defines the ABI interface of such a Smart Contract, the required
-metadata, and suggests a reference implementation.
-
-### ARC 36 - Convention for declaring filters of an NFT
-
-The goal is to establish a standard for how filters are declared inside a non-fungible (NFT) metadata.
-
-### ARC 62 - ASA Circulating Supply
-
-This ARC introduces a standard for the definition of circulating supply for Algorand
-Standard Assets (ASA) and its client-side retrieval. A reference implementation is
-suggested.
-
-### ARC 69 - ASA Parameters Conventions, Digital Media
-
-The goal of these conventions is to make it simpler to display the properties of a given ASA. This ARC differs from [ARC-3](/arc-standards/arc-0003) by focusing on optimization for fetching of digital media, as well as the use of onchain metadata. Furthermore, since asset configuration transactions are used to store the metadata, this ARC can be applied to existing ASAs.
-While mutability helps with backwards compatibility and other use cases, like leveling up an RPG character, some use cases call for immutability. In these cases, the ASA manager MAY remove the manager address, after which point the Algorand network won't allow anyone to send asset configuration transactions for the ASA. This effectively makes the latest valid [ARC-69](/arc-standards/arc-0069) metadata immutable.
-
-### ARC 71 - Non-Transferable ASA
-
-The goal is to make it simpler for block explorers, wallets, exchanges, marketplaces, and more generally, client software to identify & interact with a Non-transferable ASA (NTA).
-This defines an interface extending [ARC-3](/arc-standards/arc-0003) & [ARC-69](/arc-standards/arc-0069) non fungible ASA to create Non-transferable ASA. Before issuance, both parties (issuer and receiver), have to agree on who has (if any) the authorization to burn this ASA.
-> This spec is compatible with [ARC-19](/arc-standards/arc-0019) to create an updatable Non-transferable ASA.
-
-### ARC 89 - ASA Metadata Registry
-
-This ARC defines the interface and the implementation of a singleton Application
-that provides Algorand Standard Assets metadata through the Algod API or the AVM.
-
 ## Application ARCs
 
 ### ARC 4 - Application Binary Interface (ABI)
@@ -132,7 +67,7 @@ these method invocations.
 
 ### ARC 18 - Royalty Enforcement Specification
 
-A specification to describe a set of methods that offer an API to enforce Royalty Payments https://en.wikipedia.org/wiki/Royalty_payment to a Royalty Receiver given a policy describing the royalty shares, both on primary and secondary sales.
+A specification to describe a set of methods that offer an API to enforce Royalty Payments <https://en.wikipedia.org/wiki/Royalty_payment> to a Royalty Receiver given a policy describing the royalty shares, both on primary and secondary sales.
 This is an implementation of an [ARC-20](/arc-standards/arc-0020) specification and other methods may be implemented in the same contract according to that specification.
 
 ### ARC 21 - Round based datafeed oracles on Algorand
@@ -141,6 +76,7 @@ The following document introduces conventions for building round based datafeed 
 
 ### ARC 22 - Add `read-only` annotation to ABI methods
 
+The following document introduces a convention for creating methods (as described in [ARC-4](/arc-standards/arc-0004)) which don't mutate state.
 The goal of this convention is to allow smart contract developers to distinguish between methods which mutate state and methods which don't by introducing a new property to the `Method` descriptor.
 
 ### ARC 23 - Sharing Application Information
@@ -169,6 +105,11 @@ This ARC provides TEAL which would deploy a application that can be used for bur
 
 This ARC takes the existing JSON description of a contract as described in [ARC-4](/arc-standards/arc-0004) and adds more fields for the purpose of client interaction
 
+### ARC 65 - AVM Run Time Errors In Program
+
+This document introduces a convention for rising informative run time errors on
+the Algorand Virtual Machine (AVM) directly from the program bytecode.
+
 ### ARC 72 - Algorand Smart Contract NFT Specification
 
 This specifies an interface for non-fungible tokens (NFTs) to be implemented on Algorand as smart contracts.
@@ -185,7 +126,7 @@ This specifies a REST interface that can be implemented by indexing services to 
 
 ### ARC 87 - Key Name Specification
 
-Adopt a standard key name specification for complex data. 
+Adopt a standard key name specification for complex data.
 This defines key names that can be used to represent JSON,
 Blobs, or other structures that do not fit neatly into the state
 
@@ -207,25 +148,26 @@ The goal of this API is to propose a standard way for a dApp to request the sign
 
 ### ARC 5 - Wallet Transaction Signing API (Functional)
 
-ARC-1 defines a standard for signing transactions with security in mind. This proposal is a strict subset of ARC-1 that outlines only the minimum functionality required in order to be useable.
+> This ARC is intended to be completely compatible with [ARC-1](/arc-standards/arc-0001).
+ARC-1 defines a standard for signing transactions with security in mind. This proposal is a strict subset of ARC-1 that outlines only the minimum functionality required to be usable.
 Wallets that conform to ARC-1 already conform to this API.
 Wallets conforming to [ARC-5](/arc-standards/arc-0005) but not ARC-1 **MUST** only be used for testing purposes and **MUST NOT** used on MainNet.
 This is because this ARC-5 does not provide the same security guarantees as ARC-1 to protect properly wallet users.
 
 ### ARC 25 - Algorand WalletConnect v1 API
 
-WalletConnect https://walletconnect.com/ is an open protocol to communicate securely between mobile wallets and decentralized applications (dApps) using QR code scanning (desktop) or deep linking (mobile). It’s main use case allows users to sign transactions on web apps using a mobile wallet.
+This document specifies a standard API for communication between Algorand decentralized applications and wallets using the WalletConnect v1 protocol.
+WalletConnect <https://walletconnect.com/> is an open protocol to communicate securely between mobile wallets and decentralized applications (dApps) using QR code scanning (desktop) or deep linking (mobile). It’s main use case allows users to sign transactions on web apps using a mobile wallet.
 This document aims to establish a standard API for using the WalletConnect v1 protocol on Algorand, leveraging the existing transaction signing APIs defined in [ARC-1](/arc-standards/arc-0001).
 
 ### ARC 27 - Provider Message Schema
 
-Building off of the work of the previous ARCs relating to; provider transaction signing ([ARC-0005][arc-0005]), provider address discovery ([ARC-0006][arc-0006]), provider transaction network posting ([ARC-0007][arc-0007]) and provider transaction signing & posting ([ARC-0008][arc-0008]), this proposal aims to comprehensively outline a common message schema between clients and providers.
+Building off of the work of the previous ARCs relating to; provider transaction signing ([ARC-5](/arc-standards/arc-0005)), provider address discovery ([ARC-6](/arc-standards/arc-0006)), provider transaction network posting ([ARC-7](/arc-standards/arc-0007)) and provider transaction signing & posting ([ARC-8](/arc-standards/arc-0008)), this proposal aims to comprehensively outline a common message schema between clients and providers.
 Furthermore, this proposal extends the aforementioned methods to encompass new functionality such as:
 * Extending the message structure to target specific networks, thereby supporting multiple AVM (Algorand Virtual Machine) chains.
 * Adding a new method that disables clients on providers.
 * Adding a new method to discover provider capabilities, such as what networks and methods are supported.
 This proposal serves as a formalization of the message schema and leaves the implementation details to the prerogative of the clients and providers.
-<sup>[Back to top ^][top]</sup>
 
 ### ARC 35 - Algorand Offline Wallet Backup Protocol
 

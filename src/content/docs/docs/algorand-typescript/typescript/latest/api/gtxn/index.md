@@ -2,9 +2,9 @@
 editUrl: false
 next: false
 prev: false
-title: 'gtxn'
+title: "gtxn"
 ---
 
 ## Namespaces
 
-- [gtxn](/algorand-typescript/api/gtxn/namespaces/gtxn/index/)
+- [gtxn](/docs/algorand-typescript/typescript/latest/api/gtxn/namespaces/gtxn/index/)

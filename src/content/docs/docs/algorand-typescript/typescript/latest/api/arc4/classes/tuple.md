@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: 'Tuple'
+title: "Tuple"
 ---
 
 Defined in: [arc4/encoded-types.ts:408](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/arc4/encoded-types.ts#L408)
@@ -11,13 +11,13 @@ An arc4 encoded tuple of values
 
 ## Extends
 
-- [`ARC4Encoded`](/algorand-typescript/api/arc4/classes/arc4encoded/)
+- [`ARC4Encoded`](/docs/algorand-typescript/typescript/latest/api/arc4/classes/arc4encoded/)
 
 ## Type Parameters
 
 ### TTuple
 
-`TTuple` _extends_ readonly \[[`ARC4Encoded`](/algorand-typescript/api/arc4/classes/arc4encoded/), `...ARC4Encoded[]`\]
+`TTuple` *extends* readonly \[[`ARC4Encoded`](/docs/algorand-typescript/typescript/latest/api/arc4/classes/arc4encoded/), `...ARC4Encoded[]`\]
 
 A type representing the native tuple of item types
 
@@ -37,7 +37,7 @@ Create a new Tuple with the default zero values for items
 
 #### Overrides
 
-[`ARC4Encoded`](/algorand-typescript/api/arc4/classes/arc4encoded/).[`constructor`](/algorand-typescript/api/arc4/classes/arc4encoded/#constructor)
+[`ARC4Encoded`](/docs/algorand-typescript/typescript/latest/api/arc4/classes/arc4encoded/).[`constructor`](/docs/algorand-typescript/typescript/latest/api/arc4/classes/arc4encoded/#constructor)
 
 ### Constructor
 
@@ -69,7 +69,7 @@ The tuple items
 
 #### Get Signature
 
-> **get** **bytes**(): [`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)
+> **get** **bytes**(): [`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)
 
 Defined in: [arc4/encoded-types.ts:102](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/arc4/encoded-types.ts#L102)
 
@@ -77,13 +77,13 @@ Retrieve the encoded bytes for this type
 
 ##### Returns
 
-[`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)
+[`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)
 
 #### Inherited from
 
-[`ARC4Encoded`](/algorand-typescript/api/arc4/classes/arc4encoded/).[`bytes`](/algorand-typescript/api/arc4/classes/arc4encoded/#bytes)
+[`ARC4Encoded`](/docs/algorand-typescript/typescript/latest/api/arc4/classes/arc4encoded/).[`bytes`](/docs/algorand-typescript/typescript/latest/api/arc4/classes/arc4encoded/#bytes)
 
----
+***
 
 ### length
 
@@ -99,7 +99,7 @@ Returns the length of this tuple
 
 `TTuple`\[`"length"`\] & `object` & `number`
 
----
+***
 
 ### native
 
@@ -129,7 +129,7 @@ Returns the item at the specified index
 
 ##### TIndex
 
-`TIndex` _extends_ `string` \| `number` \| `symbol`
+`TIndex` *extends* `string` \| `number` \| `symbol`
 
 #### Parameters
 

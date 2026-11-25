@@ -1,30 +1,27 @@
 ---
-title: 'algokit_utils.errors.logic_error'
+title: "algokit_utils.errors.logic_error"
 ---
 
 <div class="api-ref">
 
-# algokit_utils.errors.logic_error
-
 ## Exceptions
 
-| [`LogicError`](#algokit_utils.errors.logic_error.LogicError) | Common base class for all non-exit exceptions. |
-| ------------------------------------------------------------ | ---------------------------------------------- |
+| [`LogicError`](#exception-logicerror-logic_error_str-str-program-str-source_map-algosourcemap--none-transaction_id-str-message-str-pc-int-logic_error-exception--none--none-traces-listsimulationtrace--none--none-get_line_for_pc-callableint-int--none--none--none)   | Common base class for all non-exit exceptions.   |
+|----------------------------------------------------------------|--------------------------------------------------|
 
 ## Classes
 
-| [`LogicErrorData`](#algokit_utils.errors.logic_error.LogicErrorData) | dict() -> new empty dictionary |
-| -------------------------------------------------------------------- | ------------------------------ |
+| [`LogicErrorData`](#class-logicerrordata)   | dict() -> new empty dictionary   |
+|------------------------------------------------------------------------|----------------------------------|
 
 ## Functions
 
-| [`parse_logic_error`](#algokit_utils.errors.logic_error.parse_logic_error)(→ LogicErrorData                               | None)                                                                         |     |
-| ------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------- | --- |
-| [`create_simulate_traces_for_logic_error`](#algokit_utils.errors.logic_error.create_simulate_traces_for_logic_error)(...) | Extract simulation traces from a simulate response for logic error debugging. |
+| [`parse_logic_error`](#parse_logic_errorerror_str-str--logicerrordata--none)(→ LogicErrorData | None)   |    |
+|-------------------------------------------------------------------------------------------------------|----|
 
 ## Module Contents
 
-### _class_ LogicErrorData
+### *class* LogicErrorData
 
 Bases: `TypedDict`
 
@@ -35,8 +32,7 @@ dict(mapping) -> new dictionary initialized from a mapping object’s
 
 dict(iterable) -> new dictionary initialized as if via:
 : d = {}
-for k, v in iterable:
-
+  for k, v in iterable:
   <br/>
   > d[k] = v
 
@@ -47,23 +43,23 @@ dict(
 ```
 
 kwargs) -> new dictionary initialized with the name=value pairs
-: in the keyword argument list. For example: dict(one=1, two=2)
+: in the keyword argument list.  For example:  dict(one=1, two=2)
 
-#### transaction*id *: str\_
+#### transaction_id *: str*
 
-#### message _: str_
+#### message *: str*
 
-#### pc _: int_
+#### pc *: int*
 
-### parse_logic_error(error_str: str) → [LogicErrorData](#algokit_utils.errors.logic_error.LogicErrorData) | None
+### parse_logic_error(error_str: str) → [LogicErrorData](#class-logicerrordata) | None
 
-### _exception_ LogicError(\*, logic_error_str: str, program: str, source_map: ProgramSourceMap | None, transaction_id: str, message: str, pc: int, logic_error: Exception | None = None, traces: list[SimulateTransactionResult] | None = None, get_line_for_pc: Callable[[int], int | None] | None = None)
+### *exception* LogicError(, logic_error_str: str, program: str, source_map: AlgoSourceMap | None, transaction_id: str, message: str, pc: int, logic_error: Exception | None = None, traces: list[[SimulationTrace](/docs/algokit-utils/python/latest/api/algokit_utils/models/simulate/#class-simulationtrace)] | None = None, get_line_for_pc: Callable[[int], int | None] | None = None)
 
 Bases: `Exception`
 
 Common base class for all non-exit exceptions.
 
-#### logic*error *= None\_
+#### logic_error *= None*
 
 #### logic_error_str
 
@@ -77,20 +73,11 @@ Common base class for all non-exit exceptions.
 
 #### pc
 
-#### traces _= None_
+#### traces *= None*
 
 #### line_no
 
 #### trace(lines: int = 5) → str
 
-### create_simulate_traces_for_logic_error(simulate: object) → list[SimulateTransactionResult]
-
-Extract simulation traces from a simulate response for logic error debugging.
-
-Args:
-: simulate: An object with simulate_response and failed_at attributes.
-
-Returns:
-: A list of SimulateTransactionResult objects extracted from the simulation response.
 
 </div>

@@ -2,10 +2,10 @@
 editUrl: false
 next: false
 prev: false
-title: 'ContractProxy'
+title: "ContractProxy"
 ---
 
-> **ContractProxy**\<`TContract`\> = [`CompiledContract`](/algorand-typescript/api/index/type-aliases/compiledcontract/) & `object`
+> **ContractProxy**\<`TContract`\> = [`CompiledContract`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/compiledcontract/) & `object`
 
 Defined in: [arc4/c2c.ts:79](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/arc4/c2c.ts#L79)
 
@@ -22,7 +22,7 @@ Get methods for calling ABI and bare methods on the target contract
 
 ### bareCreate()
 
-> **bareCreate**(`fields?`): [`ApplicationCallInnerTxn`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/applicationcallinnertxn/)
+> **bareCreate**(`fields?`): [`ApplicationCallInnerTxn`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/applicationcallinnertxn/)
 
 Create a bare application call itxn to create the contract.
 
@@ -30,16 +30,16 @@ Create a bare application call itxn to create the contract.
 
 ##### fields?
 
-[`BareCreateApplicationCallFields`](/algorand-typescript/api/arc4/type-aliases/barecreateapplicationcallfields/)
+[`BareCreateApplicationCallFields`](/docs/algorand-typescript/typescript/latest/api/arc4/type-aliases/barecreateapplicationcallfields/)
 
 Specify values for transaction fields which should override the default values.
 
 #### Returns
 
-[`ApplicationCallInnerTxn`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/applicationcallinnertxn/)
+[`ApplicationCallInnerTxn`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/applicationcallinnertxn/)
 
 ## Type Parameters
 
 ### TContract
 
-`TContract` _extends_ [`Contract`](/algorand-typescript/api/arc4/classes/contract/)
+`TContract` *extends* [`Contract`](/docs/algorand-typescript/typescript/latest/api/arc4/classes/contract/)

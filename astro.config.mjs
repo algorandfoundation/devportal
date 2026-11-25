@@ -29,6 +29,33 @@ export default defineConfig({
   // docs, starting at the first sidebar entry.
   redirects: {
     '/': '/getting-started/portal-guide/',
+    // Library guide pages that upstream moved or removed (November 2026
+    // import). AlgoKit Utils TS reorganised `concepts/*` into `capabilities/*`.
+    '/docs/algokit-utils/typescript/latest/concepts/core/account/': '/docs/algokit-utils/typescript/latest/capabilities/account/',
+    '/docs/algokit-utils/typescript/latest/concepts/core/algorand-client/': '/docs/algokit-utils/typescript/latest/capabilities/algorand-client/',
+    '/docs/algokit-utils/typescript/latest/concepts/core/amount/': '/docs/algokit-utils/typescript/latest/capabilities/amount/',
+    '/docs/algokit-utils/typescript/latest/concepts/core/client/': '/docs/algokit-utils/typescript/latest/capabilities/client/',
+    '/docs/algokit-utils/typescript/latest/concepts/core/transaction/': '/docs/algokit-utils/typescript/latest/capabilities/transaction/',
+    '/docs/algokit-utils/typescript/latest/concepts/building/app-client/': '/docs/algokit-utils/typescript/latest/capabilities/app-client/',
+    '/docs/algokit-utils/typescript/latest/concepts/building/app-deploy/': '/docs/algokit-utils/typescript/latest/capabilities/app-deploy/',
+    '/docs/algokit-utils/typescript/latest/concepts/building/app/': '/docs/algokit-utils/typescript/latest/capabilities/app/',
+    '/docs/algokit-utils/typescript/latest/concepts/building/asset/': '/docs/algokit-utils/typescript/latest/capabilities/asset/',
+    '/docs/algokit-utils/typescript/latest/concepts/building/testing/': '/docs/algokit-utils/typescript/latest/capabilities/testing/',
+    '/docs/algokit-utils/typescript/latest/concepts/building/transfer/': '/docs/algokit-utils/typescript/latest/capabilities/transfer/',
+    '/docs/algokit-utils/typescript/latest/concepts/building/typed-app-clients/': '/docs/algokit-utils/typescript/latest/capabilities/typed-app-clients/',
+    '/docs/algokit-utils/typescript/latest/concepts/advanced/debugging/': '/docs/algokit-utils/typescript/latest/capabilities/debugging/',
+    '/docs/algokit-utils/typescript/latest/concepts/advanced/dispenser-client/': '/docs/algokit-utils/typescript/latest/capabilities/dispenser-client/',
+    '/docs/algokit-utils/typescript/latest/concepts/advanced/event-emitter/': '/docs/algokit-utils/typescript/latest/capabilities/event-emitter/',
+    '/docs/algokit-utils/typescript/latest/concepts/advanced/indexer/': '/docs/algokit-utils/typescript/latest/capabilities/indexer/',
+    '/docs/algokit-utils/typescript/latest/concepts/advanced/transaction-composer/': '/docs/algokit-utils/typescript/latest/capabilities/transaction-composer/',
+    '/docs/algokit-utils/typescript/latest/concepts/advanced/modular-imports/': '/docs/algokit-utils/typescript/latest/',
+    '/docs/algokit-utils/typescript/latest/tutorials/': '/docs/algokit-utils/typescript/latest/',
+    '/docs/algokit-utils/typescript/latest/tutorials/quick-start/': '/docs/algokit-utils/typescript/latest/',
+    '/docs/algokit-utils/typescript/latest/migration/v9-to-v10-migration/': '/docs/algokit-utils/typescript/latest/',
+    '/docs/algokit-utils/typescript/latest/examples/': '/docs/algokit-utils/typescript/latest/',
+    '/docs/algokit-utils/python/latest/examples/': '/docs/algokit-utils/python/latest/',
+    '/docs/algokit-subscriber/python/latest/examples/': '/docs/algokit-subscriber/python/latest/',
+    '/docs/algokit-subscriber/typescript/latest/migration/v4-migration/': '/docs/algokit-subscriber/typescript/latest/',
   },
   integrations: [
     starlight({

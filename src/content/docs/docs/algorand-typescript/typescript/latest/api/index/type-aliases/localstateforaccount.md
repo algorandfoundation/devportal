@@ -2,12 +2,12 @@
 editUrl: false
 next: false
 prev: false
-title: 'LocalStateForAccount'
+title: "LocalStateForAccount"
 ---
 
 > **LocalStateForAccount**\<`ValueType`\> = `object`
 
-Defined in: [state.ts:51](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/state.ts#L51)
+Defined in: [state.ts:92](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/state.ts#L92)
 
 A proxy for manipulating a local state field for a single account
 
@@ -23,17 +23,17 @@ A proxy for manipulating a local state field for a single account
 
 > `readonly` **hasValue**: `boolean`
 
-Defined in: [state.ts:63](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/state.ts#L63)
+Defined in: [state.ts:104](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/state.ts#L104)
 
 Gets a boolean value indicating if local state field for a single account currently has a value
 
----
+***
 
 ### value
 
 > **value**: `ValueType`
 
-Defined in: [state.ts:55](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/state.ts#L55)
+Defined in: [state.ts:96](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/state.ts#L96)
 
 Get or set the value of this local state field for a single account
 
@@ -43,7 +43,7 @@ Get or set the value of this local state field for a single account
 
 > **delete**(): `void`
 
-Defined in: [state.ts:59](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/state.ts#L59)
+Defined in: [state.ts:100](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/state.ts#L100)
 
 Delete the stored value of this local state field for a single account
 

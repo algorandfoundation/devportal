@@ -2,12 +2,12 @@
 editUrl: false
 next: false
 prev: false
-title: 'exp'
+title: "exp"
 ---
 
-> **exp**(`a`, `b`): [`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
+> **exp**(`a`, `b`): [`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
 
-Defined in: [op.ts:899](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/op.ts#L899)
+Defined in: [op.ts:1057](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/op.ts#L1057)
 
 A raised to the Bth power. Fail if A == B == 0 and on overflow
 
@@ -15,15 +15,15 @@ A raised to the Bth power. Fail if A == B == 0 and on overflow
 
 ### a
 
-[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
+[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
 
 ### b
 
-[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
+[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
 
 ## Returns
 
-[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
+[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
 
 ## See
 

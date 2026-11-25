@@ -2,12 +2,12 @@
 editUrl: false
 next: false
 prev: false
-title: 'fromHex'
+title: "fromHex"
 ---
 
 ## Call Signature
 
-> **fromHex**(`hex`): [`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)\<[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)\>
+> **fromHex**(`hex`): [`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)\<[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)\>
 
 Defined in: [primitives.ts:306](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/primitives.ts#L306)
 
@@ -23,11 +23,11 @@ A literal string of hexadecimal characters
 
 ### Returns
 
-[`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)\<[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)\>
+[`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)\<[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)\>
 
 ## Call Signature
 
-> **fromHex**\<`TLength`\>(`hex`, `options`): [`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)\<`TLength`\>
+> **fromHex**\<`TLength`\>(`hex`, `options`): [`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)\<`TLength`\>
 
 Defined in: [primitives.ts:312](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/primitives.ts#L312)
 
@@ -37,7 +37,7 @@ Create a new bytes value from a hexadecimal encoded string
 
 #### TLength
 
-`TLength` _extends_ [`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
+`TLength` *extends* [`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
 
 ### Parameters
 
@@ -55,4 +55,4 @@ Options for bounded bytes
 
 ### Returns
 
-[`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)\<`TLength`\>
+[`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)\<`TLength`\>

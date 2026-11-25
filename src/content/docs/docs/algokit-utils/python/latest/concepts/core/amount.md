@@ -1,13 +1,13 @@
 ---
-title: 'Algo amount handling'
-description: 'Algo amount handling is one of the core capabilities provided by AlgoKit Utils. It allows you to reliably and tersely specify amounts of microAlgo and Algo and safely convert between them.'
+title: "Algo amount handling"
+description: "Algo amount handling is one of the core capabilities provided by AlgoKit Utils. It allows you to reliably and tersely specify amounts of microAlgo and Algo and safely convert between them."
 ---
 
 Algo amount handling is one of the core capabilities provided by AlgoKit Utils. It allows you to reliably and tersely specify amounts of microAlgo and Algo and safely convert between them.
 
-Any AlgoKit Utils function that needs an Algo amount will take an `AlgoAmount` object, which ensures that there is never any confusion about what value is being passed around. You can safely and explicitly convert to microAlgo or Algo when needed.
+Any AlgoKit Utils function that needs an Algo amount will take an `AlgoAmount` object, which ensures that there is never any confusion about what value is being passed around. Whenever an AlgoKit Utils function calls into an underlying algosdk function, or if you need to take an `AlgoAmount` and pass it into an underlying algosdk function (per the [modularity principle](/docs/algokit-utils/python/latest/#core-principles)) you can safely and explicitly convert to microAlgo or Algo.
 
-To see some usage examples check out the `automated tests`. Alternatively, you see the `reference documentation` for `AlgoAmount`.
+To see some usage examples check out the automated tests. Alternatively, you can see the reference documentation for `AlgoAmount`.
 
 ## `AlgoAmount`
 
@@ -23,10 +23,10 @@ from algokit_utils import AlgoAmount
 
 There are a few ways to create an `AlgoAmount`:
 
-- Algo (accepts `int` or `Decimal`)
+- Algo
   - Constructor: `AlgoAmount(algo=10)`
   - Static helper: `AlgoAmount.from_algo(10)`
-- microAlgo (accepts `int`)
+- microAlgo
   - Constructor: `AlgoAmount(micro_algo=10_000)`
   - Static helper: `AlgoAmount.from_micro_algo(10_000)`
 
@@ -34,76 +34,25 @@ There are a few ways to create an `AlgoAmount`:
 
 The `AlgoAmount` class has properties to return Algo and microAlgo:
 
-- `amount.algo` - Returns the value in Algo as `Decimal`
-- `amount.micro_algo` - Returns the value in microAlgo as `int`
+- `amount.algo` - Returns the value in Algo as a python `Decimal` object
+- `amount.micro_algo` - Returns the value in microAlgo as an integer
 
-`AlgoAmount` will coerce to an integer automatically (in microAlgo) when using `int(amount)`.
-
-`AlgoAmount` objects support the following comparison operators against other `AlgoAmount` instances or plain `int` values (treated as microAlgo):
-
-| Operator | Description              |
-| -------- | ------------------------ |
-| `==`     | Equal to                 |
-| `!=`     | Not equal to             |
-| `<`      | Less than                |
-| `<=`     | Less than or equal to    |
-| `>`      | Greater than             |
-| `>=`     | Greater than or equal to |
-
-> [!NOTE]
-> Only `__eq__` and `__lt__` are explicitly defined. The remaining operators (`!=`, `<=`, `>`, `>=`) are derived automatically via Python's [`@total_ordering`](https://docs.python.org/3/library/functools.html#functools.total_ordering) decorator.
+`AlgoAmount` will coerce to an integer automatically (in microAlgo) when using `int(amount)`, which allows you to use `AlgoAmount` objects in comparison operations such as `<` and `>=` etc.
 
 You can also call `str(amount)` or use an `AlgoAmount` directly in string interpolation to convert it to a nice user-facing formatted amount expressed in microAlgo.
 
-### Convenience functions
+### Additional Features
 
-There are also standalone convenience functions for creating `AlgoAmount` instances:
+The `AlgoAmount` class supports arithmetic operations:
 
-```python
-from algokit_utils import algo, micro_algo
+- Addition: `amount1 + amount2`
+- Subtraction: `amount1 - amount2`
+- Comparison operations: `<`, `<=`, `>`, `>=`, `==`, `!=`
 
-amount1 = algo(1)            # equivalent to AlgoAmount.from_algo(1)
-amount2 = micro_algo(1_000)  # equivalent to AlgoAmount.from_micro_algo(1_000)
-```
-
-### Constants and helpers
-
-`ALGORAND_MIN_TX_FEE` is a pre-defined `AlgoAmount` representing the minimum transaction fee (1,000 µALGO):
+Example:
 
 ```python
-from algokit_utils import ALGORAND_MIN_TX_FEE, transaction_fees
-
-fee = ALGORAND_MIN_TX_FEE                # AlgoAmount(micro_algo=1_000)
-total = transaction_fees(3)              # AlgoAmount(micro_algo=3_000)
+amount1 = AlgoAmount(algo=1)
+amount2 = AlgoAmount(micro_algo=500_000)
+total = amount1 + amount2  # Results in 1.5 Algo
 ```
-
-### Arithmetic operations
-
-`AlgoAmount` supports arithmetic operations with other `AlgoAmount` instances or plain `int` values (treated as microAlgo):
-
-| Operator | Right operand       | Return type  | Description                       |
-| -------- | ------------------- | ------------ | --------------------------------- |
-| `+`      | `AlgoAmount \| int` | `AlgoAmount` | Addition                          |
-| `-`      | `AlgoAmount \| int` | `AlgoAmount` | Subtraction                       |
-| `*`      | `int`               | `AlgoAmount` | Scalar multiplication             |
-| `/`      | `int`               | `AlgoAmount` | Division (integer, floors result) |
-| `//`     | `int`               | `AlgoAmount` | Floor division                    |
-| `+=`     | `AlgoAmount \| int` | `AlgoAmount` | In-place addition                 |
-| `-=`     | `AlgoAmount \| int` | `AlgoAmount` | In-place subtraction              |
-
-Division by zero raises `ZeroDivisionError`.
-
-```python
-a = AlgoAmount.from_algo(1)
-b = AlgoAmount.from_algo(2)
-
-# Addition and subtraction (AlgoAmount or int)
-c = a + b           # AlgoAmount(micro_algo=3_000_000)
-d = b - a           # AlgoAmount(micro_algo=1_000_000)
-
-# Multiplication and division (int only)
-e = a * 3           # AlgoAmount(micro_algo=3_000_000)
-f = b / 2           # AlgoAmount(micro_algo=1_000_000)
-```
-
-> Source: [`src/algokit_utils/models/amount.py`](https://github.com/algorandfoundation/algokit-utils-py/blob/main/src/algokit_utils/models/amount.py)

@@ -2,10 +2,10 @@
 editUrl: false
 next: false
 prev: false
-title: 'assetFreeze'
+title: "assetFreeze"
 ---
 
-> **assetFreeze**(`fields`): [`AssetFreezeItxnParams`](/algorand-typescript/api/itxn/namespaces/itxn/classes/assetfreezeitxnparams/)
+> **assetFreeze**(`fields`): [`AssetFreezeItxnParams`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/classes/assetfreezeitxnparams/)
 
 Defined in: [itxn.ts:1134](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/itxn.ts#L1134)
 
@@ -15,8 +15,8 @@ Create a new AssetFreezeItxnParams object with the specified fields
 
 ### fields
 
-[`AssetFreezeFields`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/assetfreezefields/)
+[`AssetFreezeFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/assetfreezefields/)
 
 ## Returns
 
-[`AssetFreezeItxnParams`](/algorand-typescript/api/itxn/namespaces/itxn/classes/assetfreezeitxnparams/)
+[`AssetFreezeItxnParams`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/classes/assetfreezeitxnparams/)

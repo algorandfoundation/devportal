@@ -2,12 +2,12 @@
 editUrl: false
 next: false
 prev: false
-title: 'getByte'
+title: "getByte"
 ---
 
-> **getByte**(`a`, `b`): [`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
+> **getByte**(`a`, `b`): [`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
 
-Defined in: [op.ts:973](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/op.ts#L973)
+Defined in: [op.ts:1132](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/op.ts#L1132)
 
 Bth byte of A, as an integer. If B is greater than or equal to the array length, the program fails
 
@@ -15,15 +15,15 @@ Bth byte of A, as an integer. If B is greater than or equal to the array length,
 
 ### a
 
-[`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)
+[`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)
 
 ### b
 
-[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
+[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
 
 ## Returns
 
-[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
+[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
 
 ## See
 

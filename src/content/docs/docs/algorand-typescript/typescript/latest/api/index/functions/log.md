@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: 'log'
+title: "log"
 ---
 
 > **log**(...`args`): `void`
@@ -17,7 +17,7 @@ Each value is converted to bytes and concatenated
 
 ### args
 
-...(`string` \| `number` \| `bigint` \| `boolean` \| [`uint64`](/algorand-typescript/api/index/type-aliases/uint64/) \| [`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)\<[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)\> \| [`BytesBacked`](/algorand-typescript/api/index/interfaces/bytesbacked/)\<[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)\>)[]
+...(`string` \| `number` \| `bigint` \| `boolean` \| [`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/) \| [`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)\<[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)\> \| [`BytesBacked`](/docs/algorand-typescript/typescript/latest/api/index/interfaces/bytesbacked/)\<[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)\>)[]
 
 The values to write
 

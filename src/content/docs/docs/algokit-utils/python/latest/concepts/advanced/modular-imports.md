@@ -1,6 +1,6 @@
 ---
-title: 'Modular imports'
-description: 'AlgoKit Utils is designed with a modular architecture that allows you to import only the functionality you need. This keeps your imports explicit and helps with code readability and IDE auto-completion.'
+title: "Modular imports"
+description: "AlgoKit Utils is designed with a modular architecture that allows you to import only the functionality you need. This keeps your imports explicit and helps with code readability and IDE auto-completion."
 ---
 
 AlgoKit Utils is designed with a modular architecture that allows you to import only the functionality you need. This keeps your imports explicit and helps with code readability and IDE auto-completion.
@@ -9,18 +9,20 @@ AlgoKit Utils is designed with a modular architecture that allows you to import 
 
 The library is organized into several submodules, each containing related functionality:
 
-| Submodule      | Purpose                                                      | Key Exports                                                                                  |
-| -------------- | ------------------------------------------------------------ | -------------------------------------------------------------------------------------------- |
-| `accounts`     | Account management                                           | `AccountManager`, `KmdAccountManager`                                                        |
-| `algorand`     | Algorand client entry point                                  | `AlgorandClient`                                                                             |
-| `applications` | App clients, deployment, specs                               | `AppClient`, `AppFactory`, `AppDeployer`, `AppManager`, `Arc56Contract`                      |
-| `assets`       | Asset management                                             | `AssetManager`                                                                               |
-| `clients`      | API client management                                        | `ClientManager`, `AlgodClient`, `IndexerClient`, `KmdClient`, `TestNetDispenserApiClient`    |
-| `models`       | Data models                                                  | `AlgoAmount`, `AlgoClientConfigs`, `AppState`, `SimulateTransactionResult`                   |
-| `transactions` | Transaction composition                                      | `TransactionComposer`, `AlgorandClientTransactionCreator`, `AlgorandClientTransactionSender` |
-| `protocols`    | Protocol definitions                                         | `AddressWithTransactionSigner`, `TypedAppClientProtocol`, `TypedAppFactoryProtocol`          |
-| `errors`       | Error handling                                               | `LogicError`                                                                                 |
-| `transact`     | Transaction primitives (re-exported from `algokit_transact`) | `Transaction`, `TransactionSigner`, `OnApplicationComplete`, `BoxReference`                  |
+| Submodule      | Purpose                            | Key Exports                                                                          |
+| -------------- | ---------------------------------- | ------------------------------------------------------------------------------------ |
+| `accounts`     | Account management                 | `AccountManager`, `KmdAccountManager`                                                 |
+| `algorand`     | Algorand client entry point        | `AlgorandClient`                                                                      |
+| `applications` | App clients, deployment, specs     | `AppClient`, `AppFactory`, `AppDeployer`, `AppManager`, `Arc56Contract`                |
+| `assets`       | Asset management                   | `AssetManager`                                                                        |
+| `clients`      | API client management              | `ClientManager`, `TestNetDispenserApiClient`                                          |
+| `config`       | Configuration and logging          | `config`, `AlgoKitLogger`                                                             |
+| `errors`       | Error handling                     | `LogicError`                                                                          |
+| `models`       | Data models                        | `AlgoAmount`, `AlgoClientConfigs`, `AppState`, `BoxReference`                          |
+| `protocols`    | Protocol definitions               | `TransactionSignerAccountProtocol`, `TypedAppClientProtocol`, `TypedAppFactoryProtocol` |
+| `transactions` | Transaction composition            | `TransactionComposer`, `AlgorandClientTransactionCreator`, `AlgorandClientTransactionSender` |
+
+Since AlgoKit Utils wraps the official [Algorand Python SDK](https://github.com/algorand/py-algorand-sdk), the underlying `algosdk` primitives (e.g. `algosdk.transaction.Transaction`, `algosdk.atomic_transaction_composer.TransactionSigner`) are exposed and used wherever possible, so you can mix and match with raw `algosdk` code as needed.
 
 ## Using modular imports
 
@@ -39,10 +41,10 @@ For more explicit and readable imports, use submodule imports:
 from algokit_utils.accounts import AccountManager
 
 # Application clients and deployment
-from algokit_utils.applications import AppClient, AppFactory, AppDeployer
+from algokit_utils.applications import AppClient, AppDeployer, AppFactory
 
-# API client types
-from algokit_utils.clients import ClientManager, AlgodClient, IndexerClient
+# API client management
+from algokit_utils.clients import ClientManager, TestNetDispenserApiClient
 
 # Transaction composition
 from algokit_utils.transactions import TransactionComposer
@@ -58,184 +60,25 @@ from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
     from algokit_utils.applications import AppClient
-    from algokit_utils.models import AppState
+    from algokit_utils.models import AlgoAmount
+
+
+def fund_app(app_client: AppClient, amount: AlgoAmount) -> None: ...
 ```
 
-## Submodule details
+### Mixing with algosdk
 
-### `accounts`
-
-Contains account management and KMD integration:
+Per the [modularity principle](/docs/algokit-utils/python/latest/#core-principles), AlgoKit Utils functions accept and return `algosdk` primitives wherever possible:
 
 ```python
-from algokit_utils.accounts import (
-    AccountManager,
-    KmdAccountManager,
-)
+from algosdk.v2client.algod import AlgodClient
+
+from algokit_utils import AlgorandClient
+
+algorand = AlgorandClient.default_localnet()
+
+# The underlying algosdk clients are directly accessible
+algod_client: AlgodClient = algorand.client.algod
 ```
 
-### `applications`
-
-Contains app client, factory, deployment, and ABI utilities:
-
-```python
-from algokit_utils.applications import (
-    # App client and factory
-    AppClient,
-    AppFactory,
-
-    # Deployment
-    AppDeployer,
-
-    # App management
-    AppManager,
-
-    # ABI utilities
-    ABIReturn,
-
-    # App spec
-    Arc56Contract,
-
-    # Enums
-    OnSchemaBreak,
-    OnUpdate,
-)
-```
-
-### `transactions`
-
-Contains transaction composition, creation, and sending:
-
-```python
-from algokit_utils.transactions import (
-    TransactionComposer,
-    AlgorandClientTransactionCreator,
-    AlgorandClientTransactionSender,
-)
-```
-
-Transaction parameter types are also exported from the `transactions` module (via `transaction_composer`):
-
-```python
-from algokit_utils.transactions import (
-    # Payment transactions
-    PaymentParams,
-
-    # App transactions
-    AppCreateParams,
-    AppCallParams,
-    AppCallMethodCallParams,
-
-    # Asset transactions
-    AssetCreateParams,
-    AssetTransferParams,
-    AssetOptInParams,
-)
-```
-
-The `transactions.builders` sub-package provides lower-level transaction builder functions:
-
-```python
-from algokit_utils.transactions.builders import (
-    build_payment_transaction,
-    build_app_create_transaction,
-    build_app_call_transaction,
-    build_asset_create_transaction,
-    build_asset_transfer_transaction,
-)
-```
-
-### `clients`
-
-Contains API client management and dispenser client:
-
-```python
-from algokit_utils.clients import (
-    ClientManager,
-    AlgodClient,
-    IndexerClient,
-    KmdClient,
-    TestNetDispenserApiClient,
-)
-```
-
-### `models`
-
-Contains data models for amounts, network config, state, and transactions:
-
-```python
-from algokit_utils.models import (
-    # Amounts
-    AlgoAmount,
-
-    # Network config
-    AlgoClientConfigs,
-
-    # Application state
-    AppState,
-
-    # Simulation
-    SimulateTransactionResult,
-)
-```
-
-### `transact`
-
-Re-exports core transaction primitives from the `algokit_transact` library:
-
-```python
-from algokit_utils.transact import (
-    Transaction,
-    TransactionSigner,
-    OnApplicationComplete,
-    BoxReference,
-    LogicSigAccount,
-)
-```
-
-### `protocols`
-
-Contains protocol (interface) definitions:
-
-```python
-from algokit_utils.protocols import (
-    AddressWithTransactionSigner,
-    TypedAppClientProtocol,
-    TypedAppFactoryProtocol,
-)
-```
-
-## How re-exports work
-
-Each submodule's `__init__.py` re-exports from its internal modules using wildcard imports. The root `algokit_utils/__init__.py` then aggregates all submodules:
-
-```python
-# algokit_utils/__init__.py
-from algokit_utils.applications import *
-from algokit_utils.assets import *
-from algokit_utils.protocols import *
-from algokit_utils.models import *
-from algokit_utils.accounts import *
-from algokit_utils.clients import *
-from algokit_utils.transactions import *
-from algokit_utils.errors import *
-from algokit_utils.algorand import *
-from algokit_utils.transact import *
-```
-
-This means any public symbol from any submodule is available at the root level. However, using submodule imports makes your code more explicit about where each symbol comes from.
-
-## When to use modular imports
-
-**Use the root import when:**
-
-- You're writing scripts or quick prototypes
-- You need just a few commonly-used classes like `AlgorandClient` or `AlgoAmount`
-- Brevity is more important than explicitness
-
-**Use submodule imports when:**
-
-- You want clear, self-documenting imports
-- You're building a library or larger application
-- You want to avoid namespace pollution
-- You need types from a specific domain (e.g., only transaction types)
+See the [API Reference](/docs/algokit-utils/python/latest/api/algokit_utils/) for the full list of exports in each submodule.

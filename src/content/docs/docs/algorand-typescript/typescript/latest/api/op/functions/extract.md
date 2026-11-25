@@ -2,14 +2,14 @@
 editUrl: false
 next: false
 prev: false
-title: 'extract'
+title: "extract"
 ---
 
 ## Call Signature
 
-> **extract**(`a`, `b`): [`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)
+> **extract**(`a`, `b`): [`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)
 
-Defined in: [op.ts:4094](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/op.ts#L4094)
+Defined in: [op.ts:4272](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/op.ts#L4272)
 
 A range of bytes from A starting at B up to the end of the sequence
 
@@ -17,21 +17,21 @@ A range of bytes from A starting at B up to the end of the sequence
 
 #### a
 
-[`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)
+[`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)
 
 #### b
 
-[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
+[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
 
 ### Returns
 
-[`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)
+[`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)
 
 ## Call Signature
 
-> **extract**(`a`, `b`, `c`): [`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)
+> **extract**(`a`, `b`, `c`): [`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)
 
-Defined in: [op.ts:4099](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/op.ts#L4099)
+Defined in: [op.ts:4277](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/op.ts#L4277)
 
 A range of bytes from A starting at B up to but not including B+C. If B+C is larger than the array length, the program fails
 
@@ -39,16 +39,16 @@ A range of bytes from A starting at B up to but not including B+C. If B+C is lar
 
 #### a
 
-[`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)
+[`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)
 
 #### b
 
-[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
+[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
 
 #### c
 
-[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
+[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
 
 ### Returns
 
-[`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)
+[`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)

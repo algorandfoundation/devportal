@@ -2,30 +2,30 @@
 editUrl: false
 next: false
 prev: false
-title: 'mimc'
+title: "mimc"
 ---
 
-> **mimc**(`c`, `a`): [`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)\<`32`\>
+> **mimc**(`c`, `a`): [`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)\<`32`\>
 
-Defined in: [op.ts:3382](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/op.ts#L3382)
+Defined in: [op.ts:3541](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/op.ts#L3541)
 
 MiMC hash of scalars A, using curve and parameters specified by configuration C
-A is a list of concatenated 32 byte big-endian unsigned integer scalars. Fail if A's length is not a multiple of 32 or any element exceeds the curve modulus.
-The MiMC hash function has known collisions since any input which is a multiple of the elliptic curve modulus will hash to the same value. MiMC is thus not a general purpose hash function, but meant to be used in zero knowledge applications to match a zk-circuit implementation.
+A is a non-empty list of concatenated 32 byte big-endian unsigned integer scalars.  Fail if A's length is not a multiple of 32 or any element is greater than or equal to the scalar field modulus.
+MiMC hashes field elements, not arbitrary byte strings; reducing external inputs modulo the scalar field modulus makes congruent inputs hash identically. MiMC is thus not a general purpose hash function, but meant to be used in zero knowledge applications to match a zk-circuit implementation.
 
 ## Parameters
 
 ### c
 
-[`MimcConfigurations`](/algorand-typescript/api/op/enumerations/mimcconfigurations/)
+[`MimcConfigurations`](/docs/algorand-typescript/typescript/latest/api/op/enumerations/mimcconfigurations/)
 
 ### a
 
-[`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)
+[`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)
 
 ## Returns
 
-[`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)\<`32`\>
+[`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)\<`32`\>
 
 ## See
 

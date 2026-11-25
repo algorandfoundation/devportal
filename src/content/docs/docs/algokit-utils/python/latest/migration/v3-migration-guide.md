@@ -1,9 +1,9 @@
 ---
-title: 'v3 Migration Guide'
-description: 'Guide for migrating from algokit-utils-py v2.x to v3.x — from stateless functions to the new AlgorandClient class-based interface.'
+title: "v3 Migration Guide"
+description: "Guide for migrating from algokit-utils-py v2.x to v3.x — from stateless functions to the new AlgorandClient class-based interface."
 ---
 
-Version 3 of `algokit-utils-py` moved from a stateless function-based interface to a stateful class-based interfaces. This change allows for:
+Version 3 of `algokit-utils-ts` moved from a stateless function-based interface to a stateful class-based interfaces. This change allows for:
 
 - Easier and simpler consumption experience guided by IDE autocompletion
 - Less redundant parameter passing (e.g., `algod` client)
@@ -42,7 +42,7 @@ The remaining set of guidelines are outlining migrations for specific abstractio
 
 It is important to reiterate that if you have previously relied on `beta` versions of `algokit-utils-py` v2.x, you will need to update your imports to rely on the new interfaces. Errors thrown during import from `beta` will provide a description of the new expected import path.
 
-> As with `v2.x` all public abstractions in `algokit_utils` are available for direct imports `from algokit_utils import ...`, however underlying modules have been refined to be structured loosely around common AVM domains such as `applications`, `transactions`, `accounts`, `assets`, etc.
+> As with `v2.x` all public abstractions in `algokit_utils` are available for direct imports `from algokit_utils import ...`, however underlying modules have been refined to be structured loosely around common AVM domains such as `applications`, `transactions`, `accounts`, `assets`, etc. See the [API reference](/docs/algokit-utils/python/latest/api/algokit_utils/) for latest and detailed overview.
 
 ### Step 1 - Replace SDK Clients with AlgorandClient
 
@@ -118,15 +118,11 @@ result = algokit_utils.execute_atc_with_logic_error(atc, algod)
 #### After:
 
 ```python
-from algokit_utils import PaymentParams, AlgoAmount
-
 # Single transaction
 result = algorand.send.payment(
-    PaymentParams(
-        sender=account.addr,
-        receiver="RECEIVER",
-        amount=AlgoAmount.from_algo(1),
-    )
+    sender=account.address,
+    receiver="RECEIVER",
+    amount=AlgoAmount.from_algo(1),
 )
 
 # Transaction groups
@@ -147,11 +143,11 @@ Key changes:
 
 `ApplicationSpecification` abstraction is largely identical to v2, however it's been renamed to `Arc32Contract` to better reflect the fact that it's a contract specification for a specific ARC and addition of `Arc56Contract` supporting the latest recommended conventions. Hence the main actionable change is to update your import to `from algokit_utils import Arc32Contract` and rename `ApplicationSpecification` to `Arc32Contract`.
 
-You can instantiate an `Arc56Contract` instance from an `Arc32Contract` instance using the `arc32_to_arc56` helper. For instance:
+You can instantiate an `Arc56Contract` instance from an `Arc32Contract` instance using the `Arc56Contract.from_arc32` method. For instance:
 
 ```python
 testing_app_arc32_app_spec = Arc32Contract.from_json(app_spec_json)
-arc56_app_spec = arc32_to_arc56(testing_app_arc32_app_spec)
+arc56_app_spec = Arc56Contract.from_arc32(testing_app_arc32_app_spec)
 ```
 
 > Despite auto conversion of ARC-32 to ARC-56, we recommend recompiling your contract to a fully compliant ARC-56 specification given that auto conversion would skip populating information that can't be parsed from raw ARC-32.
@@ -169,10 +165,10 @@ All of the functionality in `ApplicationClient` is available within the new clas
 - All of the methods that return or execute a transaction (`update`, `call`, `opt_in`, etc.) are now exposed in an interface similar to the one in [`AlgorandClient`](/docs/algokit-utils/python/latest/concepts/core/algorand-client/#creating-and-issuing-transactions), namely (where `{call_type}` is one of: `update` / `delete` / `opt_in` / `close_out` / `clear_state` / `call`):
   - `appClient.create_transaction.{callType}` to get a transaction for an ABI method call
   - `appClient.send.{call_type}` to sign and send a transaction for an ABI method call
-  - `appClient.params.{call_type}` to get a params object for an ABI method call
+  - `appClient.params.{call_type}` to get a [params object](/docs/algokit-utils/python/latest/concepts/core/algorand-client/#transaction-parameters) for an ABI method call
   - `appClient.create_transaction.bare.{call_type}` to get a transaction for a bare app call
   - `appClient.send.bare.{call_type}` to sign and send a transaction for a bare app call
-  - `appClient.params.bare.{call_type}` to get a params object for a bare app call
+  - `appClient.params.bare.{call_type}` to get a [params object](/docs/algokit-utils/python/latest/concepts/core/algorand-client/#transaction-parameters) for a bare app call
 - The semantics to resolve the application is now available via [simpler entrypoints within `algorand.client`](/docs/algokit-utils/python/latest/concepts/building/app-client/#appclient)
 - When making an ABI method call, the method arguments property is are now passed via explicit `args` field in a parameters dataclass applicable to the method call.
 - The foreign reference arrays have been renamed to align with typed parameters on `ts` and related core `algosdk`:
@@ -227,8 +223,8 @@ result = algokit_utils.opt_in(algod, account, [asset_id])
 
 """After"""
 result = algorand.send.asset_opt_in(
-    AssetOptInParams(
-        sender=account.addr,
+    params=AssetOptInParams(
+        sender=account.address,
         asset_id=asset_id,
     )
 )
@@ -237,26 +233,31 @@ result = algorand.send.asset_opt_in(
 ## Breaking Changes
 
 1. **Client Management**
+
    - Removal of standalone client creation functions
    - All clients now accessed through `AlgorandClient`
 
 2. **Account Management**
+
    - Account creation functions moved to `AccountManager` accessible via `algorand.account` property
    - Unified `TransactionSignerAccountProtocol` with compliant and typed `SigningAccount`, `TransactionSignerAccount`, `LogicSigAccount`, `MultiSigAccount` classes encapsulating low level `algosdk` abstractions.
    - Improved typing for account operations, such as obtaining account information from `algod`, returning a typed information object.
 
 3. **Transaction Management**
+
    - Consistent and intuitive transaction creation and sending interface accessible via `algorand.{send|params|create_transaction}` properties
    - New transaction composition interface accessible via `algorand.new_group`
    - Removing necessity to interact with low level and untyped `algosdk` abstractions for assembling, signing and sending transaction(s).
 
 4. **Application Client**
+
    - Split into `AppClient`, `AppDeployer` and `AppFactory`
    - `deploy` method in `AppFactory`/`AppDeployer` no longer auto increments the contract version by default. It is the user's responsibility to explicitly manage versioning of their smart contracts (if desired).
    - New intuitive structured interface for creating or sending `AppCall`|`AppMethodCall` transactions
    - ARC-56 support along with automatic conversion of specs from ARC-32 to ARC-56
 
 5. **State Management**
+
    - New hierarchical state access available via `app_client.state.{global_state|local_state|box}` properties
    - Improved typing for state values
    - Support for ARC-56 state schemas
@@ -269,9 +270,9 @@ result = algorand.send.asset_opt_in(
 ## Best Practices
 
 1. Use the new `AlgorandClient` as the main entry point
-2. Leverage IDE autocompletion to discover available functionality
+2. Leverage IDE autocompletion to discover available functionality, consult with [API reference](https://algokit-utils-py.readthedocs.io/en/latest/api_reference/index.html) when unsure
 3. Use the transaction parameter builders for type-safe transaction creation (`algorand.params.{}`)
-4. Use the state accessor patterns for cleaner state management (`app_client.state.{}`)
+4. Use the state accessor patterns for cleaner state management {`algorand.state.{}`}
 5. Use high level `TransactionComposer` interface over low level `algosdk` abstractions (where possible)
 6. Use source maps and debug mode to quickly troubleshoot on-chain errors
 7. Use idempotent deployment patterns with versioning

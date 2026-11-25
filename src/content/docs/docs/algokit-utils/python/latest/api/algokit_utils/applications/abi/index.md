@@ -1,127 +1,172 @@
 ---
-title: 'algokit_utils.applications.abi'
+title: "algokit_utils.applications.abi"
 ---
 
 <div class="api-ref">
 
-# algokit_utils.applications.abi
-
 ## Attributes
 
-| [`ABIValue`](#algokit_utils.applications.abi.ABIValue)                         |     |
-| ------------------------------------------------------------------------------ | --- |
-| [`ABIStruct`](#algokit_utils.applications.abi.ABIStruct)                       |     |
-| [`Arc56ReturnValueType`](#algokit_utils.applications.abi.Arc56ReturnValueType) |     |
-| [`ABIType`](#algokit_utils.applications.abi.ABIType)                           |     |
-| [`ABIArgumentType`](#algokit_utils.applications.abi.ABIArgumentType)           |     |
+| [`ABIValue`](#type-abivalue--bool--int--str--bytes--bytearray--listabivalue--tupleabivalue--dictstr-abivalue)                         |    |
+|--------------------------------------------------------------------------------|----|
+| [`ABIStruct`](#type-abistruct--dictstr-listdictstr-abivalue)                       |    |
+| [`Arc56ReturnValueType`](#type-arc56returnvaluetype--abivalue--abistruct--none) |    |
+| [`ABIType`](#type-abitype--algosdkabiabitype)                           |    |
+| [`ABIArgumentType`](#type-abiargumenttype--algosdkabiabitype--algosdkabiabitransactiontype--algosdkabiabireferencetype)           |    |
 
 ## Classes
 
-| [`ABIReturn`](#algokit_utils.applications.abi.ABIReturn)     | Represents the return value from an ABI method call.                 |
-| ------------------------------------------------------------ | -------------------------------------------------------------------- |
-| [`ABIResult`](#algokit_utils.applications.abi.ABIResult)     | Deprecated wrapper that previously carried tx context plus ABI data. |
-| [`BoxABIValue`](#algokit_utils.applications.abi.BoxABIValue) | Represents an ABI value stored in a box.                             |
+| [`ABIReturn`](#class-abireturn)     | Represents the return value from an ABI method call.   |
+|--------------------------------------------------------------|--------------------------------------------------------|
+| [`BoxABIValue`](#class-boxabivalue) | Represents an ABI value stored in a box.               |
 
 ## Functions
 
-| [`extract_abi_return_from_logs`](#algokit_utils.applications.abi.extract_abi_return_from_logs)(→ ABIReturn) | Decode ABI return value from a transaction confirmation log. |
-| ----------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------ |
-| [`parse_abi_method_result`](#algokit_utils.applications.abi.parse_abi_method_result)(→ ABIResult)           | Deprecated: use extract_abi_return_from_logs instead.        |
-| [`get_arc56_value`](#algokit_utils.applications.abi.get_arc56_value)(→ Arc56ReturnValueType)                | Deprecated: use ABIReturn.value instead.                     |
-| [`get_abi_encoded_value`](#algokit_utils.applications.abi.get_abi_encoded_value)(→ bytes)                   | Encodes a value according to its ABI type.                   |
-| [`get_abi_decoded_value`](#algokit_utils.applications.abi.get_abi_decoded_value)(→ ABIValue)                | Decodes a value according to its ABI type.                   |
+| [`get_arc56_value`](#get_arc56_valueabi_return-abireturn-method-method--algosdkabimethodmethod-structs-dictstr-liststructfield--arc56returnvaluetype)(→ Arc56ReturnValueType)                                          | Gets the ARC-56 formatted return value from an ABI return.   |
+|---------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------|
+| [`get_abi_encoded_value`](#get_abi_encoded_valuevalue-any-type_str-str-structs-dictstr-liststructfield--bytes)(→ bytes)                                             | Encodes a value according to its ABI type.                   |
+| [`get_abi_decoded_value`](#get_abi_decoded_valuevalue-bytes--int--str-type_str-str--abiargumenttype-structs-dictstr-liststructfield--abivalue)(→ ABIValue)                                          | Decodes a value according to its ABI type.                   |
+| [`get_abi_tuple_from_abi_struct`](#get_abi_tuple_from_abi_structstruct_value-dictstr-any-struct_fields-liststructfield-structs-dictstr-liststructfield--listany)(→ list[Any])                         | Converts an ABI struct to a tuple representation.            |
+| [`get_abi_tuple_type_from_abi_struct_definition`](#get_abi_tuple_type_from_abi_struct_definitionstruct_def-liststructfield-structs-dictstr-liststructfield--algosdkabitupletype)(...) | Creates a TupleType from a struct definition.                |
+| [`get_abi_struct_from_abi_tuple`](#get_abi_struct_from_abi_tupledecoded_tuple-any-struct_fields-liststructfield-structs-dictstr-liststructfield--dictstr-any)(→ dict[str, Any])                    | Converts a decoded tuple to an ABI struct.                   |
 
 ## Module Contents
 
-### _type_ ABIValue _= bool | int | str | bytes | bytearray | list['ABIValue'] | tuple['ABIValue'] | dict[str, 'ABIValue'] | object_
+### *type* ABIValue *= bool | int | str | bytes | bytearray | list['ABIValue'] | tuple['ABIValue'] | dict[str, 'ABIValue']*
 
-### _type_ ABIStruct _= dict[str, list[dict[str, 'ABIValue']]] | object_
+### *type* ABIStruct *= dict[str, list[dict[str, 'ABIValue']]]*
 
-### _type_ Arc56ReturnValueType _= ABIValue | ABIStruct | None_
+### *type* Arc56ReturnValueType *= ABIValue | ABIStruct | None*
 
-### _type_ ABIType _= abi.ABIType_
+### *type* ABIType *= algosdk.abi.ABIType*
 
-### _type_ ABIArgumentType _= abi.ABIType | arc56.TransactionType | arc56.ReferenceType_
+### *type* ABIArgumentType *= algosdk.abi.ABIType | algosdk.abi.ABITransactionType | algosdk.abi.ABIReferenceType*
 
-### _class_ ABIReturn(\*, method: Arc56Method | None, raw_value: bytes = b'', value: ABIValue | None = None, decode_error: Exception | None = None, tx_info: ConfirmationResponse | None = None)
-
+### *class* ABIReturn
 Represents the return value from an ABI method call.
 
-Aligns with the Rust model: always carries the method, raw bytes, decoded value (if available),
-and any decode error. Transaction context should live on the send result, not here.
+Wraps the raw return value and decoded value along with any decode errors.
 
-#### method _: Arc56Method | None_
+#### raw_value *: bytes | None* *= None*
 
-#### raw*value *: bytes\_
+The raw return value from the method call
 
-#### value _: ABIValue | None_
+#### value *: ABIValue | None* *= None*
 
-#### decode*error *: Exception | None\_
+The decoded return value from the method call
 
-#### _property_ is*success *: bool\_
+#### method *: algosdk.abi.method.Method | None* *= None*
 
-Returns True if the ABI call was decoded successfully.
+The ABI method definition
 
-#### _property_ tx*info *: ConfirmationResponse | None\_
+#### decode_error *: Exception | None* *= None*
 
-Deprecated: transaction info now lives on the send result.
+The exception that occurred during decoding, if any
 
-#### get_arc56_value(method: Method, structs: dict[str, object] | None = None) → Arc56ReturnValueType
+#### tx_info *: dict[str, Any] | None* *= None*
 
-Deprecated: use value directly.
+The transaction info for the method call from raw algosdk ABIResult
 
-### _class_ ABIResult(\*, tx_id: str | None = None, raw_value: bytes = b'', value: ABIValue | None = None, decode_error: Exception | None = None, tx_info: ConfirmationResponse | None = None, method: Arc56Method | None = None)
+#### *property* is_success *: bool*
 
-Bases: [`ABIReturn`](#algokit_utils.applications.abi.ABIReturn)
+Returns True if the ABI call was successful (no decode error)
 
-Deprecated wrapper that previously carried tx context plus ABI data.
+* **Returns:**
+  True if no decode error occurred, False otherwise
 
-#### tx*id *: str | None\_ _= None_
+#### get_arc56_value(method: [Method](/docs/algokit-utils/python/latest/api/algokit_utils/applications/app_spec/arc56/#class-method) | algosdk.abi.method.Method, structs: dict[str, list[[StructField](/docs/algokit-utils/python/latest/api/algokit_utils/applications/app_spec/arc56/#class-structfield)]]) → Arc56ReturnValueType
 
-#### _classmethod_ from_abireturn(abi_return: [ABIReturn](#algokit_utils.applications.abi.ABIReturn), tx_id: str | None = None) → [ABIResult](#algokit_utils.applications.abi.ABIResult)
+Gets the ARC-56 formatted return value.
 
-### extract_abi_return_from_logs(confirmation: ConfirmationResponse, method: Arc56Method) → [ABIReturn](#algokit_utils.applications.abi.ABIReturn)
+* **Parameters:**
+  * **method** – The ABI method definition
+  * **structs** – Dictionary of struct definitions
+* **Returns:**
+  The decoded return value in ARC-56 format
 
-Decode ABI return value from a transaction confirmation log.
+### get_arc56_value(abi_return: [ABIReturn](#class-abireturn), method: [Method](/docs/algokit-utils/python/latest/api/algokit_utils/applications/app_spec/arc56/#class-method) | algosdk.abi.method.Method, structs: dict[str, list[[StructField](/docs/algokit-utils/python/latest/api/algokit_utils/applications/app_spec/arc56/#class-structfield)]]) → Arc56ReturnValueType
 
-### parse_abi_method_result(method: Arc56Method, tx_id: str, txn: ConfirmationResponse) → [ABIResult](#algokit_utils.applications.abi.ABIResult)
+Gets the ARC-56 formatted return value from an ABI return.
 
-Deprecated: use extract_abi_return_from_logs instead.
+* **Parameters:**
+  * **abi_return** – The ABI return value to decode
+  * **method** – The ABI method definition
+  * **structs** – Dictionary of struct definitions
+* **Raises:**
+  **ValueError** – If there was an error decoding the return value
+* **Returns:**
+  The decoded return value in ARC-56 format
 
-### get_arc56_value(abi_return: [ABIReturn](#algokit_utils.applications.abi.ABIReturn), method: Method, structs: dict[str, object] | None = None) → Arc56ReturnValueType
-
-Deprecated: use ABIReturn.value instead.
-
-### get_abi_encoded_value(value: object, abi_type: ABIType | AVMType) → bytes
+### get_abi_encoded_value(value: Any, type_str: str, structs: dict[str, list[[StructField](/docs/algokit-utils/python/latest/api/algokit_utils/applications/app_spec/arc56/#class-structfield)]]) → bytes
 
 Encodes a value according to its ABI type.
 
-- **Parameters:**
-  - **value** – The value to encode
-  - **abi_type** – The ABI or AVM type
-- **Returns:**
+* **Parameters:**
+  * **value** – The value to encode
+  * **type_str** – The ABI type string
+  * **structs** – Dictionary of struct definitions
+* **Raises:**
+  **ValueError** – If the value cannot be encoded for the given type
+* **Returns:**
   The ABI encoded bytes
 
-### get_abi_decoded_value(value: bytes | int | str, decode_type: AVMType | ABIType | ReferenceType) → ABIValue
+### get_abi_decoded_value(value: bytes | int | str, type_str: str | ABIArgumentType, structs: dict[str, list[[StructField](/docs/algokit-utils/python/latest/api/algokit_utils/applications/app_spec/arc56/#class-structfield)]]) → ABIValue
 
 Decodes a value according to its ABI type.
 
-- **Parameters:**
-  - **value** – The value to decode
-  - **decode_type** – The ABI type string or type object
-- **Returns:**
+* **Parameters:**
+  * **value** – The value to decode
+  * **type_str** – The ABI type string or type object
+  * **structs** – Dictionary of struct definitions
+* **Returns:**
   The decoded ABI value
 
-### _class_ BoxABIValue
+### get_abi_tuple_from_abi_struct(struct_value: dict[str, Any], struct_fields: list[[StructField](/docs/algokit-utils/python/latest/api/algokit_utils/applications/app_spec/arc56/#class-structfield)], structs: dict[str, list[[StructField](/docs/algokit-utils/python/latest/api/algokit_utils/applications/app_spec/arc56/#class-structfield)]]) → list[Any]
+
+Converts an ABI struct to a tuple representation.
+
+* **Parameters:**
+  * **struct_value** – The struct value as a dictionary
+  * **struct_fields** – List of struct field definitions
+  * **structs** – Dictionary of struct definitions
+* **Raises:**
+  **ValueError** – If a required field is missing from the struct
+* **Returns:**
+  The struct as a tuple
+
+### get_abi_tuple_type_from_abi_struct_definition(struct_def: list[[StructField](/docs/algokit-utils/python/latest/api/algokit_utils/applications/app_spec/arc56/#class-structfield)], structs: dict[str, list[[StructField](/docs/algokit-utils/python/latest/api/algokit_utils/applications/app_spec/arc56/#class-structfield)]]) → algosdk.abi.TupleType
+
+Creates a TupleType from a struct definition.
+
+* **Parameters:**
+  * **struct_def** – The struct field definitions
+  * **structs** – Dictionary of struct definitions
+* **Raises:**
+  **ValueError** – If a field type is invalid
+* **Returns:**
+  The TupleType representing the struct
+
+### get_abi_struct_from_abi_tuple(decoded_tuple: Any, struct_fields: list[[StructField](/docs/algokit-utils/python/latest/api/algokit_utils/applications/app_spec/arc56/#class-structfield)], structs: dict[str, list[[StructField](/docs/algokit-utils/python/latest/api/algokit_utils/applications/app_spec/arc56/#class-structfield)]]) → dict[str, Any]
+
+Converts a decoded tuple to an ABI struct.
+
+* **Parameters:**
+  * **decoded_tuple** – The tuple to convert
+  * **struct_fields** – List of struct field definitions
+  * **structs** – Dictionary of struct definitions
+* **Returns:**
+  The tuple as a struct dictionary
+
+### *class* BoxABIValue
 
 Represents an ABI value stored in a box.
 
-#### name _: [BoxName](/docs/algokit-utils/python/latest/api/algokit_utils/models/state/#algokit_utils.models.state.BoxName)_
+#### name *: [BoxName](/docs/algokit-utils/python/latest/api/algokit_utils/models/state/#class-boxname)*
 
 The name of the box
 
-#### value _: ABIValue_
+#### value *: ABIValue*
 
 The ABI value stored in the box
+
 
 </div>

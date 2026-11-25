@@ -2,12 +2,12 @@
 editUrl: false
 next: false
 prev: false
-title: 'shr'
+title: "shr"
 ---
 
-> **shr**(`a`, `b`): [`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
+> **shr**(`a`, `b`): [`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
 
-Defined in: [op.ts:3475](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/op.ts#L3475)
+Defined in: [op.ts:3653](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/op.ts#L3653)
 
 A divided by 2^B
 
@@ -15,15 +15,15 @@ A divided by 2^B
 
 ### a
 
-[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
+[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
 
 ### b
 
-[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
+[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
 
 ## Returns
 
-[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
+[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
 
 ## See
 

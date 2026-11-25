@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: 'ARC4Encoded'
+title: "ARC4Encoded"
 ---
 
 Defined in: [arc4/encoded-types.ts:87](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/arc4/encoded-types.ts#L87)
@@ -11,15 +11,15 @@ A base type for ARC4 encoded values
 
 ## Extended by
 
-- [`Str`](/algorand-typescript/api/arc4/classes/str/)
-- [`Uint`](/algorand-typescript/api/arc4/classes/uint/)
-- [`UFixed`](/algorand-typescript/api/arc4/classes/ufixed/)
-- [`Bool`](/algorand-typescript/api/arc4/classes/bool/)
-- [`Tuple`](/algorand-typescript/api/arc4/classes/tuple/)
+- [`Str`](/docs/algorand-typescript/typescript/latest/api/arc4/classes/str/)
+- [`Uint`](/docs/algorand-typescript/typescript/latest/api/arc4/classes/uint/)
+- [`UFixed`](/docs/algorand-typescript/typescript/latest/api/arc4/classes/ufixed/)
+- [`Bool`](/docs/algorand-typescript/typescript/latest/api/arc4/classes/bool/)
+- [`Tuple`](/docs/algorand-typescript/typescript/latest/api/arc4/classes/tuple/)
 
 ## Implements
 
-- [`BytesBacked`](/algorand-typescript/api/index/interfaces/bytesbacked/)
+- [`BytesBacked`](/docs/algorand-typescript/typescript/latest/api/index/interfaces/bytesbacked/)
 
 ## Constructors
 
@@ -37,7 +37,7 @@ A base type for ARC4 encoded values
 
 #### Get Signature
 
-> **get** **bytes**(): [`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)
+> **get** **bytes**(): [`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)
 
 Defined in: [arc4/encoded-types.ts:102](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/arc4/encoded-types.ts#L102)
 
@@ -45,8 +45,8 @@ Retrieve the encoded bytes for this type
 
 ##### Returns
 
-[`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)
+[`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)
 
 #### Implementation of
 
-[`BytesBacked`](/algorand-typescript/api/index/interfaces/bytesbacked/).[`bytes`](/algorand-typescript/api/index/interfaces/bytesbacked/#bytes)
+[`BytesBacked`](/docs/algorand-typescript/typescript/latest/api/index/interfaces/bytesbacked/).[`bytes`](/docs/algorand-typescript/typescript/latest/api/index/interfaces/bytesbacked/#bytes)

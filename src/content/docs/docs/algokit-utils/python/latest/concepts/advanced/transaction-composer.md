@@ -1,285 +1,481 @@
 ---
-title: 'Transaction composer'
-description: 'The `TransactionComposer` class allows you to easily compose one or more compliant Algorand transactions and execute and/or simulate them.'
+title: "Transaction composer"
+description: "The `TransactionComposer` class allows you to easily compose one or more compliant Algorand transactions and execute and/or simulate them."
 ---
 
 The `TransactionComposer` class allows you to easily compose one or more compliant Algorand transactions and execute and/or simulate them.
 
-It's the core of how the [`AlgorandClient`](/docs/algokit-utils/python/latest/concepts/core/algorand-client/) class composes and sends transactions.
-
-To get an instance of `TransactionComposer` you can either get it from an [app client](/docs/algokit-utils/python/latest/concepts/building/app-client/), from an [`AlgorandClient`](/docs/algokit-utils/python/latest/concepts/core/algorand-client/), or by instantiating via the constructor.
+It's the core of how the `AlgorandClient` class composes and sends transactions.
 
 ```python
-composer_from_algorand = algorand.new_group()
-composer_from_app_client = app_client.algorand.new_group()
-composer_from_constructor = TransactionComposer(
-    TransactionComposerParams(
-        algod=algod,
-        # Return the TransactionSigner for this address
-        get_signer=lambda address: signer,
-    )
+from algokit_utils import TransactionComposer, AppManager
+from algokit_utils.transactions import (
+    PaymentParams,
+    AppCallMethodCallParams,
+    AssetCreateParams,
+    AppCreateParams,
+    # ... other transaction parameter types
 )
-composer_from_constructor_with_optional_params = TransactionComposer(
-    TransactionComposerParams(
-        algod=algod,
-        # Return the TransactionSigner for this address
-        get_signer=lambda address: signer,
-        get_suggested_params=lambda: algod.suggested_params(),
-        default_validity_window=1000,
-        app_manager=AppManager(algod),
-    )
+```
+
+To get an instance of `TransactionComposer` you can either get it from an app client, from an `AlgorandClient`, or by instantiating via the constructor.
+
+```python
+# From AlgorandClient
+composer_from_algorand = algorand.new_group()
+
+# From AppClient
+composer_from_app_client = app_client.algorand.new_group()
+
+# From constructor
+composer_from_constructor = TransactionComposer(
+    algod=algod,
+    # Return the TransactionSigner for this address
+    get_signer=lambda address: signer
+)
+
+# From constructor with optional params
+composer_from_constructor = TransactionComposer(
+    algod=algod,
+    # Return the TransactionSigner for this address
+    get_signer=lambda address: signer,
+    # Custom function to get suggested params
+    get_suggested_params=lambda: algod.suggested_params(),
+    # Number of rounds the transaction should be valid for
+    default_validity_window=1000,
+    # Optional AppManager instance for TEAL compilation
+    app_manager=AppManager(algod)
 )
 ```
 
 ## Constructing a transaction
 
-To construct a transaction you need to add it to the composer, passing in the relevant `params object` for that transaction. Params are Python dataclasses and all of them extend the [common call parameters](/docs/algokit-utils/python/latest/concepts/core/algorand-client/#transaction-parameters).
+To construct a transaction you need to add it to the composer, passing in the relevant params object for that transaction. Params are Python dataclasses aavailable for import from `algokit_utils.transactions`.
 
-The `methods to construct a transaction` are all named `add_{transaction_type}` and return an instance of the composer so they can be chained together fluently to construct a transaction group.
+Parameter types include:
+
+- `PaymentParams` - For ALGO transfers
+- `AssetCreateParams` - For creating ASAs
+- `AssetConfigParams` - For reconfiguring ASAs
+- `AssetTransferParams` - For ASA transfers
+- `AssetOptInParams` - For opting in to ASAs
+- `AssetOptOutParams` - For opting out of ASAs
+- `AssetDestroyParams` - For destroying ASAs
+- `AssetFreezeParams` - For freezing ASA balances
+- `AppCreateParams` - For creating applications
+- `AppCreateMethodCallParams` - For creating applications with ABI method calls
+- `AppCallParams` - For calling applications
+- `AppCallMethodCallParams` - For calling ABI methods on applications
+- `AppUpdateParams` - For updating applications
+- `AppUpdateMethodCallParams` - For updating applications with ABI method calls
+- `AppDeleteParams` - For deleting applications
+- `AppDeleteMethodCallParams` - For deleting applications with ABI method calls
+- `OnlineKeyRegistrationParams` - For online key registration transactions
+- `OfflineKeyRegistrationParams` - For offline key registration transactions
+
+The methods to construct a transaction are all named `add_{transaction_type}` and return an instance of the composer so they can be chained together fluently to construct a transaction group.
 
 For example:
 
 ```python
-from algokit_abi import arc56
+from algokit_utils import AlgoAmount
+from algokit_utils.transactions import AppCallMethodCallParams, PaymentParams
 
-my_method = arc56.Method.from_signature('my_method()void')
 result = (
     algorand.new_group()
     .add_payment(PaymentParams(
         sender="SENDER",
         receiver="RECEIVER",
-        amount=AlgoAmount.from_micro_algo(100),
+        amount=AlgoAmount.from_micro_algos(100),
+        note=b"Payment note"
     ))
     .add_app_call_method_call(AppCallMethodCallParams(
         sender="SENDER",
         app_id=123,
-        method=my_method,
+        method=abi_method,
         args=[1, 2, 3],
+        boxes=[box_reference]  # Optional box references
     ))
 )
 ```
 
-### Transaction parameter types
+## Simulating a transaction
 
-Each `add_*` method accepts a corresponding params dataclass. All param types are defined in `algokit_utils.transactions.types` and extend `CommonTxnParams`.
+Transactions can be simulated using the simulate endpoint in algod, which enables evaluating the transaction on the network without it actually being committed to a block.
+This is a powerful feature, which has a number of options which are detailed in the [simulate API docs](https://dev.algorand.co/reference/rest-apis/output/#simulatetransaction).
 
-| Composer method                | Params type                    | Key fields (beyond common)                                                                                                           |
-| ------------------------------ | ------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------ |
-| `add_payment`                  | `PaymentParams`                | `receiver`, `amount`, `close_remainder_to`                                                                                           |
-| `add_asset_create`             | `AssetCreateParams`            | `total`, `asset_name`, `unit_name`, `url`, `decimals`, `default_frozen`, `manager`, `reserve`, `freeze`, `clawback`, `metadata_hash` |
-| `add_asset_config`             | `AssetConfigParams`            | `asset_id`, `manager`, `reserve`, `freeze`, `clawback`                                                                               |
-| `add_asset_freeze`             | `AssetFreezeParams`            | `asset_id`, `account`, `frozen`                                                                                                      |
-| `add_asset_destroy`            | `AssetDestroyParams`           | `asset_id`                                                                                                                           |
-| `add_asset_transfer`           | `AssetTransferParams`          | `asset_id`, `amount`, `receiver`, `close_asset_to`, `clawback_target`                                                                |
-| `add_asset_opt_in`             | `AssetOptInParams`             | `asset_id`                                                                                                                           |
-| `add_asset_opt_out`            | `AssetOptOutParams`            | `asset_id`, `creator`                                                                                                                |
-| `add_app_call`                 | `AppCallParams`                | `app_id`, `args`, `on_complete`, reference arrays                                                                                    |
-| `add_app_create`               | `AppCreateParams`              | `approval_program`, `clear_state_program`, `schema`, `on_complete`, `args`, `extra_program_pages`, reference arrays                  |
-| `add_app_update`               | `AppUpdateParams`              | `app_id`, `approval_program`, `clear_state_program`, `on_complete`, `args`, reference arrays                                         |
-| `add_app_delete`               | `AppDeleteParams`              | `app_id`, `on_complete`, `args`, reference arrays                                                                                    |
-| `add_app_call_method_call`     | `AppCallMethodCallParams`      | `app_id`, `method`, `args`, `on_complete`, reference arrays                                                                          |
-| `add_app_create_method_call`   | `AppCreateMethodCallParams`    | `method`, `approval_program`, `clear_state_program`, `schema`, `extra_program_pages`, reference arrays                               |
-| `add_app_update_method_call`   | `AppUpdateMethodCallParams`    | `app_id`, `method`, `approval_program`, `clear_state_program`, reference arrays                                                      |
-| `add_app_delete_method_call`   | `AppDeleteMethodCallParams`    | `app_id`, `method`, reference arrays                                                                                                 |
-| `add_online_key_registration`  | `OnlineKeyRegistrationParams`  | `vote_key`, `selection_key`, `state_proof_key`, `vote_first`, `vote_last`, `vote_key_dilution`, `nonparticipation`                   |
-| `add_offline_key_registration` | `OfflineKeyRegistrationParams` | `prevent_account_from_ever_participating_again`                                                                                      |
+The `simulate()` method accepts several optional parameters that are passed through to the algod simulate endpoint:
 
-> [!NOTE]
-> "Reference arrays" refers to the optional fields `account_references`, `app_references`, `asset_references`, and `box_references` available on all app call param types.
-
-#### Common transaction parameters
-
-All param types inherit these fields from `CommonTxnParams`:
-
-| Field               | Type                                                        | Description                                                       |
-| ------------------- | ----------------------------------------------------------- | ----------------------------------------------------------------- |
-| `sender`            | `str`                                                       | The address of the account sending the transaction (required)     |
-| `signer`            | `TransactionSigner \| AddressWithTransactionSigner \| None` | The signer to use; defaults to the registered signer for `sender` |
-| `rekey_to`          | `str \| None`                                               | Rekey the sender account to this address                          |
-| `note`              | `bytes \| None`                                             | Arbitrary note to attach                                          |
-| `lease`             | `bytes \| None`                                             | Lease to prevent duplicate transactions                           |
-| `static_fee`        | `AlgoAmount \| None`                                        | Exact fee (overrides calculated fee)                              |
-| `extra_fee`         | `AlgoAmount \| None`                                        | Additional fee on top of the calculated fee                       |
-| `max_fee`           | `AlgoAmount \| None`                                        | Maximum fee cap; errors if exceeded                               |
-| `validity_window`   | `int \| None`                                               | Number of rounds the transaction is valid                         |
-| `first_valid_round` | `int \| None`                                               | Explicit first valid round                                        |
-| `last_valid_round`  | `int \| None`                                               | Explicit last valid round                                         |
-
-#### Example: `PaymentParams` structure
-
-```python
-from algokit_utils.transactions.types import PaymentParams
-from algokit_utils.models.amount import AlgoAmount
-
-params = PaymentParams(
-    sender="SENDER_ADDRESS",
-    receiver="RECEIVER_ADDRESS",
-    amount=AlgoAmount.from_algo(1),
-    # Optional common fields
-    note=b"payment note",
-    max_fee=AlgoAmount.from_micro_algo(2000),
-)
-```
-
-## Sending a transaction
-
-Once you have constructed all the required transactions, they can be sent by calling `send()` on the `TransactionComposer`.
-Additionally `send()` takes a number of parameters which allow you to opt-in to some additional behaviours as part of sending the transaction or transaction group, most significantly `populate_app_call_resources` and `cover_app_call_inner_transaction_fees`.
-
-### Populating App Call Resources
-
-`populate_app_call_resources` automatically updates the relevant app call transactions in the group to include the account, app, asset and box resources required for the transactions to execute successfully. It leverages the simulate endpoint to discover the accessed resources, which have not been explicitly specified. This setting only applies when you have constructed at least one app call transaction. You can read more about [resources and the reference arrays](https://dev.algorand.co/concepts/smart-contracts/resource-usage/#what-are-reference-arrays) in the docs.
+- `allow_more_logs: bool | None` - Allow more logs than standard
+- `allow_empty_signatures: bool | None` - Allow transactions without signatures
+- `allow_unnamed_resources: bool | None` - Allow unnamed resources in app calls
+- `extra_opcode_budget: int | None` - Additional opcode budget
+- `exec_trace_config: SimulateTraceConfig | None` - Execution trace configuration
+- `simulation_round: int | None` - Round to simulate at
+- `skip_signatures: int | None` - Skip signature verification
 
 For example:
 
 ```python
-from algokit_abi import arc56
+result = (
+    algorand.new_group()
+    .add_payment(PaymentParams(
+        sender="SENDER",
+        receiver="RECEIVER",
+        amount=AlgoAmount.from_micro_algos(100)
+    ))
+    .add_app_call_method_call(AppCallMethodCallParams(
+        sender="SENDER",
+        app_id=123,
+        method=abi_method,
+        args=[1, 2, 3]
+    ))
+    .simulate()
+)
 
-my_method = arc56.Method.from_signature('my_method()void')
+# Access simulation results
+simulate_response = result.simulate_response
+confirmations = result.confirmations
+transactions = result.transactions
+returns = result.returns  # ABI returns if any
+```
+
+### Simulate without signing
+
+There are situations where you may not be able to (or want to) sign the transactions when executing simulate.
+In these instances you should set `skip_signatures=True` which automatically builds empty transaction signers and sets both `fix-signers` and `allow-empty-signatures` to `True` when sending the algod API call.
+
+For example:
+
+```python
+result = (
+    algorand.new_group()
+    .add_payment(PaymentParams(
+        sender="SENDER",
+        receiver="RECEIVER",
+        amount=AlgoAmount.from_micro_algos(100)
+    ))
+    .add_app_call_method_call(AppCallMethodCallParams(
+        sender="SENDER",
+        app_id=123,
+        method=abi_method,
+        args=[1, 2, 3]
+    ))
+    .simulate(
+        skip_signatures=True,
+        allow_more_logs=True,  # Optional: allow more logs
+        extra_opcode_budget=700  # Optional: increase opcode budget
+    )
+)
+```
+
+### Resource Population
+
+The `TransactionComposer` includes automatic resource population capabilities for application calls. When sending or simulating transactions, it can automatically detect and populate required references for:
+
+- Account references
+- Application references
+- Asset references
+- Box references
+
+This happens automatically when either:
+
+1. The global `algokit_utils.config` instance is set to `populate_app_call_resources=True` (default is `False`)
+2. The `populate_app_call_resources` parameter is explicitly passed as `True` when sending transactions
+
+```python
+# Automatic resource population
 result = (
     algorand.new_group()
     .add_app_call_method_call(AppCallMethodCallParams(
         sender="SENDER",
         app_id=123,
-        method=my_method,
+        method=abi_method,
+        args=[1, 2, 3]
+        # Resources will be automatically populated!
+    ))
+    .send(params=SendParams(populate_app_call_resources=True))
+)
+
+# Or disable automatic population
+result = (
+    algorand.new_group()
+    .add_app_call_method_call(AppCallMethodCallParams(
+        sender="SENDER",
+        app_id=123,
+        method=abi_method,
         args=[1, 2, 3],
+        # Explicitly specify required resources
+        account_references=["ACCOUNT"],
+        app_references=[456],
+        asset_references=[789],
+        box_references=[box_reference]
     ))
-    .send(SendParams(
-        populate_app_call_resources=True,
-    ))
+    .send(params=SendParams(populate_app_call_resources=False))
 )
 ```
 
-If `my_method` in the above example accesses any resources, they will be automatically discovered and added before sending the transaction to the network.
+The resource population:
 
-#### How resource population works
+- Respects the maximum limits (4 for accounts, 8 for foreign references)
+- Handles cross-reference resources efficiently (e.g., asset holdings and local state)
+- Automatically distributes resources across multiple transactions in a group when needed
+- Raises descriptive errors if resource limits are exceeded
 
-Resource population is enabled by default via `TransactionComposerConfig(populate_app_call_resources=True)`. You can override it per-send via `SendParams` or disable it globally when constructing the composer.
+This feature is particularly useful when:
 
-When at least one `AppCall` transaction is present in the group, the composer runs the following flow before signing and sending:
+- Working with complex smart contracts that access various resources
+- Building transaction groups where resources need to be coordinated
+- Developing applications where resource requirements may change dynamically
 
-1. **Simulate** — The composer builds a copy of all transactions and submits them to the algod simulate endpoint with `allow_unnamed_resources=True` and empty signers. This tells algod to report which resources each transaction accessed without requiring real signatures.
-2. **Collect results** — The simulate response provides `unnamed_resources_accessed` at both per-transaction and group level, listing accounts, apps, assets, boxes, app-local state, and asset-holding cross-references that were accessed but not explicitly included in the transaction's reference arrays.
-3. **Per-transaction population** — For each app call transaction, simple resources (accounts, apps, assets) are added directly to that transaction's reference arrays, up to the maximum reference limit.
-4. **Group-level population** — Cross-reference resources (app-local state lookups, asset-holding lookups, boxes) require slots in multiple reference arrays simultaneously. The composer distributes these across the group's app call transactions using a best-fit strategy: it first tries transactions that already hold one side of the cross-reference, then falls back to the first transaction with available capacity.
-
-The population order for group-level resources is: app-local cross-references, asset-holding cross-references, remaining accounts, boxes, remaining assets, remaining apps, and finally extra box references.
-
-> [!NOTE]
-> If a transaction already has explicitly provided reference arrays, resource population will skip that transaction and log a warning. This prevents the composer from overwriting resources you have set manually.
-
-> [!NOTE]
-> If the group runs out of reference slots across all app call transactions, a `ValueError` is raised suggesting you add another app call transaction to the group to provide more reference capacity.
+Note: Resource population uses simulation under the hood to detect required resources, so it may add a small overhead to transaction preparation time.
 
 ### Covering App Call Inner Transaction Fees
 
-`cover_app_call_inner_transaction_fees` automatically calculate the required fee for a parent app call transaction that sends inner transactions. It leverages the simulate endpoint to discover the inner transactions sent and calculates a fee delta to resolve the optimal fee. This feature also takes care of accounting for any surplus transaction fee at the various levels, so as to effectively minimise the fees needed to successfully handle complex scenarios. This setting only applies when you have constructed at least one app call transaction.
+`cover_app_call_inner_transaction_fees` automatically calculate the required fee for a parent app call transaction that sends inner transactions. It leverages the simulate endpoint to discover the inner transactions sent and calculates a fee delta to resolve the optimal fee. This feature also takes care of accounting for any surplus transaction fee at the various levels, so as to effectively minimise the fees needed to successfully handle complex scenarios. This setting only applies when you have constucted at least one app call transaction.
 
 For example:
 
 ```python
-from algokit_abi import arc56
-
-my_method = arc56.Method.from_signature('my_method()void')
-result = (
-    algorand
-    .new_group()
-    .add_app_call_method_call(AppCallMethodCallParams(
-        sender="SENDER",
-        app_id=123,
-        method=my_method,
-        args=[1, 2, 3],
-        max_fee=AlgoAmount.from_micro_algo(5000),  # NOTE: a max_fee value is required when enabling cover_app_call_inner_transaction_fees
-    ))
-    .send(SendParams(cover_app_call_inner_transaction_fees=True))
-)
+myMethod = algosdk.ABIMethod.fromSignature('my_method()void')
+result = algorand
+  .new_group()
+  .add_app_call_method_call(AppCallMethodCallParams(
+    sender: 'SENDER',
+    app_id=123,
+    method=myMethod,
+    args=[1, 2, 3],
+    max_fee=AlgoAmount.from_micro_algo(5000), # NOTE: a maxFee value is required when enabling coverAppCallInnerTransactionFees
+  ))
+  .send(send_params={"cover_app_call_inner_transaction_fees": True})
 ```
 
 Assuming the app account is not covering any of the inner transaction fees, if `my_method` in the above example sends 2 inner transactions, then the fee calculated for the parent transaction will be 3000 µALGO when the transaction is sent to the network.
 
-The above example also has a `max_fee` of 5000 µALGO specified. An exception will be thrown if the transaction fee exceeds that value, which allows you to set fee limits. The `max_fee` field is required when enabling `cover_app_call_inner_transaction_fees`.
+The above example also has a `max_fee` of 5000 µALGO specified. An exception will be thrown if the transaction fee execeeds that value, which allows you to set fee limits. The `max_fee` field is required when enabling `cover_app_call_inner_transaction_fees`.
 
-Because `max_fee` is required and a `Transaction` does not hold any max fee information, you cannot use the generic `add_transaction()` method on the composer with `cover_app_call_inner_transaction_fees` enabled. Instead use the below, which provides a better overall experience:
+Because `max_fee` is required and an `algosdk.Transaction` does not hold any max fee information, you cannot use the generic `add_transaction()` method on the composer with `cover_app_call_inner_transaction_fees` enabled. Instead use the below, which provides a better overall experience:
 
 ```python
-my_method = arc56.Method.from_signature('my_method()void')
+my_method = algosdk.abi.Method.from_signature('my_method()void')
 
 # Does not work
-result = (
-    algorand
-    .new_group()
-    .add_transaction(algorand.create_transaction.app_call_method_call(
-        AppCallMethodCallParams(
-            sender="SENDER",
-            app_id=123,
-            method=my_method,
-            args=[1, 2, 3],
-            max_fee=AlgoAmount.from_micro_algo(5000),  # This is only used to create the Transaction object and isn't made available to the composer.
-        )
-    ).transactions[0])
-    .send(SendParams(cover_app_call_inner_transaction_fees=True))
-)
-
-# Works as expected
-result = (
-    algorand
-    .new_group()
-    .add_app_call_method_call(AppCallMethodCallParams(
-        sender="SENDER",
+result = algorand
+  .new_group()
+  .add_transaction(localnet.algorand.create_transaction.app_call_method_call(
+    AppCallMethodCallParams(
+        sender='SENDER',
         app_id=123,
         method=my_method,
         args=[1, 2, 3],
-        max_fee=AlgoAmount.from_micro_algo(5000),
-    ))
-    .send(SendParams(cover_app_call_inner_transaction_fees=True))
-)
+        max_fee=AlgoAmount.from_micro_algos(5000), # This is only used to create the algosdk.Transaction object and isn't made available to the composer.
+      )
+    ).transactions[0]
+  )
+  .send(send_params={"cover_app_call_inner_transaction_fees": True})
+
+# Works as expected
+result = algorand
+  .new_group()
+  .add_app_call_method_call(AppCallMethodCallParams(
+    sender='SENDER',
+    app_id=123,
+    method=my_method,
+    args=[1, 2, 3],
+    max_fee=AlgoAmount.from_micro_algos(5000),
+  ))
+  .send(send_params={"cover_app_call_inner_transaction_fees": True})
 ```
 
 A more complex valid scenario which leverages an app client to send an ABI method call with ABI method call transactions argument is below:
 
 ```python
 app_factory = algorand.client.get_app_factory(
-    app_spec="APP_SPEC",
-    default_sender=sender.addr,
+  app_spec='APP_SPEC',
+  default_sender=sender.addr,
 )
 
 app_client_1, _ = app_factory.send.bare.create()
 app_client_2, _ = app_factory.send.bare.create()
 
 payment_arg = algorand.create_transaction.payment(
-    PaymentParams(
-        sender=sender.addr,
-        receiver=receiver.addr,
-        amount=AlgoAmount.from_micro_algo(1),
-    )
+  PaymentParams(
+    sender=sender.addr,
+    receiver=receiver.addr,
+    amount=AlgoAmount.from_micro_algos(1),
+  )
 )
 
-# Note the use of .params. here, this ensure that max_fee is still available to the composer
+# Note the use of .params. here, this ensure that maxFee is still available to the composer
 app_call_arg = app_client_2.params.call(
-    AppClientMethodCallParams(
-        method="my_other_method",
-        args=[],
-        max_fee=AlgoAmount.from_micro_algo(2000),
-    )
+  AppCallMethodCallParams(
+    method='my_other_method',
+    args=[],
+    max_fee=AlgoAmount.from_micro_algos(2000),
+  )
 )
 
-result = (
-    app_client_1.algorand
-    .new_group()
-    .add_app_call_method_call(
-        app_client_1.params.call(
-            AppClientMethodCallParams(
-                method="my_method",
-                args=[payment_arg, app_call_arg],
-                max_fee=AlgoAmount.from_micro_algo(5000),
-            )
-        ),
-    )
-    .send(SendParams(cover_app_call_inner_transaction_fees=True))
-)
+result = app_client_1.algorand
+  .new_group()
+  .add_app_call_method_call(
+    app_client_1.params.call(
+      AppClientMethodCallParams(
+        method='my_method',
+        args=[payment_arg, app_call_arg],
+        max_fee=AlgoAmount.from_micro_algos(5000),
+      )
+    ),
+  )
+  .send({"cover_app_call_inner_transaction_fees": True})
 ```
 
 This feature should efficiently calculate the minimum fee needed to execute an app call transaction with inners, however we always recommend testing your specific scenario behaves as expected before releasing.
+
+## Error Transformers
+
+Error transformers provide a powerful mechanism for enhancing error messages and debugging information when transactions fail. They allow you to register custom functions that can transform generic blockchain errors into more meaningful, application-specific error messages.
+
+### How Error Transformers Work
+
+Error transformers are functions that take an `Exception` as input and return either a transformed `Exception` or the original exception unchanged. They are called in sequence during transaction simulation or sending when errors occur, allowing for a chain of transformations.
+
+```python
+from typing import Exception
+
+def my_error_transformer(error: Exception) -> Exception:
+    """Transform generic errors into more meaningful ones."""
+    if "asset missing" in str(error).lower():
+        return Exception("Asset not found: Please check the asset ID")
+    return error  # Return unchanged if not applicable
+```
+
+### Registering Error Transformers
+
+Error transformers can be registered at two levels:
+
+#### 1. AlgorandClient Level (Global)
+
+Register error transformers globally to apply to all transaction groups created from this client:
+
+```python
+from algokit_utils import AlgorandClient
+
+algorand = AlgorandClient.default_localnet()
+
+# Register a global error transformer
+algorand.register_error_transformer(my_error_transformer)
+
+# All transaction groups from this client will use the transformer
+result = algorand.new_group().add_payment(payment_params).send()
+
+# Unregister if needed
+algorand.unregister_error_transformer(my_error_transformer)
+```
+
+#### 2. TransactionComposer Level (Per Group)
+
+Register error transformers for a specific transaction group:
+
+```python
+# Register transformer for this specific group
+composer = algorand.new_group()
+composer.register_error_transformer(my_error_transformer)
+
+result = composer.add_payment(payment_params).send()
+```
+
+### Error Transformer Chain
+
+Multiple error transformers can be registered and they will be called in the order they were registered:
+
+```python
+def transformer_1(error: Exception) -> Exception:
+    if "missing from" in str(error):
+        return Exception("ASSET MISSING???")
+    return error
+
+def transformer_2(error: Exception) -> Exception:
+    if str(error) == "ASSET MISSING???":
+        return Exception("ASSET MISSING: Check your asset configuration")
+    return error
+
+# Register multiple transformers
+algorand.register_error_transformer(transformer_1)
+algorand.register_error_transformer(transformer_2)
+
+# They will be applied in sequence: error -> transformer_1 -> transformer_2
+```
+
+### App Client Integration
+
+The `AppClient` automatically registers error transformers to provide enhanced debugging for application-specific logic errors. These transformers:
+
+- Parse logic errors from the blockchain
+- Apply source map information when available
+- Filter errors to only handle those relevant to the specific application
+- For new applications (app_id=0), compare program bytecode to ensure error handling is applied to the correct application
+
+```python
+from algokit_utils import AppClient
+
+# Error transformer is automatically registered
+app_client = AppClient(
+    app_spec=app_spec,
+    app_id=123,  # Existing app
+    algorand=algorand
+)
+
+# App-specific logic errors will be enhanced with source maps and debugging info
+try:
+    result = app_client.send.call("my_method", args=[])
+except LogicError as e:
+    # Enhanced error with source information
+    print(f"Logic error at PC {e.pc}: {e.message}")
+    print(f"Source trace:\n{e.trace()}")
+```
+
+### Best Practices
+
+1. **Keep transformers focused**: Each transformer should handle a specific type of error or transformation.
+
+2. **Return original on no match**: Always return the original error if your transformer doesn't apply:
+   ```python
+   def my_transformer(error: Exception) -> Exception:
+       if not should_handle(error):
+           return error  # Important: return unchanged
+       return transform_error(error)
+   ```
+
+3. **Chain appropriately**: Register transformers in logical order, from most specific to most general.
+
+4. **Handle exceptions**: Ensure your transformer doesn't raise exceptions:
+   ```python
+   def safe_transformer(error: Exception) -> Exception:
+       try:
+           return transform_error(error)
+       except Exception:
+           return error  # Fallback to original
+   ```
+
+5. **Use type information**: Consider the error type when transforming:
+   ```python
+   def typed_transformer(error: Exception) -> Exception:
+       if isinstance(error, AlgodHTTPError):
+           return handle_algod_error(error)
+       elif isinstance(error, LogicError):
+           return enhance_logic_error(error)
+       return error
+   ```
+
+### Error Types
+
+Common error types you might encounter and transform:
+
+- **`AlgodHTTPError`**: Network or node-related errors
+- **`LogicError`**: Smart contract logic errors (automatically handled by AppClient)
+- **Generic `Exception`**: General transaction or validation errors
+
+Error transformers work with both `send()` and `simulate()` operations, providing consistent error enhancement across all transaction execution paths.
 
 #### Read-only calls
 
@@ -296,127 +492,3 @@ The behaviour of enabling `cover_app_call_inner_transaction_fees` for readonly m
 The high level Algorand contract authoring languages all have support for ensuring appropriate app op budget is available via `ensure_budget` in Algorand Python, `ensureBudget` in Algorand TypeScript and `increaseOpcodeBudget` in TEALScript. This is great, as it allows contract authors to ensure appropriate budget is available by automatically sending op-up inner transactions to increase the budget available. These op-up inner transactions require the fees to be covered by an account, which is generally the responsibility of the application consumer.
 
 Application consumers may not be immediately aware of the number of op-up inner transactions sent, so it can be difficult for them to determine the exact fees required to successfully execute an application call. Fortunately the `cover_app_call_inner_transaction_fees` setting above can be leveraged to automatically cover the fees for any op-up inner transaction that an application sends. Additionally if a contract author decides to cover the fee for an op-up inner transaction, then the application consumer will not be charged a fee for that transaction.
-
-## Simulating a transaction
-
-Transactions can be simulated using the simulate endpoint in algod, which enables evaluating the transaction on the network without it actually being committed to a block.
-This is a powerful feature, which has a number of options which are detailed in the [simulate API docs](https://dev.algorand.co/reference/rest-apis/output/#simulatetransaction).
-
-For example you can simulate a transaction group like below:
-
-```python
-result = (
-    algorand.new_group()
-    .add_payment(PaymentParams(
-        sender="SENDER",
-        receiver="RECEIVER",
-        amount=AlgoAmount.from_micro_algo(100),
-    ))
-    .add_app_call_method_call(AppCallMethodCallParams(
-        sender="SENDER",
-        app_id=123,
-        method=abi_method,
-        args=[1, 2, 3],
-    ))
-    .simulate()
-)
-```
-
-The above will execute a simulate request asserting that all transactions in the group are correctly signed.
-
-### Simulate without signing
-
-There are situations where you may not be able to (or want to) sign the transactions when executing simulate.
-In these instances you should set `skip_signatures=True` which automatically builds empty transaction signers and sets both `fix-signers` and `allow-empty-signatures` to `True` when sending the algod API call.
-
-For example:
-
-```python
-result = (
-    algorand.new_group()
-    .add_payment(PaymentParams(
-        sender="SENDER",
-        receiver="RECEIVER",
-        amount=AlgoAmount.from_micro_algo(100),
-    ))
-    .add_app_call_method_call(AppCallMethodCallParams(
-        sender="SENDER",
-        app_id=123,
-        method=abi_method,
-        args=[1, 2, 3],
-    ))
-    .simulate(skip_signatures=True)
-)
-```
-
-## Error Transformers
-
-Error transformers let you intercept and transform errors raised when sending or simulating transactions. This is useful for mapping low-level Algorand errors into domain-specific exceptions.
-
-### Type definitions
-
-```python
-from collections.abc import Callable
-
-# A transformer receives an Exception and must return an Exception
-ErrorTransformer = Callable[[Exception], Exception]
-```
-
-Two guard-rail exceptions are defined in `algokit_utils.transactions.transaction_composer`:
-
-| Exception                           | Raised when                                   |
-| ----------------------------------- | --------------------------------------------- |
-| `ErrorTransformerError`             | A transformer itself raises an exception      |
-| `InvalidErrorTransformerValueError` | A transformer returns a non-`Exception` value |
-
-When a transaction fails, the composer wraps the underlying error into a `TransactionComposerError` (which carries `traces`, `sent_transactions`, and `simulate_response` for debugging) before passing it through the transformer chain.
-
-### Registration API
-
-Transformers can be registered at two levels:
-
-**On `AlgorandClient`** — applies to all composers created via `new_group()`:
-
-```python
-def my_transformer(err: Exception) -> Exception:
-    if "TRANSACTION_REJECTED" in str(err):
-        return MyDomainError("Transaction was rejected by the network")
-    return err
-
-algorand.register_error_transformer(my_transformer)
-
-# Remove it later
-algorand.unregister_error_transformer(my_transformer)
-```
-
-`AlgorandClient` stores transformers in a set (de-duplicated). A snapshot is passed to each new composer at `new_group()` time.
-
-**On `TransactionComposer`** — applies only to that composer instance:
-
-```python
-composer = algorand.new_group()
-composer.register_error_transformer(my_transformer)
-```
-
-Transformers registered directly on the composer are appended after those inherited from the client.
-
-### Error flow
-
-When `send()` catches an exception, the following steps occur:
-
-1. **Interpret** — The raw error is unwrapped (e.g. extracting the algod message from HTTP status errors).
-2. **Wrap** — The interpreted error is wrapped into a `TransactionComposerError` with debug context (simulation traces, sent transactions).
-3. **Transform** — The composer error is passed through each registered transformer in order. Each transformer receives the output of the previous one (chained), not the original error.
-4. **Raise** — The final transformed error is raised with the original exception set as the cause (`raise transformed from original`).
-
-```python
-# Simplified flow inside send()
-try:
-    # ... build, sign, send
-except Exception as err:
-    interpreted = self._interpret_error(err)
-    composer_error = self._create_composer_error(interpreted, ...)
-    raise self._transform_error(composer_error) from err
-```
-
-If a transformer raises, the chain stops and an `ErrorTransformerError` is raised instead. If a transformer returns a non-`Exception` value, an `InvalidErrorTransformerValueError` is raised.

@@ -6,7 +6,10 @@
   },
   {
     "label": "Guides",
-    "items": [{ "slug": "guide/subscriber" }, { "slug": "guide/subscriptions" }]
+    "items": [
+      { "slug": "guide/subscriber" },
+      { "slug": "guide/subscriptions" }
+    ]
   },
   {
     "label": "Concepts",
@@ -22,10 +25,7 @@
       { "slug": "concepts/fast-catchup" }
     ]
   },
-  {
-    "label": "Examples",
-    "autogenerate": { "directory": "examples" }
-  },
+  { "slug": "examples" },
   {
     "label": "Migration Guides",
     "collapsed": true,

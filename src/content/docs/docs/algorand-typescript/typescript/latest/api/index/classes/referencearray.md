@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: 'ReferenceArray'
+title: "ReferenceArray"
 ---
 
 Defined in: [reference-array.ts:7](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/reference-array.ts#L7)
@@ -17,7 +17,7 @@ An in memory mutable array which is passed by reference
 
 ## Indexable
 
-\[`index`: [`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)\]: `TItem`
+\[`index`: [`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)\]: `TItem`
 
 Get or set the item at the specified index.
 Negative indexes are not supported
@@ -50,7 +50,7 @@ The initial items for the array
 
 #### Get Signature
 
-> **get** **length**(): [`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
+> **get** **length**(): [`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
 
 Defined in: [reference-array.ts:17](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/reference-array.ts#L17)
 
@@ -58,7 +58,7 @@ Returns the current length of this array
 
 ##### Returns
 
-[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
+[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
 
 ## Methods
 
@@ -74,7 +74,7 @@ Returns an iterator for the items in this array
 
 `IterableIterator`\<`TItem`\>
 
----
+***
 
 ### at()
 
@@ -89,7 +89,7 @@ Negative indexes are taken from the end.
 
 ##### index
 
-[`Uint64Compat`](/algorand-typescript/api/index/type-aliases/uint64compat/)
+[`Uint64Compat`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64compat/)
 
 The index of the item to retrieve
 
@@ -97,11 +97,11 @@ The index of the item to retrieve
 
 `TItem`
 
----
+***
 
 ### entries()
 
-> **entries**(): `IterableIterator`\<readonly \[[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/), `TItem`\]\>
+> **entries**(): `IterableIterator`\<readonly \[[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/), `TItem`\]\>
 
 Defined in: [reference-array.ts:64](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/reference-array.ts#L64)
 
@@ -109,13 +109,13 @@ Returns an iterator for a tuple of the indexes and items in this array
 
 #### Returns
 
-`IterableIterator`\<readonly \[[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/), `TItem`\]\>
+`IterableIterator`\<readonly \[[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/), `TItem`\]\>
 
----
+***
 
 ### keys()
 
-> **keys**(): `IterableIterator`\<[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)\>
+> **keys**(): `IterableIterator`\<[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)\>
 
 Defined in: [reference-array.ts:71](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/reference-array.ts#L71)
 
@@ -123,9 +123,9 @@ Returns an iterator for the indexes in this array
 
 #### Returns
 
-`IterableIterator`\<[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)\>
+`IterableIterator`\<[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)\>
 
----
+***
 
 ### pop()
 
@@ -139,7 +139,7 @@ Pop a single item from this array
 
 `TItem`
 
----
+***
 
 ### push()
 
@@ -161,7 +161,7 @@ The items to be added to this array
 
 `void`
 
----
+***
 
 ### ~~slice()~~
 
@@ -196,7 +196,7 @@ Negative indexes are taken from the end.
 
 ###### end
 
-[`Uint64Compat`](/algorand-typescript/api/index/type-aliases/uint64compat/)
+[`Uint64Compat`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64compat/)
 
 An index in which to stop copying items.
 
@@ -220,13 +220,13 @@ Negative indexes are taken from the end.
 
 ###### start
 
-[`Uint64Compat`](/algorand-typescript/api/index/type-aliases/uint64compat/)
+[`Uint64Compat`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64compat/)
 
 An index in which to start copying items.
 
 ###### end
 
-[`Uint64Compat`](/algorand-typescript/api/index/type-aliases/uint64compat/)
+[`Uint64Compat`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64compat/)
 
 An index in which to stop copying items
 

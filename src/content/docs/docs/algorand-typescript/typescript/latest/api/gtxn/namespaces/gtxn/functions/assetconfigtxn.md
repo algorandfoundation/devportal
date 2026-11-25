@@ -2,10 +2,10 @@
 editUrl: false
 next: false
 prev: false
-title: 'AssetConfigTxn'
+title: "AssetConfigTxn"
 ---
 
-> **AssetConfigTxn**(`n`): [`AssetConfigTxn`](/algorand-typescript/api/gtxn/namespaces/gtxn/interfaces/assetconfigtxn/)
+> **AssetConfigTxn**(`n`): [`AssetConfigTxn`](/docs/algorand-typescript/typescript/latest/api/gtxn/namespaces/gtxn/interfaces/assetconfigtxn/)
 
 Defined in: [gtxn.ts:613](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/gtxn.ts#L613)
 
@@ -16,10 +16,10 @@ Verifies the txn type is 'acfg'
 
 ### n
 
-[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
+[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
 
 The index of the txn in the group
 
 ## Returns
 
-[`AssetConfigTxn`](/algorand-typescript/api/gtxn/namespaces/gtxn/interfaces/assetconfigtxn/)
+[`AssetConfigTxn`](/docs/algorand-typescript/typescript/latest/api/gtxn/namespaces/gtxn/interfaces/assetconfigtxn/)

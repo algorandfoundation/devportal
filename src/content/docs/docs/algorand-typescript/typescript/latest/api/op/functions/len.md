@@ -2,12 +2,12 @@
 editUrl: false
 next: false
 prev: false
-title: 'len'
+title: "len"
 ---
 
-> **len**(`a`): [`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
+> **len**(`a`): [`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
 
-Defined in: [op.ts:3339](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/op.ts#L3339)
+Defined in: [op.ts:3498](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/op.ts#L3498)
 
 yields length of byte value A
 
@@ -15,11 +15,11 @@ yields length of byte value A
 
 ### a
 
-[`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)
+[`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)
 
 ## Returns
 
-[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
+[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
 
 ## See
 

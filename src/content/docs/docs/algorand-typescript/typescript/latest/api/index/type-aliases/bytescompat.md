@@ -2,10 +2,10 @@
 editUrl: false
 next: false
 prev: false
-title: 'BytesCompat'
+title: "BytesCompat"
 ---
 
-> **BytesCompat** = [`bytes`](/algorand-typescript/api/index/type-aliases/bytes/) \| `string`
+> **BytesCompat** = [`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/) \| `string`
 
 Defined in: [primitives.ts:18](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/primitives.ts#L18)
 

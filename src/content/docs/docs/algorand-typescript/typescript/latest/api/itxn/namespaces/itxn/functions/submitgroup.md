@@ -2,10 +2,10 @@
 editUrl: false
 next: false
 prev: false
-title: 'submitGroup'
+title: "submitGroup"
 ---
 
-> **submitGroup**\<`TFields`\>(...`transactionFields`): [`TxnFor`](/algorand-typescript/api/itxn/namespaces/itxn/type-aliases/txnfor/)\<`TFields`\>
+> **submitGroup**\<`TFields`\>(...`transactionFields`): [`TxnFor`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/type-aliases/txnfor/)\<`TFields`\>
 
 Defined in: [itxn.ts:989](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/itxn.ts#L989)
 
@@ -15,7 +15,7 @@ Submit a group of ItxnParams objects and return the InnerTransaction results
 
 ### TFields
 
-`TFields` _extends_ [`ItxnParams`](/algorand-typescript/api/itxn/namespaces/itxn/type-aliases/itxnparams/)[]
+`TFields` *extends* [`ItxnParams`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/type-aliases/itxnparams/)[]
 
 ## Parameters
 
@@ -25,4 +25,4 @@ Submit a group of ItxnParams objects and return the InnerTransaction results
 
 ## Returns
 
-[`TxnFor`](/algorand-typescript/api/itxn/namespaces/itxn/type-aliases/txnfor/)\<`TFields`\>
+[`TxnFor`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/type-aliases/txnfor/)\<`TFields`\>

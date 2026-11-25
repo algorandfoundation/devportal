@@ -2,10 +2,10 @@
 editUrl: false
 next: false
 prev: false
-title: 'PaymentTxn'
+title: "PaymentTxn"
 ---
 
-> **PaymentTxn**(`n`): [`PaymentTxn`](/algorand-typescript/api/gtxn/namespaces/gtxn/interfaces/paymenttxn/)
+> **PaymentTxn**(`n`): [`PaymentTxn`](/docs/algorand-typescript/typescript/latest/api/gtxn/namespaces/gtxn/interfaces/paymenttxn/)
 
 Defined in: [gtxn.ts:597](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/gtxn.ts#L597)
 
@@ -16,10 +16,10 @@ Verifies the txn type is 'pay'
 
 ### n
 
-[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
+[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
 
 The index of the txn in the group
 
 ## Returns
 
-[`PaymentTxn`](/algorand-typescript/api/gtxn/namespaces/gtxn/interfaces/paymenttxn/)
+[`PaymentTxn`](/docs/algorand-typescript/typescript/latest/api/gtxn/namespaces/gtxn/interfaces/paymenttxn/)

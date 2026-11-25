@@ -2,10 +2,10 @@
 editUrl: false
 next: false
 prev: false
-title: 'GtxnToItxnFields'
+title: "GtxnToItxnFields"
 ---
 
-> **GtxnToItxnFields**\<`T`\> = `T` _extends_ [`PaymentTxn`](/algorand-typescript/api/gtxn/namespaces/gtxn/interfaces/paymenttxn/) ? [`PaymentItxnParams`](/algorand-typescript/api/itxn/namespaces/itxn/classes/paymentitxnparams/) : `T` _extends_ [`KeyRegistrationTxn`](/algorand-typescript/api/gtxn/namespaces/gtxn/interfaces/keyregistrationtxn/) ? [`KeyRegistrationItxnParams`](/algorand-typescript/api/itxn/namespaces/itxn/classes/keyregistrationitxnparams/) : `T` _extends_ [`AssetConfigTxn`](/algorand-typescript/api/gtxn/namespaces/gtxn/interfaces/assetconfigtxn/) ? [`AssetConfigItxnParams`](/algorand-typescript/api/itxn/namespaces/itxn/classes/assetconfigitxnparams/) : `T` _extends_ [`AssetTransferTxn`](/algorand-typescript/api/gtxn/namespaces/gtxn/interfaces/assettransfertxn/) ? [`AssetTransferItxnParams`](/algorand-typescript/api/itxn/namespaces/itxn/classes/assettransferitxnparams/) : `T` _extends_ [`AssetFreezeTxn`](/algorand-typescript/api/gtxn/namespaces/gtxn/interfaces/assetfreezetxn/) ? [`AssetFreezeItxnParams`](/algorand-typescript/api/itxn/namespaces/itxn/classes/assetfreezeitxnparams/) : `T` _extends_ [`ApplicationCallTxn`](/algorand-typescript/api/gtxn/namespaces/gtxn/interfaces/applicationcalltxn/) ? [`ApplicationCallItxnParams`](/algorand-typescript/api/itxn/namespaces/itxn/classes/applicationcallitxnparams/) : [`ItxnParams`](/algorand-typescript/api/itxn/namespaces/itxn/type-aliases/itxnparams/)
+> **GtxnToItxnFields**\<`T`\> = `T` *extends* [`PaymentTxn`](/docs/algorand-typescript/typescript/latest/api/gtxn/namespaces/gtxn/interfaces/paymenttxn/) ? [`PaymentItxnParams`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/classes/paymentitxnparams/) : `T` *extends* [`KeyRegistrationTxn`](/docs/algorand-typescript/typescript/latest/api/gtxn/namespaces/gtxn/interfaces/keyregistrationtxn/) ? [`KeyRegistrationItxnParams`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/classes/keyregistrationitxnparams/) : `T` *extends* [`AssetConfigTxn`](/docs/algorand-typescript/typescript/latest/api/gtxn/namespaces/gtxn/interfaces/assetconfigtxn/) ? [`AssetConfigItxnParams`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/classes/assetconfigitxnparams/) : `T` *extends* [`AssetTransferTxn`](/docs/algorand-typescript/typescript/latest/api/gtxn/namespaces/gtxn/interfaces/assettransfertxn/) ? [`AssetTransferItxnParams`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/classes/assettransferitxnparams/) : `T` *extends* [`AssetFreezeTxn`](/docs/algorand-typescript/typescript/latest/api/gtxn/namespaces/gtxn/interfaces/assetfreezetxn/) ? [`AssetFreezeItxnParams`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/classes/assetfreezeitxnparams/) : `T` *extends* [`ApplicationCallTxn`](/docs/algorand-typescript/typescript/latest/api/gtxn/namespaces/gtxn/interfaces/applicationcalltxn/) ? [`ApplicationCallItxnParams`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/classes/applicationcallitxnparams/) : [`ItxnParams`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/type-aliases/itxnparams/)
 
 Defined in: [arc4/c2c.ts:21](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/arc4/c2c.ts#L21)
 
@@ -16,4 +16,4 @@ params type.
 
 ### T
 
-`T` _extends_ [`Transaction`](/algorand-typescript/api/gtxn/namespaces/gtxn/type-aliases/transaction/)
+`T` *extends* [`Transaction`](/docs/algorand-typescript/typescript/latest/api/gtxn/namespaces/gtxn/type-aliases/transaction/)

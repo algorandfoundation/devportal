@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: 'KeyRegistrationItxnParams'
+title: "KeyRegistrationItxnParams"
 ---
 
 Defined in: [itxn.ts:1024](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/itxn.ts#L1024)
@@ -33,7 +33,7 @@ Return a copy of this KeyRegistrationItxnParams object
 
 `KeyRegistrationItxnParams`
 
----
+***
 
 ### set()
 
@@ -47,17 +47,17 @@ Update one or more fields in this KeyRegistrationItxnParams object
 
 ##### fields
 
-[`KeyRegistrationFields`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/keyregistrationfields/)
+[`KeyRegistrationFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/keyregistrationfields/)
 
 #### Returns
 
 `void`
 
----
+***
 
 ### submit()
 
-> **submit**(): [`KeyRegistrationInnerTxn`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/keyregistrationinnertxn/)
+> **submit**(): [`KeyRegistrationInnerTxn`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/keyregistrationinnertxn/)
 
 Defined in: [itxn.ts:1028](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/itxn.ts#L1028)
 
@@ -65,4 +65,4 @@ Submit an itxn with these fields and return the KeyRegistrationInnerTxn result
 
 #### Returns
 
-[`KeyRegistrationInnerTxn`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/keyregistrationinnertxn/)
+[`KeyRegistrationInnerTxn`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/keyregistrationinnertxn/)

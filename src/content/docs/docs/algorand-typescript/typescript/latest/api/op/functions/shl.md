@@ -2,12 +2,12 @@
 editUrl: false
 next: false
 prev: false
-title: 'shl'
+title: "shl"
 ---
 
-> **shl**(`a`, `b`): [`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
+> **shl**(`a`, `b`): [`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
 
-Defined in: [op.ts:3466](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/op.ts#L3466)
+Defined in: [op.ts:3644](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/op.ts#L3644)
 
 A times 2^B, modulo 2^64
 
@@ -15,15 +15,15 @@ A times 2^B, modulo 2^64
 
 ### a
 
-[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
+[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
 
 ### b
 
-[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
+[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
 
 ## Returns
 
-[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
+[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
 
 ## See
 

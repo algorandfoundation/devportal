@@ -2,12 +2,12 @@
 editUrl: false
 next: false
 prev: false
-title: 'substring'
+title: "substring"
 ---
 
-> **substring**(`a`, `b`, `c`): [`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)
+> **substring**(`a`, `b`, `c`): [`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)
 
-Defined in: [op.ts:3493](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/op.ts#L3493)
+Defined in: [op.ts:3671](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/op.ts#L3671)
 
 A range of bytes from A starting at B up to but not including C. If C < B, or either is larger than the array length, the program fails
 
@@ -15,19 +15,19 @@ A range of bytes from A starting at B up to but not including C. If C < B, or ei
 
 ### a
 
-[`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)
+[`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)
 
 ### b
 
-[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
+[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
 
 ### c
 
-[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
+[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
 
 ## Returns
 
-[`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)
+[`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)
 
 ## See
 

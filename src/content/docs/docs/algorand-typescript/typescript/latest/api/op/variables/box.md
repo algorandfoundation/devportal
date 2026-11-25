@@ -2,12 +2,12 @@
 editUrl: false
 next: false
 prev: false
-title: 'Box'
+title: "Box"
 ---
 
 > `const` **Box**: `object`
 
-Defined in: [op.ts:614](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/op.ts#L614)
+Defined in: [op.ts:772](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/op.ts#L772)
 
 Get or modify box state
 
@@ -24,11 +24,11 @@ Newly created boxes are filled with 0 bytes. `box_create` will fail if the refer
 
 ##### a
 
-[`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)
+[`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)
 
 ##### b
 
-[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
+[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
 
 #### Returns
 
@@ -49,7 +49,7 @@ delete box named A if it exists. Return 1 if A existed, 0 otherwise
 
 ##### a
 
-[`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)
+[`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)
 
 #### Returns
 
@@ -62,7 +62,7 @@ Min AVM version: 8
 
 ### extract()
 
-> **extract**(`a`, `b`, `c`): [`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)
+> **extract**(`a`, `b`, `c`): [`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)
 
 read C bytes from box A, starting at offset B. Fail if A does not exist, or the byte range is outside A's size.
 
@@ -70,19 +70,19 @@ read C bytes from box A, starting at offset B. Fail if A does not exist, or the 
 
 ##### a
 
-[`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)
+[`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)
 
 ##### b
 
-[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
+[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
 
 ##### c
 
-[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
+[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
 
 #### Returns
 
-[`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)
+[`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)
 
 #### See
 
@@ -91,7 +91,7 @@ Min AVM version: 8
 
 ### get()
 
-> **get**(`a`): readonly \[[`bytes`](/algorand-typescript/api/index/type-aliases/bytes/), `boolean`\]
+> **get**(`a`): readonly \[[`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/), `boolean`\]
 
 X is the contents of box A if A exists, else ''. Y is 1 if A exists, else 0.
 For boxes that exceed 4,096 bytes, consider `box_create`, `box_extract`, and `box_replace`
@@ -100,11 +100,11 @@ For boxes that exceed 4,096 bytes, consider `box_create`, `box_extract`, and `bo
 
 ##### a
 
-[`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)
+[`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)
 
 #### Returns
 
-readonly \[[`bytes`](/algorand-typescript/api/index/type-aliases/bytes/), `boolean`\]
+readonly \[[`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/), `boolean`\]
 
 #### See
 
@@ -113,7 +113,7 @@ Min AVM version: 8
 
 ### length()
 
-> **length**(`a`): readonly \[[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/), `boolean`\]
+> **length**(`a`): readonly \[[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/), `boolean`\]
 
 X is the length of box A if A exists, else 0. Y is 1 if A exists, else 0.
 
@@ -121,11 +121,11 @@ X is the length of box A if A exists, else 0. Y is 1 if A exists, else 0.
 
 ##### a
 
-[`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)
+[`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)
 
 #### Returns
 
-readonly \[[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/), `boolean`\]
+readonly \[[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/), `boolean`\]
 
 #### See
 
@@ -143,11 +143,11 @@ For boxes that exceed 4,096 bytes, consider `box_create`, `box_extract`, and `bo
 
 ##### a
 
-[`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)
+[`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)
 
 ##### b
 
-[`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)
+[`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)
 
 #### Returns
 
@@ -168,15 +168,15 @@ write byte-array C into box A, starting at offset B. Fail if A does not exist, o
 
 ##### a
 
-[`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)
+[`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)
 
 ##### b
 
-[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
+[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
 
 ##### c
 
-[`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)
+[`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)
 
 #### Returns
 
@@ -197,11 +197,11 @@ change the size of box named A to be of length B, adding zero bytes to end or re
 
 ##### a
 
-[`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)
+[`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)
 
 ##### b
 
-[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
+[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
 
 #### Returns
 
@@ -223,19 +223,19 @@ Boxes are of constant length. If C < len(D), then len(D)-C bytes will be removed
 
 ##### a
 
-[`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)
+[`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)
 
 ##### b
 
-[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
+[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
 
 ##### c
 
-[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
+[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
 
 ##### d
 
-[`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)
+[`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)
 
 #### Returns
 

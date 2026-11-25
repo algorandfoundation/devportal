@@ -2,10 +2,10 @@
 editUrl: false
 next: false
 prev: false
-title: 'assetConfig'
+title: "assetConfig"
 ---
 
-> **assetConfig**(`fields`): [`AssetConfigItxnParams`](/algorand-typescript/api/itxn/namespaces/itxn/classes/assetconfigitxnparams/)
+> **assetConfig**(`fields`): [`AssetConfigItxnParams`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/classes/assetconfigitxnparams/)
 
 Defined in: [itxn.ts:1076](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/itxn.ts#L1076)
 
@@ -15,8 +15,8 @@ Create a new AssetConfigItxnParams object with the specified fields
 
 ### fields
 
-[`AssetConfigFields`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/assetconfigfields/)
+[`AssetConfigFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/assetconfigfields/)
 
 ## Returns
 
-[`AssetConfigItxnParams`](/algorand-typescript/api/itxn/namespaces/itxn/classes/assetconfigitxnparams/)
+[`AssetConfigItxnParams`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/classes/assetconfigitxnparams/)
