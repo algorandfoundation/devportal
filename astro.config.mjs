@@ -178,7 +178,7 @@ export default defineConfig({
           {
             base: 'reference/rest-api/kmd',
             schema:
-              'https://raw.githubusercontent.com/algorand/go-algorand/ad578576ab5f5bfe58a590164903617ecef379e4/daemon/kmd/api/swagger.json',
+              'https://raw.githubusercontent.com/algorand/go-algorand/refs/heads/master/daemon/kmd/api/swagger.json',
             sidebar: {
               label: 'kmd',
               group: kmdAPIDocsSidebarGroup,
@@ -319,7 +319,7 @@ export default defineConfig({
               attrs: { target: '_blank', rel: 'noopener' },
             },
             {
-              label: 'AlgoKit 3.0 Video Course',
+              label: 'AlgoKit Video Course',
               link: 'https://youtube.com/playlist?list=PLwRyHoehE4356E8tPKxC2XJtFEyLOHHEB&si=kfoKgu0jVObIJGWO',
               attrs: { target: '_blank', rel: 'noopener' },
             },

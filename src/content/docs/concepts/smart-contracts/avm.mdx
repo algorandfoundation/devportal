@@ -3,6 +3,8 @@ title: Algorand Virtual Machine
 description: The Algorand Virtual Machine (AVM) is a stack-based bytecode interpreter that runs smart contracts and logic signatures, using defined stack types and opcodes.
 ---
 
+import AvmVersion from '/src/components/AvmVersion.astro';
+
 The AVM is a bytecode based stack interpreter that executes programs
 associated with Algorand transactions. TEAL is an assembly language
 syntax for specifying a program that is ultimately converted to AVM
@@ -47,18 +49,18 @@ While the stack can only store two basic types of values - `uint64` and `bytes` 
 
 #### Definitions
 
-| Name     | Bound                     | AVM Type |
-| -------- | ------------------------- | -------- |
-| []byte   | len(x) <= 4096            | []byte   |
-| address  | len(x) == 32              | []byte   |
-| any      |                           | any      |
-| bigint   | len(x) <= 64              | []byte   |
-| bool     | x <= 1                    | uint64   |
-| boxName  | 1 <= len(x) <= 64         | []byte   |
-| method   | len(x) == 4               | []byte   |
-| none     |                           | none     |
-| stateKey | len(x) <= 64              | []byte   |
-| uint64   | x <= 18446744073709551615 | uint64   |
+| Name     | Bound                      | AVM Type |
+| -------- | -------------------------- | -------- |
+| []byte   | len(x) \<= 4096            | []byte   |
+| address  | len(x) == 32               | []byte   |
+| any      |                            | any      |
+| bigint   | len(x) \<= 64              | []byte   |
+| bool     | x \<= 1                    | uint64   |
+| boxName  | 1 \<= len(x) \<= 64        | []byte   |
+| method   | len(x) == 4                | []byte   |
+| none     |                            | none     |
+| stateKey | len(x) \<= 64              | []byte   |
+| uint64   | x \<= 18446744073709551615 | uint64   |
 
 ## Scratch Space
 
@@ -76,8 +78,10 @@ In order to maintain existing semantics for previously written
 programs, AVM code is versioned. When new opcodes are introduced, or
 behavior is changed, a new version is introduced. Programs carrying
 old versions are executed with their original semantics. In the AVM
-bytecode, the version is an incrementing integer, currently 13, and
-denoted vX throughout this document.
+bytecode, the version is an incrementing integer, denoted vX
+throughout this document. The latest released version is
+v<AvmVersion /> (see the [opcodes reference](/reference/algorand-teal/opcodes/)
+for the opcodes available in each version).
 
 ## Execution Modes
 
@@ -414,22 +418,22 @@ return stack matches the name of the input value.
 | `-`       | A minus B. Fail if B > A.                                                                                                                                |
 | `/`       | A divided by B (truncated division). Fail if B == 0.                                                                                                     |
 | `*`       | A times B. Fail on overflow.                                                                                                                             |
-| `<`       | A less than B => {0 or 1}                                                                                                                                |
-| `>`       | A greater than B => {0 or 1}                                                                                                                             |
-| `<=`      | A less than or equal to B => {0 or 1}                                                                                                                    |
-| `>=`      | A greater than or equal to B => {0 or 1}                                                                                                                 |
-| `&&`      | A is not zero and B is not zero => {0 or 1}                                                                                                              |
-| `\|\|`    | A is not zero or B is not zero => {0 or 1}                                                                                                               |
+| `<`       | A less than B => \{0 or 1\}                                                                                                                              |
+| `>`       | A greater than B => \{0 or 1\}                                                                                                                           |
+| `<=`      | A less than or equal to B => \{0 or 1\}                                                                                                                  |
+| `>=`      | A greater than or equal to B => \{0 or 1\}                                                                                                               |
+| `&&`      | A is not zero and B is not zero => \{0 or 1\}                                                                                                            |
+| `\|\|`    | A is not zero or B is not zero => \{0 or 1\}                                                                                                             |
 | `shl`     | A times 2^B, modulo 2^64                                                                                                                                 |
 | `shr`     | A divided by 2^B                                                                                                                                         |
-| `sqrt`    | The largest integer I such that I^2 <= A                                                                                                                 |
+| `sqrt`    | The largest integer I such that I^2 \<= A                                                                                                                |
 | `bitlen`  | The highest set bit in A. If A is a byte-array, it is interpreted as a big-endian unsigned integer. bitlen of 0 is 0, bitlen of 8 is 4                   |
 | `exp`     | A raised to the Bth power. Fail if A == B == 0 and on overflow                                                                                           |
-| `==`      | A is equal to B => {0 or 1}                                                                                                                              |
-| `!=`      | A is not equal to B => {0 or 1}                                                                                                                          |
+| `==`      | A is equal to B => \{0 or 1\}                                                                                                                            |
+| `!=`      | A is not equal to B => \{0 or 1\}                                                                                                                        |
 | `!`       | A == 0 yields 1; else 0                                                                                                                                  |
 | `itob`    | converts uint64 A to big-endian byte array, always of length 8                                                                                           |
-| `btoi`    | converts big-endian byte array A to uint64. Fails if len(A) > 8. Padded by leading 0s if len(A) < 8.                                                     |
+| `btoi`    | converts big-endian byte array A to uint64. Fails if len(A) > 8. Padded by leading 0s if len(A) \< 8.                                                    |
 | `%`       | A modulo B. Fail if B == 0.                                                                                                                              |
 | `\|`      | A bitwise-or B                                                                                                                                           |
 | `&`       | A bitwise-and B                                                                                                                                          |
@@ -451,8 +455,8 @@ return stack matches the name of the input value.
 | `setbyte`         | Copy of A with the Bth byte set to small integer (between 0..255) C. If B is greater than or equal to the array length, the program fails                                                      |
 | `concat`          | join A and B                                                                                                                                                                                   |
 | `len`             | yields length of byte value A                                                                                                                                                                  |
-| `substring s e`   | A range of bytes from A starting at S up to but not including E. If E < S, or either is larger than the array length, the program fails                                                        |
-| `substring3`      | A range of bytes from A starting at B up to but not including C. If C < B, or either is larger than the array length, the program fails                                                        |
+| `substring s e`   | A range of bytes from A starting at S up to but not including E. If E \< S, or either is larger than the array length, the program fails                                                       |
+| `substring3`      | A range of bytes from A starting at B up to but not including C. If C \< B, or either is larger than the array length, the program fails                                                       |
 | `extract s l`     | A range of bytes from A starting at S up to but not including S+L. If L is 0, then extract to the end of the string. If S or S+L is larger than the array length, the program fails            |
 | `extract3`        | A range of bytes from A starting at B up to but not including B+C. If B+C is larger than the array length, the program fails<br />`extract3` can be called using `extract` with no immediates. |
 | `extract_uint16`  | A uint16 formed from a range of big-endian bytes from A starting at B up to but not including B+2. If B+2 is larger than the array length, the program fails                                   |
@@ -488,7 +492,7 @@ bytes on outputs.
 | `b==`   | 1 if A is equal to B, else 0. A and B are interpreted as big-endian unsigned integers                            |
 | `b!=`   | 0 if A is equal to B, else 1. A and B are interpreted as big-endian unsigned integers                            |
 | `b%`    | A modulo B. A and B are interpreted as big-endian unsigned integers. Fail if B is zero.                          |
-| `bsqrt` | The largest integer I such that I^2 <= A. A and I are interpreted as big-endian unsigned integers                |
+| `bsqrt` | The largest integer I such that I^2 \<= A. A and I are interpreted as big-endian unsigned integers               |
 
 These opcodes operate on the bits of byte-array values. The shorter
 input array is interpreted as though left padded with zeros until it is the
@@ -512,10 +516,10 @@ these results may contain leading zero bytes.
 | `sha512_256`            | SHA512_256 hash of value A, yields [32]byte                                                                                                       |
 | `sha512`                | SHA512 hash of value A, yields [64]byte                                                                                                           |
 | `sha3_256`              | SHA3_256 hash of value A, yields [32]byte                                                                                                         |
-| `falcon_verify`         | for (data A, compressed-format signature B, pubkey C) verify the signature of data against the pubkey => {0 or 1}                                 |
-| `ed25519verify`         | for (data A, signature B, pubkey C) verify the signature of ("ProgData" \|\| program_hash \|\| data) against the pubkey => {0 or 1}               |
-| `ed25519verify_bare`    | for (data A, signature B, pubkey C) verify the signature of the data against the pubkey => {0 or 1}                                               |
-| `ecdsa_verify v`        | for (data A, signature B, C and pubkey D, E) verify the signature of the data against the pubkey => {0 or 1}                                      |
+| `falcon_verify`         | for (data A, compressed-format signature B, pubkey C) verify the signature of data against the pubkey => \{0 or 1\}                               |
+| `ed25519verify`         | for (data A, signature B, pubkey C) verify the signature of ("ProgData" \|\| program_hash \|\| data) against the pubkey => \{0 or 1\}             |
+| `ed25519verify_bare`    | for (data A, signature B, pubkey C) verify the signature of the data against the pubkey => \{0 or 1\}                                             |
+| `ecdsa_verify v`        | for (data A, signature B, C and pubkey D, E) verify the signature of the data against the pubkey => \{0 or 1\}                                    |
 | `ecdsa_pk_recover v`    | for (data A, recovery id B, signature C, D) recover a public key                                                                                  |
 | `ecdsa_pk_decompress v` | decompress pubkey A into components X, Y                                                                                                          |
 | `vrf_verify s`          | Verify the proof B of message A against pubkey C. Returns vrf output and verification flag.                                                       |
@@ -799,32 +803,32 @@ Account fields used in the `acct_params_get` opcode.
 
 ### Flow Control
 
-| Opcode              | Description                                                                                                                                  |
-| ------------------- | -------------------------------------------------------------------------------------------------------------------------------------------- |
-| `err`               | Fail immediately.                                                                                                                            |
-| `bnz target`        | branch to TARGET if value A is not zero                                                                                                      |
-| `bz target`         | branch to TARGET if value A is zero                                                                                                          |
-| `b target`          | branch unconditionally to TARGET                                                                                                             |
-| `return`            | use A as success value; end                                                                                                                  |
-| `pop`               | discard A                                                                                                                                    |
-| `popn n`            | remove N values from the top of the stack                                                                                                    |
-| `dup`               | duplicate A                                                                                                                                  |
-| `dup2`              | duplicate A and B                                                                                                                            |
-| `dupn n`            | duplicate A, N times                                                                                                                         |
-| `dig n`             | Nth value from the top of the stack. dig 0 is equivalent to dup                                                                              |
-| `bury n`            | replace the Nth value from the top of the stack with A. bury 0 fails.                                                                        |
-| `cover n`           | remove top of stack, and place it deeper in the stack such that N elements are above it. Fails if stack depth <= N.                          |
-| `uncover n`         | remove the value at depth N in the stack and shift above items down so the Nth deep value is on top of the stack. Fails if stack depth <= N. |
-| `frame_dig i`       | Nth (signed) value from the frame pointer.                                                                                                   |
-| `frame_bury i`      | replace the Nth (signed) value from the frame pointer in the stack with A                                                                    |
-| `swap`              | swaps A and B on stack                                                                                                                       |
-| `select`            | selects one of two values based on top-of-stack: B if C != 0, else A                                                                         |
-| `assert`            | immediately fail unless A is a non-zero number                                                                                               |
-| `callsub target`    | branch unconditionally to TARGET, saving the next instruction on the call stack                                                              |
-| `proto a r`         | Prepare top call frame for a retsub that will assume A args and R return values.                                                             |
-| `retsub`            | pop the top instruction from the call stack and branch to it                                                                                 |
-| `switch target ...` | branch to the Ath label. Continue at following instruction if index A exceeds the number of labels.                                          |
-| `match target ...`  | given match cases from A[1] to A[N], branch to the Ith label where A[I] = B. Continue to the following instruction if no matches are found.  |
+| Opcode              | Description                                                                                                                                   |
+| ------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
+| `err`               | Fail immediately.                                                                                                                             |
+| `bnz target`        | branch to TARGET if value A is not zero                                                                                                       |
+| `bz target`         | branch to TARGET if value A is zero                                                                                                           |
+| `b target`          | branch unconditionally to TARGET                                                                                                              |
+| `return`            | use A as success value; end                                                                                                                   |
+| `pop`               | discard A                                                                                                                                     |
+| `popn n`            | remove N values from the top of the stack                                                                                                     |
+| `dup`               | duplicate A                                                                                                                                   |
+| `dup2`              | duplicate A and B                                                                                                                             |
+| `dupn n`            | duplicate A, N times                                                                                                                          |
+| `dig n`             | Nth value from the top of the stack. dig 0 is equivalent to dup                                                                               |
+| `bury n`            | replace the Nth value from the top of the stack with A. bury 0 fails.                                                                         |
+| `cover n`           | remove top of stack, and place it deeper in the stack such that N elements are above it. Fails if stack depth \<= N.                          |
+| `uncover n`         | remove the value at depth N in the stack and shift above items down so the Nth deep value is on top of the stack. Fails if stack depth \<= N. |
+| `frame_dig i`       | Nth (signed) value from the frame pointer.                                                                                                    |
+| `frame_bury i`      | replace the Nth (signed) value from the frame pointer in the stack with A                                                                     |
+| `swap`              | swaps A and B on stack                                                                                                                        |
+| `select`            | selects one of two values based on top-of-stack: B if C != 0, else A                                                                          |
+| `assert`            | immediately fail unless A is a non-zero number                                                                                                |
+| `callsub target`    | branch unconditionally to TARGET, saving the next instruction on the call stack                                                               |
+| `proto a r`         | Prepare top call frame for a retsub that will assume A args and R return values.                                                              |
+| `retsub`            | pop the top instruction from the call stack and branch to it                                                                                  |
+| `switch target ...` | branch to the Ath label. Continue at following instruction if index A exceeds the number of labels.                                           |
+| `match target ...`  | given match cases from A[1] to A[N], branch to the Ith label where A[I] = B. Continue to the following instruction if no matches are found.   |
 
 ### State Access
 

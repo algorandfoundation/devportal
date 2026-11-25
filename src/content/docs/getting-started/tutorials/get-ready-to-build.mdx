@@ -57,7 +57,7 @@ If you want to learn more about AlgoKit before diving in, check out the document
 
 Before installing AlgoKit, make sure you have the following:
 
-- [Python 3.12](https://www.python.org/downloads/) or higher
+- [Python](https://www.python.org/downloads/) (see the [AlgoKit prerequisites](/algokit/algokit-intro/#prerequisites) for the minimum version)
 - [PipX](https://pypa.github.io/pipx/#on-linux-install-via-pip-requires-pip-190-or-later)
 - [Git](https://github.com/git-guides/install-git#install-git)
 - [Docker](https://docker.com/download/)
@@ -75,8 +75,8 @@ The Algorand TypeScript language extension brings language server-powered capabi
 
 #### Requirements:
 
-- [Visual Studio Code](https://code.visualstudio.com/download) 1.80.0 or higher
-- [puya-ts](https://www.npmjs.com/package/@algorandfoundation/puya-ts) 1.0.1 or higher
+- [Visual Studio Code](https://code.visualstudio.com/download) (see the [extension guide](/algokit/language-servers/algorand-typescript/#prerequisites) for the minimum version)
+- The latest release of [puya-ts](https://www.npmjs.com/package/@algorandfoundation/puya-ts) (see the [Puya compiler bulletin](/bulletins/puya-issues-27-10-2025/) for releases to avoid)
 
 #### Quick Start
 
@@ -118,10 +118,10 @@ The Algorand Python language extension brings language server-powered capabiliti
 
 #### Requirements:
 
-- [Visual Studio Code](https://code.visualstudio.com/download) 1.80.0 or higher
+- [Visual Studio Code](https://code.visualstudio.com/download) (see the [extension guide](/algokit/language-servers/algorand-python/#prerequisites) for the minimum version)
 - [Python extension for Visual Studio Code](https://marketplace.visualstudio.com/items?itemName=ms-python.python)
-- [Python](https://www.python.org/downloads/) 3.12 or higher
-- [PuyaPy](https://pypi.org/project/puyapy/) 5.3.0 or higher
+- [Python](https://www.python.org/downloads/) (see the [AlgoKit prerequisites](/algokit/algokit-intro/#prerequisites) for the minimum version)
+- The latest release of [PuyaPy](https://pypi.org/project/puyapy/) (see the [Puya compiler bulletin](/bulletins/puya-issues-27-10-2025/) for releases to avoid)
 
 #### Quick Start
 
@@ -186,7 +186,7 @@ The Algorand Python VS Code extension is currently in **beta**.
  <TabItem label="Windows" icon="seti:windows">
 :::note
 This method will install the most recent python3 version [via winget](https://learn.microsoft.com/en-us/windows/package-manager/winget/).
-If you already have Python 3.12+ installed, you may prefer to use `pipx install algokit` as explained within the pipx on any OS section, so you can control the Python version used.
+If you already have a supported Python version installed (see the [AlgoKit prerequisites](/algokit/algokit-intro/#prerequisites)), you may prefer to use `pipx install algokit` as explained within the pipx on any OS section, so you can control the Python version used.
 :::
 
    <Steps>
@@ -199,7 +199,7 @@ If you already have Python 3.12+ installed, you may prefer to use `pipx install 
          :::
 
       2. Install Python3 using WinGet
-         - Install python 3.12:
+         - Install a supported Python version (see the [AlgoKit prerequisites](/algokit/algokit-intro/#prerequisites)), for example:
          ```shell showLineNumbers=false frame=none
          winget install python.python.3.12
          ```
@@ -225,7 +225,7 @@ If you already have Python 3.12+ installed, you may prefer to use `pipx install 
  </TabItem>
  <TabItem label="macOS" icon="apple">
    :::note
-   This method will install the latest Python3 release as a dependency via Homebrew. If you already have Python 3.10+ installed, you may prefer to use `pipx install algokit` as explained within the OS agnostic tab, so you can control the Python version used.
+   This method will install the latest Python3 release as a dependency via Homebrew. If you already have a supported Python version installed (see the [AlgoKit prerequisites](/algokit/algokit-intro/#prerequisites)), you may prefer to use `pipx install algokit` as explained within the OS agnostic tab, so you can control the Python version used.
    :::
 
    <Steps>
@@ -250,7 +250,7 @@ If you already have Python 3.12+ installed, you may prefer to use `pipx install 
  <TabItem label="Linux" icon="linux">
    <Steps>
       1. Ensure prerequisites are installed
-            - [Python 3.12+](https://www.python.org/downloads/)
+            - [Python](https://www.python.org/downloads/) (see the [AlgoKit prerequisites](/algokit/algokit-intro/#prerequisites) for the minimum version)
             - [pipx](https://pypa.github.io/pipx/#on-linux-install-via-pip-requires-pip-190-or-later)
             - [Git](https://github.com/git-guides/install-git#install-git-on-linux)
             - [Docker](https://docs.docker.com/desktop/install/linux-install/)
@@ -284,7 +284,7 @@ algokit --version
 Output similar to the following should be displayed:
 
 ```shell showLineNumbers=false frame=none
-algokit, version 2.6.0
+algokit, version x.y.z
 ```
 
 ## Start a LocalNet

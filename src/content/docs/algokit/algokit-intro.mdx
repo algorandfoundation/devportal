@@ -195,7 +195,7 @@ To learn more about the AVM debugger, refer to the following resources:
 
 ## Language Servers
 
-The Algorand VS Code Language Extensions provide developers with enhanced capabilities to build Algorand smart contracts efficiently within Visual Studio Code. Designed to work alongside the standard Python and TypeScript language servers, these extensions extend core IDE functionality by adding Algorand-specific diagnostics, validation, and intelligent code actions. The [Python extension](https://marketplace.visualstudio.com/items?itemName=AlgorandFoundation.algorand-python-vscode) integrates seamlessly with the official Python extension and automatically detects the PuyaPy environment to offer real-time contract-aware analysis and quick fixes, helping developers catch errors early and improve code quality. Similarly, the [TypeScript extension](https://marketplace.visualstudio.com/items?itemName=AlgorandFoundation.algorand-typescript-vscode) supports Algorand’s specialized TypeScript and smart contract utilities, providing targeted diagnostics and validation in a familiar developer workflow. Both extensions simplify the development process by offering immediate feedback relevant to Algorand’s unique blockchain environment, accelerating learning and reducing common mistakes. Currently in beta, they require Visual Studio Code 1.80.0 or later and are designed to complement existing language tooling, making them essential tools for any developer working on Algorand smart contracts.
+The Algorand VS Code Language Extensions provide developers with enhanced capabilities to build Algorand smart contracts efficiently within Visual Studio Code. Designed to work alongside the standard Python and TypeScript language servers, these extensions extend core IDE functionality by adding Algorand-specific diagnostics, validation, and intelligent code actions. The [Python extension](https://marketplace.visualstudio.com/items?itemName=AlgorandFoundation.algorand-python-vscode) integrates seamlessly with the official Python extension and automatically detects the PuyaPy environment to offer real-time contract-aware analysis and quick fixes, helping developers catch errors early and improve code quality. Similarly, the [TypeScript extension](https://marketplace.visualstudio.com/items?itemName=AlgorandFoundation.algorand-typescript-vscode) supports Algorand’s specialized TypeScript and smart contract utilities, providing targeted diagnostics and validation in a familiar developer workflow. Both extensions simplify the development process by offering immediate feedback relevant to Algorand’s unique blockchain environment, accelerating learning and reducing common mistakes. Currently in beta, they are designed to complement existing language tooling, making them essential tools for any developer working on Algorand smart contracts.
 
 <LinkCard
   title='Algokit TypeScript Language Server'
@@ -259,33 +259,33 @@ To learn more about the testnet dispenser, refer to the following resources:
 
 While AlgoKit as a _collection_ was bumped to Version 3.0 on March 26, 2025, it is important to note that the individual tools in the kit are on different package version numbers. In the future this may be changed to epoch versioning so that it is clear that all packages are part of the same epoch release.
 
-The table below lists the minimum version of each tool required by the AlgoKit 3.0 release alongside its current latest release. The Algorand SDKs are marked `N/A` for the AlgoKit 3.0 minimum as they were not part of that release.
+The table below lists the minimum version of each tool required by the AlgoKit 3.0 release. Each repository links to its latest release, which is the source of truth for the current version. The Algorand SDKs are marked `N/A` for the AlgoKit 3.0 minimum as they were not part of that release.
 
-| Tool                                       | Repository                      | AlgoKit 3.0 Min Version                       | Current Version                           |
-| ------------------------------------------ | ------------------------------- | --------------------------------------------- | ----------------------------------------- |
-| Command Line Interface (CLI)               | algokit-cli                     | <Badge text="2.6.0" variant="success" />      | <Badge text="2.10.2" variant="success" /> |
-| Algorand SDK (Python)                      | py-algorand-sdk                 | N/A                                           | <Badge text="2.12.0" variant="success" /> |
-| Algorand SDK (TypeScript)                  | js-algorand-sdk                 | N/A                                           | <Badge text="3.7.0" variant="success" />  |
-| Algorand SDK (Go)                          | go-algorand-sdk                 | N/A                                           | <Badge text="2.12.0" variant="success" /> |
-| Algorand SDK (Java)                        | java-algorand-sdk               | N/A                                           | <Badge text="2.10.1" variant="success" /> |
-| Utils (Python)                             | algokit-utils-py                | <Badge text="4.0.0" variant="success" />      | <Badge text="4.2.3" variant="success" />  |
-| Utils (TypeScript)                         | algokit-utils-ts                | <Badge text="9.0.0" variant="success" />      | <Badge text="9.2.0" variant="success" />  |
-| Client Generator (Python)                  | algokit-client-generator-py     | <Badge text="2.1.0" variant="success" />      | <Badge text="2.2.0" variant="success" />  |
-| Client Generator (TypeScript)              | algokit-client-generator-ts     | <Badge text="5.0.0" variant="success" />      | <Badge text="6.0.1" variant="success" />  |
-| Subscriber (Python)                        | algokit-subscriber-py           | <Badge text="1.0.0" variant="success" />      | <Badge text="1.0.1" variant="success" />  |
-| Subscriber (TypeScript)                    | algokit-subscriber-ts           | <Badge text="3.2.0" variant="success" />      | <Badge text="3.2.0" variant="success" />  |
-| Puya Compiler                              | puya                            | <Badge text="4.5.3" variant="success" />      | <Badge text="5.10.0" variant="success" /> |
-| Puya Compiler, TypeScript                  | puya-ts                         | <Badge text="1.0.0-beta.58" variant="note" /> | <Badge text="1.3.0" variant="success" />  |
-| AVM Unit Testing (Python)                  | algorand-python-testing         | <Badge text="0.5.0" variant="success" />      | <Badge text="1.1.0" variant="success" />  |
-| AVM Unit Testing (TypeScript)              | algorand-typescript-testing     | <Badge text="1.0.0-beta.30" variant="note" /> | <Badge text="1.2.0" variant="success" />  |
-| LORA the Explorer                          | algokit-lora                    | <Badge text="1.2.0" variant="success" />      | <Badge text="2.3.3" variant="success" />  |
-| AVM VSCode Debugger                        | algokit-avm-vscode-debugger     | <Badge text="1.1.5" variant="success" />      | <Badge text="1.1.7" variant="success" />  |
-| Utils Add-On for TypeScript Debugging      | algokit-utils-ts-debug          | <Badge text="1.0.4" variant="success" />      | <Badge text="1.0.4" variant="success" />  |
-| Base Project Template                      | algokit-base-template           | <Badge text="1.1.0" variant="success" />      | <Badge text="1.1.0" variant="success" />  |
-| Python Smart Contract Project Template     | algokit-python-template         | <Badge text="1.6.0" variant="success" />      | <Badge text="1.8.1" variant="success" />  |
-| TypeScript Smart Contract Project Template | algokit-typescript-template     | <Badge text="0.3.1" variant="success" />      | <Badge text="0.3.7" variant="success" />  |
-| React Vite Frontend Project Template       | algokit-react-frontend-template | <Badge text="1.1.1" variant="success" />      | <Badge text="1.1.1" variant="success" />  |
-| Fullstack Project Template                 | algokit-fullstack-template      | <Badge text="2.1.4" variant="success" />      | <Badge text="2.1.8" variant="success" />  |
+| Tool                                       | Repository                                                                                                               | AlgoKit 3.0 Min Version                       |
+| ------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------ | --------------------------------------------- |
+| Command Line Interface (CLI)               | [algokit-cli](https://github.com/algorandfoundation/algokit-cli/releases/latest)                                         | <Badge text="2.6.0" variant="success" />      |
+| Algorand SDK (Python)                      | [py-algorand-sdk](https://github.com/algorand/py-algorand-sdk/releases/latest)                                           | N/A                                           |
+| Algorand SDK (TypeScript)                  | [js-algorand-sdk](https://github.com/algorand/js-algorand-sdk/releases/latest)                                           | N/A                                           |
+| Algorand SDK (Go)                          | [go-algorand-sdk](https://github.com/algorand/go-algorand-sdk/releases/latest)                                           | N/A                                           |
+| Algorand SDK (Java)                        | [java-algorand-sdk](https://github.com/algorand/java-algorand-sdk/releases/latest)                                       | N/A                                           |
+| Utils (Python)                             | [algokit-utils-py](https://github.com/algorandfoundation/algokit-utils-py/releases/latest)                               | <Badge text="4.0.0" variant="success" />      |
+| Utils (TypeScript)                         | [algokit-utils-ts](https://github.com/algorandfoundation/algokit-utils-ts/releases/latest)                               | <Badge text="9.0.0" variant="success" />      |
+| Client Generator (Python)                  | [algokit-client-generator-py](https://github.com/algorandfoundation/algokit-client-generator-py/releases/latest)         | <Badge text="2.1.0" variant="success" />      |
+| Client Generator (TypeScript)              | [algokit-client-generator-ts](https://github.com/algorandfoundation/algokit-client-generator-ts/releases/latest)         | <Badge text="5.0.0" variant="success" />      |
+| Subscriber (Python)                        | [algokit-subscriber-py](https://github.com/algorandfoundation/algokit-subscriber-py/releases/latest)                     | <Badge text="1.0.0" variant="success" />      |
+| Subscriber (TypeScript)                    | [algokit-subscriber-ts](https://github.com/algorandfoundation/algokit-subscriber-ts/releases/latest)                     | <Badge text="3.2.0" variant="success" />      |
+| Puya Compiler                              | [puya](https://github.com/algorandfoundation/puya/releases/latest)                                                       | <Badge text="4.5.3" variant="success" />      |
+| Puya Compiler, TypeScript                  | [puya-ts](https://github.com/algorandfoundation/puya-ts/releases/latest)                                                 | <Badge text="1.0.0-beta.58" variant="note" /> |
+| AVM Unit Testing (Python)                  | [algorand-python-testing](https://github.com/algorandfoundation/algorand-python-testing/releases/latest)                 | <Badge text="0.5.0" variant="success" />      |
+| AVM Unit Testing (TypeScript)              | [algorand-typescript-testing](https://github.com/algorandfoundation/algorand-typescript-testing/releases/latest)         | <Badge text="1.0.0-beta.30" variant="note" /> |
+| LORA the Explorer                          | [algokit-lora](https://github.com/algorandfoundation/algokit-lora/releases/latest)                                       | <Badge text="1.2.0" variant="success" />      |
+| AVM VSCode Debugger                        | [algokit-avm-vscode-debugger](https://github.com/algorandfoundation/algokit-avm-vscode-debugger/releases/latest)         | <Badge text="1.1.5" variant="success" />      |
+| Utils Add-On for TypeScript Debugging      | [algokit-utils-ts-debug](https://github.com/algorandfoundation/algokit-utils-ts-debug/releases/latest)                   | <Badge text="1.0.4" variant="success" />      |
+| Base Project Template                      | [algokit-base-template](https://github.com/algorandfoundation/algokit-base-template/releases/latest)                     | <Badge text="1.1.0" variant="success" />      |
+| Python Smart Contract Project Template     | [algokit-python-template](https://github.com/algorandfoundation/algokit-python-template/releases/latest)                 | <Badge text="1.6.0" variant="success" />      |
+| TypeScript Smart Contract Project Template | [algokit-typescript-template](https://github.com/algorandfoundation/algokit-typescript-template/releases/latest)         | <Badge text="0.3.1" variant="success" />      |
+| React Vite Frontend Project Template       | [algokit-react-frontend-template](https://github.com/algorandfoundation/algokit-react-frontend-template/releases/latest) | <Badge text="1.1.1" variant="success" />      |
+| Fullstack Project Template                 | [algokit-fullstack-template](https://github.com/algorandfoundation/algokit-fullstack-template/releases/latest)           | <Badge text="2.1.4" variant="success" />      |
 
 ## Install
 
@@ -432,7 +432,7 @@ Some useful commands for updating or removing AlgoKit in the future.
 
 1. Ensure desired prerequisites are installed
 
-- [Python 3.10+](https://www.python.org/downloads/)
+- [Python](https://www.python.org/downloads/) (see [Prerequisites](#prerequisites) for the minimum version)
 - [pipx](https://pypa.github.io/pipx/installation/)
 - [Git](https://github.com/git-guides/install-git)
 - [Docker](https://docs.docker.com/get-docker/)
@@ -458,7 +458,7 @@ Some useful commands for updating or removing AlgoKit in the future.
 Verify AlgoKit is installed correctly by running `algokit --version` and you should see output similar to:
 
 ```
-algokit, version 1.0.1
+algokit, version x.y.z
 ```
 
 :::note
@@ -470,23 +470,23 @@ If you get receive one of the following errors:
 Then ensure that `algokit` is available on the PATH by running `pipx ensurepath` and restarting the terminal.
 :::
 
-It is also recommended that you run `algokit doctor` to verify there are no issues in your local environment and to diagnose any problems if you do have difficulties running AlgoKit. The output of this command will look similar to:
+It is also recommended that you run `algokit doctor` to verify there are no issues in your local environment and to diagnose any problems if you do have difficulties running AlgoKit. The output of this command will look similar to the following, with each `x.y.z` replaced by the version installed on your machine:
 
 ```
-timestamp: 2023-03-27T01:23:45+00:00
-AlgoKit: 1.0.1
-AlgoKit Python: 3.11.1 (main, Dec 23 2022, 09:28:24) [Clang 14.0.0 (clang-1400.0.29.202)] (location: /Users/algokit/.local/pipx/venvs/algokit)
-OS: macOS-13.1-arm64-arm-64bit
-docker: 20.10.21
-docker compose: 2.13.0
-git: 2.37.1
-python: 3.10.9 (location:  /opt/homebrew/bin/python)
-python3: 3.10.9 (location:  /opt/homebrew/bin/python3)
-pipx: 1.1.0
-poetry: 1.3.2
-node: 18.12.1
-npm: 8.19.2
-brew: 3.6.18
+timestamp: <date and time>
+AlgoKit: x.y.z
+AlgoKit Python: x.y.z (location: <path to the AlgoKit Python environment>)
+OS: <operating system and architecture>
+docker: x.y.z
+docker compose: x.y.z
+git: x.y.z
+python: x.y.z (location: <path to python>)
+python3: x.y.z (location: <path to python3>)
+pipx: x.y.z
+poetry: x.y.z
+node: x.y.z
+npm: x.y.z
+brew: x.y.z
 
 If you are experiencing a problem with AlgoKit, feel free to submit an issue via:
 https://github.com/algorandfoundation/algokit-cli/issues/new

@@ -1,6 +1,6 @@
 ---
 title: Networks
-description: MainNet, TestNet, and BetaNet are the public Algorand networks. Each lists its version, genesis ID and hash, and special addresses for verifying a connection.
+description: MainNet, TestNet, and BetaNet are the public Algorand networks. Each lists its genesis ID and hash, and special addresses for verifying a connection.
 ---
 
 Algorand has three public networks: MainNet, TestNet, and BetaNet. This section provides details about each of these networks that will help you validate the integrity of your connection to them.
@@ -8,16 +8,6 @@ Algorand has three public networks: MainNet, TestNet, and BetaNet. This section 
 Each network reference, contains the following information:
 
 <table>
-  <tr>
-    <th>Version</th>
-    <td>
-      The latest protocol software version. Should match goal -v or GET /versions build version.
-    </td>
-  </tr>
-  <tr>
-    <th>Release Version</th>
-    <td>A link to the official release notes where you can view all the latest changes.</td>
-  </tr>
   <tr>
     <th>Genesis ID</th>
     <td>
@@ -53,17 +43,11 @@ Each network reference, contains the following information:
 
 ## Network Details
 
+The go-algorand version running on each network changes with every release, so it is not listed here. See the [go-algorand releases](https://github.com/algorand/go-algorand/releases) for the latest stable and beta versions and their release notes. To see what a node is actually running, `goal -v` or `GET /versions` reports its software build version, and `goal node status` reports the consensus protocol version of the network it is connected to.
+
 ### MainNet
 
 <table>
-  <tr>
-    <th>Version</th>
-    <td>v5.0.0-stable</td>
-  </tr>
-  <tr>
-    <th>Release Version</th>
-    <td>https://github.com/algorand/go-algorand/releases/tag/v5.0.0-stable</td>
-  </tr>
   <tr>
     <th>Genesis ID</th>
     <td>mainnet-v1.0</td>
@@ -85,14 +69,6 @@ Each network reference, contains the following information:
 ### TestNet
 
 <table>
-  <tr>
-    <th>Version</th>
-    <td>v5.0.0-stable</td>
-  </tr>
-  <tr>
-    <th>Release Version</th>
-    <td>https://github.com/algorand/go-algorand/releases/tag/v5.0.0-stable</td>
-  </tr>
   <tr>
     <th>Genesis ID</th>
     <td>testnet-v1.0</td>
@@ -118,14 +94,6 @@ Each network reference, contains the following information:
 ### BetaNet
 
 <table>
-  <tr>
-    <th>Version</th>
-    <td>v5.0.0-beta</td>
-  </tr>
-  <tr>
-    <th>Release Version</th>
-    <td>https://github.com/algorand/go-algorand/releases/tag/v5.0.0-beta</td>
-  </tr>
   <tr>
     <th>Genesis ID</th>
     <td>betanet-v1.0</td>
