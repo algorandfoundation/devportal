@@ -10,10 +10,7 @@ export default function rehypeOpcodeAnchorIds() {
     for (const node of tree.children) {
       if (node.type !== 'mdxJsxFlowElement') continue;
       const classes = node.attributes?.find(a => a.name === 'class')?.value;
-      if (
-        typeof classes !== 'string' ||
-        !classes.split(/\s+/).includes('opcode-section')
-      ) continue;
+      if (typeof classes !== 'string' || !classes.split(/\s+/).includes('opcode-section')) continue;
       const anchor = node.attributes?.find(a => a.name === 'data-anchor')?.value;
       const heading = node.children?.find(c => c.tagName === 'h3');
       // Fail the build rather than silently lose the ids if the template changes.
