@@ -10,6 +10,8 @@ This page documents the current state of the AVM and may include AVM versions th
 
 Some opcodes take *immediates*: arguments encoded directly in the instruction, rather than taken from the stack. Opcodes that take immediates carry an **Immediate Parameters** note describing what each one expects.
 
+**Stack Input** and **Stack Output** list values in stack order, with the top of the stack last. For opcodes such as `swap` and `dig`, letters name the values so you can see where each one moves, with a type after the colon where it is fixed (`A: uint64`). `[N items]` stands for a number of values that the opcode's immediates set. *exits* means the program ends there.
+
 The **Size** field lists an opcode's total encoded length in bytes: the opcode bytes plus its immediates. It is omitted when an immediate has variable length. Constant opcodes such as `pushint`, `pushbytes` and `intcblock` carry their values inline; `b`, `bz`, `bnz` and `callsub` encode their relative target offset as a `varint (zigzag)` (see the notes under `bnz`); and `switch` and `match` take a variable-length list of `int16` targets.
 
 Opcodes such as `txn` and `global` take a field immediate: one byte that selects which field to read or set. In their **Field Reference** table, **Index** is that byte's value. Each table lists only the fields that opcode can select, so the numbers can skip.
@@ -26,8 +28,8 @@ Opcodes such as `txn` and `global` take a field immediate: one byte that selects
 
     ### {{{headingText Name}}}
     - **Bytecode:** `{{bytecode Opcode}}`
-    - **Stack Input:** `{{{valueList Args}}}`
-    - **Stack Output:** `{{{valueList Returns}}}`
+    - **Stack Input:** {{{StackInput}}}
+    - **Stack Output:** {{{StackOutput}}}
     {{#if Size}}
     - **Size:** {{Size}}
     {{/if}}

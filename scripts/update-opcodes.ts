@@ -11,6 +11,11 @@
  * filter defaults to that version, so opcodes with a higher `IntroducedVersion`
  * are hidden until the reader opts in by widening the filter.
  *
+ * It also saves go-algorand's TEAL_opcodes_vN.md, from the same ref and
+ * version, as `_TEAL_opcodes.md`: the page takes the stack effects of opcodes
+ * such as `dig` and `err` from it, because langspec_vN.json has only types.
+ * The leading `_` stops Starlight from publishing it as a page.
+ *
  * This is a *content* step, not a build step: it changes committed source and
  * must never mutate files inside `prebuild`/`predev`. Use `--check` there
  * instead — a non-blocking probe that only warns.
@@ -31,9 +36,10 @@
 
 import { readFile, writeFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
-import { render } from './generate-opcode-list';
+import { prepareOpcodes, render, STACK_SOURCE } from './generate-opcode-list';
 
 const DATA_PATH = resolve('src/content/docs/reference/algorand-teal/opcodes.json');
+const STACK_PATH = resolve('src/content/docs/reference/algorand-teal', STACK_SOURCE);
 const LOGIC_DIR = 'data/transactions/logic';
 
 /** Default dataset source: bleeding-edge, includes not-yet-released opcodes. */
@@ -123,6 +129,14 @@ async function fetchLangspec(ref: string, version: number): Promise<{ raw: strin
   return { raw, spec };
 }
 
+/** go-algorand's TEAL_opcodes_vN.md, raw. Any non-200 fails the update. */
+async function fetchTealOpcodesMd(ref: string, version: number): Promise<string> {
+  const url = `https://raw.githubusercontent.com/algorand/go-algorand/${ref}/${LOGIC_DIR}/TEAL_opcodes_v${version}.md`;
+  const res = await fetchWithTimeout(url);
+  if (!res.ok) throw new Error(`Failed to fetch ${url}: HTTP ${res.status} ${res.statusText}`);
+  return res.text();
+}
+
 /**
  * Add our `LatestReleasedVersion` field to the raw langspec text without
  * re-serializing it (which would corrupt big integers and Go's escaping).
@@ -166,8 +180,11 @@ async function latestReleasedVersion(masterVersion: number): Promise<number> {
 async function readCurrent() {
   const raw = await readFile(DATA_PATH, 'utf8');
   const parsed = JSON.parse(raw) as LangSpec;
+  // Absent before the first update that fetches it.
+  const stackMd = await readFile(STACK_PATH, 'utf8').catch(() => null);
   return {
     raw,
+    stackMd,
     version: typeof parsed.Version === 'number' ? parsed.Version : 1,
     releasedVersion: parsed.LatestReleasedVersion ?? null,
   };
@@ -206,25 +223,37 @@ async function runUpdate(ref: string, dryRun: boolean) {
 
   const masterVersion = await highestVersion(ref, current.version);
   const { raw, spec } = await fetchLangspec(ref, masterVersion);
+  const stackMd = await fetchTealOpcodesMd(ref, masterVersion);
+  // Run every check render() runs (the md and the JSON list the same opcodes,
+  // every Stack line parses), on a copy, before anything is written.
+  prepareOpcodes(structuredClone(spec.Ops), stackMd);
   const released = await latestReleasedVersion(masterVersion);
   console.log(`[update-opcodes] Latest available: v${spec.Version} (${spec.Ops.length} ops); latest release: v${released}`);
 
   const nextRaw = injectLatestReleasedVersion(raw, released);
 
-  if (nextRaw === current.raw) {
+  // Compare both files: the md can change, or be missing, while the JSON does not.
+  if (nextRaw === current.raw && stackMd === current.stackMd) {
     console.log('[update-opcodes] Dataset already up to date — nothing to do.');
     return;
   }
   if (dryRun) {
+    const changed = [nextRaw !== current.raw && 'opcodes.json', stackMd !== current.stackMd && STACK_SOURCE]
+      .filter(Boolean)
+      .join(' and ');
     console.log(
-      `[update-opcodes] DRY RUN — would update dataset to v${spec.Version} ` +
+      `[update-opcodes] DRY RUN — would update ${changed} to dataset v${spec.Version} ` +
         `(released v${released}) and regenerate opcodes.mdx.`
     );
     return;
   }
 
   await writeFile(DATA_PATH, nextRaw, 'utf8');
-  console.log(`[update-opcodes] Wrote opcodes.json (dataset v${spec.Version}, released v${released}).`);
+  await writeFile(STACK_PATH, stackMd, 'utf8');
+  console.log(
+    `[update-opcodes] Wrote opcodes.json (dataset v${spec.Version}, released v${released}) ` +
+      `and ${STACK_SOURCE} (TEAL_opcodes_v${spec.Version}.md).`
+  );
   console.log('[update-opcodes] Regenerating opcodes.mdx…');
   await render();
   console.log('[update-opcodes] Done.');

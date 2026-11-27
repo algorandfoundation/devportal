@@ -37,13 +37,6 @@ Handlebars.registerHelper('mdxText', (s = '') => {
   return new Handlebars.SafeString(mdxEscape(s));
 });
 
-// Render arrays as comma-separated (used for Args/Returns simple cell rendering)
-Handlebars.registerHelper('valueList', arr => {
-  if (!Array.isArray(arr) || arr.length === 0) return '-';
-  const html = arr.map(v => `${htmlEscape(v)}`).join(',');
-  return new Handlebars.SafeString(html);
-});
-
 // 0x?? bytecode. Some opcodes (v13+) are multi-byte and arrive as an array,
 // e.g. [212, 1] -> `0xd4 0x01`.
 Handlebars.registerHelper('bytecode', n => {
@@ -222,7 +215,143 @@ export function anchorIds(names: string[]): string[] {
   });
 }
 
+/* ───────── stack input and output ───────── */
+
+// opcodes.json (go-algorand's langspec_vN.json) gives only the stack *types*.
+// For some opcodes upstream describes the stack by its effect, e.g.
+// `dig` is "A, [N items] → A, [N items], A" and `err` ends the program. That
+// text is only in go-algorand's TEAL_opcodes_vN.md, which update-opcodes.ts
+// saves as STACK_SOURCE. go-algorand writes that md line in cmd/opdoc/opdoc.go
+// (stackMarkdown): from Arg.Effects / Return.Effects when they are set,
+// otherwise from the types. So rebuild the line from the types: where it
+// matches the md, show the types; where it differs, show the md's text.
+export const STACK_SOURCE = '_TEAL_opcodes.md';
+
+const typeList = (arr: unknown) =>
+  Array.isArray(arr) && arr.length
+    ? arr.map(v => htmlEscape(v)).join(',')
+    : '-';
+
+// Each opcode's "- Stack:" line from TEAL_opcodes_vN.md, keyed by opcode
+// name, checked against the opcode names in opcodes.json. Throws when an
+// opcode block has no Stack line or more than one, or when the md and the
+// JSON list different opcodes (they were fetched from different refs).
+export function stackLines(md: string, opNames: string[]): Map<string, string> {
+  const lines = new Map<string, string>();
+  for (const block of md.split(/^## /m).slice(1)) {
+    const name = block.slice(0, block.indexOf('\n')).trim();
+    const found = [...block.matchAll(/^- Stack: (.*)$/gm)];
+    if (found.length !== 1) {
+      throw new Error(
+        `${STACK_SOURCE}: "${name}" has ${found.length} "- Stack:" lines, expected 1`,
+      );
+    }
+    if (lines.has(name)) {
+      throw new Error(`${STACK_SOURCE}: "${name}" appears twice`);
+    }
+    lines.set(name, found[0][1]);
+  }
+  const names = new Set(opNames);
+  const notInMd = opNames.filter(n => !lines.has(n));
+  const notInJson = [...lines.keys()].filter(n => !names.has(n));
+  if (notInMd.length || notInJson.length) {
+    throw new Error(
+      `${STACK_SOURCE} and opcodes.json list different opcodes ` +
+        `(missing from the md: ${notInMd.join(' ') || 'none'}; ` +
+        `missing from the JSON: ${notInJson.join(' ') || 'none'}). ` +
+        'Re-fetch both files from the same go-algorand ref.',
+    );
+  }
+  return lines;
+}
+
+// The md "- Stack:" line go-algorand writes from types alone. A port of
+// stackMarkdown in cmd/opdoc/opdoc.go: args are lettered A, B, ... and show
+// their type unless it is `any`; with more than one return, returns are
+// lettered from X (or so that the last is Z, when there are more than 3) and
+// always show their type.
+function stackLineFromTypes(args: string[], returns: string[]): string {
+  let out = '...';
+  args.forEach((t, i) => {
+    out +=
+      `, ${String.fromCharCode('A'.charCodeAt(0) + i)}` +
+      (t === 'any' ? '' : `: ${t}`);
+  });
+  out += ' &rarr; ...';
+  const first =
+    returns.length <= 3
+      ? 'X'.charCodeAt(0)
+      : 'Z'.charCodeAt(0) + 1 - returns.length;
+  returns.forEach((t, i) => {
+    out +=
+      ', ' +
+      (returns.length > 1 ? `${String.fromCharCode(first + i)}: ` : '') +
+      t;
+  });
+  return out;
+}
+
+// One side of an effect line as the page shows it: upstream's text without
+// the leading "..., " (the untouched rest of the stack), `-` when nothing is
+// popped or pushed, and *exits* when the program ends. Only the characters
+// upstream uses today are allowed. A format change (new markup, or a backtick
+// that would close the code span) fails here for a person to look at, instead
+// of showing up on the page.
+function effectSide(name: string, side: string): string {
+  const s = side.replace(/^\.\.\.(, )?/, '');
+  if (s === '_exits_') return '*exits*';
+  if (!/^[A-Za-z0-9 ,.:[\]]*$/.test(s)) {
+    throw new Error(
+      `${name}: unexpected text in ${STACK_SOURCE} Stack line: "${side}"`,
+    );
+  }
+  return '`' + (s || '-') + '`';
+}
+
+// Stack Input and Stack Output for one opcode, as Markdown (code spans, or
+// *exits*). Opcodes without an upstream effect render exactly as before.
+export function stackFields(op: OpcodeEntry, mdLine: string) {
+  const args = Array.isArray(op.Args) ? (op.Args as string[]) : [];
+  const returns = Array.isArray(op.Returns) ? (op.Returns as string[]) : [];
+  if (mdLine === stackLineFromTypes(args, returns)) {
+    return {
+      StackInput: '`' + typeList(args) + '`',
+      StackOutput: '`' + typeList(returns) + '`',
+    };
+  }
+  const sides = mdLine.split(' &rarr; ');
+  if (sides.length !== 2) {
+    throw new Error(
+      `${op.Name}: ${STACK_SOURCE} Stack line has no single "&rarr;": "${mdLine}"`,
+    );
+  }
+  return {
+    StackInput: effectSide(op.Name, sides[0]),
+    StackOutput: effectSide(op.Name, sides[1]),
+  };
+}
+
 /* ───────── render ───────── */
+
+/**
+ * Sort the opcodes into page order and add the fields the template needs
+ * beyond opcodes.json: AnchorId, StackInput and StackOutput. Exported so the
+ * page tests render exactly what render() writes. Mutates and returns `ops`.
+ */
+export function prepareOpcodes(ops: OpcodeEntry[], tealOpcodesMd: string) {
+  // Sort by UTF-16 code unit, not localeCompare: locale collation is ICU-version
+  // dependent, so a CI Node upgrade could silently reorder the entire generated
+  // file. A code-unit comparator is stable across environments.
+  ops.sort((a, b) => (a.Name < b.Name ? -1 : a.Name > b.Name ? 1 : 0));
+  const names = ops.map(op => op.Name);
+  const ids = anchorIds(names);
+  const stack = stackLines(tealOpcodesMd, names);
+  ops.forEach((op, i) => {
+    op.AnchorId = ids[i];
+    Object.assign(op, stackFields(op, stack.get(op.Name)!));
+  });
+  return ops;
+}
 
 /**
  * Render `opcodes.mdx` from the committed `opcodes.json` dataset.
@@ -234,11 +363,16 @@ export async function render() {
   const dataPath = resolve(
     'src/content/docs/reference/algorand-teal/opcodes.json',
   );
+  const stackPath = resolve(
+    'src/content/docs/reference/algorand-teal',
+    STACK_SOURCE,
+  );
   const outPath = 'src/content/docs/reference/algorand-teal/opcodes.mdx';
 
-  const [tplSrc, dataSrc] = await Promise.all([
+  const [tplSrc, dataSrc, stackSrc] = await Promise.all([
     readFile(templatePath, 'utf8'),
     readFile(dataPath, 'utf8'),
+    readFile(stackPath, 'utf8'),
   ]);
 
   const template = Handlebars.compile(tplSrc, { noEscape: true });
@@ -249,13 +383,7 @@ export async function render() {
   const datasetVersion = data.Version;
   const latestReleasedVersion = data.LatestReleasedVersion ?? datasetVersion;
 
-  const opcodes = data.Ops;
-  // Sort by UTF-16 code unit, not localeCompare: locale collation is ICU-version
-  // dependent, so a CI Node upgrade could silently reorder the entire generated
-  // file. A code-unit comparator is stable across environments.
-  opcodes.sort((a, b) => (a.Name < b.Name ? -1 : a.Name > b.Name ? 1 : 0));
-  const ids = anchorIds(opcodes.map(op => op.Name));
-  opcodes.forEach((op, i) => (op.AnchorId = ids[i]));
+  const opcodes = prepareOpcodes(data.Ops, stackSrc);
 
   const page = template({ opcodes, datasetVersion, latestReleasedVersion });
 

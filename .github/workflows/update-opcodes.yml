@@ -124,8 +124,8 @@ jobs:
           body: |
             ## ⚙️ Opcode Reference Update
 
-            Refreshed `opcodes.json` from go-algorand (`${{ github.event.inputs.ref }}`)
-            and regenerated `opcodes.mdx`.
+            Refreshed `opcodes.json` and `_TEAL_opcodes.md` (stack effects) from
+            go-algorand (`${{ github.event.inputs.ref }}`) and regenerated `opcodes.mdx`.
 
             ### Review Checklist
             - [ ] `opcodes.json` version / released version look correct
