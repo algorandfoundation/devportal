@@ -79,14 +79,48 @@ Handlebars.registerHelper('immediateTable', arr => {
   return new Handlebars.SafeString(html);
 });
 
-// Field index/name/type table (Index, Name, Type columns)
-Handlebars.registerHelper('fieldTable', (names, types) => {
-  if (!Array.isArray(names) || names.length === 0) return '';
-  const rows = names
-    .map((name, idx) => {
-      const type =
-        Array.isArray(types) && idx < types.length ? types[idx] : '-';
-      return `<tr><td>${idx}</td><td>${htmlEscape(name ?? '-')}</td><td>${htmlEscape(type ?? '-')}</td></tr>`;
+// Field Reference table (Index, Name, Type columns), built from ArgDetails.
+// Index is the field's ByteEncoding: the number that goes in the bytecode.
+// It is NOT the row position. Upstream leaves fields out of some tables (for
+// example txna lists only array fields), so the numbers can have gaps.
+// Throws when it cannot number the fields (no ArgDetails, a field without an
+// integer ByteEncoding, or ArgDetails and ArgEnum disagreeing), so such a
+// langspec fails the build instead of printing wrong numbers. An opcode
+// without ArgEnum gets no table at all; the page tests in
+// tests/scripts/generate-opcode-list.test.ts catch a table that goes missing.
+Handlebars.registerHelper('fieldDetailTable', (details, enumNames, opName) => {
+  const names = Array.isArray(enumNames) ? enumNames : [];
+  if (names.length === 0) return '';
+  // No ArgDetails means no field numbers. Stop rather than print row
+  // positions (the original bug). Langspecs older than go-algorand v5.0.0
+  // have this shape.
+  if (!Array.isArray(details) || details.length === 0) {
+    throw new Error(
+      `${opName}: has ArgEnum but no ArgDetails, so no field numbers ` +
+        '(langspecs from go-algorand before v5.0.0 lack ArgDetails; ' +
+        'refresh opcodes.json from a newer ref)',
+    );
+  }
+  if (names.length !== details.length) {
+    throw new Error(
+      `${opName}: ArgDetails has ${details.length} fields but ArgEnum has ${names.length}`,
+    );
+  }
+  const rows = details
+    .map((d, i) => {
+      if (d?.Name !== names[i]) {
+        throw new Error(
+          `${opName}: field ${i} is "${d?.Name}" in ArgDetails but "${names[i]}" in ArgEnum`,
+        );
+      }
+      if (!Number.isInteger(d.ByteEncoding)) {
+        throw new Error(
+          `${opName}: field ${d.Name} has no integer ByteEncoding ` +
+            `(got ${JSON.stringify(d.ByteEncoding)})`,
+        );
+      }
+      const type = d.Type || '-';
+      return `<tr><td>${d.ByteEncoding}</td><td>${mdxEscape(d.Name)}</td><td>${mdxEscape(type)}</td></tr>`;
     })
     .join('');
   const html = `<table>
