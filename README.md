@@ -156,12 +156,12 @@ All commands are run from the root of the project:
 
 ### Content Generation
 
-| Command                           | Description                                                                    |
-| --------------------------------- | ------------------------------------------------------------------------------ |
-| `pnpm run generate-opcode-list`   | Render the opcode reference page (`opcodes.mdx`) from `opcodes.json`            |
-| `pnpm run update:opcodes`         | Fetch the latest opcodes from go-algorand, update `opcodes.json`, and re-render |
-| `pnpm run update:opcodes:dry-run` | Preview an opcode update without writing any files                              |
-| `pnpm run check:opcodes`          | Warn (non-blocking) if the committed opcode reference is out of date            |
+| Command                           | Description                                                                                            |
+| --------------------------------- | ------------------------------------------------------------------------------------------------------ |
+| `pnpm run generate-opcode-list`   | Render the opcode reference page (`opcodes.mdx`) from `opcodes.json` and `_TEAL_opcodes.md`            |
+| `pnpm run update:opcodes`         | Fetch the latest opcodes from go-algorand, update `opcodes.json` and `_TEAL_opcodes.md`, and re-render |
+| `pnpm run update:opcodes:dry-run` | Preview an opcode update without writing any files                                                     |
+| `pnpm run check:opcodes`          | Warn (non-blocking) if the committed opcode reference is out of date                                   |
 
 See [TEAL Opcode Reference](#teal-opcode-reference) for how these fit together.
 
@@ -262,6 +262,7 @@ The project uses `@algorandfoundation/astro-github-loader` to import documentati
 The [AVM Opcodes](https://dev.algorand.co/reference/algorand-teal/opcodes) reference is sourced from the TEAL language spec in [algorand/go-algorand](https://github.com/algorand/go-algorand/tree/master/data/transactions/logic) (`master`). The page's version filter defaults to the latest live release, so opcodes for a newer, not-yet-released AVM version are hidden until the reader opts in by widening the filter.
 
 - `opcodes.json` is the dataset; `opcodes.mdx` is rendered from it (auto, in `prebuild`).
+- `_TEAL_opcodes.md` is go-algorand's `TEAL_opcodes_vN.md`, fetched from the same ref as `opcodes.json`. It supplies the stack effects the JSON lacks (for example, `swap` is `A, B` → `B, A`). The leading underscore keeps Starlight from publishing it as a page.
 - `check:opcodes` runs during `prebuild` and prints a non-blocking warning when the dataset is out of date.
 - To refresh, run **Actions → Update Opcodes → Run workflow** (opens a `devrel`-reviewed PR), or run `pnpm run update:opcodes` locally on a dedicated branch.
 

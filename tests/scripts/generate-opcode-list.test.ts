@@ -213,11 +213,30 @@ describe('Field Reference tables on the real page', () => {
   // Render the whole page in memory (render() would write it to disk), then
   // cut it into one chunk per opcode. This runs in beforeAll because the
   // helpers are registered by the import at the top of this file.
+  // prepareOpcodes adds the fields render() adds (anchor ids, stack fields),
+  // so this is the page render() writes.
   // If rendering throws here, vitest marks the per-opcode tests "skipped"
   // and the file as failed: read the error printed above the summary.
   const sections = new Map<string, string>();
-  beforeAll(() => {
-    const page = render(template, { opcodes: data.Ops });
+  let prepared: Array<Op & { StackInput?: string; StackOutput?: string }> = [];
+  beforeAll(async () => {
+    const { prepareOpcodes } =
+      await import('../../scripts/generate-opcode-list.ts');
+    const stackMd = readFileSync(
+      fileURLToPath(
+        new URL(
+          '../../src/content/docs/reference/algorand-teal/_TEAL_opcodes.md',
+          import.meta.url,
+        ),
+      ),
+      'utf8',
+    );
+    // A copy, so the tests below still see opcodes.json as committed.
+    prepared = prepareOpcodes(
+      structuredClone(data.Ops) as Parameters<typeof prepareOpcodes>[0],
+      stackMd,
+    );
+    const page = render(template, { opcodes: prepared });
     for (const chunk of page.split('<div class="opcode-section"').slice(1)) {
       const name = chunk.match(/data-name="([^"]*)"/)![1];
       sections.set(name, chunk);
@@ -233,6 +252,21 @@ describe('Field Reference tables on the real page', () => {
 
   it('renders one section per opcode', () => {
     expect(sections.size).toBe(data.Ops.length);
+  });
+
+  it('every section shows its Stack Input and Stack Output', () => {
+    expect(prepared).toHaveLength(data.Ops.length);
+    for (const op of prepared) {
+      expect(op.StackInput, op.Name).toBeTruthy();
+      expect(op.StackOutput, op.Name).toBeTruthy();
+      const section = sections.get(op.Name);
+      expect(section, op.Name).toContain(
+        `- **Stack Input:** ${op.StackInput}\n`,
+      );
+      expect(section, op.Name).toContain(
+        `- **Stack Output:** ${op.StackOutput}\n`,
+      );
+    }
   });
 
   it('finds at least one opcode with fields (so the next test is not empty)', () => {
@@ -292,5 +326,84 @@ describe('Heading anchor ids', () => {
       a < b ? -1 : a > b ? 1 : 0,
     );
     expect(anchorIds(names)).toHaveLength(names.length);
+  });
+});
+
+/* ───────── Stack Input and Stack Output ───────── */
+
+describe('Stack Input and Stack Output', () => {
+  // Inline "- Stack:" lines copied from go-algorand TEAL_opcodes_v14.md at
+  // e46aea54, so a data refresh cannot break these.
+  it('shows upstream effects where the md has them, and types otherwise', async () => {
+    const { stackFields } =
+      await import('../../scripts/generate-opcode-list.ts');
+    // Effects: letters and [N ...] instead of types; no leading "..., ".
+    expect(
+      stackFields(
+        { Name: 'dupn', Args: ['any'] },
+        '..., A &rarr; ..., A, [N copies of A]',
+      ),
+    ).toEqual({ StackInput: '`A`', StackOutput: '`A, [N copies of A]`' });
+    // An opcode that ends the program.
+    expect(stackFields({ Name: 'err' }, '... &rarr; _exits_')).toEqual({
+      StackInput: '`-`',
+      StackOutput: '*exits*',
+    });
+    expect(
+      stackFields(
+        { Name: 'return', Args: ['uint64'] },
+        '..., A: uint64 &rarr; _exits_',
+      ),
+    ).toEqual({ StackInput: '`A: uint64`', StackOutput: '*exits*' });
+    // No effect: the md line is the one built from the types (two returns
+    // are lettered X, Y), so the page keeps the types, as before.
+    expect(
+      stackFields(
+        { Name: 'box_get', Args: ['boxName'], Returns: ['[]byte', 'bool'] },
+        '..., A: boxName &rarr; ..., X: []byte, Y: bool',
+      ),
+    ).toEqual({ StackInput: '`boxName`', StackOutput: '`[]byte,bool`' });
+    // Four returns are lettered W..Z, not X..; an `any` arg shows no type.
+    expect(
+      stackFields(
+        {
+          Name: 'divmodw',
+          Args: ['uint64', 'uint64', 'uint64', 'uint64'],
+          Returns: ['uint64', 'uint64', 'uint64', 'uint64'],
+        },
+        '..., A: uint64, B: uint64, C: uint64, D: uint64 &rarr; ..., W: uint64, X: uint64, Y: uint64, Z: uint64',
+      ),
+    ).toEqual({
+      StackInput: '`uint64,uint64,uint64,uint64`',
+      StackOutput: '`uint64,uint64,uint64,uint64`',
+    });
+    expect(
+      stackFields({ Name: 'pop', Args: ['any'] }, '..., A &rarr; ...'),
+    ).toEqual({ StackInput: '`any`', StackOutput: '`-`' });
+  });
+
+  it('refuses a Stack line in a format it does not know', async () => {
+    const { stackFields } =
+      await import('../../scripts/generate-opcode-list.ts');
+    // A backtick would close the code span the page puts the text in.
+    expect(() => stackFields({ Name: 'x' }, '..., A &rarr; ..., `A`')).toThrow(
+      /unexpected text/,
+    );
+    expect(() => stackFields({ Name: 'x' }, '..., A -> ...')).toThrow(
+      /no single "&rarr;"/,
+    );
+  });
+
+  it('refuses an md that does not match opcodes.json', async () => {
+    const { stackLines } =
+      await import('../../scripts/generate-opcode-list.ts');
+    const md =
+      '## err\n\n- Stack: ... &rarr; _exits_\n\n## pop\n\n- Bytecode: 0x48\n';
+    expect(() => stackLines(md, ['err', 'pop'])).toThrow(
+      /"pop" has 0 "- Stack:" lines/,
+    );
+    expect(() => stackLines(md.split('## pop')[0], ['err', 'pop'])).toThrow(
+      /missing from the md: pop/,
+    );
   });
 });

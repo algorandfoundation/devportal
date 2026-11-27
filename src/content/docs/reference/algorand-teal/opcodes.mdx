@@ -10,6 +10,8 @@ This page documents the current state of the AVM and may include AVM versions th
 
 Some opcodes take *immediates*: arguments encoded directly in the instruction, rather than taken from the stack. Opcodes that take immediates carry an **Immediate Parameters** note describing what each one expects.
 
+**Stack Input** and **Stack Output** list values in stack order, with the top of the stack last. For opcodes such as `swap` and `dig`, letters name the values so you can see where each one moves, with a type after the colon where it is fixed (`A: uint64`). `[N items]` stands for a number of values that the opcode's immediates set. *exits* means the program ends there.
+
 The **Size** field lists an opcode's total encoded length in bytes: the opcode bytes plus its immediates. It is omitted when an immediate has variable length. Constant opcodes such as `pushint`, `pushbytes` and `intcblock` carry their values inline; `b`, `bz`, `bnz` and `callsub` encode their relative target offset as a `varint (zigzag)` (see the notes under `bnz`); and `switch` and `match` take a variable-length list of `int16` targets.
 
 Opcodes such as `txn` and `global` take a field immediate: one byte that selects which field to read or set. In their **Field Reference** table, **Index** is that byte's value. Each table lists only the fields that opcode can select, so the numbers can skip.
@@ -2198,8 +2200,8 @@ At v2 it became allowed to branch to the end of the program exactly after the la
 
     ### cover
     - **Bytecode:** `0x4e`
-    - **Stack Input:** `any`
-    - **Stack Output:** `any`
+    - **Stack Input:** `[N items], A`
+    - **Stack Output:** `A, [N items]`
     - **Size:** 2
     - **Availability:** v5
     - **Cost:** 1
@@ -2225,8 +2227,8 @@ At v2 it became allowed to branch to the end of the program exactly after the la
 
     ### dig
     - **Bytecode:** `0x4b`
-    - **Stack Input:** `any`
-    - **Stack Output:** `any,any`
+    - **Stack Input:** `A, [N items]`
+    - **Stack Output:** `A, [N items], A`
     - **Size:** 2
     - **Availability:** v3
     - **Cost:** 1
@@ -2300,8 +2302,8 @@ At v2 it became allowed to branch to the end of the program exactly after the la
 
     ### dup
     - **Bytecode:** `0x49`
-    - **Stack Input:** `any`
-    - **Stack Output:** `any,any`
+    - **Stack Input:** `A`
+    - **Stack Output:** `A, A`
     - **Size:** 1
     - **Availability:** v1
     - **Cost:** 1
@@ -2322,8 +2324,8 @@ At v2 it became allowed to branch to the end of the program exactly after the la
 
     ### dup2
     - **Bytecode:** `0x4a`
-    - **Stack Input:** `any,any`
-    - **Stack Output:** `any,any,any,any`
+    - **Stack Input:** `A, B`
+    - **Stack Output:** `A, B, A, B`
     - **Size:** 1
     - **Availability:** v2
     - **Cost:** 1
@@ -2344,8 +2346,8 @@ At v2 it became allowed to branch to the end of the program exactly after the la
 
     ### dupn
     - **Bytecode:** `0x47`
-    - **Stack Input:** `any`
-    - **Stack Output:** `-`
+    - **Stack Input:** `A`
+    - **Stack Output:** `A, [N copies of A]`
     - **Size:** 2
     - **Availability:** v8
     - **Cost:** 1
@@ -2726,7 +2728,7 @@ Fails if A or B is not in G.<br />A and/or B are allowed to be the point at infi
     ### err
     - **Bytecode:** `0x00`
     - **Stack Input:** `-`
-    - **Stack Output:** `-`
+    - **Stack Output:** *exits*
     - **Size:** 1
     - **Availability:** v1
     - **Cost:** 1
@@ -4021,7 +4023,7 @@ Almost all smart contracts should use simpler and smaller methods (such as the [
 
     ### match
     - **Bytecode:** `0x8e`
-    - **Stack Input:** `any`
+    - **Stack Input:** `[A1, A2, ..., AN], B`
     - **Stack Output:** `-`
     - **Availability:** v8
     - **Cost:** 1 + 2 per label
@@ -4209,7 +4211,7 @@ MiMC hashes field elements, not arbitrary byte strings; reducing external inputs
 
     ### popn
     - **Bytecode:** `0x46`
-    - **Stack Input:** `-`
+    - **Stack Input:** `[N items]`
     - **Stack Output:** `-`
     - **Size:** 2
     - **Availability:** v8
@@ -4330,7 +4332,7 @@ Poseidon2 hashes field elements, not arbitrary byte strings; reducing external i
     ### pushbytess
     - **Bytecode:** `0x82`
     - **Stack Input:** `-`
-    - **Stack Output:** `-`
+    - **Stack Output:** `[N items]`
     - **Availability:** v8
     - **Cost:** 1
     - **Description:** push sequences of immediate byte arrays to stack (first byte array being deepest)
@@ -4386,7 +4388,7 @@ Poseidon2 hashes field elements, not arbitrary byte strings; reducing external i
     ### pushints
     - **Bytecode:** `0x83`
     - **Stack Input:** `-`
-    - **Stack Output:** `-`
+    - **Stack Output:** `[N items]`
     - **Availability:** v8
     - **Cost:** 1
     - **Description:** push sequence of immediate uints to stack in the order they appear (first uint being deepest)
@@ -4486,8 +4488,8 @@ Poseidon2 hashes field elements, not arbitrary byte strings; reducing external i
 
     ### return
     - **Bytecode:** `0x43`
-    - **Stack Input:** `uint64`
-    - **Stack Output:** `-`
+    - **Stack Input:** `A: uint64`
+    - **Stack Output:** *exits*
     - **Size:** 1
     - **Availability:** v2
     - **Cost:** 1
@@ -4508,8 +4510,8 @@ Poseidon2 hashes field elements, not arbitrary byte strings; reducing external i
 
     ### select
     - **Bytecode:** `0x4d`
-    - **Stack Input:** `any,any,uint64`
-    - **Stack Output:** `any`
+    - **Stack Input:** `A, B, C: uint64`
+    - **Stack Output:** `A or B`
     - **Size:** 1
     - **Availability:** v3
     - **Cost:** 1
@@ -4850,8 +4852,8 @@ Poseidon2 hashes field elements, not arbitrary byte strings; reducing external i
 
     ### swap
     - **Bytecode:** `0x4c`
-    - **Stack Input:** `any,any`
-    - **Stack Output:** `any,any`
+    - **Stack Input:** `A, B`
+    - **Stack Output:** `B, A`
     - **Size:** 1
     - **Availability:** v3
     - **Cost:** 1
@@ -4994,8 +4996,8 @@ Poseidon2 hashes field elements, not arbitrary byte strings; reducing external i
 
     ### uncover
     - **Bytecode:** `0x4f`
-    - **Stack Input:** `any`
-    - **Stack Output:** `any`
+    - **Stack Input:** `A, [N items]`
+    - **Stack Output:** `[N items], A`
     - **Size:** 2
     - **Availability:** v5
     - **Cost:** 1
