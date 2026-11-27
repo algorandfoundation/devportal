@@ -262,3 +262,35 @@ describe('Field Reference tables on the real page', () => {
     }
   });
 });
+
+/* ───────── Heading anchor ids ───────── */
+
+describe('Heading anchor ids', () => {
+  it("keeps Astro's ids, fixing only !, - and b-", async () => {
+    // Inline names, so a data refresh cannot break this. Astro gave `!` and
+    // `-` an empty id and `b-` the id `b`; every other id must not change.
+    const { anchorIds } = await import('../../scripts/generate-opcode-list.ts');
+    expect(
+      anchorIds(['!', '!=', '%', '-', 'b', 'b!=', 'b-', 'b%', 'txna']),
+    ).toEqual(['not', '-1', '-2', '-', 'b', 'b-1', 'b-', 'b-2', 'txna']);
+  });
+
+  it('every opcode in opcodes.json gets an id (throws on empty or duplicate)', async () => {
+    const { anchorIds } = await import('../../scripts/generate-opcode-list.ts');
+    const { Ops } = JSON.parse(
+      readFileSync(
+        fileURLToPath(
+          new URL(
+            '../../src/content/docs/reference/algorand-teal/opcodes.json',
+            import.meta.url,
+          ),
+        ),
+        'utf8',
+      ),
+    ) as { Ops: Op[] };
+    const names = Ops.map(op => op.Name).sort((a, b) =>
+      a < b ? -1 : a > b ? 1 : 0,
+    );
+    expect(anchorIds(names)).toHaveLength(names.length);
+  });
+});

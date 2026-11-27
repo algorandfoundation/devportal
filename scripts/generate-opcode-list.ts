@@ -180,6 +180,48 @@ Handlebars.registerHelper('mdxParagraphs', (s = '') => {
   return new Handlebars.SafeString(out);
 });
 
+/* ───────── heading anchor ids ───────── */
+
+// Astro gives `!` and `-` an empty heading id and `b-` the id `b`, so their
+// anchor links are broken. These ids are public URLs: do not change them.
+const ANCHOR_ID_OVERRIDES: Record<string, string> = {
+  '!': 'not',
+  '-': '-',
+  'b-': 'b-',
+};
+
+// Heading id for each opcode, given the names in page order. Every heading
+// gets one (src/plugins/rehype-opcode-anchor-ids.mjs applies them): Astro
+// skips only headings that already have an id, and skipping some would shift
+// its -1, -2... numbering for the rest. So this repeats Astro's rule
+// (github-slugger, ASCII only, then one trailing "-" stripped) to keep every
+// other id unchanged. Throws on an id that is empty or used twice: add an
+// override.
+export function anchorIds(names: string[]): string[] {
+  const seen = new Map<string, number>();
+  const ids = new Set<string>();
+  return names.map(name => {
+    const base = name
+      .toLowerCase()
+      .replace(/[^ \-0-9a-z_]/g, '')
+      .replace(/ /g, '-');
+    let slug = base;
+    while (seen.has(slug)) {
+      seen.set(base, seen.get(base)! + 1);
+      slug = `${base}-${seen.get(base)}`;
+    }
+    seen.set(slug, 0);
+    const id = ANCHOR_ID_OVERRIDES[name] ?? slug.replace(/-$/, '');
+    if (!id || ids.has(id) || /[^\x20-\x7e]/.test(name)) {
+      throw new Error(
+        `${name}: no usable heading id ("${id}"); add one to ANCHOR_ID_OVERRIDES`,
+      );
+    }
+    ids.add(id);
+    return id;
+  });
+}
+
 /* ───────── render ───────── */
 
 /**
@@ -212,6 +254,8 @@ export async function render() {
   // dependent, so a CI Node upgrade could silently reorder the entire generated
   // file. A code-unit comparator is stable across environments.
   opcodes.sort((a, b) => (a.Name < b.Name ? -1 : a.Name > b.Name ? 1 : 0));
+  const ids = anchorIds(opcodes.map(op => op.Name));
+  opcodes.forEach((op, i) => (op.AnchorId = ids[i]));
 
   const page = template({ opcodes, datasetVersion, latestReleasedVersion });
 
